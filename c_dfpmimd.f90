@@ -1,0 +1,37 @@
+      subroutine c_dfpmimd(mot,imot,nmot)
+!
+!***********************************************************************
+!
+!     ACT
+!_A    Realisation de l'action dfpmimd.
+!
+!     INP
+!_I    l          : arg int              ; numero de domaine
+!_I    kimp       : com int              ; niveau de sortie sur unite logi imp
+!
+!***********************************************************************
+!-----parameters figes--------------------------------------------------
+!
+      use para_fige
+      use sortiefichier
+!
+!-----------------------------------------------------------------------
+!
+      character *32 mot(nmx)
+      dimension imot(nmx)
+      dimension ldom(nobj)
+      dimension lgr(nobj)
+!
+     call tcmd_dfpmimd( &
+                 mot,imot,nmot, &
+                 ldom,ldomd, &
+                 lgr,lgrd)
+!
+      if(kimp.ge.1) then
+            call b1_dfpmimd( &
+                 ldom,ldomd, &
+                 lgr,lgrd)
+      endif
+!
+      return
+      end
