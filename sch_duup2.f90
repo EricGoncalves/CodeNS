@@ -40,6 +40,9 @@
       dimension vol(ip11),mut(ip12),mu(ip12),dist(ip12)
       dimension sn(ip31*ndir)
       dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
+      dimension t(ip11,ip60),tprod(ip00)
+
+
 !
       indc(i,j,k)=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
 

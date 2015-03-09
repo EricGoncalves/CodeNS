@@ -68,6 +68,8 @@
       dimension ncin(ip41),mnpar(ip12),fgam(ip42),mnc(ip43)
       dimension cvi(ip21),cvj(ip21),cvk(ip21),cmui1(ip21),cmui2(ip21), &
                 cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
+      dimension dt(ip11)
+
 !
       if (equat(1:2).eq.'ns') then
         if ( ncyturb .gt. 1 ) then

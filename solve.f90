@@ -35,23 +35,23 @@ module para_var
   parameter(    cng=1./2.)
   parameter(    cfg=1.)
   parameter(ip00=ndimub)
-  parameter(ip11=(1+kdimg*ccg)*ndimctf)
+  parameter(ip11=int((1.+kdimg*ccg)*ndimctf))
   parameter(ip12=kdimv*(ip11-1)+1)
   parameter(ip13=kdimk*(ip11-1)+1)
-  parameter(ip21=(1+kdimg*cng)*ndimnts+ndimntu)
-  parameter(ip31=1+3*(1+kdimg*cng)*ndimnts)
+  parameter(ip21=int((1.+kdimg*cng)*ndimnts+ndimntu))
+  parameter(ip31=int(1.+3.*(1.+kdimg*cng)*ndimnts))
   parameter(ip40=mdimub)
-  parameter(ip41=(1+kdimg*cfg)*mdimtbf)
-  parameter(ip42=(1+kdimg*cfg)*mdimtnf)
-  parameter(ip43=(1+kdimg*cfg)*mdimtcf)
-  parameter(ip44=(1+kdimg*cfg)*mdimtrf)
+  parameter(ip41=int((1.+kdimg*cfg)*mdimtbf))
+  parameter(ip42=int((1.+kdimg*cfg)*mdimtnf))
+  parameter(ip43=int((1.+kdimg*cfg)*mdimtcf))
+  parameter(ip44=int((1.+kdimg*cfg)*mdimtrf))
   parameter(ip60=nvar)
 end module para_var
 !
 module boundary
   use para_fige
-  character *4 cl
-  character *2 indfl
+  character(len=4) :: cl
+  character(len=2) :: indfl
   integer iminb,imaxb,jminb,jmaxb,kminb,kmaxb
   integer mpn,nfbn
   integer mpr,nfbr,ndrr,srotr,crotr
@@ -95,8 +95,8 @@ module definition
 end module definition
 !
 module chainecarac
-  character *24 c0,c1,c2,c3
-  character *32 cb,cc,cd,ch,ci,cf,cm,cr,cs
+  character(len=24) :: c0,c1,c2,c3
+  character(len=32) :: cb,cc,cd,ch,ci,cf,cm,cr,cs
   data c0/'VALEUR NON SIGNIFICATIVE'/
   data c1/'valeur par defaut       '/
   data c2/'                        '/
@@ -110,9 +110,9 @@ module chainecarac
   data cm/' liste d''entiers attendue!     '/
   data cr/' reel attendu!                  '/
   data cs/' suite de commande attendue!    '/
-  character *7 equat,equatt
-  character *80 titrt1
-  character *4 config
+  character(len=7)  :: equat,equatt
+  character(len=80) :: titrt1
+  character(len=4)  :: config
 end module chainecarac
 !
 module constantes
@@ -164,7 +164,7 @@ end module kcle
 !
 module schemanum
   use para_fige
-   character *4 discsv
+   character(len=4) :: discsv
   integer muscl,ilim,ischema,lacou
   integer kdualns,kdualto
   integer niter,nitur,mgl
@@ -495,8 +495,8 @@ program solve
 !
       integer iyplus
       real mu,mut,nxn,nyn,nzn
-      character *32 comment
-      character *32 mot(nmx)
+      character(len=32) :: comment
+      character(len=32) :: mot(nmx)
 !
       dimension imot(nmx)
       dimension v(ip11,ip60)

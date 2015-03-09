@@ -62,6 +62,7 @@
       logical gfetke
       integer idcyc,icycle,ncyc,icyc
       real nxn,nyn,nzn,mu,mut
+      integer :: m1tb(ip00),m2tb(ip00),nfrtb(ip00)
 !
       dimension dt(ip11),vol(ip11),r(ip11),pression(ip11),ztemp(ip11),cson(ip11)
       dimension mnpar(ip12),fgam(ip42),utau(ip42)
@@ -86,6 +87,7 @@
       dimension cvi(ip21),cvj(ip21),cvk(ip21), &
                 cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
                 cmuk1(ip21),cmuk2(ip21)
+
 
 !     keinit : controle initialisation variables k et seconde (epsilon, l, ...)
 !              avant "atsch_num" :
@@ -141,7 +143,7 @@
                  tn1,tn2,tn3,tn4,tn5,tn6,tn7, &
                  dist,mnpar,fgam, &
                  ncin,mnc,ncbd, &
-                 tn8,tn9,tn10)
+                 m1tb,m2tb,nfrtb)
 !
          elseif(kcaldis.eq.0 .and. klecdis.eq.1) then
 !          lecture des distances

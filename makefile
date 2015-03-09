@@ -132,15 +132,17 @@ OBJS =  ${SRCS:.f90=.o}
 # PROFLIB	Library needed for profiling
 #
 FC =  gfortran
+#FC =  ifort
 #CMD =	 solver_air_testperfo
 CMD =	 solver_air
 
 # To perform the default compilation, use the first line
-FFLAGS =  -O2   -fdefault-double-8 -fdefault-real-8 -ffree-line-length-none
-#FFLAGS =  -O2   -fdefault-double-8 -fdefault-real-8 -fopenmp  -ffree-line-length-none
+#FFLAGS =  -Ofast -march=native -ffast-math -funsafe-math-optimizations -fdefault-double-8 -fdefault-real-8 -ffree-line-length-none # -fopenmp -ftree-loop-distribution -ftree-loop-im
+FFLAGS = -fdefault-double-8 -fdefault-real-8 -O0 -g3 -Wall -fbacktrace -ffpe-trap=zero,overflow,invalid -fbounds-check -finit-real=snan -Wextra -pedantic -std=f2008 -Wno-unused-dummy-argument -Wno-unused-parameter -Wno-unused
 #FFLAGS =  -O2   -fdefault-double-8 -fdefault-real-8  -p -fno-inline-functions
-#FFLAGS =  -O2 -r8 -openmp -threads
-LDFLAGS = -O2 -fdefault-double-8 -fdefault-real-8
+#FFLAGS = -r8 -fast #-openmp -parallel -threads 
+#FFLAGS = -r8 -fast -g -traceback #-openmp -parallel -threads 
+#FFLAGS = -r8 -O0 -g -traceback  -C -debug all -warn -fpe0 -ftrapuv -nozero -fstack-protector-all -warn nodeclarations,nounused #-openmp -parallel -threads 
 
 # Lines from here on down should not need to be changed.
 #
@@ -152,4 +154,4 @@ $(CMD):		$(OBJS)
 	  $(FC) $(FFLAGS) -o $(@) $(OBJS) $(LIBS)
 
 clean:	
-	rm -f *.o
+	rm -f *.o *.mod *.optrpt *__genmod.f90

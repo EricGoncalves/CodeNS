@@ -436,7 +436,7 @@
          if((kdualns.eq.0).or.(kdualns.eq.1)) then
 !         if(kdualns.eq.1) then
            call sch_duup( &
-                  sn,vol,tn3, &
+                  sn,vol,tn3(1), &
                   v,ptdual,vdual,vdual1, &
                   mu,mut,dist,tn4, &
                   ncyc,1, &
@@ -445,7 +445,7 @@
          elseif(kdualns.eq.2) then
 !         elseif((kdualns.eq.0).or.(kdualns.eq.2)) then
             call sch_duup2( &
-                  sn,vol,tn3, &
+                  sn,vol,tn3(1), &
                   v,ptdual,vdual,vdual1,vdual2, &
                   mu,mut,dist,tn4, &
                   ncyc,1, &

@@ -254,7 +254,7 @@
                  mfbm, &
                  ncbd,v, &
                  mmb,mpb,ncin, &
-                 pression,ztemp,con)
+                 pression,ztemp,cson)
 !
 !-----generation d'un choc oblique
       else if (cl(mfb).eq.'choc') then
