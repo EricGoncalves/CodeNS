@@ -1,4 +1,5 @@
 module para_fige
+implicit none
       integer :: ndir,nind,lz,lg,lt,mtb,mtt,neqt,nsta,lsta,ista,nobj
       integer :: nmx,lgcmdx
   parameter(  ndir=3     )
@@ -18,6 +19,7 @@ module para_fige
 end module para_fige
 !
 module para_var
+implicit none
       integer :: ndimub,ndimctf,ndimnts,ndimntu,kdimg,kdimv,kdimk
       integer :: mdimub,mdimtbf,mdimtnf,mdimtcf,mdimtrf,nvar
       integer :: ip00,ip11,ip12,ip13,ip60,ip40,ip21,ip31,ip41
@@ -57,6 +59,7 @@ end module para_var
 !
 module boundary
   use para_fige
+implicit none
   character(len=4) :: cl
   character(len=2) :: indfl
   integer iminb,imaxb,jminb,jmaxb,kminb,kmaxb
@@ -79,6 +82,7 @@ end module boundary
 !
 module maillage
   use para_fige
+implicit none
   integer nptot,npn,nnn,npc,nnc,npfb,nnfb
   integer kvn,kcaldis,kecrdis,klecdis
   integer lzx,lgx,mtbx,mtnx,mtcx,mtrx,mtax,ndimubx,ndimctbx,ndimntbx, &
@@ -93,6 +97,7 @@ end module maillage
 !
 module definition
   use para_fige
+implicit none
   integer klomg
   real roa1,aa1,ta1,pa1,ha1
   real perio,ptrans,protat,omg
@@ -102,6 +107,7 @@ module definition
 end module definition
 !
 module chainecarac
+implicit none
   character(len=24) :: c0,c1,c2,c3
   character(len=32) :: cb,cc,cd,ch,ci,cf,cm,cr,cs
   data c0/'VALEUR NON SIGNIFICATIVE'/
@@ -123,6 +129,7 @@ module chainecarac
 end module chainecarac
 !
 module constantes
+implicit none
   integer intmx,linx  
   data intmx/999999/
   data linx/132/
@@ -136,6 +143,7 @@ module constantes
 end module constantes
 !
 module proprieteflu
+implicit none
    real gam,gam1,gam2,gam3,gam4,gam5,rd
    real pr,prt,reynz
    real rgp,cp,cv
@@ -144,6 +152,7 @@ end module proprieteflu
 !
 module kcle
   use para_fige
+implicit none
   integer klzx,klgx,kmtbx,kmtnx,kmtcx,kmtrx,kmtax,kndimubx,kndimctbx, &
           kndimntbx,kmdimubx,kmdimtbx, &
           kmdimtnx,kmdimtcx,kmdimtrx,kneqtx
@@ -171,6 +180,7 @@ end module kcle
 !
 module schemanum
   use para_fige
+implicit none
    character(len=4) :: discsv
   integer muscl,ilim,ischema,lacou
   integer kdualns,kdualto
@@ -194,6 +204,7 @@ end module schemanum
 !
 module modeleturb
   use para_fige
+implicit none
   integer keasm,keinit,kesst,kfracom,kditur,kwsst,ktransi
   integer ncycrac,naprng,ncytuke0,ncycke
   integer imxclko,komsst,icytur0,ncyturb,lparoi
@@ -216,6 +227,7 @@ end module modeleturb
 !
 module sortiefichier
   use para_fige
+implicit none
   integer lsortie,nfreq
   integer kimp,kfa,lec,imp,out,sec,sor1,sor2,sor3
   integer kdgv,kdgc,kdac,kdgcf,kdacf,kres
@@ -497,10 +509,10 @@ program solve
       use definition
       use chainecarac
       use sortiefichier
+implicit none
 !
 !-----------------------------------------------------------------------
 !
-implicit none
       integer           :: iyplus
       integer           :: img,imot,l,mfbi,mfc,mfn,mfr,mnc,mnpar,mnr,ncbd,ncin
       integer           :: ncyc,nmot

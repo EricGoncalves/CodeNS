@@ -19,6 +19,8 @@
    use sortiefichier
    use kcle
    use definition
+implicit none
+integer :: nst
 !
 !-----------------------------------------------------------------------
 !

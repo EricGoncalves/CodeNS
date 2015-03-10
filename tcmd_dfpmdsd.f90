@@ -15,6 +15,22 @@
       use schemanum
       use maillage
       use kcle
+implicit none
+integer :: imot
+integer :: nmot
+integer :: ldom
+integer :: ldomd
+integer :: lgr
+integer :: lgrd
+integer :: icmt
+integer :: img
+integer :: krree
+integer :: l
+integer :: lm
+integer :: ng
+integer :: nl
+integer :: nm
+double precision :: rree
 !
 !-----------------------------------------------------------------------
 !

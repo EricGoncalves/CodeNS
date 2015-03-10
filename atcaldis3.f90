@@ -114,6 +114,53 @@
    use maillage
    use constantes
    use boundary
+implicit none
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: xpar
+double precision :: ypar
+double precision :: zpar
+double precision :: xcc
+double precision :: ycc
+double precision :: zcc
+double precision :: dist2
+double precision :: dist
+integer :: mnpar
+double precision :: fgam
+integer :: ncin
+integer :: mnc
+integer :: ncbd
+integer :: m1tb
+integer :: m2tb
+integer :: nfrtb
+integer :: idefaut
+integer :: ierr
+integer :: if0
+integer :: if1
+integer :: igr
+integer :: isens3
+integer :: jgr
+integer :: kgr
+integer :: l
+integer :: ldismx
+integer :: m
+integer :: m10
+integer :: m1max
+integer :: m1min
+integer :: m20
+integer :: m2max
+integer :: m2min
+integer :: m30
+integer :: m3max
+integer :: m3min
+integer :: mf
+integer :: n
+integer :: nf
+integer :: nfbe
+integer :: nfbi
+integer :: no
+double precision :: raptat
 !
 !-----------------------------------------------------------------------
 !

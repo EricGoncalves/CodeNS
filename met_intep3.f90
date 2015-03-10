@@ -120,6 +120,208 @@
       use sortiefichier 
       use constantes
       use modeleturb
+implicit none
+integer :: ncbd
+integer :: ncin
+double precision :: s
+double precision :: sn
+double precision :: vol
+double precision :: dist
+integer :: mnpar
+double precision :: pi
+double precision :: tau
+double precision :: us
+double precision :: ut
+double precision :: un
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: ps
+double precision :: cson
+double precision :: temp
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: am2
+double precision :: csc
+double precision :: ddist
+double precision :: del1
+double precision :: del1i
+double precision :: dev
+double precision :: distm1
+double precision :: e
+double precision :: epspi
+double precision :: epstau
+double precision :: epsvor
+double precision :: hpar
+double precision :: hpari
+integer :: i1
+integer :: i2
+integer :: idd1
+integer :: idd2
+integer :: idd3
+integer :: ideb
+integer :: idf1
+integer :: idf2
+integer :: idfac
+integer :: idm
+integer :: idm3
+integer :: ierr
+integer :: ii
+integer :: imaxf
+integer :: iminf
+integer :: isens3
+integer :: j1
+integer :: j2
+integer :: jdd1
+integer :: jdd2
+integer :: jdd3
+integer :: jdeb
+integer :: jj
+integer :: jmaxf
+integer :: jminf
+integer :: k1
+integer :: k2
+integer :: kdd1
+integer :: kdd2
+integer :: kdd3
+integer :: kdeb
+integer :: kk
+integer :: kmaxf
+integer :: kminf
+integer :: l
+integer :: lbgr
+integer :: m
+integer :: m0b
+integer :: m0n
+integer :: m0ndeb
+integer :: m0nfin
+integer :: m1
+integer :: m1max
+integer :: m1maxm1
+integer :: m1min
+integer :: m2
+integer :: m2max
+integer :: m2maxm1
+integer :: m2min
+integer :: m3
+integer :: m3del
+integer :: m3delp
+integer :: m3delt
+integer :: m3delv
+integer :: m3max
+integer :: m3min
+integer :: m3mxd
+integer :: m3pmx
+integer :: m3tmx
+integer :: m3vmx
+integer :: mdel
+integer :: mdel2
+integer :: mf
+integer :: mfac
+integer :: mfacn
+integer :: mfl
+integer :: mpar
+integer :: n
+integer :: n0c
+integer :: n0n
+integer :: nc0
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: ndel
+integer :: ndel2
+integer :: ndelp
+integer :: ndelt
+integer :: ndelv
+integer :: nfac1
+integer :: nfac2
+integer :: nfac3
+integer :: nfac4
+integer :: nfacf
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: p
+double precision :: pimax
+double precision :: qq
+double precision :: reyl
+double precision :: rhoe
+double precision :: rm2
+double precision :: rm3dlp
+double precision :: rm3dlt
+double precision :: rm3dlv
+double precision :: ro
+double precision :: rpdel
+double precision :: rr
+double precision :: rus0
+double precision :: rus1
+double precision :: sg
+double precision :: snorm
+double precision :: somd
+double precision :: somru
+double precision :: somru2
+double precision :: somu
+double precision :: somu2
+double precision :: sx
+double precision :: sy
+double precision :: sz
+double precision :: taumx
+double precision :: te
+double precision :: theta11
+double precision :: theta11i
+double precision :: tmod
+double precision :: tue
+double precision :: tx
+double precision :: ty
+double precision :: tz
+double precision :: u
+double precision :: uemod
+double precision :: uen
+double precision :: uex
+double precision :: uex1
+double precision :: uex2
+double precision :: uey
+double precision :: uey1
+double precision :: uey2
+double precision :: uez
+double precision :: uez1
+double precision :: uez2
+double precision :: und
+double precision :: us0
+double precision :: us1
+double precision :: usd
+double precision :: utd
+double precision :: utx
+double precision :: uty
+double precision :: utz
+double precision :: v
+double precision :: vormx
+double precision :: vv
+double precision :: w
+double precision :: xcfac
+double precision :: xme
+double precision :: xmue
+double precision :: xn
+double precision :: xs
+double precision :: xt
+double precision :: ycfac
+double precision :: yn
+double precision :: ys
+double precision :: yt
+double precision :: zcfac
+double precision :: zn
+double precision :: zs
+double precision :: zt
 !
 !-----------------------------------------------------------------------
 !

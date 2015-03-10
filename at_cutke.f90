@@ -12,6 +12,9 @@
       use para_var
    use modeleturb
    use sortiefichier
+implicit none
+integer :: l
+double precision :: v
 !
 !-----------------------------------------------------------------------
 !

@@ -17,6 +17,31 @@
       use maillage
       use schemanum
       use sortiefichier         
+implicit none
+integer :: ind
+double precision :: u0
+double precision :: v
+double precision :: dt
+integer :: i
+integer :: j
+integer :: k
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: l
+integer :: lm
+integer :: n
+integer :: n0
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: resr
 !
 !--------------------------------------------------------------------
 !

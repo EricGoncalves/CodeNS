@@ -28,6 +28,13 @@
       use maillage 
       use sortiefichier
       use definition
+implicit none
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+integer :: king
+integer :: img
 !
 !-----------------------------------------------------------------------
 !

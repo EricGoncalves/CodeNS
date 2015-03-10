@@ -78,6 +78,37 @@
       use boundary
       use chainecarac
       use sortiefichier
+implicit none
+integer :: mfbe
+integer :: kibdn
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: sn
+integer :: ncbd
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: tn4
+double precision :: tn5
+double precision :: tn6
+double precision :: tn7
+double precision :: tn8
+double precision :: tn9
+integer :: imax
+integer :: img
+integer :: imin
+integer :: jmax
+integer :: jmin
+integer :: kmax
+integer :: kmin
+integer :: l
+integer :: lm
+integer :: m0n
+integer :: mfbi
+integer :: mfbim
+integer :: mfn
+integer :: mt
 !
 !-----------------------------------------------------------------------
 !

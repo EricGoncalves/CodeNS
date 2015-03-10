@@ -64,6 +64,62 @@
       use schemanum
       use maillage
       use proprieteflu
+implicit none
+integer :: inc
+integer :: indc
+integer :: indn
+integer :: l
+double precision :: etal
+double precision :: t
+double precision :: dt
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+double precision :: sfsi
+double precision :: sfsj
+double precision :: sfsk
+double precision :: dism
+double precision :: cson
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+double precision :: dte
+double precision :: dtv
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: mc
+integer :: mn
+integer :: n
+integer :: n0c
+integer :: n0n
+integer :: n1
+integer :: n2
+integer :: nc
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: q
+double precision :: qq
+double precision :: ro
+double precision :: rv
+double precision :: simax
+double precision :: sjmax
+double precision :: skmax
+double precision :: smoy
 !
 !-----------------------------------------------------------------------
 !
@@ -155,9 +211,9 @@
          mn=mn+nci
          mc=mc+nci
          nc=mc+n0c
-         simax=amax1(sfsi(mn+nci),sfsi(mn))
-         sjmax=amax1(sfsj(mn+ncj),sfsj(mn))
-         skmax=amax1(sfsk(mn+nck),sfsk(mn))
+         simax=max(sfsi(mn+nci),sfsi(mn))
+         sjmax=max(sfsj(mn+ncj),sfsj(mn))
+         skmax=max(sfsk(mn+nck),sfsk(mn))
          smoy =sqrt(simax+sjmax+skmax)
          dism(mc)=vol(nc)/smoy
         enddo
@@ -185,9 +241,9 @@
           nc=indc(i,j,k)
           mc=nc-n0c
           rv1=gam*(mu(nc)/pr+mut(nc)/prt)/t(nc,1)
-          rv=amax1(rv1,4./3.*(mu(nc)+mut(nc))/t(nc,1))
+          rv=max(rv1,4./3.*(mu(nc)+mut(nc))/t(nc,1))
           dtv=etal*0.25*dism(mc)**2/rv
-          dt(nc)=amin1(dt(nc),dtv)
+          dt(nc)=min(dt(nc),dtv)
          enddo
         enddo
        enddo

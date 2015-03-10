@@ -27,6 +27,61 @@
       use definition
       use proprieteflu
       use schemanum
+implicit none
+integer :: inc
+integer :: ind
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: v
+integer :: kina
+double precision :: vdual
+double precision :: vdual1
+double precision :: vdual2
+double precision :: a
+double precision :: alpha
+double precision :: alphar
+double precision :: beta
+double precision :: betar
+double precision :: degrad
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: n
+integer :: n0
+integer :: nci
+integer :: ncij
+integer :: ncijk
+integer :: ncik
+integer :: ncj
+integer :: ncjk
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: p
+double precision :: pis2
+double precision :: q
+double precision :: rmach
+double precision :: ro
+double precision :: rou
+double precision :: rov
+double precision :: row
+double precision :: ym
+double precision :: zm
 !
 !-----------------------------------------------------------------------
 !

@@ -9,6 +9,28 @@
       use para_var
       use para_fige
       use maillage
+implicit none
+integer :: indc
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: n
+integer :: n0c
+integer :: nid
+integer :: nijd
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !

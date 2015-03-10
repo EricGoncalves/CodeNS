@@ -109,6 +109,78 @@
       use proprieteflu
       use schemanum
       use definition
+implicit none
+integer :: inc
+integer :: mfb
+integer :: l
+double precision :: rpi
+double precision :: rti
+double precision :: d0x
+double precision :: d0y
+double precision :: d0z
+integer :: ncbd
+double precision :: v
+double precision :: y
+double precision :: z
+integer :: mmb
+integer :: mpb
+integer :: mpn
+double precision :: usdn2
+double precision :: roc0
+double precision :: am0
+double precision :: qn
+double precision :: p
+double precision :: resi
+double precision :: ro
+double precision :: un
+double precision :: usdn
+double precision :: ym
+double precision :: zm
+double precision :: alm
+double precision :: pression
+double precision :: temp
+double precision :: cson
+integer :: id
+integer :: jd
+integer :: kd
+double precision :: a2
+double precision :: b
+double precision :: beta2
+double precision :: df
+double precision :: dpn
+double precision :: eps
+double precision :: f
+double precision :: gam2t
+double precision :: gam7
+double precision :: gam8
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mt
+integer :: n0c
+integer :: n0n
+integer :: nc
+integer :: nci
+integer :: ncij
+integer :: ncijk
+integer :: ncik
+integer :: ncj
+integer :: ncjk
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: nitn
+integer :: njd
+integer :: nn
+double precision :: ps
+double precision :: q2
+double precision :: qinf
+double precision :: qxs
+double precision :: qys
+double precision :: qzs
+double precision :: residu
+double precision :: w
+double precision :: wn
 !
 !-----------------------------------------------------------------------
 !
@@ -176,7 +248,7 @@
        q2=qxs**2+qys**2+qzs**2
        ps=gam1*(v(nc,5)-0.5*v(nc,1)*q2-pinfl)
        a2=gam*ps/v(nc,1)
-       beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+       beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
        roc0(m)=v(nc,1)*beta2*a2
        alm(m)=0.5*((1.+beta2)*abs(qn(m))-sqrt(((1.-beta2)*qn(m))**2+4.*beta2*a2))
        am0(m)=(alm(m)-qn(m))*ps+roc0(m)*qn(m)
@@ -199,7 +271,7 @@
          dpn=-f/df
          residu=abs(dpn)/p(m)
 !         p(m)=p(m)+dpn
-         p(m)=amax1(0.,p(m)+dpn)
+         p(m)=max(0.,p(m)+dpn)
          nitn=nitn+1
          if(nitn.gt.10) then
           residu=0.

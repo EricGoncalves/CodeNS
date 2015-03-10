@@ -70,6 +70,26 @@
       use para_fige
       use maillage
       use boundary
+implicit none
+integer :: img
+integer :: ncyc
+double precision :: v
+integer :: ncin
+integer :: ncbd
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+double precision :: ztemp
+double precision :: utau
+double precision :: topz
+integer :: mfb
+integer :: no
 !
 !-----------------------------------------------------------------------
 !

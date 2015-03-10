@@ -40,6 +40,18 @@
       use para_fige
       use maillage
       use boundary
+implicit none
+integer :: mfbi
+integer :: l
+integer :: ncin
+integer :: ncbd
+integer :: mt
+integer :: m0
+integer :: m
+integer :: mdnmfb
+integer :: ml
+integer :: nid
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !

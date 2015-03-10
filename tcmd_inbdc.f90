@@ -13,6 +13,21 @@
 !
       use para_fige
       use chainecarac
+implicit none
+integer :: imot
+integer :: nmot
+integer :: krr
+integer :: mfbea
+integer :: mfbeb
+integer :: kibdc
+double precision :: epsmsh
+integer :: iba
+integer :: jba
+integer :: kba
+integer :: icmt
+integer :: im
+integer :: kval
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

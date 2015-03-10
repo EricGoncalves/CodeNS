@@ -18,6 +18,11 @@
    use sortiefichier
    use maillage
    use boundary
+implicit none
+integer :: mfbe
+integer :: img
+integer :: mfbi
+integer :: mfbim
 !
 !-----------------------------------------------------------------------
 !

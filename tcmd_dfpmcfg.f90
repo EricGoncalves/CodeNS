@@ -13,6 +13,12 @@
       use chainecarac
       use maillage
       use boundary 
+implicit none
+integer :: imot
+integer :: nmot
+integer :: icmt
+integer :: nm
+integer :: no
 !
 !-----------------------------------------------------------------------
 !

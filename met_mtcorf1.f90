@@ -36,6 +36,37 @@
       use para_fige
       use boundary
       use modeleturb
+implicit none
+integer :: l
+integer :: ncin
+double precision :: dist
+integer :: mnpar
+double precision :: frac
+integer :: isdm3
+integer :: isens3
+integer :: lpar
+integer :: m
+integer :: m10
+integer :: m1max
+integer :: m1min
+integer :: m20
+integer :: m2max
+integer :: m2min
+integer :: m3
+integer :: m30
+integer :: m3lim
+integer :: m3max
+integer :: m3min
+integer :: m3mxx
+integer :: mfbi
+integer :: mpar
+integer :: mpb0
+integer :: mpn0
+integer :: mpn1
+integer :: n
+integer :: nfac
+integer :: nmin
+integer :: npar
 !
 !-----------------------------------------------------------------------
 !

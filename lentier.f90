@@ -9,6 +9,14 @@
 !
       use para_var
       use para_fige
+implicit none
+integer :: imot
+integer :: li
+integer :: lid
+integer :: lix
+integer :: klix
+integer :: kerr
+integer :: l
 !
 !-----------------------------------------------------------------------
 !

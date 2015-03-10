@@ -30,6 +30,19 @@
       use para_var
       use para_fige
    use maillage
+implicit none
+integer :: l
+double precision :: v
+double precision :: vv1
+double precision :: vv2
+double precision :: vv3
+double precision :: vv4
+double precision :: vv5
+double precision :: vv6
+double precision :: vv7
+integer :: m
+integer :: n
+integer :: n0
 !
 !-----------------------------------------------------------------------
 !

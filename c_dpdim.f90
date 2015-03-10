@@ -35,6 +35,20 @@
       use schemanum
       use boundary
       use sortiefichier
+implicit none
+integer :: imot
+integer :: nmot
+integer :: kl
+integer :: l
+integer :: mdimtb
+integer :: mdimtc
+integer :: mdimtn
+integer :: mdimtr
+integer :: ndimctb
+integer :: ndimctc
+integer :: ndimctk
+integer :: ndimctv
+integer :: ndimntb
 !
 !-----------------------------------------------------------------------
 !

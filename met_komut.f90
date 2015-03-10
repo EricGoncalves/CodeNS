@@ -26,6 +26,61 @@
       use maillage
       use modeleturb
       use proprieteflu
+implicit none
+integer :: inc
+integer :: ind
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: sn
+double precision :: vol
+double precision :: t
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: dist
+double precision :: v
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: a1
+double precision :: betae2
+double precision :: coef1
+double precision :: coef2
+double precision :: exp2x
+double precision :: f2
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0
+integer :: nci
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: omeg
+double precision :: rota
+double precision :: zeta
 !
 !-----------------------------------------------------------------------
 !

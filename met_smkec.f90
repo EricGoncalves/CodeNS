@@ -17,6 +17,64 @@
       use para_fige
       use maillage
       use modeleturb
+implicit none
+integer :: inc
+integer :: indc
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: s
+double precision :: cfke
+double precision :: cson
+double precision :: tprod
+double precision :: bark
+double precision :: bare
+double precision :: tsv6
+double precision :: tsv7
+double precision :: alf1
+double precision :: alf2
+double precision :: alf3
+double precision :: arg
+double precision :: b
+double precision :: c1f1
+double precision :: c2f2
+double precision :: d
+double precision :: esk
+double precision :: f1
+double precision :: f2
+double precision :: g
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: rdelta
+double precision :: retur
+double precision :: roe2sk
+double precision :: x
+double precision :: xl1
+double precision :: xl2
 !
 !-----------------------------------------------------------------------
 !
@@ -102,12 +160,12 @@
           c2f2=cke2*f2
           d=-bark(m)
           x=c1f1*tprod(m)-c2f2*s(n,7)
-          g=amax1(0.,d*(d-2.*(x-c2f2*s(n,7))))
+          g=max(0.,d*(d-2.*(x-c2f2*s(n,7))))
           rdelta=sqrt((x-c2f2*s(n,7))**2+4*x*s(n,7)+g)
           b=x-c2f2*s(n,7)-d
           xl1=0.5*(b+rdelta)/s(n,6)
           xl2=0.5*(b-rdelta)/s(n,6)
-          cfke(n)=amax1(abs(xl1),abs(xl2))
+          cfke(n)=max(abs(xl1),abs(xl2))
          enddo
         enddo
       enddo

@@ -12,6 +12,16 @@
 !
       use para_fige
       use chainecarac
+implicit none
+integer :: imot
+integer :: nmot
+integer :: l
+integer :: ni
+integer :: nj
+integer :: nk
+integer :: icmt
+integer :: kval
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

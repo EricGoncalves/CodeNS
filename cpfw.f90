@@ -188,6 +188,106 @@
       use maillage
       use definition
       use modeleturb
+implicit none
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: r
+double precision :: exs1
+double precision :: exs2
+double precision :: sn
+double precision :: vol
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: tn4
+double precision :: tn5
+double precision :: tn6
+double precision :: tn7
+double precision :: tn8
+double precision :: tn9
+double precision :: tn10
+double precision :: dist
+double precision :: cfke
+integer :: mnpar
+double precision :: fgam
+double precision :: utau
+double precision :: v
+double precision :: dt
+double precision :: ptdual
+double precision :: vdual
+double precision :: vdual1
+double precision :: vdual2
+double precision :: tnte1
+double precision :: tnte2
+double precision :: tnte3
+double precision :: tnte4vv
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+double precision :: tm1
+double precision :: tm2
+double precision :: tm3
+double precision :: tm4
+double precision :: tm5
+double precision :: tm6
+double precision :: tm7
+double precision :: tm8
+double precision :: tm9
+double precision :: tm10
+double precision :: tm11
+double precision :: tm12
+double precision :: tm13
+integer :: ncin
+integer :: mnc
+integer :: ncbd
+integer :: mnr
+double precision :: xnr
+double precision :: ynr
+double precision :: znr
+double precision :: bceqt
+double precision :: rpi
+double precision :: rti
+double precision :: d0x
+double precision :: d0y
+double precision :: d0z
+double precision :: qtx
+double precision :: qty
+double precision :: qtz
+double precision :: pres
+double precision :: tp
+double precision :: rod
+double precision :: roud
+double precision :: rovd
+double precision :: rowd
+double precision :: roed
+double precision :: pression
+double precision :: ztemp
+double precision :: cson
+double precision :: cvi
+double precision :: cvj
+double precision :: cvk
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+integer :: img
+integer :: l
+integer :: lev
+integer :: lm
+integer :: mfb
+integer :: mfc
+integer :: mfn
+integer :: mfr
+integer :: ngx
 !
 !-----------------------------------------------------------------------
 !

@@ -50,6 +50,71 @@
       use para_fige
       use maillage
       use modeleturb
+implicit none
+integer :: inc
+integer :: indc
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+integer :: ncyc
+double precision :: v
+double precision :: dist
+integer :: mnpar
+integer :: ncin
+double precision :: txxf5x
+double precision :: txyf5y
+double precision :: txzf5z
+double precision :: tyyf6x
+double precision :: tyzf6y
+double precision :: tzzf6z
+double precision :: tprod
+double precision :: cfke
+double precision :: gkgo
+double precision :: frac
+double precision :: qcxts5
+double precision :: qcyts6
+double precision :: coef1
+double precision :: coef2
+double precision :: coef3
+double precision :: coef4
+double precision :: dist2
+double precision :: dkomg
+double precision :: exp2x
+double precision :: fm1
+double precision :: fm2
+integer :: i1
+integer :: i1m1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j1m1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: omeg
+double precision :: sl3
+double precision :: w4sig2
+double precision :: wgam
+double precision :: wsig
+double precision :: xgam1
+double precision :: xgam2
+double precision :: zeta
 !
 !-----------------------------------------------------------------------
 !

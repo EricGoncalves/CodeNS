@@ -67,6 +67,69 @@
       use definition
       use maillage
       use proprieteflu
+implicit none
+integer :: inc
+integer :: indc
+integer :: indn
+integer :: l
+double precision :: etal
+double precision :: t
+double precision :: dt
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+double precision :: sfsi
+double precision :: sfsj
+double precision :: sfsk
+double precision :: dism
+double precision :: cson
+double precision :: ps
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+double precision :: a2
+double precision :: betv
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: isortie
+integer :: ivisq
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: mc
+integer :: mn
+integer :: n
+integer :: n0c
+integer :: n0n
+integer :: n1
+integer :: n2
+integer :: nc
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: q
+double precision :: q2
+double precision :: qinf
+double precision :: simax
+double precision :: sjmax
+double precision :: skmax
+double precision :: smoy
+double precision :: uu
+double precision :: vv
+double precision :: ww
+double precision :: xm0
+double precision :: xmach2
 !
 !-----------------------------------------------------------------------
 !
@@ -162,9 +225,9 @@
          mn=mn+nci
          mc=mc+nci
          nc=mc+n0c
-         simax=amax1(sfsi(mn+nci),sfsi(mn))
-         sjmax=amax1(sfsj(mn+ncj),sfsj(mn))
-         skmax=amax1(sfsk(mn+nck),sfsk(mn))
+         simax=max(sfsi(mn+nci),sfsi(mn))
+         sjmax=max(sfsj(mn+ncj),sfsj(mn))
+         skmax=max(sfsk(mn+nck),sfsk(mn))
          smoy =sqrt(simax+sjmax+skmax)
          dism(mc)=vol(nc)/smoy
         enddo
@@ -177,13 +240,13 @@
 !        do i=i1,i2m1
 !         nc=indc(i,j,k)
 !         mc=nc-n0c
-!         dpi=amax1(abs(ps(nc+nci)-ps(nc)),abs(ps(nc-nci)-ps(nc)))
-!         dpj=amax1(abs(ps(nc+ncj)-ps(nc)),abs(ps(nc-ncj)-ps(nc)))
-!         dpm=amax1(dpi,dpj)
+!         dpi=max(abs(ps(nc+nci)-ps(nc)),abs(ps(nc-nci)-ps(nc)))
+!         dpj=max(abs(ps(nc+ncj)-ps(nc)),abs(ps(nc-ncj)-ps(nc)))
+!         dpm=max(dpi,dpj)
 !         q2=(t(nc,2)**2+t(nc,3)**2+t(nc,4)**2)/t(nc,1)**2
 !         q=sqrt(q2)
 !         a2=cson(nc)**2
-!         beta2=amin1(amax1(q2/a2,cte*dpm/(t(nc,1)*a2)),1.)
+!         beta2=min(max(q2/a2,cte*dpm/(t(nc,1)*a2)),1.)
 !         beta2v(mc)=beta2
 !        enddo
 !       enddo
@@ -200,9 +263,9 @@
          q2=(t(nc,2)**2+t(nc,3)**2+t(nc,4)**2)/t(nc,1)**2
          q=sqrt(q2)
          a2=cson(nc)**2
-         beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
-!         beta2e=amax1(q2/a2,cte*qinf**2/a2)
-!         beta2=amin1(amax1(beta2e,beta2v(m)),1.)
+         beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
+!         beta2e=max(q2/a2,cte*qinf**2/a2)
+!         beta2=min(max(beta2e,beta2v(m)),1.)
          rlam=0.5*((1.+beta2)*q+sqrt(((1.-beta2)*q)**2+4.*beta2*a2))
          dte=dism(mc)/rlam
          dt(nc)=etal*dte
@@ -217,9 +280,9 @@
           nc=indc(i,j,k)
           mc=nc-n0c
           rv1=gam*(mu(nc)/pr+mut(nc)/prt)/t(nc,1)
-          rv=amax1(rv1,4./3.*(mu(nc)+mut(nc))/t(nc,1))
+          rv=max(rv1,4./3.*(mu(nc)+mut(nc))/t(nc,1))
           dtv=etal*0.5*dism(mc)**2/rv
-          dt(nc)=amin1(dt(nc),dtv)
+          dt(nc)=min(dt(nc),dtv)
          enddo
         enddo
        enddo
@@ -245,7 +308,7 @@
 !           betau=xmach/cpi**2
 !           betau=xmach**2+1./cflc**2
            betau=xmach2*(1.+xmach2*(1.-xm0**2)/xm0**4)
-           beta2v(mc)=amin1(amax1(beta2v(mc),betau),1.)
+           beta2v(mc)=min(max(beta2v(mc),betau),1.)
           enddo
          enddo
         enddo

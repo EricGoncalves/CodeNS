@@ -42,6 +42,20 @@
 !
       use para_var
       use para_fige
+implicit none
+double precision :: bceqt
+integer :: mfl
+double precision :: rpi
+double precision :: rti
+double precision :: d0x
+double precision :: d0y
+double precision :: d0z
+integer :: ncbd
+integer :: mmb
+integer :: mpb
+integer :: m
+integer :: ml
+integer :: mt
 !
 !-----------------------------------------------------------------------
 !

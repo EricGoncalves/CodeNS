@@ -19,6 +19,73 @@
       use para_fige
       use maillage
       use schemanum
+implicit none
+integer :: inc
+integer :: indc
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+double precision :: s
+double precision :: dsdx
+double precision :: dsdy
+double precision :: dsdz
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: c0
+double precision :: eps
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: i2p1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: j2p1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: k2p1
+integer :: kdir
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: si1
+double precision :: si2
+double precision :: si3
+double precision :: sj1
+double precision :: sj2
+double precision :: sj3
+double precision :: sk1
+double precision :: sk2
+double precision :: sk3
+double precision :: ts
+double precision :: vols
 !
 !-----------------------------------------------------------------------
 !

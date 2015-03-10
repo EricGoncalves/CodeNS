@@ -37,6 +37,29 @@
 !
       use para_var
       use para_fige
+implicit none
+integer :: mfb
+integer :: ncin
+integer :: ncbd
+double precision :: v
+integer :: mmb
+integer :: mpb
+integer :: mpn
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mt
+integer :: ni
+integer :: nl
+double precision :: qn1
+double precision :: qtx
+double precision :: qty
+double precision :: qtz
+double precision :: qx1
+double precision :: qy1
+double precision :: qz1
+double precision :: ro1
+double precision :: roe1
 !
 !-----------------------------------------------------------------------
 !

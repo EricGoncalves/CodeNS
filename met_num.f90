@@ -33,6 +33,68 @@
       use proprieteflu
       use chainecarac
       use sortiefichier
+implicit none
+integer :: ncbd
+integer :: ncin
+integer :: mnc
+integer :: ncyc
+integer :: mnr
+double precision :: xnr
+double precision :: ynr
+double precision :: znr
+double precision :: bceqt
+double precision :: u
+double precision :: v
+double precision :: dt
+double precision :: d
+double precision :: cfke
+integer :: mnpar
+double precision :: dist
+double precision :: fgam
+double precision :: utau
+double precision :: topz
+double precision :: txxf5x
+double precision :: txyf5y
+double precision :: txzf5z
+double precision :: tyyf6x
+double precision :: tyzf6y
+double precision :: tzzf6z
+double precision :: qcxts5
+double precision :: qcyts6
+double precision :: qcz000
+double precision :: sn
+double precision :: vol
+double precision :: ptdual
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: t
+double precision :: tprod
+double precision :: dtdx
+double precision :: dtdy
+double precision :: dtdz
+double precision :: tn9
+double precision :: tn10
+double precision :: tp
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: pression
+double precision :: ztemp
+double precision :: cson
+double precision :: coefe
+integer :: l
+integer :: lgsnlt
+integer :: mf
+integer :: mfc
+integer :: mfr
+integer :: npsn
 !
 !-----------------------------------------------------------------------
 !

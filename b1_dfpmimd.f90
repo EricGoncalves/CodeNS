@@ -20,6 +20,18 @@
    use schemanum
    use kcle
    use chainecarac
+implicit none
+integer :: ldom
+integer :: ldomd
+integer :: lgr
+integer :: lgrd
+integer :: lm
+integer :: long
+integer :: longm1
+integer :: nm
+integer :: nmult
+integer :: nr
+integer :: nrest
 !
 !-----------------------------------------------------------------------
 !

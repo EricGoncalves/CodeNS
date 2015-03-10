@@ -9,6 +9,14 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
+implicit none
+integer :: lgcmd
+integer :: imot
+integer :: nm1
+integer :: nm2
+integer :: icmd
+integer :: ipos
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

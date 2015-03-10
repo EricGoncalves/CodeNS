@@ -30,6 +30,21 @@
       use para_fige
       use boundary
       use definition
+implicit none
+double precision :: t
+integer :: ncbd
+integer :: ncin
+integer :: mnc
+integer :: m
+integer :: mb
+integer :: mc
+integer :: mf
+integer :: mfb
+integer :: mt
+integer :: nc
+integer :: nd
+integer :: ndm
+double precision :: tper
 !
 !-----------------------------------------------------------------------
 !

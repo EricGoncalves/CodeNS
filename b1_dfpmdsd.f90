@@ -20,6 +20,18 @@
    use sortiefichier
    use schemanum
    use kcle
+implicit none
+integer :: ldom
+integer :: ldomd
+integer :: lgr
+integer :: lgrd
+integer :: lm
+integer :: long
+integer :: longm1
+integer :: nm
+integer :: nmult
+integer :: nr
+integer :: nrest
 !
 !-----------------------------------------------------------------------
 !

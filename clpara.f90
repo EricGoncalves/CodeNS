@@ -28,6 +28,21 @@
 !
       use para_var
       use para_fige
+implicit none
+integer :: mfb
+integer :: ncbd
+double precision :: v
+integer :: mmb
+integer :: mpb
+integer :: ncin
+double precision :: pression
+double precision :: temp
+double precision :: cson
+integer :: m
+integer :: mb
+integer :: mt
+integer :: nc
+integer :: ni
 !
 !-----------------------------------------------------------------------
 !

@@ -56,6 +56,35 @@
       use para_fige
       use maillage
       use proprieteflu
+implicit none
+integer :: mfb
+double precision :: pres
+integer :: ncbd
+double precision :: v
+integer :: mmb
+integer :: mpb
+integer :: mpn
+integer :: l
+double precision :: pression
+double precision :: temp
+double precision :: cson
+double precision :: dqn
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mt
+integer :: n0c
+integer :: n0n
+integer :: nl
+double precision :: ps
+double precision :: qx
+double precision :: qxs
+double precision :: qy
+double precision :: qys
+double precision :: qz
+double precision :: qzs
+double precision :: rho
+double precision :: roc0
 !
 !-----------------------------------------------------------------------
 !

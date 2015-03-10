@@ -18,6 +18,29 @@
       use boundary
       use definition
       use sortiefichier
+implicit none
+integer :: kpst
+double precision :: bceqt
+integer :: mnc
+integer :: ncin
+integer :: mnr
+double precision :: xnr
+double precision :: ynr
+double precision :: znr
+integer :: ncbd
+double precision :: v
+double precision :: utau
+integer :: m
+integer :: m0ns
+integer :: mb
+integer :: mfb
+integer :: mt
+integer :: n2
+integer :: nc
+integer :: nfacns
+integer :: ni
+integer :: nl
+integer :: no
 !
 !-----------------------------------------------------------------------
 !

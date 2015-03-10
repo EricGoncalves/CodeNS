@@ -11,6 +11,8 @@
       use para_fige
    use schemanum
    use kcle
+implicit none
+integer :: l
 !
 !-----------------------------------------------------------------------
 !

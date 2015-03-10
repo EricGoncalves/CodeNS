@@ -24,6 +24,25 @@
       use para_var
       use para_fige
       use boundary
+implicit none
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+integer :: ncbd
+integer :: ncin
+integer :: m
+integer :: mb
+integer :: mf
+integer :: mfb
+integer :: mt
+integer :: nd
+integer :: ndm
 !
 !-----------------------------------------------------------------------
 !

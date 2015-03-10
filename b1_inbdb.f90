@@ -18,6 +18,22 @@
 !
       use para_fige
    use sortiefichier
+implicit none
+integer :: lmfb
+integer :: lmfbd
+integer :: kibdb
+integer :: ibdcst
+integer :: ibdcfl
+integer :: ibddim
+integer :: nvbc
+double precision :: vbc
+integer :: long
+integer :: longm1
+integer :: nm
+integer :: nmult
+integer :: npd
+integer :: nr
+integer :: nrest
 !
 !-----------------------------------------------------------------------
 !

@@ -30,6 +30,10 @@
       use para_fige
    use sortiefichier
    use maillage
+implicit none
+integer :: l
+integer :: img
+integer :: lm
 !
 !-----------------------------------------------------------------------
 !

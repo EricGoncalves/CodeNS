@@ -142,7 +142,7 @@ FFLAGS = -fdefault-double-8 -fdefault-real-8 -O0 -g3 -Wall -fbacktrace -ffpe-tra
 #FFLAGS =  -O2   -fdefault-double-8 -fdefault-real-8  -p -fno-inline-functions
 #FFLAGS = -r8 -fast #-openmp -parallel -threads 
 #FFLAGS = -r8 -fast -g -traceback #-openmp -parallel -threads 
-#FFLAGS = -r8 -O0 -g -traceback  -C -debug all -warn -fpe0 -ftrapuv -nozero -fstack-protector-all -warn nodeclarations,nounused #-openmp -parallel -threads 
+#FFLAGS = -r8 -O0 -g -traceback  -C -debug all -warn all,nodeclarations,nounused -fpe0 -ftrapuv -nozero -fstack-protector-all  -init=snan -stand f08 -WB -fp-stack-check -u -gen-interfaces #-openmp -parallel -threads 
 
 # Lines from here on down should not need to be changed.
 #

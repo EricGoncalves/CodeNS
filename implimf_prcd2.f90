@@ -25,6 +25,114 @@
       use proprieteflu
       use schemanum
       use definition 
+implicit none
+integer :: inc
+integer :: indc
+integer :: lm
+double precision :: u
+double precision :: dt
+double precision :: v
+double precision :: d
+double precision :: ff
+integer :: lmx
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+double precision :: dtpas
+integer :: ityprk
+double precision :: dfxx
+double precision :: dfyy
+double precision :: dfzz
+double precision :: dfxy
+double precision :: dfxz
+double precision :: dfyz
+double precision :: dfex
+double precision :: dfey
+double precision :: dfez
+double precision :: rv
+double precision :: ps
+double precision :: cson
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+double precision :: a2
+double precision :: beta2
+double precision :: cnds
+double precision :: cndsi
+double precision :: cndsj
+double precision :: coefa
+double precision :: dw11
+double precision :: dw12
+double precision :: dw13
+double precision :: dw15
+double precision :: dw21
+double precision :: dw22
+double precision :: dw23
+double precision :: dw25
+double precision :: fact
+double precision :: fex
+double precision :: fey
+double precision :: fez
+double precision :: fxx
+double precision :: fxy
+double precision :: fxz
+double precision :: fyy
+double precision :: fyz
+double precision :: fzz
+double precision :: gd
+double precision :: ge
+double precision :: get
+integer :: i1
+integer :: i1m1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k2
+integer :: k2m1
+integer :: kdir
+integer :: ls
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: q2
+double precision :: qinf
+double precision :: ti1
+double precision :: ti2
+double precision :: ti3
+double precision :: ti5
+double precision :: tj1
+double precision :: tj2
+double precision :: tj3
+double precision :: tj5
+double precision :: ui
+double precision :: uu
+double precision :: vi
+double precision :: vn
+double precision :: vv
+double precision :: wi
+double precision :: wi1
+double precision :: wi2
+double precision :: wi3
+double precision :: wi4
+double precision :: wi5
+double precision :: ww
 !
 !-----------------------------------------------------------------------
 !
@@ -114,7 +222,7 @@
         do n=ind1,ind2
          m=n-n0c
 !         rv(m)=(gam/v(n,1))*(mu(n)/pr+mut(n)/prt)
-         rv(m)=amax1(gam*(mu(n)/pr+mut(n)/prt)/v(n,1), &
+         rv(m)=max(gam*(mu(n)/pr+mut(n)/prt)/v(n,1), &
                    4./3.*(mu(n)+mut(n))/v(n,1))
          coefdiag(m)=vol(n)/dt(n)
          coefb(m)=0.
@@ -145,7 +253,7 @@
           ww=0.5*(v(n,4)/v(n,1)+v(n-ninc,4)/v(n-ninc,1))
           vn=uu*sn(m,kdir,1)+vv*sn(m,kdir,2)+ww*sn(m,kdir,3)
           a2=0.25*(cson(n)+cson(n-ninc))**2
-          beta2=amin1(amax1((uu**2+vv**2+ww**2)/a2,cte*qinf**2/a2),1.)
+          beta2=min(max((uu**2+vv**2+ww**2)/a2,cte*qinf**2/a2),1.)
           coefe(kdir,m)=0.25*((1.+beta2)*abs(vn) &
                      +    sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
           coefv(kdir,m)=(rv(m)+rv(m-ninc))*cnds/(vol(n)+vol(n-ninc))
@@ -174,7 +282,7 @@
           ww=0.5*(v(n,4)/v(n,1)+v(n-ninc,4)/v(n-ninc,1))
           vn=uu*sn(m,kdir,1)+vv*sn(m,kdir,2)+ww*sn(m,kdir,3)
           a2=0.25*(cson(n)+cson(n-ninc))**2
-          beta2=amin1(amax1((uu**2+vv**2+ww**2)/a2,cte*qinf**2/a2),1.)
+          beta2=min(max((uu**2+vv**2+ww**2)/a2,cte*qinf**2/a2),1.)
           coefe(kdir,m)=0.25*((1.+beta2)*abs(vn) &
                      +    sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
           coefv(kdir,m)=(rv(m)+rv(m-ninc))*cnds/(vol(n)+vol(n-ninc))
@@ -297,7 +405,7 @@
              (v(n,1)*cndsj)
           q2=uu**2+vv**2
           a2=cson(n)**2
-          beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+          beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
           get=v(n,5)/v(n,1)             !energie totale
           ge=get-0.5*q2                 !energie interne
           coefa=coefdiag(m)-coefb(m)

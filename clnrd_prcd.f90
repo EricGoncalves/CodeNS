@@ -59,6 +59,69 @@
       use proprieteflu
       use schemanum
       use definition       
+implicit none
+integer :: mfb
+double precision :: rod
+double precision :: roud
+double precision :: rovd
+double precision :: rowd
+double precision :: roed
+integer :: ncbd
+double precision :: v
+integer :: mmb
+integer :: mpb
+integer :: mpn
+integer :: l
+double precision :: pression
+double precision :: temp
+double precision :: cson
+double precision :: a2
+double precision :: alm
+double precision :: alp
+double precision :: am
+double precision :: ap
+double precision :: b0
+double precision :: beta2
+double precision :: bs
+double precision :: eps0
+double precision :: epsm
+double precision :: epsp
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mt
+integer :: n0c
+integer :: n0n
+integer :: nl
+double precision :: p
+double precision :: pd
+double precision :: ps
+double precision :: q2
+double precision :: qn
+double precision :: qnd
+double precision :: qns
+double precision :: qtx
+double precision :: qtxd
+double precision :: qtxs
+double precision :: qty
+double precision :: qtyd
+double precision :: qtys
+double precision :: qtz
+double precision :: qtzd
+double precision :: qtzs
+double precision :: qxd
+double precision :: qxs
+double precision :: qyd
+double precision :: qys
+double precision :: qzd
+double precision :: qzs
+double precision :: rho
+double precision :: rhos
+double precision :: rmd
+double precision :: rms
+double precision :: rocs
+double precision :: rpd
+double precision :: rps
 !
 !-----------------------------------------------------------------------
 !
@@ -91,7 +154,7 @@
        rocs=sqrt(gam*ps*rhos)
        q2=qxs**2+qys**2+qzs**2
        a2=gam*ps/rhos
-       beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+       beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
        alp=0.5*((1.+beta2)*abs(qns) + sqrt(((1.-beta2)*qns)**2+4.*beta2*a2))
        alm=0.5*((1.+beta2)*abs(qns) - sqrt(((1.-beta2)*qns)**2+4.*beta2*a2))
        eps0=.5+sign(.5,-qns)

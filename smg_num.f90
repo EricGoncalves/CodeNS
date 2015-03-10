@@ -45,6 +45,113 @@
       use definition
       use modeleturb
       use chainecarac
+implicit none
+integer :: mg
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: r
+double precision :: sn
+double precision :: vol
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: tn4
+double precision :: tn5
+double precision :: tn6
+double precision :: tn7
+double precision :: tn8
+double precision :: tn9
+double precision :: tn10
+double precision :: dist
+double precision :: cfke
+integer :: mnpar
+double precision :: fgam
+double precision :: utau
+double precision :: v
+double precision :: dt
+double precision :: ptdual
+double precision :: vdual
+double precision :: vdual1
+double precision :: vdual2
+double precision :: d_volt
+double precision :: u_duv
+double precision :: ff_du
+double precision :: u0
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+double precision :: tm1
+double precision :: tm2
+double precision :: tm3
+double precision :: tm4
+double precision :: tm5
+double precision :: tm6
+double precision :: tm7
+double precision :: tm8
+double precision :: tm9
+double precision :: tm10
+double precision :: tm11
+double precision :: tm12
+double precision :: tm13
+integer :: ncin
+integer :: mnc
+integer :: ncbd
+integer :: mnr
+double precision :: xnr
+double precision :: ynr
+double precision :: znr
+double precision :: bceqt
+double precision :: rpi
+double precision :: rti
+double precision :: d0x
+double precision :: d0y
+double precision :: d0z
+double precision :: qtx
+double precision :: qty
+double precision :: qtz
+double precision :: pres
+double precision :: tp
+double precision :: rod
+double precision :: roud
+double precision :: rovd
+double precision :: rowd
+double precision :: roed
+double precision :: pression
+double precision :: ztemp
+double precision :: cson
+double precision :: cvi
+double precision :: cvj
+double precision :: cvk
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+integer :: icyexpl
+integer :: img
+integer :: iter
+integer :: itypdf
+integer :: ityprk
+integer :: l
+integer :: lm
+integer :: mcyresi
+integer :: mcysave
+integer :: mfc
+integer :: mfr
+integer :: mglp
+integer :: nc
+integer :: ndeb
+integer :: nfin
+integer :: ngx
+double precision :: temp
 !
 !-----------------------------------------------------------------------
 !

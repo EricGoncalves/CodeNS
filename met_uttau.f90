@@ -17,6 +17,50 @@
       use maillage
       use boundary
       use sortiefichier
+implicit none
+integer :: ncbd
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: s
+double precision :: utau
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: l
+integer :: m0
+integer :: m0n
+integer :: m1
+integer :: mf
+integer :: mfac
+integer :: mfacn
+integer :: mfl
+integer :: mt
+integer :: n0
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nfacf
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: taunorm
+double precision :: utx
+double precision :: utxt
+double precision :: uty
+double precision :: utyt
+double precision :: utz
+double precision :: utzt
 !
 !-----------------------------------------------------------------------
 !

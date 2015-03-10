@@ -85,6 +85,74 @@
       use boundary
       use definition
       use sortiefichier
+implicit none
+double precision :: x
+double precision :: y
+double precision :: z
+integer :: krr
+double precision :: eps
+integer :: kinitc
+integer :: mfba
+integer :: la
+integer :: ia1
+integer :: ia2
+integer :: ja1
+integer :: ja2
+integer :: ka1
+integer :: ka2
+integer :: lb
+integer :: ib1
+integer :: ib2
+integer :: jb1
+integer :: jb2
+integer :: kb1
+integer :: kb2
+integer :: iba
+integer :: jba
+integer :: kba
+integer :: mnc
+double precision :: cnrota
+double precision :: dist
+integer :: i
+integer :: ii
+integer :: imax
+integer :: img
+integer :: inpcb
+integer :: ipb
+integer :: j
+integer :: jj
+integer :: jmax
+integer :: jpb
+integer :: k
+integer :: kk
+integer :: kmax
+integer :: kpb
+integer :: l
+integer :: lper
+integer :: m
+integer :: m0c
+integer :: mc
+integer :: na
+integer :: nai
+integer :: naj
+integer :: nak
+integer :: nb
+integer :: nbv
+integer :: ncilb
+integer :: ncjlb
+integer :: ncklb
+integer :: nidla
+integer :: nidlb
+integer :: nijdla
+integer :: nijdlb
+integer :: njdla
+integer :: njdlb
+integer :: nvi
+integer :: nvj
+integer :: nvk
+double precision :: snrota
+double precision :: ynb
+double precision :: znb
 !
 !-----------------------------------------------------------------------
 !

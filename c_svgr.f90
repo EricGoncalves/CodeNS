@@ -28,6 +28,16 @@
       use para_var
       use para_fige
      use sortiefichier
+implicit none
+integer :: imot
+integer :: nmot
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
 !
 !-----------------------------------------------------------------------
 !

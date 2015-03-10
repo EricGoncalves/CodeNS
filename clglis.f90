@@ -60,6 +60,121 @@
       use proprieteflu
       use constantes
       use boundary
+implicit none
+integer :: inc
+integer :: mfb
+integer :: l
+integer :: ncin
+integer :: ncbd
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+double precision :: v
+double precision :: pression
+double precision :: ztemp
+double precision :: cson
+integer :: id
+integer :: jd
+integer :: kd
+double precision :: a2s
+double precision :: coef
+double precision :: dp
+double precision :: ds
+double precision :: dsn
+double precision :: dx
+double precision :: dy
+double precision :: dz
+double precision :: ec
+double precision :: ecs
+double precision :: ent
+double precision :: ents
+double precision :: gm
+double precision :: gm1
+double precision :: gm1rg
+double precision :: grgm1
+double precision :: h
+double precision :: hs
+integer :: incf
+integer :: incm
+integer :: isens
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mnode
+integer :: mt
+integer :: n0c
+integer :: n0n
+integer :: nc
+integer :: nc12f
+integer :: nc1f
+integer :: nc2f
+integer :: nci
+integer :: ncij
+integer :: ncijk
+integer :: ncj
+integer :: ncjk
+integer :: nck
+integer :: ncki
+integer :: nd
+integer :: nid
+integer :: nijd
+integer :: nindf
+integer :: nindfa
+integer :: njd
+integer :: nlc
+integer :: nln
+integer :: nlnf
+integer :: nn
+double precision :: p
+double precision :: pext
+double precision :: ps
+double precision :: pts
+double precision :: q2
+double precision :: q2s
+double precision :: qns
+double precision :: qt2s
+double precision :: qtx
+double precision :: qtxs
+double precision :: qty
+double precision :: qtys
+double precision :: qtz
+double precision :: qtzs
+double precision :: r2vol
+double precision :: rgm
+double precision :: rgm1
+double precision :: ro
+double precision :: roe
+double precision :: roec
+double precision :: roes
+double precision :: ros
+double precision :: rou
+double precision :: rous
+double precision :: rov
+double precision :: rovs
+double precision :: row
+double precision :: rows
+double precision :: rros
+double precision :: rvol
+double precision :: sx
+double precision :: sxn
+double precision :: sy
+double precision :: syn
+double precision :: sz
+double precision :: szn
+double precision :: tworgm1
+double precision :: us
+double precision :: vs
+double precision :: ws
+double precision :: xcp
+double precision :: xcs
+double precision :: ycp
+double precision :: ycs
+double precision :: zcp
+double precision :: zcs
+integer :: idirch
 !
 !-----------------------------------------------------------------------
 !

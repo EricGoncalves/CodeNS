@@ -17,6 +17,12 @@
       use maillage
       use chainecarac
       use schemanum
+implicit none
+integer :: imgc
+integer :: imgf
+double precision :: vol
+double precision :: vv
+double precision :: vc
 !
 !-----------------------------------------------------------------------
 !

@@ -16,6 +16,16 @@
       use sortiefichier
    use chainecarac
    use modeleturb
+implicit none
+integer :: ldom
+integer :: ldomd
+integer :: kina
+integer :: long
+integer :: longm1
+integer :: nm
+integer :: nmult
+integer :: nr
+integer :: nrest
 !
 !-----------------------------------------------------------------------
 !

@@ -50,6 +50,77 @@
       use para_fige
       use maillage
       use modeleturb
+implicit none
+integer :: indc
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: v
+double precision :: dist
+integer :: mnpar
+integer :: ncin
+double precision :: txxf5x
+double precision :: txyf5y
+double precision :: txzf5z
+double precision :: tyyf6x
+double precision :: tyzf6y
+double precision :: tzzf6z
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: tprod
+double precision :: cfke
+double precision :: frac
+double precision :: qcxts5
+double precision :: qcyts6
+double precision :: alpha
+double precision :: coef1
+double precision :: coef2
+double precision :: coef3
+double precision :: coef4
+double precision :: dist2
+double precision :: dkomg
+double precision :: exp2x
+double precision :: fm1
+double precision :: fm2
+double precision :: gkgo
+integer :: i1
+integer :: i1m1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: omeg
+double precision :: rcmu
+double precision :: sl3
+double precision :: ss
+double precision :: w4sig2
+double precision :: wgam
+double precision :: wsig
+double precision :: xgam1
+double precision :: xgam2
+double precision :: zeta
 !
 !-----------------------------------------------------------------------
 !
@@ -151,7 +222,7 @@
          ss=sqrt(4.*(dvxx(m)**2+dvyy(m)**2+dvzz(m)**2)/3. &
              + (dvzy(m)+dvyz(m))**2 + (dvxz(m)+dvzx(m))**2 &
              + (dvyx(m)+dvxy(m))**2)/omeg
-         alpha=amin1(1.,rcmu/ss)
+         alpha=min(1.,rcmu/ss)
          qcxts5(n)=tprod(m)- betae*v(n,6)*omeg
          qcyts6(n)=tprod(m)*wgam*v(n,1)/mut(n)/alpha &
                  - beta*v(n,7)*omeg + sl3

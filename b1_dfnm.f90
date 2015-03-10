@@ -15,6 +15,7 @@
       use schemanum
       use kcle
       use proprieteflu
+implicit none
 !
 !-----------------------------------------------------------------------
 !

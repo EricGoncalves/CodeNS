@@ -29,6 +29,63 @@
       use para_fige
       use maillage
       use modeleturb
+implicit none
+integer :: ind
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: sn
+double precision :: vol
+double precision :: t
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: dist
+double precision :: v
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: a1
+double precision :: alpha
+double precision :: betae2
+double precision :: coef1
+double precision :: coef2
+double precision :: exp2x
+double precision :: f2
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: omeg
+double precision :: rcmu
+double precision :: rmut
+double precision :: rota
+double precision :: smut
+double precision :: ss
+double precision :: zeta
 !
 !-----------------------------------------------------------------------
 !
@@ -87,7 +144,7 @@
               dvzz(m)**2)/3. + (dvzy(m)+dvyz(m))**2 &
                              + (dvxz(m)+dvzx(m))**2 &
                + (dvyx(m)+dvxy(m))**2)/v(n,7)
-           alpha=amin1(1.,rcmu/ss)
+           alpha=min(1.,rcmu/ss)
            mut(n)=v(n,1)*alpha*v(n,6)/v(n,7)
           enddo
          enddo
@@ -116,9 +173,9 @@
               dvzz(m)**2)/3. + (dvzy(m)+dvyz(m))**2 &
                              + (dvxz(m)+dvzx(m))**2 &
                + (dvyx(m)+dvxy(m))**2)/v(n,7)
-           alpha=amin1(1.,rcmu/ss)
+           alpha=min(1.,rcmu/ss)
            rmut=v(n,1)*alpha*v(n,6)/v(n,7)
-           mut(n)=amin1(smut,rmut)
+           mut(n)=min(smut,rmut)
           enddo
          enddo
         enddo

@@ -24,6 +24,90 @@
       use schemanum
       use chainecarac
       use modeleturb
+implicit none
+integer :: inc
+integer :: indc
+integer :: l
+double precision :: u
+double precision :: dt
+double precision :: v
+double precision :: cfke
+integer :: ncin
+integer :: ncyc
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+double precision :: dwi6
+double precision :: dwi7
+double precision :: u1
+double precision :: u2
+double precision :: u3
+double precision :: rv
+double precision :: coefdiag
+double precision :: alpha
+double precision :: beta6
+double precision :: beta7
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+double precision :: ai
+double precision :: bi
+double precision :: cci
+double precision :: cnds
+double precision :: di6
+double precision :: di7
+double precision :: dj6
+double precision :: dj7
+double precision :: dk6
+double precision :: dk7
+integer :: i1
+integer :: i1m1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k2
+integer :: k2m1
+integer :: kdir
+integer :: ldom
+integer :: li
+integer :: lj
+integer :: lk
+integer :: m
+integer :: mb
+integer :: mf
+integer :: mfb
+integer :: mt
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: ni
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+integer :: no
+double precision :: td
+double precision :: tmi
+double precision :: tmj
+double precision :: tmk
+double precision :: tpi
+double precision :: tpj
+double precision :: tpk
+double precision :: uu
+double precision :: vv
+double precision :: ww
 !
 !-----------------------------------------------------------------
 !
@@ -119,7 +203,7 @@
         do n=ind1,ind2
          m=n-n0c
          rv(m)=(mu(n)+mut(n)/cmt)/v(n,1)
-!         cfke(n)=amin1(cfke(n),100.)
+!         cfke(n)=min(cfke(n),100.)
          coefdiag(m)=vol(n)/dt(n) + cfke(n)*vol(n)
         enddo
        enddo

@@ -9,6 +9,13 @@
 !
       use para_fige
    use sortiefichier
+implicit none
+integer :: imot
+integer :: nmot
+integer :: l
+integer :: ni
+integer :: nj
+integer :: nk
 !
 !-----------------------------------------------------------------------
 !

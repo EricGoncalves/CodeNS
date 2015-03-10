@@ -15,6 +15,47 @@
       use maillage
       use modeleturb
       use proprieteflu
+implicit none
+integer :: inc
+integer :: ind
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: v
+double precision :: dist
+double precision :: c1
+double precision :: c14
+double precision :: c2
+double precision :: c22
+double precision :: f1
+double precision :: fmu
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: n
+integer :: n0
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: r2sb1
+double precision :: rack
+double precision :: ss2
+double precision :: xl2
+double precision :: xxi
+double precision :: xxi2
 !
 !-----------------------------------------------------------------------
 !

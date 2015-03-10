@@ -14,6 +14,7 @@
       use para_fige
       use kcle
       use schemanum
+implicit none
 !
 !-----------------------------------------------------------------------
 !

@@ -96,6 +96,58 @@
       use maillage
       use chainecarac
       use schemanum
+implicit none
+integer :: ncin
+integer :: ncbd
+double precision :: sn
+double precision :: vol
+double precision :: v
+double precision :: bceqt
+double precision :: rpi
+double precision :: rti
+double precision :: d0x
+double precision :: d0y
+double precision :: d0z
+double precision :: qtx
+double precision :: qty
+double precision :: qtz
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: omg
+double precision :: pres
+double precision :: tp
+double precision :: rod
+double precision :: roud
+double precision :: rovd
+double precision :: rowd
+double precision :: roed
+integer :: icyc
+integer :: mnr
+double precision :: xnr
+double precision :: ynr
+double precision :: znr
+integer :: mnc
+double precision :: tm1
+double precision :: tm2
+double precision :: tm3
+double precision :: tm4
+double precision :: tm5
+double precision :: tm6
+double precision :: tm7
+double precision :: tm8
+double precision :: tm9
+double precision :: tm10
+double precision :: tm11
+double precision :: tm12
+double precision :: tm13
+double precision :: pression
+double precision :: ztemp
+double precision :: cson
+integer :: l
+integer :: mf
+integer :: mfc
+integer :: mfr
 !
 !-----------------------------------------------------------------------
 !

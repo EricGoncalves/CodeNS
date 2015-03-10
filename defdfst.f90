@@ -12,6 +12,9 @@
       use constantes
       use kcle
       use definition
+implicit none
+integer :: lst
+integer :: nst
 !
 !-----------------------------------------------------------------------
 !

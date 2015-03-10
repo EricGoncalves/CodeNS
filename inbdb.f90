@@ -37,6 +37,28 @@
       use boundary
       use maillage
       use sortiefichier
+implicit none
+integer :: ncbd
+integer :: ncin
+integer :: mfbe
+integer :: kibdb
+integer :: ibdcst
+integer :: ibdcfl
+integer :: ibddim
+integer :: nvbc
+double precision :: vbc
+double precision :: bceqt
+integer :: img
+integer :: l
+integer :: lm
+integer :: m
+integer :: m0
+integer :: mfbi
+integer :: mfbim
+integer :: mflm
+integer :: ml
+integer :: mt
+integer :: nv
 !
 !-----------------------------------------------------------------------
 !

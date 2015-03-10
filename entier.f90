@@ -1,4 +1,8 @@
       subroutine entier(mot,imot,i,kerr)
+implicit none
+integer :: imot
+integer :: i
+integer :: kerr
 !
 !***********************************************************************
 !

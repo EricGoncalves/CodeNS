@@ -119,6 +119,61 @@
       use para_fige
       use maillage
       use boundary
+implicit none
+integer :: mfb
+integer :: l
+integer :: imin
+integer :: imax
+integer :: jmin
+integer :: jmax
+integer :: kmin
+integer :: kmax
+double precision :: x
+double precision :: y
+double precision :: z
+integer :: ncbd
+double precision :: tnix
+double precision :: tniy
+double precision :: tniz
+double precision :: tnjx
+double precision :: tnjy
+double precision :: tnjz
+double precision :: tnkx
+double precision :: tnky
+double precision :: tnkz
+double precision :: eps
+integer :: i
+integer :: i1
+integer :: i2
+integer :: id
+integer :: is
+integer :: j
+integer :: j1
+integer :: j2
+integer :: jd
+integer :: js
+integer :: k
+integer :: k1
+integer :: k2
+integer :: kd
+integer :: ks
+integer :: m0b
+integer :: m0n
+integer :: m1
+integer :: m1max
+integer :: m1min
+integer :: m2
+integer :: m2max
+integer :: m2min
+integer :: mb
+integer :: mn
+integer :: n0
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !

@@ -35,6 +35,21 @@
       use definition
       use sortiefichier
       use schemanum
+implicit none
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: v
+double precision :: tnte1
+integer :: kina
+double precision :: utau
+double precision :: vdual
+double precision :: vdual1
+double precision :: vdual2
+integer :: img
+integer :: keinit
+integer :: lm
 !
 !-----------------------------------------------------------------------
 !

@@ -24,6 +24,7 @@
       use constantes
       use definition
       use chainecarac
+implicit none
 !
 !-----------------------------------------------------------------------
 !

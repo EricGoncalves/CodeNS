@@ -1,5 +1,5 @@
       subroutine utdon_gen( &
-                 config,cl,x,y,z,omg, &
+                 config,cl,x,y,z,omg1, &
                  ncbd,v, &
                  nxn,nyn,nzn)
 !
@@ -57,6 +57,23 @@
       use modeleturb
       use schemanum
       use definition
+implicit none
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: omg1
+integer :: ncbd
+double precision :: v
+integer :: idefconf
+integer :: idefxref
+integer :: ierr
+integer :: ligne
+integer :: mflu
+integer :: nb
+double precision :: p2
+double precision :: rpi
+double precision :: rti
+double precision :: tpar
 !
 !**********************************************************************
 !

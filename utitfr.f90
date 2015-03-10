@@ -98,6 +98,141 @@
       use sortiefichier
       use schemanum 
       use constantes
+implicit none
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: v
+integer :: ncbd
+integer :: icyc
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: ps
+double precision :: alfar
+double precision :: betar
+double precision :: claefr
+double precision :: claero
+double precision :: clav
+double precision :: clavfr
+double precision :: clavtfr
+double precision :: clavtot
+double precision :: cmaefr
+double precision :: cmaero
+double precision :: cmav
+double precision :: cmavfr
+double precision :: cmavtfr
+double precision :: cmavtot
+double precision :: cnaefr
+double precision :: cnaero
+double precision :: cnav
+double precision :: cnavfr
+double precision :: cnavtfr
+double precision :: cnavtot
+double precision :: csal
+double precision :: csbe
+double precision :: cxaefr
+double precision :: cxaero
+double precision :: cxav
+double precision :: cxavfr
+double precision :: cxavtfr
+double precision :: cxavtot
+double precision :: cyaefr
+double precision :: cyaero
+double precision :: cyav
+double precision :: cyavfr
+double precision :: cyavtfr
+double precision :: cyavtot
+double precision :: czaefr
+double precision :: czaero
+double precision :: czav
+double precision :: czavfr
+double precision :: czavtfr
+double precision :: czavtot
+double precision :: dcl
+double precision :: dclfr
+double precision :: dcm
+double precision :: dcmfr
+double precision :: dcn
+double precision :: dcnfr
+double precision :: dcx
+double precision :: dcxfr
+double precision :: dcy
+double precision :: dcyfr
+double precision :: dcz
+double precision :: dczfr
+double precision :: dsml
+double precision :: dsxy
+double precision :: dsxz
+double precision :: dsyz
+double precision :: dx1
+double precision :: dx2
+double precision :: dy1
+double precision :: dy2
+double precision :: dz1
+double precision :: dz2
+integer :: i1
+integer :: i2
+integer :: icyexpl
+integer :: idf1
+integer :: idf2
+integer :: idfac
+integer :: idm
+integer :: imaxf
+integer :: iminf
+integer :: j1
+integer :: j2
+integer :: jmaxf
+integer :: jminf
+integer :: k1
+integer :: k2
+integer :: kmaxf
+integer :: kminf
+integer :: l
+integer :: m0b
+integer :: m0n
+integer :: m1
+integer :: m1max
+integer :: m1maxm1
+integer :: m1min
+integer :: m2
+integer :: m2max
+integer :: m2maxm1
+integer :: m2min
+integer :: mf
+integer :: mfac
+integer :: mfacn
+integer :: mfl
+integer :: n0c
+integer :: n0n
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nfac1
+integer :: nfac2
+integer :: nfac3
+integer :: nfac4
+integer :: nfacf
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: pspi0
+double precision :: snal
+double precision :: snbe
+double precision :: taunorm
+double precision :: tauref0
+double precision :: utx
+double precision :: utxt
+double precision :: uty
+double precision :: utyt
+double precision :: utz
+double precision :: utzt
+double precision :: xcfac
+double precision :: ycfac
+double precision :: zcfac
 !
 !-----------------------------------------------------------------------
 !

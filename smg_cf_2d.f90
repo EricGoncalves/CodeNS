@@ -10,6 +10,64 @@
       use maillage
       use chainecarac
       use schemanum
+implicit none
+integer :: inc_c
+integer :: inc_f
+integer :: indc_f
+integer :: indn_c
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: imgc
+integer :: imgf
+double precision :: vol
+double precision :: vv
+double precision :: vc
+integer :: i1c
+integer :: i2c
+integer :: ic
+integer :: if
+integer :: incc_i
+integer :: incc_j
+integer :: incc_k
+integer :: incf_i
+integer :: incf_ij
+integer :: incf_ijk
+integer :: incf_ik
+integer :: incf_j
+integer :: incf_jk
+integer :: incf_k
+integer :: j1c
+integer :: j2c
+integer :: jc
+integer :: jf
+integer :: k1c
+integer :: k2c
+integer :: kc
+integer :: kf
+integer :: l
+integer :: lmc
+integer :: lmf
+integer :: n0cf
+integer :: n0nc
+integer :: nc1
+integer :: nc2
+integer :: nc3
+integer :: nc4
+integer :: nf1
+integer :: nf2
+integer :: nf3
+integer :: nf4
+integer :: nic
+integer :: nif
+integer :: nijc
+integer :: nijf
+integer :: njc
+integer :: njf
+double precision :: sss
 !
 !-----------------------------------------------------------------------
 !

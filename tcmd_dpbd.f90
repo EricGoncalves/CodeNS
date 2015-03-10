@@ -16,6 +16,16 @@
       use chainecarac
       use maillage 
       use kcle
+implicit none
+integer :: imot
+integer :: nmot
+integer :: lmfb
+integer :: lmfbd
+integer :: lgr
+integer :: lgrd
+integer :: icmt
+integer :: im
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

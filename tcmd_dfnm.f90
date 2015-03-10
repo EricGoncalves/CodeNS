@@ -14,6 +14,11 @@
    use schemanum
    use maillage
       use proprieteflu
+implicit none
+integer :: imot
+integer :: nmot
+integer :: icmt
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

@@ -29,6 +29,13 @@
       use para_fige
    use boundary
    use sortiefichier
+implicit none
+integer :: imot
+integer :: nmot
+integer :: mfbi
+integer :: mnc
+integer :: m0c
+integer :: mt
 !
 !-----------------------------------------------------------------------
 !

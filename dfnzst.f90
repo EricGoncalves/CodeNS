@@ -45,6 +45,8 @@
       use definition
    use kcle
       use proprieteflu
+implicit none
+integer :: nonzst
 !
 !-----------------------------------------------------------------------
 !

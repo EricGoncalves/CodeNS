@@ -21,6 +21,8 @@
       use kcle
       use schemanum
       use maillage
+implicit none
+integer :: ng
 !
 !-----------------------------------------------------------------------
 !

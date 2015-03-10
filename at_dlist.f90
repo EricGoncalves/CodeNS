@@ -40,6 +40,34 @@
       use para_var
       use para_fige
    use boundary
+implicit none
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: xpar
+double precision :: ypar
+double precision :: zpar
+integer :: ncin
+integer :: m1tb
+integer :: m2tb
+integer :: nfrtb
+integer :: nfbi
+integer :: idm
+integer :: imaxf
+integer :: iminf
+integer :: jmaxf
+integer :: jminf
+integer :: kmaxf
+integer :: kminf
+integer :: l
+integer :: m0b
+integer :: m0n
+integer :: m1
+integer :: m1max
+integer :: m2
+integer :: m2max
+integer :: mfac
+integer :: mfacn
 !
 !-----------------------------------------------------------------------
 !

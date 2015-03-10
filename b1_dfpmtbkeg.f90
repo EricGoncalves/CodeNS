@@ -19,6 +19,7 @@
       use sortiefichier
       use modeleturb
       use schemanum
+implicit none
 !
 !-----------------------------------------------------------------------
 !

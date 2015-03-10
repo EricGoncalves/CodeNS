@@ -12,6 +12,11 @@
    use chainecarac
       use kcle
       use boundary
+implicit none
+integer :: imot
+integer :: nmot
+integer :: icmt
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

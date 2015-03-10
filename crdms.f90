@@ -53,6 +53,20 @@
       use kcle
       use chainecarac
       use schemanum
+implicit none
+integer :: l
+integer :: ni
+integer :: nj
+integer :: nk
+integer :: img
+integer :: imgi
+integer :: imgj
+integer :: imgk
+integer :: lm
+integer :: nid
+integer :: njd
+integer :: nkd
+integer :: nptfs
 !
 !-----------------------------------------------------------------------
 !

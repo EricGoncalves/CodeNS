@@ -152,6 +152,211 @@
       use chainecarac
       use sortiefichier
       use schemanum
+implicit none
+integer :: ncbd
+integer :: ncin
+double precision :: s
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: ps
+double precision :: temp
+double precision :: cson
+double precision :: akp
+double precision :: alfar
+double precision :: betar
+double precision :: cfinf0
+double precision :: claefr
+double precision :: claerfr
+double precision :: claero
+double precision :: claerob
+double precision :: claetfr
+double precision :: clav
+double precision :: clavb
+double precision :: clavbfr
+double precision :: clavfr
+double precision :: clavtfr
+double precision :: clavtot
+double precision :: cmaefr
+double precision :: cmaerfr
+double precision :: cmaero
+double precision :: cmaerob
+double precision :: cmaetfr
+double precision :: cmav
+double precision :: cmavb
+double precision :: cmavbfr
+double precision :: cmavfr
+double precision :: cmavtfr
+double precision :: cmavtot
+double precision :: cnaefr
+double precision :: cnaerfr
+double precision :: cnaero
+double precision :: cnaerob
+double precision :: cnaetfr
+double precision :: cnav
+double precision :: cnavb
+double precision :: cnavbfr
+double precision :: cnavfr
+double precision :: cnavtfr
+double precision :: cnavtot
+double precision :: csal
+double precision :: csbe
+double precision :: cxaefr
+double precision :: cxaerfr
+double precision :: cxaero
+double precision :: cxaerob
+double precision :: cxaetfr
+double precision :: cxav
+double precision :: cxavb
+double precision :: cxavbfr
+double precision :: cxavfr
+double precision :: cxavtfr
+double precision :: cxavtot
+double precision :: cyaefr
+double precision :: cyaerfr
+double precision :: cyaero
+double precision :: cyaerob
+double precision :: cyaetfr
+double precision :: cyav
+double precision :: cyavb
+double precision :: cyavbfr
+double precision :: cyavfr
+double precision :: cyavtfr
+double precision :: cyavtot
+double precision :: czaefr
+double precision :: czaerfr
+double precision :: czaero
+double precision :: czaerob
+double precision :: czaetfr
+double precision :: czav
+double precision :: czavb
+double precision :: czavbfr
+double precision :: czavfr
+double precision :: czavtfr
+double precision :: czavtot
+double precision :: dcl
+double precision :: dclfr
+double precision :: dcm
+double precision :: dcmfr
+double precision :: dcn
+double precision :: dcnfr
+double precision :: dcx
+double precision :: dcxfr
+double precision :: dcy
+double precision :: dcyfr
+double precision :: dcz
+double precision :: dczfr
+double precision :: dsml
+double precision :: dsxy
+double precision :: dsxz
+double precision :: dsyz
+double precision :: dx1
+double precision :: dx2
+double precision :: dy1
+double precision :: dy2
+double precision :: dz1
+double precision :: dz2
+integer :: i1
+integer :: i2
+integer :: idf1
+integer :: idf2
+integer :: idfac
+integer :: idm
+integer :: imaxf
+integer :: iminf
+integer :: j1
+integer :: j2
+integer :: jmaxf
+integer :: jminf
+integer :: k1
+integer :: k2
+integer :: kimpl
+integer :: kmaxf
+integer :: kminf
+integer :: l
+integer :: m0b
+integer :: m0n
+integer :: m1
+integer :: m1max
+integer :: m1maxm1
+integer :: m1min
+integer :: m2
+integer :: m2max
+integer :: m2maxm1
+integer :: m2min
+integer :: mf
+integer :: mfac
+integer :: mfacn
+integer :: mfl
+integer :: n0c
+integer :: n0n
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nfac1
+integer :: nfac2
+integer :: nfac3
+integer :: nfac4
+integer :: nfacf
+integer :: nfaci
+integer :: nfacm
+integer :: nid
+integer :: nijd
+integer :: njd
+integer :: nn
+double precision :: phip
+double precision :: phipadi
+double precision :: phiref0
+double precision :: phit
+double precision :: pis2
+double precision :: pspi0
+double precision :: qq
+double precision :: qt
+double precision :: qtx
+double precision :: qty
+double precision :: qtz
+double precision :: raddeg
+double precision :: rm
+double precision :: sml
+double precision :: smlfr
+double precision :: snal
+double precision :: snbe
+double precision :: sxy
+double precision :: sxyb
+double precision :: sxyfr
+double precision :: sxz
+double precision :: sxzfr
+double precision :: syz
+double precision :: syzfr
+double precision :: t1
+double precision :: t2
+double precision :: t3
+double precision :: taumod
+double precision :: taunorm
+double precision :: tauref0
+double precision :: u
+double precision :: utaur
+double precision :: utsnu
+double precision :: utx
+double precision :: utxt
+double precision :: uty
+double precision :: utyt
+double precision :: utz
+double precision :: utzt
+double precision :: v
+double precision :: w
+double precision :: xcfac
+double precision :: ycfac
+double precision :: zcfac
 !
 !-----------------------------------------------------------------------
 !

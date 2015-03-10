@@ -15,6 +15,15 @@
       use maillage
       use kcle
       use modeleturb
+implicit none
+integer :: imot
+integer :: nmot
+integer :: ldom
+integer :: ldomd
+integer :: kina
+integer :: icmt
+integer :: kval
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

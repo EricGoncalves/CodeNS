@@ -19,6 +19,66 @@
       use maillage
       use proprieteflu
       use schemanum
+implicit none
+integer :: inc
+integer :: indc
+integer :: lm
+double precision :: v
+double precision :: d
+double precision :: sn
+integer :: lgsnlt
+double precision :: snu
+double precision :: ps
+double precision :: cson
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+double precision :: cc
+double precision :: ck2
+double precision :: ck4
+double precision :: cnds
+double precision :: ds1
+double precision :: ds2
+double precision :: ds3
+double precision :: ds4
+double precision :: ds5
+double precision :: eps2
+double precision :: eps4
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: kdir
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: rl
+double precision :: uu
+double precision :: vv
+double precision :: ww
 !
 !-----------------------------------------------------------------------
 !

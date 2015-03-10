@@ -12,6 +12,12 @@
       use chainecarac
       use kcle
       use proprieteflu
+implicit none
+integer :: imot
+integer :: nmot
+integer :: icmt
+integer :: kval
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

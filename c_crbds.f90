@@ -13,6 +13,19 @@
       use para_var
       use para_fige
       use sortiefichier
+implicit none
+integer :: imot
+integer :: nmot
+integer :: ncbd
+integer :: imax
+integer :: imin
+integer :: jmax
+integer :: jmin
+integer :: kini
+integer :: kmax
+integer :: kmin
+integer :: l
+integer :: mfbe
 !
 !-----------------------------------------------------------------------
 !

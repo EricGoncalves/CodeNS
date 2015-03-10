@@ -56,6 +56,43 @@
       use para_fige
       use maillage
       use sortiefichier
+implicit none
+integer :: inc
+integer :: indc
+integer :: indn
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: r
+double precision :: exs1
+double precision :: exs2
+double precision :: sn
+double precision :: vol
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+integer :: lgsnlt
+integer :: nc
+integer :: nci
+integer :: ncij
+integer :: ncijk
+integer :: ncik
+integer :: ncj
+integer :: ncjk
+integer :: nck
+integer :: nid
+integer :: njd
+integer :: nn
+integer :: npsn
+double precision :: yc
+double precision :: zc
 !
 !-----------------------------------------------------------------------
 !

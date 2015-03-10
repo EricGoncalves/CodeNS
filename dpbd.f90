@@ -18,6 +18,24 @@
       use para_var
       use para_fige
       use boundary
+implicit none
+integer :: mfbe
+integer :: img
+integer :: ncbd
+integer :: ncin
+integer :: mnc
+integer :: mnr
+double precision :: xnr
+double precision :: ynr
+double precision :: znr
+double precision :: tm1
+double precision :: tm2
+double precision :: tm3
+double precision :: tm4
+double precision :: tm5
+double precision :: tm6
+integer :: l
+integer :: lb
 !
 !-----------------------------------------------------------------------
 !

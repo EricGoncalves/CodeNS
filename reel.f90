@@ -1,4 +1,8 @@
       subroutine reel(mot,imot,r,kerr)
+implicit none
+integer :: imot
+double precision :: r
+integer :: kerr
 !
 !***********************************************************************
 !

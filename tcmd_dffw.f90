@@ -12,6 +12,12 @@
       use chainecarac
       use kcle
       use definition
+implicit none
+integer :: imot
+integer :: nmot
+integer :: icmt
+integer :: im
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

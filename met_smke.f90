@@ -55,6 +55,40 @@
       use para_var
       use para_fige
       use chainecarac
+implicit none
+integer :: l
+double precision :: sn
+double precision :: vol
+double precision :: v
+double precision :: tprod
+double precision :: cfke
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: t
+double precision :: dtdx
+double precision :: dtdy
+double precision :: dtdz
+double precision :: bark
+double precision :: bare
+double precision :: qcxts5
+double precision :: qcyts6
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: cson
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
 !
 !-----------------------------------------------------------------------
 !

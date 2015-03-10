@@ -33,6 +33,29 @@
       use boundary
       use schemanum
       use chainecarac 
+implicit none
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: r
+double precision :: exs1
+double precision :: exs2
+double precision :: sn
+double precision :: vol
+integer :: ncbd
+integer :: mnc
+integer :: mnr
+double precision :: xnr
+double precision :: ynr
+double precision :: znr
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+integer :: img
+integer :: l
+integer :: lm
+integer :: mfc
+integer :: mfr
 !
 !-----------------------------------------------------------------------
 !

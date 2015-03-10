@@ -50,6 +50,40 @@
       use proprieteflu
       use definition
       use schemanum
+implicit none
+integer :: mfb
+double precision :: pres
+integer :: ncbd
+double precision :: v
+integer :: mmb
+integer :: mpb
+integer :: mpn
+integer :: l
+double precision :: pression
+double precision :: temp
+double precision :: cson
+double precision :: a2
+double precision :: alp
+double precision :: beta2
+double precision :: dqn
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mt
+integer :: n0c
+integer :: n0n
+integer :: nl
+double precision :: ps
+double precision :: q2
+double precision :: qns
+double precision :: qx
+double precision :: qxs
+double precision :: qy
+double precision :: qys
+double precision :: qz
+double precision :: qzs
+double precision :: rho
+double precision :: roc
 !
 !-----------------------------------------------------------------------
 !
@@ -79,7 +113,7 @@
        ps=gam1*(v(nl,5)-0.5*rho*q2-pinfl)
        roc=sqrt(gam*ps*rho)
        a2=gam*ps/rho
-       beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+       beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
        alp=0.5*((1.+beta2)*abs(qns) + sqrt(((1.-beta2)*qns)**2+4.*beta2*a2))
 !
        dqn=(alp+qns)*(pres(m)-ps)/(rho*beta2*a2)

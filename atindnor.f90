@@ -52,6 +52,28 @@
       use para_fige
    use maillage
    use boundary
+implicit none
+integer :: nfbe
+integer :: m10
+integer :: m20
+integer :: m30
+integer :: m1min
+integer :: m1max
+integer :: m2min
+integer :: m2max
+integer :: m3min
+integer :: m3max
+integer :: isens3
+integer :: imax
+integer :: imin
+integer :: jmax
+integer :: jmin
+integer :: kmax
+integer :: kmin
+integer :: l
+integer :: mfbi
+integer :: nid
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !

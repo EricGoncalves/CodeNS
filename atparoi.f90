@@ -23,6 +23,12 @@
    use sortiefichier
    use boundary
    use maillage
+implicit none
+integer :: l
+integer :: nfbe
+integer :: n
+integer :: nf
+integer :: nfbi
 !
 !-----------------------------------------------------------------------
 !

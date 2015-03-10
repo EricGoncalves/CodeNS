@@ -35,6 +35,22 @@
       use para_fige
       use maillage
       use boundary
+implicit none
+double precision :: v
+double precision :: dist
+integer :: ncin
+integer :: ncbd
+integer :: l
+integer :: mnpar
+double precision :: fgam
+integer :: ncyc
+double precision :: tprod
+double precision :: tp
+double precision :: ztemp
+integer :: ldom
+integer :: mf
+integer :: mfb
+integer :: no
 !
 !-----------------------------------------------------------------------
 !

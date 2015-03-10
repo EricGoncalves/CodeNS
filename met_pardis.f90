@@ -14,6 +14,28 @@
       use para_fige
       use maillage
       use boundary
+implicit none
+integer :: ncin
+double precision :: d
+integer :: isens3
+integer :: m
+integer :: m10
+integer :: m1max
+integer :: m1min
+integer :: m20
+integer :: m2max
+integer :: m2min
+integer :: m3
+integer :: m30
+integer :: m3max
+integer :: m3min
+integer :: mb
+integer :: mfb
+integer :: mt
+integer :: n
+integer :: ni
+integer :: no
+integer :: nper
 !
 !-----------------------------------------------------------------------
 !

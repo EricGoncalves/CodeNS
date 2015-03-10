@@ -67,6 +67,49 @@
       use chainecarac
       use sortiefichier
       use constantes
+implicit none
+integer :: ind
+integer :: i
+integer :: j
+integer :: k
+integer :: img
+integer :: l
+double precision :: u
+double precision :: v
+double precision :: dt
+double precision :: res1
+double precision :: res2
+double precision :: res3
+double precision :: res4
+double precision :: res5
+double precision :: res6
+double precision :: res7
+integer :: icyc
+double precision :: dumy1
+double precision :: dumy2
+double precision :: dumax
+integer :: idumx
+integer :: jdumx
+integer :: kdumx
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0
+integer :: ni
+integer :: nid
+integer :: nijd
+integer :: nj
+integer :: njd
+integer :: nk
+integer :: nmax
 !
 !-----------------------------------------------------------------------
 !
@@ -132,7 +175,7 @@
          res1(m)=(v(n,1)-u(n,1))/dt(n)
          dumy1(1)=dumy1(1)+abs(res1(m))
          dumy2(1)=dumy2(1)+res1(m)*res1(m)
-         dumax(1)=amax1(dumax(1),abs(res1(m)))
+         dumax(1)=max(dumax(1),abs(res1(m)))
          s=0.5*(sign(1.,abs(res1(m))-dumax(1))+1.)
          res1(m)=alog10(max(abs(res1(m)),reelmn))
          idumx(1)=int((1.-s)*idumx(1)+s*i)
@@ -142,7 +185,7 @@
          res2(m)=(v(n,2)-u(n,2))/dt(n)
          dumy1(2)=dumy1(2)+abs(res2(m))
          dumy2(2)=dumy2(2)+res2(m)*res2(m)
-         dumax(2)=amax1(dumax(2),abs(res2(m)))
+         dumax(2)=max(dumax(2),abs(res2(m)))
          s=0.5*(sign(1.,abs(res2(m))-dumax(2))+1.)
          res2(m)=alog10(max(abs(res2(m)),reelmn))
          idumx(2)=int((1.-s)*idumx(2)+s*i)
@@ -152,7 +195,7 @@
          res3(m)=(v(n,3)-u(n,3))/dt(n)
          dumy1(3)=dumy1(3)+abs(res3(m))
          dumy2(3)=dumy2(3)+res3(m)*res3(m)
-         dumax(3)=amax1(dumax(3),abs(res3(m)))
+         dumax(3)=max(dumax(3),abs(res3(m)))
          s=.5*(sign(1.,abs(res3(m))-dumax(3))+1.)
          res3(m)=alog10(max(abs(res3(m)),reelmn))
          idumx(3)=int((1.-s)*idumx(3)+s*i)
@@ -162,7 +205,7 @@
          res4(m)=(v(n,4)-u(n,4))/dt(n)
          dumy1(4)=dumy1(4)+abs(res4(m))
          dumy2(4)=dumy2(4)+res4(m)*res4(m)
-         dumax(4)=amax1(dumax(4),abs(res4(m)))
+         dumax(4)=max(dumax(4),abs(res4(m)))
          s=.5*(sign(1.,abs(res4(m))-dumax(4))+1.)
          res4(m)=alog10(max(abs(res4(m)),reelmn))
          idumx(4)=int((1.-s)*idumx(4)+s*i)
@@ -172,7 +215,7 @@
          res5(m)=(v(n,5)-u(n,5))/dt(n)
          dumy1(5)=dumy1(5)+abs(res5(m))
          dumy2(5)=dumy2(5)+res5(m)*res5(m)
-         dumax(5)=amax1(dumax(5),abs(res5(m)))
+         dumax(5)=max(dumax(5),abs(res5(m)))
          s=.5*(sign(1.,abs(res5(m))-dumax(5))+1.)
          res5(m)=alog10(max(abs(res5(m)),reelmn))
          idumx(5)=int((1.-s)*idumx(5)+s*i)
@@ -191,7 +234,7 @@
          res6(m)=(v(n,6)-u(n,6))/dt(n)
          dumy1(6)=dumy1(6)+abs(res6(m))
          dumy2(6)=dumy2(6)+res6(m)*res6(m)
-         dumax(6)=amax1(dumax(6),abs(res6(m)))
+         dumax(6)=max(dumax(6),abs(res6(m)))
          s=.5*(sign(1.,abs(res6(m))-dumax(6))+1.)
          res6(m)=alog10(max(abs(res6(m)),reelmn))
          idumx(6)=int((1.-s)*idumx(6)+s*i)
@@ -201,7 +244,7 @@
          res7(m)=(v(n,7)-u(n,7))/dt(n)
          dumy1(7)=dumy1(7)+abs(res7(m))
          dumy2(7)=dumy2(7)+res7(m)*res7(m)
-         dumax(7)=amax1(dumax(7),abs(res7(m)))
+         dumax(7)=max(dumax(7),abs(res7(m)))
          s=.5*(sign(1.,abs(res7(m))-dumax(7))+1.)
          res7(m)=alog10(max(abs(res7(m)),reelmn))
          idumx(7)=int((1.-s)*idumx(7)+s*i)

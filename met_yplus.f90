@@ -72,6 +72,81 @@
       use maillage
       use boundary
       use sortiefichier
+implicit none
+integer :: ncbd
+integer :: ncin
+double precision :: s
+double precision :: dist
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: distp
+integer :: i1
+integer :: i2
+integer :: idf1
+integer :: idf2
+integer :: idfac
+integer :: idm
+integer :: imaxf
+integer :: iminf
+integer :: j1
+integer :: j2
+integer :: jmaxf
+integer :: jminf
+integer :: k1
+integer :: k2
+integer :: kimpl
+integer :: kmaxf
+integer :: kminf
+integer :: l
+integer :: m0b
+integer :: m0n
+integer :: m1
+integer :: m1max
+integer :: m1maxm1
+integer :: m1min
+integer :: m2
+integer :: m2max
+integer :: m2maxm1
+integer :: m2min
+integer :: mf
+integer :: mfac
+integer :: mfacn
+integer :: mfl
+integer :: n0c
+integer :: n0n
+integer :: nc
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nfac1
+integer :: nfac2
+integer :: nfac3
+integer :: nfac4
+integer :: nfacf
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: sxyb
+double precision :: taunorm
+double precision :: taupe
+double precision :: utau
+double precision :: utx
+double precision :: utxt
+double precision :: uty
+double precision :: utyt
+double precision :: utz
+double precision :: utzt
+double precision :: xcfac
+double precision :: ycfac
+double precision :: yplusp
+double precision :: zcfac
 !
 !-----------------------------------------------------------------------
 !

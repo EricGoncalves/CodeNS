@@ -18,6 +18,14 @@
    use maillage
    use boundary
    use kcle
+implicit none
+integer :: long
+integer :: longm1
+integer :: nm
+integer :: nmult
+integer :: no
+integer :: nr
+integer :: nrest
 !
 !-----------------------------------------------------------------------
 !

@@ -40,6 +40,29 @@
       use para_var
       use para_fige
       use maillage
+implicit none
+integer :: ind
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+integer :: imin
+integer :: imax
+integer :: jmin
+integer :: jmax
+integer :: kmin
+integer :: kmax
+integer :: ncbd
+integer :: mt
+integer :: m0
+integer :: ii
+integer :: jj
+integer :: kk
+integer :: m
+integer :: n0
+integer :: nid
+integer :: nijd
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !

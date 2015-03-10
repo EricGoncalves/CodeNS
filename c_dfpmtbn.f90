@@ -17,6 +17,9 @@
       use para_fige
       use sortiefichier
       use modeleturb
+implicit none
+integer :: imot
+integer :: nmot
 !
 !-----------------------------------------------------------------------
 !

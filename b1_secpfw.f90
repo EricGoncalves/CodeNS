@@ -16,6 +16,16 @@
    use kcle
    use schemanum
    use maillage
+implicit none
+integer :: lgr
+integer :: lgrd
+integer :: kncycl
+integer :: long
+integer :: longm1
+integer :: nm
+integer :: nmult
+integer :: nr
+integer :: nrest
 !
 !-----------------------------------------------------------------------
 !

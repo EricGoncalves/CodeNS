@@ -66,6 +66,45 @@
       use para_fige
       use boundary
       use maillage
+implicit none
+integer :: ncbd
+integer :: mnr
+double precision :: xnr
+double precision :: ynr
+double precision :: znr
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+integer :: ncin
+double precision :: cr
+integer :: l
+integer :: m
+integer :: mb
+integer :: mf
+integer :: mfb
+integer :: mfbm
+integer :: mr
+integer :: mt
+integer :: nd
+integer :: nid
+integer :: njd
+integer :: nr
+double precision :: qcxr
+double precision :: qcyr
+double precision :: qczr
+double precision :: sr
+double precision :: txxr
+double precision :: txyr
+double precision :: txzr
+double precision :: tyyr
+double precision :: tyzr
+double precision :: tzzr
 !
 !-----------------------------------------------------------------------
 !

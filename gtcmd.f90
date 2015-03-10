@@ -13,6 +13,14 @@
       use para_fige
       use sortiefichier
       use constantes 
+implicit none
+integer :: lgcmd
+integer :: icmd
+integer :: ilin
+integer :: ipos
+integer :: ksuite
+integer :: lglin
+integer :: lgt
 !
 !-----------------------------------------------------------------------
 !

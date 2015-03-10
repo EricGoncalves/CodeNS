@@ -13,6 +13,17 @@
 !
       use para_fige
    use sortiefichier
+implicit none
+integer :: lmfb
+integer :: lmfbd
+integer :: lgr
+integer :: lgrd
+integer :: long
+integer :: longm1
+integer :: nm
+integer :: nmult
+integer :: nr
+integer :: nrest
 !
 !-----------------------------------------------------------------------
 !

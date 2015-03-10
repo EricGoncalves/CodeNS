@@ -103,6 +103,54 @@
       use chainecarac
       use schemanum
       use modeleturb
+implicit none
+integer :: img
+double precision :: s
+double precision :: ro
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: dist
+integer :: mnpar
+double precision :: fgam
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+integer :: icyc
+integer :: mcyturb
+integer :: ncbd
+integer :: ncin
+integer :: mnc
+double precision :: sn
+double precision :: vol
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: ztemp
+integer :: l
+integer :: lgsnlt
+integer :: lm
+integer :: mf
+integer :: mfc
+integer :: npsn
 !
 !-----------------------------------------------------------------------
 !

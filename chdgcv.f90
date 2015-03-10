@@ -45,6 +45,21 @@
       use para_fige
    use maillage
    use sortiefichier
+implicit none
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+integer :: imin
+integer :: imax
+integer :: jmin
+integer :: jmax
+integer :: kmin
+integer :: kmax
+integer :: kdg
 !
 !-----------------------------------------------------------------------
 !

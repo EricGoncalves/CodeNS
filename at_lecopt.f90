@@ -23,6 +23,21 @@
       use para_fige
    use sortiefichier
    use maillage
+implicit none
+integer :: igr
+integer :: jgr
+integer :: kgr
+double precision :: raptat
+integer :: idefaut
+integer :: ierr
+integer :: igrl
+integer :: jgrl
+integer :: kgrl
+integer :: l
+integer :: lig
+integer :: llu
+integer :: nf
+double precision :: raptatl
 !
 !-----------------------------------------------------------------------
 !

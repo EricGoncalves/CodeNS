@@ -46,6 +46,31 @@
       use boundary
       use maillage
       use sortiefichier
+implicit none
+integer :: kkn
+integer :: jjn
+integer :: iin
+integer :: mfbe
+integer :: img
+integer :: ncbd
+integer :: n
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+integer :: lm
+integer :: m0b
+integer :: m0n
+integer :: mb
+integer :: mfbi
+integer :: mfbim
+integer :: mm
+integer :: mn
+integer :: mt
+integer :: n0c
+integer :: nid
+integer :: nijd
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !

@@ -22,6 +22,10 @@
 !***********************************************************************
 !
       use sortiefichier
+implicit none
+double precision :: roam
+double precision :: aam
+double precision :: tam
 !
 !-----------------------------------------------------------------------
 !

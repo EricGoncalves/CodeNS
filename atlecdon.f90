@@ -36,6 +36,12 @@
         use chainecarac
         use sortiefichier
         use schemanum
+implicit none
+integer :: ierrdis
+integer :: kamort
+integer :: lig
+integer :: muttrav
+double precision :: rap_h0
 !
 !-----------------------------------------------------------------------
 !

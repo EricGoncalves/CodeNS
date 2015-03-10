@@ -19,6 +19,95 @@
       use maillage
       use modeleturb
       use chainecarac
+implicit none
+integer :: inc
+integer :: indc
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: sn
+double precision :: vol
+double precision :: s
+double precision :: cfke
+double precision :: tprod
+double precision :: bark
+double precision :: bare
+double precision :: tsv6
+double precision :: tsv7
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: t
+double precision :: dtdx
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: arg
+double precision :: b
+double precision :: c1f1
+double precision :: c2f2
+double precision :: cc43
+double precision :: d
+double precision :: esk
+double precision :: f1
+double precision :: f2
+double precision :: g
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: i2p1
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: j2p1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: k2p1
+integer :: lgsnlt
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+integer :: npsn
+double precision :: qsi2
+double precision :: rdelta
+double precision :: retur
+double precision :: roe2sk
+double precision :: ss
+double precision :: x
+double precision :: xl
+double precision :: xl1
+double precision :: xl2
+double precision :: xlvk
+double precision :: xlvk2
 !
 !-----------------------------------------------------------------------
 !
@@ -148,12 +237,12 @@
           c2f2=cke2*f2
           d=-bark(m)
           x=c1f1*tprod(m)-c2f2*s(n,7)
-          g=amax1(0.,d*(d-2.*(x-c2f2*s(n,7))))
+          g=max(0.,d*(d-2.*(x-c2f2*s(n,7))))
           rdelta=sqrt((x-c2f2*s(n,7))**2+4*x*s(n,7)+g)
           b=x-c2f2*s(n,7)-d
           xl1=0.5*(b+rdelta)/s(n,6)
           xl2=0.5*(b-rdelta)/s(n,6)
-          cfke(n)=amax1(abs(xl1),abs(xl2))
+          cfke(n)=max(abs(xl1),abs(xl2))
          enddo
        enddo
       enddo

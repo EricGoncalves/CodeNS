@@ -9,6 +9,13 @@
 !
       use para_fige
       use chainecarac
+implicit none
+integer :: imot
+integer :: nm
+double precision :: rree
+integer :: krree
+integer :: icmt
+integer :: kerr
 !
 !-----------------------------------------------------------------------
 !

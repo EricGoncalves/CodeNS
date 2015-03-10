@@ -21,6 +21,9 @@
 !
       use para_fige
       use sortiefichier 
+implicit none
+integer :: imot
+integer :: nmot
 !
 !-----------------------------------------------------------------------
 !

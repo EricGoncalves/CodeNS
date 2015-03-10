@@ -16,6 +16,8 @@
    use kcle
    use maillage
    use boundary
+implicit none
+integer :: m
 !
 !-----------------------------------------------------------------------
 !

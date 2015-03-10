@@ -26,6 +26,145 @@
       use maillage
       use schemanum
       use proprieteflu
+implicit none
+double precision :: fmp
+double precision :: fpm
+double precision :: fpp
+double precision :: fmm
+double precision :: phi
+integer :: inc
+integer :: indc
+double precision :: xa
+double precision :: aa
+double precision :: ra
+double precision :: ta
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+double precision :: a
+integer :: lm
+integer :: ityprk
+double precision :: u
+double precision :: v
+double precision :: d
+double precision :: ff
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+double precision :: sn
+integer :: lgsnlt
+double precision :: rhol
+double precision :: ul
+double precision :: vl
+double precision :: wl
+double precision :: pl
+double precision :: rhor
+double precision :: ur
+double precision :: vr
+double precision :: wr
+double precision :: prr
+double precision :: ps
+double precision :: cvi
+double precision :: cvj
+double precision :: cvk
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: ai
+double precision :: al
+double precision :: ar
+double precision :: cal
+double precision :: car
+double precision :: cbl
+double precision :: cbr
+double precision :: cmi
+double precision :: cml
+double precision :: cmr
+double precision :: cnds
+double precision :: dm
+double precision :: fex
+double precision :: fey
+double precision :: fez
+double precision :: fxx
+double precision :: fxy
+double precision :: fxz
+double precision :: fyy
+double precision :: fyz
+double precision :: fzz
+double precision :: hi1
+double precision :: hi2
+double precision :: hi3
+double precision :: hi4
+double precision :: hi5
+double precision :: hj1
+double precision :: hj2
+double precision :: hj3
+double precision :: hj4
+double precision :: hj5
+double precision :: hk1
+double precision :: hk2
+double precision :: hk3
+double precision :: hk4
+double precision :: hk5
+double precision :: hl
+double precision :: hr
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: kdir
+integer :: m
+integer :: n
+integer :: n0c
+integer :: n1
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: psi
+double precision :: si0
+double precision :: si1
+double precision :: si2
+double precision :: si3
+double precision :: si4
+double precision :: sj0
+double precision :: sj1
+double precision :: sj2
+double precision :: sj3
+double precision :: sj4
+double precision :: sk0
+double precision :: sk1
+double precision :: sk2
+double precision :: sk3
+double precision :: sk4
 !
 !-----------------------------------------------------------------------
 !
@@ -52,7 +191,7 @@
             +0.125*(1.-sign(1.,abs(ta)-1.))*(ta+1.)**2*(2.-ta+0.75*ta*(ta-1.)**2)
       fpm(ra)=0.25*(1.+sign(1.,abs(ra)-1.))*(1.-sign(1.,abs(ra))) &
             +0.125*(1.-sign(1.,abs(ra)-1.))*(ra-1.)**2*(2.+ra-0.75*ra*(ra+1.)**2)
-      phi(a)=sign(1.,a)*amax1(0.,amin1(abs(a),sign(1.,a)))
+      phi(a)=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
 
       DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE   :: r1,r2,r3,r4,r5
       ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))

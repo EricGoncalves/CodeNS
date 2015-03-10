@@ -81,6 +81,57 @@
       use proprieteflu
       use modeleturb
       use definition
+implicit none
+integer :: lm
+integer :: ncyc
+double precision :: v
+double precision :: dist
+integer :: ncin
+integer :: ncbd
+integer :: mfbm
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+integer :: mnpar
+double precision :: fgam
+double precision :: tp
+double precision :: temp
+double precision :: cta
+double precision :: ctb
+double precision :: denom
+integer :: iter
+integer :: m
+integer :: m0ns
+integer :: mb
+integer :: mpar
+integer :: mt
+integer :: n0c
+integer :: nc
+integer :: nfacns
+integer :: ni
+integer :: nii
+double precision :: phip
+double precision :: qc1
+double precision :: rop
+double precision :: t1
+double precision :: t2
+double precision :: t3
+double precision :: temp1
+double precision :: tn
+double precision :: top
+double precision :: tt
+double precision :: upyp1
+double precision :: v1t
+double precision :: v1x
+double precision :: v1y
+double precision :: v1z
+double precision :: yp02
 !
 !-----------------------------------------------------------------------
 !

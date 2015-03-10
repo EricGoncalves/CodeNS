@@ -22,6 +22,103 @@
       use maillage
       use proprieteflu
       use schemanum
+implicit none
+integer :: inc
+integer :: indc
+integer :: lm
+double precision :: u
+double precision :: dt
+double precision :: v
+double precision :: d
+double precision :: ff
+integer :: lmx
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+double precision :: dtpas
+integer :: ityprk
+double precision :: dfxx
+double precision :: dfyy
+double precision :: dfzz
+double precision :: dfxy
+double precision :: dfxz
+double precision :: dfyz
+double precision :: dfex
+double precision :: dfey
+double precision :: dfez
+double precision :: coefdiag
+double precision :: ps
+double precision :: cson
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+double precision :: cc
+double precision :: cnds
+double precision :: fact
+double precision :: fex
+double precision :: fey
+double precision :: fez
+double precision :: fiex
+double precision :: fiey
+double precision :: fiez
+double precision :: fixx
+double precision :: fixy
+double precision :: fixz
+double precision :: fiyy
+double precision :: fiyz
+double precision :: fizz
+double precision :: fxx
+double precision :: fxy
+double precision :: fxz
+double precision :: fyy
+double precision :: fyz
+double precision :: fzz
+integer :: i1
+integer :: i1m1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k2
+integer :: k2m1
+integer :: kdir
+integer :: ls
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: pres
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: tn4
+double precision :: tn5
+double precision :: ui
+double precision :: uu
+double precision :: vi
+double precision :: vv
+double precision :: wi
+double precision :: wi1
+double precision :: wi2
+double precision :: wi3
+double precision :: wi4
+double precision :: wi5
+double precision :: ww
 !
 !-----------------------------------------------------------------------
 !

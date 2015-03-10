@@ -26,6 +26,16 @@
 !
       use para_fige
    use sortiefichier
+implicit none
+integer :: mfb
+integer :: kini
+integer :: l
+integer :: imin
+integer :: imax
+integer :: jmin
+integer :: jmax
+integer :: kmin
+integer :: kmax
 !
 !-----------------------------------------------------------------------
 !

@@ -13,6 +13,27 @@
 !
       use para_var
       use para_fige
+implicit none
+integer :: l
+double precision :: v
+double precision :: sn
+double precision :: vol
+double precision :: s
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
 !
 !-----------------------------------------------------------------------
 !

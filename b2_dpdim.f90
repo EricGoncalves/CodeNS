@@ -34,6 +34,18 @@
    use schemanum
    use maillage
    use chainecarac
+implicit none
+integer :: kl
+integer :: l
+integer :: mdimtb
+integer :: mdimtc
+integer :: mdimtn
+integer :: mdimtr
+integer :: ndimctb
+integer :: ndimctc
+integer :: ndimctk
+integer :: ndimctv
+integer :: ndimntb
 !
 !-----------------------------------------------------------------------
 !

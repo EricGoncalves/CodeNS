@@ -24,6 +24,109 @@
       use schemanum
       use proprieteflu
       use definition
+implicit none
+double precision :: fmp
+double precision :: fpm
+double precision :: fpp
+double precision :: fmm
+integer :: inc
+integer :: indc
+double precision :: xa
+double precision :: aa
+double precision :: ra
+double precision :: ta
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: lm
+integer :: ityprk
+double precision :: u
+double precision :: v
+double precision :: d
+double precision :: ff
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+double precision :: sn
+integer :: lgsnlt
+double precision :: rhol
+double precision :: ul
+double precision :: vl
+double precision :: wl
+double precision :: pl
+double precision :: rhor
+double precision :: ur
+double precision :: vr
+double precision :: wr
+double precision :: prr
+double precision :: ps
+double precision :: fex
+double precision :: fey
+double precision :: fez
+double precision :: fxx
+double precision :: fxy
+double precision :: fxz
+double precision :: fyy
+double precision :: fyz
+double precision :: fzz
+double precision :: hk1
+double precision :: hk2
+double precision :: hk3
+double precision :: hk4
+double precision :: hk5
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: kdir
+integer :: m
+integer :: n
+integer :: n0c
+integer :: n1
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: si1
+double precision :: si2
+double precision :: si3
+double precision :: si4
+double precision :: si5
+double precision :: sj1
+double precision :: sj2
+double precision :: sj3
+double precision :: sj4
+double precision :: sj5
+double precision :: sk1
+double precision :: sk2
+double precision :: sk3
+double precision :: sk4
+double precision :: sk5
 !          
 !-----------------------------------------------------------------------
 !
@@ -180,8 +283,8 @@
 !        calcul de la vitesse du son a l'interface
          ai=sqrt(al*ar)
 !        terme de preconditionnement
-         beta2l=amin1(amax1(q2l/al**2,cte*(qinf/al)**2),1.)
-         beta2r=amin1(amax1(q2r/ar**2,cte*(qinf/ar)**2),1.)
+         beta2l=min(max(q2l/al**2,cte*(qinf/al)**2),1.)
+         beta2r=min(max(q2r/ar**2,cte*(qinf/ar)**2),1.)
          betai=0.5*(sqrt(beta2l)+sqrt(beta2r))
          cmm=0.5*(vnl+vnr)/ai
          fpr=sqrt((1.-betai**2)**2*cmm**2+4.*betai**2)/(1.+betai**2)
@@ -384,8 +487,8 @@
 !        calcul de la vitesse du son a l'interface
          ai=sqrt(al*ar)
 !        terme de preconditionnement
-         beta2l=amin1(amax1(q2l/al**2,cte*(qinf/al)**2),1.)
-         beta2r=amin1(amax1(q2r/ar**2,cte*(qinf/ar)**2),1.)
+         beta2l=min(max(q2l/al**2,cte*(qinf/al)**2),1.)
+         beta2r=min(max(q2r/ar**2,cte*(qinf/ar)**2),1.)
          betai=0.5*(sqrt(beta2l)+sqrt(beta2r))
          cmm=0.5*(vnl+vnr)/ai
          fpr=sqrt((1.-betai**2)**2*cmm**2+4.*betai**2)/(1.+betai**2)
@@ -587,8 +690,8 @@
 !        calcul de la vitesse du son a l'interface
          ai=sqrt(al*ar)
 !        terme de preconditionnement
-         beta2l=amin1(amax1(q2l/al**2,cte*(qinf/al)**2),1.)
-         beta2r=amin1(amax1(q2r/ar**2,cte*(qinf/ar)**2),1.)
+         beta2l=min(max(q2l/al**2,cte*(qinf/al)**2),1.)
+         beta2r=min(max(q2r/ar**2,cte*(qinf/ar)**2),1.)
          betai=0.5*(sqrt(beta2l)+sqrt(beta2r))
          cmm=0.5*(vnl+vnr)/ai
          fpr=sqrt((1.-betai**2)**2*cmm**2+4.*betai**2)/(1.+betai**2)

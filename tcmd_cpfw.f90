@@ -10,6 +10,9 @@
 !
       use para_fige
       use chainecarac
+implicit none
+integer :: imot
+integer :: nmot
 !
 !-----------------------------------------------------------------------
 !

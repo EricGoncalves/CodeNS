@@ -14,6 +14,22 @@
 !
       use para_fige
       use chainecarac
+implicit none
+integer :: imot
+integer :: nmot
+integer :: mfbe
+integer :: kini
+integer :: l
+integer :: imin
+integer :: imax
+integer :: jmin
+integer :: jmax
+integer :: kmin
+integer :: kmax
+integer :: icmt
+integer :: im
+integer :: kval
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

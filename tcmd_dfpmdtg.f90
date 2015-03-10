@@ -12,6 +12,11 @@
       use chainecarac
       use kcle
       use schemanum
+implicit none
+integer :: imot
+integer :: nmot
+integer :: icmt
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

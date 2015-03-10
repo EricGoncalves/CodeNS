@@ -48,6 +48,56 @@
       use para_fige
       use maillage
       use modeleturb
+implicit none
+integer :: indc
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: v
+double precision :: txxf5x
+double precision :: txyf5y
+double precision :: txzf5z
+double precision :: tyyf6x
+double precision :: tyzf6y
+double precision :: tzzf6z
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: tprod
+double precision :: cfke
+double precision :: qcxts5
+double precision :: qcyts6
+double precision :: alpha
+double precision :: cd
+double precision :: gkgo
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: omeg
+double precision :: rcmu
+double precision :: ss
+double precision :: xw
 !
 !-----------------------------------------------------------------------
 !
@@ -95,7 +145,7 @@
          ss=sqrt(4.*(dvxx(m)**2+dvyy(m)**2+dvzz(m)**2)/3. &
              + (dvzy(m)+dvyz(m))**2 + (dvxz(m)+dvzx(m))**2 &
              + (dvyx(m)+dvxy(m))**2)/omeg
-         alpha=amin1(1.,rcmu/ss)
+         alpha=min(1.,rcmu/ss)
          qcxts5(n)=tprod(m)-betas*v(n,6)*omeg
          qcyts6(n)=xw*tprod(m)*v(n,7)/v(n,6)/alpha-beta*v(n,7)*omeg+cd
          cfke(n)=0.18*omeg

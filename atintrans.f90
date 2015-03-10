@@ -67,6 +67,56 @@
       use boundary
    use sortiefichier
    use modeleturb
+implicit none
+integer :: ncin
+double precision :: fgam
+integer :: i1
+integer :: i2
+integer :: idm
+integer :: ilmax
+integer :: ilmin
+integer :: imaxf
+integer :: iminf
+integer :: j1
+integer :: j2
+integer :: jlmax
+integer :: jlmin
+integer :: jmaxf
+integer :: jminf
+integer :: k1
+integer :: k2
+integer :: klmax
+integer :: klmin
+integer :: kmaxf
+integer :: kminf
+integer :: l
+integer :: lig
+integer :: m0b
+integer :: m0n
+integer :: m1
+integer :: m1deb
+integer :: m1fin
+integer :: m1max
+integer :: m1maxm1
+integer :: m1min
+integer :: m2
+integer :: m2deb
+integer :: m2fin
+integer :: m2max
+integer :: m2maxm1
+integer :: m2min
+integer :: mfacn
+integer :: mfe
+integer :: mfl
+integer :: n
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nfr
+integer :: nfrmx
+integer :: nid
+integer :: nijd
+integer :: njd
 !
 !-----------------------------------------------------------------------
 

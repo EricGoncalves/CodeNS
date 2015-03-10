@@ -14,6 +14,16 @@
 !***********************************************************************
 !
       use sortiefichier
+implicit none
+integer :: ldom
+integer :: ldomd
+integer :: king
+integer :: long
+integer :: longm1
+integer :: nm
+integer :: nmult
+integer :: nr
+integer :: nrest
 !
 !-----------------------------------------------------------------------
 !

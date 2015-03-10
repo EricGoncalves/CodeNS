@@ -14,6 +14,15 @@
 !
       use para_var
       use para_fige
+implicit none
+double precision :: bceqt
+integer :: mfl
+double precision :: tp
+integer :: mmb
+integer :: mpb
+integer :: m
+integer :: ml
+integer :: mt
 !
 !-----------------------------------------------------------------------
 !

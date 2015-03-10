@@ -40,6 +40,31 @@
       use para_var
       use para_fige
       use proprieteflu
+implicit none
+integer :: ncbd
+integer :: ncin
+integer :: mfb
+integer :: mmb
+integer :: mpb
+integer :: mpn
+double precision :: v
+double precision :: pression
+double precision :: temp
+double precision :: cson
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mt
+integer :: ni
+integer :: nl
+double precision :: qn
+double precision :: qtx
+double precision :: qty
+double precision :: qtz
+double precision :: qx
+double precision :: qy
+double precision :: qz
+double precision :: rho
 !
 !-----------------------------------------------------------------------
 !

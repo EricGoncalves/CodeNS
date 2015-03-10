@@ -12,6 +12,12 @@
 !
       use para_fige
       use chainecarac
+implicit none
+integer :: imot
+integer :: nmot
+integer :: icmt
+integer :: im
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

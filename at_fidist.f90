@@ -58,6 +58,101 @@
    use sortiefichier
    use maillage
    use boundary
+implicit none
+integer :: ind
+integer :: igr
+integer :: jgr
+integer :: kgr
+double precision :: raptat
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: xpar
+double precision :: ypar
+double precision :: zpar
+double precision :: xcc
+double precision :: ycc
+double precision :: zcc
+double precision :: dist2
+double precision :: dist
+integer :: mnpar
+integer :: m1tb
+integer :: m2tb
+integer :: nfrtb
+integer :: l
+integer :: i
+integer :: j
+integer :: k
+double precision :: dmini
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: i2m2
+integer :: idif
+integer :: idind
+integer :: idm
+integer :: iespacem
+integer :: ig
+integer :: igmx
+integer :: igrp
+integer :: imaxf
+integer :: iminf
+integer :: imini
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: j2m2
+integer :: jdind
+integer :: jespacem
+integer :: jg
+integer :: jgmx
+integer :: jgrp
+integer :: jmaxf
+integer :: jminf
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: k2m2
+integer :: kdind
+integer :: kg
+integer :: kgmx
+integer :: kgrp
+integer :: kmaxf
+integer :: kminf
+integer :: m0b
+integer :: m0n
+integer :: m1
+integer :: m1max
+integer :: m1mi
+integer :: m1mx
+integer :: m2
+integer :: m2max
+integer :: m2mi
+integer :: m2mx
+integer :: mb
+integer :: mbb
+integer :: mbmx
+integer :: mc
+integer :: mfac0
+integer :: mfacn
+integer :: mfacp
+integer :: mp
+integer :: mpar0
+integer :: mpar1
+integer :: n
+integer :: n0
+integer :: nc
+integer :: ncelat
+integer :: ncelgr
+integer :: ndeb
+integer :: nfbi
+integer :: nfpar
+integer :: nfpar0
+integer :: nid
+integer :: nijd
+integer :: njd
+integer :: ns
+integer :: nsom
 !
 !-----------------------------------------------------------------------
 !

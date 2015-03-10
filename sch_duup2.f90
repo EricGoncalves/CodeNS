@@ -28,6 +28,47 @@
       use schemanum
       use sortiefichier
       use chainecarac
+implicit none
+integer :: indc
+integer :: i
+integer :: j
+integer :: k
+double precision :: sn
+double precision :: vol
+double precision :: t
+double precision :: v
+double precision :: ptdual
+double precision :: vdual
+double precision :: vdual1
+double precision :: vdual2
+double precision :: dist
+double precision :: tprod
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: c13
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: l
+integer :: lm
+integer :: m
+integer :: n0c
+integer :: nc
+integer :: nid
+integer :: nijd
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !

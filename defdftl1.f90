@@ -10,6 +10,8 @@
 !
       use kcle
       use chainecarac
+implicit none
+integer :: itit
 !
 !-----------------------------------------------------------------------
 !

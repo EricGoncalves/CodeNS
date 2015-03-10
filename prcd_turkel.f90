@@ -20,6 +20,51 @@
       use proprieteflu
       use schemanum
       use definition
+implicit none
+integer :: indc
+integer :: i
+integer :: j
+integer :: k
+integer :: lm
+double precision :: u
+double precision :: v
+double precision :: sn
+integer :: lgsnlt
+double precision :: temp
+double precision :: cson
+double precision :: a2
+double precision :: beta2
+double precision :: cndsi
+double precision :: cndsj
+double precision :: cndsk
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: q2
+double precision :: qinf
+double precision :: uu
+double precision :: vv
+double precision :: ww
 !
 !-----------------------------------------------------------------------
 !
@@ -77,7 +122,7 @@
        ww=(v(n,2)*sn(m,3,1)+v(n,3)*sn(m,3,2)+v(n,4)*sn(m,3,3))/(v(n,1)*cndsk)
        q2=uu**2+vv**2+ww**2
        a2=cson(n)**2
-       beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+       beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
        get=v(n,5)/v(n,1)                              !energie totale
        ge=get-0.5*q2
        gd=(beta2-1.)/ge

@@ -55,6 +55,44 @@
       use maillage
       use sortiefichier
       use chainecarac
+implicit none
+integer :: img
+double precision :: u
+double precision :: v
+double precision :: dt
+double precision :: res1xx
+double precision :: res2yy
+double precision :: res3zz
+double precision :: res4
+double precision :: res5
+double precision :: res6
+double precision :: res7
+double precision :: tn8
+integer :: icyc
+integer :: ncyc
+integer :: ncycle
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: utau
+integer :: imax
+integer :: imin
+integer :: jmax
+integer :: jmin
+integer :: kmax
+integer :: kmin
+integer :: l
+integer :: lm
+integer :: m
+integer :: n0
+integer :: ni
+integer :: nid
+integer :: nijd
+integer :: nj
+integer :: njd
+integer :: nk
+integer :: nmax
+integer :: npts
 !
 !-----------------------------------------------------------------------
 !
@@ -135,12 +173,12 @@
       if(equat(6:7).eq.'ke') then
        do m=1,7
         dumy2g(m)=dumy2g(m)+nmax*dumy2(m)**2
-        dumaxg(m)=amax1(dumaxg(m),abs(dumax(m)))
+        dumaxg(m)=max(dumaxg(m),abs(dumax(m)))
        enddo
       else
        do m=1,5
         dumy2g(m)=dumy2g(m)+nmax*dumy2(m)**2
-        dumaxg(m)=amax1(dumaxg(m),abs(dumax(m)))
+        dumaxg(m)=max(dumaxg(m),abs(dumax(m)))
        enddo
       endif
       endif !gin test img

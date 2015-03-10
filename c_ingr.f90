@@ -13,6 +13,16 @@
       use para_var
       use para_fige
    use sortiefichier
+implicit none
+integer :: imot
+integer :: nmot
+double precision :: x
+double precision :: y
+double precision :: z
+integer :: king
+integer :: l
+integer :: ldom
+integer :: ldomd
 !
 !-----------------------------------------------------------------------
 !

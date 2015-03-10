@@ -66,6 +66,51 @@
       use proprieteflu
       use schemanum
       use definition
+implicit none
+integer :: inc
+integer :: mfb
+integer :: l
+double precision :: rpi
+double precision :: rti
+integer :: ncbd
+double precision :: v
+integer :: mmb
+integer :: mpb
+integer :: mpn
+double precision :: pression
+double precision :: temp
+double precision :: cson
+integer :: id
+integer :: jd
+integer :: kd
+double precision :: b
+double precision :: gam2t
+double precision :: gam6
+double precision :: gamt
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mt
+integer :: n0c
+integer :: n0n
+integer :: nc
+integer :: nci
+integer :: ncij
+integer :: ncijk
+integer :: ncik
+integer :: ncj
+integer :: ncjk
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: pres
+double precision :: qinf
+double precision :: qn
+double precision :: qxs
+double precision :: qys
+double precision :: qzs
+double precision :: rho
 !
 !-----------------------------------------------------------------------
 !

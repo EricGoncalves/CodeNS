@@ -61,6 +61,32 @@
       use constantes
       use chainecarac
       use sortiefichier 
+implicit none
+integer :: indc
+integer :: img
+double precision :: u
+double precision :: dt
+double precision :: sn
+double precision :: vol
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: tn4
+double precision :: cson
+double precision :: pression
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+integer :: lgsnlt
+integer :: lm
+integer :: n
+integer :: ndeb
+integer :: nfin
+integer :: nid
+integer :: nijd
+integer :: njd
+integer :: npsn
 !
 !-----------------------------------------------------------------------
 !
@@ -117,14 +143,14 @@
          do j = jj1(lm),jj2(lm)-1
           do i = ii1(lm),ii2(lm)-1
            n = indc(i,j,k)
-           dtmin=amin1(dtmin,dt(n))
+           dtmin=min(dtmin,dt(n))
           enddo
          enddo
         enddo
 !
       enddo
 !
-      dtmin=amin1(dt1min,dtmin)
+      dtmin=min(dt1min,dtmin)
       if(dtmin.lt.dt1min) then
        write(imp,'("===> chrono")')
        write(imp,'(2(1pe11.3))') &

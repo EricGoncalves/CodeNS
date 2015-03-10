@@ -18,6 +18,11 @@
 !
       use para_fige
    use sortiefichier
+implicit none
+integer :: l
+integer :: ni
+integer :: nj
+integer :: nk
 !
 !-----------------------------------------------------------------------
 !

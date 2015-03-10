@@ -21,6 +21,7 @@
       use chainecarac
       use kcle
       use proprieteflu
+implicit none
 !
 !-----------------------------------------------------------------------
 !

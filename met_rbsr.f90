@@ -13,6 +13,38 @@
       use para_fige
    use boundary
       use maillage
+implicit none
+integer :: ncbd
+integer :: mnr
+double precision :: xnr
+double precision :: ynr
+double precision :: znr
+double precision :: s1x
+double precision :: s1y
+double precision :: s1z
+double precision :: s2x
+double precision :: s2y
+double precision :: s2z
+integer :: ncin
+double precision :: cr
+integer :: l
+integer :: m
+integer :: mb
+integer :: mf
+integer :: mfb
+integer :: mr
+integer :: mt
+integer :: nd
+integer :: nid
+integer :: njd
+integer :: nr
+double precision :: s1xr
+double precision :: s1yr
+double precision :: s1zr
+double precision :: s2xr
+double precision :: s2yr
+double precision :: s2zr
+double precision :: sr
 !
 !-----------------------------------------------------------------------
 !

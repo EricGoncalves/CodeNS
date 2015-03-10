@@ -19,6 +19,81 @@
       use chainecarac
       use proprieteflu
       use schemanum
+implicit none
+double precision :: psi
+double precision :: amimd
+double precision :: fi1
+integer :: inc
+integer :: ind
+double precision :: a
+double precision :: b
+double precision :: x
+double precision :: y
+double precision :: z
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: t
+double precision :: d
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+double precision :: del6
+double precision :: del7
+double precision :: aa
+double precision :: eps
+double precision :: c
+double precision :: cndsi
+double precision :: cndsj
+double precision :: cndsk
+double precision :: coef
+double precision :: dd
+double precision :: etot
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: i2p1
+integer :: ind1
+integer :: ind2
+integer :: is
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: j2p1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: k2p1
+integer :: m
+integer :: m1
+integer :: m2
+integer :: n
+integer :: n0
+integer :: n1
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: q2
+double precision :: rlam
+double precision :: rro
+double precision :: rro1
+double precision :: u
+double precision :: v
+double precision :: w
 !
 !-----------------------------------------------------------------------
 !
@@ -30,7 +105,7 @@
       ind(i,j,k)= 1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
       inc(id,jd,kd)= id+jd*nid+kd*nijd
 !
-      amimd(a,b)=sign(1.,a)*amax1(0.,amin1(abs(a),b*sign(1.,a)))
+      amimd(a,b)=sign(1.,a)*max(0.,min(abs(a),b*sign(1.,a)))
       fi1(x,y,z)=amimd(x,amimd(y,z))
       psi(aa,eps)=0.5*(1.+sign(1.,abs(aa)-eps))*abs(aa)+ &
                  0.25*(1.-sign(1.,abs(aa)-eps))*(aa*aa+eps*eps)/eps

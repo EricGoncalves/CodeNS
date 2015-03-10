@@ -15,6 +15,40 @@
       use maillage
       use modeleturb
       use chainecarac
+implicit none
+integer :: inc
+integer :: ind
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: v
+double precision :: dist
+integer :: mnpar
+double precision :: utau
+double precision :: fmu
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: mp
+integer :: n
+integer :: n0
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: yplus
 !
 !-----------------------------------------------------------------------
 !

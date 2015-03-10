@@ -38,6 +38,52 @@
       use para_var
       use para_fige
       use maillage
+implicit none
+integer :: inc
+integer :: indc
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: mfb
+double precision :: bceqt
+double precision :: pres
+integer :: ncbd
+double precision :: v
+integer :: mmb
+integer :: mpb
+integer :: mpn
+integer :: lm
+double precision :: sn
+integer :: lgsnlt
+double precision :: dqm
+integer :: i1
+integer :: i2
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j2
+integer :: k1
+integer :: k2
+integer :: kdir
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mt
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+integer :: nl
+double precision :: qms
+double precision :: rqns
 !
 !-----------------------------------------------------------------------
 !

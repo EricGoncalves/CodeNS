@@ -21,6 +21,9 @@
       use sortiefichier
       use boundary
       use maillage
+implicit none
+integer :: imot
+integer :: nmot
 !
 !-----------------------------------------------------------------------
 !

@@ -21,6 +21,33 @@
       use para_fige
       use maillage
       use schemanum
+implicit none
+integer :: indc
+integer :: i
+integer :: j
+integer :: k
+double precision :: v
+double precision :: ptdual
+double precision :: vdual
+double precision :: vdual1
+double precision :: vdual2
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n0c
+integer :: nc
+integer :: nid
+integer :: nijd
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !

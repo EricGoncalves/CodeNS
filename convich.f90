@@ -9,6 +9,8 @@
 !***********************************************************************
 !
       use chainecarac 
+implicit none
+integer :: kvar
       character(len=24) ::  cvar
 !
       if(kvar.eq.0) then

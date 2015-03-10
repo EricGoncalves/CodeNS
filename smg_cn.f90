@@ -17,6 +17,55 @@
       use para_fige
       use maillage
       use chainecarac
+implicit none
+integer :: inc
+integer :: indc
+integer :: indn
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: img
+double precision :: vol
+double precision :: volt
+double precision :: vc
+double precision :: vv
+double precision :: eps
+integer :: i1
+integer :: i2
+integer :: iinf
+integer :: inc_i
+integer :: inc_ij
+integer :: inc_ijk
+integer :: inc_ik
+integer :: inc_j
+integer :: inc_jk
+integer :: inc_k
+integer :: isup
+integer :: j1
+integer :: j2
+integer :: jinf
+integer :: jsup
+integer :: k1
+integer :: k2
+integer :: kinf
+integer :: ksup
+integer :: l
+integer :: lm
+integer :: n
+integer :: n0c
+integer :: n0n
+integer :: nc
+integer :: ndeb
+integer :: nfin
+integer :: ni
+integer :: nij
+integer :: nj
+integer :: nn
+double precision :: ts
+double precision :: vols
 !
 !-----------------------------------------------------------------------
 !

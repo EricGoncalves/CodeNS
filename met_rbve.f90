@@ -10,6 +10,17 @@
       use para_var
       use para_fige
    use boundary
+implicit none
+double precision :: t
+integer :: ncin
+integer :: ncbd
+integer :: m
+integer :: mf
+integer :: mfb
+integer :: ml
+integer :: mt
+integer :: n
+integer :: ni
 !
 !-----------------------------------------------------------------------
 !

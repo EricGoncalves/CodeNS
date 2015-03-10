@@ -27,6 +27,26 @@
       use para_fige
       use sortiefichier
       use chainecarac
+implicit none
+integer :: l
+double precision :: v
+double precision :: utau
+integer :: ncin
+integer :: ncbd
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: tn4
+double precision :: tn5
+double precision :: tn6
+double precision :: tn7
+double precision :: tn8
+integer :: imax
+integer :: imin
+integer :: jmax
+integer :: jmin
+integer :: kmax
+integer :: kmin
 !
 !-----------------------------------------------------------------------
 !

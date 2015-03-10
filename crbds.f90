@@ -55,6 +55,26 @@
       use chainecarac
       use sortiefichier
       use boundary
+implicit none
+integer :: mfbe
+integer :: kini
+integer :: l
+integer :: imin
+integer :: imax
+integer :: jmin
+integer :: jmax
+integer :: kmin
+integer :: kmax
+integer :: ncbd
+integer :: img
+integer :: imgi
+integer :: imgj
+integer :: imgk
+integer :: lm
+integer :: m0
+integer :: mfbi
+integer :: mfbim
+integer :: mt
 !
 !-----------------------------------------------------------------------
 !

@@ -16,6 +16,16 @@
 !
       use para_fige
    use sortiefichier
+implicit none
+integer :: lmfb
+integer :: lmfbd
+integer :: kibdn
+integer :: long
+integer :: longm1
+integer :: nm
+integer :: nmult
+integer :: nr
+integer :: nrest
 !
 !-----------------------------------------------------------------------
 !

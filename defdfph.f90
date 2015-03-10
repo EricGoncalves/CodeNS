@@ -21,6 +21,7 @@
       use kcle
       use constantes
       use proprieteflu
+implicit none
 !
 !-----------------------------------------------------------------------
 !

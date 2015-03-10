@@ -21,6 +21,93 @@
       use proprieteflu
       use schemanum
       use definition
+implicit none
+integer :: inc
+integer :: indc
+integer :: lm
+double precision :: v
+double precision :: d
+double precision :: sn
+integer :: lgsnlt
+double precision :: snup
+double precision :: ps
+double precision :: cson
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+double precision :: a2
+double precision :: beta2
+double precision :: ck2
+double precision :: ck4
+double precision :: cnds
+double precision :: d1
+double precision :: d2
+double precision :: d3
+double precision :: d3w1
+double precision :: d3w2
+double precision :: d3w3
+double precision :: d3w4
+double precision :: d3w5
+double precision :: d4
+double precision :: d5
+double precision :: dd1
+double precision :: dd2
+double precision :: dd3
+double precision :: dd4
+double precision :: dd5
+double precision :: ds1
+double precision :: ds2
+double precision :: ds3
+double precision :: ds4
+double precision :: ds5
+double precision :: dw1
+double precision :: dw2
+double precision :: dw3
+double precision :: dw4
+double precision :: dw5
+double precision :: eps2
+double precision :: eps4
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: kdir
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: pres
+double precision :: q2
+double precision :: qinf
+double precision :: rho
+double precision :: rl
+double precision :: temp
+double precision :: uu
+double precision :: vn
+double precision :: vv
+double precision :: ww
 !
 !-----------------------------------------------------------------------
 !
@@ -125,7 +212,7 @@
 !         a2=0.25*(cson(n)+cson(n-ninc))**2
          a2=cson(n)*cson(n-ninc)
          q2=uu**2+vv**2+ww**2
-         beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+         beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
          rl=0.5*((1.+beta2)*abs(vn) + &
                sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
          get=0.5*(v(n,5)/v(n,1)+v(n-ninc,5)/v(n-ninc,1)) !energietotale
@@ -194,7 +281,7 @@
         a2=gam*pres/rho
 !        a2=cson(n)*cson(n-ninc)
         q2=uu**2+vv**2+ww**2
-        beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+        beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
         rl=0.5*((1.+beta2)*abs(vn) + &
               sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
         get=0.5*(v(n,5)/v(n,1)+v(n-ninc,5)/v(n-ninc,1))
@@ -245,7 +332,7 @@
         a2=gam*pres/rho
 !        a2=cson(n)*cson(n-ninc)
         q2=uu**2+vv**2+ww**2
-        beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+        beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
         rl=0.5*((1.+beta2)*abs(vn) + &
               sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
         get=0.5*(v(n,5)/v(n,1)+v(n-ninc,5)/v(n-ninc,1))
@@ -313,7 +400,7 @@
          vn=uu*sn(m,kdir,1)+vv*sn(m,kdir,2)+ww*sn(m,kdir,3)
          a2=cson(n)*cson(n-ninc)
          q2=uu**2+vv**2+ww**2
-         beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+         beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
          rl=0.5*((1.+beta2)*abs(vn) + &
                sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
          get=0.5*(v(n,5)/v(n,1)+v(n-ninc,5)/v(n-ninc,1))
@@ -382,7 +469,7 @@
          a2=gam*pres/rho
 !         a2=cson(n)*cson(n-ninc)
          q2=uu**2+vv**2+ww**2
-         beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+         beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
          rl=0.5*((1.+beta2)*abs(vn) + &
               sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
          get=0.5*(v(n,5)/v(n,1)+v(n-ninc,5)/v(n-ninc,1))
@@ -433,7 +520,7 @@
          a2=gam*pres/rho
 !         a2=cson(n)*cson(n-ninc)
          q2=uu**2+vv**2+ww**2
-         beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+         beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
          rl=0.5*((1.+beta2)*abs(vn) + &
               sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
          get=0.5*(v(n,5)/v(n,1)+v(n-ninc,5)/v(n-ninc,1))
@@ -502,7 +589,7 @@
          vn=uu*sn(m,kdir,1)+vv*sn(m,kdir,2)+ww*sn(m,kdir,3)
          a2=cson(n)*cson(n-ninc)
          q2=uu**2+vv**2+ww**2
-         beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+         beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
          rl=0.5*((1.+beta2)*abs(vn) + &
                sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
          get=0.5*(v(n,5)/v(n,1)+v(n-ninc,5)/v(n-ninc,1))
@@ -571,7 +658,7 @@
          a2=gam*pres/rho
 !         a2=cson(n)*cson(n-ninc)
          q2=uu**2+vv**2+ww**2
-         beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+         beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
          rl=0.5*((1.+beta2)*abs(vn) + &
               sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
          get=0.5*(v(n,5)/v(n,1)+v(n-ninc,5)/v(n-ninc,1))
@@ -622,7 +709,7 @@
          a2=gam*pres/rho
 !         a2=cson(n)*cson(n-ninc)
          q2=uu**2+vv**2+ww**2
-         beta2=amin1(amax1(q2/a2,cte*qinf**2/a2),1.)
+         beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
          rl=0.5*((1.+beta2)*abs(vn) + &
               sqrt(((1.-beta2)*vn)**2+4.*beta2*cnds*a2))
          get=0.5*(v(n,5)/v(n,1)+v(n-ninc,5)/v(n-ninc,1))

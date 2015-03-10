@@ -53,6 +53,108 @@
       use maillage
       use modeleturb
       use chainecarac
+implicit none
+integer :: indc
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: delta
+double precision :: sn
+double precision :: vol
+double precision :: v
+double precision :: dist
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: txxf5x
+double precision :: txyf5y
+double precision :: txzf5z
+double precision :: cfke
+double precision :: t
+double precision :: dtdx
+double precision :: dtdy
+double precision :: dtdz
+double precision :: sdif
+double precision :: qcxts5
+double precision :: qcyts6
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: cb2sig
+double precision :: ct42
+double precision :: cv13
+double precision :: cv133
+double precision :: cw36
+double precision :: dft2
+double precision :: dfv1
+double precision :: dfv2
+double precision :: dfw
+double precision :: dist2
+double precision :: dpr
+double precision :: dsdif
+double precision :: dsm1
+double precision :: dsm2
+double precision :: dst
+double precision :: dxg
+double precision :: ft2
+double precision :: fv1
+double precision :: fv2
+double precision :: fw
+integer :: i1
+integer :: i1m1
+integer :: i2
+integer :: i2m1
+integer :: imax
+integer :: imin
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j2
+integer :: j2m1
+integer :: jmax
+integer :: jmin
+integer :: k1
+integer :: k1m1
+integer :: k2
+integer :: k2m1
+integer :: kmax
+integer :: kmin
+integer :: lgsnlt
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nid
+integer :: nijd
+integer :: njd
+integer :: npsn
+double precision :: rtil6
+double precision :: rtilde
+double precision :: sm1
+double precision :: sm2
+double precision :: stilde
+double precision :: uns3
+double precision :: uns6
+double precision :: vort
+double precision :: xg
+double precision :: xg6
+double precision :: xkhi
+double precision :: xkhi2
+double precision :: xkhi3
+double precision :: xkhi4
 !
 !-----------------------------------------------------------------------
 !
@@ -197,7 +299,7 @@
             stilde=vort+nutilde*fv2/kapd2
 !            stilde=fv3*vort+nutilde*fv2/kapd2
             rtilde=nutilde/(stilde*kapd2)
-            rtilde=amin1(rtilde,1.)
+            rtilde=min(rtilde,1.)
             rtil6 =rtilde**6
             ft2   =ct3*exp(-ct4*xkhi2)
             sm1   =cb1*(1.-ft2)*stilde*v(n,6)

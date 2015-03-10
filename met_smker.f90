@@ -16,6 +16,62 @@
       use para_fige
       use maillage
       use modeleturb
+implicit none
+integer :: inc
+integer :: indc
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: s
+double precision :: cfke
+double precision :: tprod
+double precision :: tsv6
+double precision :: tsv7
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: as
+double precision :: b
+double precision :: c1f1
+double precision :: c2f2
+double precision :: d
+double precision :: esk
+double precision :: g
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: rdelta
+double precision :: roe2sk
+double precision :: x
+double precision :: xl1
+double precision :: xl2
 !
 !-----------------------------------------------------------------------
 !
@@ -65,7 +121,7 @@
 !     &            dvzz(m)**2)/3. + (dvzy(m)+dvyz(m))**2
 !     &              + (dvxz(m)+dvzx(m))**2
 !     &              + (dvyx(m)+dvxy(m))**2)/s(n,7)
-!            alpha=amin1(1.,1./(as*cmu*ss))
+!            alpha=min(1.,1./(as*cmu*ss))
             tsv6(n)=tprod(m)-s(n,7)
             tsv7(n)=cke1*tprod(m)*esk-cke2*roe2sk
 !           tsv7(n)=cke1*tprod(m)*esk/alpha -cke2*roe2sk
@@ -74,12 +130,12 @@
             c2f2=cke2
             d=0.
             x=c1f1*tprod(m)-c2f2*s(n,7)
-            g=amax1(0.,d*(d-2.*(x-c2f2*s(n,7))))
+            g=max(0.,d*(d-2.*(x-c2f2*s(n,7))))
             rdelta=sqrt((x-c2f2*s(n,7))**2+4*x*s(n,7)+g)
             b=x-c2f2*s(n,7)-d
             xl1=0.5*(b+rdelta)/s(n,6)
             xl2=0.5*(b-rdelta)/s(n,6)
-            cfke(n)=amax1(abs(xl1),abs(xl2))
+            cfke(n)=max(abs(xl1),abs(xl2))
           enddo
         enddo
       enddo

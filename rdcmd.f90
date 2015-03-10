@@ -9,6 +9,10 @@
 !
       use para_var
       use para_fige
+implicit none
+integer :: imot
+integer :: nmot
+integer :: lgcmd
 !
 !-----------------------------------------------------------------------
 !

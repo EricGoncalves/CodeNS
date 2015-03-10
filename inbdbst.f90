@@ -12,6 +12,18 @@
       use sortiefichier
       use proprieteflu
       use definition
+implicit none
+integer :: ibdcst
+integer :: nvbc
+double precision :: vbc
+double precision :: aist
+double precision :: alst
+double precision :: btst
+double precision :: pist
+double precision :: pspi
+double precision :: roist
+double precision :: tist
+double precision :: tsti
 !
 !-----------------------------------------------------------------------
 !

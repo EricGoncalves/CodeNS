@@ -20,6 +20,7 @@
       use definition
       use chainecarac
    use maillage
+implicit none
 !
 !-----------------------------------------------------------------------
 !

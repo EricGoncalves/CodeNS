@@ -21,6 +21,51 @@
       use schemanum
       use boundary
       use proprieteflu
+implicit none
+integer :: l
+double precision :: v
+double precision :: txxf5x
+double precision :: txyf5y
+double precision :: txzf5z
+double precision :: tyyf6x
+double precision :: tyzf6y
+double precision :: tzzf6z
+double precision :: qcxts5
+double precision :: qcyts6
+double precision :: qcz000
+double precision :: sn
+double precision :: vol
+integer :: ncbd
+integer :: ncin
+integer :: mnc
+integer :: mnr
+double precision :: xnr
+double precision :: ynr
+double precision :: znr
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: ztemp
+double precision :: dtdx
+double precision :: dtdy
+double precision :: dtdz
+integer :: lgsnlt
+integer :: mf
+integer :: mfc
+integer :: mfr
+integer :: npsn
 !
 !-----------------------------------------------------------------------
 !

@@ -48,6 +48,39 @@
       use para_fige
       use boundary
       use definition
+implicit none
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+integer :: ncbd
+integer :: ncin
+integer :: mnc
+double precision :: cr
+integer :: m
+integer :: mb
+integer :: mc
+integer :: mf
+integer :: mfb
+integer :: mt
+integer :: nc
+integer :: nd
+integer :: ndm
+double precision :: qcxr
+double precision :: qcyr
+double precision :: qczr
+double precision :: sr
+double precision :: txxr
+double precision :: txyr
+double precision :: txzr
+double precision :: tyyr
+double precision :: tyzr
+double precision :: tzzr
 !
 !-----------------------------------------------------------------------
 !

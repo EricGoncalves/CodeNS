@@ -15,6 +15,14 @@
       use chainecarac
       use kcle
       use definition
+implicit none
+integer :: imot
+integer :: nmot
+integer :: nst
+integer :: icmt
+integer :: kval
+integer :: lst
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

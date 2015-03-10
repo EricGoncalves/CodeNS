@@ -11,6 +11,29 @@
       use para_var
       use para_fige
       use sortiefichier
+implicit none
+integer :: ibdcfl
+integer :: mfl
+double precision :: bceqt
+integer :: mpb
+double precision :: adim
+integer :: img
+integer :: m
+integer :: mflm
+integer :: ml
+integer :: mt
+integer :: nbidon
+integer :: nd
+integer :: ne
+integer :: nif
+integer :: njf
+integer :: nkf
+integer :: nr
+integer :: nt
+integer :: nv
+integer :: nvp
+integer :: nvt
+double precision :: rbidon
 !
 !-----------------------------------------------------------------------
 !

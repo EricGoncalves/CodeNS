@@ -53,6 +53,56 @@
       use proprieteflu
       use definition
       use modeleturb
+implicit none
+double precision :: v
+double precision :: dist
+integer :: ncin
+integer :: ncbd
+integer :: mfb
+integer :: l
+integer :: mnpar
+double precision :: fgam
+integer :: ncyc
+double precision :: tp
+double precision :: temp
+double precision :: c1
+double precision :: c2
+double precision :: c3
+double precision :: c4
+double precision :: ca
+double precision :: cb
+double precision :: cta
+double precision :: ctb
+double precision :: denom
+double precision :: dudy
+integer :: iter
+integer :: m
+integer :: m0ns
+integer :: mb
+integer :: mpar
+integer :: mt
+integer :: n0c
+integer :: nc
+integer :: nfacns
+integer :: ni
+integer :: nii
+double precision :: rc4
+double precision :: rnutilde
+double precision :: rop
+double precision :: t1
+double precision :: t2
+double precision :: t3
+double precision :: temp1
+double precision :: tn
+double precision :: top
+double precision :: tt
+double precision :: upyp1
+double precision :: v1t
+double precision :: v1x
+double precision :: v1y
+double precision :: v1z
+double precision :: yp02
+double precision :: yplus1
 !
 !-----------------------------------------------------------------------
 !

@@ -101,6 +101,73 @@
       use maillage
       use proprieteflu
       use definition
+implicit none
+integer :: inc
+integer :: mfb
+integer :: l
+double precision :: rpi
+double precision :: rti
+double precision :: d0x
+double precision :: d0y
+double precision :: d0z
+integer :: ncbd
+double precision :: v
+double precision :: y
+double precision :: z
+integer :: mmb
+integer :: mpb
+integer :: mpn
+double precision :: usdn2
+double precision :: roc0
+double precision :: am0
+double precision :: qn
+double precision :: p
+double precision :: resi
+double precision :: ro
+double precision :: un
+double precision :: usdn
+double precision :: ym
+double precision :: zm
+double precision :: pression
+double precision :: temp
+double precision :: cson
+integer :: id
+integer :: jd
+integer :: kd
+double precision :: b
+double precision :: df
+double precision :: dqn
+double precision :: eps
+double precision :: f
+double precision :: gam2t
+double precision :: gam6
+double precision :: gamt
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mt
+integer :: n0c
+integer :: n0n
+integer :: nc
+integer :: nci
+integer :: ncij
+integer :: ncijk
+integer :: ncik
+integer :: ncj
+integer :: ncjk
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: nitn
+integer :: njd
+integer :: nn
+double precision :: ps
+double precision :: qxs
+double precision :: qys
+double precision :: qzs
+double precision :: residu
+double precision :: w
+double precision :: wn
 !
 !-----------------------------------------------------------------------
 !
@@ -190,7 +257,7 @@
 !
        residu=0.
        do m=1,mt
-        residu=amax1(residu,resi(m))
+        residu=max(residu,resi(m))
        enddo
        nitn=nitn+1
       enddo

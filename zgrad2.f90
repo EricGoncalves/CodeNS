@@ -64,6 +64,105 @@
       use para_var
       use para_fige
       use maillage
+implicit none
+integer :: inc
+integer :: ind
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+double precision :: s
+double precision :: temp
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: dtx
+double precision :: dty
+double precision :: dtz
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: c0
+double precision :: eps
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: imax
+integer :: imin
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: jmax
+integer :: jmin
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: kmax
+integer :: kmin
+integer :: m
+integer :: n
+integer :: n0
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: sixx
+double precision :: sixy
+double precision :: sixz
+double precision :: siyx
+double precision :: siyy
+double precision :: siyz
+double precision :: sizx
+double precision :: sizy
+double precision :: sizz
+double precision :: sjxx
+double precision :: sjxy
+double precision :: sjxz
+double precision :: sjyx
+double precision :: sjyy
+double precision :: sjyz
+double precision :: sjzx
+double precision :: sjzy
+double precision :: sjzz
+double precision :: skxx
+double precision :: skxy
+double precision :: skxz
+double precision :: skyx
+double precision :: skyy
+double precision :: skyz
+double precision :: skzx
+double precision :: skzy
+double precision :: skzz
+double precision :: stx
+double precision :: sty
+double precision :: stz
+double precision :: ts
+double precision :: vols
 !
 !-----------------------------------------------------------------------
 !

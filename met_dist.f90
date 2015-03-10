@@ -20,6 +20,53 @@
       use para_fige
       use maillage
       use chainecarac
+implicit none
+integer :: inc
+integer :: indn
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: delta
+double precision :: dx1
+double precision :: dx2
+double precision :: dx3
+double precision :: dx4
+double precision :: dy1
+double precision :: dy2
+double precision :: dy3
+double precision :: dy4
+double precision :: dz1
+double precision :: dz2
+double precision :: dz3
+double precision :: dz4
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncij
+integer :: ncijk
+integer :: ncik
+integer :: ncj
+integer :: ncjk
+integer :: nck
+integer :: nid
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !
@@ -69,7 +116,7 @@
          dy2=sqrt((x(n+nci)-x(n+ncij))**2+(y(n+nci)-y(n+ncij))**2+ &
                   (z(n+nci)-z(n+ncij))**2)
 !
-         Delta(m)=amax1(dx1,dx2,dy1,dy2)
+         Delta(m)=max(dx1,dx2,dy1,dy2)
         enddo
        enddo
 !
@@ -109,7 +156,7 @@
          dz4=sqrt((x(n+ncij)-x(n+ncijk))**2+(y(n+ncij)-y(n+ncijk))**2+ &
                   (z(n+ncij)-z(n+ncijk))**2)
 !
-         Delta(m)=amax1(dx1,dx2,dx3,dx4,dy1,dy2,dy3,dy4,dz1,dz2,dz3,dz4)
+         Delta(m)=max(dx1,dx2,dx3,dx4,dy1,dy2,dy3,dy4,dz1,dz2,dz3,dz4)
         enddo
        enddo
       enddo

@@ -19,6 +19,73 @@
       use para_fige
       use maillage
       use modeleturb
+implicit none
+integer :: inc
+integer :: ind
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: sn
+double precision :: vol
+double precision :: t
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: dist
+double precision :: v
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: a1
+double precision :: c1
+double precision :: c14
+double precision :: c2
+double precision :: c22
+double precision :: coef1
+double precision :: coef2
+double precision :: exp2x
+double precision :: f1
+double precision :: f2
+double precision :: fmu
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n
+integer :: n0
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: r2sb1
+double precision :: rack
+double precision :: ss2
+double precision :: tdef
+double precision :: xl2
+double precision :: xxi
+double precision :: xxi2
+double precision :: zeta
 !
 !-----------------------------------------------------------------------
 !

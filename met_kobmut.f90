@@ -25,6 +25,40 @@
       use para_fige
       use maillage
       use modeleturb
+implicit none
+integer :: inc
+integer :: ind
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: ncyc
+integer :: l
+double precision :: v
+double precision :: allfae
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: idebug
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: n
+integer :: n0
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: omegha
+double precision :: rapk
+double precision :: reytur
 !
 !-----------------------------------------------------------------------
 !

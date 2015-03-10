@@ -22,6 +22,207 @@
       use maillage
       use proprieteflu
       use schemanum
+implicit none
+integer :: inc
+integer :: indc
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: lm
+integer :: ityprk
+double precision :: u
+double precision :: v
+double precision :: ff
+double precision :: sn
+integer :: lgsnlt
+double precision :: rhol
+double precision :: ul
+double precision :: vl
+double precision :: wl
+double precision :: pl
+double precision :: rhor
+double precision :: ur
+double precision :: vr
+double precision :: wr
+double precision :: prr
+double precision :: ps
+double precision :: al
+double precision :: am
+double precision :: am2i
+double precision :: ar
+double precision :: cnds
+double precision :: dfex
+double precision :: dfey
+double precision :: dfez
+double precision :: dfxx
+double precision :: dfxy
+double precision :: dfxz
+double precision :: dfyy
+double precision :: dfyz
+double precision :: dfzz
+double precision :: di1
+double precision :: di2
+double precision :: di3
+double precision :: di4
+double precision :: di5
+double precision :: dj1
+double precision :: dj2
+double precision :: dj3
+double precision :: dj4
+double precision :: dj5
+double precision :: dk1
+double precision :: dk2
+double precision :: dk3
+double precision :: dk4
+double precision :: dk5
+double precision :: dw1
+double precision :: dw2
+double precision :: dw3
+double precision :: dw4
+double precision :: dw5
+double precision :: el
+double precision :: er
+double precision :: f1
+double precision :: f2
+double precision :: f3
+double precision :: f4
+double precision :: f5
+double precision :: fex
+double precision :: fey
+double precision :: fez
+double precision :: fxx
+double precision :: fxy
+double precision :: fxz
+double precision :: fyy
+double precision :: fyz
+double precision :: fzz
+double precision :: g1
+double precision :: g2
+double precision :: g3
+double precision :: g4
+double precision :: g5
+double precision :: gd
+double precision :: gd1
+double precision :: gd2
+double precision :: h1
+double precision :: h2
+double precision :: h3
+double precision :: h4
+double precision :: h5
+double precision :: hl
+double precision :: hm
+double precision :: hr
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: kdir
+integer :: m
+integer :: n
+integer :: n0c
+integer :: n1
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: p11
+double precision :: p12
+double precision :: p13
+double precision :: p14
+double precision :: p15
+double precision :: p21
+double precision :: p22
+double precision :: p23
+double precision :: p24
+double precision :: p25
+double precision :: p31
+double precision :: p32
+double precision :: p33
+double precision :: p34
+double precision :: p35
+double precision :: p41
+double precision :: p42
+double precision :: p43
+double precision :: p44
+double precision :: p45
+double precision :: p51
+double precision :: p52
+double precision :: p53
+double precision :: p54
+double precision :: p55
+double precision :: q11
+double precision :: q12
+double precision :: q13
+double precision :: q14
+double precision :: q15
+double precision :: q21
+double precision :: q22
+double precision :: q23
+double precision :: q24
+double precision :: q25
+double precision :: q2l
+double precision :: q2r
+double precision :: q31
+double precision :: q32
+double precision :: q33
+double precision :: q34
+double precision :: q35
+double precision :: q41
+double precision :: q42
+double precision :: q43
+double precision :: q44
+double precision :: q45
+double precision :: q51
+double precision :: q52
+double precision :: q53
+double precision :: q54
+double precision :: q55
+double precision :: rhoami
+double precision :: rhoiam
+double precision :: rhom
+double precision :: rhomi
+double precision :: si0
+double precision :: si1
+double precision :: si2
+double precision :: si3
+double precision :: si4
+double precision :: sj0
+double precision :: sj1
+double precision :: sj2
+double precision :: sj3
+double precision :: sj4
+double precision :: sk0
+double precision :: sk1
+double precision :: sk2
+double precision :: sk3
+double precision :: sk4
+double precision :: um
+double precision :: v1
+double precision :: v4
+double precision :: v5
+double precision :: vitm2
+double precision :: vm
+double precision :: vn
+double precision :: wm
 !
 !-----------------------------------------------------------------------
 !

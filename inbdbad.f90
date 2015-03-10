@@ -12,6 +12,10 @@
       use para_fige
       use definition
       use boundary
+implicit none
+integer :: mfl
+integer :: nv
+double precision :: adim
 !
 !-----------------------------------------------------------------------
 !

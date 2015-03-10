@@ -15,6 +15,25 @@
       use para_var
       use para_fige
    use sortiefichier
+implicit none
+integer :: imot
+integer :: nmot
+double precision :: exs1
+double precision :: exs2
+double precision :: x
+double precision :: y
+double precision :: z
+integer :: ncbd
+integer :: ncin
+integer :: mnc
+double precision :: epsmsh
+integer :: iba
+integer :: jba
+integer :: kba
+integer :: kibdc
+integer :: krr
+integer :: mfbea
+integer :: mfbeb
 !
 !-----------------------------------------------------------------------
 !

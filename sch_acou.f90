@@ -19,6 +19,44 @@
       use maillage
       use constantes
       use schemanum
+implicit none
+integer :: indc
+integer :: i
+integer :: j
+integer :: k
+integer :: lm
+integer :: ityprk
+double precision :: u
+double precision :: ff
+double precision :: dtpas
+double precision :: x
+double precision :: y
+double precision :: z
+integer :: idcyc
+double precision :: vol
+integer :: i1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: n0c
+integer :: nc
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: omeg
+double precision :: temps
+double precision :: ts1
+double precision :: xcc
+double precision :: ycc
+double precision :: zcc
 !
 !-----------------------------------------------------------------------
 !

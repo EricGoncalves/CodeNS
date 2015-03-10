@@ -10,6 +10,14 @@
 !
       use para_var
       use para_fige
+implicit none
+integer :: lgcmd
+integer :: imot
+integer :: nmot
+integer :: icmd
+integer :: im
+integer :: kbl
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

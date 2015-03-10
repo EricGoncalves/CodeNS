@@ -30,6 +30,22 @@
       use para_fige
       use maillage
       use proprieteflu
+implicit none
+integer :: mfb
+double precision :: tp
+integer :: ncbd
+double precision :: v
+integer :: mmb
+integer :: mpb
+integer :: ncin
+double precision :: pression
+double precision :: temp
+double precision :: cson
+integer :: m
+integer :: mb
+integer :: mt
+integer :: ni
+integer :: nl
 !
 !-----------------------------------------------------------------------
 !

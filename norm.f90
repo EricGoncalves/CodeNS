@@ -76,6 +76,67 @@
       use para_var
       use para_fige
       use maillage
+implicit none
+integer :: inc
+integer :: ind
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+integer :: ndt
+integer :: imin
+integer :: imax
+integer :: jmin
+integer :: jmax
+integer :: kmin
+integer :: kmax
+double precision :: tnix
+double precision :: tniy
+double precision :: tniz
+double precision :: tnjx
+double precision :: tnjy
+double precision :: tnjz
+double precision :: tnkx
+double precision :: tnky
+double precision :: tnkz
+double precision :: dx1
+double precision :: dx2
+double precision :: dy1
+double precision :: dy2
+double precision :: dz1
+double precision :: dz2
+integer :: i1
+integer :: i1p1
+integer :: imaxm1
+integer :: ior
+integer :: j1
+integer :: j1p1
+integer :: jmaxm1
+integer :: jor
+integer :: k1
+integer :: k1p1
+integer :: kmaxm1
+integer :: kor
+integer :: m
+integer :: mor
+integer :: n
+integer :: n0
+integer :: nid
+integer :: nijd
+integer :: njd
+integer :: nor
+double precision :: psi
+double precision :: psj
+double precision :: psk
+double precision :: vx
+double precision :: vy
+double precision :: vz
 !
 !-----------------------------------------------------------------------
 !

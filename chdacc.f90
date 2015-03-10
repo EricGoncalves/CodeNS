@@ -61,6 +61,27 @@
    use maillage
    use boundary
    use sortiefichier
+implicit none
+integer :: l
+integer :: ncin
+integer :: ncbd
+double precision :: v
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: tn4
+double precision :: tn5
+double precision :: tn6
+double precision :: tn7
+double precision :: tn8
+integer :: imin
+integer :: imax
+integer :: jmin
+integer :: jmax
+integer :: kmin
+integer :: kmax
+integer :: kda
+integer :: mfb
 !
 !-----------------------------------------------------------------------
 !

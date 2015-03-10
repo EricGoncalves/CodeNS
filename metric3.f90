@@ -33,6 +33,72 @@
       use para_fige
       use maillage
       use chainecarac
+implicit none
+integer :: inc
+integer :: indn
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: cvi
+double precision :: cvj
+double precision :: cvk
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: dmi
+double precision :: dmj
+double precision :: dmk
+double precision :: dpi
+double precision :: dpj
+double precision :: dpk
+integer :: i1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: j1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: m
+integer :: mc
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncij
+integer :: ncijk
+integer :: ncik
+integer :: ncj
+integer :: ncjk
+integer :: nck
+integer :: nid
+integer :: njd
+double precision :: tk
+double precision :: xe
+double precision :: xn
+double precision :: xp
+double precision :: xr
+double precision :: ye
+double precision :: yn
+double precision :: yp
+double precision :: yr
+double precision :: ze
+double precision :: zn
+double precision :: zp
+double precision :: zr
 !
 !-----------------------------------------------------------------------
 !

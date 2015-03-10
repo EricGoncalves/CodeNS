@@ -12,6 +12,12 @@
       use chainecarac
       use modeleturb
       use schemanum
+implicit none
+integer :: imot
+integer :: nmot
+integer :: icmt
+integer :: kval
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

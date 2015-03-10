@@ -30,6 +30,24 @@
       use para_var
       use para_fige
    use boundary
+implicit none
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: xpar
+double precision :: ypar
+double precision :: zpar
+integer :: ncin
+integer :: nfbi
+integer :: isens3
+integer :: m
+integer :: m0
+integer :: m0n
+integer :: mb
+integer :: mbn
+integer :: mt
+integer :: nci
+integer :: ndm3
 !
 !-----------------------------------------------------------------------
 !

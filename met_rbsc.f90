@@ -11,6 +11,25 @@
       use para_var
       use para_fige
    use boundary
+implicit none
+double precision :: s1x
+double precision :: s1y
+double precision :: s1z
+double precision :: s2x
+double precision :: s2y
+double precision :: s2z
+integer :: ncbd
+integer :: ncin
+integer :: mnc
+integer :: m
+integer :: mb
+integer :: mc
+integer :: mf
+integer :: mfb
+integer :: mt
+integer :: nc
+integer :: nd
+integer :: ndm
 !
 !-----------------------------------------------------------------------
 !

@@ -72,6 +72,51 @@
       use kcle
       use schemanum
       use proprieteflu
+implicit none
+double precision :: dt
+double precision :: v
+double precision :: toxx
+double precision :: toxy
+double precision :: toxz
+double precision :: toyy
+double precision :: toyz
+double precision :: tozz
+double precision :: qcx
+double precision :: qcy
+double precision :: qcz
+double precision :: sn
+double precision :: vol
+double precision :: ptdual
+double precision :: vdual
+double precision :: vdual1
+double precision :: vdual2
+double precision :: cvi
+double precision :: cvj
+double precision :: cvk
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: pression
+double precision :: ztemp
+double precision :: cson
+double precision :: tnte1
+double precision :: tnte3
+double precision :: tnte4
+integer :: ncyc
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: tn4
+double precision :: tn5
+double precision :: tn6
+double precision :: tn7
+double precision :: tn8
+double precision :: tn9
+double precision :: tn10
+integer :: icmt
 !
 !-----------------------------------------------------------------------
 !

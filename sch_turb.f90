@@ -20,6 +20,71 @@
       use para_fige
       use maillage
       use modeleturb
+implicit none
+integer :: inc
+integer :: indc
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: u
+double precision :: v
+double precision :: d
+double precision :: fd5x
+double precision :: fd5y
+double precision :: fd5z
+double precision :: fd6x
+double precision :: fd6y
+double precision :: fd6z
+double precision :: ts6
+double precision :: ts7
+integer :: ncin
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+double precision :: f6x
+double precision :: f6y
+double precision :: f6z
+double precision :: f7x
+double precision :: f7y
+double precision :: f7z
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: kdir
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: si6
+double precision :: si7
+double precision :: sj6
+double precision :: sj7
+double precision :: sk6
+double precision :: sk7
 !
 !-----------------------------------------------------------------------
 !

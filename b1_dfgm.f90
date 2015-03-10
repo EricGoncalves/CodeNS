@@ -17,6 +17,7 @@
    use definition
    use kcle
    use chainecarac
+implicit none
 !
 !-----------------------------------------------------------------------
 !

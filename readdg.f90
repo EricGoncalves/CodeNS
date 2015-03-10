@@ -35,6 +35,26 @@
       use para_fige
       use sortiefichier
       use maillage
+implicit none
+integer :: indn
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+integer :: kdg
+double precision :: x
+double precision :: y
+double precision :: z
+integer :: i1
+integer :: i2
+integer :: j1
+integer :: j2
+integer :: k1
+integer :: k2
+integer :: n
+integer :: nid
+integer :: nijd
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !

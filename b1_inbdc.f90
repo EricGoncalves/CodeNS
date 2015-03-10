@@ -32,6 +32,15 @@
 !
       use para_fige
    use sortiefichier
+implicit none
+integer :: krr
+integer :: mfbea
+integer :: mfbeb
+integer :: kibdc
+double precision :: epsmsh
+integer :: iba
+integer :: jba
+integer :: kba
 !
 !-----------------------------------------------------------------------
 !

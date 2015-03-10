@@ -12,6 +12,11 @@
       use chainecarac
       use modeleturb
       use kcle
+implicit none
+integer :: imot
+integer :: nmot
+integer :: icmt
+integer :: nm
 !
 !-----------------------------------------------------------------------
 !

@@ -37,6 +37,90 @@
       use proprieteflu
       use definition
       use modeleturb
+implicit none
+double precision :: v
+double precision :: dist
+integer :: ncin
+integer :: ncbd
+integer :: mfb
+integer :: l
+double precision :: vol
+double precision :: sn
+integer :: ncyc
+integer :: mnpar
+double precision :: fgam
+double precision :: tprod
+double precision :: utau
+double precision :: dpdx
+double precision :: dpdy
+double precision :: dpdz
+double precision :: ps
+double precision :: temp
+double precision :: ca
+double precision :: cklb2
+double precision :: cklb3
+double precision :: coefa
+double precision :: coefb
+double precision :: coefc
+double precision :: coefc1
+double precision :: coefp
+double precision :: conv
+double precision :: ctk
+double precision :: ctmu
+double precision :: ctmu2
+double precision :: dconv
+double precision :: dist2
+double precision :: dnum
+double precision :: dpc
+double precision :: dpdt
+double precision :: dy
+double precision :: f1i
+double precision :: fmui
+integer :: ij
+integer :: in
+integer :: iter
+integer :: j
+integer :: kk
+integer :: lgsnlt
+integer :: m
+integer :: m0ns
+integer :: mb
+integer :: mpar
+integer :: mt
+integer :: n0c
+integer :: nc
+integer :: ndis
+integer :: nfacns
+integer :: ni
+integer :: nii
+integer :: nn
+integer :: npsn
+integer :: ntab
+double precision :: rhoi
+double precision :: rhol
+double precision :: rk2
+double precision :: rok2
+double precision :: rop
+double precision :: som1
+double precision :: som2
+double precision :: som3
+double precision :: t1
+double precision :: t2
+double precision :: t3
+double precision :: tn
+double precision :: top
+double precision :: top0
+double precision :: topar
+double precision :: topini
+double precision :: tt
+double precision :: upyp1
+double precision :: v1t
+double precision :: v1x
+double precision :: v1y
+double precision :: v1z
+double precision :: xi
+double precision :: yi
+double precision :: yp02
 !
 !-----------------------------------------------------------------------
 !

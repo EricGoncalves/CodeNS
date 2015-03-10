@@ -14,6 +14,7 @@
       use sortiefichier
    use chainecarac
    use kcle
+implicit none
 !
 !-----------------------------------------------------------------------
 !

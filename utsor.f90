@@ -149,6 +149,128 @@
       use proprieteflu 
       use definition
       use chainecarac
+implicit none
+integer :: ncbd
+double precision :: s
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: akp
+double precision :: alfar
+double precision :: betar
+double precision :: claero
+double precision :: claerob
+double precision :: clav
+double precision :: clavb
+double precision :: clavtot
+double precision :: cmaero
+double precision :: cmaerob
+double precision :: cmav
+double precision :: cmavb
+double precision :: cmavtot
+double precision :: cnaero
+double precision :: cnaerob
+double precision :: cnav
+double precision :: cnavb
+double precision :: cnavtot
+double precision :: csal
+double precision :: csbe
+double precision :: cxaero
+double precision :: cxaerob
+double precision :: cxav
+double precision :: cxavb
+double precision :: cxavtot
+double precision :: cyaero
+double precision :: cyaerob
+double precision :: cyav
+double precision :: cyavb
+double precision :: cyavtot
+double precision :: czaero
+double precision :: czaerob
+double precision :: czav
+double precision :: czavb
+double precision :: czavtot
+double precision :: dcl
+double precision :: dcm
+double precision :: dcn
+double precision :: dcx
+double precision :: dcy
+double precision :: dcz
+double precision :: dsml
+double precision :: dsxy
+double precision :: dsxz
+double precision :: dsyz
+double precision :: dx1
+double precision :: dx2
+double precision :: dy1
+double precision :: dy2
+double precision :: dz1
+double precision :: dz2
+integer :: i1
+integer :: i2
+integer :: idf1
+integer :: idf2
+integer :: idfac
+integer :: idm
+integer :: imaxf
+integer :: iminf
+integer :: j1
+integer :: j2
+integer :: jmaxf
+integer :: jminf
+integer :: k1
+integer :: k2
+integer :: kmaxf
+integer :: kminf
+integer :: l
+integer :: m0b
+integer :: m0n
+integer :: m1
+integer :: m1max
+integer :: m1maxm1
+integer :: m1min
+integer :: m2
+integer :: m2max
+integer :: m2maxm1
+integer :: m2min
+integer :: mf
+integer :: mfac
+integer :: mfacn
+integer :: mfl
+integer :: n0c
+integer :: n0n
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nfac1
+integer :: nfac2
+integer :: nfac3
+integer :: nfac4
+integer :: nfacf
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: pa
+double precision :: paspa1
+double precision :: pis2
+double precision :: ps
+double precision :: pspi0
+double precision :: qq
+double precision :: raddeg
+double precision :: rm2
+double precision :: sml
+double precision :: snal
+double precision :: snbe
+double precision :: sxy
+double precision :: sxyb
+double precision :: sxz
+double precision :: syz
+double precision :: u
+double precision :: v
+double precision :: w
+double precision :: xcfac
+double precision :: ycfac
+double precision :: zcfac
 !
 !-----------------------------------------------------------------------
 !

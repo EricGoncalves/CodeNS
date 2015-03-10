@@ -11,6 +11,11 @@
       use para_fige
       use chainecarac
       use kcle
+implicit none
+integer :: imot
+integer :: nmot
+integer :: itit
+integer :: lgcmd
 !
 !-----------------------------------------------------------------------
 !

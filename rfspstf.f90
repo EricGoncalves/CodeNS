@@ -24,6 +24,16 @@
       use para_var
       use para_fige
       use boundary
+implicit none
+double precision :: t0
+integer :: ncin
+integer :: ncbd
+integer :: m
+integer :: mf
+integer :: mfb
+integer :: ml
+integer :: mt
+integer :: n
 !
 !-----------------------------------------------------------------------
 !

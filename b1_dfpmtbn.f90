@@ -18,6 +18,7 @@
    use sortiefichier
    use modeleturb
    use kcle
+implicit none
 !
 !-----------------------------------------------------------------------
 !

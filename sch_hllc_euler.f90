@@ -22,6 +22,123 @@
       use maillage
       use proprieteflu
       use schemanum
+implicit none
+integer :: inc
+integer :: indc
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: lm
+integer :: ityprk
+double precision :: u
+double precision :: v
+double precision :: ff
+double precision :: sn
+integer :: lgsnlt
+double precision :: rhol
+double precision :: ul
+double precision :: vl
+double precision :: wl
+double precision :: pl
+double precision :: rhor
+double precision :: ur
+double precision :: vr
+double precision :: wr
+double precision :: prr
+double precision :: ps
+double precision :: al
+double precision :: am
+double precision :: ar
+double precision :: cnds
+double precision :: el
+double precision :: er
+double precision :: fex
+double precision :: fey
+double precision :: fez
+double precision :: fxx
+double precision :: fxy
+double precision :: fxz
+double precision :: fyy
+double precision :: fyz
+double precision :: fzz
+double precision :: gd
+double precision :: gd1
+double precision :: gd2
+double precision :: hc1
+double precision :: hc2
+double precision :: hc3
+double precision :: hc4
+double precision :: hc5
+double precision :: hl
+double precision :: hm
+double precision :: hr
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: ind1
+integer :: ind2
+integer :: isortie
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: kdir
+integer :: m
+integer :: n
+integer :: n0c
+integer :: n1
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: ninc
+integer :: njd
+double precision :: pst
+double precision :: q2l
+double precision :: q2r
+double precision :: rhoest
+double precision :: rhom
+double precision :: rhost
+double precision :: rhoust
+double precision :: rhovst
+double precision :: rhowst
+double precision :: si1
+double precision :: si2
+double precision :: si3
+double precision :: si4
+double precision :: si5
+double precision :: sj1
+double precision :: sj2
+double precision :: sj3
+double precision :: sj4
+double precision :: sj5
+double precision :: sk1
+double precision :: sk2
+double precision :: sk3
+double precision :: sk4
+double precision :: sk5
+double precision :: sl
+double precision :: sr
+double precision :: sst
+double precision :: um
+double precision :: vitm2
+double precision :: vm
+double precision :: vnl
+double precision :: vnm
+double precision :: vnr
+double precision :: wm
 !
 !-----------------------------------------------------------------------
 !

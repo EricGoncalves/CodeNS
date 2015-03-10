@@ -12,6 +12,7 @@
    use sortiefichier
    use kcle
    use schemanum
+implicit none
 !
 !-----------------------------------------------------------------------
 !

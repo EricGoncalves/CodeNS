@@ -10,6 +10,13 @@
       use para_var
       use para_fige
       use chainecarac
+implicit none
+integer :: imot
+integer :: nm
+integer :: ient
+integer :: kient
+integer :: icmt
+integer :: kerr
 !
 !-----------------------------------------------------------------------
 !

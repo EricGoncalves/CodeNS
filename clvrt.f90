@@ -19,6 +19,108 @@
       use maillage
       use proprieteflu
       use schemanum
+implicit none
+integer :: inc
+integer :: mfb
+double precision :: rod
+double precision :: roud
+double precision :: rovd
+double precision :: rowd
+double precision :: roed
+integer :: ncbd
+double precision :: v
+integer :: mmb
+integer :: mpb
+integer :: mpn
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: pression
+double precision :: temp
+double precision :: cson
+integer :: id
+integer :: jd
+integer :: kd
+double precision :: am
+double precision :: ap
+double precision :: b0
+double precision :: bs
+double precision :: dvx
+double precision :: dvz
+double precision :: dx
+double precision :: dz
+double precision :: eps0
+double precision :: epsm
+double precision :: epsp
+double precision :: gami
+double precision :: gm1sg
+double precision :: gsgm1
+integer :: m
+integer :: mb
+integer :: mn
+integer :: mt
+integer :: n0c
+integer :: n0n
+integer :: nci
+integer :: ncij
+integer :: ncijk
+integer :: ncik
+integer :: ncj
+integer :: ncjk
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+integer :: nl
+integer :: nn
+double precision :: p
+double precision :: pd0
+double precision :: pdd
+double precision :: pi
+double precision :: ps
+double precision :: qcs4p
+double precision :: qd0
+double precision :: qd2
+double precision :: qd20
+double precision :: qn
+double precision :: qnd
+double precision :: qns
+double precision :: qtx
+double precision :: qtxd
+double precision :: qtxs
+double precision :: qty
+double precision :: qtyd
+double precision :: qtys
+double precision :: qtz
+double precision :: qtzd
+double precision :: qtzs
+double precision :: qxd
+double precision :: qxd0
+double precision :: qxs
+double precision :: qyd
+double precision :: qyd0
+double precision :: qys
+double precision :: qzd
+double precision :: qzd0
+double precision :: qzs
+double precision :: ro
+double precision :: ro0
+double precision :: roc0
+double precision :: rod0
+double precision :: rodd
+double precision :: roqn0
+double precision :: ros
+double precision :: vrtalr
+double precision :: vrtang
+double precision :: vrtbet
+double precision :: vrtdel
+double precision :: vrtden
+double precision :: vrtdis
+double precision :: vrtfac
+double precision :: vrtsin
+double precision :: vrtx
+double precision :: vrtz
 !
 !-----------------------------------------------------------------------
 !

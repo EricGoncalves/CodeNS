@@ -50,6 +50,58 @@
    use sortiefichier
    use maillage
    use boundary
+implicit none
+integer :: ind
+integer :: igr
+integer :: jgr
+integer :: kgr
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: xpar
+double precision :: ypar
+double precision :: zpar
+double precision :: xcc
+double precision :: ycc
+double precision :: zcc
+double precision :: dist2
+double precision :: dist
+integer :: mnpar
+integer :: m1tb
+integer :: m2tb
+integer :: nfrtb
+integer :: l
+integer :: i
+integer :: j
+integer :: k
+double precision :: dmini
+integer :: i1
+integer :: i2
+integer :: ib
+integer :: igr0
+integer :: imini
+integer :: j1
+integer :: j2
+integer :: jb
+integer :: jgr0
+integer :: k1
+integer :: k2
+integer :: kb
+integer :: kgr0
+integer :: m0b
+integer :: mb
+integer :: mbb
+integer :: mbmx
+integer :: mc
+integer :: mp
+integer :: mpar0
+integer :: mpar1
+integer :: n0
+integer :: nc
+integer :: nfbi
+integer :: nid
+integer :: nijd
+integer :: njd
 !
 !-----------------------------------------------------------------------
 !

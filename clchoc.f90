@@ -31,6 +31,25 @@
       use definition
       use proprieteflu
       use schemanum
+implicit none
+integer :: mfb
+integer :: mmb
+integer :: mpb
+integer :: ncbd
+double precision :: v
+double precision :: a22
+double precision :: cmach22
+integer :: m
+integer :: mb
+integer :: ml
+integer :: mt
+integer :: nl
+double precision :: p
+double precision :: p2
+double precision :: ro
+double precision :: ro2
+double precision :: thet
+double precision :: v22
 !
 !-----------------------------------------------------------------------
 !

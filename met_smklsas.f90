@@ -66,6 +66,121 @@
       use maillage
       use modeleturb
       use chainecarac
+implicit none
+integer :: inc
+integer :: indc
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+integer :: l
+double precision :: sn
+double precision :: vol
+double precision :: v
+double precision :: dist
+integer :: mnpar
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: txxf5x
+double precision :: txyf5y
+double precision :: txzf5z
+double precision :: tyyf6x
+double precision :: tyzf6y
+double precision :: tzzf6z
+double precision :: tprod
+double precision :: cfke
+double precision :: t
+double precision :: dtdx
+double precision :: dtdy
+double precision :: dtdz
+double precision :: bark
+double precision :: qcxts5
+double precision :: qcyts6
+double precision :: tn1
+double precision :: tn2
+double precision :: tn3
+double precision :: tn9
+double precision :: cmui1
+double precision :: cmui2
+double precision :: cmuj1
+double precision :: cmuj2
+double precision :: cmuk1
+double precision :: cmuk2
+double precision :: c132
+double precision :: cc43
+double precision :: csk2
+double precision :: csl1
+double precision :: csl12
+double precision :: divv
+double precision :: dqkdk
+double precision :: dqkdl
+double precision :: dqldk
+double precision :: dqldl
+double precision :: dssigl
+double precision :: dvdv
+double precision :: gkgro
+double precision :: glgk
+double precision :: glgl
+double precision :: glgro
+integer :: i1
+integer :: i1m1
+integer :: i2
+integer :: i2m1
+integer :: imax
+integer :: imin
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j2
+integer :: j2m1
+integer :: jmax
+integer :: jmin
+integer :: k1
+integer :: k1m1
+integer :: k2
+integer :: k2m1
+integer :: kmax
+integer :: kmin
+integer :: lgsnlt
+integer :: m
+integer :: n
+integer :: n0c
+integer :: nci
+integer :: nid
+integer :: nijd
+integer :: njd
+integer :: npsn
+double precision :: qsi2
+double precision :: rack
+double precision :: racrk
+double precision :: racro
+double precision :: rdelta
+double precision :: rtil3
+double precision :: sk2
+double precision :: sl1
+double precision :: sl2
+double precision :: sl3
+double precision :: sl4
+double precision :: sl5
+double precision :: ss
+double precision :: xdelta
+double precision :: xk
+double precision :: xkapad2
+double precision :: xl
+double precision :: xl1
+double precision :: xl2
+double precision :: xlskap2
+double precision :: xlvk
 !
 !-----------------------------------------------------------------------
 !

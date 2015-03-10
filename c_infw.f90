@@ -15,6 +15,22 @@
       use para_fige
    use sortiefichier
       use modeleturb
+implicit none
+integer :: imot
+integer :: nmot
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: v
+double precision :: tnte1
+double precision :: utau
+double precision :: vdual
+double precision :: vdual1
+double precision :: vdual2
+integer :: kina
+integer :: l
+integer :: ldom
+integer :: ldomd
 !
 !-----------------------------------------------------------------------
 !

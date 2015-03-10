@@ -22,6 +22,54 @@
       use maillage
       use boundary
       use chainecarac
+implicit none
+integer :: inc
+integer :: ind
+integer :: id
+integer :: jd
+integer :: kd
+integer :: i
+integer :: j
+integer :: k
+double precision :: sn
+integer :: lgsnlt
+double precision :: vol
+integer :: l
+double precision :: ps
+double precision :: dpdx
+double precision :: dpdy
+double precision :: dpdz
+double precision :: eps
+integer :: i1
+integer :: i1m1
+integer :: i1p1
+integer :: i2
+integer :: i2m1
+integer :: i2p1
+integer :: ind1
+integer :: ind2
+integer :: j1
+integer :: j1m1
+integer :: j1p1
+integer :: j2
+integer :: j2m1
+integer :: j2p1
+integer :: k1
+integer :: k1m1
+integer :: k1p1
+integer :: k2
+integer :: k2m1
+integer :: k2p1
+integer :: m
+integer :: n
+integer :: n0
+integer :: nci
+integer :: ncj
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+double precision :: ts
 !
 !-----------------------------------------------------------------------
 !

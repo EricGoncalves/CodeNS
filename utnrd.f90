@@ -49,6 +49,56 @@
       use definition
       use proprieteflu
       use boundary
+implicit none
+integer :: inc
+integer :: id
+integer :: jd
+integer :: kd
+double precision :: bceqt
+integer :: mfl
+integer :: l
+double precision :: rod
+double precision :: roud
+double precision :: rovd
+double precision :: rowd
+double precision :: roed
+integer :: ncbd
+double precision :: y
+double precision :: z
+double precision :: a
+double precision :: alpha0
+double precision :: alphar
+double precision :: beta0
+double precision :: betar
+double precision :: degrad
+integer :: m
+integer :: ml
+integer :: mt
+integer :: n0c
+integer :: n0n
+integer :: nc
+integer :: nci
+integer :: ncij
+integer :: ncijk
+integer :: ncik
+integer :: ncj
+integer :: ncjk
+integer :: nck
+integer :: nid
+integer :: nijd
+integer :: njd
+integer :: nn
+double precision :: p
+double precision :: pis2
+double precision :: q
+double precision :: rmach
+double precision :: ro
+double precision :: roe
+double precision :: rou
+double precision :: rov
+double precision :: row
+double precision :: ym
+double precision :: zm
 !
 !-----------------------------------------------------------------------
 !

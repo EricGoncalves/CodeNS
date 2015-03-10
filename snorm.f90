@@ -33,6 +33,25 @@
       use para_fige
       use maillage
       use chainecarac
+implicit none
+integer :: l
+double precision :: x
+double precision :: y
+double precision :: z
+double precision :: sn
+integer :: lgsnlt
+integer :: i1
+integer :: i2
+integer :: imax
+integer :: imin
+integer :: j1
+integer :: j2
+integer :: jmax
+integer :: jmin
+integer :: k1
+integer :: k2
+integer :: kmax
+integer :: kmin
 !
 !-----------------------------------------------------------------------
 !

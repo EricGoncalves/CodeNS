@@ -58,6 +58,64 @@
       use proprieteflu
       use definition
       use modeleturb
+implicit none
+double precision :: v
+double precision :: dist
+integer :: ncin
+integer :: ncbd
+integer :: mfb
+integer :: l
+integer :: mnpar
+double precision :: fgam
+double precision :: tprod
+double precision :: dvxx
+double precision :: dvxy
+double precision :: dvxz
+double precision :: dvyx
+double precision :: dvyy
+double precision :: dvyz
+double precision :: dvzx
+double precision :: dvzy
+double precision :: dvzz
+double precision :: temp
+double precision :: cmu1
+double precision :: cmu2
+double precision :: co
+double precision :: echleps
+double precision :: eps
+integer :: iter
+integer :: m
+integer :: m0ns
+integer :: mb
+integer :: mpar
+integer :: mt
+integer :: n0c
+integer :: nc
+integer :: nfacns
+integer :: ni
+integer :: nii
+double precision :: pka
+double precision :: pkb
+double precision :: prodk
+double precision :: retur
+double precision :: rop
+double precision :: t1
+double precision :: t2
+double precision :: t3
+double precision :: temp1
+double precision :: tn
+double precision :: top
+double precision :: tparoi
+double precision :: tt
+double precision :: upyp1
+double precision :: uto
+double precision :: v1t
+double precision :: v1x
+double precision :: v1y
+double precision :: v1z
+double precision :: ye
+double precision :: yp02
+double precision :: yv
 !
 !-----------------------------------------------------------------------
 !
@@ -182,8 +240,8 @@
           ss=v(ni,6)*sqrt(4.*(dvxx(nii)**2+dvyy(nii)**2+dvzz(nii)**2)/3. &
              + (dvzy(nii)+dvyz(nii))**2 + (dvxz(nii)+dvzx(nii))**2 &
              + (dvyx(nii)+dvxy(nii))**2)/v(ni,7)
-!          alpha=amin1(1.,1./(cmu1*cmu*ss))    !correspond a c=0.52
-          alpha=amin1(1.,as/(cmu*ss))          !correspond a c=0.3
+!          alpha=min(1.,1./(cmu1*cmu*ss))    !correspond a c=0.52
+          alpha=min(1.,as/(cmu*ss))          !correspond a c=0.3
           tprod(nii)=prodk*alpha
           if(dist(ni).lt.yv) tprod(nii)=0.
 !     fin boucle sur facettes paroi

@@ -72,6 +72,43 @@
       use modeleturb
       use chainecarac
       use sortiefichier
+implicit none
+integer :: l
+integer :: ncin
+integer :: ncbd
+double precision :: v
+double precision :: dist
+integer :: mnpar
+integer :: isens3
+integer :: lpar
+integer :: m
+integer :: m10
+integer :: m1max
+integer :: m1min
+integer :: m20
+integer :: m2max
+integer :: m2min
+integer :: m3
+integer :: m30
+integer :: m3clpar
+integer :: m3max
+integer :: m3min
+integer :: m3mxf
+integer :: m3tot
+integer :: mfbi
+integer :: mpar
+integer :: mpb0
+integer :: mpn0
+integer :: mpn1
+integer :: n
+integer :: ncfic
+integer :: nfac
+integer :: nmaxp
+integer :: nmin
+integer :: nminp
+integer :: npar
+double precision :: pond
+double precision :: romegal
 !
 !-----------------------------------------------------------------------
 !

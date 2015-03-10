@@ -10,6 +10,14 @@
       use para_fige
       use definition
       use sortiefichier
+implicit none
+integer :: ibddim
+integer :: nvbc
+double precision :: vbc
+double precision :: alf0
+double precision :: bet0
+double precision :: pdim
+double precision :: tdim
 !
 !-----------------------------------------------------------------------
 !

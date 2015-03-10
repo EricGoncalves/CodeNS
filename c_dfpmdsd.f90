@@ -10,6 +10,13 @@
 !
       use para_fige
       use sortiefichier
+implicit none
+integer :: imot
+integer :: nmot
+integer :: ldom
+integer :: ldomd
+integer :: lgr
+integer :: lgrd
 !
 !-----------------------------------------------------------------------
 !
