@@ -24,8 +24,8 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 cgam,crd,cpinfl,cql,cpr,cprt,creynz
+      character(len=1316) :: form
+      character(len=24) ::  cgam,crd,cpinfl,cql,cpr,cprt,creynz
 !
       call convich(kgam,cgam)
       call convich(krd,crd)

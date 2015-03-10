@@ -13,7 +13,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *4 clmf
+      character(len=4 ) :: clmf
       dimension vbc(ista*lsta)
 !
       if(ibddim.eq.0) then

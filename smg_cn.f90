@@ -179,7 +179,7 @@
 !
       do n = ndeb,nfin
        ts=sign(0.5,-volt(n))
-       vols = (0.5+ts)*eps+(0.5-ts)*volt(n)
+       vols = (0.5+ts)*eps+(0.5-ts)*volt(n)+tiny(1.)
        vv(n,1)=vv(n,1)/vols
        vv(n,2)=vv(n,2)/vols
        vv(n,3)=vv(n,3)/vols

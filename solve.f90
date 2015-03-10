@@ -1,4 +1,6 @@
 module para_fige
+      integer :: ndir,nind,lz,lg,lt,mtb,mtt,neqt,nsta,lsta,ista,nobj
+      integer :: nmx,lgcmdx
   parameter(  ndir=3     )
   parameter(  nind=3     )
   parameter(    lz=50    )
@@ -16,6 +18,11 @@ module para_fige
 end module para_fige
 !
 module para_var
+      integer :: ndimub,ndimctf,ndimnts,ndimntu,kdimg,kdimv,kdimk
+      integer :: mdimub,mdimtbf,mdimtnf,mdimtcf,mdimtrf,nvar
+      integer :: ip00,ip11,ip12,ip13,ip60,ip40,ip21,ip31,ip41
+      integer :: ip42,ip43,ip44
+      double precision :: ccg,cfg,cng
   parameter(ndimub =120000)
   parameter(ndimctf=100000)
   parameter(ndimnts=100000)
@@ -493,10 +500,19 @@ program solve
 !
 !-----------------------------------------------------------------------
 !
-      integer iyplus
-      real mu,mut,nxn,nyn,nzn
-      character(len=32) :: comment
-      character(len=32) :: mot(nmx)
+implicit none
+      integer           :: iyplus
+      integer           :: img,imot,l,mfbi,mfc,mfn,mfr,mnc,mnpar,mnr,ncbd,ncin
+      integer           :: ncyc,nmot
+      real              :: mu,mut,nxn,nyn,nzn
+      double precision  :: aam,bceqt,cfke,cmui1,cmui2,cmuj1,cmuj2,cmuk1
+      double precision  :: cmuk2,cson,cvi,cvj,cvk,d0x,d0y,d0z,dist,dt,exs1
+      double precision  :: exs2,fgam,pres,pression,ptdual,qcx,qcy,qcz,qtx,qty,qtz,r,res,roam
+      double precision  :: rod,roed,roud,rovd,rowd,rpi,rti,sn,tam,tm1,tm10,tm11,tm12,tm13
+      double precision  :: tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tn1,tn10,tn2,tn3,tn4,tn5,tn6,tn7
+      double precision  :: tn8,tn9,tnte1,tnte2,tnte3,tnte4,toxx,toxy,toxz,toyy,toyz,tozz,tp
+      double precision  :: utau,v,vdual,vdual1,vdual2,vol,x,xnr,y,ynr,z,znr,ztemp
+      character(len=32) :: comment,mot(nmx)
 !
       dimension imot(nmx)
       dimension v(ip11,ip60)
@@ -522,7 +538,7 @@ program solve
       dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40), &
                 tm5(ip40),tm6(ip40),tm7(ip40),tm8(ip40), &
                 tm9(ip40),tm10(ip40),tm11(ip40),tm12(ip40),tm13(ip40)
-!				tm14(ip40),tm15(ip40),tm16(ip40), &
+!    tm14(ip40),tm15(ip40),tm16(ip40), &
 !                tm17(ip40),tm18(ip40),tm19(ip40),tm20(ip40), &
 !                tm21(ip40),tm22(ip40),tm23(ip40),tm24(ip40), &
 !                tm25(ip40),tm26(ip40),tm27(ip40),tm28(ip40), &
@@ -581,6 +597,7 @@ program solve
 !
 !  lecture et interpretation des donnees  ******************************
 !
+      mot=""
       do while(mot(1)(1:3).ne.'end')
 !
       call rdcmd(mot,imot,nmot)

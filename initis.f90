@@ -43,7 +43,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *2 indfl
+      character(len=2 ) :: indfl
       dimension ncbd(ip41)
 !
       ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd

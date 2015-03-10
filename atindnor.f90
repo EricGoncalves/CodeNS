@@ -50,12 +50,12 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use maillage
-	  use boundary
+   use maillage
+   use boundary
 !
 !-----------------------------------------------------------------------
 !
-      character *2 indmf
+      character(len=2 ) :: indmf
       integer dm1,dm2,dm3
 !
 !     ..................................................................

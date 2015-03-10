@@ -27,7 +27,7 @@
 !-----------------------------------------------------------------------
 !                                                                       
       real nx,ny,nz 
-      character *7 equat 
+      character(len=7 ) :: equat 
       real f1,f2,f3,f4,f5,fc1,fc2,fc3,fc4,fc5,df1,df2,df3,df4,df5 
       real g1,g2,g3,g4,g5,gc1,gc2,gc3,gc4,gc5,dg1,dg2,dg3,dg4,dg5 
       real fv2,fv3,fv4,fv5,gv2,gv3,gv4,gv5 

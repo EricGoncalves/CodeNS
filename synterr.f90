@@ -8,15 +8,15 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 command
-      character *32 comment
-      character *32 mot(nmx)
-      character *7 formatcm
-      character *4 longcm
+      character(len=1316) :: command
+      character(len=32) :: comment
+      character(len=32) :: mot(nmx)
+      character(len=7 ) :: formatcm
+      character(len=4 ) :: longcm
       dimension imot(nmx)
 !
       call cctcmd(command,lgcmd,mot,imot,1,nmot)

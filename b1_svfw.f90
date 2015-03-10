@@ -16,8 +16,8 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *4 disc
+      character(len=1316) :: form
+      character(len=4 ) :: disc
 !
        form='(/,2x,''sauvegarde des var_calc'',/' &
              //'2x,''-----------------------'',/' &

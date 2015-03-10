@@ -14,14 +14,14 @@
 !***********************************************************************
 !
       use sortiefichier
-	  use definition
-	  use kcle
-	  use chainecarac
+   use definition
+   use kcle
+   use chainecarac
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 cconfig,cperio
+      character(len=1316) :: form
+      character(len=24) ::  cconfig,cperio
 !
       call convich(kconfig,cconfig)
       call convich(kperio,cperio)

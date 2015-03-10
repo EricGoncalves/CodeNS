@@ -47,13 +47,14 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
-	  use maillage
-	  use boundary
+   use sortiefichier
+   use maillage
+   use boundary
 !
 !-----------------------------------------------------------------------
 !
       real nxn,nyn,nzn
+      integer dm3
       dimension x(ip21),y(ip21),z(ip21)
       dimension nxn(ip42),nyn(ip42),nzn(ip42)
       dimension xpar(ip00),ypar(ip00),zpar(ip00)
@@ -124,8 +125,7 @@
         enddo
 !
         if(ierr.ne.0) then
-          write(imp,'(/,''!!!atdist_1: probleme orientation pour '', &
-          ''calcul distance'')')
+          write(imp,'(/,''!!!atdist_1: probleme orientation pour '',''calcul distance'')')
           stop
         end if
       enddo

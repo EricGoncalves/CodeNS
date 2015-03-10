@@ -13,12 +13,12 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
+   use sortiefichier
       use modeleturb
 !
 !-----------------------------------------------------------------------
 !
-      character *32 mot(nmx)
+      character(len=32) ::  mot(nmx)
       real mut
 !
       dimension imot(nmx)

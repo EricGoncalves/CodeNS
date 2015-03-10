@@ -13,13 +13,13 @@
 !***********************************************************************
 !
       use sortiefichier
-	  use boundary
-	  use kcle
+   use boundary
+   use kcle
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 ckexl
+      character(len=1316) :: form
+      character(len=24) :: ckexl
 !
       call convich(kkexl,ckexl)
 !

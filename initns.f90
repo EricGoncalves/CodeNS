@@ -122,8 +122,8 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *2 indfb
-      character *7 eqt
+      character(len=2 ) :: indfb
+      character(len=7 ) :: eqt
       integer dm,nip0
       real nxn,nyn,nzn,nn
       dimension x(ip21),y(ip21),z(ip21)

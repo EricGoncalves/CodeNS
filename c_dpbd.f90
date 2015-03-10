@@ -21,8 +21,8 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 mot(nmx)
-      character *32 typdat
+      character(len=32) ::  mot(nmx)
+      character(len=32) ::  typdat
       real nxn,nyn,nzn
 !
       dimension imot(nmx)

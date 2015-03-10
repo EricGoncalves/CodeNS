@@ -191,7 +191,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
+      character(len=1316) :: form
       integer ncyc
       real nxn,nyn,nzn,mu,mut
 !

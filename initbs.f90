@@ -43,7 +43,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *2 indf
+      character(len=2 ) :: indf
       dimension ncin(ip41),ncbd(ip41)
 !
       nid=id2(l)-id1(l)+1

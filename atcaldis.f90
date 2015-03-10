@@ -114,10 +114,10 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
-	  use maillage
-	  use constantes
-	  use boundary
+   use sortiefichier
+   use maillage
+   use constantes
+   use boundary
 !
 !-----------------------------------------------------------------------
 !
@@ -138,8 +138,7 @@
 !     dans xpar(ip00), ypar(ip00),zpar(ip00),dist2(ip00). Il faut donc :
 !     ndimub=ip00 > mdimtnx=ip42
       if(ip00 .le. mdimtnx) then
-        write(imp,'(/,''!!!atcaldis: ip00='',i6,4x, &
-        ''inferieur a mdimtnx='',i6)')ip00,mdimtnx
+        write(imp,'(/,''!!!atcaldis: ip00='',i6,4x,''inferieur a mdimtnx='',i6)')ip00,mdimtnx
         stop
       endif
 !
@@ -178,8 +177,7 @@
         stop
       end if
       if(nbd.eq.0) then
-        write(imp,'(/,"!!!atcaldis: pas de paroi pour calcul des ", &
-        "distances aux parois - arret")')
+        write(imp,'(/,"!!!atcaldis: pas de paroi pour calcul des distances aux parois - arret")')
         stop
       end if
 !

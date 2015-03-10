@@ -11,8 +11,8 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
-	  use maillage
+   use sortiefichier
+   use maillage
 !
 !-----------------------------------------------------------------------
 !
@@ -50,8 +50,7 @@
 !
    10 continue
       close(ird)
-      write(imp,'("===>at_lecdist: fin lecture fichier= fdist", &
-      "  nb domaines lus=",i3)')ldismx
+      write(imp,'("===>at_lecdist: fin lecture fichier= fdist  nb domaines lus=",i3)')ldismx
       return
 !
    50 continue

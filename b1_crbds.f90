@@ -25,12 +25,12 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *2 indfl
+      character(len=1316) :: form
+      character(len=2 ) :: indfl
 !
       if ((kini.eq.1).or.(kini.eq.2)) then
        form='(/,2x,''creation d''''une frontiere rectangle'',/' &

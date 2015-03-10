@@ -30,7 +30,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *4 disc
+      character(len=4 ) :: disc
       real mut
 !
       dimension utau(ip42)

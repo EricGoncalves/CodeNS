@@ -17,9 +17,9 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 comment
-      character *32 mot(nmx)
-      character *2 indmf
+      character(len=32) ::  comment
+      character(len=32) ::  mot(nmx)
+      character(len=2 ) :: indmf
       dimension imot(nmx)
 !
       do icmt=1,32

@@ -48,7 +48,7 @@
 
       REAL,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz
       ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-	           dvzx(ip00),dvzy(ip00),dvzz(ip00))
+            dvzx(ip00),dvzy(ip00),dvzz(ip00))
 
       c13=1./3.
       do l = 1,lzx
@@ -193,8 +193,7 @@
                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
            else
-             write(imp,'(/,''!!!sch_duup: modele k-l de Smith '', &
-             ''non prevu'')')
+             write(imp,'(/,''!!!sch_duup: modele k-l de Smith '',''non prevu'')')
              stop
            endif
 !
@@ -220,14 +219,12 @@
 !
          else if(kcmut.eq.5) then
 !           modele de Chien
-             write(imp,'(/,''!!!sch_duup: modele k-e de Chien '', &
-             ''non prevu'')')
+             write(imp,'(/,''!!!sch_duup: modele k-e de Chien '',''non prevu'')')
              stop
 
          else if(kcmut.eq.7) then
 
-          write(imp,'(/,''!!!sch_duup: modele k-e RNG '', &
-             ''non prevu'')')
+          write(imp,'(/,''!!!sch_duup: modele k-e RNG '',''non prevu'')')
            stop
          else if(kcmut.eq.8) then
 

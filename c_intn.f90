@@ -9,11 +9,11 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *32 mot(nmx)
+      character(len=32) ::  mot(nmx)
 !
       dimension imot(nmx)
 !

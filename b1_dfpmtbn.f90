@@ -15,14 +15,14 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
-	  use modeleturb
-	  use kcle
+   use sortiefichier
+   use modeleturb
+   use kcle
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 cicytur0,cncyturb
+      character(len=1316) :: form
+      character(len=24) ::  cicytur0,cncyturb
 !
       call convich(kicytur0,cicytur0)
       call convich(kncyturb,cncyturb)

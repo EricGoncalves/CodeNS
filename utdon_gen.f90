@@ -60,8 +60,8 @@
 !
 !**********************************************************************
 !
-      character *4 config,cl(mtb)
-      character *80 cmtlec
+      character(len=4 ) :: config,cl(mtb)
+      character(len=80) ::  cmtlec
       real nxn,nyn,nzn
 !
       dimension ncbd(ip41)
@@ -88,6 +88,7 @@
 !
       kditur=intmx
 !
+      cmtlec=""
       do while(cmtlec(1:4 ).ne.'stop' .or.cmtlec(1:4 ).ne.'STOP')
 !
         read(don1,7000,err=99,end=98) cmtlec
@@ -148,10 +149,10 @@
           beta0 =be0
 !
           if(kimp.gt.1) then
-            write(imp,'(9x," p2=",1pe11.3,3x,"tpar=",1pe11.3, &
-            3x,"  rpi=",1pe11.3,3x,"rti=",1pe11.3)') p2,tpar,rpi,rti
-            write(imp,'(9x,"rm0=",1pe11.3,3x," al0=",1pe11.3, &
-            3x,"beta0=",1pe11.3)')rm0,al0,be0
+            write(imp,'(9x," p2=",1pe11.3,3x,"tpar=",1pe11.3,' &
+            //'3x,"  rpi=",1pe11.3,3x,"rti=",1pe11.3)') p2,tpar,rpi,rti
+            write(imp,'(9x,"rm0=",1pe11.3,3x," al0=",1pe11.3,' &
+            //'3x,"beta0=",1pe11.3)')rm0,al0,be0
           endif
 !
           p2=p2*pa1
@@ -172,14 +173,14 @@
           ligne=ligne+1
 !
           if(kimp.gt.1) then
-            write(imp,'("integration pression et frottement ", &
-            "sur les parois. kvglo=",i3)') kvglo
-            write(imp,'("grandeurs de reference :",/, &
-            5x,"Xref=",1pe12.4,"   Yref=",1pe12.4,"  Zref=",1pe12.4,/, &
-            5x,"Sref=",1pe12.4,"  XLref=",1pe12.4)') &
+            write(imp,'("integration pression et frottement ",' &
+            //'"sur les parois. kvglo=",i3)') kvglo
+            write(imp,'("grandeurs de reference :",/,' &
+            //'5x,"Xref=",1pe12.4,"   Yref=",1pe12.4,"  Zref=",1pe12.4,/,' &
+            //'5x,"Sref=",1pe12.4,"  XLref=",1pe12.4)') &
             xref,yref,zref, sref,xlref
-            write(imp,'(3x,"Po/Pio=",1pe12.4,1x,"Qo/Pio=",1pe12.4, &
-            4x,"Vo=",1pe12.4)')p0spi0,q0spi0,v0
+            write(imp,'(3x,"Po/Pio=",1pe12.4,1x,"Qo/Pio=",1pe12.4,' &
+            //'4x,"Vo=",1pe12.4)')p0spi0,q0spi0,v0
           endif
 !
         elseif(cmtlec(1:10).eq.'liste surf' .or. &
@@ -187,13 +188,11 @@
 !         liste d'un nombre mon fixe de numeros de parois
 !
           if(kimp.gt.1) then
-            write(imp,'(/,"LISTE SURFaces >>> pour calcul ", &
-            "epaisseurs et Cx_f")')
+            write(imp,'(/,"LISTE SURFaces >>> pour calcul epaisseurs et Cx_f")')
           endif
 !
           if(kvglo.eq.0) then
-            write(imp,'(/,"!!!utdon_gen: il faut mettre : ", &
-            "SURFACES Integration avant LISTE SURFaces")')
+            write(imp,'(/,"!!!utdon_gen: il faut mettre : SURFACES Integration avant LISTE SURFaces")')
             ierr=ierr+1
           endif
 !
@@ -213,8 +212,7 @@
                 endif
               else
 !               mauvais numero de surface
-                write(imp,'(/,"!!!utdon_gen: numero de surface ", &
-                "incorrect: mf=",i4)')mflu
+                write(imp,'(/,"!!!utdon_gen: numero de surface incorrect: mf=",i4)')mflu
               endif
             else !fin sequence, continuer la lecture generale des mots-c
              if(kimp.gt.1) then
@@ -228,15 +226,13 @@
           read(don1,*,err=99) vrtcz
           ligne=ligne+1
           if(kimp.gt.1) then
-            write(imp,'(/,"VRT  >>> correction de vorticite ", &
-            " vrtcz=",1pe11.4)')vrtcz
-            write(imp,'(/,9x,"le profil doit etre dans le plan ", &
-            "x-z")')
+            write(imp,'(/,"VRT  >>> correction de vorticite vrtcz=",1pe11.4)')vrtcz
+            write(imp,'(/,9x,"le profil doit etre dans le plan x-z")')
             if(idefxref.ne.1 .or. idefconf.ne.1) then
-              write(imp,'(/,"!!!utdon_gen: il faut VRT apres ", &
-              "SURFACES Integration pour definition de ", &
-              "xlref, xref et zref",/,32x, &
-              "CONFIGURATion pour rmach, alpha et beta=0")')
+              write(imp,'(/,"!!!utdon_gen: il faut VRT apres ",' &
+              //'"SURFACES Integration pour definition de ",' &
+              //'"xlref, xref et zref",/,32x,' &
+              //'"CONFIGURATion pour rmach, alpha et beta=0")')
               stop
             endif
           endif
@@ -264,8 +260,7 @@
 !
       if(kditur.eq.intmx) then
         ierr=ierr+1
-        write(imp,'(/,"!!!utdon_gen: schema numerique non defini ", &
-        "mot-cle SCHEMA NUM")')
+        write(imp,'(/,"!!!utdon_gen: schema numerique non defini mot-cle SCHEMA NUM")')
       end if
 !
       if(ierr.ne.0) then

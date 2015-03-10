@@ -31,7 +31,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       real nx,ny,nz,rr,ss,tt
       dimension v(ip11,ip60),u(ip11,ip60),ff(ip11,ip60)
       dimension toxx(ip12),toxy(ip12),toxz(ip12), &

@@ -56,7 +56,7 @@
 !  
       DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: alfaa,betaa,ff,vit,mui,muti,tempi,topc
       ALLOCATE(alfaa(ntab),betaa(ntab),ff(ntab),topc(2), &
-	           vit(ntab),mui(ntab),muti(ntab),tempi(ntab))
+            vit(ntab),mui(ntab),muti(ntab),tempi(ntab))
  
 !      ndis=20
       ndis=30
@@ -103,7 +103,7 @@
         v1x=v(ni,2)/v(ni,1)
         v1y=v(ni,3)/v(ni,1)
         v1z=v(ni,4)/v(ni,1)
-!       tangente normee a la paroi	    
+!       tangente normee a la paroi     
         tn=v1x*nxn(nfacns)+v1y*nyn(nfacns)+v1z*nzn(nfacns)
         t1=v1x-tn*nxn(nfacns)
         t2=v1y-tn*nyn(nfacns)
@@ -156,7 +156,7 @@
         v1x=v(ni,2)/v(ni,1)
         v1y=v(ni,3)/v(ni,1)
         v1z=v(ni,4)/v(ni,1)
-!       tangente normee a la paroi	    
+!       tangente normee a la paroi     
         tn=v1x*nxn(nfacns)+v1y*nyn(nfacns)+v1z*nzn(nfacns)
         t1=v1x-tn*nxn(nfacns)
         t2=v1y-tn*nyn(nfacns)
@@ -165,7 +165,7 @@
         t1=t1/tt
         t2=t2/tt
         t3=t3/tt
-!       composante tangentielle de la vitesse dans repere paroi : v1t	    
+!       composante tangentielle de la vitesse dans repere paroi : v1t     
         v1t=v1x*t1+v1y*t2+v1z*t3
 !       masse volumique a la paroi
         rop=v(ni,1)*temp(ni)/temp(nc)
@@ -186,7 +186,7 @@
         dconv=1.
         do while (dconv.gt.seuil) 
           top0=topar
-!         boucle pour calculer la derivee de la fonction pour le Newton 	  
+!         boucle pour calculer la derivee de la fonction pour le Newton    
           do kk=1,2
            topini=topar 
            conv=1.            
@@ -195,13 +195,13 @@
            coefc=coefc1+4.*rk2/dist2
            ca=(4.*rk2+coefa/coefp-coefb*dist(ni)/(1.-coefp) &
                  -coefc*dist2/(4.-coefp)-4.*rk2/(4.-coefp))/dpc
-!          viscosite a la paroi	
+!          viscosite a la paroi 
            mup=mu(ni)
 !          balayage pour calculet muti
            do nn=2,ndis
             yi=(nn-1)*dy
             mui(nn)=mu(ni)
-!           test sur la transition	
+!           test sur la transition 
             if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
               muti(nn)=0.
             else    
@@ -219,16 +219,16 @@
             endif  
             ff(nn)=muti(nn)/(mui(nn)+muti(nn))**2  
            end do 
-!---------------------------------------------------------------	
+!--------------------------------------------------------------- 
 !         integration de la vitesse
-!--------------------------------------------------------------	      
+!--------------------------------------------------------------       
 !         initialisation du calcul
           vit(1)=0.
           vit(ndis)=v1t
           ctk=-0.5*(mup+mui(2)+muti(2))/dy
           ctmu2=0.5*(mui(2)+muti(2)+mui(3)+muti(3))/dy 
           betaa(ndis)=v1t
-!         calcul des alfa, beta	
+!         calcul des alfa, beta 
           do ij=ndis-1,3,-1
             ctmu=0.5*(mui(ij)+muti(ij)+mui(ij+1)+muti(ij+1))/dy 
             alfaa(ij)=(ctk+ctmu*alfaa(ij+1))/ctmu
@@ -243,7 +243,7 @@
           topar=topini+dtop          
          enddo
          dnum=topc(2)-topc(1)-dtop
-         if(dnum.eq.0.) then
+         if(abs(dnum).le.tiny(1.)) then
            topar=0.
          else
            topar=top0-(topc(1)-top0)*dtop/(topc(2)-topc(1)-dtop)
@@ -254,7 +254,7 @@
 !------fin boucle du Newton----------------------------------------------
 !************************************************************************
         enddo
-!       test sur la transition	
+!       test sur la transition 
         if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
 !        tprod(nii)=0.
          v(ni,7)=roeinf

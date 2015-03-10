@@ -38,7 +38,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character*1 coord
+      character(len=1) coord
       dimension x(ip21),y(ip21),z(ip21)
       logical ecri
 !
@@ -69,16 +69,13 @@
 !
    10 continue
       coord='x'
-      write(imp,'(/,"!!!readdg: probleme lecture maillage ",/, &
-      a1,3x,"l=",i3)') coord,l
+      write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
    11 continue
       coord='y'
-      write(imp,'(/,"!!!readdg: probleme lecture maillage ",/, &
-      a1,3x,"l=",i3)') coord,l
+      write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
    12 continue
       coord='z'
-      write(imp,'(/,"!!!readdg: probleme lecture maillage ",/, &
-      a1,3x,"l=",i3)') coord,l
+      write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
       write(imp,'(10x,"i2=",i5,3x,"j2=",i5,3x,"k2=",i5)')i2,j2,k2
       stop
 !

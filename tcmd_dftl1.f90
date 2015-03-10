@@ -14,8 +14,8 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 command
-      character *32 mot(nmx)
+      character(len=1316) :: command
+      character(len=32)   :: mot(nmx)
       dimension imot(nmx)
 !
       if(ktitrt1.eq.2) ktitrt1=3

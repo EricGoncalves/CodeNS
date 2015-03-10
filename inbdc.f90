@@ -110,9 +110,9 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *2 tvi,tvj,tvk
-      character *7 eqt
-      character *6 typa,typb
+      character(len=2 ) :: tvi,tvj,tvk
+      character(len=7 ) :: eqt
+      character(len=6 ) :: typa,typb
 !
       dimension x(ip21),y(ip21),z(ip21)
       dimension ncbd(ip41),ncin(ip41)

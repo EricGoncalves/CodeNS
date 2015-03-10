@@ -28,7 +28,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1 c
+      character(len=1 ) :: c
       integer icycle,ncycl,idcyc,nmid,jmid
       real mut,mu,qinf
 !

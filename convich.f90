@@ -9,7 +9,7 @@
 !***********************************************************************
 !
       use chainecarac 
-      character *24 cvar
+      character(len=24) ::  cvar
 !
       if(kvar.eq.0) then
         cvar=c0

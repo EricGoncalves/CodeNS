@@ -390,8 +390,8 @@
                  pression)
            endif
 !
-!--------------	WENO 3 pondere-----------------------------------------
-!	   	
+!-------------- WENO 3 pondere-----------------------------------------
+!     
          elseif(ischema.eq.11) then
             if(equat(3:4).eq.'2d') then
               call sch_weno3pond( &
@@ -402,7 +402,7 @@
                  sn(npsn),lgsnlt, &
                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                  pression, &
-				 cvi,cvj,cmui1,cmui2,cmuj1,cmuj2)
+     cvi,cvj,cmui1,cmui2,cmuj1,cmuj2)
             elseif(equat(3:4).eq.'3d') then
               call sch_weno3pond_3d( &
                  lm,0, &
@@ -414,7 +414,7 @@
                  pression, &
                  cvi,cvj,cvk, &
                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-           endif	
+           endif 
 !
 !--------Schema WENO ordre 5-----------------------------------
 !
@@ -463,7 +463,7 @@
 !                 pression, &
 !                 cvi,cvj,cvk, &
 !                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-           endif		   		   		   	   	  
+           endif                      
 !
 !*********Schema HLLC avec extrapolation MUSCL*******************
 !

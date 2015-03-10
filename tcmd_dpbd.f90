@@ -19,9 +19,9 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 comment
-      character *32 mot(nmx)
-      character *32 typdat
+      character(len=32) ::  comment
+      character(len=32) ::  mot(nmx)
+      character(len=32) ::  typdat
       dimension imot(nmx)
       dimension lmfb(mtb)
       dimension lgr(nobj)

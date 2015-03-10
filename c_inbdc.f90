@@ -14,12 +14,12 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *2 tvi,tvj,tvk
-      character *32 mot(nmx)
+      character(len=2 ) :: tvi,tvj,tvk
+      character(len=32) ::  mot(nmx)
 !
       dimension imot(nmx)
       dimension x(ip21),y(ip21),z(ip21)

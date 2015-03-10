@@ -15,7 +15,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *4 clmf
+      character(len=4 ) :: clmf
       real mast
       dimension vbc(ista*lsta)
 !

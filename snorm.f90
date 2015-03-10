@@ -36,7 +36,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 eqt
+      character(len=7 ) :: eqt
       dimension x(ip21),y(ip21),z(ip21)
       dimension sn(lgsnlt,nind,ndir)
 !

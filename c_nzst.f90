@@ -42,8 +42,8 @@
 !
 !***********************************************************************
 !
-	  use sortiefichier
-	  use proprieteflu
+   use sortiefichier
+   use proprieteflu
       use definition
 !
 !-----------------------------------------------------------------------

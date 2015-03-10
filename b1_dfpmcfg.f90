@@ -14,16 +14,16 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
-	  use maillage
-	  use boundary
-	  use kcle
+   use sortiefichier
+   use maillage
+   use boundary
+   use kcle
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 cnba
-      character *2 nlg,nlm,nrr,nrm
+      character(len=1316) :: form
+      character(len=24) ::  cnba
+      character(len=2 ) :: nlg,nlm,nrr,nrm
 !
       call convich(knba,cnba)
 !

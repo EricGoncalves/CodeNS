@@ -16,16 +16,16 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
-	  use schemanum
-	  use kcle
-	  use chainecarac
+   use sortiefichier
+   use schemanum
+   use kcle
+   use chainecarac
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 ckmf,clmax
-      character *2 nlg,nlm,nrr,nrm
+      character(len=1316) :: form
+      character(len=24) ::  ckmf,clmax
+      character(len=2 ) :: nlg,nlm,nrr,nrm
 !
       dimension ldom(ldomd)
       dimension lgr(lgrd)

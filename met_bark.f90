@@ -19,7 +19,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       real mu
       dimension s(ip11,ip60)
       dimension sn(ip31*ndir)

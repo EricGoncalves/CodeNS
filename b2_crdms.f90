@@ -28,12 +28,12 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
-	  use maillage
+   use sortiefichier
+   use maillage
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
+      character(len=1316) :: form
 !
        form='(/ 2x,''numero de la grille      : '',11x,i5/' &
              //'2x,''nb de noeuds (dont fic.) : '',10x,i6/' &

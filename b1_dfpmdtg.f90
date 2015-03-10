@@ -18,14 +18,14 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
-	  use schemanum
-	  use kcle
+   use sortiefichier
+   use schemanum
+   use kcle
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 ckdtl,cicychr0,cncychro,cdt1min
+      character(len=1316) :: form
+      character(len=24) ::  ckdtl,cicychr0,cncychro,cdt1min
 !
       call convich(kkdtl,ckdtl)
       call convich(kicychr0,cicychr0)

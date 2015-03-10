@@ -82,7 +82,7 @@
       write(imp,1920) m,nc,int(pi(m)),int(pj(m)),int(pk(m))
       enddo
 !
- 1900 format(1h1,' Frontiere ',i5,' appartenant au domaine ',i5, &
+ 1900 format('1 Frontiere ',i5,' appartenant au domaine ',i5, &
              ' coincidente avec le domaine ',i5, &
              ' grille numero ',i3//)
  1910 format(1x,'    m', &

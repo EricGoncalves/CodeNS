@@ -124,8 +124,7 @@
         kmaxf=kmaxb(mfl)
 !
         if(kcaldis.eq.0) then
-          write(sor2,'("!!!!met_yplus: kcaldis=0.", &
-          "Il faut 1 ou 2 ==>return")')
+          write(sor2,'("!!!!met_yplus: kcaldis=0. Il faut 1 ou 2 ==>return")')
           return
         endif
 !
@@ -208,8 +207,8 @@
 !
 !           hauteur demi maille
             write(sor2,'(" y+ et dist avec hauteur demi maille")')
-            write(sor2,'("  m1  m2    mfac",t20,"x",t31,"y",t42,"z", &
-            t53,"utau/ai",t64,"y+_1",t75,"dist")')
+            write(sor2,'("  m1  m2    mfac",t20,"x",t31,"y",t42,"z",' &
+            //'t53,"utau/ai",t64,"y+_1",t75,"dist")')
 !
           do m1=m1min,m1maxm1
 !           boucle sur les cellules de la bande

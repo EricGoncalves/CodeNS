@@ -61,8 +61,7 @@
                  v(nc,7)=bceqt(mb,7)
               enddo
             else
-              write(imp,'("!!!met_bord: frontiere ",a4," non prevue", &
-              ". Possible: idd ou iddk")')cl(mfb)
+              write(imp,'("!!!met_bord: frontiere ",a4," non prevue. Possible: idd ou iddk")')cl(mfb)
               stop
             end if
 !

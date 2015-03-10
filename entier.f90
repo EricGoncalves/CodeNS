@@ -7,9 +7,9 @@
 !
 !***********************************************************************
 !
-      character *32 mot
-      character *4 formatm
-      character *1 longm
+      character(len=32) ::  mot
+      character(len=4 ) :: formatm
+      character(len=1 ) :: longm
 !
        write(longm,'(i1)') imot
        formatm='(i'//longm//')'

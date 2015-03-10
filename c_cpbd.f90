@@ -82,7 +82,7 @@
 !-----------------------------------------------------------------------
 !
 !
-      character *32 mot(nmx)
+      character(len=32) ::  mot(nmx)
       real nxn,nyn,nzn
       real mut
 !

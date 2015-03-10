@@ -79,7 +79,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       dimension x(ip21),y(ip21),z(ip21)
       dimension tnix(ndt),tniy(ndt),tniz(ndt), &
                 tnjx(ndt),tnjy(ndt),tnjz(ndt), &

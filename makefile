@@ -1,6 +1,6 @@
 SHELL=/bin/sh
 
-SRCS    =           solve.f90 \
+SRCS    =           solve.f90   \
 at_cutke.f90        at_dlist.f90        at_ecrdist.f90      at_fidist.f90 \
 at_grdist.f90       at_lecdist.f90      at_lecopt.f90       atcaldis.f90 \
 atcaldis3.f90       atccc.f90           atccfp.f90          atctranske.f90 \
@@ -138,7 +138,7 @@ CMD =	 solver_air
 
 # To perform the default compilation, use the first line
 #FFLAGS =  -Ofast -march=native -ffast-math -funsafe-math-optimizations -fdefault-double-8 -fdefault-real-8 -ffree-line-length-none # -fopenmp -ftree-loop-distribution -ftree-loop-im
-FFLAGS = -fdefault-double-8 -fdefault-real-8 -O0 -g3 -Wall -fbacktrace -ffpe-trap=zero,overflow,invalid -fbounds-check -finit-real=snan -Wextra -pedantic -std=f2008 -Wno-unused-dummy-argument -Wno-unused-parameter -Wno-unused
+FFLAGS = -fdefault-double-8 -fdefault-real-8 -O0 -g3 -Wall -fbacktrace -ffpe-trap=zero,overflow,invalid -fbounds-check -finit-real=snan -Wextra -pedantic -std=f2008 -fimplicit-none -Wno-unused-dummy-argument -Wno-unused-parameter -Wno-unused -fmax-errors=500
 #FFLAGS =  -O2   -fdefault-double-8 -fdefault-real-8  -p -fno-inline-functions
 #FFLAGS = -r8 -fast #-openmp -parallel -threads 
 #FFLAGS = -r8 -fast -g -traceback #-openmp -parallel -threads 

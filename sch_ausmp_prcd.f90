@@ -24,10 +24,10 @@
       use schemanum
       use proprieteflu
       use definition
-!	  	  	   
+!          
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       real nx,ny,nz,cnds,cmm,fpr,dm,qinf,ca,cb,ai,ani,cmi,psi
       real al,ar,q2l,q2r,hl,hr,vnl,vnr,cml,cmr,beta2l,beta2r,betai
       real hi1,hi2,hi3,hi4,hi5,hj1,hj2,hj3,hj4,hj5
@@ -37,7 +37,7 @@
       dimension sn(lgsnlt,nind,ndir)
       dimension ps(ip11)
       dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
-	            rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
+             rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
       indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
       inc(id,jd,kd)=id+jd*nid+kd*nijd

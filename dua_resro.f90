@@ -16,7 +16,7 @@
       use para_fige
       use maillage
       use schemanum
-      use sortiefichier	        
+      use sortiefichier         
 !
 !--------------------------------------------------------------------
 !

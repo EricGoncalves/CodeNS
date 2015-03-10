@@ -30,7 +30,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *4 disc
+      character(len=4 ) :: disc
       dimension x(ip21),y(ip21),z(ip21)
       dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !

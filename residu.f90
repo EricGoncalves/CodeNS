@@ -70,7 +70,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
+      character(len=1316) :: form
       real s,coef
 !
       dimension idumx(neqt),jdumx(neqt),kdumx(neqt), &
@@ -135,9 +135,9 @@
          dumax(1)=amax1(dumax(1),abs(res1(m)))
          s=0.5*(sign(1.,abs(res1(m))-dumax(1))+1.)
          res1(m)=alog10(max(abs(res1(m)),reelmn))
-         idumx(1)=(1.-s)*idumx(1)+s*i
-         jdumx(1)=(1.-s)*jdumx(1)+s*j
-         kdumx(1)=(1.-s)*kdumx(1)+s*k
+         idumx(1)=int((1.-s)*idumx(1)+s*i)
+         jdumx(1)=int((1.-s)*jdumx(1)+s*j)
+         kdumx(1)=int((1.-s)*kdumx(1)+s*k)
 !
          res2(m)=(v(n,2)-u(n,2))/dt(n)
          dumy1(2)=dumy1(2)+abs(res2(m))
@@ -145,9 +145,9 @@
          dumax(2)=amax1(dumax(2),abs(res2(m)))
          s=0.5*(sign(1.,abs(res2(m))-dumax(2))+1.)
          res2(m)=alog10(max(abs(res2(m)),reelmn))
-         idumx(2)=(1.-s)*idumx(2)+s*i
-         jdumx(2)=(1.-s)*jdumx(2)+s*j
-         kdumx(2)=(1.-s)*kdumx(2)+s*k
+         idumx(2)=int((1.-s)*idumx(2)+s*i)
+         jdumx(2)=int((1.-s)*jdumx(2)+s*j)
+         kdumx(2)=int((1.-s)*kdumx(2)+s*k)
 !
          res3(m)=(v(n,3)-u(n,3))/dt(n)
          dumy1(3)=dumy1(3)+abs(res3(m))
@@ -155,9 +155,9 @@
          dumax(3)=amax1(dumax(3),abs(res3(m)))
          s=.5*(sign(1.,abs(res3(m))-dumax(3))+1.)
          res3(m)=alog10(max(abs(res3(m)),reelmn))
-         idumx(3)=(1.-s)*idumx(3)+s*i
-         jdumx(3)=(1.-s)*jdumx(3)+s*j
-         kdumx(3)=(1.-s)*kdumx(3)+s*k
+         idumx(3)=int((1.-s)*idumx(3)+s*i)
+         jdumx(3)=int((1.-s)*jdumx(3)+s*j)
+         kdumx(3)=int((1.-s)*kdumx(3)+s*k)
 !
          res4(m)=(v(n,4)-u(n,4))/dt(n)
          dumy1(4)=dumy1(4)+abs(res4(m))
@@ -165,9 +165,9 @@
          dumax(4)=amax1(dumax(4),abs(res4(m)))
          s=.5*(sign(1.,abs(res4(m))-dumax(4))+1.)
          res4(m)=alog10(max(abs(res4(m)),reelmn))
-         idumx(4)=(1.-s)*idumx(4)+s*i
-         jdumx(4)=(1.-s)*jdumx(4)+s*j
-         kdumx(4)=(1.-s)*kdumx(4)+s*k
+         idumx(4)=int((1.-s)*idumx(4)+s*i)
+         jdumx(4)=int((1.-s)*jdumx(4)+s*j)
+         kdumx(4)=int((1.-s)*kdumx(4)+s*k)
 !
          res5(m)=(v(n,5)-u(n,5))/dt(n)
          dumy1(5)=dumy1(5)+abs(res5(m))
@@ -175,9 +175,9 @@
          dumax(5)=amax1(dumax(5),abs(res5(m)))
          s=.5*(sign(1.,abs(res5(m))-dumax(5))+1.)
          res5(m)=alog10(max(abs(res5(m)),reelmn))
-         idumx(5)=(1.-s)*idumx(5)+s*i
-         jdumx(5)=(1.-s)*jdumx(5)+s*j
-         kdumx(5)=(1.-s)*kdumx(5)+s*k
+         idumx(5)=int((1.-s)*idumx(5)+s*i)
+         jdumx(5)=int((1.-s)*jdumx(5)+s*j)
+         kdumx(5)=int((1.-s)*kdumx(5)+s*k)
         enddo
        enddo
       enddo
@@ -194,9 +194,9 @@
          dumax(6)=amax1(dumax(6),abs(res6(m)))
          s=.5*(sign(1.,abs(res6(m))-dumax(6))+1.)
          res6(m)=alog10(max(abs(res6(m)),reelmn))
-         idumx(6)=(1.-s)*idumx(6)+s*i
-         jdumx(6)=(1.-s)*jdumx(6)+s*j
-         kdumx(6)=(1.-s)*kdumx(6)+s*k
+         idumx(6)=int((1.-s)*idumx(6)+s*i)
+         jdumx(6)=int((1.-s)*jdumx(6)+s*j)
+         kdumx(6)=int((1.-s)*kdumx(6)+s*k)
 !
          res7(m)=(v(n,7)-u(n,7))/dt(n)
          dumy1(7)=dumy1(7)+abs(res7(m))
@@ -204,18 +204,18 @@
          dumax(7)=amax1(dumax(7),abs(res7(m)))
          s=.5*(sign(1.,abs(res7(m))-dumax(7))+1.)
          res7(m)=alog10(max(abs(res7(m)),reelmn))
-         idumx(7)=(1.-s)*idumx(7)+s*i
-         jdumx(7)=(1.-s)*jdumx(7)+s*j
-         kdumx(7)=(1.-s)*kdumx(7)+s*k
+         idumx(7)=int((1.-s)*idumx(7)+s*i)
+         jdumx(7)=int((1.-s)*jdumx(7)+s*j)
+         kdumx(7)=int((1.-s)*kdumx(7)+s*k)
         enddo
        enddo
       enddo
       end if
 !
-      form='(10x,2hdu,i1,19h/dt : moyenne l1 = ,1pe10.3, &
-                  16h - moyenne l2 = ,1pe10.3,13h - maximum = , &
-                  1pe10.3,20h atteint au point i=,i3,3h j=, &
-                  i3,3h k=,i3)'
+      form='(10x,2hdu,i1,19h/dt : moyenne l1 = ,1pe10.3,' &
+                  //'16h - moyenne l2 = ,1pe10.3,13h - maximum = ,' &
+                  //'1pe10.3,20h atteint au point i=,i3,3h j=,' &
+                  //'i3,3h k=,i3)'
 !
       if(equat(6:7).eq.'ke') then
        do m=1,neqt

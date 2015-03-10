@@ -75,7 +75,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 comment
+      character(len=32) ::  comment
       real mu,mut           
 !
       dimension v(ip11,ip60)

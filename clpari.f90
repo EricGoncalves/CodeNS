@@ -59,7 +59,7 @@
 !
        pression(nl)=pression(ni)      !hypothese dPdn=0
        temp(nl)=tp(m)          
-	   cson(nl)=sqrt(temp(nl))
+    cson(nl)=sqrt(temp(nl))
       enddo
 !
       return

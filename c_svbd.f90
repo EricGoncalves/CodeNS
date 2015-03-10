@@ -28,12 +28,12 @@
 !
       use para_var
       use para_fige
-	  use boundary
-	  use sortiefichier
+   use boundary
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *32 mot(nmx)
+      character(len=32) ::  mot(nmx)
       dimension imot(nmx)
       dimension ncbd(ip41)
 !

@@ -110,10 +110,10 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
-	  use maillage
-	  use constantes
-	  use boundary
+   use sortiefichier
+   use maillage
+   use constantes
+   use boundary
 !
 !-----------------------------------------------------------------------
 !
@@ -134,8 +134,7 @@
 !     dans xpar(ip00), ypar(ip00),zpar(ip00). Il faut donc :
 !     ip00 > mdimtnx
       if(ip00 .le. mdimtnx) then
-        write(imp,'(/,''!!!atcaldis3: ip00='',i6,4x, &
-        ''inferieur a mdimtnx='',i6)')ip00,mdimtnx
+        write(imp,'(/,''!!!atcaldis3: ip00='',i6,4x,''inferieur a mdimtnx='',i6)')ip00,mdimtnx
         stop
       end if
 !
@@ -178,8 +177,7 @@
         stop
       end if
       if(nbd.eq.0) then
-        write(imp,'(/,"!!!atcaldis3: pas de paroi pour calcul des ", &
-        "distances aux parois - arret")')
+        write(imp,'(/,"!!!atcaldis3: pas de paroi pour calcul des distances aux parois - arret")')
         stop
       end if
 !
@@ -189,13 +187,11 @@
 !     Verifications
 !
       if(lzx.gt.lz) then
-        write(imp,'(/,"!!!atcaldis3: trop de domaines  lzx=",i3,3x, &
-        "lz=",i3)')lzx,lz
+        write(imp,'(/,"!!!atcaldis3: trop de domaines  lzx=",i3,3x,"lz=",i3)')lzx,lz
         stop
       end if
       if(nbd.ge.mtb) then
-        write(imp,'(/,"!!!atcaldis3: trop de frontieres  nbd=",i3,3x, &
-        "mtb=",i3)')nbd,mtb
+        write(imp,'(/,"!!!atcaldis3: trop de frontieres  nbd=",i3,3x,"mtb=",i3)')nbd,mtb
         stop
       end if
 !
@@ -218,8 +214,7 @@
         end do
       end if
 !
-      write(imp,'(/,"==>atcaldis3: rattachement des domaines aux ", &
-      "parois")')
+      write(imp,'(/,"==>atcaldis3: rattachement des domaines aux parois")')
       do l=1,lzx
         if0=npbrat(l)+1
         if1=npbrat(l)+nbdrat(l)

@@ -6,7 +6,7 @@
                  sn,lgsnlt, &
                  fxx,fyy,fzz,fxy,fxz,fyz,fex,fey,fez, &
                  ps, &
-				 cvi,cvj,cvk, &
+     cvi,cvj,cvk, &
                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !******************************************************************
@@ -33,7 +33,7 @@
       real g1,g2,g3,g4,g5,gc1,gc2,gc3,gc4,gc5,dg1,dg2,dg3,dg4,dg5
       real h1,h2,h3,h4,h5,hc1,hc2,hc3,hc4,hc5,dh1,dh2,dh3,dh4,dh5
       real fv2,fv3,fv4,fv5,gv2,gv3,gv4,gv5,hv2,hv3,hv4,hv5
-      character *7 equat
+      character(len=7 ) :: equat
       dimension u(ip11,ip60),v(ip11,ip60),ff(ip11,ip60),ps(ip11)
       dimension sn(lgsnlt,nind,ndir)
       dimension toxx(ip12),toxy(ip12),toxz(ip12), &
@@ -74,7 +74,7 @@
 !
       nci = inc(1,0,0)
       ncj = inc(0,1,0)
-	  nck = inc(0,0,1)
+   nck = inc(0,0,1)
 !
 !     activation des sorties
       isortie=0
@@ -1996,11 +1996,11 @@
           +(fyz(m-ninc)-toyz(n-ninc))*sn(m,kdir,2) &
           +(fzz(m-ninc)-tozz(n-ninc))*sn(m,kdir,3)
         f5=(fex(m-ninc)-(toxx(n-ninc)*v(n-ninc,2)+toxy(n-ninc)*v(n-ninc,3)+ &
-		                 toxz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcx(n-ninc))*sn(m,kdir,1) &
+                   toxz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcx(n-ninc))*sn(m,kdir,1) &
           +(fey(m-ninc)-(toxy(n-ninc)*v(n-ninc,2)+toyy(n-ninc)*v(n-ninc,3)+ &
-		                 toyz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcy(n-ninc))*sn(m,kdir,2) &
+                   toyz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcy(n-ninc))*sn(m,kdir,2) &
           +(fez(m-ninc)-(toxz(n-ninc)*v(n-ninc,2)+toyz(n-ninc)*v(n-ninc,3)+ &
-		                 tozz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcz(n-ninc))*sn(m,kdir,3)
+                   tozz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcz(n-ninc))*sn(m,kdir,3)
         u(n,1)=u(n,1)-f1
         u(n,2)=u(n,2)-f2
         u(n,3)=u(n,3)-f3
@@ -2065,11 +2065,11 @@
           +(fyz(m-ninc)-toyz(n-ninc))*sn(m,kdir,2) &
           +(fzz(m-ninc)-tozz(n-ninc))*sn(m,kdir,3)
         g5=(fex(m-ninc)-(toxx(n-ninc)*v(n-ninc,2)+toxy(n-ninc)*v(n-ninc,3)+ &
-		                 toxz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcx(n-ninc))*sn(m,kdir,1) &
+                   toxz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcx(n-ninc))*sn(m,kdir,1) &
           +(fey(m-ninc)-(toxy(n-ninc)*v(n-ninc,2)+toyy(n-ninc)*v(n-ninc,3)+ &
-	                     toyz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcy(n-ninc))*sn(m,kdir,2) &
+                      toyz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcy(n-ninc))*sn(m,kdir,2) &
           +(fez(m-ninc)-(toxz(n-ninc)*v(n-ninc,2)+toyz(n-ninc)*v(n-ninc,3)+ &
-		                 tozz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcz(n-ninc))*sn(m,kdir,3)
+                   tozz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcz(n-ninc))*sn(m,kdir,3)
         u(n,1)=u(n,1)-g1
         u(n,2)=u(n,2)-g2
         u(n,3)=u(n,3)-g3
@@ -2111,7 +2111,7 @@
         u(n,5)=u(n,5)+g5
        enddo
       enddo 
-	  !
+   !
       kdir=3
       ninc=nck
 !
@@ -2134,11 +2134,11 @@
           +(fyz(m-ninc)-toyz(n-ninc))*sn(m,kdir,2) &
           +(fzz(m-ninc)-tozz(n-ninc))*sn(m,kdir,3)
         h5=(fex(m-ninc)-(toxx(n-ninc)*v(n-ninc,2)+toxy(n-ninc)*v(n-ninc,3)+ &
-		                 toxz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcx(n-ninc))*sn(m,kdir,1) &
+                   toxz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcx(n-ninc))*sn(m,kdir,1) &
           +(fey(m-ninc)-(toxy(n-ninc)*v(n-ninc,2)+toyy(n-ninc)*v(n-ninc,3)+ &
-	                     toyz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcy(n-ninc))*sn(m,kdir,2) &
+                      toyz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcy(n-ninc))*sn(m,kdir,2) &
           +(fez(m-ninc)-(toxz(n-ninc)*v(n-ninc,2)+toyz(n-ninc)*v(n-ninc,3)+ &
-		                 tozz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcz(n-ninc))*sn(m,kdir,3)
+                   tozz(n-ninc)*v(n-ninc,4))/v(n-ninc,1)-qcz(n-ninc))*sn(m,kdir,3)
         u(n,1)=u(n,1)-h1
         u(n,2)=u(n,2)-h2
         u(n,3)=u(n,3)-h3

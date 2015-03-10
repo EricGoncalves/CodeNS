@@ -58,7 +58,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *2 indmf
+      character(len=2 ) :: indmf
       dimension ncbd(ip41)
 !
       mtbx=mtbx+1

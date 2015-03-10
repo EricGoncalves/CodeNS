@@ -29,7 +29,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       dimension v(ip11,ip60),d(ip11,ip60),u(ip11,ip60),ff(ip11,ip60)
       dimension toxx(ip12),toxy(ip12),toxz(ip12), &
                 toyy(ip12),toyz(ip12),tozz(ip12), &
@@ -39,7 +39,7 @@
                 cmuk1(ip21),cmuk2(ip21),cvi(ip21),cvj(ip21),cvk(ip21)
       dimension ps(ip11)
       dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
-	            rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
+             rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
       indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
       inc(id,jd,kd)=id+jd*nid+kd*nijd
@@ -138,27 +138,27 @@
          ind2 = indc(i2m1,j,k)
          do n=ind1,ind2
           m=n-n0c
-          if((r1(m-ninc)*r1(m)*r1(m+ninc)).eq.0.) then
+          if(abs(r1(m-ninc)*r1(m)*r1(m+ninc)).le.tiny(1.)) then
            r1(m)=1.
           else
            r1(m)=r1(m)/r1(m-ninc)
           endif
-          if((r2(m-ninc)*r2(m)*r2(m+ninc)).eq.0.) then
+          if(abs(r2(m-ninc)*r2(m)*r2(m+ninc)).le.tiny(1.)) then
            r2(m)=1.
           else
            r2(m)=r2(m)/r2(m-ninc)
           endif
-          if((r3(m-ninc)*r3(m)*r3(m+ninc)).eq.0.) then
+          if(abs(r3(m-ninc)*r3(m)*r3(m+ninc)).le.tiny(1.)) then
            r3(m)=1.
           else
            r3(m)=r3(m)/r3(m-ninc)
           endif
-          if((r4(m-ninc)*r4(m)*r4(m+ninc)).eq.0.) then
+          if(abs(r4(m-ninc)*r4(m)*r4(m+ninc)).le.tiny(1.)) then
            r4(m)=1.
           else
            r4(m)=r4(m)/r4(m-ninc)
           endif
-          if((r5(m-ninc)*r5(m)*r5(m+ninc)).eq.0.) then
+          if(abs(r5(m-ninc)*r5(m)*r5(m+ninc)).le.tiny(1.)) then
            r5(m)=1.
           else
            r5(m)=r5(m)/r5(m-ninc)
@@ -294,7 +294,7 @@
         enddo
        enddo
       enddo
-	  endif
+   endif
 !
       do k=k1,k2m1
        do j=j1,j2m1
@@ -466,27 +466,27 @@
          ind2 = indc(i2m1,j,k)
          do n=ind1,ind2
           m=n-n0c
-          if((r1(m-ninc)*r1(m)*r1(m+ninc)).eq.0.) then
+          if(abs(r1(m-ninc)*r1(m)*r1(m+ninc)).le.tiny(1.)) then
            r1(m)=1.
           else
            r1(m)=r1(m)/r1(m-ninc)
           endif
-          if((r2(m-ninc)*r2(m)*r2(m+ninc)).eq.0.) then
+          if(abs(r2(m-ninc)*r2(m)*r2(m+ninc)).le.tiny(1.)) then
            r2(m)=1.
           else
            r2(m)=r2(m)/r2(m-ninc)
           endif
-          if((r3(m-ninc)*r3(m)*r3(m+ninc)).eq.0.) then
+          if(abs(r3(m-ninc)*r3(m)*r3(m+ninc)).le.tiny(1.)) then
            r3(m)=1.
           else
            r3(m)=r3(m)/r3(m-ninc)
           endif
-          if((r4(m-ninc)*r4(m)*r4(m+ninc)).eq.0.) then
+          if(abs(r4(m-ninc)*r4(m)*r4(m+ninc)).le.tiny(1.)) then
            r4(m)=1.
           else
            r4(m)=r4(m)/r4(m-ninc)
           endif
-          if((r5(m-ninc)*r5(m)*r5(m+ninc)).eq.0.) then
+          if(abs(r5(m-ninc)*r5(m)*r5(m+ninc)).le.tiny(1.)) then
            r5(m)=1.
           else
            r5(m)=r5(m)/r5(m-ninc)
@@ -794,27 +794,27 @@
          ind2 = indc(i2m1,j,k)
          do n=ind1,ind2
           m=n-n0c
-          if((r1(m-ninc)*r1(m)*r1(m+ninc)).eq.0.) then
+          if(abs(r1(m-ninc)*r1(m)*r1(m+ninc)).le.tiny(1.)) then
            r1(m)=1.
           else
            r1(m)=r1(m)/r1(m-ninc)
           endif
-          if((r2(m-ninc)*r2(m)*r2(m+ninc)).eq.0.) then
+          if(abs(r2(m-ninc)*r2(m)*r2(m+ninc)).le.tiny(1.)) then
            r2(m)=1.
           else
            r2(m)=r2(m)/r2(m-ninc)
           endif
-          if((r3(m-ninc)*r3(m)*r3(m+ninc)).eq.0.) then
+          if(abs(r3(m-ninc)*r3(m)*r3(m+ninc)).le.tiny(1.)) then
            r3(m)=1.
           else
            r3(m)=r3(m)/r3(m-ninc)
           endif
-          if((r4(m-ninc)*r4(m)*r4(m+ninc)).eq.0.) then
+          if(abs(r4(m-ninc)*r4(m)*r4(m+ninc)).le.tiny(1.)) then
            r4(m)=1.
           else
            r4(m)=r4(m)/r4(m-ninc)
           endif
-          if((r5(m-ninc)*r5(m)*r5(m+ninc)).eq.0.) then
+          if(abs(r5(m-ninc)*r5(m)*r5(m+ninc)).le.tiny(1.)) then
            r5(m)=1.
           else
            r5(m)=r5(m)/r5(m-ninc)
@@ -908,7 +908,7 @@
        enddo
 !
       else
-!	   
+!    
       do k=k1p1,k2m1
        do j=j1,j2m1
         ind1 = indc(i1  ,j,k)

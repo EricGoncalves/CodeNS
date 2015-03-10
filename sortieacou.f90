@@ -18,7 +18,7 @@
 !
       logical ouvert
       character*40 nom
-      character *1 c
+      character(len=1 ) :: c
       dimension t(ip11,ip60)
 !
       indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd

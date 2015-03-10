@@ -38,18 +38,18 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 mot(nmx)
+      character(len=32) ::  mot(nmx)
       dimension imot(nmx)
 !
-      ndimctb=(1+kdimg*ccg)*ndimctf
+      ndimctb=int((1.+kdimg*ccg)*ndimctf)
       ndimctv=kdimv*(ndimctb-1)+1
       ndimctk=kdimk*(ndimctb-1)+1
-      ndimctc=kdimg*ccg*ndimctf
-      ndimntb=(1+kdimg*cng)*ndimnts+ndimntu
-      mdimtb =(1+kdimg*cfg)*mdimtbf
-      mdimtn =(1+kdimg*cfg)*mdimtnf
-      mdimtc =(1+kdimg*cfg)*mdimtcf
-      mdimtr =(1+kdimg*cfg)*mdimtrf
+      ndimctc=int(kdimg*ccg*ndimctf)
+      ndimntb=int((1.+kdimg*cng)*ndimnts+ndimntu)
+      mdimtb =int((1.+kdimg*cfg)*mdimtbf)
+      mdimtn =int((1.+kdimg*cfg)*mdimtnf)
+      mdimtc =int((1.+kdimg*cfg)*mdimtcf)
+      mdimtr =int((1.+kdimg*cfg)*mdimtrf)
 !
       kl=0
       do l=1,lzx

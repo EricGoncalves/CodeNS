@@ -15,14 +15,14 @@
 !-----------------------------------------------------------------------
 !
       use sortiefichier
-	  use chainecarac
-	  use definition
-	  use kcle
+   use chainecarac
+   use definition
+   use kcle
 !
 !-----------------------------------------------------------------------
 
-      character *1316 form
-      character *24 cequat,cklomg,comg
+      character(len=1316) :: form
+      character(len=24) ::  cequat,cklomg,comg
 !
       call convich(kequat,cequat)
       call convich(kklomg,cklomg)

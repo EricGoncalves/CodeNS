@@ -17,8 +17,8 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 comment
-      character *32 mot(nmx)
+      character(len=32) ::  comment
+      character(len=32) ::  mot(nmx)
       dimension imot(nmx)
       dimension ldom(nobj)
 !

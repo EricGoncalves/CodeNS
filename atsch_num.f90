@@ -304,13 +304,11 @@
 !
             else if(kinke.eq.6) then
 !
-              write(imp,'(/,"!!!atsch_num: kinke=",i4,4x, &
-              "commencer le calcul avec k-l de Smith")')kinke
+              write(imp,'(/,"!!!atsch_num: kinke=",i4,4x,"commencer le calcul avec k-l de Smith")')kinke
               stop
 !
             else
-              write(imp,'(/,"!!!atsch_num: kinke=",i4,4x, &
-              "non prevue-STOP")')kinke
+              write(imp,'(/,"!!!atsch_num: kinke=",i4,4x,"non prevue-STOP")')kinke
               stop
             endif
         enddo   ! fin boucle domaine
@@ -481,7 +479,7 @@
                  icyc,mcyturb, &
                  ncbd,ncin,mnc, &
                  sn,vol, &  
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &				             
+                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &                 
                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
                  ztemp)
         endif
@@ -764,7 +762,7 @@
 !                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
 !                 pression,cson)
            endif
-!		   
+!     
 !--------Schema WENO ordre 3 pondere-----------------------------------
 !
          elseif(ischema.eq.11) then

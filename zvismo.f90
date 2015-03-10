@@ -88,8 +88,7 @@
       enddo
 !
       if(iarret.ne.0) then
-        write(imp,'(/,"!!!zvismo: temperature negative en",i8, &
-        " cellules domaine= ",i4)')iarret,l
+        write(imp,'(/,"!!!zvismo: temperature negative en",i8," cellules domaine= ",i4)')iarret,l
           stop
       endif
 !

@@ -88,10 +88,10 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *6 typa,typb
-      character *7 equat
-      character *2 tvi,tvj,tvk
+      character(len=1316) :: form
+      character(len=6 ) :: typa,typb
+      character(len=7 ) :: equat
+      character(len=2 ) :: tvi,tvj,tvk
       dimension x(ip21),y(ip21),z(ip21)
       dimension mnc(ip43)
 !
@@ -263,15 +263,15 @@
       l=mod(la,lz)
       img=(la-l)/lz+1
 !
-       form='(/3x,''numero de grille  : '',i3,/, &
-             3x,''indices du point du domaine b coincident '', &
-             ''avec le point ia1,ja1,ka1 du domaine a'',/, &
-             19x,''iba = '',i5,''    jba = '',i5,''    kba = '',i5,/ &
-             3x,''sens de variation des indices dans le domaine b '', &
-             ''en fonction de la variation des indices dans '', &
-             ''le domaine a'',/, &
-              19x,''tvi ='',4x,a,4x,''tvj ='',4x,a,4x,''tvk ='',4x,a,/ &
-              19x,''rotation de frt b (nb de pas)  ='',i3)'
+       form='(/3x,''numero de grille  : '',i3,/,' &
+             //'3x,''indices du point du domaine b coincident '',' &
+             //'''avec le point ia1,ja1,ka1 du domaine a'',/,' &
+             //'19x,''iba = '',i5,''    jba = '',i5,''    kba = '',i5,/' &
+             //'3x,''sens de variation des indices dans le domaine b '',' &
+             //'''en fonction de la variation des indices dans '',' &
+             //'''le domaine a'',/,' &
+             //'19x,''tvi ='',4x,a,4x,''tvj ='',4x,a,4x,''tvk ='',4x,a,/' &
+             //'19x,''rotation de frt b (nb de pas)  ='',i3)'
       write(imp,form) img,iba,jba,kba,tvi,tvj,tvk,lper
       endif
 !

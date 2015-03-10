@@ -12,13 +12,13 @@
 !***********************************************************************
 !
       use sortiefichier
-	  use chainecarac
-	  use kcle
+   use chainecarac
+   use kcle
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 ctitrt1
+      character(len=1316) :: form
+      character(len=24) ::  ctitrt1
 !
       call convich(ktitrt1,ctitrt1)
 !

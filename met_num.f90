@@ -49,7 +49,7 @@
       dimension bceqt(ip41,neqt)
       dimension sn(ip31*ndir)
       dimension tn1(ip00),tn2(ip00),tn3(ip00),t(ip00),tprod(ip00), &
-	            dtdx(ip00),dtdy(ip00),dtdz(ip00),tn9(ip00),tn10(ip00)
+             dtdx(ip00),dtdy(ip00),dtdz(ip00),tn9(ip00),tn10(ip00)
       dimension tp(ip40),ncbd(ip41),ncin(ip41),mnc(ip43)
       dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
       dimension nxn(ip42),nyn(ip42),nzn(ip42)
@@ -59,9 +59,9 @@
       dimension coefe(ndir,ip00)
       dimension x(ip21),y(ip21),z(ip21)
       DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz, &
-	                                               dvzx,dvzy,dvzz,fracmod
+                                                dvzx,dvzy,dvzz,fracmod
       ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-	           dvzx(ip00),dvzy(ip00),dvzz(ip00),fracmod(ip12))
+            dvzx(ip00),dvzy(ip00),dvzz(ip00),fracmod(ip12))
 !
 !     choix des appels : a initialiser en fonction du modele
 !     Fait dans "atlecdon.f"
@@ -557,7 +557,7 @@
                    vol)
             elseif(klroe.eq.2) then
 !            schema ordre 2 - sans correction de Harten
-              if(epsroe.eq.0) then
+              if(abs(epsroe).le.tiny(1.)) then
                 call met_roe2o( &
                      l,v,d, &
                      sn(npsn),lgsnlt, &
@@ -732,8 +732,7 @@
                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
            else
-             write(imp,'(/,''!!!met_num: modele k-l de Smith '', &
-             ''non prevu'')')
+             write(imp,'(/,''!!!met_num: modele k-l de Smith '',''non prevu'')')
              stop
            endif
 !

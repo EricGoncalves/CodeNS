@@ -21,7 +21,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 typdat
+      character(len=32) ::  typdat
       real nxn,nyn,nzn
 !
       dimension ncbd(ip41),ncin(ip41)

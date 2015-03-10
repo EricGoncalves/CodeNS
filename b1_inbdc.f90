@@ -31,12 +31,12 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *2 tvi,tvj,tvk
+      character(len=1316) :: form
+      character(len=2 ) :: tvi,tvj,tvk
 !
           form='(/,2x,''calculs pour frontiere coincidente'',/' &
                 //'2x,''----------------------------------'',/' &

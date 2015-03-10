@@ -154,7 +154,7 @@
                  dtdx,dtdy,dtdz, &
                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
       
-	  ind1=indc(i1  ,j1  ,k1  )
+   ind1=indc(i1  ,j1  ,k1  )
       ind2=indc(i2m1,j2m1,k2m1)
       do n=ind1,ind2
        m=n-n0

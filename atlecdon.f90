@@ -39,7 +39,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *80 ligne
+      character(len=80) ::  ligne
 !
 !      write(imp,'(/,''==>atlecdon: lecture atlecdon et '',
 !     &''initialisation modeles de turbulence'')')
@@ -130,8 +130,7 @@
         if(equatt(4:4).ne.' ' .and. equatt(4:4).ne.'R' .and. &
            equatt(4:4).ne.'S' .and. equatt(4:4).ne.'M' .and. &
            equatt(4:4).ne.'C' .and. equatt(4:4).ne.'L') then
-          write(imp,'(/,''!!!atlecdon: modele'',a7, &
-          '' non prevu'')')equatt
+          write(imp,'(/,''!!!atlecdon: modele'',a7,'' non prevu'')')equatt
           stop
         endif
 !
@@ -192,8 +191,7 @@
         ct4=2.
 !
         if(equatt(4:4).ne.' ' .and. equatt(4:4).ne.'D' .and. equatt(4:4).ne.'L') then
-          write(imp,'(/,''!!!atlecdon: modele'',a7, &
-          '' non prevu'')')equatt
+          write(imp,'(/,''!!!atlecdon: modele'',a7,'' non prevu'')')equatt
           stop
         endif
         if(kcaldis.eq.0 .and. klecdis.eq.0) ierrdis=1
@@ -222,8 +220,7 @@
 !
         if(equatt(4:4).ne.' ' .and. equatt(4:4).ne.'L' .and. &
            equatt(4:4).ne.'S' .and. equatt(4:4).ne.'R') then
-          write(imp,'(/,''!!!atlecdon: modele'',a7, &
-          '' non prevu'')')equatt
+          write(imp,'(/,''!!!atlecdon: modele'',a7,'' non prevu'')')equatt
           stop
         endif
 !
@@ -363,8 +360,7 @@
 !
         if(equatt(4:4).ne.' ' .and. equatt(4:4).ne.'R' .and. &
            equatt(4:4).ne.'S' ) then
-          write(imp,'(/,''!!!atlecdon: modele'',a7, &
-          '' non prevu'')')equatt
+          write(imp,'(/,''!!!atlecdon: modele'',a7,'' non prevu'')')equatt
           stop
         endif
 
@@ -398,19 +394,16 @@
       else if(equatt(1:3).eq.'EU') then
 !
       else
-         write(imp,'(/,''!!!atlecdon: modele'',a7, &
-         '' non prevu'')')equatt
+         write(imp,'(/,''!!!atlecdon: modele'',a7,'' non prevu'')')equatt
          stop
       endif
 !
       if(klecdis.eq.1 .and. (kcaldis.eq.1 .or. kcaldis.eq.2) ) then
-        write(imp,'(/,''!!!atlecdon: lecture et calcul distance '', &
-        ''incompatible sauf si kcaldis=3'')')
+        write(imp,'(/,''!!!atlecdon: lecture et calcul distance '',''incompatible sauf si kcaldis=3'')')
         if(ierrdis.eq.0) stop
       endif
       if(ierrdis.ne.0) then
-        write(imp,'(/,''!!!atlecdon: il faut un calcul de '', &
-        ''distance avec ce modele'')')
+        write(imp,'(/,''!!!atlecdon: il faut un calcul de '',''distance avec ce modele'')')
         stop
       endif
 !
@@ -470,18 +463,15 @@
 !
   100 continue
 !     erreur ouverture fichier
-      write(imp,'(/,''!!!atlecdon: probleme ouverture fichier '', &
-      ''atlecdon'')')
+      write(imp,'(/,''!!!atlecdon: probleme ouverture fichier '',''atlecdon'')')
       stop
   200 continue
 !     erreur lecture fichier
-      write(imp,'(/,''!!!atlecdon: probleme lecture fichier '', &
-      ''fatdon ligne'',i2)')lig
+      write(imp,'(/,''!!!atlecdon: probleme lecture fichier '',''fatdon ligne'',i2)')lig
       stop
   201 continue
 !     fin prematuree lecture fichier
-      write(imp,'(/,''!!!atlecdon: fin fichier fatdon. '', &
-      ''manquer sequence precision pour delta'',i2)')lig
+      write(imp,'(/,''!!!atlecdon: fin fichier fatdon. '',''manquer sequence precision pour delta'',i2)')lig
       stop
 !
   300 format(a80)

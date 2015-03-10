@@ -17,14 +17,14 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *8 cadim
-      character *4 cl
-      character *2 nlg,nlm,nrr,nrm
+      character(len=1316) :: form
+      character(len=8 ) :: cadim
+      character(len=4 ) :: cl
+      character(len=2 ) :: nlg,nlm,nrr,nrm
 !
 !
       dimension vbc(ista*lsta)

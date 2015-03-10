@@ -38,11 +38,11 @@
 !
       use para_var
       use para_fige
-	  use maillage
+   use maillage
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       real mmut,mut
       dimension v(ip11,ip60),mut(ip12)
       dimension vv1(ip00),vv2(ip00),vv3(ip00),vv4(ip00),vv5(ip00), &

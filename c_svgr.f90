@@ -27,12 +27,12 @@
 !
       use para_var
       use para_fige
-  	  use sortiefichier
+     use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *32 mot(nmx)
-      character *4 disc
+      character(len=32) ::  mot(nmx)
+      character(len=4 ) :: disc
 !
       dimension imot(nmx)
       dimension x(ip21),y(ip21),z(ip21)

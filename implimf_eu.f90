@@ -25,7 +25,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       dimension v(ip11,ip60),u(ip11,ip60),d(ip11,ip60),ff(ip11,ip60)
       dimension vol(ip11),dt(ip11),ps(ip11),cson(ip11)
       dimension sn(lgsnlt,nind,ndir)

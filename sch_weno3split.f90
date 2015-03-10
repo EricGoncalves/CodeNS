@@ -32,7 +32,7 @@
       real f1,f2,f3,f4,f5,fc1,fc2,fc3,fc4,fc5,df1,df2,df3,df4,df5
       real g1,g2,g3,g4,g5,gc1,gc2,gc3,gc4,gc5,dg1,dg2,dg3,dg4,dg5
       real fv2,fv3,fv4,fv5,gv2,gv3,gv4,gv5
-      character *7 equat
+      character(len=7 ) :: equat
       dimension u(ip11,ip60),v(ip11,ip60),ff(ip11,ip60),ps(ip11)
       dimension sn(lgsnlt,nind,ndir)
       dimension toxx(ip12),toxy(ip12),toxz(ip12), &
@@ -298,33 +298,33 @@
           t5f1m =0.5*gam3*v(n-ninc,1)*(ull-all) !rho*(u-c)/(2*gam)
           qm5f1m=t5f1m*(q51+q52*(ull-all)+q53*vll+q54*wll+q55*(hll-ull*all))
           qp5f1m=q51*(v(n-ninc,2)-t5f1m    ) &
-		        +q52*(fxx(m-ninc)-t5f1m*(ull-all)) &
+          +q52*(fxx(m-ninc)-t5f1m*(ull-all)) &
                 +q53*(fxy(m-ninc)-t5f1m*vll)  &
-				+q54*(fxz(m-ninc)-t5f1m*wll) &
+    +q54*(fxz(m-ninc)-t5f1m*wll) &
                 +q55*(fex(m-ninc)-t5f1m*(hll-ull*all))
 !
           t5f =0.5*gam3*v(n,1)*(ul-al)
           qm5f=t5f*(q51+q52*(ul-al)+q53*vl+q54*wl+q55*(hl-ul*al))
           qp5f=q51*(v(n,2)-t5f   ) &
-		      +q52*(fxx(m)-t5f*(ul-al)) &
-			  +q53*(fxy(m)-t5f*vl) &
+        +q52*(fxx(m)-t5f*(ul-al)) &
+     +q53*(fxy(m)-t5f*vl) &
               +q54*(fxz(m)-t5f*wl) &
-			  +q55*(fex(m)-t5f*(hl-ul*al))
+     +q55*(fex(m)-t5f*(hl-ul*al))
 !
           t5f1p=0.5*gam3*v(n1,1)*(ur-ar)
           qm5f1p=t5f1p*(q51+q52*(ur-ar)+q53*vr+q54*wr+q55*(hr-ur*ar))
           qp5f1p=q51*(v(n+ninc,2)-t5f1p   ) &
-		        +q52*(fxx(m+ninc)-t5f1p*(ur-ar)) &
+          +q52*(fxx(m+ninc)-t5f1p*(ur-ar)) &
                 +q53*(fxy(m+ninc)-t5f1p*vr) &
-				+q54*(fxz(m+ninc)-t5f1p*wr)  &
+    +q54*(fxz(m+ninc)-t5f1p*wr)  &
                 +q55*(fex(m+ninc)-t5f1p*(hr-ur*ar))
 !
           t5f2p=0.5*gam3*v(n+2*ninc,1)*(urr-arr)
           qm5f2p=t5f2p*(q51+q52*(urr-arr)+q53*vrr+q54*wrr+q55*(hrr-urr*arr))
           qp5f2p=q51*(v(n+2*ninc,2)-t5f2p    ) &
-		        +q52*(fxx(m+2*ninc)-t5f2p*(urr-arr)) &
+          +q52*(fxx(m+2*ninc)-t5f2p*(urr-arr)) &
                 +q53*(fxy(m+2*ninc)-t5f2p*vrr) &
-				+q54*(fxz(m+2*ninc)-t5f2p*wrr)  &
+    +q54*(fxz(m+2*ninc)-t5f2p*wrr)  &
                 +q55*(fex(m+2*ninc)-t5f2p*(hrr-urr*arr))
          endif
 !        calcul des flux d'ordre 2 sur les 2 stencils
@@ -924,33 +924,33 @@
           t5f1m =0.5*gam3*v(n-ninc,1)*(vll-all) !rho*(v-c)/(2*gam)
           qm5f1m=t5f1m*(q51+q52*ull+q53*(vll-all)+q54*wll+q55*(hll-vll*all))
           qp5f1m=q51*(v(n-ninc,3)-t5f1m)  &
-		        +q52*(fxy(m-ninc)-t5f1m*ull) &
+          +q52*(fxy(m-ninc)-t5f1m*ull) &
                 +q53*(fyy(m-ninc)-t5f1m*(vll-all)) &
-				+q54*(fyz(m-ninc)-t5f1m*wll)   &
+    +q54*(fyz(m-ninc)-t5f1m*wll)   &
                 +q55*(fey(m-ninc)-t5f1m*(hll-vll*all))
 !
           t5f =0.5*gam3*v(n,1)*(vl-al)
           qm5f=t5f*(q51+q52*ul+q53*(vl-al)+q54*wl+q55*(hl-vl*al))
           qp5f=q51*(v(n,3)-t5f   ) &
-		      +q52*(fxy(m)-t5f*ul) &
-			  +q53*(fyy(m)-t5f*(vl-al)) &
+        +q52*(fxy(m)-t5f*ul) &
+     +q53*(fyy(m)-t5f*(vl-al)) &
               +q54*(fyz(m)-t5f*wl) &
-			  +q55*(fey(m)-t5f*(hl-vl*al))
+     +q55*(fey(m)-t5f*(hl-vl*al))
 !
           t5f1p=0.5*gam3*v(n1,1)*(vr-ar)
           qm5f1p=t5f1p*(q51+q52*ur+q53*(vr-ar)+q54*wr+q55*(hr-vr*ar))
           qp5f1p=q51*(v(n+ninc,3)-t5f1p) &
-		        +q52*(fxy(m+ninc)-t5f1p*ur) &
+          +q52*(fxy(m+ninc)-t5f1p*ur) &
                 +q53*(fyy(m+ninc)-t5f1p*(vr-ar)) &
-				+q54*(fyz(m+ninc)-t5f1p*wr)  &
+    +q54*(fyz(m+ninc)-t5f1p*wr)  &
                 +q55*(fey(m+ninc)-t5f1p*(hr-vr*ar))
 !
           t5f2p=0.5*gam3*v(n+2*ninc,1)*(vrr-arr)
           qm5f2p=t5f2p*(q51+q52*urr+q53*(vrr-arr)+q54*wrr+q55*(hrr-vrr*arr))
           qp5f2p=q51*(v(n+2*ninc,3)-t5f2p) &
-		        +q52*(fxy(m+2*ninc)-t5f2p*urr) &
+          +q52*(fxy(m+2*ninc)-t5f2p*urr) &
                 +q53*(fyy(m+2*ninc)-t5f2p*(vrr-arr)) &
-				+q54*(fyz(m+2*ninc)-t5f2p*wrr)  &
+    +q54*(fyz(m+2*ninc)-t5f2p*wrr)  &
                 +q55*(fey(m+2*ninc)-t5f2p*(hrr-vrr*arr))
          endif
 !        calcul des flux d'ordre 2 sur les 2 stencils

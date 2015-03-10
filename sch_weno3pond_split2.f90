@@ -6,7 +6,7 @@
                  sn,lgsnlt, &
                  fxx,fyy,fzz,fxy,fxz,fyz,fex,fey,fez, &
                  ps, &
-				 cvi,cvj,cmui1,cmui2,cmuj1,cmuj2)
+     cvi,cvj,cmui1,cmui2,cmuj1,cmuj2)
 !
 !******************************************************************
 !
@@ -34,7 +34,7 @@
       real f1,f2,f3,f4,f5,fc1,fc2,fc3,fc4,fc5,df1,df2,df3,df4,df5
       real g1,g2,g3,g4,g5,gc1,gc2,gc3,gc4,gc5,dg1,dg2,dg3,dg4,dg5
       real fv2,fv3,fv4,fv5,gv2,gv3,gv4,gv5
-      character *7 equat
+      character(len=7 ) :: equat
       dimension u(ip11,ip60),v(ip11,ip60),ff(ip11,ip60),ps(ip11)
       dimension sn(lgsnlt,nind,ndir)
       dimension toxx(ip12),toxy(ip12),toxz(ip12), &
@@ -302,7 +302,7 @@
                +q54*0.5*(fxz(m+2*ninc)+v(n+2*ninc,4)*abs(v(n+2*ninc,2)/v(n+2*ninc,1)+sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1))))) &
                +q55*0.5*(fex(m+2*ninc)+v(n+2*ninc,5)*abs(v(n+2*ninc,2)/v(n+2*ninc,1)-sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1)))))
          qm5f2p=q51*0.5*(v(n+2*ninc,2)-abs(v(n+2*ninc,2))) &
-		       +q52*0.5*(fxx(m+2*ninc)-v(n+2*ninc,2)*abs(v(n+2*ninc,2)/v(n+2*ninc,1))) &
+         +q52*0.5*(fxx(m+2*ninc)-v(n+2*ninc,2)*abs(v(n+2*ninc,2)/v(n+2*ninc,1))) &
                +q53*0.5*(fxy(m+2*ninc)-v(n+2*ninc,3)*abs(v(n+2*ninc,2)/v(n+2*ninc,1))) &
                +q54*0.5*(fxz(m+2*ninc)-v(n+2*ninc,4)*abs(v(n+2*ninc,2)/v(n+2*ninc,1)+sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1))))) &
                +q55*0.5*(fex(m+2*ninc)-v(n+2*ninc,5)*abs(v(n+2*ninc,2)/v(n+2*ninc,1)-sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1)))))
@@ -423,8 +423,8 @@
          w24=ww24/sw
 !
          wwp15=g1p/betap51
-		 wwm15=g1m/betam51
-		 wwp25=g2p/betap52 
+   wwm15=g1m/betam51
+   wwp25=g2p/betap52 
          wwm25=g2m/betam52
          swp=wwp15+wwp25
          swm=wwm15+wwm25
@@ -981,7 +981,7 @@
                +q54*0.5*(fyz(m+2*ninc)+v(n+2*ninc,4)*abs(v(n+2*ninc,3)/v(n+2*ninc,1)+sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1))))) &
                +q55*0.5*(fey(m+2*ninc)+v(n+2*ninc,5)*abs(v(n+2*ninc,3)/v(n+2*ninc,1)-sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1)))))
          qm5f2p=q51*0.5*(v(n+2*ninc,3)-abs(v(n+2*ninc,3))) &
-		       +q52*0.5*(fxy(m+2*ninc)-v(n+2*ninc,2)*abs(v(n+2*ninc,3)/v(n+2*ninc,1))) &
+         +q52*0.5*(fxy(m+2*ninc)-v(n+2*ninc,2)*abs(v(n+2*ninc,3)/v(n+2*ninc,1))) &
                +q53*0.5*(fyy(m+2*ninc)-v(n+2*ninc,3)*abs(v(n+2*ninc,3)/v(n+2*ninc,1))) &
                +q54*0.5*(fyz(m+2*ninc)-v(n+2*ninc,4)*abs(v(n+2*ninc,3)/v(n+2*ninc,1)+sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1))))) &
                +q55*0.5*(fey(m+2*ninc)-v(n+2*ninc,5)*abs(v(n+2*ninc,3)/v(n+2*ninc,1)-sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1)))))
@@ -1075,8 +1075,8 @@
          w24=ww24/sw
 !
          wwp15=g1p/betap51
-		 wwm15=g1m/betam51
-		 wwp25=g2p/betap52 
+   wwm15=g1m/betam51
+   wwp25=g2p/betap52 
          wwm25=g2m/betam52
          swp=wwp15+wwp25
          swm=wwm15+wwm25
@@ -1304,7 +1304,7 @@
                +q54*0.5*(fxz(m+2*ninc)+v(n+2*ninc,4)*abs(v(n+2*ninc,2)/v(n+2*ninc,1)+sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1))))) &
                +q55*0.5*(fex(m+2*ninc)+v(n+2*ninc,5)*abs(v(n+2*ninc,2)/v(n+2*ninc,1)-sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1)))))
          qm5f2p=q51*0.5*(v(n+2*ninc,2)-abs(v(n+2*ninc,2))) &
-		       +q52*0.5*(fxx(m+2*ninc)-v(n+2*ninc,2)*abs(v(n+2*ninc,2)/v(n+2*ninc,1))) &
+         +q52*0.5*(fxx(m+2*ninc)-v(n+2*ninc,2)*abs(v(n+2*ninc,2)/v(n+2*ninc,1))) &
                +q53*0.5*(fxy(m+2*ninc)-v(n+2*ninc,3)*abs(v(n+2*ninc,2)/v(n+2*ninc,1))) &
                +q54*0.5*(fxz(m+2*ninc)-v(n+2*ninc,4)*abs(v(n+2*ninc,2)/v(n+2*ninc,1)+sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1))))) &
                +q55*0.5*(fex(m+2*ninc)-v(n+2*ninc,5)*abs(v(n+2*ninc,2)/v(n+2*ninc,1)-sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1)))))
@@ -1399,10 +1399,10 @@
          sw=ww11+ww21
          w11=ww11/sw
          w21=ww21/sw
-		 ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
-		      +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
-		 ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
-		      +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
+   ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
+        +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
+   ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
+        +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
          swm=ww11m+ww21m
          w11=ww11m/swm 
          w21=ww21m/swm 
@@ -1414,10 +1414,10 @@
          sw=ww12+ww22
          w12=ww12/sw
          w22=ww22/sw
-		 ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
-		      +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
-		 ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
-		      +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
+   ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
+        +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
+   ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
+        +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
          swm=ww12m+ww22m 
          w12=ww12m/swm 
          w22=ww22m/swm 
@@ -1429,10 +1429,10 @@
          sw=ww13+ww23
          w13=ww13/sw
          w23=ww23/sw
-		 ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
-		      +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
-		 ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &		 
-		      +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
+   ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
+        +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
+   ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
+        +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
          swm=ww13m+ww23m
          w13=ww13m/swm 
          w23=ww23m/swm 
@@ -1444,17 +1444,17 @@
          sw=ww14+ww24
          w14=ww14/sw
          w24=ww24/sw
-		 ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
-		      +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
-		 ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &	 
-		      +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
+   ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
+        +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
+   ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
+        +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
          swm=ww14m+ww24m 
          w14=ww14m/swm 
          w24=ww24m/swm 
 !
          wwp15=g1p/betap51
-		 wwm15=g1m/betam51
-		 wwp25=g2p/betap52 
+   wwm15=g1m/betam51
+   wwp25=g2p/betap52 
          wwm25=g2m/betam52
          swp=wwp15+wwp25
          swm=wwm15+wwm25
@@ -1594,10 +1594,10 @@
          sw=ww11+ww21
          w11=ww11/sw
          w21=ww21/sw
-		 ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
-		      +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
-		 ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
-		      +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
+   ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
+        +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
+   ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
+        +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
          swm=ww11m+ww21m
          w11=ww11m/swm 
          w21=ww21m/swm 
@@ -1609,10 +1609,10 @@
          sw=ww12+ww22
          w12=ww12/sw
          w22=ww22/sw
-		 ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
-		      +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
-		 ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
-		      +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
+   ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
+        +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
+   ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
+        +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
          swm=ww12m+ww22m 
          w12=ww12m/swm 
          w22=ww22m/swm 
@@ -1624,10 +1624,10 @@
          sw=ww13+ww23
          w13=ww13/sw
          w23=ww23/sw
-		 ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
-		      +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
-		 ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &		 
-		      +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
+   ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
+        +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
+   ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
+        +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
          swm=ww13m+ww23m
          w13=ww13m/swm 
          w23=ww23m/swm 
@@ -1639,10 +1639,10 @@
          sw=ww14+ww24
          w14=ww14/sw
          w24=ww24/sw
-		 ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
-		      +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
-		 ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &	 
-		      +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
+   ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
+        +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
+   ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
+        +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
          swm=ww14m+ww24m 
          w14=ww14m/swm 
          w24=ww24m/swm 
@@ -1654,10 +1654,10 @@
          sw=ww15+ww25
          w15=ww15/sw
          w25=ww25/sw
-		 ww15m=w15*0.5*(1.+sign(1.,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
-		      +w15*0.5*(1.-sign(1.,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
-		 ww25m=w25*0.5*(1.+sign(1.,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &		 
-		      +w25*0.5*(1.-sign(1.,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
+   ww15m=w15*0.5*(1.+sign(1.,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
+        +w15*0.5*(1.-sign(1.,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
+   ww25m=w25*0.5*(1.+sign(1.,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &   
+        +w25*0.5*(1.-sign(1.,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
          swm=ww15m+ww25m
          w15=ww15m/swm 
          w25=ww25m/swm
@@ -1936,10 +1936,10 @@
          sw=ww11+ww21
          w11=ww11/sw
          w21=ww21/sw
-		 ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
-		      +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
-		 ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
-		      +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
+   ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
+        +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
+   ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
+        +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
          swm=ww11m+ww21m
          w11=ww11m/swm 
          w21=ww21m/swm 
@@ -1951,10 +1951,10 @@
          sw=ww12+ww22
          w12=ww12/sw
          w22=ww22/sw
-		 ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
-		      +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
-		 ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
-		      +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
+   ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
+        +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
+   ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
+        +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
          swm=ww12m+ww22m 
          w12=ww12m/swm 
          w22=ww22m/swm 
@@ -1966,10 +1966,10 @@
          sw=ww13+ww23
          w13=ww13/sw
          w23=ww23/sw
-		 ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
-		      +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
-		 ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &		 
-		      +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
+   ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
+        +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
+   ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
+        +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
          swm=ww13m+ww23m
          w13=ww13m/swm 
          w23=ww23m/swm 
@@ -1981,10 +1981,10 @@
          sw=ww14+ww24
          w14=ww14/sw
          w24=ww24/sw
-		 ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
-		      +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
-		 ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &	 
-		      +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
+   ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
+        +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
+   ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
+        +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
          swm=ww14m+ww24m 
          w14=ww14m/swm 
          w24=ww24m/swm 
@@ -1996,10 +1996,10 @@
          sw=ww15+ww25
          w15=ww15/sw
          w25=ww25/sw
-		 ww15m=w15*0.5*(1.+sign(1.,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
-		      +w15*0.5*(1.-sign(1.,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
-		 ww25m=w25*0.5*(1.+sign(1.,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &		 
-		      +w25*0.5*(1.-sign(1.,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
+   ww15m=w15*0.5*(1.+sign(1.,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
+        +w15*0.5*(1.-sign(1.,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
+   ww25m=w25*0.5*(1.+sign(1.,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &   
+        +w25*0.5*(1.-sign(1.,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
          swm=ww15m+ww25m
          w15=ww15m/swm 
          w25=ww25m/swm 
@@ -2091,7 +2091,7 @@
                +q54*0.5*(fyz(m+2*ninc)+v(n+2*ninc,4)*abs(v(n+2*ninc,3)/v(n+2*ninc,1)+sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1))))) &
                +q55*0.5*(fey(m+2*ninc)+v(n+2*ninc,5)*abs(v(n+2*ninc,3)/v(n+2*ninc,1)-sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1)))))
          qm5f2p=q51*0.5*(v(n+2*ninc,3)-abs(v(n+2*ninc,3))) &
-		       +q52*0.5*(fxy(m+2*ninc)-v(n+2*ninc,2)*abs(v(n+2*ninc,3)/v(n+2*ninc,1))) &
+         +q52*0.5*(fxy(m+2*ninc)-v(n+2*ninc,2)*abs(v(n+2*ninc,3)/v(n+2*ninc,1))) &
                +q53*0.5*(fyy(m+2*ninc)-v(n+2*ninc,3)*abs(v(n+2*ninc,3)/v(n+2*ninc,1))) &
                +q54*0.5*(fyz(m+2*ninc)-v(n+2*ninc,4)*abs(v(n+2*ninc,3)/v(n+2*ninc,1)+sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1))))) &
                +q55*0.5*(fey(m+2*ninc)-v(n+2*ninc,5)*abs(v(n+2*ninc,3)/v(n+2*ninc,1)-sqrt(abs(gam*ps(n+2*ninc)/v(n+2*ninc,1)))))
@@ -2159,10 +2159,10 @@
          sw=ww11+ww21
          w11=ww11/sw
          w21=ww21/sw
-		 ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
-		      +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
-		 ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
-		      +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
+   ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
+        +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
+   ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
+        +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
          swm=ww11m+ww21m
          w11=ww11m/swm 
          w21=ww21m/swm 
@@ -2174,10 +2174,10 @@
          sw=ww12+ww22
          w12=ww12/sw
          w22=ww22/sw
-		 ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
-		      +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
-		 ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
-		      +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
+   ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
+        +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
+   ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
+        +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
          swm=ww12m+ww22m 
          w12=ww12m/swm 
          w22=ww22m/swm 
@@ -2189,10 +2189,10 @@
          sw=ww13+ww23
          w13=ww13/sw
          w23=ww23/sw
-		 ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
-		      +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
-		 ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &		 
-		      +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
+   ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
+        +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
+   ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
+        +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
          swm=ww13m+ww23m
          w13=ww13m/swm 
          w23=ww23m/swm 
@@ -2204,17 +2204,17 @@
          sw=ww14+ww24
          w14=ww14/sw
          w24=ww24/sw
-		 ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
-		      +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
-		 ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &	 
-		      +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
+   ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
+        +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
+   ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
+        +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
          swm=ww14m+ww24m 
          w14=ww14m/swm 
          w24=ww24m/swm 
 !
          wwp15=g1p/betap51
-		 wwm15=g1m/betam51
-		 wwp25=g2p/betap52 
+   wwm15=g1m/betam51
+   wwp25=g2p/betap52 
          wwm25=g2m/betam52
          swp=wwp15+wwp25
          swm=wwm15+wwm25
@@ -2271,7 +2271,7 @@
        enddo
       enddo
 
-	  endif
+   endif
 !
 !-----traitement des bords------------------------------------------
 !

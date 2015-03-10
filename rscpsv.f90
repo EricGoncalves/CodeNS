@@ -58,7 +58,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
+      character(len=1316) :: form
       dimension u(ip11,ip60),v(ip11,ip60)
       dimension dt(ip11),x(ip21),y(ip21),z(ip21),utau(ip42)
       dimension res1xx(ip00),res2yy(ip00),res3zz(ip00),res4(ip00), &

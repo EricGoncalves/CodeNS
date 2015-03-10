@@ -21,16 +21,15 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
-	  use maillage
+   use sortiefichier
+   use maillage
 !
 !-----------------------------------------------------------------------
 !
-      character *80 ligne
+      character(len=80) ligne
       dimension igr(lz),jgr(lz),kgr(lz),raptat(mtb)
 !
-      write(imp,'(/,"==>at_lecopt: lecture relations domaines-paroi ", &
-      "pour calcul optimise de la distance",/)')
+      write(imp,'(/,"==>at_lecopt: lecture relations domaines-paroi pour calcul optimise de la distance",/)')
 !
       open(99,file='fatdon',form='formatted',err=100)
 !
@@ -90,8 +89,7 @@
             do l=1,lzx
               read(99,*,err=25)llu,nbdrat(l)
               if(abs(llu).ne.l) then
-                write(imp,'("!!!at_lecopt: erreur sur numero bloc l=", &
-                i4,3x,"l lu=",i4)')
+                write(imp,'("!!!at_lecopt: erreur sur numero bloc l=",i4,3x,"l lu=",i4)')
                 ierr=ierr+1
               endif
               if(l.lt.lz) then
@@ -146,8 +144,7 @@
       stop
   100 continue
 !     erreur ouverture fichier
-      write(imp,'(/,''!!!at_lecopt: probleme ouverture fichier '', &
-      ''atlecdon'')')
+      write(imp,'(/,''!!!at_lecopt: probleme ouverture fichier '',''atlecdon'')')
       stop
 !
   300 format(a80)

@@ -75,8 +75,7 @@
       write(imp,1910) mm,l,img,i,j,k,ncin(m)
       enddo
 !
- 1900 format(1h1//1x,'    m',4x,'  l',2x,'img',2x,'  i',2x,'  j', &
-             2x,'  k',2x,'      ncin'/)
+ 1900 format('1     m',4x,'  l',2x,'img',2x,'  i',2x,'  j', 2x,'  k',2x,'      ncin'/)
  1910 format(1x,i5,2x,5(2x,i3),5x,i7)
 !
       return

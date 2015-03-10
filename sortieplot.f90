@@ -24,7 +24,7 @@
 !-----------------------------------------------------------------------
 !
       logical ouvert
-      character *1 c
+      character(len=1 ) :: c
       real u,v,w,e,qq,xme
 !
       dimension t(ip11,ip60),cson(ip11),ps(ip11)

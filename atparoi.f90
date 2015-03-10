@@ -20,9 +20,9 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
-	  use boundary
-	  use maillage
+   use sortiefichier
+   use boundary
+   use maillage
 !
 !-----------------------------------------------------------------------
 !
@@ -52,8 +52,7 @@
 !       FAIRE message ou verifier a l'initialisation
 !       --------------------------------------------
 !
-        write(imp,'(/,''!!!atparoi: plus de 2 paroi dans domaine '', &
-        ''STOP'')')
+        write(imp,'(/,''!!!atparoi: plus de 2 paroi dans domaine '',''STOP'')')
         stop
       end if
 !

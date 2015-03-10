@@ -16,8 +16,8 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
-	  use maillage
+   use sortiefichier
+   use maillage
 !
 !-----------------------------------------------------------------------
 !

@@ -43,12 +43,12 @@
 !
       use para_var
       use para_fige
-	  use maillage
-	  use sortiefichier
+   use maillage
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *4 disc
+      character(len=4 ) :: disc
       dimension x(ip21),y(ip21),z(ip21)
       dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !

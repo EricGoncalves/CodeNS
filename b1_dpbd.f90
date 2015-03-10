@@ -12,13 +12,13 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *32 typdat
-      character *2 nlg,nlm,nrr,nrm
+      character(len=1316) :: form
+      character(len=32) ::  typdat
+      character(len=2 ) :: nlg,nlm,nrr,nrm
 !
       dimension lmfb(lmfbd)
       dimension lgr(lgrd)

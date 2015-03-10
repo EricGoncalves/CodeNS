@@ -156,7 +156,7 @@
 !-----------------------------------------------------------------------
 !
       logical ecrcom
-      character *1 c
+      character(len=1 ) :: c
       real nxn,nyn,nzn
       real mu,mut
 !
@@ -235,13 +235,13 @@
           c,'t_z/rU2',c, c,'Cf0',c, c,'Kp',c, c,'P/Pi',c, &
           c,'Mp_isen',c, c,'qx',c, c,'qy',c, c,'qz',c, &
           c,'i',c, c,'j',c, c,'L Utau/nu',c, c,'Utau/a_i',c
-        write(sor2,'("# Mach0=",1pe11.3,4x,"tau_ref_0=",1pe11.3, &
-        3x,"phiref=",1pe11.3)')rm0,tauref0,phiref0
-        write(sor2,'("#",t5,"x/L",t15,"y/L",t25,"z/L", &
-        t33,"t_x/rU2",t44,"t_y/rU2",t55,"t_z/rU2",t67,"Cf0", &
-        t78,"Kp",t89,"P/Pi",t99,"Mp_isen",t114,"qx",t125,"qy",t136, &
-        "qz",t144,"i   j",t164,"L Utau/nu",t175, &
-        "Utau/a_i")')
+        write(sor2,'("# Mach0=",1pe11.3,4x,"tau_ref_0=",1pe11.3,' &
+        //'3x,"phiref=",1pe11.3)')rm0,tauref0,phiref0
+        write(sor2,'("#",t5,"x/L",t15,"y/L",t25,"z/L",' &
+        //'t33,"t_x/rU2",t44,"t_y/rU2",t55,"t_z/rU2",t67,"Cf0",' &
+        //'t78,"Kp",t89,"P/Pi",t99,"Mp_isen",t114,"qx",t125,"qy",t136,' &
+        //'"qz",t144,"i   j",t164,"L Utau/nu",t175,' &
+        //'"Utau/a_i")')
       end if
 !
       pis2=atan2(1.,0.)
@@ -269,15 +269,15 @@
       cmavtfr=0.
       cnavtfr=0.
 !
-      if(v0.eq.0.) then
+      if(abs(v0).le.tiny(1.)) then
         write(imp,'(/,"!!!utsorfr: v0=0  devient 1")')
         v0=1.
       end if
-      if(q0spi0.eq.0.) then
+      if(abs(q0spi0).le.tiny(1.)) then
         write(imp,'(/,"!!!utsorfr: q0spi0=0  devient 1")')
         q0spi0=1.
       end if
-      if(pa1.eq.0.) then
+      if(abs(pa1).le.tiny(1.)) then
         write(imp,'(/,"!!!utsorfr: pa1=0  devient 1")')
         pa1=1.
       end if
@@ -322,7 +322,7 @@
 !
         if(kimpl.eq.1) then
           write(imp,987) l,mfl,iminf,imaxf,jminf,jmaxf,kminf,kmaxf
-  987     format(1h1,'integration des pressions par frontiere :', &
+  987     format('integration des pressions par frontiere :', &
           /1x,39('-') &
           //1x,'zone ',i3,'  - frontiere ',i3/1x,26('-'), &
           //5x,'imin = ',i3,5x,'imax = ',i3, &
@@ -736,7 +736,7 @@
       if(kimpl.eq.1) then
         write(imp,890) cxavtot,cyavtot,czavtot,clavtot,cmavtot,cnavtot, &
         cxaero,cyaero,czaero,claero,cmaero,cnaero
-  890   format(1h1,'efforts globaux pression - configuration ', &
+  890   format('efforts globaux pression - configuration ', &
         'complete :'/,1x,40('-'),//,1x,'repere avion :',/ &
         /,5x,'cx = ',f8.4,5x,'cy = ',f8.4,5x,'cz = ',f8.4 &
          ,5x,'cl = ',f8.4,5x,'cm = ',f8.4,5x,'cn = ',f8.4,// &

@@ -12,7 +12,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 mot
+      character(len=32) ::  mot
       dimension li(nobj)
 !
       if ((imot.eq.1).and.(mot.eq.'*')) then

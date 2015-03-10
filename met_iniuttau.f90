@@ -24,7 +24,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       real nxn,nyn,nzn
       real mu,mut
       dimension txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &

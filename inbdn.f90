@@ -81,8 +81,8 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *2 indfb
-      character *7 eqt
+      character(len=2 ) :: indfb
+      character(len=7 ) :: eqt
       real nxn,nyn,nzn
       dimension x(ip21),y(ip21),z(ip21)
       dimension sn(ip31*ndir)

@@ -17,8 +17,8 @@
       dimension bceqt(ip41,neqt)
       dimension mpb(mtt)
 !
-      character *20 chvar,frmt
-      character *80 titre
+      character(len=20) ::  chvar,frmt
+      character(len=80) ::  titre
 !
 ! lecture du fichier de conditions aux limites
 !

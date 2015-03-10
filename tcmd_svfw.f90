@@ -15,9 +15,9 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 comment
-      character *32 mot(nmx)
-      character *4 disc
+      character(len=32) ::  comment
+      character(len=32) ::  mot(nmx)
+      character(len=4 ) :: disc
       dimension imot(nmx)
 !
       do icmt=1,32

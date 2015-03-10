@@ -23,7 +23,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60)               
       dimension fd5x(ip12),fd5y(ip12),fd5z(ip12), &
                 fd6x(ip12),fd6y(ip12),fd6z(ip12), &

@@ -18,9 +18,9 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 comment
-      character *32 mot(nmx)
-      character *4 clmf
+      character(len=32) ::  comment
+      character(len=32) ::  mot(nmx)
+      character(len=4 ) :: clmf
       dimension imot(nmx)
       dimension lmfb(mtb)
       dimension vbc(ista*lsta)

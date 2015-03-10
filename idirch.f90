@@ -16,7 +16,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *2 ch
+      character(len=2 ) :: ch
       integer idirch
 !
       idirch = 0

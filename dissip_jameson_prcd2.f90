@@ -24,7 +24,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       real ge,get,gd,qq
       real prec1,prec3
       dimension v(ip11,ip60),d(ip11,ip60)

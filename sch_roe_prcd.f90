@@ -28,7 +28,7 @@
 !-----------------------------------------------------------------------
 !
       real nx,ny,nz,rr,ss,tt
-      character *7 equat
+      character(len=7 ) :: equat
       dimension v(ip11,ip60),u(ip11,ip60),ff(ip11,ip60)
       dimension toxx(ip12),toxy(ip12),toxz(ip12), &
                 toyy(ip12),toyz(ip12),tozz(ip12), &
@@ -36,7 +36,7 @@
       dimension sn(lgsnlt,nind,ndir)
       dimension ps(ip11)
       dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
-	            rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
+             rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
       indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
       inc(id,jd,kd)=id+jd*nid+kd*nijd

@@ -78,8 +78,8 @@
          stop '  !! volumes negatifs !! '
          end if
 !
- 1000 format(//,5x,34hvolumes negatifs sur domaine no : ,i3/, &
-             //,5x,34h                 sur grille  no : ,i3/)
+ 1000 format(//,5x,"volumes negatifs sur domaine no : ",i3/, &
+             //,5x,"                 sur grille  no : ",i3/)
  1001 format(5x,' i=',i3,'        j=',i3,'        n=',i5,'        vol=',e12.4)
  1002 format(//,5x,' nombre de volumes negatifs :',i6)
  1003 format(///,5x,'arret du programme car mailles negatives')

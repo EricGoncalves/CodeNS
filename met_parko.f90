@@ -124,9 +124,9 @@
           m3tot=abs(m3max-m3min)+1
 !
           if(m3tot.lt.m3clpar) then
-            write(imp,'(/,"!!!met_parko: il faut au moins m3clpar=",i3, &
-            "  perpendiculairement a la paroi",/,13x, &
-            "domaine =",i3,4x,"nb pts=",i3,4x,"ARRET")')lpar,m3clpar
+            write(imp,'(/,"!!!met_parko: il faut au moins m3clpar=",i3,' &
+            //'"  perpendiculairement a la paroi",/,13x,' &
+            //'"domaine =",i3,4x,"nb pts=",i3,4x,"ARRET")')lpar,m3clpar
             stop
           end if
 !

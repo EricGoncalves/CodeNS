@@ -25,7 +25,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1 c
+      character(len=1 ) :: c
       real u,v,w,e,qq,xme,mu,mut,vk,ve,taur,xmt
 !
       dimension t(ip11,ip60)

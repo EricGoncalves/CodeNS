@@ -19,7 +19,7 @@
       use constantes
       use definition
       use chainecarac
-	  use maillage
+   use maillage
 !
 !-----------------------------------------------------------------------
 !

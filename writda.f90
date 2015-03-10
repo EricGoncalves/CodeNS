@@ -45,7 +45,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 eqt
+      character(len=7 ) :: eqt
       real mut
       dimension v1(ip00),v2(ip00),v3(ip00),v4(ip00), &
                 v5(ip00),v6(ip00),v7(ip00)
@@ -93,10 +93,10 @@
 !     open(100,file='testecri.tec',form='formatted',status='unknown')
 !     do j=1,jmax
 !      do i=1,imax
-!       do k=1,1	
+!       do k=1,1 
 !        write(1,'(8(e20.12),3i5)')  &
 !           v1(ind(i,j,k)),v2(ind(i,j,k)),v3(ind(i,j,k)),v4(ind(i,j,k)),v5(ind(i,j,k)), &
-!		   v6(ind(i,j,k)),v7(ind(i,j,k)),mut(ind(i,j,k)),i,j,k
+!     v6(ind(i,j,k)),v7(ind(i,j,k)),mut(ind(i,j,k)),i,j,k
 !        enddo      
 !       enddo
 !      enddo

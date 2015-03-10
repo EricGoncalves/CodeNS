@@ -121,15 +121,15 @@
       csbe=cos(betar)
       snbe=sin(betar)
 !
-      if(pa1.eq.0.) then
+      if(abs(pa1).le.tiny(1.)) then
         write(imp,'("!!!utit: pa1=0, devient 1")')
         pa1=1.
       end if
-      if(q0spi0.eq.0.) then
+      if(abs(q0spi0).le.tiny(1.)) then
         write(imp,'("!!!utit: q0spi0=0, devient 1")')
         q0spi0=1.
       endif
-      if(sref.eq.0.) then
+      if(abs(sref).le.tiny(1.)) then
         write(imp,'("!!!utit: sref=0, devient 1")')
         sref=1.
       endif

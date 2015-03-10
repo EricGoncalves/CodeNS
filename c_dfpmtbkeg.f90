@@ -19,7 +19,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 mot(nmx)
+      character(len=32) ::  mot(nmx)
       dimension imot(nmx)
 !
       call tcmd_dfpmtbkeg(mot,imot,nmot)

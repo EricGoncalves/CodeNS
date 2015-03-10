@@ -58,15 +58,15 @@
 !
       use para_var
       use para_fige
-	  use maillage
-	  use boundary
-	  use sortiefichier
+   use maillage
+   use boundary
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
       real mut
-      character *7 equat
-      character *4 disc
+      character(len=7 ) :: equat
+      character(len=4 ) :: disc
       dimension v(ip11,ip60)
       dimension mut(ip12)
       dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &

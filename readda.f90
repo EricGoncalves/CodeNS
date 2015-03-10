@@ -119,10 +119,10 @@
 !     open(200,file='testlec.tec',form='formatted',status='unknown')
 !     do j=1,j2m1
 !      do i=1,i2m1
-!       do k=1,1	
+!       do k=1,1 
 !        write(1,'(8(e20.12),3i5)')  &
 !           v(ind(i,j,k),1) ,v(ind(i,j,k),2),v(ind(i,j,k),3),v(ind(i,j,k),4),v(ind(i,j,k),5), &
-!		   v(ind(i,j,k),6),v(ind(i,j,k),7),mut(ind(i,j,k)),i,j,k
+!     v(ind(i,j,k),6),v(ind(i,j,k),7),mut(ind(i,j,k)),i,j,k
 !        enddo      
 !       enddo
 !     enddo

@@ -86,7 +86,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character clsave
+      character(len=4) clsave
       real nxn,nyn,nzn
       real mut
 !

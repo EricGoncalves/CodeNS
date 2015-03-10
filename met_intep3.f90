@@ -123,9 +123,9 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *20 nomfic
-      character *1 c
-      character *5 control
+      character(len=20) ::  nomfic
+      character(len=1 ) :: c
+      character(len=5 ) :: control
       real nxn,nyn,nzn,nx,ny,nz
       real mu
       logical ouvert,iok
@@ -141,7 +141,7 @@
       dimension pi(ip00),tau(ip00),us(ip00),ut(ip00),un(ip00)
       DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,vort
       ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-	           dvzx(ip00),dvzy(ip00),dvzz(ip00),vort(ip12))
+            dvzx(ip00),dvzy(ip00),dvzz(ip00),vort(ip12))
 
 
 !     double cote
@@ -165,8 +165,7 @@
 !
       if(epspid.le.0. .or. epstaud.le.0. .or. epsvord.le.0) then
 !       pas de definition des constantes pour delta
-        write(imp,'("!!!!met_intep: pas de definition des constantes", &
-        " dans fatdon")')
+        write(imp,'("!!!!met_intep: pas de definition des constantes dans fatdon")')
         return
       endif
 !
@@ -401,10 +400,10 @@
         write(sor3,'("ZONE F=POINT, I=",i4," J=",i4)') &
         m1max-m1min,  m2max-m2min
 
-        write(sor3,'("#",t4,"xcfac",t16,"ycfac",t28,"zcfac", &
-          t40,"theta11",t54,"H",t64,"theta11i",t77,"Hi", &
-          t88,"ue_s",t100,"|Ue|",t111,"Me",t124,"R_L", &
-          t135,"i   j   k")')
+        write(sor3,'("#",t4,"xcfac",t16,"ycfac",t28,"zcfac",' &
+          //'t40,"theta11",t54,"H",t64,"theta11i",t77,"Hi",' &
+          //'t88,"ue_s",t100,"|Ue|",t111,"Me",t124,"R_L",' &
+          //'t135,"i   j   k")')
 !
 !       ---------------------------------------
 !       mfac   : pointeur tableaux toutes frontieres
@@ -498,8 +497,7 @@
             m3tmx=0
             m3vmx=0
             if(m3mxd.le.0) then
-               write(imp,'("!!!met_intep: calcul de maximum ", &
-               "impossible m1=",i4,4x,"m2=",i4)')m1,m2
+               write(imp,'("!!!met_intep: calcul de maximum impossible m1=",i4,4x,"m2=",i4)')m1,m2
                if(m1.le.2 .and. m2.le.2) then
                  m3=m3min
                  n=nc0-idm3
@@ -532,9 +530,9 @@
             if(m3pmx.eq.0) pimax=1.
             if(m3tmx.eq.0) taumx=1.
             if(m3vmx.eq.0) vormx=1.
-            if(pimax.eq.0) pimax=1.
-            if(taumx.eq.0) taumx=1.
-            if(vormx.eq.0) vormx=1.
+            if(abs(pimax).le.tiny(1.)) pimax=1.
+            if(abs(taumx).le.tiny(1.)) taumx=1.
+            if(abs(vormx).le.tiny(1.)) vormx=1.
 !
 !         --------------------------------------------------------
 !           epaisseurs de couche limite.
@@ -579,7 +577,7 @@
                 mdel  =m-idm3
                 ndel2 =n
                 ndelv =n-idm3
-                if((vort(ndel2)-vort(ndelv)).eq.0) then
+                if(abs(vort(ndel2)-vort(ndelv)).le.tiny(1.)) then
                   rm3dlv=0.
                 else
                   rm3dlv=(epsvor-vort(ndelv))/(vort(ndel2)-vort(ndelv))
@@ -599,7 +597,7 @@
                 mdel2 =m
                 mdel  =m-idm3
                 ndelp =n-idm3
-                if((pi(mdel2)-pi(mdel)).eq.0.) then
+                if(abs(pi(mdel2)-pi(mdel)).le.tiny(1.)) then
                  rm3dlp=rm3dlv
                 else
                  rm3dlp=(epspi-pi(mdel))/(pi(mdel2)-pi(mdel))
@@ -803,8 +801,8 @@
               theta11i=somu-somu2
               hpar    =0.
               hpari   =0.
-              if(theta11 .ne.0.) hpar =del1/theta11
-              if(theta11i.ne.0.) hpari=del1i/theta11i
+              if(abs(theta11 ).le.tiny(1.)) hpar =del1/theta11
+              if(abs(theta11i).le.tiny(1.)) hpari=del1i/theta11i
             else
 !             calcul epaisseurs impossible
               del1    =0.

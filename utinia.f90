@@ -74,14 +74,13 @@
 !
         read(inia1,*) rmach,alpha,beta
         close(inia1)
-        write(imp,'(12x,"rmach=",f10.3,4x,"alpha=",f10.3, &
-        4x,"beta=",f10.4)')rmach,alpha,beta
+        write(imp,'(12x,"rmach=",f10.3,4x,"alpha=",f10.3,4x,"beta=",f10.4)')rmach,alpha,beta
         vrtmac=rmach
         vrtalp=alpha
-        if(beta.ne.0.) then
-          write(imp,'(/,"!!!utinia: probleme possible avec la ", &
-          "correction de vorticite. alpha doit etre l incidence.",/, &
-          10x,"le profil doit etre en x et z")')
+        if(abs(beta).le.tiny(1.)) then
+          write(imp,'(/,"!!!utinia: probleme possible avec la ",' &
+          //'"correction de vorticite. alpha doit etre l incidence.",/,' &
+          //'10x,"le profil doit etre en x et z")')
         end if
 !     endif
 !

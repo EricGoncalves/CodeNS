@@ -187,7 +187,7 @@
 !
             distsa =dist(n)**2   ! SA standard
             kappad2 =kappa2*distsa ! pour calcul rtilde
-!			
+!   
             nutilde=v(n,6)/v(n,1)
 !            
             dvdv=dvxx(m)*dvxx(m)+dvxy(m)*dvxy(m)+dvyx(m)*dvyx(m)+dvyy(m)*dvyy(m)   ! En 2D

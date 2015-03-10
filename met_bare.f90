@@ -21,7 +21,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       real mu,mut
       dimension s(ip11,ip60)
       dimension mut(ip12),mu(ip12),vol(ip11)

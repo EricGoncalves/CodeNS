@@ -93,7 +93,7 @@
 !
       DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: alfaa,betaa,ff,vitx,vitz,mui,muti,tempi,topcx,topcz
       ALLOCATE(alfaa(ntab),betaa(ntab),ff(ntab),topcx(2),topcz(2), &
-	           vitx(ntab),vitz(ntab),mui(ntab),muti(ntab),tempi(ntab))
+            vitx(ntab),vitz(ntab),mui(ntab),muti(ntab),tempi(ntab))
 
       ndis=30
       dtopx=0.001
@@ -140,7 +140,7 @@
         v1x=v(ni,2)/v(ni,1)
         v1y=v(ni,3)/v(ni,1)
         v1z=v(ni,4)/v(ni,1)
-!       tangente normee a la paroi	    
+!       tangente normee a la paroi     
         tn=v1x*nxn(nfacns)+v1y*nyn(nfacns)+v1z*nzn(nfacns)
         t1=v1x-tn*nxn(nfacns)
         t2=v1y-tn*nyn(nfacns)

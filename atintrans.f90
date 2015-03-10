@@ -63,14 +63,14 @@
 !
       use para_var
       use para_fige
-	  use maillage
+   use maillage
       use boundary
-	  use sortiefichier
-	  use modeleturb
+   use sortiefichier
+   use modeleturb
 !
 !-----------------------------------------------------------------------
 
-      character *80 ligne
+      character(len=80) ::  ligne
       dimension fgam(ip42),ncin(ip41)
 !
       open(99,file='fatdon',status='old',err=100)
@@ -98,8 +98,7 @@
       read(99,*,err=302)nfrmx
       if(nfrmx.le.0) then
 !       le nombre de zones laminaires doit etre positif
-        write(imp,'(/,"!!!atintrans: domaine laminaire mal defini", &
-        14x,"nfrmx=",i5)')nfrmx
+        write(imp,'(/,"!!!atintrans: domaine laminaire mal defini",14x,"nfrmx=",i5)')nfrmx
         stop
       endif
 !
@@ -206,29 +205,24 @@
   301 continue
 !     fin de fichier. Pas de transition
       ktransi=0
-      write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ", &
-      "ou tout turbulent")')
+      write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ou tout turbulent")')
       close(99)
       return
 !
   100 continue
-      write(imp,'(/,"!!!atintrans: erreur ouverture fichier ", &
-      "fatdon")')
+      write(imp,'(/,"!!!atintrans: erreur ouverture fichier fatdon")')
       stop
 !
   302 continue
-      write(imp,'(/,"!!!atintrans: erreur nombre de frontieres ", &
-      "laminaires ")')
+      write(imp,'(/,"!!!atintrans: erreur nombre de frontieres laminaires ")')
       stop
 !
   303 continue
-      write(imp,'(/,"!!!atintrans: erreur lecture frontiere ", &
-      "ligne",i4)')lig
+      write(imp,'(/,"!!!atintrans: erreur lecture frontiere ligne",i4)')lig
       stop
 !
   304 continue
-      write(imp,'(/,"!!!atintrans: erreur positionnement dans ", &
-      "fatdon")')
+      write(imp,'(/,"!!!atintrans: erreur positionnement dans fatdon")')
       stop
 !
       return

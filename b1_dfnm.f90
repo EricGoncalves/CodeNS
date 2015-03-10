@@ -18,8 +18,8 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 cnfi, &
+      character(len=1316) :: form
+      character(len=24) ::  cnfi, &
                     ckfmg,clgx,ckcg, &
                     ckdualns,ctol,ctolke,cniter,cnitur, &
                     cischema,cmuscl,cilim,cxk,ckprec,ccte,ckvisq

@@ -55,7 +55,7 @@
       dimension x(ip21),y(ip21),z(ip21)
       dimension dt(ip11),vol(ip11),r(ip11),pression(ip11),ztemp(ip11),cson(ip11)
       dimension v(ip11,ip60),d_volt(ip11,ip60),u_duv(ip11,ip60), &
-	            ff_du(ip11,ip60),u0(ip11,ip60)
+             ff_du(ip11,ip60),u0(ip11,ip60)
       dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),ptdual(ip11,ip60)
       dimension sn(ip31*ndir)
       dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)

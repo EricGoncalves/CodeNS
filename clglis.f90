@@ -63,7 +63,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *2 indf
+      character(len=2 ) :: indf
       dimension x(ip21),y(ip21),z(ip21)
       dimension vol(ip11),pression(ip11),ztemp(ip11),cson(ip11)
       dimension v(ip11,ip60)

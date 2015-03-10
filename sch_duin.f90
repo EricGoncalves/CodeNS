@@ -1,5 +1,5 @@
       subroutine sch_duin( &
-	      v,img,ptdual,vdual,vdual1,vdual2)
+       v,img,ptdual,vdual,vdual1,vdual2)
 !
 !***********************************************************************
 !

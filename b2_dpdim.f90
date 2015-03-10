@@ -30,52 +30,52 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
-	  use schemanum
-	  use maillage
-	  use chainecarac
+   use sortiefichier
+   use schemanum
+   use maillage
+   use chainecarac
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
+      character(len=1316) :: form
 !
-      ndimctb=(1+kdimg*ccg)*ndimctf
+      ndimctb=int((1.+kdimg*ccg)*ndimctf)
       ndimctv=kdimv*(ndimctb-1)+1
       ndimctk=kdimk*(ndimctb-1)+1
-      ndimctc=kdimg*ccg*ndimctf
-      ndimntb=(1+kdimg*cng)*ndimnts+ndimntu
-      mdimtb =(1+kdimg*cfg)*mdimtbf
-      mdimtn =(1+kdimg*cfg)*mdimtnf
-      mdimtc =(1+kdimg*cfg)*mdimtcf
-      mdimtr =(1+kdimg*cfg)*mdimtrf
+      ndimctc=int(kdimg*ccg*ndimctf)
+      ndimntb=int((1.+kdimg*cng)*ndimnts+ndimntu)
+      mdimtb =int((1.+kdimg*cfg)*mdimtbf)
+      mdimtn =int((1.+kdimg*cfg)*mdimtnf)
+      mdimtc =int((1.+kdimg*cfg)*mdimtcf)
+      mdimtr =int((1.+kdimg*cfg)*mdimtrf)
 !
       kl=0
       do l=1,lzx
        kl=max(kl,kmf(l))
       enddo
 !
-           form='(''1'',''Verification du dimensionnement du code:'',/, &
-                       1x,39(1h-),                             //, &
-                       1x,''code     '',  11x,''calcul    '',7x/, &
-                       1x,''----     '',  11x,''------    '',7x//, &
-                       1x,''lz     = '',i7,4x,''lzx     = '',i7//, &
-                       1x,''ndimub = '',i7,4x,''ndimubx = '',i7//, &
-                       1x,''ndimctb= '',i7,4x,''ndimctbx= '',i7//, &
-                       1x,''ndimntb= '',i7,4x,''ndimntbx= '',i7//, &
-                       1x,''nvar   = '',i7,4x,''equat   = '',2x,a//, &
-                       1x,''kdimv  = '',i7,//, &
-                       1x,''kdimk  = '',i7,//, &
-                       1x,''kdimg  = '',i7,4x,''lgx     = '',i7/)'
+           form='(''1'',''Verification du dimensionnement du code:'',/,' &
+                       //'1x,39(1h-),                             //,' &
+                       //'1x,''code     '',  11x,''calcul    '',7x/,' &
+                       //'1x,''----     '',  11x,''------    '',7x//,' &
+                       //'1x,''lz     = '',i7,4x,''lzx     = '',i7//,' &
+                       //'1x,''ndimub = '',i7,4x,''ndimubx = '',i7//,' &
+                       //'1x,''ndimctb= '',i7,4x,''ndimctbx= '',i7//,' &
+                       //'1x,''ndimntb= '',i7,4x,''ndimntbx= '',i7//,' &
+                       //'1x,''nvar   = '',i7,4x,''equat   = '',2x,a//,' &
+                       //'1x,''kdimv  = '',i7,//,' &
+                       //'1x,''kdimk  = '',i7,//,' &
+                       //'1x,''kdimg  = '',i7,4x,''lgx     = '',i7/)'
       write(imp,form)lz,lzx,ndimub,ndimubx,ndimctb,ndimctbx, &
                      ndimntb,ndimntbx, &
                      nvar,equat,kdimv,kdimk,kdimg,lgx
-           form='( &
-                       1x,''mtb     = '',i7,4x,''mtbx    = '',i7//, &
-                       1x,''mdimub  = '',i7,4x,''mdimubx = '',i7//, &
-                       1x,''mdimtb  = '',i7,4x,''mdimtbx = '',i7//, &
-                       1x,''mdimtn  = '',i7,4x,''mdimtnx = '',i7//, &
-                       1x,''mdimtc  = '',i7,4x,''mdimtcx = '',i7//, &
-                       1x,''mdimtr  = '',i7,4x,''mdimtrx = '',i7//)'
+           form='(' &
+                       //'1x,''mtb     = '',i7,4x,''mtbx    = '',i7//,' &
+                       //'1x,''mdimub  = '',i7,4x,''mdimubx = '',i7//,' &
+                       //'1x,''mdimtb  = '',i7,4x,''mdimtbx = '',i7//,' &
+                       //'1x,''mdimtn  = '',i7,4x,''mdimtnx = '',i7//,' &
+                       //'1x,''mdimtc  = '',i7,4x,''mdimtcx = '',i7//,' &
+                       //'1x,''mdimtr  = '',i7,4x,''mdimtrx = '',i7//)'
       write(imp,form)mtb,mtbx, &
                      mdimub,mdimubx,mdimtb,mdimtbx,mdimtn,mdimtnx, &
                      mdimtc,mdimtcx,mdimtr,mdimtrx

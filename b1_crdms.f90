@@ -17,11 +17,11 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
+      character(len=1316) :: form
 !
        form='(/,2x,''creation d''''un domaine '',/' &
              //'2x,''----------------------'',/' &

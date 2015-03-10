@@ -10,7 +10,7 @@
 !
       use para_var
       use para_fige
-	  use boundary
+   use boundary
 !
 !-----------------------------------------------------------------------
 !

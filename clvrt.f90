@@ -4,7 +4,7 @@
                  nxn,nyn,nzn,ncbd,v, &
                  mmb,mpb,mpn, &
                  l,x,y,z, &
-				 pression,temp,cson)
+     pression,temp,cson)
 !
 !***********************************************************************
 !

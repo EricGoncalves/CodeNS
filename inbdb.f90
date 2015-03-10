@@ -40,7 +40,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *4 clmf
+      character(len=4 ) :: clmf
       dimension vbc(ista*lsta)
       dimension bceqt(ip41,neqt)
       dimension ncbd(ip41),ncin(ip41)

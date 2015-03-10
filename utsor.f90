@@ -235,11 +235,11 @@
       if(kimp.eq.1) then
        write(imp,987) l,mfl,iminf,imaxf,jminf,jmaxf,kminf,kmaxf
       endif
-  987 format(1h1,41hintegration des pressions par frontiere :/1x,39(1h-) &
-      //1x,5hzone ,i3,15h   - frontiere ,i3/1x,26(1h-), &
-      //5x,7himin = ,i3,5x,7himax = ,i3, &
-      //5x,7hjmin = ,i3,5x,7hjmax = ,i3, &
-      //5x,7hkmin = ,i3,5x,7hkmax = ,i3/)
+  987 format("integration des pressions par frontiere : ",39("-") &
+      //1x,"zone ",i3,"   - frontiere ",i3/1x,26("-"), &
+      //5x,"imin = ",i3,5x,"imax = ",i3, &
+      //5x,"jmin = ",i3,5x,"jmax = ",i3, &
+      //5x,"kmin = ",i3,5x,"kmax = ",i3/)
 !
       m1min=1
       m2min=1
@@ -367,14 +367,14 @@
       write(imp,991) m2,sxyb,cxavb,cyavb,czavb,clavb,cmavb,cnavb, &
       cxaerob,cyaerob,czaerob,claerob,cmaerob,cnaerob
       endif
-  991 format(//,1x,13hbande numero ,i3,2h :,/,1x,18(1h-),// &
-      /,1x,35hsurface mouillee projetee sur xy : ,e12.4,/ &
-      /,1x,31hefforts dans le repere avion : ,/ &
-      /,5x,5hcx = ,f8.4,5x,5hcy = ,f8.4,5x,5hcz = ,f8.4 &
-      ,5x,5hcl = ,f8.4,5x,5hcm = ,f8.4,5x,5hcn = ,f8.4,// &
-      /,1x,39hefforts dans le repere aerodynamique : ,/ &
-      /,5x,5hcx = ,f8.4,5x,5hcy = ,f8.4,5x,5hcz = ,f8.4 &
-      ,5x,5hcl = ,f8.4,5x,5hcm = ,f8.4,5x,5hcn = ,f8.4//)
+  991 format(//,1x,"bande numero ",i3," :",/,1x,18("-"),// &
+      /,1x,"surface mouillee projetee sur xy : ",e12.4,/ &
+      /,1x,"efforts dans le repere avion : ",/ &
+      /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4,// &
+      /,1x,"efforts dans le repere aerodynamique : ",/ &
+      /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
 !
       endif
 !
@@ -434,17 +434,17 @@
        write(imp,989) sml,sxy,syz,sxz,cxav,cyav,czav,clav,cmav, &
        cnav,cxaero,cyaero,czaero,claero,cmaero,cnaero
       endif
-  985 format(//,1x,20hfrontiere complete :,/,1x,20(1h-),/)
-  989 format(/,1x,35hsurface mouillee          : ,e12.4,/ &
-      /,1x,35hsurface mouillee projetee sur xy : ,e12.4,/ &
-      /,1x,35hsurface mouillee projetee sur yz : ,e12.4,/ &
-      /,1x,35hsurface mouillee projetee sur xz : ,e12.4,// &
-      /,1x,31hefforts dans le repere avion : ,/ &
-      /,5x,5hcx = ,f8.4,5x,5hcy = ,f8.4,5x,5hcz = ,f8.4 &
-      ,5x,5hcl = ,f8.4,5x,5hcm = ,f8.4,5x,5hcn = ,f8.4,// &
-      /,1x,39hefforts dans le repere aerodynamique : ,/ &
-      /,5x,5hcx = ,f8.4,5x,5hcy = ,f8.4,5x,5hcz = ,f8.4 &
-      ,5x,5hcl = ,f8.4,5x,5hcm = ,f8.4,5x,5hcn = ,f8.4//)
+  985 format(//,1x,"frontiere complete :",/,1x,20("-"),/)
+  989 format(/,1x,"surface mouillee          : ",e12.4,/ &
+      /,1x,"surface mouillee projetee sur xy : ",e12.4,/ &
+      /,1x,"surface mouillee projetee sur yz : ",e12.4,/ &
+      /,1x,"surface mouillee projetee sur xz : ",e12.4,// &
+      /,1x,"efforts dans le repere avion : ",/ &
+      /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4,// &
+      /,1x,"efforts dans le repere aerodynamique : ",/ &
+      /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
       enddo
 !
       cxaero=cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
@@ -458,13 +458,13 @@
       write(imp,990) cxavtot,cyavtot,czavtot,clavtot,cmavtot,cnavtot, &
       cxaero,cyaero,czaero,claero,cmaero,cnaero
       endif
-  990 format(1h1,42hefforts globaux - configuration complete :/,1x, &
-      40(1h-),//,1x,14hrepere avion :,/ &
-      /5x,5hcx = ,f8.4,5x,5hcy = ,f8.4,5x,5hcz = ,f8.4 &
-      ,5x,5hcl = ,f8.4,5x,5hcm = ,f8.4,5x,5hcn = ,f8.4,// &
-      /,1x,22hrepere aerodynamique :,/ &
-      /,5x,5hcx = ,f8.4,5x,5hcy = ,f8.4,5x,5hcz = ,f8.4 &
-      ,5x,5hcl = ,f8.4,5x,5hcm = ,f8.4,5x,5hcn = ,f8.4)
+  990 format("efforts globaux - configuration complete :"/,1x, &
+      40("-"),//,1x,"repere avion :",/ &
+      /5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4,// &
+      /,1x,"repere aerodynamique :",/ &
+      /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4)
 !
       return
       end

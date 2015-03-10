@@ -16,15 +16,15 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
-	  use kcle
-	  use definition
+   use sortiefichier
+   use kcle
+   use definition
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 cd,cm,cal,cbe
-      character *24 ct,cro,ca
+      character(len=1316) :: form
+      character(len=24) ::  cd,cm,cal,cbe
+      character(len=24) ::  ct,cro,ca
 !
       call convich(kvarst(nst,4),cd)
       call convich(kvarst(nst,5),cm)

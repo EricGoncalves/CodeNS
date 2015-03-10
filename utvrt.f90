@@ -17,7 +17,7 @@
       use para_fige
       use maillage
       use definition
-      use proprieteflu	  	   
+      use proprieteflu       
 !
 !-----------------------------------------------------------------------
 !

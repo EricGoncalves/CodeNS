@@ -15,13 +15,13 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
-	  use maillage
-	  use boundary
+   use sortiefichier
+   use maillage
+   use boundary
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
+      character(len=1316) :: form
 !
       mfbi=nfei(mfbe)
 !

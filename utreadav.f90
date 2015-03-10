@@ -39,7 +39,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       real mut
       dimension u(ip11,ip60),v(ip11,ip60),mut(ip12)
 !

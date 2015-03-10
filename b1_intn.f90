@@ -9,14 +9,14 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
-	  use kcle
-	  use schemanum
+   use sortiefichier
+   use kcle
+   use schemanum
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 cnumt
+      character(len=1316) :: form
+      character(len=24) ::  cnumt
 !
       call convich(knumt,cnumt)
 !

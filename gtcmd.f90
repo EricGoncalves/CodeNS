@@ -16,8 +16,8 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 command
-      character *132 line
+      character(len=1316) :: command
+      character(len=132)  :: line
 !
       do icmd=1,lgcmdx
        command(icmd:icmd)=' '

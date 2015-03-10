@@ -28,7 +28,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       real mu,mut,precon,rhoe,pres
       dimension v(ip11,ip60),u(ip11,ip60),d(ip11,ip60),ff(ip11,ip60)
       dimension vol(ip11),dt(ip11),ps(ip11),cson(ip11)
@@ -45,7 +45,7 @@
                                                      d2w1,d2w2,d2w3,d2w4,d2w5
       ALLOCATE(coefe(ndir,ip00),coefv(ndir,ip00))
       ALLOCATE(coefdiag(ip00),coefb(ip00), &
-			   d2w1(ip00),d2w2(ip00),d2w3(ip00),d2w4(ip00),d2w5(ip00))
+      d2w1(ip00),d2w2(ip00),d2w3(ip00),d2w4(ip00),d2w5(ip00))
 
       n0c=npc(lm)
       i1=ii1(lm)

@@ -63,7 +63,7 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *7 equat
+      character(len=7 ) :: equat
       dimension sn(lgsnlt,nind,ndir)
       dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
                 dvyx(ip00),dvyy(ip00),dvyz(ip00), &

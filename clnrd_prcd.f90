@@ -58,7 +58,7 @@
       use maillage
       use proprieteflu
       use schemanum
-      use definition	  	   
+      use definition       
 !
 !-----------------------------------------------------------------------
 !

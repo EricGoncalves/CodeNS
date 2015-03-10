@@ -12,12 +12,12 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
+   use sortiefichier
 !
 !-----------------------------------------------------------------------
 !
-      character *32 mot(nmx)
-      character *4 clmf
+      character(len=32) ::  mot(nmx)
+      character(len=4 ) :: clmf
 !
       dimension imot(nmx)
       dimension lmfb(mtb)

@@ -11,25 +11,24 @@
 !
       use para_var
       use para_fige
-	  use sortiefichier
-	  use maillage
+   use sortiefichier
+   use maillage
 !
 !-----------------------------------------------------------------------
 !
-      character*8 nomfich
+      character(len=8) :: nomfich
       dimension dist(ip12),mnpar(ip12)
 !
       ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
+      iwd=98
       if(l0.eq.0) then
 !       ecriture tous les domaines dans "fdist"
 !
         nomfich='fdist   '
-        iwd=98
         open(iwd,file=nomfich,form='unformatted',err=50)
 !
-        write(imp,'("===>at_ecrdist: distance tous domaines", &
-        "   fichier=",a8)')nomfich
+        write(imp,'("===>at_ecrdist: distance tous domaines   fichier=",a8)')nomfich
 !
         do l=1,lzx
           n0=npc(l)
@@ -64,8 +63,7 @@
           stop
         end if
 !
-        write(imp,'("===>at_ecrdist: ecriture distance domaine",i2, &
-        "   fichier=",a8)')l,nomfich
+        write(imp,'("===>at_ecrdist: ecriture distance domaine",i2,"   fichier=",a8)')l,nomfich
 !
         open(iwd,file=nomfich,form='unformatted',err=50)
 !
@@ -110,8 +108,7 @@
       write(imp,'("!!!at_ecrdist: erreur ouverture fichier=",a8)') &
       nomfich
    60 continue
-      write(imp,'("!!!at_ecrdist: erreur ouverture fichier=", &
-      " fdist-aux")')
+      write(imp,'("!!!at_ecrdist: erreur ouverture fichier=fdist-aux")')
       stop
 !
       end

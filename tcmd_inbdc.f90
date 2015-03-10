@@ -16,9 +16,9 @@
 !
 !-----------------------------------------------------------------------
 !
-      character *32 comment
-      character *32 mot(nmx)
-      character *2 tvi,tvj,tvk
+      character(len=32) ::  comment
+      character(len=32) ::  mot(nmx)
+      character(len=2 ) :: tvi,tvj,tvk
       dimension imot(nmx)
 !
 !

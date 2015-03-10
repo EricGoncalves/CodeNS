@@ -74,7 +74,7 @@
               m=n-n0
               retur=(v(n,6)**2)/(v(n,7)*mu(n))
               ss=v(n,6)*sqrt(4.*(dvxx(m)**2+dvyy(m)**2+ dvzz(m)**2)/3.  &
-			       + (dvzy(m)+dvyz(m))**2 &
+          + (dvzy(m)+dvyz(m))**2 &
                    + (dvxz(m)+dvzx(m))**2 &
                    + (dvyx(m)+dvxy(m))**2)/v(n,7)
               cmuv=amin1(cmu,as/ss)

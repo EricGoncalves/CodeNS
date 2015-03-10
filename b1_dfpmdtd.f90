@@ -16,15 +16,15 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
-	  use sortiefichier
-	  use schemanum
-	  use kcle
+   use sortiefichier
+   use schemanum
+   use kcle
 !
 !-----------------------------------------------------------------------
 !
-      character *1316 form
-      character *24 ceta
-      character *2 nlg,nlm,nrr,nrm
+      character(len=1316) :: form
+      character(len=24) ::  ceta
+      character(len=2 ) :: nlg,nlm,nrr,nrm
 !
       dimension ldom(ldomd)
       dimension lgr(lgrd)
