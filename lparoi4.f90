@@ -1,3 +1,6 @@
+module mod_lparoi4
+implicit none
+contains
       subroutine lparoi4( &
                 ncyc, &
                 nxn,nyn,nzn, &
@@ -177,3 +180,4 @@ double precision :: v1z
 !
       return
       end
+end module

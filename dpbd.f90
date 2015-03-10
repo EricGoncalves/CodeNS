@@ -1,3 +1,6 @@
+module mod_dpbd
+implicit none
+contains
       subroutine dpbd( &
                  mfbe,img, &
                  typdat, &
@@ -18,6 +21,10 @@
       use para_var
       use para_fige
       use boundary
+use mod_dpbdn
+use mod_dpbdc
+use mod_dpbdb
+use mod_dpbdi
 implicit none
 integer :: mfbe
 integer :: img
@@ -81,3 +88,4 @@ integer :: lb
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_utpari
+implicit none
+contains
       subroutine utpari( &
                  bceqt, &
                  mfl,tp, &
@@ -38,3 +41,4 @@ integer :: mt
 !
       return
       end
+end module

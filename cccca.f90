@@ -1,3 +1,6 @@
+module mod_cccca
+implicit none
+contains
       subroutine cccca( &
                  l,equat, &
                  v,mut, &
@@ -92,3 +95,4 @@ integer :: n0
 !
       return
       end
+end module

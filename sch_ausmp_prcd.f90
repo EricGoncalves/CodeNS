@@ -1,3 +1,6 @@
+module mod_sch_ausmp_prcd
+implicit none
+contains
       subroutine sch_ausmp_prcd( &
                  lm,ityprk, &
                  u,v,d,ff, &
@@ -845,3 +848,4 @@ double precision :: sk5
 
       return
       end
+end module

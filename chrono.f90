@@ -1,3 +1,6 @@
+module mod_chrono
+implicit none
+contains
       subroutine chrono( &
                  img, &
                  mu,mut,u,dt,dtmin, &
@@ -61,6 +64,8 @@
       use constantes
       use chainecarac
       use sortiefichier 
+use mod_chronos_prcd
+use mod_chronos
 implicit none
 integer :: indc
 integer :: img
@@ -171,3 +176,4 @@ integer :: npsn
 !
       return
       end
+end module

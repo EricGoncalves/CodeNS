@@ -1,3 +1,6 @@
+module mod_met_dist
+implicit none
+contains
       subroutine met_dist(l,x,y,z,Delta)
 !
 !***********************************************************************
@@ -165,3 +168,4 @@ integer :: njd
 !
       return
       end
+end module

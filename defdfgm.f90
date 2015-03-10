@@ -1,3 +1,6 @@
+module mod_defdfgm
+implicit none
+contains
       subroutine defdfgm
 !
 !***********************************************************************
@@ -27,3 +30,4 @@ implicit none
 !
       return
       end
+end module

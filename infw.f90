@@ -1,3 +1,6 @@
+module mod_infw
+implicit none
+contains
       subroutine infw( &
                  l,x,y,z,v,mut,tnte1, &
                  kina,utau, &
@@ -35,6 +38,9 @@
       use definition
       use sortiefichier
       use schemanum
+use mod_utreadav
+use mod_utinia
+use mod_readda
 implicit none
 integer :: l
 double precision :: x
@@ -104,3 +110,4 @@ integer :: lm
 !
       return
       end
+end module

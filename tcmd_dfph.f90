@@ -1,3 +1,6 @@
+module mod_tcmd_dfph
+implicit none
+contains
       subroutine tcmd_dfph(mot,imot,nmot)
 !
 !***********************************************************************
@@ -12,6 +15,8 @@
       use chainecarac
       use kcle
       use proprieteflu
+use mod_synterr
+use mod_valreel
 implicit none
 integer :: imot
 integer :: nmot
@@ -77,3 +82,4 @@ integer :: nm
 !
       return
       end
+end module

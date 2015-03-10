@@ -1,3 +1,6 @@
+module mod_met_laplaciens
+implicit none
+contains
       subroutine met_laplaciens( &
                  l, &
                  equat, &
@@ -110,10 +113,11 @@ double precision :: vols
                 cmuk1(ip21),cmuk2(ip21)
       dimension v(ip11,ip60)
 !
-      data eps/0.000001/
+
 !
       indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
       inc(id,jd,kd)=id+jd*nid+kd*nijd
+      eps=0.000001
 !
       n0c=npc(l)
       i1=ii1(l)
@@ -491,3 +495,4 @@ double precision :: vols
 !
       return
       end
+end module

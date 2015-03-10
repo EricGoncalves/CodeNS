@@ -1,3 +1,6 @@
+module mod_atdist_2
+implicit none
+contains
           subroutine atdist_2( &
                  x,y,z, &
                  xpar,ypar,zpar, &
@@ -141,3 +144,4 @@ integer :: no
 !
       return
       end
+end module

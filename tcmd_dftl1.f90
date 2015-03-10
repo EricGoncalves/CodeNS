@@ -1,3 +1,6 @@
+module mod_tcmd_dftl1
+implicit none
+contains
       subroutine tcmd_dftl1(mot,imot,nmot)
 !
 !***********************************************************************
@@ -11,6 +14,7 @@
       use para_fige
       use chainecarac
       use kcle
+use mod_cctcmd
 implicit none
 integer :: imot
 integer :: nmot
@@ -40,3 +44,4 @@ integer :: lgcmd
 !
       return
       end
+end module

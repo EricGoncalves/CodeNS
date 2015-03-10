@@ -1,3 +1,6 @@
+module mod_svfw
+implicit none
+contains
       subroutine svfw( &
                  l,v,mut,utau, &
                  disc,ncin,ncbd, &
@@ -27,6 +30,8 @@
       use para_fige
       use sortiefichier
       use chainecarac
+use mod_chdacc
+use mod_writda
 implicit none
 integer :: l
 double precision :: v
@@ -78,3 +83,4 @@ integer :: kmin
 !
       return
       end
+end module

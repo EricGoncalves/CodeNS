@@ -1,3 +1,6 @@
+module mod_sch_jameson
+implicit none
+contains
       subroutine sch_jameson( &
                  lm,ityprk, &
                  u,v,d,ff, &
@@ -560,3 +563,4 @@ double precision :: sk4
 
       return
       end
+end module

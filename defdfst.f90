@@ -1,3 +1,6 @@
+module mod_defdfst
+implicit none
+contains
       subroutine defdfst
 !
 !***********************************************************************
@@ -37,3 +40,4 @@ integer :: nst
 !
       return
       end
+end module

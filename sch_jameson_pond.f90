@@ -1,3 +1,6 @@
+module mod_sch_jameson_pond
+implicit none
+contains
       subroutine sch_jameson_pond( &
                  lm,ityprk, &
                  u,v,d,ff, &
@@ -571,3 +574,4 @@ double precision :: sk4
 
       return
       end
+end module

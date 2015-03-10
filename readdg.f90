@@ -1,3 +1,6 @@
+module mod_readdg
+implicit none
+contains
       subroutine readdg( &
                  l,kdg,x,y,z)
 !
@@ -117,3 +120,4 @@ integer :: njd
 !
       return
       end
+end module

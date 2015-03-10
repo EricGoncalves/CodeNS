@@ -1,3 +1,6 @@
+module mod_lpker1
+implicit none
+contains
       subroutine lpker1( &
                  v,mu,mut,dist, &
                  nxn,nyn,nzn, &
@@ -250,3 +253,4 @@ double precision :: yv
       return
       end
 
+end module

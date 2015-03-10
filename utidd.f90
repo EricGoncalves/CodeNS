@@ -1,3 +1,6 @@
+module mod_utidd
+implicit none
+contains
       subroutine utidd( &
                  bceqt, &
                  mfl,rpi,rti,d0x,d0y,d0z,ncbd, &
@@ -76,3 +79,4 @@ integer :: mt
 !
       return
       end
+end module

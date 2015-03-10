@@ -1,3 +1,6 @@
+module mod_rfspstc
+implicit none
+contains
       subroutine rfspstc(l,t)
 !
 !***********************************************************************
@@ -166,3 +169,4 @@ integer :: njd
 !
       return
       end
+end module

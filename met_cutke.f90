@@ -1,3 +1,6 @@
+module mod_met_cutke
+implicit none
+contains
       subroutine met_cutke(l,s)
 !
 !***********************************************************************
@@ -90,3 +93,4 @@ integer :: njd
 !
       return
       end
+end module

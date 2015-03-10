@@ -1,3 +1,6 @@
+module mod_c_cpbd
+implicit none
+contains
       subroutine c_cpbd( &
                  mot,imot,nmot, &
                  ncin,nxn,nyn,nzn,ncbd, &
@@ -78,6 +81,10 @@
       use boundary
       use schemanum
       use sortiefichier
+use mod_b1_cpbd
+
+use mod_cpbd
+use mod_tcmd_cpbd
 implicit none
 integer :: imot
 integer :: nmot
@@ -170,3 +177,4 @@ double precision :: cson
 !
       return
       end
+end module

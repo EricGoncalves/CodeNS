@@ -1,3 +1,6 @@
+module mod_idirch
+implicit none
+contains
       function idirch(ch)
 implicit none
 integer :: idir
@@ -52,3 +55,4 @@ integer :: idir
 !
       return
       end
+end module

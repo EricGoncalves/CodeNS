@@ -1,3 +1,6 @@
+module mod_tcmd_dfpmdsd
+implicit none
+contains
       subroutine tcmd_dfpmdsd( &
                  mot,imot,nmot, &
                  ldom,ldomd, &
@@ -15,6 +18,9 @@
       use schemanum
       use maillage
       use kcle
+use mod_synterr
+use mod_valreel
+use mod_vallent
 implicit none
 integer :: imot
 integer :: nmot
@@ -130,3 +136,4 @@ double precision :: rree
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_c_dfpmcfg
+implicit none
+contains
       subroutine c_dfpmcfg(mot,imot,nmot)
 !
 !***********************************************************************
@@ -21,6 +24,11 @@
       use sortiefichier
       use boundary
       use maillage
+use mod_b1_dfpmcfg
+
+use mod_dfpmcfg
+
+use mod_tcmd_dfpmcfg
 implicit none
 integer :: imot
 integer :: nmot
@@ -40,3 +48,4 @@ integer :: nmot
 !
       return
       end
+end module

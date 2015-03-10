@@ -1,3 +1,6 @@
+module mod_b1_dfnzst
+implicit none
+contains
       subroutine b1_dfnzst(nonzst)
 !
 !***********************************************************************
@@ -29,3 +32,4 @@ integer :: nonzst
 !
       return
       end
+end module

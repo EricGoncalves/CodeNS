@@ -1,3 +1,6 @@
+module mod_c_svfw
+implicit none
+contains
       subroutine c_svfw( &
                  mot,imot,nmot, &
                  l,v,mut,utau, &
@@ -36,6 +39,9 @@
       use para_var
       use para_fige
    use sortiefichier
+use mod_svfw
+use mod_tcmd_svfw
+use mod_b1_svfw
 implicit none
 integer :: imot
 integer :: nmot
@@ -81,3 +87,4 @@ double precision :: tn8
 !
       return
       end
+end module

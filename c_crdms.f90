@@ -1,3 +1,6 @@
+module mod_c_crdms
+implicit none
+contains
       subroutine c_crdms(mot,imot,nmot)
 !
 !***********************************************************************
@@ -9,6 +12,11 @@
 !
       use para_fige
    use sortiefichier
+use mod_crdms
+use mod_b3_crdms
+use mod_b1_crdms
+use mod_b2_crdms
+use mod_tcmd_crdms
 implicit none
 integer :: imot
 integer :: nmot
@@ -41,3 +49,4 @@ integer :: nk
 !
       return
       end
+end module

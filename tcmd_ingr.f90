@@ -1,3 +1,6 @@
+module mod_tcmd_ingr
+implicit none
+contains
       subroutine tcmd_ingr( &
                  mot,imot,nmot, &
                  ldom,ldomd,king)
@@ -14,6 +17,9 @@
       use chainecarac
       use maillage
       use kcle
+use mod_synterr
+use mod_valenti
+use mod_vallent
 implicit none
 integer :: imot
 integer :: nmot
@@ -55,3 +61,4 @@ integer :: nm
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_zgrad2
+implicit none
+contains
       subroutine zgrad2( &
                  l, &
                  equat, &
@@ -175,12 +178,13 @@ double precision :: vols
       dimension vol(ip11),temp(ip11),s(ip11,ip60)
       dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
                 cmuk1(ip21),cmuk2(ip21)
-      data eps/0.00001/
+
 !
       ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
       inc(id,jd,kd)=id+jd*nid+kd*nijd
 
       REAL,DIMENSION(:),ALLOCATABLE :: vx,vy,vz
+      eps=0.00001
       ALLOCATE(vx(ip00),vy(ip00),vz(ip00))
 
       n0=npc(l)
@@ -582,3 +586,4 @@ DEALLOCATE(vx,vy,vz)
 
       return
       end
+end module

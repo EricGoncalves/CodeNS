@@ -1,3 +1,6 @@
+module mod_clidd2_prcd
+implicit none
+contains
       subroutine clidd2_prcd( &
                  mfb,l,rpi,rti,d0x,d0y,d0z, &
                  nxn,nyn,nzn,ncbd,v, &
@@ -195,9 +198,8 @@ double precision :: wn
       dimension pression(ip11),temp(ip11),cson(ip11)
       dimension y(ip21),z(ip21)
 !
-      data eps/0.0000001/
-!
       inc(id,jd,kd)=id+jd*nid+kd*nijd
+      eps=0.0000001
 !
       n0n=npn(l)
       n0c=npc(l)
@@ -305,3 +307,4 @@ double precision :: wn
 !
       return
       end
+end module

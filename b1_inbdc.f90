@@ -1,3 +1,6 @@
+module mod_b1_inbdc
+implicit none
+contains
       subroutine b1_inbdc( &
                  krr,mfbea,mfbeb,kibdc,epsmsh, &
                  iba,jba,kba,tvi,tvj,tvk)
@@ -68,3 +71,4 @@ integer :: kba
 !
       return
       end
+end module

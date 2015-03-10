@@ -1,3 +1,6 @@
+module mod_met_mtcorf1
+implicit none
+contains
       subroutine met_mtcorf1( &
                  l,ncin, &
                  dist,mnpar,frac)
@@ -36,6 +39,7 @@
       use para_fige
       use boundary
       use modeleturb
+use mod_atindnor
 implicit none
 integer :: l
 integer :: ncin
@@ -71,7 +75,7 @@ integer :: npar
 !-----------------------------------------------------------------------
 !
       integer dm1,dm2,dm3
-      dimension dist(ip12),mnpar(ip12),frac(ip12)
+      dimension dist(ip12),mnpar(ip12),frac(ip00)
       dimension ncin(ip41)
 !
       do mpar=1,nbdko
@@ -177,3 +181,4 @@ integer :: npar
 !
       return
       end
+end module

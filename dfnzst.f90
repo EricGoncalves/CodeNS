@@ -1,3 +1,6 @@
+module mod_dfnzst
+implicit none
+contains
       subroutine dfnzst(nonzst)
 !
 !***********************************************************************
@@ -66,3 +69,4 @@ integer :: nonzst
 !
       return
       end
+end module

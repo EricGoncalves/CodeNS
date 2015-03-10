@@ -1,3 +1,6 @@
+module mod_b1_dfpmcfg
+implicit none
+contains
       subroutine b1_dfpmcfg
 !
 !***********************************************************************
@@ -18,6 +21,7 @@
    use maillage
    use boundary
    use kcle
+use mod_convich
 implicit none
 integer :: long
 integer :: longm1
@@ -83,3 +87,4 @@ integer :: nrest
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_utidi
+implicit none
+contains
       subroutine utidi( &
                  bceqt, &
                  mfl,rpi,rti,ncbd, &
@@ -62,3 +65,4 @@ integer :: mt
 !
       return
       end
+end module

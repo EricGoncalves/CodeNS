@@ -1,3 +1,6 @@
+module mod_dua_resro
+implicit none
+contains
       subroutine dua_resro( &
                  icyc,ncyc,img, &
                  u0,v,dt)
@@ -90,3 +93,4 @@ double precision :: resr
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_cldebit
+implicit none
+contains
       subroutine cldebit( &
                  mfb,pres, &
                  nxn,nyn,nzn,ncbd,v, &
@@ -139,3 +142,4 @@ double precision :: roc0
 !
       return
       end
+end module

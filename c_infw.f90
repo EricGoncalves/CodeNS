@@ -1,3 +1,6 @@
+module mod_c_infw
+implicit none
+contains
       subroutine c_infw( &
                  mot,imot,nmot, &
                  x,y,z,v,mut,tnte1,utau, &
@@ -15,6 +18,9 @@
       use para_fige
    use sortiefichier
       use modeleturb
+use mod_infw
+use mod_tcmd_infw
+use mod_b1_infw
 implicit none
 integer :: imot
 integer :: nmot
@@ -65,3 +71,4 @@ integer :: ldomd
 !
       return
       end
+end module

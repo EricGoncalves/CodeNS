@@ -1,3 +1,6 @@
+module mod_b1_dfst0
+implicit none
+contains
       subroutine b1_dfst0(roam,aam,tam)
 !
 !***********************************************************************
@@ -35,3 +38,4 @@ double precision :: tam
 !
       return
       end
+end module

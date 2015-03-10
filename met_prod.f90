@@ -1,3 +1,6 @@
+module mod_met_prod
+implicit none
+contains
       subroutine met_prod( &
                  l,ncyc, &
                  mut,s, &
@@ -107,3 +110,4 @@ integer :: njd
 !
       return
       end
+end module

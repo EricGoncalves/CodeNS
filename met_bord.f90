@@ -1,3 +1,6 @@
+module mod_met_bord
+implicit none
+contains
       subroutine met_bord( &
                  kpst, &
                  bceqt, &
@@ -18,6 +21,9 @@
       use boundary
       use definition
       use sortiefichier
+use mod_met_rbve
+use mod_met_rbvc
+use mod_met_rbvr
 implicit none
 integer :: kpst
 double precision :: bceqt
@@ -356,3 +362,4 @@ integer :: no
 !
       return
       end
+end module

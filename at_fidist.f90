@@ -1,3 +1,6 @@
+module mod_at_fidist
+implicit none
+contains
           subroutine at_fidist( &
                  igr,jgr,kgr,raptat, &
                  x,y,z, &
@@ -449,3 +452,4 @@ integer :: nsom
 !
       return
       end
+end module

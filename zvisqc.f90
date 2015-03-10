@@ -1,3 +1,6 @@
+module mod_zvisqc
+implicit none
+contains
       subroutine zvisqc( &
                  img, &
                  s,mu,ro, &
@@ -103,6 +106,13 @@
       use chainecarac
       use schemanum
       use modeleturb
+use mod_smg_fcs
+use mod_zfluto
+use mod_atctranske
+use mod_zgrad
+use mod_rbte
+use mod_zgrad2
+use mod_rbtc
 implicit none
 integer :: img
 double precision :: s
@@ -248,3 +258,4 @@ DEALLOCATE(dtx,dty,dtz)
 
       return
       end
+end module

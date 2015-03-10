@@ -1,3 +1,6 @@
+module mod_rbord
+implicit none
+contains
       subroutine rbord( &
                  kpst,img, &
                  mnc,ncin,mnr,xnr,ynr,znr,nxn,nyn,nzn,ncbd, &
@@ -86,6 +89,34 @@
       use schemanum
       use definition
       use modeleturb
+use mod_utprd
+use mod_utpari
+use mod_clgli2
+use mod_clprd
+use mod_clpara
+use mod_clidd2_prcd
+use mod_clpari
+use mod_clnrd_prcd
+use mod_clidd
+use mod_clchoc
+use mod_lecture_acou
+use mod_utvrt
+use mod_clextr
+use mod_rbvr
+use mod_clglis
+use mod_clsym
+use mod_clnrd
+use mod_rbvc
+use mod_utnrd
+use mod_cldebit
+use mod_rbve
+use mod_utdebit
+use mod_utidd
+use mod_clidi0
+use mod_utidi
+use mod_clvrt
+use mod_clprd_prcd
+use mod_cldebit_prcd
 implicit none
 integer :: kpst
 integer :: img
@@ -445,3 +476,4 @@ integer :: npsn
 !
       return
       end
+end module

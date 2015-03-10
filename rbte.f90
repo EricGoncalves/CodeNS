@@ -1,3 +1,6 @@
+module mod_rbte
+implicit none
+contains
       subroutine rbte( &
                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
                  ncbd,ncin)
@@ -73,3 +76,4 @@ integer :: ndm
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_c_dfpmtbkeg
+implicit none
+contains
       subroutine c_dfpmtbkeg(mot,imot,nmot)
 !
 !***********************************************************************
@@ -16,6 +19,9 @@
 !
       use para_fige
       use sortiefichier
+use mod_b1_dfpmtbkeg
+
+use mod_tcmd_dfpmtbkeg
 implicit none
 integer :: imot
 integer :: nmot
@@ -33,3 +39,4 @@ integer :: nmot
 !
       return
       end
+end module

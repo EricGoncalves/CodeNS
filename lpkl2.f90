@@ -1,3 +1,6 @@
+module mod_lpkl2
+implicit none
+contains
       subroutine lpkl2( &
                  v,mu,mut,dist, &
                  nxn,nyn,nzn, &
@@ -233,3 +236,4 @@ double precision :: yv
       return
       end
 
+end module

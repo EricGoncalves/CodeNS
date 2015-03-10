@@ -1,3 +1,6 @@
+module mod_b1_svfw
+implicit none
+contains
       subroutine b1_svfw(disc)
 !
 !***********************************************************************
@@ -28,3 +31,4 @@ implicit none
 !
       return
       end
+end module

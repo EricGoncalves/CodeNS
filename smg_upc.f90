@@ -1,3 +1,6 @@
+module mod_smg_upc
+implicit none
+contains
       subroutine smg_upc( &
                         img, &
                         dc,v)
@@ -86,3 +89,4 @@ integer :: njd
 !
       return
       end
+end module

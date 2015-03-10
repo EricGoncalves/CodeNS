@@ -1,3 +1,6 @@
+module mod_utprd
+implicit none
+contains
       subroutine utprd( &
                  bceqt, &
                  mfl,pres,icyc, &
@@ -46,3 +49,4 @@ integer :: mt
       enddo
 !
       end
+end module

@@ -1,3 +1,6 @@
+module mod_initis
+implicit none
+contains
       subroutine initis( &
                  l,imin,imax,jmin,jmax,kmin,kmax, &
                  indfl,ncbd, &
@@ -143,3 +146,4 @@ integer :: njd
 !
       return
       end
+end module

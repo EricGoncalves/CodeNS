@@ -1,3 +1,6 @@
+module mod_met_kemut
+implicit none
+contains
       subroutine met_kemut( &
                  l, &
                  sn,vol,t, &
@@ -18,6 +21,7 @@
       use modeleturb
       use proprieteflu
       use chainecarac
+use mod_teq_gradv
 implicit none
 integer :: inc
 integer :: ind
@@ -185,3 +189,4 @@ integer :: njd
 !
       return
       end
+end module

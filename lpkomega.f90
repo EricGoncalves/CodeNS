@@ -1,3 +1,6 @@
+module mod_lpkomega
+implicit none
+contains
       subroutine lpkomega( &
                  v,mu,mut,dist, &
                  nxn,nyn,nzn, &
@@ -54,6 +57,8 @@
       use para_fige
       use maillage
       use boundary
+use mod_lpkomega1
+use mod_lpkomega2
 implicit none
 double precision :: v
 double precision :: dist
@@ -124,3 +129,4 @@ integer :: no
       return
       end
 
+end module

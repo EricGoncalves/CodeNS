@@ -1,3 +1,6 @@
+module mod_sch_weno5
+implicit none
+contains
       subroutine sch_weno5(                                             &
                  lm,ityprk,                                             &
                  u,v,ff,                                                &
@@ -3321,3 +3324,4 @@ double precision :: ww35m
                                                                        
       return 
       END                                           
+end module

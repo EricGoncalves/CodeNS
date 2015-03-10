@@ -1,3 +1,6 @@
+module mod_lpker
+implicit none
+contains
       subroutine lpker( &
                  v,mu,mut,dist, &
                  nxn,nyn,nzn, &
@@ -34,6 +37,7 @@
       use para_fige
       use maillage
       use boundary
+use mod_lpker1
 implicit none
 double precision :: v
 double precision :: dist
@@ -115,3 +119,4 @@ integer :: no
       return
       end
 
+end module

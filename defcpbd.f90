@@ -1,3 +1,6 @@
+module mod_defcpbd
+implicit none
+contains
       subroutine defcpbd
 !
 !***********************************************************************
@@ -23,3 +26,4 @@ implicit none
 !
       return
       end
+end module

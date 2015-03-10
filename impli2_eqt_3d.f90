@@ -1,3 +1,6 @@
+module mod_impli2_eqt_3d
+implicit none
+contains
       subroutine impli2_eqt_3d( &
                  l,u,dt,v, &
                  mu,mut,cfke,ncin, &
@@ -539,3 +542,4 @@ DEALLOCATE(coefe)
 
       return
       end
+end module

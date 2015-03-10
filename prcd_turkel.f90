@@ -1,3 +1,6 @@
+module mod_prcd_turkel
+implicit none
+contains
       subroutine prcd_turkel( &
                  lm,u,v, &
                  sn,lgsnlt, &
@@ -162,3 +165,4 @@ double precision :: ww
 !
       return
       end
+end module

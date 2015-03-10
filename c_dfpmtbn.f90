@@ -1,3 +1,6 @@
+module mod_c_dfpmtbn
+implicit none
+contains
       subroutine c_dfpmtbn(mot,imot,nmot)
 !
 !***********************************************************************
@@ -17,6 +20,9 @@
       use para_fige
       use sortiefichier
       use modeleturb
+use mod_tcmd_dfpmtbn
+use mod_b1_dfpmtbn
+
 implicit none
 integer :: imot
 integer :: nmot
@@ -34,3 +40,4 @@ integer :: nmot
 !
       return
       end
+end module

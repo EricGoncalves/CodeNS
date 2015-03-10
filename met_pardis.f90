@@ -1,3 +1,6 @@
+module mod_met_pardis
+implicit none
+contains
       subroutine met_pardis(ncin,d)
 !
 !***********************************************************************
@@ -14,6 +17,7 @@
       use para_fige
       use maillage
       use boundary
+use mod_atindnor
 implicit none
 integer :: ncin
 double precision :: d
@@ -75,3 +79,4 @@ integer :: nper
       return
       end
 
+end module

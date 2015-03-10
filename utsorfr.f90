@@ -1,3 +1,6 @@
+module mod_utsorfr
+implicit none
+contains
       subroutine utsorfr( &
                  ncbd,ncin,s,mu,mut, &
                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
@@ -962,3 +965,4 @@ double precision :: zcfac
 !
       return
       end
+end module

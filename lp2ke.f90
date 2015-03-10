@@ -1,3 +1,6 @@
+module mod_lp2ke
+implicit none
+contains
       subroutine lp2ke( &
                 v,mu,mut,dist, &
                 nxn,nyn,nzn, &
@@ -55,6 +58,7 @@
       use para_fige
       use maillage
       use boundary
+use mod_lp2ke1
 implicit none
 double precision :: v
 double precision :: dist
@@ -135,3 +139,4 @@ integer :: no
       return
       end
       
+end module

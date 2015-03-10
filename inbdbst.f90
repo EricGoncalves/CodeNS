@@ -1,3 +1,6 @@
+module mod_inbdbst
+implicit none
+contains
       subroutine inbdbst(clmf,ibdcst,nvbc,vbc)
 !
 !***********************************************************************
@@ -143,3 +146,4 @@ double precision :: tsti
 !
       return
       end
+end module

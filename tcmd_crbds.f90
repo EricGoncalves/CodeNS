@@ -1,3 +1,6 @@
+module mod_tcmd_crbds
+implicit none
+contains
       subroutine tcmd_crbds( &
                  mot,imot,nmot, &
                  mfbe,kini,l, &
@@ -14,6 +17,8 @@
 !
       use para_fige
       use chainecarac
+use mod_synterr
+use mod_valenti
 implicit none
 integer :: imot
 integer :: nmot
@@ -135,3 +140,4 @@ integer :: nm
 !
       return
       end
+end module

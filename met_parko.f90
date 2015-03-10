@@ -1,3 +1,6 @@
+module mod_met_parko
+implicit none
+contains
       subroutine met_parko( &
                  l,ncin,ncbd, &
                  v,mut,mu,dist,mnpar)
@@ -72,6 +75,7 @@
       use modeleturb
       use chainecarac
       use sortiefichier
+use mod_atindnor
 implicit none
 integer :: l
 integer :: ncin
@@ -220,3 +224,4 @@ double precision :: romegal
 !
       return
       end
+end module

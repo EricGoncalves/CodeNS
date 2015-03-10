@@ -1,3 +1,6 @@
+module mod_dissip_jameson_prcd2
+implicit none
+contains
       subroutine dissip_jameson_prcd2( &
                  lm,v,d, &
                  equat, &
@@ -746,3 +749,4 @@ double precision :: ww
 
       return
       end
+end module

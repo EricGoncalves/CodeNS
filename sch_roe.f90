@@ -1,3 +1,6 @@
+module mod_sch_roe
+implicit none
+contains
       subroutine sch_roe( &
                  lm,ityprk, &
                  u,v,ff, &
@@ -1666,3 +1669,4 @@ DEALLOCATE(r1,r2,r3,r4,r5)
 
       return
       end
+end module

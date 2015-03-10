@@ -1,3 +1,6 @@
+module mod_pgrad
+implicit none
+contains
       subroutine pgrad(  &
                 sn,vol,lgsnlt,l, &
                 ps,dpdx,dpdy,dpdz)
@@ -78,11 +81,12 @@ double precision :: ts
       dimension dpdx(ip00),dpdy(ip00),dpdz(ip00)
       dimension ps(ip11),vol(ip11)
 !
-      data eps/0.001/
+
 !
       ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
       inc(id,jd,kd)=id+jd*nid+kd*nijd
 !
+      eps=0.001
       n0=npc(l)
       i1=ii1(l)
       i2=ii2(l)
@@ -270,3 +274,4 @@ double precision :: ts
 !
       return
       end
+end module

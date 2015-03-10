@@ -1,3 +1,6 @@
+module mod_b1_dffw
+implicit none
+contains
       subroutine b1_dffw
 !
 !***********************************************************************
@@ -18,6 +21,7 @@
    use chainecarac
    use definition
    use kcle
+use mod_convich
 implicit none
 !
 !-----------------------------------------------------------------------
@@ -41,3 +45,4 @@ implicit none
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_utvrt
+implicit none
+contains
       subroutine utvrt( &
                  bceqt, &
                  mfl,l,rod,roud,rovd,rowd,roed, &
@@ -141,3 +144,4 @@ double precision :: zm
       return
       end
 
+end module

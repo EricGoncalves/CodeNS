@@ -1,3 +1,6 @@
+module mod_sch_ausmp_pond
+implicit none
+contains
       subroutine sch_ausmp_pond( &
                 lm,ityprk, &
                 u,v,d,ff, &
@@ -1257,3 +1260,4 @@ DEALLOCATE(r1,r2,r3,r4,r5)
 
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_met_gradtr
+implicit none
+contains
       subroutine met_gradtr( &
                  l, &
                  sn, &
@@ -39,6 +42,7 @@
       use para_fige
       use maillage
       use chainecarac
+use mod_teq_grads
 implicit none
 integer :: indc
 integer :: i
@@ -218,3 +222,4 @@ integer :: npsn
 
       return
       end
+end module

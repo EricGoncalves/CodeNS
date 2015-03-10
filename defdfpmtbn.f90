@@ -1,3 +1,6 @@
+module mod_defdfpmtbn
+implicit none
+contains
       subroutine defdfpmtbn
 !
 !***********************************************************************
@@ -28,3 +31,4 @@ implicit none
 !
       return
       end
+end module

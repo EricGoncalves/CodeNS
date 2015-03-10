@@ -1,3 +1,6 @@
+module mod_sch_hllc_euler
+implicit none
+contains
       subroutine sch_hllc_euler( &
                  lm,ityprk, &
                  u,v,ff, &
@@ -973,3 +976,4 @@ double precision :: wm
 
       return
       end
+end module

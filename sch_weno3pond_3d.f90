@@ -1,3 +1,6 @@
+module mod_sch_weno3pond_3d
+implicit none
+contains
       subroutine sch_weno3pond_3d( &
                  lm,ityprk, &
                  u,v,ff, &
@@ -2496,3 +2499,4 @@ double precision :: ww25
 
       return
       end
+end module

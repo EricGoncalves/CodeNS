@@ -1,3 +1,6 @@
+module mod_cllparoi2
+implicit none
+contains
       subroutine cllparoi2( &
                 img,ncyc, &
                 v, & 
@@ -70,6 +73,8 @@
       use para_fige
       use maillage
       use boundary
+use mod_lparoi4
+use mod_lparoi3d
 implicit none
 integer :: img
 integer :: ncyc
@@ -130,3 +135,4 @@ integer :: no
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_utreadav
+implicit none
+contains
       subroutine utreadav( &
                  l,inia1,equat, &
                  u,v,mut,keinit)
@@ -186,3 +189,4 @@ integer :: njd
 !
       return
       end
+end module

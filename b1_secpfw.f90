@@ -1,3 +1,6 @@
+module mod_b1_secpfw
+implicit none
+contains
       subroutine b1_secpfw(lgr,lgrd)
 !
 !***********************************************************************
@@ -16,6 +19,7 @@
    use kcle
    use schemanum
    use maillage
+use mod_convich
 implicit none
 integer :: lgr
 integer :: lgrd
@@ -103,3 +107,4 @@ integer :: nrest
 !
       return
       end
+end module

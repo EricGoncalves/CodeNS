@@ -1,3 +1,6 @@
+module mod_svol
+implicit none
+contains
       subroutine svol( &
                  l,x,y,z, &
                  sn,lgsnlt, &
@@ -184,3 +187,4 @@ integer :: njd
 !
       return
       end
+end module

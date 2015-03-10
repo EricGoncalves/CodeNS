@@ -1,3 +1,6 @@
+module mod_met_komut
+implicit none
+contains
       subroutine met_komut( &
                  l, &
                  sn,vol,t, &
@@ -26,6 +29,7 @@
       use maillage
       use modeleturb
       use proprieteflu
+use mod_teq_gradv
 implicit none
 integer :: inc
 integer :: ind
@@ -170,3 +174,4 @@ double precision :: zeta
 !
       return
       end
+end module

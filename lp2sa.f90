@@ -1,3 +1,6 @@
+module mod_lp2sa
+implicit none
+contains
       subroutine lp2sa( &
                 v,mu,mut,dist, &
                 nxn,nyn,nzn, &
@@ -52,6 +55,7 @@
       use para_fige
       use maillage
       use boundary
+use mod_lp2sa1
 implicit none
 double precision :: v
 double precision :: dist
@@ -130,3 +134,4 @@ integer :: no
       return
       end
       
+end module

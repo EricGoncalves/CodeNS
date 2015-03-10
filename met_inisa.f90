@@ -1,3 +1,6 @@
+module mod_met_inisa
+implicit none
+contains
       subroutine met_inisa(l,v,mut,mu)
 !
 !***********************************************************************
@@ -78,3 +81,4 @@ integer :: njd
 !
       return
       end
+end module

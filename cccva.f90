@@ -1,3 +1,6 @@
+module mod_cccva
+implicit none
+contains
       subroutine cccva( &
                  l,equat, &
                  v,mut, &
@@ -323,3 +326,4 @@ integer :: njd
 !
       return
       end
+end module

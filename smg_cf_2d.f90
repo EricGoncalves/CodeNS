@@ -1,3 +1,6 @@
+module mod_smg_cf_2d
+implicit none
+contains
       subroutine smg_cf_2d( &
                  imgc,imgf, &
                  vol, &
@@ -318,3 +321,4 @@ double precision :: sss
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_tcmd_dfnzst
+implicit none
+contains
       subroutine tcmd_dfnzst( &
                  mot,imot,nmot, &
                  nonzst)
@@ -12,6 +15,8 @@
 !
       use para_fige
       use chainecarac
+use mod_synterr
+use mod_valenti
 implicit none
 integer :: imot
 integer :: nmot
@@ -47,3 +52,4 @@ integer :: nm
 !
       return
       end
+end module

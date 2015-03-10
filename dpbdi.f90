@@ -1,3 +1,6 @@
+module mod_dpbdi
+implicit none
+contains
       subroutine dpbdi( &
                  mfbe,img, &
                  ncbd)
@@ -102,3 +105,4 @@ integer :: njd
 !
       return
       end
+end module

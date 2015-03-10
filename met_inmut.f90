@@ -1,3 +1,6 @@
+module mod_met_inmut
+implicit none
+contains
       subroutine met_inmut(l,mu,mut)
 !
 !***********************************************************************
@@ -67,3 +70,4 @@ integer :: njd
 !
       return
       end
+end module

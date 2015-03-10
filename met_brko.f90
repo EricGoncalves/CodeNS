@@ -1,3 +1,6 @@
+module mod_met_brko
+implicit none
+contains
       subroutine met_brko( &
                  l, &
                  mut,v, &
@@ -109,3 +112,4 @@ double precision :: rota
 !
       return
       end
+end module

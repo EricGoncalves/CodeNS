@@ -1,3 +1,6 @@
+module mod_sch_expli
+implicit none
+contains
       subroutine sch_expli(lm,u,v,dt,vol)
 !
 !***********************************************************************
@@ -93,3 +96,4 @@ integer :: njd
 !
       return
       end
+end module

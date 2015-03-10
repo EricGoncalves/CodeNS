@@ -1,3 +1,6 @@
+module mod_sch_weno5pond
+implicit none
+contains
       subroutine sch_weno5pond(                                        &
                  lm,ityprk,                                             &
                  u,v,ff,                                                &
@@ -2200,3 +2203,4 @@ double precision :: ww35
 
       return
       end
+end module

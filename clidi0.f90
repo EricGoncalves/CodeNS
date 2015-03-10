@@ -1,3 +1,6 @@
+module mod_clidi0
+implicit none
+contains
       subroutine clidi0( &
                  mfb,l,rpi,rti, &
                  nxn,nyn,nzn,ncbd,v, &
@@ -107,9 +110,8 @@ double precision :: vn
                 rovn0(ip40),un(ip40),vy0(ip40),vz0(ip40), &
                 ym(ip40),zm(ip40)
 !
-      data eps/0.0000001/
-!
       inc(id,jd,kd)=id+jd*nid+kd*nijd
+      eps=0.0000001
 !
       n0n=npn(l)
       n0c=npc(l)
@@ -217,3 +219,4 @@ double precision :: vn
 !
       return
       end
+end module

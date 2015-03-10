@@ -1,3 +1,6 @@
+module mod_cpbd
+implicit none
+contains
       subroutine cpbd( &
                  ncin,nxn,nyn,nzn,ncbd, &
                  sn,vol,v,mut, &
@@ -83,6 +86,7 @@
       use boundary
       use schemanum
       use sortiefichier
+use mod_rbc
 implicit none
 integer :: ncin
 integer :: ncbd
@@ -215,3 +219,4 @@ integer :: no
 !
       return
       end
+end module

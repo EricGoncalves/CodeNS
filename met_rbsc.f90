@@ -1,3 +1,6 @@
+module mod_met_rbsc
+implicit none
+contains
       subroutine met_rbsc( &
                  s1x,s1y,s1z,s2x,s2y,s2z, &
                  ncbd,ncin,mnc)
@@ -66,3 +69,4 @@ integer :: ndm
 !
       return
       end
+end module

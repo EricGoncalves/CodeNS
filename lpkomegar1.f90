@@ -1,3 +1,6 @@
+module mod_lpkomegar1
+implicit none
+contains
       subroutine lpkomegar1( &
                  v,mu,mut,dist, &
                  nxn,nyn,nzn, &
@@ -218,3 +221,4 @@ double precision :: yv
       return
       end
 
+end module

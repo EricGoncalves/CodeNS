@@ -1,3 +1,6 @@
+module mod_b2_dpdim
+implicit none
+contains
       subroutine b2_dpdim
 !
 !***********************************************************************
@@ -94,3 +97,4 @@ integer :: ndimntb
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_tcmd_inbdb
+implicit none
+contains
       subroutine tcmd_inbdb( &
                  mot,imot,nmot, &
                  lmfb,lmfbd,clmf,kibdb, &
@@ -15,6 +18,10 @@
       use chainecarac
       use maillage
       use kcle
+use mod_synterr
+use mod_valenti
+use mod_valreel
+use mod_vallent
 implicit none
 integer :: imot
 integer :: nmot
@@ -129,3 +136,4 @@ integer :: nmr
 !
       return
       end
+end module

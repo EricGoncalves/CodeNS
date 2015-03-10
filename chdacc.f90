@@ -1,3 +1,6 @@
+module mod_chdacc
+implicit none
+contains
       subroutine chdacc( &
                  l,disc,ncin,ncbd, &
                  equat, &
@@ -61,6 +64,10 @@
    use maillage
    use boundary
    use sortiefichier
+use mod_cccca
+use mod_rfspstc
+use mod_rfspstf
+use mod_cccva
 implicit none
 integer :: l
 integer :: ncin
@@ -162,3 +169,4 @@ integer :: mfb
 !
       return
       end
+end module

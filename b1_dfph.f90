@@ -1,3 +1,6 @@
+module mod_b1_dfph
+implicit none
+contains
       subroutine b1_dfph
 !
 !***********************************************************************
@@ -21,6 +24,7 @@
       use chainecarac
       use kcle
       use proprieteflu
+use mod_convich
 implicit none
 !
 !-----------------------------------------------------------------------
@@ -57,3 +61,4 @@ implicit none
 !
       return
       end
+end module

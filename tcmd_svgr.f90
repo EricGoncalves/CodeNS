@@ -1,3 +1,6 @@
+module mod_tcmd_svgr
+implicit none
+contains
       subroutine tcmd_svgr( &
                  mot,imot,nmot, &
                  disc)
@@ -12,6 +15,7 @@
 !
       use para_fige
       use chainecarac
+use mod_synterr
 implicit none
 integer :: imot
 integer :: nmot
@@ -49,3 +53,4 @@ integer :: nm
 !
       return
       end
+end module

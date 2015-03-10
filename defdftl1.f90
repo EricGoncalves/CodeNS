@@ -1,3 +1,6 @@
+module mod_defdftl1
+implicit none
+contains
       subroutine defdftl1
 !
 !***********************************************************************
@@ -23,3 +26,4 @@ integer :: itit
 !
       return
       end
+end module

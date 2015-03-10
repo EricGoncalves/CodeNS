@@ -1,3 +1,6 @@
+module mod_c_dfnm
+implicit none
+contains
       subroutine c_dfnm(mot,imot,nmot)
 !
 !***********************************************************************
@@ -10,6 +13,9 @@
 !
       use para_fige
       use sortiefichier
+use mod_tcmd_dfnm
+use mod_b1_dfnm
+
 implicit none
 integer :: imot
 integer :: nmot
@@ -27,3 +33,4 @@ integer :: nmot
 !
       return
       end
+end module

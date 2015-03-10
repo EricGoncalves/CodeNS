@@ -1,3 +1,6 @@
+module mod_met_rfvc
+implicit none
+contains
       subroutine met_rfvc(t,ncbd,mnc)
 !
 !***********************************************************************
@@ -48,3 +51,4 @@ integer :: nd
 !
       return
       end
+end module

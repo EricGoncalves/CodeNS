@@ -1,3 +1,6 @@
+module mod_tcmd_secpfw
+implicit none
+contains
       subroutine tcmd_secpfw( &
                  mot,imot,nmot, &
                  lgr,lgrd)
@@ -15,6 +18,9 @@
       use maillage
       use kcle
       use schemanum
+use mod_synterr
+use mod_valenti
+use mod_vallent
 implicit none
 integer :: imot
 integer :: nmot
@@ -157,3 +163,4 @@ integer :: nm
 !
       return
       end
+end module

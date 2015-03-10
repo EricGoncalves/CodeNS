@@ -1,3 +1,6 @@
+module mod_at_lecdist
+implicit none
+contains
       subroutine at_lecdist( &
                  ldismx, &
                  dist,mnpar)
@@ -90,3 +93,4 @@ integer :: njd
       end
 
 
+end module

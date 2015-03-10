@@ -1,3 +1,6 @@
+module mod_tcmd_dfpmimd
+implicit none
+contains
       subroutine tcmd_dfpmimd( &
                  mot,imot,nmot, &
                  ldom,ldomd, &
@@ -15,6 +18,9 @@
       use kcle
       use chainecarac
       use maillage
+use mod_synterr
+use mod_valenti
+use mod_vallent
 implicit none
 integer :: imot
 integer :: nmot
@@ -130,3 +136,4 @@ integer :: nm
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_utdebit
+implicit none
+contains
       subroutine utdebit( &
                  mfb,bceqt,pres, &
                  nxn,nyn,nzn,ncbd,v, &
@@ -142,3 +145,4 @@ double precision :: rqns
 !
       return
       end
+end module

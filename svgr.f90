@@ -1,3 +1,6 @@
+module mod_svgr
+implicit none
+contains
       subroutine svgr( &
                  l,x,y,z, &
                  tn1,tn2,tn3, &
@@ -27,6 +30,8 @@
       use para_var
       use para_fige
       use sortiefichier
+use mod_writdg
+use mod_chdgcv
 implicit none
 integer :: l
 double precision :: x
@@ -66,3 +71,4 @@ integer :: kmin
 !
       return
       end
+end module

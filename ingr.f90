@@ -1,3 +1,6 @@
+module mod_ingr
+implicit none
+contains
       subroutine ingr(l,x,y,z,king)
 !
 !***********************************************************************
@@ -28,6 +31,8 @@
       use maillage 
       use sortiefichier
       use definition
+use mod_readdg
+use mod_smg_fcm
 implicit none
 integer :: l
 double precision :: x
@@ -59,3 +64,4 @@ integer :: img
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_reel
+implicit none
+contains
       subroutine reel(mot,imot,r,kerr)
 implicit none
 integer :: imot
@@ -24,3 +27,4 @@ integer :: kerr
 !
       return
       end
+end module

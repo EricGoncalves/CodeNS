@@ -1,3 +1,6 @@
+module mod_met_klmut
+implicit none
+contains
       subroutine met_klmut( &
                  l, &
                  v,mu,mut,dist)
@@ -119,3 +122,4 @@ double precision :: xxi2
 !
       return
       end
+end module

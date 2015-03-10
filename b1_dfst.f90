@@ -1,3 +1,6 @@
+module mod_b1_dfst
+implicit none
+contains
       subroutine b1_dfst(nst)
 !
 !***********************************************************************
@@ -19,6 +22,7 @@
    use sortiefichier
    use kcle
    use definition
+use mod_convich
 implicit none
 integer :: nst
 !
@@ -64,3 +68,4 @@ integer :: nst
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_c_dpdim
+implicit none
+contains
       subroutine c_dpdim(mot,imot,nmot)
 !
 !***********************************************************************
@@ -35,6 +38,8 @@
       use schemanum
       use boundary
       use sortiefichier
+use mod_b2_dpdim
+
 implicit none
 integer :: imot
 integer :: nmot
@@ -93,3 +98,4 @@ integer :: ndimntb
 !
       return
       end
+end module

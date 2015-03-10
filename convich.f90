@@ -1,3 +1,6 @@
+module mod_convich
+implicit none
+contains
       subroutine convich(kvar,cvar)
 !
 !***********************************************************************
@@ -25,3 +28,4 @@ integer :: kvar
 !
       return
       end
+end module

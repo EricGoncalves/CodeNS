@@ -1,3 +1,6 @@
+module mod_rbc
+implicit none
+contains
       subroutine rbc( &
                  ncin,nxn,nyn,nzn,ncbd, &
                  sn,vol,v,mut, &
@@ -96,6 +99,12 @@
       use maillage
       use chainecarac
       use schemanum
+use mod_rbord
+use mod_rfvr
+use mod_rbse
+use mod_rfspstc
+use mod_rfve
+use mod_rfvc
 implicit none
 integer :: ncin
 integer :: ncbd
@@ -243,3 +252,4 @@ integer :: mfr
 !
       return
       end
+end module

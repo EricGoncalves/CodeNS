@@ -1,3 +1,6 @@
+module mod_c_crbds
+implicit none
+contains
       subroutine c_crbds( &
                  mot,imot,nmot, &
                  ncbd)
@@ -13,6 +16,10 @@
       use para_var
       use para_fige
       use sortiefichier
+use mod_b2_crbds
+use mod_b1_crbds
+use mod_tcmd_crbds
+use mod_crbds
 implicit none
 integer :: imot
 integer :: nmot
@@ -59,3 +66,4 @@ integer :: mfbe
 !
       return
       end
+end module

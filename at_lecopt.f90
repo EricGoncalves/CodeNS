@@ -1,3 +1,6 @@
+module mod_at_lecopt
+implicit none
+contains
       subroutine at_lecopt( &
                  igr,jgr,kgr,raptat,idefaut)
 !
@@ -166,3 +169,4 @@ double precision :: raptatl
 !
       return
       end
+end module

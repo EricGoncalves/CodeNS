@@ -1,3 +1,6 @@
+module mod_met_rbvc
+implicit none
+contains
       subroutine met_rbvc( &
                  t, &
                  ncbd,ncin,mnc)
@@ -57,3 +60,4 @@ integer :: ndm
 !
       return
       end
+end module

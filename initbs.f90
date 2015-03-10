@@ -1,3 +1,6 @@
+module mod_initbs
+implicit none
+contains
       subroutine initbs( &
                  mfbi,l,indf, &
                  ncin,ncbd, &
@@ -75,3 +78,4 @@ integer :: njd
 !
       return
       end
+end module

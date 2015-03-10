@@ -1,3 +1,6 @@
+module mod_defdfpmcfg
+implicit none
+contains
       subroutine defdfpmcfg
 !
 !***********************************************************************
@@ -29,3 +32,4 @@ integer :: m
 !
       return
       end
+end module

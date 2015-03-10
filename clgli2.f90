@@ -1,3 +1,6 @@
+module mod_clgli2
+implicit none
+contains
       subroutine clgli2( &
                  ncbd,ncin, &
                  mfb,mmb,mpb,mpn, &
@@ -104,3 +107,4 @@ double precision :: rho
 !
       return
       end
+end module

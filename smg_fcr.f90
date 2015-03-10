@@ -1,3 +1,6 @@
+module mod_smg_fcr
+implicit none
+contains
       subroutine smg_fcr( &
                  imgf,imgc,df)
 !
@@ -172,3 +175,4 @@ integer :: njf
 !
       return
       end
+end module

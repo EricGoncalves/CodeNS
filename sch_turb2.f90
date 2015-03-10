@@ -1,3 +1,6 @@
+module mod_sch_turb2
+implicit none
+contains
       subroutine sch_turb2( &
                  l,u,v,d, &
                  fd5x,fd5y,fd5z,fd6x,fd6y,fd6z,ts6,ts7, &
@@ -22,6 +25,7 @@
       use para_fige
       use maillage
       use modeleturb
+use mod_met_pardis
 implicit none
 integer :: inc
 integer :: indc
@@ -377,3 +381,4 @@ double precision :: sk7
 
       return
       end
+end module

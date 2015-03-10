@@ -1,3 +1,6 @@
+module mod_met_smker
+implicit none
+contains
       subroutine met_smker( &
                  l, &
                  s,cfke, &
@@ -142,3 +145,4 @@ double precision :: xl2
 !
       return
       end
+end module

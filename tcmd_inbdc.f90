@@ -1,3 +1,6 @@
+module mod_tcmd_inbdc
+implicit none
+contains
       subroutine tcmd_inbdc( &
                  mot,imot,nmot, &
                  krr,mfbea,mfbeb,kibdc,epsmsh, &
@@ -13,6 +16,9 @@
 !
       use para_fige
       use chainecarac
+use mod_synterr
+use mod_valenti
+use mod_valreel
 implicit none
 integer :: imot
 integer :: nmot
@@ -195,3 +201,4 @@ integer :: nm
 !
       return
       end
+end module

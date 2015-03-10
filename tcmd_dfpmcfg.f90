@@ -1,3 +1,6 @@
+module mod_tcmd_dfpmcfg
+implicit none
+contains
       subroutine tcmd_dfpmcfg(mot,imot,nmot)
 !
 !***********************************************************************
@@ -13,6 +16,8 @@
       use chainecarac
       use maillage
       use boundary 
+use mod_synterr
+use mod_valenti
 implicit none
 integer :: imot
 integer :: nmot
@@ -55,3 +60,4 @@ integer :: no
 !
       return
       end
+end module

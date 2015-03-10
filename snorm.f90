@@ -1,3 +1,6 @@
+module mod_snorm
+implicit none
+contains
       subroutine snorm( &
                  l,x,y,z, &
                  sn,lgsnlt)
@@ -33,6 +36,7 @@
       use para_fige
       use maillage
       use chainecarac
+use mod_norm
 implicit none
 integer :: l
 double precision :: x
@@ -84,3 +88,4 @@ integer :: kmin
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_met_samut
+implicit none
+contains
       subroutine met_samut(l,v,mu,mut)
 !
 !***********************************************************************
@@ -98,3 +101,4 @@ double precision :: xkhi3
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_clidi
+implicit none
+contains
       subroutine clidi( &
                  mfb,l,rpi,rti, &
                  nxn,nyn,nzn,ncbd,v, &
@@ -173,3 +176,4 @@ double precision :: rho
 !
       return
       end
+end module

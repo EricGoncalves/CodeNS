@@ -1,3 +1,6 @@
+module mod_met_bark
+implicit none
+contains
       subroutine met_bark( &
                  l, &
                  equat, &
@@ -16,6 +19,7 @@
       use para_var
       use para_fige
       use maillage
+use mod_teq_grads
 implicit none
 integer :: indc
 integer :: i
@@ -153,3 +157,4 @@ integer :: npsn
 
       return
       end
+end module

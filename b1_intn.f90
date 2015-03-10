@@ -1,3 +1,6 @@
+module mod_b1_intn
+implicit none
+contains
       subroutine b1_intn
 !
 !***********************************************************************
@@ -12,6 +15,7 @@
    use sortiefichier
    use kcle
    use schemanum
+use mod_convich
 implicit none
 !
 !-----------------------------------------------------------------------
@@ -28,3 +32,4 @@ implicit none
 !
       return
       end
+end module

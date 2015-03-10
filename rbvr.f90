@@ -1,3 +1,6 @@
+module mod_rbvr
+implicit none
+contains
       subroutine rbvr( &
                  ncbd,mnr,xnr,ynr,znr, &
                  t, &
@@ -177,3 +180,4 @@ double precision :: sr
 !
       return
       end
+end module

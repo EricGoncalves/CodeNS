@@ -1,3 +1,6 @@
+module mod_chdgcv
+implicit none
+contains
       subroutine chdgcv( &
                  l,disc, &
                  x,y,z, &
@@ -45,6 +48,8 @@
       use para_fige
    use maillage
    use sortiefichier
+use mod_cvccg
+use mod_cvcvg
 implicit none
 integer :: l
 double precision :: x
@@ -107,3 +112,4 @@ integer :: kdg
 !
       return
       end
+end module

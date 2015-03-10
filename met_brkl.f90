@@ -1,3 +1,6 @@
+module mod_met_brkl
+implicit none
+contains
       subroutine met_brkl( &
                  l, &
                  mu,mut,v, &
@@ -110,3 +113,4 @@ integer :: njd
 !
       return
       end
+end module

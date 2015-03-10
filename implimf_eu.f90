@@ -1,3 +1,6 @@
+module mod_implimf_eu
+implicit none
+contains
       subroutine implimf_eu( &
                  lm,u,dt,v,d,ff, &
                  equat,lmx, &
@@ -589,3 +592,4 @@ DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
 
       return
       end
+end module

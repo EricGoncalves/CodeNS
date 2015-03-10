@@ -1,3 +1,6 @@
+module mod_writdg
+implicit none
+contains
       subroutine writdg( &
                  l,kdg, &
                  imin,imax,jmin,jmax,kmin,kmax, &
@@ -70,3 +73,4 @@ integer :: njd
 !
       return
       end
+end module

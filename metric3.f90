@@ -1,3 +1,6 @@
+module mod_metric3
+implicit none
+contains
       subroutine metric3( &
                  l,x,y,z, &
                  cvi,cvj,cvk, &
@@ -734,3 +737,4 @@ double precision :: zr
 !
       return
       end
+end module

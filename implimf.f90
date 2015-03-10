@@ -1,3 +1,6 @@
+module mod_implimf
+implicit none
+contains
       subroutine implimf( &
                  lm,u,dt,v,d,ff, &
                  mu,mut, &
@@ -481,3 +484,4 @@ DEALLOCATE(coefe,coefdiag)
 
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_lp2ke1
+implicit none
+contains
       subroutine lp2ke1( &
                 v,mu,mut,dist, &
                 nxn,nyn,nzn, &
@@ -37,6 +40,7 @@
       use proprieteflu
       use definition
       use modeleturb
+use mod_pgrad
 implicit none
 double precision :: v
 double precision :: dist
@@ -382,3 +386,4 @@ DEALLOCATE(alfaa,betaa,ff,vit,mui,muti,tempi,topc)
 
       return
       end
+end module

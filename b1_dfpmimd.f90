@@ -1,3 +1,6 @@
+module mod_b1_dfpmimd
+implicit none
+contains
       subroutine b1_dfpmimd( &
                  ldom,ldomd, &
                  lgr,lgrd)
@@ -20,6 +23,7 @@
    use schemanum
    use kcle
    use chainecarac
+use mod_convich
 implicit none
 integer :: ldom
 integer :: ldomd
@@ -137,3 +141,4 @@ integer :: nrest
 !
       return
       end
+end module

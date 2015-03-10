@@ -1,3 +1,6 @@
+module mod_residu
+implicit none
+contains
       subroutine residu( &
                  img, &
                  l, &
@@ -291,3 +294,4 @@ integer :: nmax
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_c_nzst
+implicit none
+contains
       subroutine c_nzst(roam,aam,tam)
 !
 !***********************************************************************
@@ -60,3 +63,4 @@ double precision :: tam
 !
       return
       end
+end module

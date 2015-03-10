@@ -1,3 +1,6 @@
+module mod_clpari
+implicit none
+contains
       subroutine clpari( &
                  mfb,tp, &
                  ncbd,v, &
@@ -80,3 +83,4 @@ integer :: nl
 !
       return
       end
+end module

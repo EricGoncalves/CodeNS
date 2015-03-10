@@ -1,3 +1,6 @@
+module mod_defsecpfw
+implicit none
+contains
       subroutine defsecpfw
 !
 !***********************************************************************
@@ -46,3 +49,4 @@ integer :: ng
 !
       return
       end
+end module

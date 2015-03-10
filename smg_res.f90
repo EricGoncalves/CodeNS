@@ -1,3 +1,6 @@
+module mod_smg_res
+implicit none
+contains
       subroutine smg_res( &
                  itypdf, &
                  lm,dfi,df)
@@ -90,3 +93,4 @@ integer :: njd
 !
       return
       end
+end module

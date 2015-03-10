@@ -1,3 +1,6 @@
+module mod_sch_dual
+implicit none
+contains
       subroutine sch_dual( &
             lm,u,v,icycle, &
             vol,ptdual)
@@ -87,3 +90,4 @@ integer :: njd
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_inbdbdf
+implicit none
+contains
       subroutine inbdbdf(clmf,ibddim,nvbc,vbc)
 !
 !***********************************************************************
@@ -130,3 +133,4 @@ double precision :: tdim
 !
       return
       end
+end module

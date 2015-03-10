@@ -1,3 +1,6 @@
+module mod_atccc
+implicit none
+contains
           subroutine atccc( &
                  x,y,z, &
                  xcc,ycc,zcc, &
@@ -105,3 +108,4 @@ integer :: njd
 !
       return
       end
+end module

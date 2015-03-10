@@ -1,3 +1,6 @@
+module mod_met_smch
+implicit none
+contains
       subroutine met_smch( &
                  l, &
                  v,mu,dist,mnpar,utau, &
@@ -184,3 +187,4 @@ double precision :: yplus
 !
       return
       end
+end module

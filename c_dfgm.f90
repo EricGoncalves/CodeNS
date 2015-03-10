@@ -1,3 +1,6 @@
+module mod_c_dfgm
+implicit none
+contains
       subroutine c_dfgm(mot,imot,nmot)
 !
 !***********************************************************************
@@ -21,6 +24,11 @@
 !
       use para_fige
       use sortiefichier 
+use mod_tcmd_dfgm
+use mod_b1_dfgm
+
+use mod_dfgm
+
 implicit none
 integer :: imot
 integer :: nmot
@@ -40,3 +48,4 @@ integer :: nmot
 !
       return
       end
+end module

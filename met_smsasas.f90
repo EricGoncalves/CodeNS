@@ -1,3 +1,6 @@
+module mod_met_smsasas
+implicit none
+contains
       subroutine met_smsasas( &
                  l, &
                  sn, &
@@ -54,6 +57,9 @@
       use maillage
       use modeleturb
       use chainecarac
+use mod_met_laplaciens
+use mod_teq_grads
+use mod_met_difsa
 implicit none
 integer :: indc
 integer :: i
@@ -380,3 +386,4 @@ double precision :: xlvk2
 !
       return
       end
+end module

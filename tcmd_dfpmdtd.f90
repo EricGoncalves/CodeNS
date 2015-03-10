@@ -1,3 +1,6 @@
+module mod_tcmd_dfpmdtd
+implicit none
+contains
       subroutine tcmd_dfpmdtd( &
                  mot,imot,nmot, &
                  ldom,ldomd, &
@@ -16,6 +19,9 @@
       use kcle
       use maillage
       use schemanum
+use mod_synterr
+use mod_valreel
+use mod_vallent
 implicit none
 integer :: imot
 integer :: nmot
@@ -110,3 +116,4 @@ integer :: nm
 !
       return
       end
+end module

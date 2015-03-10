@@ -1,3 +1,6 @@
+module mod_met_num
+implicit none
+contains
       subroutine met_num( &
                  ncbd,ncin,mnc,ncyc, &
                  mnr,xnr,ynr,znr, &
@@ -33,6 +36,64 @@
       use proprieteflu
       use chainecarac
       use sortiefichier
+use mod_lp2ke
+use mod_met_samut
+use mod_lp2kl
+use mod_met_chmut
+use mod_met_fludcsa
+use mod_met_roe2oh
+use mod_met_smsa
+use mod_lp2kw
+use mod_met_smklsas
+use mod_sch_turb2
+use mod_met_smdes
+use mod_impli2_eqt_3d
+use mod_sch_turb
+use mod_met_komutr
+use mod_met_roe2o
+use mod_met_kocmut
+use mod_teq_gradv
+use mod_met_bord
+use mod_lpker
+use mod_at_cutke
+use mod_met_roe
+use mod_met_mutke2
+use mod_met_fludmt
+use mod_lpke
+use mod_met_klrmut
+use mod_met_klsmut
+use mod_atctranske
+use mod_lpkl
+use mod_met_dual2
+use mod_lp2sa
+use mod_lpkomega
+use mod_met_gradtr
+use mod_met_fludc
+use mod_met_smch
+use mod_met_smsasas
+use mod_met_kemutr
+use mod_met_fludko
+use mod_met_smmtr
+use mod_impli2_eqt
+use mod_met_kemutm
+use mod_met_smkor
+use mod_met_rbsc
+use mod_met_rbse
+use mod_met_parko
+use mod_lpsa
+use mod_met_smmt
+use mod_met_klmut
+use mod_met_komut
+use mod_met_prod
+use mod_met_dual
+use mod_met_smke
+use mod_met_rbsr
+use mod_lpkomegar
+use mod_met_kemut
+use mod_met_smkl
+use mod_met_smko
+use mod_met_uttau
+use mod_zvismo
 implicit none
 integer :: ncbd
 integer :: ncin
@@ -914,3 +975,4 @@ DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,fracmod)
 
       return
       end
+end module

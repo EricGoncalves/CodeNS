@@ -1,3 +1,6 @@
+module mod_lpkomega2
+implicit none
+contains
       subroutine lpkomega2( &
                  v,mu,mut,dist, &
                  nxn,nyn,nzn, &
@@ -214,3 +217,4 @@ double precision :: yv
       return
       end
 
+end module

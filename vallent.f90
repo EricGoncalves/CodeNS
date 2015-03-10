@@ -1,3 +1,6 @@
+module mod_vallent
+implicit none
+contains
       subroutine vallent(mot,imot,nm,lent,lentd,lx,klx)
 !
 !***********************************************************************
@@ -10,6 +13,8 @@
       use para_var
       use para_fige
       use chainecarac
+use mod_synterr
+use mod_lentier
 implicit none
 integer :: imot
 integer :: nm
@@ -43,3 +48,4 @@ integer :: kerr
 !
       return
       end
+end module

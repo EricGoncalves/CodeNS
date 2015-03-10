@@ -1,3 +1,6 @@
+module mod_smg_cf
+implicit none
+contains
       subroutine smg_cf( &
                  imgc,imgf, &
                  vol , &
@@ -17,6 +20,8 @@
       use maillage
       use chainecarac
       use schemanum
+use mod_smg_cf_2d
+use mod_smg_cf_3d
 implicit none
 integer :: imgc
 integer :: imgf
@@ -70,3 +75,4 @@ double precision :: vc
 !
       return
       end
+end module

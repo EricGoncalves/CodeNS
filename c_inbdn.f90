@@ -1,3 +1,6 @@
+module mod_c_inbdn
+implicit none
+contains
       subroutine c_inbdn( &
                  mot,imot,nmot, &
                  x,y,z, &
@@ -17,6 +20,9 @@
       use para_var
       use para_fige
    use sortiefichier
+use mod_b1_inbdn
+use mod_inbdn
+use mod_tcmd_inbdn
 implicit none
 integer :: imot
 integer :: nmot
@@ -78,3 +84,4 @@ integer :: lmfbd
 !
       return
       end
+end module

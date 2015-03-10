@@ -1,3 +1,6 @@
+module mod_clextr
+implicit none
+contains
       subroutine clextr( &
                  mfb, &
                  ncbd,v, &
@@ -65,3 +68,4 @@ integer :: nl
 !
       return
       end
+end module

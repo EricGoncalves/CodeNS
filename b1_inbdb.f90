@@ -1,3 +1,6 @@
+module mod_b1_inbdb
+implicit none
+contains
       subroutine b1_inbdb( &
                  lmfb,lmfbd,cl,kibdb, &
                  ibdcst,ibdcfl,ibddim,nvbc,vbc)
@@ -155,3 +158,4 @@ integer :: nrest
 !
       return
       end
+end module

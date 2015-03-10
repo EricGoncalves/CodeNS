@@ -1,3 +1,6 @@
+module mod_met_dual
+implicit none
+contains
       subroutine met_dual( &
                  icycle,l,u,v, &
                  vol,ptdual)
@@ -84,3 +87,4 @@ integer :: njd
 !
       return
       end
+end module

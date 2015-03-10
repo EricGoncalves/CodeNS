@@ -1,3 +1,6 @@
+module mod_crdms
+implicit none
+contains
       subroutine crdms( &
                  l,ni,nj,nk)
 !
@@ -119,3 +122,4 @@ integer :: nptfs
 !
       return
       end
+end module

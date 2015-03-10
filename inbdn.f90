@@ -1,3 +1,6 @@
+module mod_inbdn
+implicit none
+contains
       subroutine inbdn( &
                  mfbe,kibdn, &
                  x,y,z, &
@@ -78,6 +81,7 @@
       use boundary
       use chainecarac
       use sortiefichier
+use mod_initns
 implicit none
 integer :: mfbe
 integer :: kibdn
@@ -170,3 +174,4 @@ integer :: mt
 !
       return
       end
+end module

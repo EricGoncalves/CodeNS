@@ -1,3 +1,6 @@
+module mod_lp2kl3d
+implicit none
+contains
       subroutine lp2kl3d( &
                 v,mu,mut,dist, &
                 nxn,nyn,nzn, &
@@ -74,6 +77,7 @@
       use proprieteflu
       use definition
       use modeleturb
+use mod_pgrad
 implicit none
 double precision :: v
 double precision :: dist
@@ -452,3 +456,4 @@ DEALLOCATE(alfaa,betaa,ff,vitx,vitz,mui,muti,tempi,topcx,topcz)
 
       return
       end
+end module

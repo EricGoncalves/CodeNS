@@ -1,3 +1,6 @@
+module mod_met_rbve
+implicit none
+contains
       subroutine met_rbve(t,ncin,ncbd)
 !
 !***********************************************************************
@@ -45,3 +48,4 @@ integer :: ni
 !
       return
       end
+end module

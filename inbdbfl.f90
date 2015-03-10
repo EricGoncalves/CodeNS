@@ -1,3 +1,6 @@
+module mod_inbdbfl
+implicit none
+contains
       subroutine inbdbfl(ibdcfl,mfl,bceqt,mpb)
 !
 !***********************************************************************
@@ -11,6 +14,7 @@
       use para_var
       use para_fige
       use sortiefichier
+use mod_inbdbad
 implicit none
 integer :: ibdcfl
 integer :: mfl
@@ -106,3 +110,4 @@ double precision :: rbidon
 !
       return
       end
+end module

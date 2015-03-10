@@ -1,3 +1,6 @@
+module mod_met_fludmt
+implicit none
+contains
       subroutine met_fludmt( &
                  l, &
                  s,mu,mut, &
@@ -145,3 +148,4 @@ double precision :: sigme
 !
       return
       end
+end module

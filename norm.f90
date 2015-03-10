@@ -1,3 +1,6 @@
+module mod_norm
+implicit none
+contains
       subroutine norm( &
                  l,x,y,z, &
                  equat,ndt, &
@@ -321,3 +324,4 @@ double precision :: vz
 !
       return
       end
+end module

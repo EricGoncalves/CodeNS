@@ -1,3 +1,6 @@
+module mod_tcmd_cpbd
+implicit none
+contains
       subroutine tcmd_cpbd(mot,imot,nmot)
 !
 !***********************************************************************
@@ -12,6 +15,8 @@
    use chainecarac
       use kcle
       use boundary
+use mod_synterr
+use mod_valenti
 implicit none
 integer :: imot
 integer :: nmot
@@ -51,3 +56,4 @@ integer :: nm
 !
       return
       end
+end module

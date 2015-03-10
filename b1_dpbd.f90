@@ -1,3 +1,6 @@
+module mod_b1_dpbd
+implicit none
+contains
       subroutine b1_dpbd( &
                  lmfb,lmfbd, &
                  lgr,lgrd, &
@@ -120,3 +123,4 @@ integer :: nrest
 !
       return
       end
+end module

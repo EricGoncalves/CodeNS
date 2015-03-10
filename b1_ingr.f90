@@ -1,3 +1,6 @@
+module mod_b1_ingr
+implicit none
+contains
       subroutine b1_ingr( &
                  ldom,ldomd,king)
 !
@@ -83,3 +86,4 @@ integer :: nrest
 !
       return
       end
+end module

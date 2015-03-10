@@ -1,3 +1,6 @@
+module mod_sortieplot4
+implicit none
+contains
       subroutine sortieplot(x,y,z,l,t,ps,dist,mu,mut)
 !
 !***********************************************************************
@@ -123,3 +126,4 @@ double precision :: zcc
 !
       return
       end
+end module

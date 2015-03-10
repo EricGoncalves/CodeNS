@@ -1,3 +1,6 @@
+module mod_c_intn
+implicit none
+contains
       subroutine c_intn(mot,imot,nmot)
 !
 !***********************************************************************
@@ -10,6 +13,9 @@
 !
       use para_fige
    use sortiefichier
+use mod_b1_intn
+
+use mod_tcmd_intn
 implicit none
 integer :: imot
 integer :: nmot
@@ -28,3 +34,4 @@ integer :: nmot
 !
       return
       end
+end module

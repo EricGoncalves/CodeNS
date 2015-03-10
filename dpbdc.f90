@@ -1,3 +1,6 @@
+module mod_dpbdc
+implicit none
+contains
       subroutine dpbdc( &
                  mfbe,img, &
                  mnc, &
@@ -114,3 +117,4 @@ integer :: nn
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_defdfph
+implicit none
+contains
       subroutine defdfph
 !
 !***********************************************************************
@@ -42,3 +45,4 @@ implicit none
 !
       return
       end
+end module

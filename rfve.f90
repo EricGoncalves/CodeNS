@@ -1,3 +1,6 @@
+module mod_rfve
+implicit none
+contains
       subroutine rfve( &
                  t,ps,temp,cson, &
                  ncbd,ncin)
@@ -72,3 +75,4 @@ integer :: ni
 !
       return
       end
+end module

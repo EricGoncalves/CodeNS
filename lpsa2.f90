@@ -1,3 +1,6 @@
+module mod_lpsa2
+implicit none
+contains
       subroutine lpsa2( &
                  v,mu,mut,dist, &
                  nxn,nyn,nzn, &
@@ -240,3 +243,4 @@ double precision :: yplus1
       return
       end
 
+end module

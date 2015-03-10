@@ -1,3 +1,6 @@
+module mod_met_smke
+implicit none
+contains
       subroutine met_smke( &
                  l, &
                  sn, &
@@ -55,6 +58,13 @@
       use para_var
       use para_fige
       use chainecarac
+use mod_met_smkec
+use mod_met_smkesas
+use mod_met_bark
+use mod_met_bare
+use mod_met_smker
+use mod_met_smkes
+use mod_met_exgr
 implicit none
 integer :: l
 double precision :: sn
@@ -174,3 +184,4 @@ double precision :: cmuk2
 !
       return
       end
+end module

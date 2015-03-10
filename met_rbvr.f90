@@ -1,3 +1,6 @@
+module mod_met_rbvr
+implicit none
+contains
       subroutine met_rbvr( &
                  ncbd,mnr,xnr,ynr,znr, &
                  t, &
@@ -89,3 +92,4 @@ double precision :: sr
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_clsym
+implicit none
+contains
       subroutine clsym( &
                  mfb, &
                  nxn,nyn,nzn,ncin,ncbd,v, &
@@ -99,3 +102,4 @@ double precision :: roe1
 !
       return
       end
+end module

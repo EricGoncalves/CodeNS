@@ -1,3 +1,6 @@
+module mod_sch_rusanov
+implicit none
+contains
       subroutine sch_rusanov( &
                  lm,ityprk, &
                  u,v,ff, &
@@ -876,3 +879,4 @@ double precision :: vnr
 
       return
       end
+end module

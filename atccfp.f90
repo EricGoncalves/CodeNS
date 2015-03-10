@@ -1,3 +1,6 @@
+module mod_atccfp
+implicit none
+contains
         subroutine atccfp( &
                  x,y,z, &
                  xpar,ypar,zpar, &
@@ -79,3 +82,4 @@ integer :: ndm3
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_clidd
+implicit none
+contains
       subroutine clidd( &
                  mfb,l,rpi,rti,d0x,d0y,d0z, &
                  nxn,nyn,nzn,ncbd,v, &
@@ -184,10 +187,9 @@ double precision :: wn
                 un(ip40),usdn(ip40),ym(ip40),zm(ip40)
       dimension y(ip21),z(ip21)
 !
-      data eps/0.0000001/
-!
       inc(id,jd,kd)=id+jd*nid+kd*nijd
 !
+      eps=0.0000001
       n0n=npn(l)
       n0c=npc(l)
 !
@@ -285,3 +287,4 @@ double precision :: wn
 !
       return
       end
+end module

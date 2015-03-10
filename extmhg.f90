@@ -1,3 +1,6 @@
+module mod_extmhg
+implicit none
+contains
       subroutine extmhg(l,x,y,z,ex1,ex2)
 !
 !***********************************************************************
@@ -162,3 +165,4 @@ integer :: njd
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_lpkomegar
+implicit none
+contains
       subroutine lpkomegar( &
                  v,mu,mut,dist, &
                  nxn,nyn,nzn, &
@@ -24,6 +27,7 @@
       use para_fige
       use maillage
       use boundary
+use mod_lpkomegar1
 implicit none
 double precision :: v
 double precision :: dist
@@ -103,3 +107,4 @@ integer :: no
       return
       end
 
+end module

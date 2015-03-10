@@ -1,3 +1,6 @@
+module mod_tcmd_cpfw
+implicit none
+contains
       subroutine tcmd_cpfw(mot,imot,nmot)
 !
 !***********************************************************************
@@ -21,3 +24,4 @@ integer :: nmot
 !
       return
       end
+end module

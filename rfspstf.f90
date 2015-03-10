@@ -1,3 +1,6 @@
+module mod_rfspstf
+implicit none
+contains
       subroutine rfspstf(t0,ncin,ncbd)
 !
 !***********************************************************************
@@ -57,3 +60,4 @@ integer :: n
 !
       return
       end
+end module

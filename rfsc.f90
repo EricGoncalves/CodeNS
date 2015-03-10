@@ -1,3 +1,6 @@
+module mod_rfsc
+implicit none
+contains
       subroutine rfsc(t,ncbd,mnc)
 !
 !***********************************************************************
@@ -66,3 +69,4 @@ integer :: nd
 !
       return
       end
+end module

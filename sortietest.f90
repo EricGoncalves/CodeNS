@@ -1,3 +1,6 @@
+module mod_sortietest
+implicit none
+contains
       subroutine sortietest( &
                  icycle,ncycl,idcyc, &
                  vdual2,dist,vol,mut,mu, &
@@ -198,3 +201,4 @@ double precision :: zcc
 !
       return
       end
+end module

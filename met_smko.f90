@@ -1,3 +1,6 @@
+module mod_met_smko
+implicit none
+contains
       subroutine met_smko( &
                  l,v, &
                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
@@ -148,3 +151,4 @@ double precision :: fmt
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_utnrd
+implicit none
+contains
       subroutine utnrd( &
                  bceqt, &
                  mfl,l,rod,roud,rovd,rowd,roed, &
@@ -167,3 +170,4 @@ double precision :: zm
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_atindnor
+implicit none
+contains
       subroutine atindnor( &
                  nfbe, &
                  m10,m20,m30, &
@@ -215,3 +218,4 @@ integer :: njd
 !
       return
       end
+end module

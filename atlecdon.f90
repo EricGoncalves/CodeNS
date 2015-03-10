@@ -1,3 +1,6 @@
+module mod_atlecdon
+implicit none
+contains
       subroutine atlecdon
 !
 !     ACT
@@ -484,3 +487,4 @@ double precision :: rap_h0
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_gtcmd
+implicit none
+contains
       subroutine gtcmd(command,lgcmd)
 !
 !***********************************************************************
@@ -66,3 +69,4 @@ integer :: lgt
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_tcmd_dfpmdtg
+implicit none
+contains
       subroutine tcmd_dfpmdtg(mot,imot,nmot)
 !
 !***********************************************************************
@@ -12,6 +15,9 @@
       use chainecarac
       use kcle
       use schemanum
+use mod_synterr
+use mod_valenti
+use mod_valreel
 implicit none
 integer :: imot
 integer :: nmot
@@ -86,3 +92,4 @@ integer :: nm
 !
       return
       end
+end module

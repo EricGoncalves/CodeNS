@@ -1,3 +1,6 @@
+module mod_dffw
+implicit none
+contains
       subroutine dffw
 !
 !***********************************************************************
@@ -34,3 +37,4 @@ implicit none
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_tcmd_intn
+implicit none
+contains
       subroutine tcmd_intn(mot,imot,nmot)
 !
 !***********************************************************************
@@ -12,6 +15,8 @@
       use chainecarac
       use kcle
       use schemanum
+use mod_synterr
+use mod_valenti
 implicit none
 integer :: imot
 integer :: nmot
@@ -47,3 +52,4 @@ integer :: nm
 !
       return
       end
+end module

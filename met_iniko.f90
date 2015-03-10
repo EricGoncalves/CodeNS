@@ -1,3 +1,6 @@
+module mod_met_iniko
+implicit none
+contains
       subroutine met_iniko( &
                  l,ncin,ncbd, &
                  v,mut,mu,dist,mnpar, &
@@ -16,6 +19,11 @@
       use para_var
       use para_fige
       use modeleturb
+use mod_met_cutked
+use mod_met_brko
+use mod_met_kocmut
+use mod_teq_gradv
+use mod_met_komut
 implicit none
 integer :: l
 integer :: ncin
@@ -99,3 +107,4 @@ double precision :: cmuk2
 !
       return
       end
+end module

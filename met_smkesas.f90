@@ -1,3 +1,6 @@
+module mod_met_smkesas
+implicit none
+contains
       subroutine met_smkesas( &
                  l, &
                  sn, &
@@ -19,6 +22,7 @@
       use maillage
       use modeleturb
       use chainecarac
+use mod_met_laplaciens
 implicit none
 integer :: inc
 integer :: indc
@@ -249,3 +253,4 @@ double precision :: xlvk2
 !
       return
       end
+end module

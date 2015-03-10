@@ -1,3 +1,6 @@
+module mod_teq_grads
+implicit none
+contains
       subroutine teq_grads( &
                  l, &
                  equat, &
@@ -96,10 +99,11 @@ double precision :: vols
       dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
                 cmuk1(ip21),cmuk2(ip21)
 !
-      data eps/0.000001/
 !
       indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
       inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+      eps=0.000001
 !
       n0c=npc(l)
       i1=ii1(l)
@@ -489,3 +493,4 @@ double precision :: vols
 !
       return
       end
+end module

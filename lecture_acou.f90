@@ -1,3 +1,6 @@
+module mod_lecture_acou
+implicit none
+contains
       subroutine lecture_acou(l,v)
 !
 !***********************************************************************
@@ -89,3 +92,4 @@ integer :: njd
 !
       return
       end
+end module

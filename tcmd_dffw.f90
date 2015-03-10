@@ -1,3 +1,6 @@
+module mod_tcmd_dffw
+implicit none
+contains
       subroutine tcmd_dffw(mot,imot,nmot)
 !
 !***********************************************************************
@@ -12,6 +15,9 @@
       use chainecarac
       use kcle
       use definition
+use mod_synterr
+use mod_valenti
+use mod_valreel
 implicit none
 integer :: imot
 integer :: nmot
@@ -72,3 +78,4 @@ integer :: nm
 !
       return
       end
+end module

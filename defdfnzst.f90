@@ -1,3 +1,6 @@
+module mod_defdfnzst
+implicit none
+contains
       subroutine defdfnzst
 !
 !***********************************************************************
@@ -35,3 +38,4 @@ implicit none
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_chronos
+implicit none
+contains
       subroutine chronos( &
                  l,etal,mu,mut, &
                  t, &
@@ -251,3 +254,4 @@ double precision :: smoy
 
       return
       end
+end module

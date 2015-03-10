@@ -1,3 +1,6 @@
+module mod_c_dftl1
+implicit none
+contains
       subroutine c_dftl1(mot,imot,nmot)
 !
 !***********************************************************************
@@ -10,6 +13,7 @@
 !
       use para_fige
       use sortiefichier
+use mod_tcmd_dftl1
 implicit none
 integer :: imot
 integer :: nmot
@@ -27,3 +31,4 @@ integer :: nmot
 !
       return
       end
+end module

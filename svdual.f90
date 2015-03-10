@@ -1,3 +1,6 @@
+module mod_svdual
+implicit none
+contains
       subroutine svdual(l,vdual,vdual1,vdual2)
 !
 !***********************************************************************
@@ -115,3 +118,4 @@ integer :: njd
 !
       return
       end
+end module

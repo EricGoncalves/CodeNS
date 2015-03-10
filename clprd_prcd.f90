@@ -1,3 +1,6 @@
+module mod_clprd_prcd
+implicit none
+contains
       subroutine clprd_prcd( &
                  mfb,pres, &
                  nxn,nyn,nzn,ncbd,v, &
@@ -134,3 +137,4 @@ double precision :: roc
 !
       return
       end
+end module

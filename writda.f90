@@ -1,3 +1,6 @@
+module mod_writda
+implicit none
+contains
       subroutine writda( &
                  l,kda,eqt,utau, &
                  imin,imax,jmin,jmax,kmin,kmax, &
@@ -130,3 +133,4 @@ integer :: njd
 !
       return
       end
+end module

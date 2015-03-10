@@ -1,3 +1,6 @@
+module mod_inbdb
+implicit none
+contains
       subroutine inbdb( &
                  ncbd,ncin, &
                  mfbe,clmf,kibdb, &
@@ -37,6 +40,10 @@
       use boundary
       use maillage
       use sortiefichier
+use mod_initbs
+use mod_inbdbfl
+use mod_inbdbdf
+use mod_inbdbst
 implicit none
 integer :: ncbd
 integer :: ncin
@@ -126,3 +133,4 @@ integer :: nv
 !
       return
       end
+end module

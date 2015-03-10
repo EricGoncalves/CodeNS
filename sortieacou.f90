@@ -1,3 +1,6 @@
+module mod_sortieacou
+implicit none
+contains
       subroutine sortieacou(l,t)
 !
 !***********************************************************************
@@ -93,3 +96,4 @@ integer :: njd
 !
       return
       end
+end module

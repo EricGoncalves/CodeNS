@@ -1,3 +1,6 @@
+module mod_rdcmd
+implicit none
+contains
       subroutine rdcmd(mot,imot,nmot)
 !
 !***********************************************************************
@@ -9,6 +12,8 @@
 !
       use para_var
       use para_fige
+use mod_gtcmd
+use mod_splcmd
 implicit none
 integer :: imot
 integer :: nmot
@@ -25,3 +30,4 @@ integer :: lgcmd
 !
       return
       end
+end module

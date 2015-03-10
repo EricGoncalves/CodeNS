@@ -1,3 +1,6 @@
+module mod_met_brad
+implicit none
+contains
       subroutine met_brad( &
                  l, &
                  mut,v, &
@@ -98,3 +101,4 @@ integer :: njd
 !
       return
       end
+end module

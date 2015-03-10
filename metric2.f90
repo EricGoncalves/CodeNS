@@ -1,3 +1,6 @@
+module mod_metric2
+implicit none
+contains
       subroutine metric2( &
                  l,x,y,z, &
                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
@@ -556,3 +559,4 @@ double precision :: zr
 !
       return
       end
+end module

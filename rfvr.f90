@@ -1,3 +1,6 @@
+module mod_rfvr
+implicit none
+contains
       subroutine rfvr( &
                  t, &
                  ncbd,mnr,xnr,ynr,znr)
@@ -167,3 +170,4 @@ double precision :: sr
 !
       return
       end
+end module

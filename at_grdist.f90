@@ -1,3 +1,6 @@
+module mod_at_grdist
+implicit none
+contains
           subroutine at_grdist( &
                  igr,jgr,kgr, &
                  x,y,z, &
@@ -192,3 +195,4 @@ integer :: njd
 !
       return
       end
+end module

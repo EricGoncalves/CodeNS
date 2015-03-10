@@ -1,3 +1,6 @@
+module mod_c_ingr
+implicit none
+contains
       subroutine c_ingr( &
                  mot,imot,nmot, &
                  x,y,z)
@@ -13,6 +16,9 @@
       use para_var
       use para_fige
    use sortiefichier
+use mod_tcmd_ingr
+use mod_ingr
+use mod_b1_ingr
 implicit none
 integer :: imot
 integer :: nmot
@@ -46,3 +52,4 @@ integer :: ldomd
 !
       return
       end
+end module

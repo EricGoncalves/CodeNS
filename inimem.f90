@@ -1,3 +1,6 @@
+module mod_inimem
+implicit none
+contains
       subroutine inimem( &
                  dt,v,mu,mut, &
                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
@@ -72,6 +75,9 @@
       use kcle
       use schemanum
       use proprieteflu
+use mod_def
+use constantes 
+use mod_inivec
 implicit none
 double precision :: dt
 double precision :: v
@@ -175,6 +181,16 @@ integer :: icmt
       kmdimtnx  =0
       kmdimtcx  =0
       kmdimtrx  =0
+
+!     initialisation des constantes
+
+  intmx=huge(1)
+  reelmx=huge(1.)
+  reelmn=tiny(1.)
+  pis2=acos(-1.)/2.
+  raddeg=90./pis2
+  degrad=pis2/90.
+
 !
 !     valeurs par defaut
 !
@@ -215,3 +231,4 @@ integer :: icmt
 !
       return
       end
+end module

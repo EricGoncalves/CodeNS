@@ -1,3 +1,6 @@
+module mod_met_yplus
+implicit none
+contains
       subroutine met_yplus( &
                  ncbd,ncin,s,mu,dist, &
                  toxx,toxy,toxz,toyy,toyz,tozz, &
@@ -332,3 +335,4 @@ double precision :: zcfac
 !
       return
       end
+end module

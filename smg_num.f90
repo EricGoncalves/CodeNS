@@ -1,3 +1,6 @@
+module mod_smg_num
+implicit none
+contains
       subroutine smg_num( &
                  mg,ncycl, &
                  idcyc, &
@@ -45,6 +48,26 @@
       use definition
       use modeleturb
       use chainecarac
+use mod_smg_fcr
+use mod_sch_duup2
+use mod_smg_cf
+use mod_rfvr
+use mod_dua_resro
+use mod_smg_upc
+use mod_sortieplot
+use mod_smg_flu
+use mod_utitfr
+use mod_sortieplot2
+use mod_sch_duin
+use mod_svfw
+use mod_smg_cn
+use mod_rfvc
+use mod_sortietest
+use mod_smg_fcv
+use mod_sch_duup
+use mod_rbc
+use mod_rscpsv
+use mod_atsch_num
 implicit none
 integer :: mg
 double precision :: x
@@ -151,7 +174,6 @@ integer :: nc
 integer :: ndeb
 integer :: nfin
 integer :: ngx
-double precision :: temp
 !
 !-----------------------------------------------------------------------
 !
@@ -483,7 +505,7 @@ double precision :: temp
               call sortietest(   &
                  icycle,ncycl,idcyc, &
                  vdual2,dist,vol,mut,mu, &
-                 x,y,z,l,v,pression,temp)
+                 x,y,z,l,v,pression,ztemp)
              enddo
 !
 !          sortie instationnaire densite-pression
@@ -543,7 +565,7 @@ double precision :: temp
          if((kdualns.eq.0).or.(kdualns.eq.1)) then
 !         if(kdualns.eq.1) then
            call sch_duup( &
-                  sn,vol,tn3(1), &
+                  sn,vol,tn3, &
                   v,ptdual,vdual,vdual1, &
                   mu,mut,dist,tn4, &
                   ncyc,1, &
@@ -552,7 +574,7 @@ double precision :: temp
          elseif(kdualns.eq.2) then
 !         elseif((kdualns.eq.0).or.(kdualns.eq.2)) then
             call sch_duup2( &
-                  sn,vol,tn3(1), &
+                  sn,vol,tn3, &
                   v,ptdual,vdual,vdual1,vdual2, &
                   mu,mut,dist,tn4, &
                   ncyc,1, &
@@ -565,3 +587,4 @@ double precision :: temp
 !
       return
       end
+end module

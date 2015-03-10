@@ -1,3 +1,6 @@
+module mod_rbse
+implicit none
+contains
       subroutine rbse(t,ncin,ncbd)
 !
 !***********************************************************************
@@ -59,3 +62,4 @@ integer :: ni
 !
       return
       end
+end module

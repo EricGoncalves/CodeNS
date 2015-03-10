@@ -1,3 +1,6 @@
+module mod_tcmd_dfpmtbn
+implicit none
+contains
       subroutine tcmd_dfpmtbn(mot,imot,nmot)
 !
 !***********************************************************************
@@ -12,6 +15,8 @@
       use chainecarac
       use modeleturb
       use kcle
+use mod_synterr
+use mod_valenti
 implicit none
 integer :: imot
 integer :: nmot
@@ -69,3 +74,4 @@ integer :: nm
 !
       return
       end
+end module

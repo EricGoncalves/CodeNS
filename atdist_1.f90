@@ -1,3 +1,6 @@
+module mod_atdist_1
+implicit none
+contains
           subroutine atdist_1( &
                  x,y,z, &
                  nxn,nyn,nzn, &
@@ -166,3 +169,4 @@ integer :: ncm1l
 !
       return
       end
+end module

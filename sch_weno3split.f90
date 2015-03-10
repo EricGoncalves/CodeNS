@@ -1,3 +1,6 @@
+module mod_sch_weno3split
+implicit none
+contains
       subroutine sch_weno3split( &
                  lm,ityprk, &
                  u,v,ff, &
@@ -2615,3 +2618,4 @@ double precision :: wwp25m
 
       return
       end
+end module

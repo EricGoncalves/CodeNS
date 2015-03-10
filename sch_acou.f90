@@ -1,3 +1,6 @@
+module mod_sch_acou
+implicit none
+contains
       subroutine sch_acou( &
                  lm,ityprk, &
                  u,ff,dtpas, &
@@ -139,3 +142,4 @@ double precision :: zcc
 !
       return
       end
+end module

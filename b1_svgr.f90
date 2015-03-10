@@ -1,3 +1,6 @@
+module mod_b1_svgr
+implicit none
+contains
       subroutine b1_svgr(disc)
 !
 !***********************************************************************
@@ -28,3 +31,4 @@ implicit none
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_valreel
+implicit none
+contains
       subroutine valreel(mot,imot,nm,rree,krree)
 !
 !***********************************************************************
@@ -9,6 +12,8 @@
 !
       use para_fige
       use chainecarac
+use mod_synterr
+use mod_reel
 implicit none
 integer :: imot
 integer :: nm
@@ -37,3 +42,4 @@ integer :: kerr
 !
       return
       end
+end module

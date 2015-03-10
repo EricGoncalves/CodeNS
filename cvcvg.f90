@@ -1,3 +1,6 @@
+module mod_cvcvg
+implicit none
+contains
       subroutine cvcvg( &
                  l, &
                  x,y,z, &
@@ -97,3 +100,4 @@ integer :: njd
 !
       return
       end
+end module

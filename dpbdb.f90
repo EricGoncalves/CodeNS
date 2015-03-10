@@ -1,3 +1,6 @@
+module mod_dpbdb
+implicit none
+contains
       subroutine dpbdb( &
                  mfbe,img, &
                  ncbd,ncin)
@@ -104,3 +107,4 @@ integer :: njd
 !
       return
       end
+end module

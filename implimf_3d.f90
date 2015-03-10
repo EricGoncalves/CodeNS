@@ -1,3 +1,6 @@
+module mod_implimf_3d
+implicit none
+contains
       subroutine implimf_3d( &
                  lm,u,dt,v,d,ff, &
                  mu,mut, &
@@ -610,3 +613,4 @@ DEALLOCATE(coefe,coefdiag,d2w1,d2w2,d2w3,d2w4,d2w5)
 
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_sch_hllc_prcd
+implicit none
+contains
       subroutine sch_hllc_prcd( &
                  lm,ityprk, &
                  u,v,ff, &
@@ -1101,3 +1104,4 @@ double precision :: wm
 
       return
       end
+end module

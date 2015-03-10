@@ -1,3 +1,6 @@
+module mod_b1_dfpmdtg
+implicit none
+contains
       subroutine b1_dfpmdtg
 !
 !***********************************************************************
@@ -21,6 +24,7 @@
    use sortiefichier
    use schemanum
    use kcle
+use mod_convich
 implicit none
 !
 !-----------------------------------------------------------------------
@@ -47,3 +51,4 @@ implicit none
 !
       return
       end
+end module

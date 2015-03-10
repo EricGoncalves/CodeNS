@@ -1,3 +1,6 @@
+module mod_lpsa
+implicit none
+contains
       subroutine lpsa( &
                  v,mu,mut,dist, &
                  nxn,nyn,nzn, &
@@ -50,6 +53,8 @@
       use para_fige
       use maillage
       use boundary
+use mod_lpsa1
+use mod_lpsa2
 implicit none
 double precision :: v
 double precision :: dist
@@ -116,3 +121,4 @@ integer :: no
       return
       end
 
+end module

@@ -1,3 +1,6 @@
+module mod_met_smdes
+implicit none
+contains
       subroutine met_smdes( &
                  l,x,y,z,Delta, &
                  sn, &
@@ -53,6 +56,9 @@
       use maillage
       use modeleturb
       use chainecarac
+use mod_met_dist
+use mod_teq_grads
+use mod_met_difsa
 implicit none
 integer :: indc
 integer :: i
@@ -335,3 +341,4 @@ double precision :: xkhi4
 !
       return
       end
+end module

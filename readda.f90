@@ -1,3 +1,6 @@
+module mod_readda
+implicit none
+contains
       subroutine readda( &
                  l,kda, &
                  v,mut,utau, &
@@ -240,3 +243,4 @@ integer :: njd
 !
       return
       end
+end module

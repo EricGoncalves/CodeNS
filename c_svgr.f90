@@ -1,3 +1,6 @@
+module mod_c_svgr
+implicit none
+contains
       subroutine c_svgr( &
                  mot,imot,nmot, &
                  l,x,y,z, &
@@ -28,6 +31,8 @@
       use para_var
       use para_fige
      use sortiefichier
+use mod_svgr
+use mod_tcmd_svgr
 implicit none
 integer :: imot
 integer :: nmot
@@ -63,3 +68,4 @@ double precision :: tn3
 !
       return
       end
+end module

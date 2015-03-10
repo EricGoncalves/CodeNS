@@ -1,3 +1,6 @@
+module mod_atparoi
+implicit none
+contains
       subroutine atparoi(l,nfbe)
 !
 !***********************************************************************
@@ -64,3 +67,4 @@ integer :: nfbi
 !
       return
       end
+end module

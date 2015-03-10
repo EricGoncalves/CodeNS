@@ -1,3 +1,6 @@
+module mod_met_intep3
+implicit none
+contains
       subroutine met_intep3( &
                  ncbd,ncin,s, &
                  sn,vol, &
@@ -120,6 +123,7 @@
       use sortiefichier 
       use constantes
       use modeleturb
+use mod_teq_gradv
 implicit none
 integer :: ncbd
 integer :: ncin
@@ -1072,3 +1076,4 @@ DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,vort)
 
       return
       end
+end module

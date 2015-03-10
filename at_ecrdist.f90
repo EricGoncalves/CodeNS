@@ -1,3 +1,6 @@
+module mod_at_ecrdist
+implicit none
+contains
       subroutine at_ecrdist( &
                  l0,         &
                  dist,mnpar)
@@ -137,3 +140,4 @@ integer :: njd
       end
 
 
+end module

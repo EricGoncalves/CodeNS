@@ -1,3 +1,6 @@
+module mod_sch_duup
+implicit none
+contains
       subroutine sch_duup( &
                sn,vol,t, &
                v,ptdual,vdual,vdual1, &
@@ -27,6 +30,18 @@
       use schemanum
       use sortiefichier
       use chainecarac
+use mod_met_klrmut
+use mod_met_klmut
+use mod_met_samut
+use mod_met_klsmut
+use mod_at_cutke
+use mod_met_kocmut
+use mod_met_kemutr
+use mod_met_kemutm
+use mod_met_komut
+use mod_met_kemut
+use mod_met_komutr
+use mod_met_klnmut
 implicit none
 integer :: indc
 integer :: i
@@ -293,3 +308,4 @@ DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz)
 
       return
       end
+end module

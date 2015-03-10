@@ -1,3 +1,6 @@
+module mod_met_fludc
+implicit none
+contains
       subroutine met_fludc( &
                  l, &
                  s,mu,mut, &
@@ -152,3 +155,4 @@ integer :: njd
 !
       return
       end
+end module

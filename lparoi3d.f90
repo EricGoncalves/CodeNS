@@ -1,3 +1,6 @@
+module mod_lparoi3d
+implicit none
+contains
       subroutine lparoi3d(  &
                  ncyc, &
                  nxn,nyn,nzn, &
@@ -186,3 +189,4 @@ double precision :: v1z
 !
       return
       end
+end module

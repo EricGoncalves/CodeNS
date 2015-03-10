@@ -1,3 +1,6 @@
+module mod_clnrd_prcd
+implicit none
+contains
       subroutine clnrd_prcd( &
                  mfb, &
                  rod,roud,rovd,rowd,roed, &
@@ -201,3 +204,4 @@ double precision :: rps
 !
       return
       end
+end module

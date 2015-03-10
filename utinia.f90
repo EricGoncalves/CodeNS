@@ -1,3 +1,6 @@
+module mod_utinia
+implicit none
+contains
       subroutine utinia( &
                  l,x,y,z,v,mut, &
                  kina, &
@@ -214,3 +217,4 @@ double precision :: zm
 !
       return
       end
+end module

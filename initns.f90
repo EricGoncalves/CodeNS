@@ -1,3 +1,6 @@
+module mod_initns
+implicit none
+contains
       subroutine initns( &
                  mfb,l,indfb, &
                  imin,imax,jmin,jmax,kmin,kmax, &
@@ -119,6 +122,7 @@
       use para_fige
       use maillage
       use boundary
+use mod_norm
 implicit none
 integer :: mfb
 integer :: l
@@ -187,7 +191,7 @@ integer :: njd
                 tnjx(ip00),tnjy(ip00),tnjz(ip00), &
                 tnkx(ip00),tnky(ip00),tnkz(ip00)
 !
-      data eps/1.e-10/
+      eps=1.e-10
 !
       n0=npc(l)
       i1=ii1(l)
@@ -338,3 +342,4 @@ integer :: njd
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_c_secpfw
+implicit none
+contains
       subroutine c_secpfw(mot,imot,nmot)
 !
 !***********************************************************************
@@ -9,6 +12,8 @@
 !
       use para_fige
    use sortiefichier
+use mod_tcmd_secpfw
+use mod_b1_secpfw
 implicit none
 integer :: imot
 integer :: nmot
@@ -32,3 +37,4 @@ integer :: lgrd
 !
       return
       end
+end module

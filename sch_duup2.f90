@@ -1,3 +1,6 @@
+module mod_sch_duup2
+implicit none
+contains
       subroutine sch_duup2( &
                    sn,vol,t, &
                    v,ptdual,vdual,vdual1,vdual2, &
@@ -28,6 +31,17 @@
       use schemanum
       use sortiefichier
       use chainecarac
+use mod_met_klrmut
+use mod_met_klmut
+use mod_met_samut
+use mod_met_klsmut
+use mod_at_cutke
+use mod_met_kemutr
+use mod_met_kemutm
+use mod_met_komut
+use mod_met_kemut
+use mod_met_komutr
+use mod_met_klnmut
 implicit none
 integer :: indc
 integer :: i
@@ -81,7 +95,7 @@ integer :: njd
       dimension vol(ip11),mut(ip12),mu(ip12),dist(ip12)
       dimension sn(ip31*ndir)
       dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
-      dimension t(ip11,ip60),tprod(ip00)
+      dimension t(ip00),tprod(ip00)
 
 
 !
@@ -281,3 +295,4 @@ DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz)
 
       return
       end
+end module

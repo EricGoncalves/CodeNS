@@ -1,3 +1,6 @@
+module mod_metric
+implicit none
+contains
       subroutine metric( &
                  x,y,z,r,exs1,exs2, &
                  sn,vol, &
@@ -33,6 +36,9 @@
       use boundary
       use schemanum
       use chainecarac 
+use mod_metrics
+use mod_rfsc
+use mod_rfsr
 implicit none
 double precision :: x
 double precision :: y
@@ -105,3 +111,4 @@ integer :: mfr
 !
       return
       end
+end module

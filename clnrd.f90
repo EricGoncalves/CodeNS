@@ -1,3 +1,6 @@
+module mod_clnrd
+implicit none
+contains
       subroutine clnrd( &
                  mfb, &
                  rod,roud,rovd,rowd,roed, &
@@ -185,3 +188,4 @@ double precision :: ros
 !
       return
       end
+end module

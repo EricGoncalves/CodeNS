@@ -1,3 +1,6 @@
+module mod_rbtr
+implicit none
+contains
       subroutine rbtr( &
                  ncbd,mnr,xnr,ynr,znr, &
                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
@@ -261,3 +264,4 @@ double precision :: tzzr
 !
       return
       end
+end module

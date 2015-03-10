@@ -1,3 +1,6 @@
+module mod_teq_gradv
+implicit none
+contains
       subroutine teq_gradv( &
                  l, &
                  sn, &
@@ -16,6 +19,7 @@
       use para_fige
       use maillage
       use chainecarac
+use mod_teq_grads
 implicit none
 integer :: indc
 integer :: i
@@ -209,3 +213,4 @@ integer :: npsn
 !
       return
       end
+end module

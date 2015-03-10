@@ -1,3 +1,6 @@
+module mod_sch_duin
+implicit none
+contains
       subroutine sch_duin( &
        v,img,ptdual,vdual,vdual1,vdual2)
 !
@@ -129,3 +132,4 @@ integer :: njd
 !
       return
       end
+end module

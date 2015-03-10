@@ -1,3 +1,6 @@
+module mod_b1_infw
+implicit none
+contains
       subroutine b1_infw( &
                  ldom,ldomd,kina)
 !
@@ -90,3 +93,4 @@ integer :: nrest
 !
       return
       end
+end module

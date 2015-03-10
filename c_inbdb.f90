@@ -1,3 +1,6 @@
+module mod_c_inbdb
+implicit none
+contains
       subroutine c_inbdb( &
                  mot,imot,nmot, &
                  ncbd,ncin,bceqt)
@@ -13,6 +16,9 @@
       use para_var
       use para_fige
    use sortiefichier
+use mod_tcmd_inbdb
+use mod_b1_inbdb
+use mod_inbdb
 implicit none
 integer :: imot
 integer :: nmot
@@ -64,3 +70,4 @@ double precision :: vbc
 !
       return
       end
+end module

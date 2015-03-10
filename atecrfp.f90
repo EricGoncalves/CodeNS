@@ -1,3 +1,6 @@
+module mod_atecrfp
+implicit none
+contains
         subroutine atecrfp( &
                  x,y,z, &
                  xpar,ypar,zpar, &
@@ -110,3 +113,4 @@ integer :: mfacn
 !
       return
       end
+end module

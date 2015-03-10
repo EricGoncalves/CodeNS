@@ -1,3 +1,6 @@
+module mod_smg_cn
+implicit none
+contains
       subroutine smg_cn( &
                  img, &
                  vol,volt, &
@@ -72,11 +75,12 @@ double precision :: vols
       dimension vc(ip11,ip60),vv(ip11,ip60)
       dimension vol(ip11),volt(ip11)
 !
-      data eps/0.001/
+
 !
       indn(i,j,k)=n0n+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
       indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
       inc(id,jd,kd)=id+jd*ni+kd*nij
+      eps=0.001
 !
       do l = 1,lzx
        lm = l+(img-1)*lz
@@ -240,3 +244,4 @@ double precision :: vols
 !
       return
       end
+end module

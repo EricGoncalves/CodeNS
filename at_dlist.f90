@@ -1,3 +1,6 @@
+module mod_at_dlist
+implicit none
+contains
         subroutine at_dlist( &
                  x,y,z, &
                  xpar,ypar,zpar, &
@@ -112,3 +115,4 @@ integer :: mfacn
 !
       return
       end
+end module

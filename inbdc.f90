@@ -1,3 +1,6 @@
+module mod_inbdc
+implicit none
+contains
       subroutine inbdc( &
                  exs1,exs2, &
                  x,y,z, &
@@ -107,6 +110,8 @@
       use boundary
       use sortiefichier
       use chainecarac
+use mod_initcs
+use mod_extmhg
 implicit none
 double precision :: exs1
 double precision :: exs2
@@ -259,3 +264,4 @@ integer :: mt
 !
       return
       end
+end module

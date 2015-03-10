@@ -1,3 +1,6 @@
+module mod_c_dfph
+implicit none
+contains
       subroutine c_dfph(mot,imot,nmot)
 !
 !***********************************************************************
@@ -20,6 +23,11 @@
 !
       use para_fige
       use sortiefichier
+use mod_dfph
+
+use mod_b1_dfph
+
+use mod_tcmd_dfph
 implicit none
 integer :: imot
 integer :: nmot
@@ -39,3 +47,4 @@ integer :: nmot
 !
       return
       end
+end module

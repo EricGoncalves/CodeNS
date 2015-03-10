@@ -1,3 +1,6 @@
+module mod_smg_fcs
+implicit none
+contains
       subroutine smg_fcs( &
                  imgf,imgc, &
                  vol,v)
@@ -166,3 +169,4 @@ integer :: njf
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_met_bare
+implicit none
+contains
       subroutine met_bare( &
                  l, &
                  equat, &
@@ -18,6 +21,7 @@
       use para_var
       use para_fige
       use maillage
+use mod_teq_grads
 implicit none
 integer :: indc
 integer :: i
@@ -355,3 +359,4 @@ integer :: npsn
 !
       return
       end
+end module

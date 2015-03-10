@@ -1,3 +1,6 @@
+module mod_tcmd_crdms
+implicit none
+contains
       subroutine tcmd_crdms( &
                  mot,imot,nmot, &
                  l,ni,nj,nk)
@@ -12,6 +15,8 @@
 !
       use para_fige
       use chainecarac
+use mod_synterr
+use mod_valenti
 implicit none
 integer :: imot
 integer :: nmot
@@ -69,3 +74,4 @@ integer :: nm
 !
       return
       end
+end module

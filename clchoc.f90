@@ -1,3 +1,6 @@
+module mod_clchoc
+implicit none
+contains
       subroutine clchoc( &
                  mfb,mmb,mpb, &
                  ncbd,v)
@@ -94,3 +97,4 @@ double precision :: v22
 !
       return
       end
+end module

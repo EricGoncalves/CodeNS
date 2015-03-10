@@ -1,3 +1,6 @@
+module mod_sch_roe_pond_prcd
+implicit none
+contains
       subroutine sch_roe_pond_prcd( &
                  lm,ityprk, &
                  u,v,ff, &
@@ -1297,3 +1300,4 @@ double precision :: wm
 !
       return
       end
+end module

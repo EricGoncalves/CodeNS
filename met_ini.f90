@@ -1,3 +1,6 @@
+module mod_met_ini
+implicit none
+contains
       subroutine met_ini( &
                  l,v,mut,mu, &
                  sn,vol,s, &
@@ -13,6 +16,8 @@
 !
       use para_var
       use para_fige
+use mod_teq_gradv
+use mod_met_brad
 implicit none
 integer :: l
 double precision :: v
@@ -68,3 +73,4 @@ double precision :: cmuk2
 !
       return
       end
+end module

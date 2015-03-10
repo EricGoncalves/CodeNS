@@ -1,3 +1,6 @@
+module mod_utsor
+implicit none
+contains
       subroutine utsor( &
                  ncbd,s,mut, &
                  x,y,z,nxn,nyn,nzn)
@@ -590,3 +593,4 @@ double precision :: zcfac
 !
       return
       end
+end module

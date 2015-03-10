@@ -1,3 +1,6 @@
+module mod_atcaldis3
+implicit none
+contains
       subroutine atcaldis3( &
                  x,y,z,nxn,nyn,nzn, &
                  xpar,ypar,zpar,xcc,ycc,zcc,dist2, &
@@ -114,6 +117,16 @@
    use maillage
    use constantes
    use boundary
+use mod_atccfp
+use mod_atindnor
+use mod_at_lecdist
+use mod_at_ecrdist
+use mod_at_grdist
+use mod_at_lecopt
+use mod_atccc
+use mod_at_dlist
+use mod_atdist_3
+use mod_at_fidist
 implicit none
 double precision :: x
 double precision :: y
@@ -395,3 +408,4 @@ double precision :: raptat
 !
       return
       end
+end module

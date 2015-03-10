@@ -1,3 +1,6 @@
+module mod_at_cutke
+implicit none
+contains
       subroutine at_cutke(l,v)
 !
 !***********************************************************************
@@ -12,6 +15,10 @@
       use para_var
    use modeleturb
    use sortiefichier
+use mod_met_cutke
+use mod_met_cut
+use mod_met_cutsa
+use mod_met_cutked
 implicit none
 integer :: l
 double precision :: v
@@ -38,3 +45,4 @@ double precision :: v
 !
        return
        end
+end module

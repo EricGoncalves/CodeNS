@@ -1,3 +1,6 @@
+module mod_b1_dfpmtbn
+implicit none
+contains
       subroutine b1_dfpmtbn
 !
 !***********************************************************************
@@ -18,6 +21,7 @@
    use sortiefichier
    use modeleturb
    use kcle
+use mod_convich
 implicit none
 !
 !-----------------------------------------------------------------------
@@ -37,3 +41,4 @@ implicit none
 !
       return
       end
+end module

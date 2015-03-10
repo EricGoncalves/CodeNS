@@ -1,3 +1,6 @@
+module mod_utdon_gen
+implicit none
+contains
       subroutine utdon_gen( &
                  config,cl,x,y,z,omg1, &
                  ncbd,v, &
@@ -309,3 +312,4 @@ double precision :: tpar
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_atctranske
+implicit none
+contains
       subroutine atctranske( &
                  l,v,mu,mut,mnpar,fgam)
 !
@@ -109,3 +112,4 @@ integer :: njd
 !
       return
       end
+end module

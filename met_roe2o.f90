@@ -1,3 +1,6 @@
+module mod_met_roe2o
+implicit none
+contains
       subroutine met_roe2o( &
                  l,t,d, &
                  sn,lgsnlt, &
@@ -331,3 +334,4 @@ double precision :: w
 
       return
       end
+end module

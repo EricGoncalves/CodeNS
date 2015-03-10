@@ -1,3 +1,6 @@
+module mod_splcmd
+implicit none
+contains
       subroutine splcmd(command,lgcmd,mot,imot,nmot)
 !
 !***********************************************************************
@@ -55,3 +58,4 @@ integer :: nm
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_met_klnmut
+implicit none
+contains
       subroutine met_klnmut( &
                  l, &
                  sn, &
@@ -46,6 +49,8 @@
       use para_fige
       use maillage
       use modeleturb
+use mod_teq_gradv
+use mod_met_prod
 implicit none
 integer :: inc
 integer :: ind
@@ -203,3 +208,4 @@ integer :: njd
 
 
 
+end module

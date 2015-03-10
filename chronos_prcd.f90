@@ -1,3 +1,6 @@
+module mod_chronos_prcd
+implicit none
+contains
       subroutine chronos_prcd( &
                  l,etal,mu,mut, &
                  t, &
@@ -358,3 +361,4 @@ DEALLOCATE(beta2v)
 
       return
       end
+end module

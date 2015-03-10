@@ -1,3 +1,6 @@
+module mod_utitfr
+implicit none
+contains
       subroutine utitfr( &
                  x,y,z,v,ncbd,nxn,nyn,nzn,icyc, &
                  toxx,toxy,toxz,toyy,toyz,tozz, &
@@ -524,3 +527,4 @@ double precision :: zcfac
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_atintrans
+implicit none
+contains
       subroutine atintrans(ncin,fgam)
 !
 !***********************************************************************
@@ -277,3 +280,4 @@ integer :: njd
 !
       return
       end
+end module

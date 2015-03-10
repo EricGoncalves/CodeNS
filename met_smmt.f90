@@ -1,3 +1,6 @@
+module mod_met_smmt
+implicit none
+contains
       subroutine met_smmt( &
                  l,ncyc, &
                  v,mu,mut,dist,mnpar,ncin, &
@@ -50,6 +53,7 @@
       use para_fige
       use maillage
       use modeleturb
+use mod_met_mtcorf1
 implicit none
 integer :: inc
 integer :: indc
@@ -241,3 +245,4 @@ double precision :: zeta
 !
       return
       end
+end module

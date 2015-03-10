@@ -1,3 +1,6 @@
+module mod_sch_ausmp
+implicit none
+contains
       subroutine sch_ausmp( &
                  lm,ityprk, &
                  u,v,d,ff, &
@@ -1234,3 +1237,4 @@ DEALLOCATE(r1,r2,r3,r4,r5)
 
       return
       end
+end module

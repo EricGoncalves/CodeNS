@@ -1,3 +1,6 @@
+module mod_met_difsa
+implicit none
+contains
       subroutine met_difsa( &
                  l, &
                  sn, &
@@ -43,6 +46,7 @@
       use maillage
       use modeleturb
       use chainecarac
+use mod_teq_grads
 implicit none
 integer :: indc
 integer :: i
@@ -184,3 +188,4 @@ integer :: npsn
       enddo
       return
       end
+end module

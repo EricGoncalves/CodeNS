@@ -1,3 +1,6 @@
+module mod_b1_crbds
+implicit none
+contains
       subroutine b1_crbds( &
                  mfb,kini,l,imin,imax,jmin,jmax,kmin,kmax, &
                  indfl)
@@ -65,3 +68,4 @@ integer :: kmax
 !
       return
       end
+end module

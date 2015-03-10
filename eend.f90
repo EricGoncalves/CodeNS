@@ -1,3 +1,6 @@
+module mod_eend
+implicit none
+contains
       subroutine eend
 implicit none
 !
@@ -12,3 +15,4 @@ implicit none
 !
       return
       end
+end module

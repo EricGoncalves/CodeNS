@@ -1,3 +1,6 @@
+module mod_met_roe
+implicit none
+contains
       subroutine met_roe( &
                  l,t,d, &
                  equat, &
@@ -230,3 +233,4 @@ double precision :: wm
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_implimf_prcd2
+implicit none
+contains
       subroutine implimf_prcd2( &
                  lm,u,dt,v,d,ff, &
                  mu,mut, &
@@ -536,3 +539,4 @@ DEALLOCATE(coefe,coefv,coefdiag,coefb,d2w1,d2w2,d2w3,d2w4,d2w5)
 
       return
       end
+end module

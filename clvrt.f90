@@ -1,3 +1,6 @@
+module mod_clvrt
+implicit none
+contains
       subroutine clvrt( &
                  mfb, &
                  rod,roud,rovd,rowd,roed, &
@@ -257,3 +260,4 @@ double precision :: vrtz
 !
       end
 
+end module

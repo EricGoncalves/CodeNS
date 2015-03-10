@@ -1,3 +1,6 @@
+module mod_c_cpfw
+implicit none
+contains
       subroutine c_cpfw( &
                  mot,imot,nmot, &
                  ncyc, &
@@ -33,6 +36,10 @@
       use para_var
       use para_fige
       use sortiefichier
+use mod_b1_cpfw
+
+use mod_tcmd_cpfw
+use mod_cpfw
 implicit none
 integer :: imot
 integer :: nmot
@@ -192,3 +199,4 @@ double precision :: cmuk2
 !
       return
       end
+end module

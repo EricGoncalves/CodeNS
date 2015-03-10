@@ -1,3 +1,6 @@
+module mod_met_kocmut
+implicit none
+contains
       subroutine met_kocmut( &
                  l, &
                  sn,vol,t, &
@@ -27,6 +30,7 @@
       use para_fige
       use maillage
       use modeleturb
+use mod_teq_gradv
 implicit none
 integer :: ind
 integer :: i
@@ -157,3 +161,4 @@ double precision :: zeta
 !
       return
       end
+end module

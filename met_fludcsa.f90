@@ -1,3 +1,6 @@
+module mod_met_fludcsa
+implicit none
+contains
       subroutine met_fludcsa( &
                  l, &
                  s,mu, &
@@ -143,3 +146,4 @@ double precision :: smutot
 !
       return
       end
+end module

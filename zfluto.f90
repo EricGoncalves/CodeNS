@@ -1,3 +1,6 @@
+module mod_zfluto
+implicit none
+contains
       subroutine zfluto( &
                  l,mu,mut,toxx,toxy,toxz,toyy,toyz,tozz, &
                  qcx,qcy,qcz, &
@@ -163,3 +166,4 @@ integer :: njd
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_tcmd_dfnm
+implicit none
+contains
       subroutine tcmd_dfnm(mot,imot,nmot)
 !
 !***********************************************************************
@@ -14,6 +17,9 @@
    use schemanum
    use maillage
       use proprieteflu
+use mod_synterr
+use mod_valenti
+use mod_valreel
 implicit none
 integer :: imot
 integer :: nmot
@@ -91,3 +97,4 @@ integer :: nm
 !
       return
       end
+end module

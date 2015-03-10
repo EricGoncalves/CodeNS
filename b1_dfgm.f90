@@ -1,3 +1,6 @@
+module mod_b1_dfgm
+implicit none
+contains
       subroutine b1_dfgm
 !
 !***********************************************************************
@@ -17,6 +20,7 @@
    use definition
    use kcle
    use chainecarac
+use mod_convich
 implicit none
 !
 !-----------------------------------------------------------------------
@@ -52,3 +56,4 @@ implicit none
 !
       return
       end
+end module

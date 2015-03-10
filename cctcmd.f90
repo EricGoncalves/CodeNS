@@ -1,3 +1,6 @@
+module mod_cctcmd
+implicit none
+contains
       subroutine cctcmd(command,lgcmd,mot,imot,nm1,nm2)
 !
 !***********************************************************************
@@ -40,3 +43,4 @@ integer :: nm
 !
       return
       end
+end module

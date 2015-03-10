@@ -1,3 +1,6 @@
+module mod_met_uttau
+implicit none
+contains
       subroutine met_uttau( &
                  ncbd, &
                  nxn,nyn,nzn, &
@@ -137,3 +140,4 @@ double precision :: utzt
 !
       return
       end
+end module

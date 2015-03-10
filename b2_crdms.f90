@@ -1,3 +1,6 @@
+module mod_b2_crdms
+implicit none
+contains
       subroutine b2_crdms(l)
 !
 !***********************************************************************
@@ -62,3 +65,4 @@ integer :: lm
 !
       return
       end
+end module

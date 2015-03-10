@@ -1,3 +1,6 @@
+module mod_met_exgr
+implicit none
+contains
       subroutine met_exgr( &
                  l, &
                  ds1,ds2,ds3)
@@ -64,10 +67,11 @@ integer :: njd
 !
       dimension ds1(ip00),ds2(ip00),ds3(ip00)
 !
-      data ex1,ex2/1.0,0.0/
 !
       indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
       inc(id,jd,kd)=id+jd*nid+kd*nijd
+      ex1=1.
+      ex2=0.
 !
       n0c=npc(l)
       i1=ii1(l)
@@ -151,3 +155,4 @@ integer :: njd
 !
       return
       end
+end module

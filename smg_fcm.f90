@@ -1,3 +1,6 @@
+module mod_smg_fcm
+implicit none
+contains
       subroutine smg_fcm( &
                  imgf,imgc, &
                  l, &
@@ -103,3 +106,4 @@ integer :: njf
 !
       return
       end
+end module

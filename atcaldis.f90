@@ -1,3 +1,6 @@
+module mod_atcaldis
+implicit none
+contains
       subroutine atcaldis( &
                  x,y,z,nxn,nyn,nzn, &
                  xpar,ypar,zpar,xcc,ycc,zcc,dist2, &
@@ -118,6 +121,13 @@
    use maillage
    use constantes
    use boundary
+use mod_atdist_2
+use mod_atccfp
+use mod_atdist_1
+use mod_at_ecrdist
+use mod_atecrfp
+use mod_atccc
+use mod_atindnor
 implicit none
 double precision :: x
 double precision :: y
@@ -317,3 +327,4 @@ integer :: no
 !
       return
       end
+end module

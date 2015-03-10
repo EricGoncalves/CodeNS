@@ -1,3 +1,6 @@
+module mod_defintn
+implicit none
+contains
       subroutine defintn
 !
 !***********************************************************************
@@ -23,3 +26,4 @@ implicit none
 !
       return
       end
+end module

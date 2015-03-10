@@ -1,3 +1,6 @@
+module mod_met_chmut
+implicit none
+contains
       subroutine met_chmut( &
                  l, &
                  v,mu,mut,dist,mnpar,utau)
@@ -97,3 +100,4 @@ double precision :: yplus
 !
       return
       end
+end module

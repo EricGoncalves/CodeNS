@@ -1,3 +1,6 @@
+module mod_zpres
+implicit none
+contains
       subroutine zpres( &
                  l,v, &
                  pression,ztemp,cson)
@@ -121,3 +124,4 @@ integer :: njd
 !
       return
       end
+end module

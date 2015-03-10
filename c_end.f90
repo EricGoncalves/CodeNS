@@ -1,3 +1,6 @@
+module mod_c_end
+implicit none
+contains
       subroutine c_end(mot,imot,nmot)
 !
 !***********************************************************************
@@ -9,6 +12,10 @@
 !-----parameters figes--------------------------------------------------
 !
       use para_fige
+use mod_eend
+
+use mod_b1_end
+
 implicit none
 integer :: imot
 integer :: nmot
@@ -23,3 +30,4 @@ integer :: nmot
 !
       return
       end
+end module

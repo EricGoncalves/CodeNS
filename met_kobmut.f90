@@ -1,3 +1,6 @@
+module mod_met_kobmut
+implicit none
+contains
       subroutine met_kobmut( &
                  ncyc, &
                  l, &
@@ -110,3 +113,4 @@ double precision :: reytur
 !
       return
       end
+end module

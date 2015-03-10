@@ -1,3 +1,6 @@
+module mod_valenti
+implicit none
+contains
       subroutine valenti(mot,imot,nm,ient,kient)
 !
 !***********************************************************************
@@ -10,6 +13,8 @@
       use para_var
       use para_fige
       use chainecarac
+use mod_synterr
+use mod_entier
 implicit none
 integer :: imot
 integer :: nm
@@ -38,3 +43,4 @@ integer :: kerr
 !
       return
       end
+end module

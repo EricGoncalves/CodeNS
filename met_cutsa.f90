@@ -1,3 +1,6 @@
+module mod_met_cutsa
+implicit none
+contains
       subroutine met_cutsa(l,s)
 !
 !***********************************************************************
@@ -87,3 +90,4 @@ integer :: njd
 !
       return
       end
+end module

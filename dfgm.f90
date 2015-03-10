@@ -1,3 +1,6 @@
+module mod_dfgm
+implicit none
+contains
       subroutine dfgm
 !
 !***********************************************************************
@@ -43,3 +46,4 @@ implicit none
 !
       return
       end
+end module

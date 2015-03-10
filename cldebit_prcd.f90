@@ -1,3 +1,6 @@
+module mod_cldebit_prcd
+implicit none
+contains
       subroutine cldebit_prcd( &
                  mfb,pres, &
                  nxn,nyn,nzn,ncbd,v, &
@@ -139,3 +142,4 @@ double precision :: rhos
 !
       return
       end
+end module

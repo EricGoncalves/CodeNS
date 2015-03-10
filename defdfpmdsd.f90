@@ -1,3 +1,6 @@
+module mod_defdfpmdsd
+implicit none
+contains
       subroutine defdfpmdsd
 !
 !***********************************************************************
@@ -32,3 +35,4 @@ integer :: l
 !
       return
       end
+end module

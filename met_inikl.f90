@@ -1,3 +1,6 @@
+module mod_met_inikl
+implicit none
+contains
       subroutine met_inikl( &
                  l,v,mut,mu,dist, &
                  sn,vol,s, &
@@ -14,6 +17,10 @@
 !
       use para_var
       use para_fige
+use mod_teq_gradv
+use mod_met_cutke
+use mod_met_brkl
+use mod_met_klmut
 implicit none
 integer :: l
 double precision :: v
@@ -74,3 +81,4 @@ double precision :: cmuk2
 !
       return
       end
+end module

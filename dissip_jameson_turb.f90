@@ -1,3 +1,6 @@
+module mod_dissip_jameson_turb
+implicit none
+contains
       subroutine dissip_jameson_turb( &
                  lm,v,d, &
                  equat, &
@@ -396,3 +399,4 @@ double precision :: ww
 
       return
       end
+end module

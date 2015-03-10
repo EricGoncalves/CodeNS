@@ -1,3 +1,6 @@
+module mod_met_mutke2
+implicit none
+contains
       subroutine met_mutke2( &
                  l,ncyc, &
                  v,mu,mut,dist,mnpar,ncin, &
@@ -209,3 +212,4 @@ double precision :: xl
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_vervol
+implicit none
+contains
       subroutine vervol(lm,vol)
 !
 !***********************************************************************
@@ -110,3 +113,4 @@ integer :: njd
 !
       return
       end
+end module

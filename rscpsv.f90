@@ -1,3 +1,6 @@
+module mod_rscpsv
+implicit none
+contains
       subroutine rscpsv( &
                  img, &
                  u,v,dt, &
@@ -55,6 +58,9 @@
       use maillage
       use sortiefichier
       use chainecarac
+use mod_cvccg
+use mod_writdg
+use mod_residu
 implicit none
 integer :: img
 double precision :: u
@@ -206,3 +212,4 @@ DEALLOCATE(idumx,jdumx,kdumx,dumy1,dumy2,dumax,dumy2g,dumaxg)
 
       return
       end
+end module

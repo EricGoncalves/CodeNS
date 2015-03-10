@@ -1,3 +1,6 @@
+module mod_rbtc
+implicit none
+contains
       subroutine rbtc( &
                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
                  ncbd,ncin,mnc)
@@ -132,3 +135,4 @@ double precision :: tzzr
 !
       return
       end
+end module

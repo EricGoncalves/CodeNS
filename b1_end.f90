@@ -1,3 +1,6 @@
+module mod_b1_end
+implicit none
+contains
       subroutine b1_end
 !
 !***********************************************************************
@@ -20,3 +23,4 @@ implicit none
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_lentier
+implicit none
+contains
       subroutine lentier(mot,imot,li,lid,lix,klix,kerr)
 !
 !***********************************************************************
@@ -9,6 +12,7 @@
 !
       use para_var
       use para_fige
+use mod_entier
 implicit none
 integer :: imot
 integer :: li
@@ -41,3 +45,4 @@ integer :: l
       return
 !
       end
+end module

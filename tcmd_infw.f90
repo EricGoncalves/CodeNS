@@ -1,3 +1,6 @@
+module mod_tcmd_infw
+implicit none
+contains
       subroutine tcmd_infw( &
                  mot,imot,nmot, &
                  ldom,ldomd,kina)
@@ -15,6 +18,9 @@
       use maillage
       use kcle
       use modeleturb
+use mod_synterr
+use mod_valenti
+use mod_vallent
 implicit none
 integer :: imot
 integer :: nmot
@@ -72,3 +78,4 @@ integer :: nm
 !
       return
       end
+end module

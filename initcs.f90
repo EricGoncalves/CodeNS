@@ -1,3 +1,6 @@
+module mod_initcs
+implicit none
+contains
       subroutine initcs( &
                  x,y,z,krr,eps,kinitc, &
                  mfba, &
@@ -434,3 +437,4 @@ double precision :: znb
 !
       return
       end
+end module

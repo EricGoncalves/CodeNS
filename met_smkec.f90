@@ -1,3 +1,6 @@
+module mod_met_smkec
+implicit none
+contains
       subroutine met_smkec( &
                  l, &
                  mu,s,cfke, &
@@ -172,3 +175,4 @@ double precision :: xl2
 !
       return
       end
+end module

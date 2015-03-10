@@ -1,3 +1,6 @@
+module mod_defdfnm
+implicit none
+contains
       subroutine defdfnm
 !
 !***********************************************************************
@@ -57,3 +60,4 @@ implicit none
 !
       return
       end
+end module

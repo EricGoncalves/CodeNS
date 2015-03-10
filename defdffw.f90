@@ -1,3 +1,6 @@
+module mod_defdffw
+implicit none
+contains
       subroutine defdffw
 !
 !***********************************************************************
@@ -26,3 +29,4 @@ implicit none
 !
       return
       end
+end module

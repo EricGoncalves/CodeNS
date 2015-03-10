@@ -1,3 +1,6 @@
+module mod_synterr
+implicit none
+contains
       subroutine synterr(mot,imot,nmot,comment)
 !
 !***********************************************************************
@@ -9,6 +12,7 @@
 !
       use para_fige
    use sortiefichier
+use mod_cctcmd
 implicit none
 integer :: imot
 integer :: nmot
@@ -47,3 +51,4 @@ integer :: lgcmd
 !
       return
       end
+end module

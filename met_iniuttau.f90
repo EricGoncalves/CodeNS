@@ -1,3 +1,6 @@
+module mod_met_iniuttau
+implicit none
+contains
       subroutine met_iniuttau( &
                  l,mu,mut,v,equat, &
                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
@@ -21,6 +24,13 @@
       use schemanum
       use boundary
       use proprieteflu
+use mod_zfluto
+use mod_zgrad2
+use mod_rbtr
+use mod_zgrad
+use mod_rbte
+use mod_zvismo
+use mod_rbtc
 implicit none
 integer :: l
 double precision :: v
@@ -58,9 +68,6 @@ double precision :: cmuj2
 double precision :: cmuk1
 double precision :: cmuk2
 double precision :: ztemp
-double precision :: dtdx
-double precision :: dtdy
-double precision :: dtdz
 integer :: lgsnlt
 integer :: mf
 integer :: mfc
@@ -85,8 +92,8 @@ integer :: npsn
                 cmuk1(ip21),cmuk2(ip21)
       dimension dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00), &
                 dvyz(ip00),dvzx(ip00),dvzy(ip00),dvzz(ip00)
-      DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dtx,dty,dtz
-      ALLOCATE(dtx(ip00),dty(ip00),dtz(ip00))
+      DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dtdx,dtdy,dtdz
+      ALLOCATE(dtdx(ip00),dtdy(ip00),dtdz(ip00))
 !
        npsn=ndir*npfb(l)+1
        lgsnlt=nnn(l)
@@ -157,7 +164,8 @@ integer :: npsn
                  qcxts5,qcyts6,qcz000, &
                  ncin)
 
-DEALLOCATE(dtx,dty,dtz)
+DEALLOCATE(dtdx,dtdy,dtdz)
 
       return
       end
+end module

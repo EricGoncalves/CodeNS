@@ -1,3 +1,6 @@
+module mod_clglis
+implicit none
+contains
       subroutine clglis( &
                  mfb,l,indf, &
                  ncin,ncbd, &
@@ -60,6 +63,7 @@
       use proprieteflu
       use constantes
       use boundary
+use mod_idirch
 implicit none
 integer :: inc
 integer :: mfb
@@ -174,7 +178,6 @@ double precision :: ycp
 double precision :: ycs
 double precision :: zcp
 double precision :: zcs
-integer :: idirch
 !
 !-----------------------------------------------------------------------
 !
@@ -458,3 +461,4 @@ integer :: idirch
 !
       return
       end
+end module

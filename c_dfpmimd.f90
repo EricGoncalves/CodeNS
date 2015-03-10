@@ -1,3 +1,6 @@
+module mod_c_dfpmimd
+implicit none
+contains
       subroutine c_dfpmimd(mot,imot,nmot)
 !
 !***********************************************************************
@@ -14,6 +17,8 @@
 !
       use para_fige
       use sortiefichier
+use mod_b1_dfpmimd
+use mod_tcmd_dfpmimd
 implicit none
 integer :: imot
 integer :: nmot
@@ -42,3 +47,4 @@ integer :: lgrd
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_b1_dfpmtbkeg
+implicit none
+contains
       subroutine b1_dfpmtbkeg
 !
 !***********************************************************************
@@ -50,3 +53,4 @@ implicit none
 !
       return
       end
+end module

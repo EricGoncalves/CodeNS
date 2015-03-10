@@ -1,3 +1,6 @@
+module mod_c_dfnzst
+implicit none
+contains
       subroutine c_dfnzst(mot,imot,nmot)
 !
 !***********************************************************************
@@ -40,6 +43,9 @@
 !
       use para_fige
       use sortiefichier
+use mod_tcmd_dfnzst
+use mod_b1_dfnzst
+use mod_dfnzst
 implicit none
 integer :: imot
 integer :: nmot
@@ -62,3 +68,4 @@ integer :: nonzst
 !
       return
       end
+end module

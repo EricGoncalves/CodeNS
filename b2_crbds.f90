@@ -1,3 +1,6 @@
+module mod_b2_crbds
+implicit none
+contains
       subroutine b2_crbds(mfbe)
 !
 !***********************************************************************
@@ -41,3 +44,4 @@ integer :: mfbim
 !
       return
       end
+end module

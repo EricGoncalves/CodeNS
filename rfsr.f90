@@ -1,3 +1,6 @@
+module mod_rfsr
+implicit none
+contains
       subroutine rfsr( &
                  t, &
                  ncbd,mnr,xnr,ynr,znr)
@@ -104,3 +107,4 @@ integer :: nr
 !
       return
       end
+end module

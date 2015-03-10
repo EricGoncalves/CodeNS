@@ -1,3 +1,6 @@
+module mod_lparoi1
+implicit none
+contains
       subroutine lparoi1( &
                  lm,ncyc, &
                  v,mu,mut,dist, &
@@ -282,3 +285,4 @@ double precision :: yp02
 !
       return
       end
+end module

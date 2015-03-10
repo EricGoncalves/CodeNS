@@ -1,3 +1,6 @@
+module mod_rbvc
+implicit none
+contains
       subroutine rbvc(t,ncbd,ncin,mnc)
 !
 !***********************************************************************
@@ -78,3 +81,4 @@ double precision :: tper
 !
       return
       end
+end module

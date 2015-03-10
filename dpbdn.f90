@@ -1,3 +1,6 @@
+module mod_dpbdn
+implicit none
+contains
       subroutine dpbdn( &
                  mfbe,img, &
                  ncbd,nxn,nyn,nzn)
@@ -116,3 +119,4 @@ integer :: njd
 !
       return
       end
+end module

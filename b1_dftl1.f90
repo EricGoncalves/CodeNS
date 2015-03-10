@@ -1,3 +1,6 @@
+module mod_b1_dftl1
+implicit none
+contains
       subroutine b1_dftl1
 !
 !***********************************************************************
@@ -14,6 +17,7 @@
       use sortiefichier
    use chainecarac
    use kcle
+use mod_convich
 implicit none
 !
 !-----------------------------------------------------------------------
@@ -30,3 +34,4 @@ implicit none
 !
       return
       end
+end module

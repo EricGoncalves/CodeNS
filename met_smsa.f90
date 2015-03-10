@@ -1,3 +1,6 @@
+module mod_met_smsa
+implicit none
+contains
       subroutine met_smsa( &
                  l, &
                  sn, &
@@ -51,6 +54,8 @@
       use maillage
       use modeleturb
       use chainecarac
+use mod_teq_grads
+use mod_met_difsa
 implicit none
 integer :: indc
 integer :: i
@@ -312,3 +317,4 @@ double precision :: xkhi4
 !
       return
       end
+end module

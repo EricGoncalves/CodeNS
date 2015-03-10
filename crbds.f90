@@ -1,3 +1,6 @@
+module mod_crbds
+implicit none
+contains
       subroutine crbds( &
                  mfbe,kini,l, &
                  imin,imax,jmin,jmax,kmin,kmax, &
@@ -55,6 +58,7 @@
       use chainecarac
       use sortiefichier
       use boundary
+use mod_initis
 implicit none
 integer :: mfbe
 integer :: kini
@@ -136,3 +140,4 @@ integer :: mt
 !
       return
       end
+end module

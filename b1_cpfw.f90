@@ -1,3 +1,6 @@
+module mod_b1_cpfw
+implicit none
+contains
       subroutine b1_cpfw
 !
 !***********************************************************************
@@ -23,3 +26,4 @@ implicit none
 !
       return
       end
+end module

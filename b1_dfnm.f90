@@ -1,3 +1,6 @@
+module mod_b1_dfnm
+implicit none
+contains
       subroutine b1_dfnm
 !
 !***********************************************************************
@@ -15,6 +18,7 @@
       use schemanum
       use kcle
       use proprieteflu
+use mod_convich
 implicit none
 !
 !-----------------------------------------------------------------------
@@ -77,3 +81,4 @@ implicit none
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_b1_crdms
+implicit none
+contains
       subroutine b1_crdms( &
                  l,ni,nj,nk)
 !
@@ -36,3 +39,4 @@ integer :: nk
 !
       return
       end
+end module

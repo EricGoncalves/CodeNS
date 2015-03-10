@@ -1,3 +1,6 @@
+module mod_c_svbdc
+implicit none
+contains
       subroutine c_svbdc( &
                  mot,imot,nmot, &
                  mfbi, &
@@ -53,3 +56,4 @@ integer :: mt
 !
       return
       end
+end module

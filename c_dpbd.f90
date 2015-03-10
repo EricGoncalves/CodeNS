@@ -1,3 +1,6 @@
+module mod_c_dpbd
+implicit none
+contains
       subroutine c_dpbd( &
                  mot,imot,nmot, &
                  ncbd,ncin, &
@@ -18,6 +21,9 @@
       use para_var
       use para_fige
       use sortiefichier
+use mod_tcmd_dpbd
+use mod_dpbd
+use mod_b1_dpbd
 implicit none
 integer :: imot
 integer :: nmot
@@ -93,3 +99,4 @@ integer :: mg
 !
       return
       end
+end module

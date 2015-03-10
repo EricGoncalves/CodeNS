@@ -1,3 +1,6 @@
+module mod_zvismo
+implicit none
+contains
       subroutine zvismo(l,mu,s,temp)
 !
 !***********************************************************************
@@ -120,3 +123,4 @@ double precision :: usrey
 !
       return
       end
+end module

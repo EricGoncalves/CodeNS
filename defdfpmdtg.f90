@@ -1,3 +1,6 @@
+module mod_defdfpmdtg
+implicit none
+contains
       subroutine defdfpmdtg
 !
 !***********************************************************************
@@ -35,3 +38,4 @@ implicit none
 !
       return
       end
+end module

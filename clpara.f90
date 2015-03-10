@@ -1,3 +1,6 @@
+module mod_clpara
+implicit none
+contains
       subroutine clpara( &
                  mfb, &
                  ncbd,v, &
@@ -74,3 +77,4 @@ integer :: ni
 !
       return
       end
+end module

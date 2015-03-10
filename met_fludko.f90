@@ -1,3 +1,6 @@
+module mod_met_fludko
+implicit none
+contains
       subroutine met_fludko( &
                  l,mu,mut, &
                  fd5x,fd5y,fd5z,fd6x,fd6y,fd6z)
@@ -98,3 +101,4 @@ integer :: njd
 !
       return
       end
+end module

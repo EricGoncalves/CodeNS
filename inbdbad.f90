@@ -1,3 +1,6 @@
+module mod_inbdbad
+implicit none
+contains
       subroutine inbdbad( &
                  mfl,nv,adim, &
                  chvar)
@@ -111,3 +114,4 @@ double precision :: adim
 !
       return
       end
+end module

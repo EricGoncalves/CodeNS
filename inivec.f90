@@ -1,3 +1,6 @@
+module mod_inivec
+implicit none
+contains
       subroutine inivec( &
                  dt,v,mu,mut, &
                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
@@ -200,3 +203,4 @@ integer :: n
 !
       return
       end
+end module

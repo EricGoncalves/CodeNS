@@ -1,3 +1,6 @@
+module mod_met_cut
+implicit none
+contains
       subroutine met_cut(l,s)
 !
 !***********************************************************************
@@ -87,3 +90,4 @@ integer :: njd
 !
       return
       end
+end module

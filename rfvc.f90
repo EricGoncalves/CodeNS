@@ -1,3 +1,6 @@
+module mod_rfvc
+implicit none
+contains
       subroutine rfvc( &
               t,ncbd,mnc, &
               ps,temp,cson)
@@ -77,3 +80,4 @@ double precision :: tper
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_met_klrmut
+implicit none
+contains
       subroutine met_klrmut( &
                  l, &
                  sn,vol,t, &
@@ -19,6 +22,7 @@
       use para_fige
       use maillage
       use modeleturb
+use mod_teq_gradv
 implicit none
 integer :: inc
 integer :: ind
@@ -181,3 +185,4 @@ double precision :: zeta
 !
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_sch_roe_euler
+implicit none
+contains
       subroutine sch_roe_euler( &
                  lm,ityprk, &
                  u,v,ff, &
@@ -1161,3 +1164,4 @@ double precision :: wm
 
       return
       end
+end module

@@ -1,3 +1,6 @@
+module mod_metrics
+implicit none
+contains
       subroutine metrics( &
                  l,x,y,z,r,exs1,exs2, &
                  sn,vol, &
@@ -56,6 +59,10 @@
       use para_fige
       use maillage
       use sortiefichier
+use mod_vervol
+use mod_snorm
+use mod_svol
+use mod_extmhg
 implicit none
 integer :: inc
 integer :: indc
@@ -151,3 +158,4 @@ double precision :: zc
 !
       return
       end
+end module

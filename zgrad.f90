@@ -1,3 +1,6 @@
+module mod_zgrad
+implicit none
+contains
       subroutine zgrad( &
                  l, &
                  equat, &
@@ -133,12 +136,13 @@ double precision :: vols
                 dvzx(ip00),dvzy(ip00),dvzz(ip00), &
                 dtx (ip00),dty (ip00),dtz (ip00)
       dimension vol(ip11),temp(ip11),s(ip11,ip60)
-      data eps/0.001/
+
 
       ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
       inc(id,jd,kd)=id+jd*nid+kd*nijd
 
       REAL,DIMENSION(:),ALLOCATABLE :: vx,vy,vz
+      eps=0.001
       ALLOCATE(vx(ip00),vy(ip00),vz(ip00))
 !
       n0=npc(l)
@@ -499,3 +503,4 @@ DEALLOCATE(vx,vy,vz)
 
       return
       end
+end module
