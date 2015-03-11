@@ -157,5 +157,5 @@ integer :: nrest
       endif
 !
       return
-      end
+      end subroutine
 end module

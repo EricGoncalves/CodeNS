@@ -29,5 +29,5 @@ integer :: nmot
       call eend
 !
       return
-      end
+      end subroutine
 end module

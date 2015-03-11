@@ -174,5 +174,5 @@ integer :: njf
       enddo
 !
       return
-      end
+      end subroutine
 end module

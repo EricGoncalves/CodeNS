@@ -323,5 +323,5 @@ double precision :: yp02
 DEALLOCATE(alfaa,betaa,ff,vit,mui,muti,tempi,topc)
 
       return
-      end
+      end subroutine
 end module

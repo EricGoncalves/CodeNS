@@ -334,5 +334,5 @@ double precision :: zcfac
        enddo
 !
       return
-      end
+      end subroutine
 end module

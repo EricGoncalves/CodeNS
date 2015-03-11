@@ -94,5 +94,5 @@ integer :: n0
       endif
 !
       return
-      end
+      end subroutine
 end module

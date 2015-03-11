@@ -106,5 +106,5 @@ double precision :: cmuk2
       endif
 !
       return
-      end
+      end subroutine
 end module

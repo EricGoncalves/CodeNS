@@ -460,5 +460,5 @@ double precision :: zcs
         enddo
 !
       return
-      end
+      end subroutine
 end module

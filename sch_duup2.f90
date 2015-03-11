@@ -294,5 +294,5 @@ integer :: njd
 DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz)
 
       return
-      end
+      end subroutine
 end module

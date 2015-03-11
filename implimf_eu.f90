@@ -591,5 +591,5 @@ double precision :: ww
 DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
 
       return
-      end
+      end subroutine
 end module

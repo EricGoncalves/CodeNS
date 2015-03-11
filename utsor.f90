@@ -592,5 +592,5 @@ double precision :: zcfac
       ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4)
 !
       return
-      end
+      end subroutine
 end module

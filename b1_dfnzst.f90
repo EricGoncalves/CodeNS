@@ -31,5 +31,5 @@ integer :: nonzst
       write(imp,form)nonzst
 !
       return
-      end
+      end subroutine
 end module

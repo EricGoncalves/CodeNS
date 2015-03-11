@@ -353,5 +353,5 @@ double precision :: xkhi4
        enddo
 !
       return
-      end
+      end subroutine
 end module

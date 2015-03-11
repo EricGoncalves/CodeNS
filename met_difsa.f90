@@ -187,5 +187,5 @@ integer :: npsn
          sdif(m)=sdif(m)*cb2/sigma
       enddo
       return
-      end
+      end subroutine
 end module

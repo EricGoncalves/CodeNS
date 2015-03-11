@@ -59,5 +59,5 @@ integer :: no
       endif
 !
       return
-      end
+      end subroutine
 end module

@@ -145,5 +145,5 @@ integer :: nrest
                           ki4(lm),cki4
 !
       return
-      end
+      end subroutine
 end module

@@ -216,5 +216,5 @@ double precision :: zm
       endif
 !
       return
-      end
+      end subroutine
 end module

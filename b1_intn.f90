@@ -31,5 +31,5 @@ implicit none
       write(imp,form) numt,cnumt
 !
       return
-      end
+      end subroutine
 end module

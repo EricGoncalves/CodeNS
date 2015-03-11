@@ -483,5 +483,5 @@ double precision :: wi5
 DEALLOCATE(coefe,coefdiag)
 
       return
-      end
+      end subroutine
 end module

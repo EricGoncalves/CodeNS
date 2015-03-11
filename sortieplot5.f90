@@ -135,5 +135,5 @@ double precision :: zcc
         enddo
 !
       return
-      end
+      end subroutine
 end module

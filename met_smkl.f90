@@ -348,5 +348,5 @@ double precision :: xlskap2
       enddo
 !
       return
-      end
+      end subroutine
 end module

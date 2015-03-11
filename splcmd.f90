@@ -57,5 +57,5 @@ integer :: nm
       if (nmot.ne.0) imot(nmot)=im
 !
       return
-      end
+      end subroutine
 end module

@@ -297,5 +297,5 @@ double precision :: yp02
       enddo
 !
       return
-      end
+      end subroutine
 end module

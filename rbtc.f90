@@ -97,8 +97,8 @@ double precision :: tzzr
 !
       mfb=lbd(mf)
       mt=mmb(mfb)
-      sr=-sin(float(mper(mfb))*protat)
-      cr= cos(float(mper(mfb))*protat)
+      sr=-sin(real(mper(mfb))*protat)
+      cr= cos(real(mper(mfb))*protat)
 !
 !DEC$ IVDEP
       do m=1,mt
@@ -134,5 +134,5 @@ double precision :: tzzr
       enddo
 !
       return
-      end
+      end subroutine
 end module

@@ -82,5 +82,5 @@ integer :: kmin
                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,ip12,tn8)
 !
       return
-      end
+      end subroutine
 end module

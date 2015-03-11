@@ -211,5 +211,5 @@ double precision :: xl
       endif
 !
       return
-      end
+      end subroutine
 end module

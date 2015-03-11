@@ -168,5 +168,5 @@ integer :: mfb
       endif
 !
       return
-      end
+      end subroutine
 end module

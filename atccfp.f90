@@ -81,5 +81,5 @@ integer :: ndm3
        enddo
 !
       return
-      end
+      end subroutine
 end module

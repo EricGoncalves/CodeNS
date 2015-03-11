@@ -486,5 +486,5 @@ double precision :: rap_h0
   300 format(a80)
 !
       return
-      end
+      end subroutine
 end module

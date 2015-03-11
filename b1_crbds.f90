@@ -67,5 +67,5 @@ integer :: kmax
       write(imp,form) mfb,l,imin,imax,jmin,jmax,kmin,kmax,indfl,kini
 !
       return
-      end
+      end subroutine
 end module

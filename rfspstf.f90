@@ -59,5 +59,5 @@ integer :: n
       enddo
 !
       return
-      end
+      end subroutine
 end module

@@ -119,5 +119,5 @@ integer :: njd
       endif
 !
       return
-      end
+      end subroutine
 end module

@@ -37,5 +37,5 @@ implicit none
       krnz=0
 !
       return
-      end
+      end subroutine
 end module

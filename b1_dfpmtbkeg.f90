@@ -52,5 +52,5 @@ implicit none
                       rki4t  
 !
       return
-      end
+      end subroutine
 end module

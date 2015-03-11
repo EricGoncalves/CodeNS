@@ -426,5 +426,5 @@ double precision :: xlvk
       enddo
 !
       return
-      end
+      end subroutine
 end module

@@ -2617,5 +2617,5 @@ double precision :: wwp25m
       endif
 
       return
-      end
+      end subroutine
 end module

@@ -110,5 +110,5 @@ integer :: mfr
       endif
 !
       return
-      end
+      end subroutine
 end module

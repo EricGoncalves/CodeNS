@@ -59,5 +59,5 @@ implicit none
       kpinfl=1
 !
       return
-      end
+      end subroutine
 end module

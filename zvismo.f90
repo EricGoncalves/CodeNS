@@ -122,5 +122,5 @@ double precision :: usrey
       endif
 !
       return
-      end
+      end subroutine
 end module

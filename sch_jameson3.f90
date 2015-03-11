@@ -765,5 +765,5 @@ double precision :: sk4
       endif
 
       return
-      end
+      end subroutine
 end module

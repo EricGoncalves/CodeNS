@@ -211,5 +211,5 @@ integer :: npts
 DEALLOCATE(idumx,jdumx,kdumx,dumy1,dumy2,dumax,dumy2g,dumaxg)
 
       return
-      end
+      end subroutine
 end module

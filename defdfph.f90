@@ -44,5 +44,5 @@ implicit none
       kreynz=0
 !
       return
-      end
+      end subroutine
 end module

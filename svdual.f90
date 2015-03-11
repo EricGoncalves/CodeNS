@@ -117,5 +117,5 @@ integer :: njd
       close(98)
 !
       return
-      end
+      end subroutine
 end module

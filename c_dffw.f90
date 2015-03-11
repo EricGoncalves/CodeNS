@@ -42,5 +42,5 @@ integer :: nmot
       call dffw
 !
       return
-      end
+      end subroutine
 end module

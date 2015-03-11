@@ -147,5 +147,5 @@ double precision :: sigme
       endif
 !
       return
-      end
+      end subroutine
 end module

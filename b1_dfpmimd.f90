@@ -140,5 +140,5 @@ integer :: nrest
       write(imp,form) lgr,kmf(lm),ckmf
 !
       return
-      end
+      end subroutine
 end module

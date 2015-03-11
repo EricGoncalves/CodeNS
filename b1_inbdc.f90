@@ -70,5 +70,5 @@ integer :: kba
       endif
 !
       return
-      end
+      end subroutine
 end module

@@ -30,5 +30,5 @@ implicit none
       kncyturb=1
 !
       return
-      end
+      end subroutine
 end module

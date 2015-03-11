@@ -22,5 +22,5 @@ implicit none
       write(imp,form)
 !
       return
-      end
+      end subroutine
 end module

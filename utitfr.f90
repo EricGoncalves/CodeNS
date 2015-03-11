@@ -526,5 +526,5 @@ double precision :: zcfac
 !      vrtcz=czaero
 !
       return
-      end
+      end subroutine
 end module

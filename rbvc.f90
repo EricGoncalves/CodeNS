@@ -59,7 +59,7 @@ double precision :: tper
 !
       mfb=lbd(mf)
       mt=mmb(mfb)
-      tper=protat*float(mper(mfb))
+      tper=protat*real(mper(mfb))
 !
       do m=1,mt
       mc=mpc(mfb)+m
@@ -80,5 +80,5 @@ double precision :: tper
       enddo
 !
       return
-      end
+      end subroutine
 end module

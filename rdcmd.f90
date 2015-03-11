@@ -29,5 +29,5 @@ integer :: lgcmd
       call splcmd(command,lgcmd,mot,imot,nmot)
 !
       return
-      end
+      end subroutine
 end module

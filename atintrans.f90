@@ -279,5 +279,5 @@ integer :: njd
       stop
 !
       return
-      end
+      end subroutine
 end module

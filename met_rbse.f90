@@ -62,5 +62,5 @@ integer :: ndm
       enddo
 !
       return
-      end
+      end subroutine
 end module

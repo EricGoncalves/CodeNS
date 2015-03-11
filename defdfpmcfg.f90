@@ -31,5 +31,5 @@ integer :: m
       knba=1
 !
       return
-      end
+      end subroutine
 end module

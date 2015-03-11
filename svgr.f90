@@ -70,5 +70,5 @@ integer :: kmin
                  tn1,tn2,tn3)
 !
       return
-      end
+      end subroutine
 end module

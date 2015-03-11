@@ -72,5 +72,5 @@ integer :: njd
       write(kdg)(((z(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
 !
       return
-      end
+      end subroutine
 end module

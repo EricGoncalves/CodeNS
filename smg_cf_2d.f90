@@ -320,5 +320,5 @@ double precision :: sss
       enddo
 !
       return
-      end
+      end subroutine
 end module

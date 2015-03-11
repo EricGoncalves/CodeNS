@@ -28,5 +28,5 @@ implicit none
       komg=1
 !
       return
-      end
+      end subroutine
 end module

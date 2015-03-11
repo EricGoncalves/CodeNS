@@ -71,5 +71,5 @@ integer :: mfbeb
                  iba,jba,kba,tvi,tvj,tvk)
 !
       return
-      end
+      end subroutine
 end module

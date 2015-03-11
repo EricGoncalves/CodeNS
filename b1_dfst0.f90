@@ -37,5 +37,5 @@ double precision :: tam
       write(imp,form) roam,aam,tam
 !
       return
-      end
+      end subroutine
 end module

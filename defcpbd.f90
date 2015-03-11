@@ -25,5 +25,5 @@ implicit none
       kkexl=1
 !
       return
-      end
+      end subroutine
 end module

@@ -67,5 +67,5 @@ double precision :: tn3
                  disc)
 !
       return
-      end
+      end subroutine
 end module

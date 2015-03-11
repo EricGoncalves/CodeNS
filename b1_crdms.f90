@@ -38,5 +38,5 @@ integer :: nk
       write(imp,form) l,ni,nj,nk
 !
       return
-      end
+      end subroutine
 end module

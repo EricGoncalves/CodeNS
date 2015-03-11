@@ -502,5 +502,5 @@ double precision :: vols
 DEALLOCATE(vx,vy,vz)
 
       return
-      end
+      end subroutine
 end module

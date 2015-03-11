@@ -51,5 +51,5 @@ integer :: ldomd
       enddo
 !
       return
-      end
+      end subroutine
 end module

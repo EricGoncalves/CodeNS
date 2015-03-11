@@ -325,5 +325,5 @@ integer :: njd
       end if
 !
       return
-      end
+      end subroutine
 end module

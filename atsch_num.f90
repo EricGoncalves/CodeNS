@@ -1207,5 +1207,5 @@ integer :: npsn
         enddo      !fin boucle sur domaines
 
       return
-      end
+      end subroutine
 end module

@@ -86,5 +86,5 @@ integer :: nrest
       write(imp,form) (nba(no),no=1,mtbx)
 !
       return
-      end
+      end subroutine
 end module

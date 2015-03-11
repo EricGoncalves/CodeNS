@@ -47,5 +47,5 @@ integer :: nmot
       call dfgm
 !
       return
-      end
+      end subroutine
 end module

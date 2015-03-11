@@ -311,5 +311,5 @@ double precision :: tpar
       stop
 !
       return
-      end
+      end subroutine
 end module

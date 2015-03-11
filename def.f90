@@ -61,5 +61,5 @@ implicit none
       call defsecpfw
 !
       return
-      end
+      end subroutine
 end module

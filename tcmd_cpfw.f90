@@ -23,5 +23,5 @@ integer :: nmot
       dimension imot(nmx)
 !
       return
-      end
+      end subroutine
 end module

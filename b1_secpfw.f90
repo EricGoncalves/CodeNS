@@ -106,5 +106,5 @@ integer :: nrest
       write(imp,form) lgr,ncycle(lgr(1)),cncycl
 !
       return
-      end
+      end subroutine
 end module

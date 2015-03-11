@@ -111,5 +111,5 @@ integer :: kdg
       endif
 !
       return
-      end
+      end subroutine
 end module

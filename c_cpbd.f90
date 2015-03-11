@@ -176,5 +176,5 @@ double precision :: cson
                  tm12,tm13,pression,ztemp,cson)
 !
       return
-      end
+      end subroutine
 end module

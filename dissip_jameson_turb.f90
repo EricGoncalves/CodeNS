@@ -398,5 +398,5 @@ double precision :: ww
       endif
 
       return
-      end
+      end subroutine
 end module

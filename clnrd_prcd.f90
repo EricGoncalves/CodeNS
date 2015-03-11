@@ -203,5 +203,5 @@ double precision :: rps
       enddo
 !
       return
-      end
+      end subroutine
 end module

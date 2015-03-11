@@ -122,5 +122,5 @@ integer :: nrest
       write(imp,form) lgr
 !
       return
-      end
+      end subroutine
 end module

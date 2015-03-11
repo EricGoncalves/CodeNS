@@ -38,5 +38,5 @@ double precision :: tam
       endif
 !
       return
-      end
+      end subroutine
 end module

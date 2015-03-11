@@ -139,5 +139,5 @@ double precision :: utzt
       enddo
 !
       return
-      end
+      end subroutine
 end module

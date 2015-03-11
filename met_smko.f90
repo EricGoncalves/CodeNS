@@ -150,5 +150,5 @@ double precision :: fmt
       enddo
 !
       return
-      end
+      end subroutine
 end module

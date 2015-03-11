@@ -168,5 +168,5 @@ integer :: ncm1l
       enddo
 !
       return
-      end
+      end subroutine
 end module

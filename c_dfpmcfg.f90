@@ -47,5 +47,5 @@ integer :: nmot
       call dfpmcfg
 !
       return
-      end
+      end subroutine
 end module

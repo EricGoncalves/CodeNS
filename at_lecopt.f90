@@ -168,5 +168,5 @@ double precision :: raptatl
   300 format(a80)
 !
       return
-      end
+      end subroutine
 end module

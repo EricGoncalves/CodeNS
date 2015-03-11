@@ -67,5 +67,5 @@ integer :: nonzst
       call dfnzst(nonzst)
 !
       return
-      end
+      end subroutine
 end module

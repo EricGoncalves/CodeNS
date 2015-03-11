@@ -253,5 +253,5 @@ double precision :: smoy
       endif
 
       return
-      end
+      end subroutine
 end module

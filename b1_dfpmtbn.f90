@@ -40,5 +40,5 @@ implicit none
                       ncyturb,cncyturb
 !
       return
-      end
+      end subroutine
 end module

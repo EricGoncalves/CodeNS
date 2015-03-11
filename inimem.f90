@@ -230,5 +230,5 @@ integer :: icmt
                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10)
 !
       return
-      end
+      end subroutine
 end module

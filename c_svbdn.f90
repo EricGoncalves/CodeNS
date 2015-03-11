@@ -59,5 +59,5 @@ integer :: mt
 !                 mt,m0n)
 !
       return
-      end
+      end subroutine
 end module

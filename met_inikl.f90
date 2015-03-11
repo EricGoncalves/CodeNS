@@ -80,5 +80,5 @@ double precision :: cmuk2
                  v,mu,mut,dist)
 !
       return
-      end
+      end subroutine
 end module

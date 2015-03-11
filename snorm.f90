@@ -87,5 +87,5 @@ integer :: kmin
                  sn(1,3,1),sn(1,3,2),sn(1,3,3))
 !
       return
-      end
+      end subroutine
 end module

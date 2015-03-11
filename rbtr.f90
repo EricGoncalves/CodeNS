@@ -263,5 +263,5 @@ double precision :: tzzr
       enddo
 !
       return
-      end
+      end subroutine
 end module

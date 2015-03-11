@@ -192,8 +192,8 @@ double precision :: znb
        kpb=max(1,kb2-kb1)
 !
       do lper=-1,1
-       cnrota=cos(float(lper)*protat)
-       snrota=sin(float(lper)*protat)
+       cnrota=cos(real(lper)*protat)
+       snrota=sin(real(lper)*protat)
 !
        print*,' lper=',lper
        do k=kb1,kb2,kpb
@@ -436,5 +436,5 @@ double precision :: znb
       enddo
 !
       return
-      end
+      end subroutine
 end module

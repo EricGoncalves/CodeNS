@@ -54,5 +54,5 @@ integer :: idir
  1000 format(10x,'caracter - type of subdomain face incomprehensible')
 !
       return
-      end
+      end function
 end module

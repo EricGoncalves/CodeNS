@@ -43,5 +43,5 @@ integer :: mfbim
       enddo
 !
       return
-      end
+      end subroutine
 end module

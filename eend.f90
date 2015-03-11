@@ -14,5 +14,5 @@ implicit none
       stop
 !
       return
-      end
+      end subroutine
 end module

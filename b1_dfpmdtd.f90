@@ -138,5 +138,5 @@ integer :: nrest
       write(imp,form) lgr,eta(lm),ceta
 !
       return
-      end
+      end subroutine
 end module

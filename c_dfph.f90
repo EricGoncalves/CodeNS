@@ -46,5 +46,5 @@ integer :: nmot
       call dfph
 !
       return
-      end
+      end subroutine
 end module

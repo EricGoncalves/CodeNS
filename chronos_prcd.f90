@@ -360,5 +360,5 @@ double precision :: xmach2
 DEALLOCATE(beta2v)
 
       return
-      end
+      end subroutine
 end module

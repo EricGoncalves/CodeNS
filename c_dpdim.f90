@@ -60,15 +60,15 @@ integer :: ndimntb
       character(len=32) ::  mot(nmx)
       dimension imot(nmx)
 !
-      ndimctb=int((1.+kdimg*ccg)*ndimctf)
+      ndimctb=nint((1.+kdimg*ccg)*ndimctf)
       ndimctv=kdimv*(ndimctb-1)+1
       ndimctk=kdimk*(ndimctb-1)+1
-      ndimctc=int(kdimg*ccg*ndimctf)
-      ndimntb=int((1.+kdimg*cng)*ndimnts+ndimntu)
-      mdimtb =int((1.+kdimg*cfg)*mdimtbf)
-      mdimtn =int((1.+kdimg*cfg)*mdimtnf)
-      mdimtc =int((1.+kdimg*cfg)*mdimtcf)
-      mdimtr =int((1.+kdimg*cfg)*mdimtrf)
+      ndimctc=nint(kdimg*ccg*ndimctf)
+      ndimntb=nint((1.+kdimg*cng)*ndimnts+ndimntu)
+      mdimtb =nint((1.+kdimg*cfg)*mdimtbf)
+      mdimtn =nint((1.+kdimg*cfg)*mdimtnf)
+      mdimtc =nint((1.+kdimg*cfg)*mdimtcf)
+      mdimtr =nint((1.+kdimg*cfg)*mdimtrf)
 !
       kl=0
       do l=1,lzx
@@ -97,5 +97,5 @@ integer :: ndimntb
       if (mdimtr .lt.mdimtrx ) stop 'dimensionnement incorrecte'
 !
       return
-      end
+      end subroutine
 end module

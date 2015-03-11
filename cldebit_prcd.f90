@@ -141,5 +141,5 @@ double precision :: rhos
       enddo
 !
       return
-      end
+      end subroutine
 end module

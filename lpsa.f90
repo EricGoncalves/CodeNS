@@ -119,6 +119,6 @@ integer :: no
       end do
 !
       return
-      end
+      end subroutine
 
 end module

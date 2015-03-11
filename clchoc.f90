@@ -96,5 +96,5 @@ double precision :: v22
       enddo
 !
       return
-      end
+      end subroutine
 end module

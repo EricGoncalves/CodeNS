@@ -48,5 +48,5 @@ integer :: ng
       enddo
 !
       return
-      end
+      end subroutine
 end module

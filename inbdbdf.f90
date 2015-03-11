@@ -132,5 +132,5 @@ double precision :: tdim
       endif
 !
       return
-      end
+      end subroutine
 end module

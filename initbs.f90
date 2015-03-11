@@ -65,11 +65,11 @@ integer :: njd
       njd=jd2(l)-jd1(l)+1
 !
       if (indf(1:1).eq.'i') &
-              mdnmfb=isign(1,-iabs(ii1(l)-iminb(mfbi)))*1
+              mdnmfb=sign(1,-abs(ii1(l)-iminb(mfbi)))*1
       if (indf(1:1).eq.'j') &
-              mdnmfb=isign(1,-iabs(jj1(l)-jminb(mfbi)))*nid
+              mdnmfb=sign(1,-abs(jj1(l)-jminb(mfbi)))*nid
       if (indf(1:1).eq.'k') &
-              mdnmfb=isign(1,-iabs(kk1(l)-kminb(mfbi)))*nid*njd
+              mdnmfb=sign(1,-abs(kk1(l)-kminb(mfbi)))*nid*njd
 !
       do m=1,mt
       ml=m0+m
@@ -77,5 +77,5 @@ integer :: njd
       enddo
 !
       return
-      end
+      end subroutine
 end module

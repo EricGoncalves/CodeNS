@@ -137,7 +137,7 @@ integer :: njd
       write(imp,'("!!!at_ecrdist: erreur ouverture fichier=fdist-aux")')
       stop
 !
-      end
+      end subroutine
 
 
 end module

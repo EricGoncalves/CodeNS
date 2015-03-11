@@ -30,5 +30,5 @@ implicit none
       write(imp,form) disc
 !
       return
-      end
+      end subroutine
 end module

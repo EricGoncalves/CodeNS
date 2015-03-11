@@ -68,5 +68,5 @@ integer :: nonzst
       cv=cp/gam
 !
       return
-      end
+      end subroutine
 end module

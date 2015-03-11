@@ -37,5 +37,5 @@ implicit none
       kdt1min =0
 !
       return
-      end
+      end subroutine
 end module

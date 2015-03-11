@@ -106,7 +106,7 @@ double precision :: zcc
             +z(nc+nijd)+z(nc+nijd+1)+z(nc+nijd+nid)+z(nc+nijd+nid+1))* &
              0.125
 !
-        temps=float(idcyc)*dtpas
+        temps=real(idcyc)*dtpas
 !        ts1=0.5*exp(-log(2.)*((xcc-x0)**2 + (ycc-y0)**2
 !     &           +  (zcc-z0)**2)/cga**2)*cos(omeg*temps)
         ts1=0.5*exp(-log(2.)*((xcc-x0)**2+(ycc-y0)**2)/cga**2) &
@@ -130,7 +130,7 @@ double precision :: zcc
             +z(nc+nijd)+z(nc+nijd+1)+z(nc+nijd+nid)+z(nc+nijd+nid+1))* &
              0.125
 !
-        temps=float(idcyc)*dtpas
+        temps=real(idcyc)*dtpas
 !        ts1=1.*exp(-log(2.)*((xcc-x0)**2 + (ycc-y0)**2
 !     &           +  (zcc-z0)**2)/cga**2)*cos(omeg*temps)
         ts1=0.5*exp(-log(2.)*((xcc-x0)**2+(ycc-y0)**2)/cga**2) &
@@ -141,5 +141,5 @@ double precision :: zcc
       endif
 !
       return
-      end
+      end subroutine
 end module

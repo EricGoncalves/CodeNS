@@ -323,5 +323,5 @@ double precision :: vz
       enddo
 !
       return
-      end
+      end subroutine
 end module

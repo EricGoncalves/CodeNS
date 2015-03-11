@@ -475,5 +475,5 @@ integer :: npsn
       enddo
 !
       return
-      end
+      end subroutine
 end module

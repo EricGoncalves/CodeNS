@@ -43,5 +43,5 @@ integer :: lgcmd
       ktitrt1=2
 !
       return
-      end
+      end subroutine
 end module

@@ -26,5 +26,5 @@ integer :: kerr
   100 continue
 !
       return
-      end
+      end subroutine
 end module

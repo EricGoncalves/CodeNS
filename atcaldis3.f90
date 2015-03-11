@@ -407,5 +407,5 @@ double precision :: raptat
       enddo
 !
       return
-      end
+      end subroutine
 end module

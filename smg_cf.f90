@@ -74,5 +74,5 @@ double precision :: vc
       end if
 !
       return
-      end
+      end subroutine
 end module

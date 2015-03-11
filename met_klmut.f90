@@ -121,5 +121,5 @@ double precision :: xxi2
       enddo
 !
       return
-      end
+      end subroutine
 end module

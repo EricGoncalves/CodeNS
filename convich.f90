@@ -27,5 +27,5 @@ integer :: kvar
       endif
 !
       return
-      end
+      end subroutine
 end module

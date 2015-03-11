@@ -72,5 +72,5 @@ double precision :: cmuk2
 !      call met_cut(l,v)
 !
       return
-      end
+      end subroutine
 end module

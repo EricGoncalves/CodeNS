@@ -85,5 +85,5 @@ integer :: nrest
       write(imp,form) ldom,king
 !
       return
-      end
+      end subroutine
 end module

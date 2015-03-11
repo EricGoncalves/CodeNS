@@ -88,5 +88,5 @@ integer :: nrest
       write(imp,form) lmfb,kibdn
 !
       return
-      end
+      end subroutine
 end module

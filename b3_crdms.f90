@@ -41,5 +41,5 @@ integer :: nk
                 /2x,'-------------------------')
 !
       return
-      end
+      end subroutine
 end module

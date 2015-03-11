@@ -187,5 +187,5 @@ double precision :: ros
       enddo
 !
       return
-      end
+      end subroutine
 end module

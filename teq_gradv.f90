@@ -212,5 +212,5 @@ integer :: npsn
                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
       return
-      end
+      end subroutine
 end module

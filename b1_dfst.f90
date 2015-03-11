@@ -67,5 +67,5 @@ integer :: nst
                      varst(nst,7),cbe
 !
       return
-      end
+      end subroutine
 end module

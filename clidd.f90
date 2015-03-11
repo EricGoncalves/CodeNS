@@ -286,5 +286,5 @@ double precision :: wn
       enddo
 !
       return
-      end
+      end subroutine
 end module

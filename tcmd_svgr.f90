@@ -52,5 +52,5 @@ integer :: nm
       endif
 !
       return
-      end
+      end subroutine
 end module

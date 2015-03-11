@@ -112,5 +112,5 @@ double precision :: reytur
         enddo
 !
       return
-      end
+      end subroutine
 end module

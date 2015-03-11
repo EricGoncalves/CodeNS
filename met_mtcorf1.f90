@@ -180,5 +180,5 @@ integer :: npar
       end do
 !
       return
-      end
+      end subroutine
 end module

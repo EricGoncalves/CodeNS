@@ -2202,5 +2202,5 @@ double precision :: ww35
       endif  
 
       return
-      end
+      end subroutine
 end module

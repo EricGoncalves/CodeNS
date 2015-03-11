@@ -43,5 +43,5 @@ integer :: nst
       endif
 !
       return
-      end
+      end subroutine
 end module

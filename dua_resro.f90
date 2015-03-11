@@ -92,5 +92,5 @@ double precision :: resr
       write(sor3,'(1x,i6,1x,i6,1x,e13.6)') ncyc,icyc,resite
 !
       return
-      end
+      end subroutine
 end module

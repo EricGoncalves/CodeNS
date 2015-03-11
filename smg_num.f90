@@ -586,5 +586,5 @@ integer :: ngx
       enddo    ! fin boucle icycle sur temps physique
 !
       return
-      end
+      end subroutine
 end module

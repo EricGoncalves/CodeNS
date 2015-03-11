@@ -258,6 +258,6 @@ double precision :: vrtz
       cson(nl)=sqrt(temp(nl))
       enddo
 !
-      end
+      end subroutine
 
 end module

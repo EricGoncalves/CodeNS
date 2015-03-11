@@ -50,5 +50,5 @@ implicit none
                       dt1min,cdt1min
 !
       return
-      end
+      end subroutine
 end module

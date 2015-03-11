@@ -141,5 +141,5 @@ double precision :: roc0
       enddo
 !
       return
-      end
+      end subroutine
 end module

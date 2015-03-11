@@ -184,5 +184,5 @@ double precision :: zeta
         enddo
 !
       return
-      end
+      end subroutine
 end module

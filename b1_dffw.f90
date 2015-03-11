@@ -44,5 +44,5 @@ implicit none
                       omg,comg
 !
       return
-      end
+      end subroutine
 end module

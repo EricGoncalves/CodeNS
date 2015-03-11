@@ -112,5 +112,5 @@ integer :: njd
  1003 format(///,5x,'arret du programme car mailles negatives')
 !
       return
-      end
+      end subroutine
 end module

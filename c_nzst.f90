@@ -62,5 +62,5 @@ double precision :: tam
       ha1=cp*ta1
 !
       return
-      end
+      end subroutine
 end module

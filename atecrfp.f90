@@ -112,5 +112,5 @@ integer :: mfacn
       enddo
 !
       return
-      end
+      end subroutine
 end module

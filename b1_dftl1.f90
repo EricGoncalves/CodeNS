@@ -33,5 +33,5 @@ implicit none
       write(imp,form) titrt1,ctitrt1
 !
       return
-      end
+      end subroutine
 end module

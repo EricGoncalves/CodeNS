@@ -257,5 +257,5 @@ integer :: npsn
 DEALLOCATE(dtx,dty,dtz)
 
       return
-      end
+      end subroutine
 end module

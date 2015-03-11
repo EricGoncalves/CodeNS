@@ -47,5 +47,5 @@ integer :: kerr
         endif
 !
       return
-      end
+      end subroutine
 end module

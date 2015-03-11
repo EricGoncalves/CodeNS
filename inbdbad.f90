@@ -113,5 +113,5 @@ double precision :: adim
       endif
 !
       return
-      end
+      end subroutine
 end module

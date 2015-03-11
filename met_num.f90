@@ -974,5 +974,5 @@ integer :: npsn
 DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,fracmod)
 
       return
-      end
+      end subroutine
 end module

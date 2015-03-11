@@ -48,5 +48,5 @@ integer :: mt
        pres(m)=bceqt(ml,1)
       enddo
 !
-      end
+      end subroutine
 end module

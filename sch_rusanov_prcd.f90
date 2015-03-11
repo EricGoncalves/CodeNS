@@ -899,5 +899,5 @@ double precision :: vnr
       endif
 
       return
-      end
+      end subroutine
 end module

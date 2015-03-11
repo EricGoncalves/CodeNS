@@ -135,5 +135,5 @@ double precision :: rree
       endif
 !
       return
-      end
+      end subroutine
 end module

@@ -148,7 +148,7 @@ integer :: nmax
       nk = k2-k1
 !
       nmax=ni*nj*nk
-      coef=1./float(nmax)
+      coef=1./real(nmax)
 !
       if(equat(6:7).eq.'ke') then
        do m=1,neqt
@@ -180,50 +180,50 @@ integer :: nmax
          dumy2(1)=dumy2(1)+res1(m)*res1(m)
          dumax(1)=max(dumax(1),abs(res1(m)))
          s=0.5*(sign(1.,abs(res1(m))-dumax(1))+1.)
-         res1(m)=alog10(max(abs(res1(m)),reelmn))
-         idumx(1)=int((1.-s)*idumx(1)+s*i)
-         jdumx(1)=int((1.-s)*jdumx(1)+s*j)
-         kdumx(1)=int((1.-s)*kdumx(1)+s*k)
+         res1(m)=log10(max(abs(res1(m)),reelmn))
+         idumx(1)=nint((1.-s)*idumx(1)+s*i)
+         jdumx(1)=nint((1.-s)*jdumx(1)+s*j)
+         kdumx(1)=nint((1.-s)*kdumx(1)+s*k)
 !
          res2(m)=(v(n,2)-u(n,2))/dt(n)
          dumy1(2)=dumy1(2)+abs(res2(m))
          dumy2(2)=dumy2(2)+res2(m)*res2(m)
          dumax(2)=max(dumax(2),abs(res2(m)))
          s=0.5*(sign(1.,abs(res2(m))-dumax(2))+1.)
-         res2(m)=alog10(max(abs(res2(m)),reelmn))
-         idumx(2)=int((1.-s)*idumx(2)+s*i)
-         jdumx(2)=int((1.-s)*jdumx(2)+s*j)
-         kdumx(2)=int((1.-s)*kdumx(2)+s*k)
+         res2(m)=log10(max(abs(res2(m)),reelmn))
+         idumx(2)=nint((1.-s)*idumx(2)+s*i)
+         jdumx(2)=nint((1.-s)*jdumx(2)+s*j)
+         kdumx(2)=nint((1.-s)*kdumx(2)+s*k)
 !
          res3(m)=(v(n,3)-u(n,3))/dt(n)
          dumy1(3)=dumy1(3)+abs(res3(m))
          dumy2(3)=dumy2(3)+res3(m)*res3(m)
          dumax(3)=max(dumax(3),abs(res3(m)))
          s=.5*(sign(1.,abs(res3(m))-dumax(3))+1.)
-         res3(m)=alog10(max(abs(res3(m)),reelmn))
-         idumx(3)=int((1.-s)*idumx(3)+s*i)
-         jdumx(3)=int((1.-s)*jdumx(3)+s*j)
-         kdumx(3)=int((1.-s)*kdumx(3)+s*k)
+         res3(m)=log10(max(abs(res3(m)),reelmn))
+         idumx(3)=nint((1.-s)*idumx(3)+s*i)
+         jdumx(3)=nint((1.-s)*jdumx(3)+s*j)
+         kdumx(3)=nint((1.-s)*kdumx(3)+s*k)
 !
          res4(m)=(v(n,4)-u(n,4))/dt(n)
          dumy1(4)=dumy1(4)+abs(res4(m))
          dumy2(4)=dumy2(4)+res4(m)*res4(m)
          dumax(4)=max(dumax(4),abs(res4(m)))
          s=.5*(sign(1.,abs(res4(m))-dumax(4))+1.)
-         res4(m)=alog10(max(abs(res4(m)),reelmn))
-         idumx(4)=int((1.-s)*idumx(4)+s*i)
-         jdumx(4)=int((1.-s)*jdumx(4)+s*j)
-         kdumx(4)=int((1.-s)*kdumx(4)+s*k)
+         res4(m)=log10(max(abs(res4(m)),reelmn))
+         idumx(4)=nint((1.-s)*idumx(4)+s*i)
+         jdumx(4)=nint((1.-s)*jdumx(4)+s*j)
+         kdumx(4)=nint((1.-s)*kdumx(4)+s*k)
 !
          res5(m)=(v(n,5)-u(n,5))/dt(n)
          dumy1(5)=dumy1(5)+abs(res5(m))
          dumy2(5)=dumy2(5)+res5(m)*res5(m)
          dumax(5)=max(dumax(5),abs(res5(m)))
          s=.5*(sign(1.,abs(res5(m))-dumax(5))+1.)
-         res5(m)=alog10(max(abs(res5(m)),reelmn))
-         idumx(5)=int((1.-s)*idumx(5)+s*i)
-         jdumx(5)=int((1.-s)*jdumx(5)+s*j)
-         kdumx(5)=int((1.-s)*kdumx(5)+s*k)
+         res5(m)=log10(max(abs(res5(m)),reelmn))
+         idumx(5)=nint((1.-s)*idumx(5)+s*i)
+         jdumx(5)=nint((1.-s)*jdumx(5)+s*j)
+         kdumx(5)=nint((1.-s)*kdumx(5)+s*k)
         enddo
        enddo
       enddo
@@ -239,20 +239,20 @@ integer :: nmax
          dumy2(6)=dumy2(6)+res6(m)*res6(m)
          dumax(6)=max(dumax(6),abs(res6(m)))
          s=.5*(sign(1.,abs(res6(m))-dumax(6))+1.)
-         res6(m)=alog10(max(abs(res6(m)),reelmn))
-         idumx(6)=int((1.-s)*idumx(6)+s*i)
-         jdumx(6)=int((1.-s)*jdumx(6)+s*j)
-         kdumx(6)=int((1.-s)*kdumx(6)+s*k)
+         res6(m)=log10(max(abs(res6(m)),reelmn))
+         idumx(6)=nint((1.-s)*idumx(6)+s*i)
+         jdumx(6)=nint((1.-s)*jdumx(6)+s*j)
+         kdumx(6)=nint((1.-s)*kdumx(6)+s*k)
 !
          res7(m)=(v(n,7)-u(n,7))/dt(n)
          dumy1(7)=dumy1(7)+abs(res7(m))
          dumy2(7)=dumy2(7)+res7(m)*res7(m)
          dumax(7)=max(dumax(7),abs(res7(m)))
          s=.5*(sign(1.,abs(res7(m))-dumax(7))+1.)
-         res7(m)=alog10(max(abs(res7(m)),reelmn))
-         idumx(7)=int((1.-s)*idumx(7)+s*i)
-         jdumx(7)=int((1.-s)*jdumx(7)+s*j)
-         kdumx(7)=int((1.-s)*kdumx(7)+s*k)
+         res7(m)=log10(max(abs(res7(m)),reelmn))
+         idumx(7)=nint((1.-s)*idumx(7)+s*i)
+         jdumx(7)=nint((1.-s)*jdumx(7)+s*j)
+         kdumx(7)=nint((1.-s)*kdumx(7)+s*k)
         enddo
        enddo
       enddo
@@ -293,5 +293,5 @@ integer :: nmax
       endif
 !
       return
-      end
+      end subroutine
 end module

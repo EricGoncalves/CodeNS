@@ -68,5 +68,5 @@ integer :: lgt
       enddo
 !
       return
-      end
+      end subroutine
 end module

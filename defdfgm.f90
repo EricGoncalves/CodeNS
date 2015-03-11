@@ -29,5 +29,5 @@ implicit none
       kperio=1
 !
       return
-      end
+      end subroutine
 end module

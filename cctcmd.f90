@@ -42,5 +42,5 @@ integer :: nm
       enddo
 !
       return
-      end
+      end subroutine
 end module

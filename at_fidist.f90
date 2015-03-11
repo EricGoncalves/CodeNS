@@ -323,8 +323,8 @@ integer :: nsom
                   m2max=jmaxf-jminf+1
                 end if
                 idm=m1max-1
-                iespacem=int( float(m1max)*raptat)
-                jespacem=int( float(m2max)*raptat)
+                iespacem=nint( real(m1max)*raptat)
+                jespacem=nint( real(m2max)*raptat)
               end if
 !
               if(raptat.gt.0.) then
@@ -451,5 +451,5 @@ integer :: nsom
           enddo
 !
       return
-      end
+      end subroutine
 end module

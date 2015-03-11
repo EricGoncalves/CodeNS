@@ -50,5 +50,5 @@ integer :: lgcmd
       stop 'Erreur de syntaxe dans une commande!'
 !
       return
-      end
+      end subroutine
 end module

@@ -34,5 +34,5 @@ implicit none
       write(imp,form) kexl,ckexl
 !
       return
-      end
+      end subroutine
 end module

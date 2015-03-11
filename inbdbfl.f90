@@ -109,5 +109,5 @@ double precision :: rbidon
  5555 format (6(e12.5))
 !
       return
-      end
+      end subroutine
 end module

@@ -35,5 +35,5 @@ implicit none
       gam5=gam*gam1
 !
       return
-      end
+      end subroutine
 end module

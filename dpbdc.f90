@@ -105,7 +105,7 @@ integer :: nn
       pj(m)=jj
       pk(m)=kk
       if (mod(m,50).eq.1) write(imp,1910)
-      write(imp,1920) m,nc,int(pi(m)),int(pj(m)),int(pk(m))
+      write(imp,1920) m,nc,nint(pi(m)),nint(pj(m)),nint(pk(m))
       enddo
 !
  1900 format('1 Frontiere ',i5,' appartenant au domaine ',i5, &
@@ -116,5 +116,5 @@ integer :: nn
  1920 format(1x,i5,2x,i6,3(2x,i3))
 !
       return
-      end
+      end subroutine
 end module

@@ -372,5 +372,5 @@ double precision :: sk7
        enddo
 
       return
-      end
+      end subroutine
 end module

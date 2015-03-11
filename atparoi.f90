@@ -66,5 +66,5 @@ integer :: nfbi
       end if
 !
       return
-      end
+      end subroutine
 end module

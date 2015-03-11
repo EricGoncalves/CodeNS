@@ -69,5 +69,5 @@ double precision :: vbc
       enddo
 !
       return
-      end
+      end subroutine
 end module

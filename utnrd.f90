@@ -169,5 +169,5 @@ double precision :: zm
       enddo
 !
       return
-      end
+      end subroutine
 end module

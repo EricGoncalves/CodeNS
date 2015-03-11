@@ -134,5 +134,5 @@ integer :: no
       enddo
 !
       return
-      end
+      end subroutine
 end module

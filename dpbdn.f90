@@ -118,5 +118,5 @@ integer :: njd
  1910 format(1x,i5,4x,i3,2x,i3,2x,i6,3(2x,i3),3(2x,f10.6))
 !
       return
-      end
+      end subroutine
 end module
