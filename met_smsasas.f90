@@ -170,7 +170,7 @@ double precision :: xlvk2
 !
 !-----------------------------------------------------------------------
 !
-      real mu,kappa2,kapd2,nutilde,nlaplu
+      double precision mu,kappa2,kapd2,nutilde,nlaplu
 !
       dimension v(ip11,ip60)
       dimension mu(ip12),dist(ip12), &

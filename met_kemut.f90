@@ -73,7 +73,7 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,mut0,retur,fmu,a1,coef1,coef2,rota,zeta,exp2x,f2
+      double precision mu,mut,mut0,retur,fmu,a1,coef1,coef2,rota,zeta,exp2x,f2
       dimension mu(ip12),mut(ip12)
       dimension v(ip11,ip60)
       dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &

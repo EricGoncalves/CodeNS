@@ -88,7 +88,7 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut
+      double precision mu,mut
       dimension s(ip11,ip60)
       dimension mut(ip12),mu(ip12), &
                 fd5x(ip12),fd5y(ip12),fd5z(ip12), &

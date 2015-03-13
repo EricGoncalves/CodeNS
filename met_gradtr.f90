@@ -99,7 +99,7 @@ integer :: npsn
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut
+      double precision mu,mut
       dimension sn(ip31*ndir), &
                 vol(ip11)
       dimension s(ip11,ip60)

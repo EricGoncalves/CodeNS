@@ -77,7 +77,7 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
       dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
 !
       iin(n)=id1(lm)+mod(n-n0c-1,nid)

@@ -115,8 +115,8 @@ double precision :: ww
 !-----------------------------------------------------------------------
 !
       character(len=7 ) :: equat
-      real ge,get,gd,qq
-      real prec1,prec3
+      double precision ge,get,gd,qq
+      double precision prec1,prec3
       dimension v(ip11,ip60),d(ip11,ip60)
       dimension sn(lgsnlt,nind,ndir)
       dimension ps(ip11),cson(ip11),temp(ip11),snup(ip00)

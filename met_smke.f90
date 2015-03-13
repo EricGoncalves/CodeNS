@@ -102,7 +102,7 @@ double precision :: cmuk2
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut
+      double precision mu,mut
       dimension v(ip11,ip60)
       dimension mut(ip12),mu(ip12),qcxts5(ip12),qcyts6(ip12)
       dimension cfke(ip13),vol(ip11),cson(ip11)

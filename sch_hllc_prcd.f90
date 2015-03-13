@@ -172,8 +172,8 @@ double precision :: wm
 !
 !-----------------------------------------------------------------------
 !
-      real nx,ny,nz,ids
-      real fc1,fc2,fc3,fc4,fc5,gc1,gc2,gc3,gc4,gc5
+      double precision nx,ny,nz,ids
+      double precision fc1,fc2,fc3,fc4,fc5,gc1,gc2,gc3,gc4,gc5
       character(len=7 ) :: equat
       dimension v(ip11,ip60),u(ip11,ip60),ff(ip11,ip60)
       dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &

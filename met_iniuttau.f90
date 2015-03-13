@@ -77,8 +77,8 @@ integer :: npsn
 !-----------------------------------------------------------------------
 !
       character(len=7 ) :: equat
-      real nxn,nyn,nzn
-      real mu,mut
+      double precision nxn,nyn,nzn
+      double precision mu,mut
       dimension txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &
                 tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12)
       dimension nxn(ip42),nyn(ip42),nzn(ip42), &

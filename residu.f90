@@ -117,7 +117,7 @@ integer :: nmax
 !-----------------------------------------------------------------------
 !
       character(len=1316) :: form
-      real s,coef
+      double precision s,coef
 !
       dimension idumx(neqt),jdumx(neqt),kdumx(neqt), &
                 dumy1(neqt),dumy2(neqt),dumax(neqt)

@@ -67,7 +67,7 @@ double precision :: utzt
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn,taupe
+      double precision nxn,nyn,nzn,taupe
       dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
       dimension s(ip11,ip60)
       dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41),utau(ip42)

@@ -365,8 +365,8 @@ double precision :: zcfac
 !
       logical ecrcom
       character(len=1 ) :: c
-      real nxn,nyn,nzn
-      real mu,mut
+      double precision nxn,nyn,nzn
+      double precision mu,mut
 !
       dimension s(ip11,ip60),ps(ip11),temp(ip11),cson(ip11)
       dimension mu(ip12),mut(ip12)

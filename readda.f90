@@ -74,7 +74,7 @@ integer :: njd
 !-----------------------------------------------------------------------
 !
       integer resu
-      real mut
+      double precision mut
 !
       dimension v(ip11,ip60),mut(ip12)
       dimension utau(ip42)

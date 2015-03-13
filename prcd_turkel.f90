@@ -71,8 +71,8 @@ double precision :: ww
 !
 !-----------------------------------------------------------------------
 !
-      real get,ge,gd
-      real p11,p12,p13,p14,p15, &
+      double precision get,ge,gd
+      double precision p11,p12,p13,p14,p15, &
            p21,p22,p23,p24,p25, &
            p31,p32,p33,p34,p35, &
            p41,p42,p43,p44,p45, &

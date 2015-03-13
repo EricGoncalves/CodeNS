@@ -89,8 +89,8 @@ double precision :: xl
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,mut0,c14,c22,cmb1,c50,cmu500,xk,eps,retur,fmu,fmusm
-      real coef1,coef2,coef3,coef4,zeta,exp2x,chi,chi2,chi4,x1,f1,s24,dist2
+      double precision mu,mut,mut0,c14,c22,cmb1,c50,cmu500,xk,eps,retur,fmu,fmusm
+      double precision coef1,coef2,coef3,coef4,zeta,exp2x,chi,chi2,chi4,x1,f1,s24,dist2
       dimension v(ip11,ip60)
       dimension mut(ip12),mu(ip12),dist(ip12),mnpar(ip12), &
                 txxf5x(ip12),txyf5y (ip12),txzf5z(ip12), &

@@ -374,12 +374,12 @@ double precision :: ww35m
 !                                                                       
 !-----------------------------------------------------------------------
 !                                                                       
-      real nx,ny,nz 
+      double precision nx,ny,nz 
       character(len=7 ) :: equat 
-      real f1,f2,f3,f4,f5,fc1,fc2,fc3,fc4,fc5,df1,df2,df3,df4,df5
-      real g1,g2,g3,g4,g5,gc1,gc2,gc3,gc4,gc5,dg1,dg2,dg3,dg4,dg5
-      real h1,h2,h3,h4,h5,hc1,hc2,hc3,hc4,hc5,dh1,dh2,dh3,dh4,dh5
-      real fv2,fv3,fv4,fv5,gv2,gv3,gv4,gv5,hv2,hv3,hv4,hv5
+      double precision f1,f2,f3,f4,f5,fc1,fc2,fc3,fc4,fc5,df1,df2,df3,df4,df5
+      double precision g1,g2,g3,g4,g5,gc1,gc2,gc3,gc4,gc5,dg1,dg2,dg3,dg4,dg5
+      double precision h1,h2,h3,h4,h5,hc1,hc2,hc3,hc4,hc5,dh1,dh2,dh3,dh4,dh5
+      double precision fv2,fv3,fv4,fv5,gv2,gv3,gv4,gv5,hv2,hv3,hv4,hv5
       dimension u(ip11,ip60),v(ip11,ip60),ff(ip11,ip60),ps(ip11)
       dimension sn(lgsnlt,nind,ndir) 
       dimension toxx(ip12),toxy(ip12),toxz(ip12),                       &

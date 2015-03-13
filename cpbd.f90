@@ -140,8 +140,8 @@ integer :: no
 !-----------------------------------------------------------------------
 !
       character(len=4) clsave
-      real nxn,nyn,nzn
-      real mut
+      double precision nxn,nyn,nzn
+      double precision mut
 !
       dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
                 tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &

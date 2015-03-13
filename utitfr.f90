@@ -239,7 +239,7 @@ double precision :: zcfac
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn,pres
+      double precision nxn,nyn,nzn,pres
 !
       dimension x(ip21),y(ip21),z(ip21)
       dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)

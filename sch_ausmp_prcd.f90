@@ -134,9 +134,9 @@ double precision :: sk5
 !-----------------------------------------------------------------------
 !
       character(len=7 ) :: equat
-      real nx,ny,nz,cnds,cmm,fpr,dm,qinf,ca,cb,ai,ani,cmi,psi
-      real al,ar,q2l,q2r,hl,hr,vnl,vnr,cml,cmr,beta2l,beta2r,betai
-      real hi1,hi2,hi3,hi4,hi5,hj1,hj2,hj3,hj4,hj5
+      double precision nx,ny,nz,cnds,cmm,fpr,dm,qinf,ca,cb,ai,ani,cmi,psi
+      double precision al,ar,q2l,q2r,hl,hr,vnl,vnr,cml,cmr,beta2l,beta2r,betai
+      double precision hi1,hi2,hi3,hi4,hi5,hj1,hj2,hj3,hj4,hj5
       dimension v(ip11,ip60),d(ip11,ip60),u(ip11,ip60),ff(ip11,ip60)
       dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
                 tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12)

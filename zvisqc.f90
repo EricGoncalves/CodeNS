@@ -164,7 +164,7 @@ integer :: npsn
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut
+      double precision mu,mut
       dimension x(ip21),y(ip21),z(ip21)
       dimension s(ip11,ip60)
       dimension ro(ip11),vol(ip11),ztemp(ip11)

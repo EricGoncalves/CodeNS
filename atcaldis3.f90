@@ -178,7 +178,7 @@ double precision :: raptat
 !-----------------------------------------------------------------------
 !
       integer dm1,dm2,dm3
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
       dimension dist(ip12),mnpar(ip12),fgam(ip42)
       dimension x(ip21),y(ip21),z(ip21)
       dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)

@@ -135,8 +135,8 @@ double precision :: yp02
 !-----------------------------------------------------------------------
 !
       logical lamin
-      real mu,mut,mup,sv
-      real nxn,nyn,nzn,n1,n2,n3
+      double precision mu,mut,mup,sv
+      double precision nxn,nyn,nzn,n1,n2,n3
 !
       dimension mu(ip12),mut(ip12),toxx(ip12),toxy(ip12), &
                 toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12), &

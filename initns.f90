@@ -184,7 +184,7 @@ integer :: njd
       character(len=2 ) :: indfb
       character(len=7 ) :: eqt
       integer dm,nip0
-      real nxn,nyn,nzn,nn
+      double precision nxn,nyn,nzn,nn
       dimension x(ip21),y(ip21),z(ip21)
       dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
       dimension tnix(ip00),tniy(ip00),tniz(ip00), &

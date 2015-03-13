@@ -127,7 +127,7 @@ integer :: icmt
 !-----------------------------------------------------------------------
 !
       character(len=32) ::  comment
-      real mu,mut           
+      double precision mu,mut           
 !
       dimension v(ip11,ip60)
       dimension dt(ip11),vol(ip11),pression(ip11),ztemp(ip11),cson(ip11)

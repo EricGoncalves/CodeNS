@@ -190,8 +190,8 @@ double precision :: xlvk
 !-----------------------------------------------------------------------
 !
       logical impli
-      real mu,mut,nlaplu
-      real rtilde,nutilde,fd,f1
+      double precision mu,mut,nlaplu
+      double precision rtilde,nutilde,fd,f1
       dimension v(ip11,ip60)
       dimension mut(ip12),mu(ip12),dist(ip12),mnpar(ip12),txxf5x(ip12), &
                 txyf5y(ip12),txzf5z(ip12),tyyf6x(ip12),tyzf6y(ip12), &

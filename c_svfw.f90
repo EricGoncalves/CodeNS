@@ -63,7 +63,7 @@ double precision :: tn8
 !
       character(len=32) ::  mot(nmx)
       character(len=4 ) :: disc
-      real mut
+      double precision mut
 !
       dimension imot(nmx)
       dimension utau(ip42),mut(ip12)

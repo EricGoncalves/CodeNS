@@ -56,7 +56,7 @@ integer :: kmin
 !-----------------------------------------------------------------------
 !
       character(len=4 ) :: disc
-      real mut
+      double precision mut
 !
       dimension utau(ip42)
       dimension v(ip11,ip60)

@@ -98,7 +98,7 @@ integer :: no
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
 !
       dimension v(ip11,ip60)
       dimension toxx(ip12),toxy(ip12),toxz(ip12), &

@@ -332,8 +332,8 @@ double precision :: zt
       character(len=20) ::  nomfic
       character(len=1 ) :: c
       character(len=5 ) :: control
-      real nxn,nyn,nzn,nx,ny,nz
-      real mu
+      double precision nxn,nyn,nzn,nx,ny,nz
+      double precision mu
       logical ouvert,iok
 !
       dimension s(ip11,ip60),vol(ip11),ps(ip11),cson(ip11),temp(ip11)

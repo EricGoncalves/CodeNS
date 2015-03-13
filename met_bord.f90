@@ -50,7 +50,7 @@ integer :: no
 !
 !-----------------------------------------------------------------------
 !
-      real mu
+      double precision mu
 !
       dimension ncin(ip41),ncbd(ip41)
       dimension mnc(ip43)

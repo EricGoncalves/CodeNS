@@ -109,7 +109,7 @@ double precision :: wi5
 !-----------------------------------------------------------------------
 !
       character(len=7 ) :: equat
-      real mu,mut,fact
+      double precision mu,mut,fact
       dimension v(ip11,ip60),u(ip11,ip60),d(ip11,ip60),ff(ip11,ip60)
       dimension vol(ip11),dt(ip11),ps(ip11),cson(ip11)
       dimension mu(ip12),mut(ip12)

@@ -59,7 +59,7 @@ integer :: lm
 !
 !-----------------------------------------------------------------------
 !
-      real mut
+      double precision mut
       dimension x(ip21),y(ip21),z(ip21)
       dimension v(ip11,ip60),tnte1(ip11,ip60)
       dimension mut(ip12)

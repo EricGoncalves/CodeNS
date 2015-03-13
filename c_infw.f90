@@ -41,7 +41,7 @@ integer :: ldomd
 !-----------------------------------------------------------------------
 !
       character(len=32) ::  mot(nmx)
-      real mut
+      double precision mut
 !
       dimension imot(nmx)
       dimension ldom(nobj)

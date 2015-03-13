@@ -126,7 +126,7 @@ double precision :: smoy
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,rv1
+      double precision mu,mut,rv1
       character(len=7 ) :: equat
 !
       dimension t(ip11,ip60)

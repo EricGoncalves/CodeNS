@@ -49,7 +49,7 @@ double precision :: resr
 !--------------------------------------------------------------------
 !
       integer icyc,ncyc,img
-      real durmy2
+      double precision durmy2
       dimension u0(ip11,ip60),v(ip11,ip60),dt(ip11)
 !
       ind(i,j,k)=n0+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd

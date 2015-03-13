@@ -73,7 +73,7 @@ integer :: mfacn
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
 !
       dimension x(ip21),y(ip21),z(ip21)
       dimension xpar(ip00),ypar(ip00),zpar(ip00)

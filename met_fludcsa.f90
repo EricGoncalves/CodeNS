@@ -78,7 +78,7 @@ double precision :: smutot
 !
 !-----------------------------------------------------------------------
 !
-      real mu
+      double precision mu
 !
       dimension s(ip11,ip60)
       dimension mu(ip12), &

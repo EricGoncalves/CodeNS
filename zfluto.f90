@@ -115,7 +115,7 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,ds3
+      double precision mu,mut,ds3
       dimension mu(ip12),mut(ip12)
       dimension toxx(ip12),toxy(ip12),toxz(ip12), &
                 toyy(ip12),toyz(ip12),tozz(ip12)

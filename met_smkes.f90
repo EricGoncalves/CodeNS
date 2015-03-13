@@ -73,7 +73,7 @@ double precision :: xl2
 !
 !-----------------------------------------------------------------------
 !
-      real mu
+      double precision mu
       dimension s(ip11,ip60)
       dimension mu(ip12),tsv6(ip12),tsv7(ip12)
       dimension tprod(ip00),bark(ip00),bare(ip00)

@@ -66,7 +66,7 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real rhoe
+      double precision rhoe
       dimension v(ip11,ip60)
       dimension pression(ip11),ztemp(ip11),cson(ip11)
 !

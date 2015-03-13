@@ -92,7 +92,7 @@ double precision :: fmt
 !
 !-----------------------------------------------------------------------
 !
-      real betasc,betac,xmt,xw,omeg,gkgo
+      double precision betasc,betac,xmt,xw,omeg,gkgo
       dimension v(ip11,ip60)
       dimension cson(ip11)
       dimension txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &

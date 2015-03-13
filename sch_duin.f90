@@ -55,7 +55,7 @@ integer :: njd
 !-----------------------------------------------------------------------
 !
       integer l,lm,img
-      real c1
+      double precision c1
       dimension v(ip11,ip60),ptdual(ip11,ip60)
       dimension vdual1(ip11,ip60),vdual(ip11,ip60),vdual2(ip11,ip60)
 !

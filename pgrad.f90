@@ -76,7 +76,7 @@ double precision :: ts
 !
 !-----------------------------------------------------------------------
 !
-      real vols,cc0
+      double precision vols,cc0
       dimension sn(lgsnlt,nind,ndir)
       dimension dpdx(ip00),dpdy(ip00),dpdz(ip00)
       dimension ps(ip11),vol(ip11)

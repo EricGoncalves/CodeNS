@@ -81,7 +81,7 @@ integer :: no
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,nxn,nyn,nzn
+      double precision mu,mut,nxn,nyn,nzn
 !
       dimension v(ip11,ip60)
       dimension mu(ip12),mut(ip12),mnpar(ip12),dist(ip12)

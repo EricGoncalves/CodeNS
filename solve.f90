@@ -314,7 +314,7 @@ implicit none
       integer           :: iyplus
       integer           :: img,imot,l,mfbi,mfc,mfn,mfr,mnc,mnpar,mnr,ncbd,ncin
       integer           :: ncyc,nmot
-      real              :: mu,mut,nxn,nyn,nzn
+      double precision              :: mu,mut,nxn,nyn,nzn
       double precision  :: aam,bceqt,cfke,cmui1,cmui2,cmuj1,cmuj2,cmuk1
       double precision  :: cmuk2,cson,cvi,cvj,cvk,d0x,d0y,d0z,dist,dt,exs1
       double precision  :: exs2,fgam,pres,pression,ptdual,qcx,qcy,qcz,qtx,qty,qtz,r,res,roam

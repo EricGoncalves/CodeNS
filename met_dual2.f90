@@ -49,7 +49,7 @@ integer :: njd
 !-----------------------------------------------------------------------
 !
       integer icycle,l
-      real dti,fact
+      double precision dti,fact
       dimension v(ip11,ip60),u(ip11,ip60),ptdual(ip11,ip60)
       dimension vol(ip11)
 !

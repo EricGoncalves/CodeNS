@@ -69,7 +69,7 @@ double precision :: zcc
 !
       character(len=1 ) :: c
       integer icycle,ncycl,idcyc,nmid,jmid
-      real mut,mu,qinf
+      double precision mut,mu,qinf
 !
       dimension vdual2(ip11,ip60),t(ip11,ip60)
       dimension x(ip21),y(ip21),z(ip21)

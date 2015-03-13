@@ -118,7 +118,7 @@ double precision :: yplus
 !
 !-----------------------------------------------------------------------
 !
-      real mu
+      double precision mu
       dimension v(ip11,ip60)
       dimension mu(ip12),dist(ip12),mnpar(ip12),utau(ip42), &
                 qcxts5(ip12),qcyts6 (ip12)

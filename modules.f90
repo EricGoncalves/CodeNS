@@ -69,7 +69,7 @@ implicit none
   integer nfba,nbdc,kexl
   integer mmb,mpb,nba,ndlb,nfei
   integer mpc,nfbc,ndcc,mdnc,mper
-  real bc
+      double precision bc
   dimension nbdc(mtb),bc(mtb,ista*lsta)
   dimension iminb(mtt),imaxb(mtt),jminb(mtt),jmaxb(mtt),kminb(mtt),kmaxb(mtt)
   dimension mpn(mtt),nfbn(mtb)
@@ -99,10 +99,10 @@ module definition
   use para_fige
 implicit none
   integer klomg
-  real roa1,aa1,ta1,pa1,ha1
-  real perio,ptrans,protat,omg
-  real ronz,anz,tnz,dnz,pnz,rnz
-  real varst
+      double precision roa1,aa1,ta1,pa1,ha1
+      double precision perio,ptrans,protat,omg
+      double precision ronz,anz,tnz,dnz,pnz,rnz
+      double precision varst
   dimension varst(nsta,lsta)
 end module definition
 !
@@ -131,8 +131,8 @@ end module chainecarac
 module constantes
 implicit none
   integer linx ,intmx
-  real reelmx,reelmn
-  real pis2,raddeg,degrad
+      double precision reelmx,reelmn
+      double precision pis2,raddeg,degrad
   data linx/132/
 !  data intmx/999999/
 !  data reelmx/999999999./
@@ -144,10 +144,10 @@ end module constantes
 !
 module proprieteflu
 implicit none
-   real gam,gam1,gam2,gam3,gam4,gam5,rd
-   real pr,prt,reynz
-   real rgp,cp,cv
-   real pinfl,ql
+      double precision gam,gam1,gam2,gam3,gam4,gam5,rd
+      double precision pr,prt,reynz
+      double precision rgp,cp,cv
+      double precision pinfl,ql
 end module proprieteflu
 !
 module kcle
@@ -190,12 +190,12 @@ implicit none
   integer nfi,kfmg,kcg
   integer kmf,lmax,numt,ncycle
   integer kdtl,icychr0,ncychro
-  real rki2t,rki4t,xk,cte,epsroe
-  real resno1,resite,reske1,reskeite
-  real rm0,al0,be0,tol,tolke
-  real vrtmac,vrtalp,vrtcz,vrtlre,vrtxre,vrtzre
-  real x0,y0,z0,freq,cga
-  real ki2,ki4,eta,dt1min
+      double precision rki2t,rki4t,xk,cte,epsroe
+      double precision resno1,resite,reske1,reskeite
+      double precision rm0,al0,be0,tol,tolke
+      double precision vrtmac,vrtalp,vrtcz,vrtlre,vrtxre,vrtzre
+      double precision x0,y0,z0,freq,cga
+      double precision ki2,ki4,eta,dt1min
   dimension ki2(lt),ki4(lt)
   dimension kmf(lt),lmax(lt)
   dimension ncycle(lg) 
@@ -209,19 +209,19 @@ implicit none
   integer ncycrac,naprng,ncytuke0,ncycke
   integer imxclko,komsst,icytur0,ncyturb,lparoi
   integer kcutke,kfludis,ksecmb,kcmut,kclkep,kinke,kparoi,kutau
-  real utaumin,rapvisq
-  real cb1,sigma,cb2,kappa,cw1,cw2,cw3,cv1,ct1,ct2,ct3,ct4
-  real rokinf,roeinf,epsk,epse,rkplus
-  real cmu,cke1,cke2,alfak,alfae
-  real rtrac,drtrac,vkar,cllog,yp0
-  real sigme1,sigma1,beta1,wsig1,betae,okappa
-  real sigme2,sigma2,beta2,wsig2
-  real allfae0,allfa0,rrk,romeg,rbeta,bheta,sigmeb,sigmab,bethae
-  real sigmk,sigmw,sigmd,beta,betas
-  real ccmu,cc1,cc2,ce2,cgl,ceta,sigk,sige
-  real cmukl,cklb1,ckle2,sigmak,sigmal,xkappa
-  real epspid,epstaud,epsvord
-  real pctvort
+      double precision utaumin,rapvisq
+      double precision cb1,sigma,cb2,kappa,cw1,cw2,cw3,cv1,ct1,ct2,ct3,ct4
+      double precision rokinf,roeinf,epsk,epse,rkplus
+      double precision cmu,cke1,cke2,alfak,alfae
+      double precision rtrac,drtrac,vkar,cllog,yp0
+      double precision sigme1,sigma1,beta1,wsig1,betae,okappa
+      double precision sigme2,sigma2,beta2,wsig2
+      double precision allfae0,allfa0,rrk,romeg,rbeta,bheta,sigmeb,sigmab,bethae
+      double precision sigmk,sigmw,sigmd,beta,betas
+      double precision ccmu,cc1,cc2,ce2,cgl,ceta,sigk,sige
+      double precision cmukl,cklb1,ckle2,sigmak,sigmal,xkappa
+      double precision epspid,epstaud,epsvord
+      double precision pctvort
   dimension pctvort(lt)
 end module modeleturb
 !
@@ -239,7 +239,7 @@ implicit none
 !  data inig1,kfi,kfb,kfn,kfc,kfr,kdgcf,kdacf,kres/31,32,33,34,35,36,37,38,39/
   data don1,inia1,sorf1,sorf2/41,42,43,44/
   integer kvglo,nbfll,nmfint
-  real xref,yref,zref,sref,xlref
-  real alpha0,beta0,p0spi0,q0spi0,v0
+      double precision xref,yref,zref,sref,xlref
+      double precision alpha0,beta0,p0spi0,q0spi0,v0
   dimension nmfint(mtb)
 end module sortiefichier

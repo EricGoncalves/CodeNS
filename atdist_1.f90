@@ -90,7 +90,7 @@ integer :: ncm1l
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
       integer dm3
       dimension x(ip21),y(ip21),z(ip21)
       dimension nxn(ip42),nyn(ip42),nzn(ip42)

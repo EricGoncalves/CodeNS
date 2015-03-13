@@ -139,8 +139,8 @@ double precision :: cson
 !
 !
       character(len=32) ::  mot(nmx)
-      real nxn,nyn,nzn
-      real mut
+      double precision nxn,nyn,nzn
+      double precision mut
 !
       dimension imot(nmx)
       dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &

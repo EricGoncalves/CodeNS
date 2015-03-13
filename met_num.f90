@@ -159,7 +159,7 @@ integer :: npsn
 !-----------------------------------------------------------------------
 !
       integer icycle
-      real nxn,nyn,nzn,mu,mut
+      double precision nxn,nyn,nzn,mu,mut
 !
       dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60),ptdual(ip11,ip60)
       dimension dt(ip11),vol(ip11),ztemp(ip11),cson(ip11),pression(ip11),topz(ip11)

@@ -97,7 +97,7 @@ double precision :: roc0
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
 !
       dimension pres(ip40)
       dimension v(ip11,ip60)

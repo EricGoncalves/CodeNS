@@ -49,7 +49,7 @@ integer :: lmfbd
 !
       character(len=32) ::  mot(nmx)
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
 !
       dimension imot(nmx)
       dimension lmfb(mtb)

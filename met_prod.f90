@@ -57,7 +57,7 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real mut,ds3,torxx,toryy,torzz,torxy,torxz,toryz
+      double precision mut,ds3,torxx,toryy,torzz,torxy,torxz,toryz
       dimension s(ip11,ip60)
       dimension mut(ip12)
       dimension tprod(ip00), &

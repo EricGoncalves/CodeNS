@@ -58,7 +58,7 @@ double precision :: xkhi3
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut
+      double precision mu,mut
       dimension mu(ip12),mut(ip12)
       dimension v(ip11,ip60)
 !

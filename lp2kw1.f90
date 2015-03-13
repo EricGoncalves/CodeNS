@@ -136,8 +136,8 @@ double precision :: yp02
 !
       parameter( ntab=50  )
       logical lamin
-      real mu,mut,mup,sv,nxn,nyn,nzn
-      real ki,li,dtop,seuil
+      double precision mu,mut,mup,sv,nxn,nyn,nzn
+      double precision ki,li,dtop,seuil
 !
       dimension mu(ip12),mut(ip12)
       dimension nxn(ip42),nyn(ip42),nzn(ip42)

@@ -60,7 +60,7 @@ double precision :: rota
 !
 !-----------------------------------------------------------------------
 !
-      real mut,mutmx
+      double precision mut,mutmx
       dimension v(ip11,ip60)
       dimension mut(ip12)
       dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &

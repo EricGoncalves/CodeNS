@@ -47,7 +47,7 @@ integer :: mt
 !-----------------------------------------------------------------------
 !
       character(len=32) ::  mot(nmx)
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
       dimension nxn(ip42),nyn(ip42),nzn(ip42)
       dimension imot(nmx)
 !

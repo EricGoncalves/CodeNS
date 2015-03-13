@@ -100,7 +100,7 @@ integer :: n
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut
+      double precision mu,mut
       dimension v(ip11,ip60)
       dimension vol(ip11),dt(ip11),pression(ip11),ztemp(ip11),cson(ip11)
       dimension mu(ip12),mut(ip12)

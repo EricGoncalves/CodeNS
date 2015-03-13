@@ -71,7 +71,7 @@ double precision :: rho
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
       dimension v(ip11,ip60)
       dimension ncbd(ip41),ncin(ip41)
       dimension nxn(ip42),nyn(ip42),nzn(ip42)

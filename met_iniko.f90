@@ -51,7 +51,7 @@ double precision :: cmuk2
 !
 !-----------------------------------------------------------------------
 !
-      real mut,mu
+      double precision mut,mu
       dimension v(ip11,ip60)
       dimension mut(ip12),mu(ip12),dist(ip12),mnpar(ip12)
       dimension ncin(ip41),ncbd(ip41),vol(ip11)

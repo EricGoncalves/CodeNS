@@ -84,7 +84,7 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real mut,mu
+      double precision mut,mu
       integer ncyc,img
 !
       dimension v(ip11,ip60),ptdual(ip11,ip60),vdual1(ip11,ip60),vdual(ip11,ip60)

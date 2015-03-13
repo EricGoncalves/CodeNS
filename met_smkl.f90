@@ -177,7 +177,7 @@ double precision :: xlskap2
 !-----------------------------------------------------------------------
 !
       logical impli
-      real mu,mut
+      double precision mu,mut
       dimension v(ip11,ip60)
       dimension mut(ip12),mu(ip12),dist(ip12),mnpar(ip12), &
                 txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &

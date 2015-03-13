@@ -74,7 +74,7 @@ double precision :: usrey
 !
 !-----------------------------------------------------------------------
 !
-      real mu,bl,a
+      double precision mu,bl,a
       dimension mu(ip12),temp(ip11)
       dimension s(ip11,ip60)
 !

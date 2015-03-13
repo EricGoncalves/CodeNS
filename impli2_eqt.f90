@@ -109,7 +109,7 @@ double precision :: ww
 !-----------------------------------------------------------------
 !
       integer ibalai
-      real mu,mut,cmt,fact
+      double precision mu,mut,cmt,fact
 !
       dimension v(ip11,ip60),u(ip11,ip60)
       dimension dt(ip11),vol(ip11),mu(ip12),mut(ip12), &

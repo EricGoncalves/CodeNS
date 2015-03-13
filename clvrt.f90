@@ -127,7 +127,7 @@ double precision :: vrtz
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
       dimension x(ip21),y(ip21),z(ip21)
       dimension v(ip11,ip60)
       dimension pression(ip11),temp(ip11),cson(ip11)

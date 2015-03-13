@@ -47,7 +47,7 @@ integer :: lb
 !-----------------------------------------------------------------------
 !
       character(len=32) ::  typdat
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
 !
       dimension ncbd(ip41),ncin(ip41)
       dimension nxn(ip42),nyn(ip42),nzn(ip42)

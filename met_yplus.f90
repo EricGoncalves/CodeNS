@@ -154,8 +154,8 @@ double precision :: zcfac
 !-----------------------------------------------------------------------
 !
       integer dnc
-      real nxn,nyn,nzn
-      real mu
+      double precision nxn,nyn,nzn
+      double precision mu
 !
       dimension s(ip11,ip60)
       dimension x(ip12),y(ip12),z(ip12),mu(ip12),dist(ip12)

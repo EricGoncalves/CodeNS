@@ -43,7 +43,7 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real mut,mu
+      double precision mut,mu
 !
       dimension v(ip11,ip60)
       dimension mut(ip12),mu(ip12)

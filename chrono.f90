@@ -95,7 +95,7 @@ integer :: npsn
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,dtmin
+      double precision mu,mut,dtmin
       dimension u(ip11,ip60)
       dimension dt(ip11),cson(ip11),vol(ip11),pression(ip11)
       dimension mu(ip12),mut(ip12)

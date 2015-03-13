@@ -155,7 +155,7 @@ double precision :: xkhi4
 !
 !-----------------------------------------------------------------------
 !
-      real mu,kappa2,kapd2,nutilde
+      double precision mu,kappa2,kapd2,nutilde
 !
       dimension v(ip11,ip60)
       dimension mu(ip12),dist(ip12), &

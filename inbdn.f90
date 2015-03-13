@@ -118,7 +118,7 @@ integer :: mt
 !
       character(len=2 ) :: indfb
       character(len=7 ) :: eqt
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
       dimension x(ip21),y(ip21),z(ip21)
       dimension sn(ip31*ndir)
       dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)

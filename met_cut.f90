@@ -46,7 +46,7 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real test6,test7,ts
+      double precision test6,test7,ts
       dimension s(ip11,ip60)
 !
       indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd

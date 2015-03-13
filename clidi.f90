@@ -117,7 +117,7 @@ double precision :: rho
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
 !
       dimension rpi(ip40),rti(ip40)
       dimension v(ip11,ip60),pression(ip11),temp(ip11),cson(ip11)

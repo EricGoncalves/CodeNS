@@ -73,7 +73,7 @@ integer :: njd
 !-----------------------------------------------------------------------
 !
       character(len=7 ) :: equat
-      real mut
+      double precision mut
       dimension u(ip11,ip60),v(ip11,ip60),mut(ip12)
 !
       ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd

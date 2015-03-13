@@ -55,7 +55,7 @@ integer :: no
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,nxn,nyn,nzn
+      double precision mu,mut,nxn,nyn,nzn
 !
       dimension mu(ip12),mut(ip12),dist(ip12),mnpar(ip12)
       dimension nxn(ip42),nyn(ip42),nzn(ip42),fgam(ip42)

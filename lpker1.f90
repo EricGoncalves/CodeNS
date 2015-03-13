@@ -123,8 +123,8 @@ double precision :: yv
 !-----------------------------------------------------------------------
 !
       logical lamin
-      real mu,mut,mup,sv,as,ss,alpha
-      real nxn,nyn,nzn,n1,n2,n3
+      double precision mu,mut,mup,sv,as,ss,alpha
+      double precision nxn,nyn,nzn,n1,n2,n3
 !
       dimension mu(ip12),mut(ip12),dist(ip12),mnpar(ip12)
       dimension nxn(ip42),nyn(ip42),nzn(ip42),fgam(ip42)

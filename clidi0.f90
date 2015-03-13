@@ -99,7 +99,7 @@ double precision :: vn
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn,coef
+      double precision nxn,nyn,nzn,coef
       dimension rpi(ip40),rti(ip40)
       dimension v(ip11,ip60),pression(ip11),temp(ip11),cson(ip11)
       dimension y(ip21),z(ip21)

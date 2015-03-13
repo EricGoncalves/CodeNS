@@ -115,7 +115,7 @@ double precision :: xlvk2
 !
 !-----------------------------------------------------------------------
 !
-      real mu,nlaplu,psas
+      double precision mu,nlaplu,psas
       dimension s(ip11,ip60)
       dimension mu(ip12),tsv6(ip12),tsv7(ip12)
       dimension vol(ip11)

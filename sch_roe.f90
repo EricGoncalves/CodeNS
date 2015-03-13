@@ -242,7 +242,7 @@ double precision :: wm
 !
 !-----------------------------------------------------------------------
 !
-      real nx,ny,nz
+      double precision nx,ny,nz
       character(len=7 ) :: equat
       dimension v(ip11,ip60),u(ip11,ip60),ff(ip11,ip60)
       dimension toxx(ip12),toxy(ip12),toxz(ip12), &

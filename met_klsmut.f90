@@ -93,7 +93,7 @@ double precision :: zeta
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut
+      double precision mu,mut
       dimension mu(ip12),mut(ip12),dist(ip12),vol(ip11)
       dimension v(ip11,ip60)
       dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &

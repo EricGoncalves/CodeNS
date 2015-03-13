@@ -53,7 +53,7 @@ integer :: mg
 !
       character(len=32) ::  mot(nmx)
       character(len=32) ::  typdat
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
 !
       dimension imot(nmx)
       dimension lmfb(mtb)

@@ -57,7 +57,7 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,mutmx,omeg,b1s2,cmu1
+      double precision mu,mut,mutmx,omeg,b1s2,cmu1
       dimension v(ip11,ip60)
       dimension mu(ip12),mut(ip12)
       dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &

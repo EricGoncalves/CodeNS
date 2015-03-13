@@ -31,7 +31,7 @@ double precision :: tsti
 !-----------------------------------------------------------------------
 !
       character(len=4 ) :: clmf
-      real mast
+      double precision mast
       dimension vbc(ista*lsta)
 !
       roist =varst(ibdcst,1)

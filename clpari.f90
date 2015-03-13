@@ -52,7 +52,7 @@ integer :: nl
 !
 !-----------------------------------------------------------------------
 !
-      real rhoe1,epar
+      double precision rhoe1,epar
       dimension v(ip11,ip60)
       dimension ncbd(ip41),ncin(ip41)
       dimension mmb(mtt),mpb(mtt)

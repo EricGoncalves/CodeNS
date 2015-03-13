@@ -82,7 +82,7 @@ double precision :: tpar
 !
       character(len=4 ) :: config,cl(mtb)
       character(len=80) ::  cmtlec
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
 !
       dimension ncbd(ip41)
       dimension x(ip21), y(ip21), z(ip21)

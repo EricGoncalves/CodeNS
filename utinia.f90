@@ -88,7 +88,7 @@ double precision :: zm
 !
 !-----------------------------------------------------------------------
 !
-      real mut
+      double precision mut
       dimension x(*),y(*),z(*)
       dimension v(ip11,ip60)
       dimension mut(*)

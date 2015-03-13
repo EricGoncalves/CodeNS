@@ -174,7 +174,7 @@ double precision :: wn
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
 !
       dimension rpi(ip40),rti(ip40)
       dimension d0x(ip40),d0y(ip40),d0z(ip40)

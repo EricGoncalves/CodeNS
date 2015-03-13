@@ -173,8 +173,8 @@ integer :: npsn
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
-      real mu,mut
+      double precision nxn,nyn,nzn
+      double precision mu,mut
       dimension x(ip21),y(ip21),z(ip21)
       dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60),ff(ip11,ip60)
       dimension ptdual(ip11,ip60)

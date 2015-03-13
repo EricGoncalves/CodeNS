@@ -92,7 +92,7 @@ integer :: mfb
 !
 !-----------------------------------------------------------------------
 !
-      real mut
+      double precision mut
       character(len=7 ) :: equat
       character(len=4 ) :: disc
       dimension v(ip11,ip60)

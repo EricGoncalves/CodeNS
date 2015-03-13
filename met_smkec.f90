@@ -81,7 +81,7 @@ double precision :: xl2
 !
 !-----------------------------------------------------------------------
 !
-      real mu,pid,xmt,epsc
+      double precision mu,pid,xmt,epsc
       dimension s(ip11,ip60)
       dimension cson(ip11)
       dimension mu(ip12),tsv6(ip12),tsv7(ip12)

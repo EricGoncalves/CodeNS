@@ -87,7 +87,7 @@ double precision :: sss
 !       i,j             i+1,j
 !
 !
-      real cc1,cc2,cc3,cc4  
+      double precision cc1,cc2,cc3,cc4  
       dimension vol (ip11)
       dimension vv(ip11,ip60),vc(ip11,ip60)
 !

@@ -56,7 +56,7 @@ double precision :: v22
 !
 !-----------------------------------------------------------------------
 !
-      real angle,rmn2,gam6,tt,xx
+      double precision angle,rmn2,gam6,tt,xx
 !
       dimension ncbd(ip41)
       dimension v(ip11,ip60)

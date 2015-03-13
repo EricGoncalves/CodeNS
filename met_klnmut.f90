@@ -103,8 +103,8 @@ integer :: njd
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,mutpr,eps,alpha,ralpha,sigmaa,fmu,prodpr
-   real csk2,c1,c2,r2sb1,c14,c22,rack,xxi,xxi2,xl2,f1,ss2
+      double precision mu,mut,mutpr,eps,alpha,ralpha,sigmaa,fmu,prodpr
+      double precision csk2,c1,c2,r2sb1,c14,c22,rack,xxi,xxi2,xl2,f1,ss2
       dimension v(ip11,ip60)
       dimension mut(ip12),mu(ip12),dist(ip12),vol(ip11)
       dimension sn(ip31*ndir)

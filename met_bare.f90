@@ -73,7 +73,7 @@ integer :: npsn
 !-----------------------------------------------------------------------
 !
       character(len=7 ) :: equat
-      real mu,mut
+      double precision mu,mut
       dimension s(ip11,ip60)
       dimension mut(ip12),mu(ip12),vol(ip11)
       dimension sn(ip31*ndir)

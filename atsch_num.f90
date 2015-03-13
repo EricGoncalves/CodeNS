@@ -220,7 +220,7 @@ integer :: npsn
 !
       logical gfetke
       integer idcyc,icycle,ncyc,icyc
-      real nxn,nyn,nzn,mu,mut
+      double precision nxn,nyn,nzn,mu,mut
       integer :: m1tb(ip00),m2tb(ip00),nfrtb(ip00)
 !
       dimension dt(ip11),vol(ip11),r(ip11),pression(ip11),ztemp(ip11),cson(ip11)

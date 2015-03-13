@@ -61,7 +61,7 @@ double precision :: zcc
 !
       logical ouvert
       character(len=1 ) :: c
-      real u,v,w,e,qq,xme
+      double precision u,v,w,e,qq,xme
 !
       dimension t(ip11,ip60),cson(ip11),ps(ip11)
       dimension x(ip21),y(ip21),z(ip21)

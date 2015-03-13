@@ -136,9 +136,9 @@ double precision :: xmach2
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,Lref,rv,rlam,dte,dtv,rv1
-      real beta2,beta2e,betau,cpi,xmach,cflc
-      real dpi,dpj,dpm
+      double precision mu,mut,Lref,rv,rlam,dte,dtv,rv1
+      double precision beta2,beta2e,betau,cpi,xmach,cflc
+      double precision dpi,dpj,dpm
       character(len=7 ) :: equat
       dimension t(ip11,ip60)
       dimension dt(ip11),vol(ip11),cson(ip11),ps(ip11)

@@ -66,7 +66,7 @@ double precision :: roe1
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
       dimension v(ip11,ip60)
       dimension nxn(ip42),nyn(ip42),nzn(ip42)
       dimension ncin(ip41),ncbd(ip41)

@@ -177,7 +177,7 @@ integer :: ngx
 !-----------------------------------------------------------------------
 !
       integer idcyc,ndcyc,icyc,ncyc,icycle,ncycl
-      real nxn,nyn,nzn,mu,mut
+      double precision nxn,nyn,nzn,mu,mut
 !
       dimension mnpar(ip12),fgam(ip42),utau(ip42)
       dimension x(ip21),y(ip21),z(ip21)

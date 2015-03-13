@@ -145,9 +145,9 @@ double precision :: vnr
 !
 !-----------------------------------------------------------------------
 !
-      real nx,ny,nz,ids
-      real f1,f2,f3,f4,f5,g1,g2,g3,g4,g5,h1,h2,h3,h4,h5,rm,cpl,cpr
-      real di1,di2,di3,di4,di5,dj1,dj2,dj3,dj4,dj5,dk1,dk2,dk3,dk4,dk5
+      double precision nx,ny,nz,ids
+      double precision f1,f2,f3,f4,f5,g1,g2,g3,g4,g5,h1,h2,h3,h4,h5,rm,cpl,cpr
+      double precision di1,di2,di3,di4,di5,dj1,dj2,dj3,dj4,dj5,dk1,dk2,dk3,dk4,dk5
       character(len=7 ) :: equat
       dimension v(ip11,ip60),u(ip11,ip60),ff(ip11,ip60)
       dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &

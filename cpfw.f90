@@ -299,7 +299,7 @@ integer :: ngx
 !
       character(len=1316) :: form
       integer ncyc
-      real nxn,nyn,nzn,mu,mut
+      double precision nxn,nyn,nzn,mu,mut
 !
       dimension x(ip21),y(ip21),z(ip21)
       dimension v(ip11,ip60),vdual(ip11,ip60),vdual1(ip11,ip60), &

@@ -277,7 +277,7 @@ double precision :: zcfac
 !
 !-----------------------------------------------------------------------
 !
-      real mut,nxn,nyn,nzn
+      double precision mut,nxn,nyn,nzn
 !
       dimension x(ip21),y(ip21),z(ip21)
       dimension s(ip11,ip60)

@@ -112,7 +112,7 @@ double precision :: v1z
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn,n1,n2,n3
+      double precision nxn,nyn,nzn,n1,n2,n3
 !
       dimension v(ip11,ip60)
       dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12), &

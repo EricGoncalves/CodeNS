@@ -138,7 +138,7 @@ double precision :: cmuk2
 !-----------------------------------------------------------------------
 !
       character(len=32) ::  mot(nmx)
-      real nxn,nyn,nzn,mu,mut
+      double precision nxn,nyn,nzn,mu,mut
 !
       dimension imot(nmx)
       dimension x(ip21),y(ip21),z(ip21)

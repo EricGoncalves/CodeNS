@@ -90,7 +90,7 @@ double precision :: rqns
 !
 !-----------------------------------------------------------------------
 !
-      real nxn,nyn,nzn
+      double precision nxn,nyn,nzn
 !
       dimension v(ip11,ip60)
       dimension bceqt(ip41,neqt)

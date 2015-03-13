@@ -49,7 +49,7 @@ integer :: ni
 !
 !-----------------------------------------------------------------------
 !
-      real rhoe1
+      double precision rhoe1
       dimension v(ip11,ip60)
       dimension ncbd(ip41),ncin(ip41)
       dimension mmb(mtt),mpb(mtt)

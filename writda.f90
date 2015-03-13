@@ -75,7 +75,7 @@ integer :: njd
 !-----------------------------------------------------------------------
 !
       character(len=7 ) :: eqt
-      real mut
+      double precision mut
       dimension v1(ip00),v2(ip00),v3(ip00),v4(ip00), &
                 v5(ip00),v6(ip00),v7(ip00)
       dimension mut(ndmut)

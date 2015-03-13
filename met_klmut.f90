@@ -62,7 +62,7 @@ double precision :: xxi2
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut
+      double precision mu,mut
       dimension mu(ip12),mut(ip12),dist(ip12)
       dimension v(ip11,ip60)
 !

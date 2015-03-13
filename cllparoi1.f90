@@ -102,7 +102,7 @@ integer :: no
 !
 !-----------------------------------------------------------------------
 !
-      real mu,mut,nxn,nyn,nzn
+      double precision mu,mut,nxn,nyn,nzn
 !
       dimension mu(ip12),mut(ip12), &
                 toxx(ip12),toxy(ip12),toxz(ip12), &

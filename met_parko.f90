@@ -117,7 +117,7 @@ double precision :: romegal
 !-----------------------------------------------------------------------
 !
       integer dm1,dm2,dm3
-      real mu,mut
+      double precision mu,mut
       dimension v(ip11,ip60)
       dimension mut(ip12),mu(ip12)
       dimension dist(ip12),mnpar(ip12)

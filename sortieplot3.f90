@@ -63,7 +63,7 @@ double precision :: zcc
 !-----------------------------------------------------------------------
 !
       character(len=1 ) :: c
-      real u,v,w,e,qq,xme,mu,mut,coef
+      double precision u,v,w,e,qq,xme,mu,mut,coef
 !
       dimension t(ip11,ip60)
       dimension x(ip21),y(ip21),z(ip21)
