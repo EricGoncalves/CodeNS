@@ -75,7 +75,7 @@ integer :: npar
 !-----------------------------------------------------------------------
 !
       integer dm1,dm2,dm3
-      dimension dist(ip12),mnpar(ip12),frac(ip00)
+      dimension dist(ip12),mnpar(ip12),frac(ip12)
       dimension ncin(ip41)
 !
       do mpar=1,nbdko

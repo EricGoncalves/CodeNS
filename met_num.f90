@@ -517,7 +517,7 @@ integer :: npsn
                  v,mu,mut,dist,mnpar,ncin, &
                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 tprod,cfke,tn9, &
+                 tprod,cfke,fracmod, &
                  qcxts5,qcyts6)
                endif
 !

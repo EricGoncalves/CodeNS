@@ -133,7 +133,7 @@ double precision :: zeta
       dimension mut(ip12),mu(ip12),dist(ip12),mnpar(ip12), &
                 txxf5x(ip12),txyf5y (ip12),txzf5z(ip12), &
                 tyyf6x(ip12),tyzf6y (ip12),tzzf6z(ip12), &
-                qcxts5(ip12),qcyts6 (ip12),frac(ip00)
+                qcxts5(ip12),qcyts6 (ip12),frac(ip12)
       dimension tprod(ip00)
       dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
                 dvyx(ip00),dvyy(ip00),dvyz(ip00), &
