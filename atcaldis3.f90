@@ -1,4 +1,6 @@
 module mod_atcaldis3
+use mod_at_lecdist
+use mod_at_ecrdist
 implicit none
 contains
       subroutine atcaldis3( &
@@ -119,8 +121,6 @@ contains
    use boundary
 use mod_atccfp
 use mod_atindnor
-use mod_at_lecdist
-use mod_at_ecrdist
 use mod_at_grdist
 use mod_at_lecopt
 use mod_atccc

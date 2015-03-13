@@ -1,4 +1,5 @@
 module mod_vallent
+use mod_synterr
 implicit none
 contains
       subroutine vallent(mot,imot,nm,lent,lentd,lx,klx)
@@ -13,7 +14,6 @@ contains
       use para_var
       use para_fige
       use chainecarac
-use mod_synterr
 use mod_lentier
 implicit none
 integer :: imot

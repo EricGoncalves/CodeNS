@@ -1,4 +1,6 @@
 module mod_met_num
+use mod_zvismo
+use mod_met_uttau
 implicit none
 contains
       subroutine met_num( &
@@ -52,7 +54,6 @@ use mod_sch_turb
 use mod_met_komutr
 use mod_met_roe2o
 use mod_met_kocmut
-use mod_teq_gradv
 use mod_met_bord
 use mod_lpker
 use mod_at_cutke
@@ -92,8 +93,6 @@ use mod_lpkomegar
 use mod_met_kemut
 use mod_met_smkl
 use mod_met_smko
-use mod_met_uttau
-use mod_zvismo
 implicit none
 integer :: ncbd
 integer :: ncin

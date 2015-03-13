@@ -19,7 +19,6 @@ contains
       use chainecarac
       use maillage 
       use kcle
-use mod_synterr
 use mod_vallent
 implicit none
 integer :: imot

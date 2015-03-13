@@ -15,7 +15,6 @@ contains
       use chainecarac
       use modeleturb
       use schemanum
-use mod_synterr
 use mod_valreel
 implicit none
 integer :: imot

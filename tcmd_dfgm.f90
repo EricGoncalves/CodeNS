@@ -15,7 +15,6 @@ contains
       use chainecarac
       use kcle
       use definition
-use mod_synterr
 use mod_valreel
 implicit none
 integer :: imot

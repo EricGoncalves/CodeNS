@@ -1,4 +1,5 @@
 module mod_met_komut
+use mod_teq_gradv
 implicit none
 contains
       subroutine met_komut( &
@@ -29,7 +30,6 @@ contains
       use maillage
       use modeleturb
       use proprieteflu
-use mod_teq_gradv
 implicit none
 integer :: inc
 integer :: ind

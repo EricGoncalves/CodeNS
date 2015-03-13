@@ -15,7 +15,6 @@ contains
    use chainecarac
       use kcle
       use boundary
-use mod_synterr
 use mod_valenti
 implicit none
 integer :: imot

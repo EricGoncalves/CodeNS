@@ -16,7 +16,6 @@ contains
 !
       use para_fige
       use chainecarac
-use mod_synterr
 use mod_valenti
 use mod_valreel
 implicit none

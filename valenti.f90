@@ -1,4 +1,5 @@
 module mod_valenti
+use mod_synterr
 implicit none
 contains
       subroutine valenti(mot,imot,nm,ient,kient)
@@ -13,7 +14,6 @@ contains
       use para_var
       use para_fige
       use chainecarac
-use mod_synterr
 use mod_entier
 implicit none
 integer :: imot

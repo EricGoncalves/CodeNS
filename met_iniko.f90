@@ -22,7 +22,6 @@ contains
 use mod_met_cutked
 use mod_met_brko
 use mod_met_kocmut
-use mod_teq_gradv
 use mod_met_komut
 implicit none
 integer :: l

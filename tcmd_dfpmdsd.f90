@@ -18,7 +18,6 @@ contains
       use schemanum
       use maillage
       use kcle
-use mod_synterr
 use mod_valreel
 use mod_vallent
 implicit none

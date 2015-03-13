@@ -1,4 +1,7 @@
 module mod_smg_num
+use mod_smg_cn
+use mod_rbc
+use mod_smg_cf
 implicit none
 contains
       subroutine smg_num( &
@@ -50,8 +53,6 @@ contains
       use chainecarac
 use mod_smg_fcr
 use mod_sch_duup2
-use mod_smg_cf
-use mod_rfvr
 use mod_dua_resro
 use mod_smg_upc
 use mod_sortieplot
@@ -60,8 +61,6 @@ use mod_utitfr
 use mod_sortieplot2
 use mod_sch_duin
 use mod_svfw
-use mod_smg_cn
-use mod_rfvc
 use mod_sortietest
 use mod_smg_fcv
 use mod_sch_duup

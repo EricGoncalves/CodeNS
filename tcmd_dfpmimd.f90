@@ -18,7 +18,6 @@ contains
       use kcle
       use chainecarac
       use maillage
-use mod_synterr
 use mod_valenti
 use mod_vallent
 implicit none

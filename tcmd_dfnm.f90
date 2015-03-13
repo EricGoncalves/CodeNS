@@ -17,7 +17,6 @@ contains
    use schemanum
    use maillage
       use proprieteflu
-use mod_synterr
 use mod_valenti
 use mod_valreel
 implicit none

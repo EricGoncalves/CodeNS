@@ -269,7 +269,6 @@ use mod_c_svfw
 use mod_c_svbdb
 use mod_c_svbdc
 use mod_inimem
-use mod_synterr
 use mod_c_dfst0
 use mod_c_dffw
 use mod_utdon_gen

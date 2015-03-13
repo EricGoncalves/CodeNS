@@ -57,7 +57,6 @@ contains
       use modeleturb
       use chainecarac
 use mod_met_dist
-use mod_teq_grads
 use mod_met_difsa
 implicit none
 integer :: indc

@@ -66,7 +66,6 @@ use mod_implimf_prcd2
 use mod_sch_jameson3pond
 use mod_sch_roe_euler
 use mod_sch_ausmp_prcd
-use mod_at_ecrdist
 use mod_sch_weno5pond
 use mod_dissip_jameson
 use mod_sch_jameson_pond
@@ -107,7 +106,6 @@ use mod_sch_hllc
 use mod_chrono
 use mod_met_rfvc
 use mod_atcaldis3
-use mod_at_lecdist
 use mod_sch_roe
 use mod_met_rfve
 use mod_sch_weno5_3d
@@ -118,8 +116,6 @@ use mod_sch_expli
 use mod_atintrans
 use mod_sch_rusanov
 use mod_sch_ausmp_pond
-use mod_met_uttau
-use mod_zvismo
 use mod_sch_rusanov_prcd
 implicit none
 integer :: img

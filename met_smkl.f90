@@ -68,7 +68,6 @@ contains
       use maillage
       use modeleturb
       use chainecarac
-use mod_teq_grads
 use mod_met_bark
 implicit none
 integer :: inc

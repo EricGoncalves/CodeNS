@@ -1,4 +1,5 @@
 module mod_c_dffw
+use mod_tcmd_dffw
 implicit none
 contains
       subroutine c_dffw(mot,imot,nmot)
@@ -19,7 +20,7 @@ contains
 !
       use para_fige
    use sortiefichier
-use mod_tcmd_dffw
+
 use mod_dffw
 
 use mod_b1_dffw

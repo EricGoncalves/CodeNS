@@ -1,4 +1,5 @@
 module mod_met_bark
+use mod_teq_grads
 implicit none
 contains
       subroutine met_bark( &
@@ -19,7 +20,7 @@ contains
       use para_var
       use para_fige
       use maillage
-use mod_teq_grads
+
 implicit none
 integer :: indc
 integer :: i

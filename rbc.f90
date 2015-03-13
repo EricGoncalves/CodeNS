@@ -1,4 +1,6 @@
 module mod_rbc
+use mod_rfvr
+use mod_rfvc
 implicit none
 contains
       subroutine rbc( &
@@ -100,11 +102,9 @@ contains
       use chainecarac
       use schemanum
 use mod_rbord
-use mod_rfvr
 use mod_rbse
 use mod_rfspstc
 use mod_rfve
-use mod_rfvc
 implicit none
 integer :: ncin
 integer :: ncbd

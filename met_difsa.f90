@@ -1,4 +1,5 @@
 module mod_met_difsa
+use mod_teq_grads
 implicit none
 contains
       subroutine met_difsa( &
@@ -46,7 +47,6 @@ contains
       use maillage
       use modeleturb
       use chainecarac
-use mod_teq_grads
 implicit none
 integer :: indc
 integer :: i

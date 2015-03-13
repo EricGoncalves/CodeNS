@@ -15,7 +15,6 @@ contains
       use chainecarac
       use kcle
       use schemanum
-use mod_synterr
 use mod_valenti
 implicit none
 integer :: imot

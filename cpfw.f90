@@ -192,12 +192,8 @@ contains
       use definition
       use modeleturb
 use mod_smg_num
-use mod_rfvr
 use mod_metric
 use mod_metric3
-use mod_smg_cn
-use mod_rfvc
-use mod_smg_cf
 implicit none
 double precision :: x
 double precision :: y
