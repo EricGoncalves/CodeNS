@@ -1,11 +1,11 @@
 module mod_atcaldis
-implicit none
+  implicit none
 contains
-      subroutine atcaldis( &
-                 x,y,z,nxn,nyn,nzn, &
-                 xpar,ypar,zpar,xcc,ycc,zcc,dist2, &
-                 dist,mnpar,fgam,img, &
-                 ncin,mnc,ncbd)
+  subroutine atcaldis( &
+       x,y,z,nxn,nyn,nzn, &
+       xpar,ypar,zpar,xcc,ycc,zcc,dist2, &
+       dist,mnpar,fgam,img, &
+       ncin,mnc,ncbd)
 !
 !***********************************************************************
 !
@@ -115,68 +115,39 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use sortiefichier
-   use maillage
-   use constantes
-   use boundary
-use mod_atdist_2
-use mod_atccfp
-use mod_atdist_1
-use mod_at_ecrdist
-use mod_atecrfp
-use mod_atccc
-use mod_atindnor
-implicit none
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: xpar
-double precision :: ypar
-double precision :: zpar
-double precision :: xcc
-double precision :: ycc
-double precision :: zcc
-double precision :: dist2
-double precision :: dist
-integer :: mnpar
-double precision :: fgam
-integer :: img
-integer :: ncin
-integer :: mnc
-integer :: ncbd
-integer :: ierr
-integer :: isens3
-integer :: l
-integer :: lm
-integer :: m
-integer :: m10
-integer :: m1max
-integer :: m1min
-integer :: m20
-integer :: m2max
-integer :: m2min
-integer :: m30
-integer :: m3max
-integer :: m3min
-integer :: mf
-integer :: n
-integer :: nfbe
-integer :: nfbi
-integer :: no
+    use para_var
+    use para_fige
+    use sortiefichier
+    use maillage
+    use constantes
+    use boundary
+    use mod_atdist_2
+    use mod_atccfp
+    use mod_atdist_1
+    use mod_at_ecrdist
+    use mod_atecrfp
+    use mod_atccc
+    use mod_atindnor
+    implicit none
+    integer          ::    dm1,   dm2,   dm3,  ierr,   img
+    integer          :: isens3,     l,    lm,     m,   m10
+    integer          ::  m1max, m1min,   m20, m2max, m2min
+    integer          ::    m30, m3max, m3min,    mf,   mnc
+    integer          ::  mnpar,     n,  ncbd,  ncin,  nfbe
+    integer          ::   nfbi,    no
+    double precision ::  dist,dist2, fgam,  nxn,  nyn
+    double precision ::   nzn,    x,  xcc, xpar,    y
+    double precision ::   ycc, ypar,    z,  zcc, zpar
 !
 !-----------------------------------------------------------------------
 !
-      integer dm1,dm2,dm3
-      double precision nxn,nyn,nzn
-      dimension dist(ip12),mnpar(ip12),fgam(ip42)
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension xpar(ip00),ypar(ip00),zpar(ip00)
-      dimension xcc (ip00),ycc (ip00),zcc (ip00),dist2(ip00)
-      dimension ncin(ip41)
-      dimension mnc(ip43)
+    dimension dist(ip12),mnpar(ip12),fgam(ip42)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension xpar(ip00),ypar(ip00),zpar(ip00)
+    dimension xcc (ip00),ycc (ip00),zcc (ip00),dist2(ip00)
+    dimension ncin(ip41)
+    dimension mnc(ip43)
 !
 !     -----------------------------------------------------------------
 !
@@ -184,25 +155,25 @@ integer :: no
 !     Les centres des facettes parois a normales stockees sont mis
 !     dans xpar(ip00), ypar(ip00),zpar(ip00),dist2(ip00). Il faut donc :
 !     ndimub=ip00 > mdimtnx=ip42
-      if(ip00 .le. mdimtnx) then
-        write(imp,'(/,''!!!atcaldis: ip00='',i6,4x,''inferieur a mdimtnx='',i6)')ip00,mdimtnx
-        stop
-      endif
+    if(ip00 .le. mdimtnx) then
+       write(imp,'(/,''!!!atcaldis: ip00='',i6,4x,''inferieur a mdimtnx='',i6)')ip00,mdimtnx
+       stop
+    endif
 !
 !     -----------------------------------------------------------------
 !     Liste des parois - numero interne
 !                        nba : rang de traitement
 !                        nbd : nombre de frontieres a traiter
 !
-      ierr =0
-      nbd  =0
-      nbdko=0
-      do no=1,mtbx
-        nfbe=nba(no)
-        nfbi=nfei(nfbe)
+    ierr =0
+    nbd  =0
+    nbdko=0
+    do no=1,mtbx
+       nfbe=nba(no)
+       nfbi=nfei(nfbe)
 !      modification du test pour la condition aux limites lois de paroi et calcul Euler
-        if((cl(nfbi)(1:2).eq.'pa').or.(cl(nfbi)(1:2).eq.'lp').or. &
-           (cl(nfbi)(1:2).eq.'gl')) then  !la frontiere est une paroi
+       if((cl(nfbi)(1:2).eq.'pa').or.(cl(nfbi)(1:2).eq.'lp').or. &
+            (cl(nfbi)(1:2).eq.'gl')) then  !la frontiere est une paroi
 !
           nbd         =nbd+1
           lbd(nbd)    =nfbi
@@ -217,55 +188,55 @@ integer :: no
              endif
           enddo
           ierr=ierr+1
-        endif
-      enddo
-      if(ierr.ne.0) then
-        write(imp,'(/,"!!!atcaldis: pb declaration parois - arret")')
-        stop
-      end if
-      if(nbd.eq.0) then
-        write(imp,'(/,"!!!atcaldis: pas de paroi pour calcul des distances aux parois - arret")')
-        stop
-      end if
+       endif
+    enddo
+    if(ierr.ne.0) then
+       write(imp,'(/,"!!!atcaldis: pb declaration parois - arret")')
+       stop
+    end if
+    if(nbd.eq.0) then
+       write(imp,'(/,"!!!atcaldis: pas de paroi pour calcul des distances aux parois - arret")')
+       stop
+    end if
 !
 !     ----------------------------------------------------------
 !       initialisation des distances a une valeur infinie
 !
-        do n=1,ndimctbx
-          dist(n) =reelmx
-          mnpar(n)=0
-        enddo
+    do n=1,ndimctbx
+       dist(n) =reelmx
+       mnpar(n)=0
+    enddo
 !     ----------------------------------------------------------
 !
 !     boucle sur les frontieres a traiter (parois)
 !
-      do mf=1,nbd
-        nfbi=lbd(mf)
+    do mf=1,nbd
+       nfbi=lbd(mf)
 !
 !       calcul des indices pour deplacement "parallelement" a la paroi
-        call atindnor( &
-                 nfbi, &
-                 m10,m20,m30, &
-                 m1min,m1max,m2min,m2max,m3min,m3max, &
-                 dm1,dm2,dm3,isens3)
+       call atindnor( &
+            nfbi, &
+            m10,m20,m30, &
+            m1min,m1max,m2min,m2max,m3min,m3max, &
+            dm1,dm2,dm3,isens3)
 !
 !       calcul des centres des facettes formant les parois
-        call atccfp( &
-                 x,y,z, &
-                 xpar,ypar,zpar, &
-                 ncin, &
-                 nfbi,dm1,dm2,dm3,isens3)
+       call atccfp( &
+            x,y,z, &
+            xpar,ypar,zpar, &
+            ncin, &
+            nfbi,dm1,dm2,dm3,isens3)
 !
 !       ecriture centre facettes parois
 !
-        call atecrfp( &
-                 x,y,z, &
-                 xpar,ypar,zpar, &
-                 nxn,nyn,nzn, &
-                 ncin, &
-                 nfbi)
+       call atecrfp( &
+            x,y,z, &
+            xpar,ypar,zpar, &
+            nxn,nyn,nzn, &
+            ncin, &
+            nfbi)
 !
-        if(kcaldis.eq.1) then
+       if(kcaldis.eq.1) then
 !
 !         integration de la distance suivant les lignes du maillage
 !         qui partent de la paroi
@@ -274,57 +245,57 @@ integer :: no
 !
 !         calcul des centres des cellules
           call atccc( &
-                 x,y,z, &
-                 xcc,ycc,zcc, &
-                 l)
+               x,y,z, &
+               xcc,ycc,zcc, &
+               l)
 !
 !         integration le long du maillage
           call atdist_1( &
-                 x,y,z, &
-                 nxn,nyn,nzn, &
-                 xpar,ypar,zpar, &
-                 xcc,ycc,zcc, &
-                 dist,mnpar, &
-                 ncin,m3min,m3max,dm3,isens3, &
-                 nfbi)
-        end if
-      enddo
+               x,y,z, &
+               nxn,nyn,nzn, &
+               xpar,ypar,zpar, &
+               xcc,ycc,zcc, &
+               dist,mnpar, &
+               ncin,m3min,m3max,dm3,isens3, &
+               nfbi)
+       end if
+    enddo
 !
 !     -------------------------------------------------------------
 !
-      if(kcaldis.eq.2) then
+    if(kcaldis.eq.2) then
 
 !       Calcul de la distance de toutes les cellules a la facette
 !       la plus proche. Toutes les facettes de toutes les parois
 !       sont esssayees.
 !       boucle sur les domaines
 !
-        do l=1,lzx
-         lm=l+(img-1)*lz
+       do l=1,lzx
+          lm=l+(img-1)*lz
 !
 !         calcul des centres des cellules
           call atccc( &
-                 x,y,z, &
-                 xcc,ycc,zcc, &
-                 lm)
+               x,y,z, &
+               xcc,ycc,zcc, &
+               lm)
 !
 !         calcul distrance de chaque cellule d'un domaine aux parois et
 !         cellule origine de la "normale"
           call atdist_2( &
-                 x,y,z, &
-                 xpar,ypar,zpar, &
-                 xcc,ycc,zcc,dist2, &
-                 dist,mnpar, &
-                 lm)
+               x,y,z, &
+               xpar,ypar,zpar, &
+               xcc,ycc,zcc,dist2, &
+               dist,mnpar, &
+               lm)
           if(kecrdis.eq.1) then
 !           ecriture disque des distances (fichiers separes "fdist_l")
-            call at_ecrdist( &
-                 lm,         &
-                 dist,mnpar)
+             call at_ecrdist( &
+                  lm,         &
+                  dist,mnpar)
           endif
-        enddo
-      endif
+       enddo
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine atcaldis
+end module mod_atcaldis

@@ -1,14 +1,14 @@
 module mod_atcaldis3
-use mod_at_lecdist
-use mod_at_ecrdist
-implicit none
+  use mod_at_lecdist
+  use mod_at_ecrdist
+  implicit none
 contains
-      subroutine atcaldis3( &
-                 x,y,z,nxn,nyn,nzn, &
-                 xpar,ypar,zpar,xcc,ycc,zcc,dist2, &
-                 dist,mnpar,fgam, &
-                 ncin,mnc,ncbd, &
-                 m1tb,m2tb,nfrtb)
+  subroutine atcaldis3( &
+       x,y,z,nxn,nyn,nzn, &
+       xpar,ypar,zpar,xcc,ycc,zcc,dist2, &
+       dist,mnpar,fgam, &
+       ncin,mnc,ncbd, &
+       m1tb,m2tb,nfrtb)
 !
 !***********************************************************************
 !
@@ -113,104 +113,68 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use sortiefichier
-   use maillage
-   use constantes
-   use boundary
-use mod_atccfp
-use mod_atindnor
-use mod_at_grdist
-use mod_at_lecopt
-use mod_atccc
-use mod_at_dlist
-use mod_atdist_3
-use mod_at_fidist
-implicit none
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: xpar
-double precision :: ypar
-double precision :: zpar
-double precision :: xcc
-double precision :: ycc
-double precision :: zcc
-double precision :: dist2
-double precision :: dist
-integer :: mnpar
-double precision :: fgam
-integer :: ncin
-integer :: mnc
-integer :: ncbd
-integer :: m1tb
-integer :: m2tb
-integer :: nfrtb
-integer :: idefaut
-integer :: ierr
-integer :: if0
-integer :: if1
-integer :: igr
-integer :: isens3
-integer :: jgr
-integer :: kgr
-integer :: l
-integer :: ldismx
-integer :: m
-integer :: m10
-integer :: m1max
-integer :: m1min
-integer :: m20
-integer :: m2max
-integer :: m2min
-integer :: m30
-integer :: m3max
-integer :: m3min
-integer :: mf
-integer :: n
-integer :: nf
-integer :: nfbe
-integer :: nfbi
-integer :: no
-double precision :: raptat
+    use para_var
+    use para_fige
+    use sortiefichier
+    use maillage
+    use constantes
+    use boundary
+    use mod_atccfp
+    use mod_atindnor
+    use mod_at_grdist
+    use mod_at_lecopt
+    use mod_atccc
+    use mod_at_dlist
+    use mod_atdist_3
+    use mod_at_fidist
+    implicit none
+    integer          ::     dm1,    dm2,    dm3,idefaut,   ierr
+    integer          ::     if0,    if1,    igr, isens3,    jgr
+    integer          ::     kgr,      l, ldismx,      m,    m10
+    integer          ::   m1max,  m1min,   m1tb,    m20,  m2max
+    integer          ::   m2min,   m2tb,    m30,  m3max,  m3min
+    integer          ::      mf,    mnc,  mnpar,      n,   ncbd
+    integer          ::    ncin,     nf,   nfbe,   nfbi,  nfrtb
+    integer          ::      no
+    double precision ::   dist, dist2,  fgam,   nxn,   nyn
+    double precision ::    nzn,raptat,     x,   xcc,  xpar
+    double precision ::      y,   ycc,  ypar,     z,   zcc
+    double precision ::   zpar
 !
 !-----------------------------------------------------------------------
 !
-      integer dm1,dm2,dm3
-      double precision nxn,nyn,nzn
-      dimension dist(ip12),mnpar(ip12),fgam(ip42)
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension xpar(ip00),ypar(ip00),zpar(ip00)
-      dimension xcc (ip00),ycc (ip00),zcc (ip00),dist2(ip00)
-      dimension ncin(ip41)
-      dimension mnc(ip43)
-      dimension m1tb(ip00),m2tb(ip00),nfrtb(ip00)
-      dimension igr(lz),jgr(lz),kgr(lz),raptat(mtb)
+    dimension dist(ip12),mnpar(ip12),fgam(ip42)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension xpar(ip00),ypar(ip00),zpar(ip00)
+    dimension xcc (ip00),ycc (ip00),zcc (ip00),dist2(ip00)
+    dimension ncin(ip41)
+    dimension mnc(ip43)
+    dimension m1tb(ip00),m2tb(ip00),nfrtb(ip00)
+    dimension igr(lz),jgr(lz),kgr(lz),raptat(mtb)
 !
 !     verification compatibilite du dimensionnement
 !     Les centres des facettes parois a normales stockees sont mis
 !     dans xpar(ip00), ypar(ip00),zpar(ip00). Il faut donc :
 !     ip00 > mdimtnx
-      if(ip00 .le. mdimtnx) then
-        write(imp,'(/,''!!!atcaldis3: ip00='',i6,4x,''inferieur a mdimtnx='',i6)')ip00,mdimtnx
-        stop
-      end if
+    if(ip00 .le. mdimtnx) then
+       write(imp,'(/,''!!!atcaldis3: ip00='',i6,4x,''inferieur a mdimtnx='',i6)')ip00,mdimtnx
+       stop
+    end if
 !
 !     -----------------------------------------------------------------
 !     Liste des parois - numero interne
 !                        nba : rang de traitement
 !                        nbd : nombre de frontieres a traiter
 !
-      ierr =0
-      nbd  =0
-      nbdko=0
-      do no=1,mtbx
-        nfbe=nba(no)
-        nfbi=nfei(nfbe)
+    ierr =0
+    nbd  =0
+    nbdko=0
+    do no=1,mtbx
+       nfbe=nba(no)
+       nfbi=nfei(nfbe)
 !
-        if((cl(nfbi)(1:2).eq.'pa').or.(cl(nfbi)(1:2).eq.'lp')) then
+       if((cl(nfbi)(1:2).eq.'pa').or.(cl(nfbi)(1:2).eq.'lp')) then
 !
 !
 !         la frontiere est une paroi
@@ -224,112 +188,112 @@ double precision :: raptat
 !
           do m=1,mtnx
              if(nfbn(m).eq.nfbi) then
-                 ierr=-1
-               exit
+                ierr=-1
+                exit
              endif
-            enddo
+          enddo
 !         la frontiere n'est pas a normale stockee
           ierr=ierr+1
-        endif
-       enddo
-      if(ierr.ne.0) then
-        write(imp,'(/,"!!!atcaldis3: pb declaration parois - arret")')
-        stop
-      end if
-      if(nbd.eq.0) then
-        write(imp,'(/,"!!!atcaldis3: pas de paroi pour calcul des distances aux parois - arret")')
-        stop
-      end if
+       endif
+    enddo
+    if(ierr.ne.0) then
+       write(imp,'(/,"!!!atcaldis3: pb declaration parois - arret")')
+       stop
+    end if
+    if(nbd.eq.0) then
+       write(imp,'(/,"!!!atcaldis3: pas de paroi pour calcul des distances aux parois - arret")')
+       stop
+    end if
 !
 !     initialisation pour chaque domaine de la liste des frontieres
 !     qui seront explorees
 !
 !     Verifications
 !
-      if(lzx.gt.lz) then
-        write(imp,'(/,"!!!atcaldis3: trop de domaines  lzx=",i3,3x,"lz=",i3)')lzx,lz
-        stop
-      end if
-      if(nbd.ge.mtb) then
-        write(imp,'(/,"!!!atcaldis3: trop de frontieres  nbd=",i3,3x,"mtb=",i3)')nbd,mtb
-        stop
-      end if
+    if(lzx.gt.lz) then
+       write(imp,'(/,"!!!atcaldis3: trop de domaines  lzx=",i3,3x,"lz=",i3)')lzx,lz
+       stop
+    end if
+    if(nbd.ge.mtb) then
+       write(imp,'(/,"!!!atcaldis3: trop de frontieres  nbd=",i3,3x,"mtb=",i3)')nbd,mtb
+       stop
+    end if
 !
 !     lecture des informations pour calcul des distances
-      call at_lecopt( &
-                 igr,jgr,kgr,raptat,idefaut)
+    call at_lecopt( &
+         igr,jgr,kgr,raptat,idefaut)
 !
 !     initialisation de la liste des frontieres a explorer pour chaque domaine
 !
-      if(idefaut.eq.1) then
+    if(idefaut.eq.1) then
 !       toutes les parois pour tous les domaine
 !
-        npbrat(1)=0
-        do l=1,lzx
+       npbrat(1)=0
+       do l=1,lzx
           nbdrat(l)=nbd
           if(l.lt.lz) npbrat(l+1)=npbrat(l)+nbdrat(l)
           do nf=1,nbd
-            lbdrat(npbrat(l)+nf)=lbd(nf)
+             lbdrat(npbrat(l)+nf)=lbd(nf)
           end do
-        end do
-      end if
+       end do
+    end if
 !
-      write(imp,'(/,"==>atcaldis3: rattachement des domaines aux parois")')
-      do l=1,lzx
-        if0=npbrat(l)+1
-        if1=npbrat(l)+nbdrat(l)
-      end do
+    write(imp,'(/,"==>atcaldis3: rattachement des domaines aux parois")')
+    do l=1,lzx
+       if0=npbrat(l)+1
+       if1=npbrat(l)+nbdrat(l)
+    end do
 !
 !     ----------------------------------------------------------
 !
 !       initialisation des distances a une valeur infinie
 !
-        do n=1,ndimctbx
-          dist(n) =reelmx
-          mnpar(n)=0
-        enddo
+    do n=1,ndimctbx
+       dist(n) =reelmx
+       mnpar(n)=0
+    enddo
 !
-      if(klecdis.eq.1) then
+    if(klecdis.eq.1) then
 !       lecture des distances
 !
-        call at_lecdist( &
-                 ldismx, &
-                 dist,mnpar)
+       call at_lecdist( &
+            ldismx, &
+            dist,mnpar)
 !
-      else
+    else
        ldismx=0
-      end if
+    end if
 !     ----------------------------------------------------------
 !
 !     boucle sur les frontieres a traiter (parois)
 !
-      do mf=1,nbd
-        nfbi=lbd(mf)
+    do mf=1,nbd
+       nfbi=lbd(mf)
 !
 !       calcul des indices pour deplacement "parallelement" a la paroi
-        call atindnor( &
-                 nfbi, &
-                 m10,m20,m30, &
-                 m1min,m1max,m2min,m2max,m3min,m3max, &
-                 dm1,dm2,dm3,isens3)
+       call atindnor( &
+            nfbi, &
+            m10,m20,m30, &
+            m1min,m1max,m2min,m2max,m3min,m3max, &
+            dm1,dm2,dm3,isens3)
 !
 !       calcul des centres des facettes formant les parois
-        call atccfp( &
-                 x,y,z, &
-                 xpar,ypar,zpar, &
-                 ncin, &
-                 nfbi,dm1,dm2,dm3,isens3)
+       call atccfp( &
+            x,y,z, &
+            xpar,ypar,zpar, &
+            ncin, &
+            nfbi,dm1,dm2,dm3,isens3)
 !
 !       relation entre les indices "m1 m2" des facettes paroi et leur numero
 !
-        call at_dlist( &
-                 x,y,z, &
-                 xpar,ypar,zpar, &
-                 ncin, &
-                 m1tb,m2tb,nfrtb, &
-                 nfbi)
+       call at_dlist( &
+            x,y,z, &
+            xpar,ypar,zpar, &
+            ncin, &
+            m1tb,m2tb,nfrtb, &
+            nfbi)
 !
-       enddo
+    enddo
 !
 !     -------------------------------------------------------------
 !
@@ -338,14 +302,14 @@ double precision :: raptat
 !     sont esssayees.
 !     boucle sur les domaines
 !
-      do l=1,lzx
-        if(l.gt.ldismx) then
+    do l=1,lzx
+       if(l.gt.ldismx) then
 !
 !         calcul des centres des cellules
           call atccc( &
-                 x,y,z, &
-                 xcc,ycc,zcc, &
-                 l)
+               x,y,z, &
+               xcc,ycc,zcc, &
+               l)
 !
 !         calcul distance des cellules d'un domaine aux parois dans le
 !         maillage grossier par exploration systematique des frontieres
@@ -354,14 +318,14 @@ double precision :: raptat
 !         jgr=3
 !         kgr=1
           if(igr(l).ne.1 .or. jgr(l).ne.1 .or. kgr(l).ne.1) then
-            call at_grdist( &
-                 igr(l),jgr(l),kgr(l), &
-                 x,y,z, &
-                 xpar,ypar,zpar, &
-                 xcc,ycc,zcc,dist2, &
-                 dist,mnpar, &
-                 m1tb,m2tb,nfrtb, &
-                 l)
+             call at_grdist( &
+                  igr(l),jgr(l),kgr(l), &
+                  x,y,z, &
+                  xpar,ypar,zpar, &
+                  xcc,ycc,zcc,dist2, &
+                  dist,mnpar, &
+                  m1tb,m2tb,nfrtb, &
+                  l)
 !
 !           retour au maillage fin en se limitant a l'exploration de
 !           portions reduites de frontieres quand une cellule du maillage
@@ -378,34 +342,34 @@ double precision :: raptat
 !           raptat=0.5
 !           ==========
 
-            call at_fidist( &
-                 igr(l),jgr(l),kgr(l),raptat(l), &
-                 x,y,z, &
-                 xpar,ypar,zpar, &
-                 xcc,ycc,zcc,dist2, &
-                 dist,mnpar, &
-                 m1tb,m2tb,nfrtb, &
-                 l)
+             call at_fidist( &
+                  igr(l),jgr(l),kgr(l),raptat(l), &
+                  x,y,z, &
+                  xpar,ypar,zpar, &
+                  xcc,ycc,zcc,dist2, &
+                  dist,mnpar, &
+                  m1tb,m2tb,nfrtb, &
+                  l)
           else
 !           recherche systematique avec liste
 !
-            call atdist_3( &
-                 x,y,z, &
-                 xpar,ypar,zpar, &
-                 xcc,ycc,zcc,dist2, &
-                 dist,mnpar, &
-                 l)
+             call atdist_3( &
+                  x,y,z, &
+                  xpar,ypar,zpar, &
+                  xcc,ycc,zcc,dist2, &
+                  dist,mnpar, &
+                  l)
           end if
           if(kecrdis.eq.1) then
 !           ecriture disque des distances (fichiers separes "fdist_l")
-            call at_ecrdist( &
-                 l,          &
-                 dist,mnpar)
+             call at_ecrdist( &
+                  l,          &
+                  dist,mnpar)
           end if
-        end if
+       end if
 !
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine atcaldis3
+end module mod_atcaldis3

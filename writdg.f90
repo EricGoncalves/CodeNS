@@ -1,10 +1,10 @@
 module mod_writdg
-implicit none
+  implicit none
 contains
-      subroutine writdg( &
-                 l,kdg, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 x,y,z)
+  subroutine writdg( &
+       l,kdg, &
+       imin,imax,jmin,jmax,kmin,kmax, &
+       x,y,z)
 !
 !***********************************************************************
 !
@@ -32,45 +32,31 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-implicit none
-integer :: ind
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-integer :: kdg
-integer :: imin
-integer :: imax
-integer :: jmin
-integer :: jmax
-integer :: kmin
-integer :: kmax
-double precision :: x
-double precision :: y
-double precision :: z
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    implicit none
+    integer          ::    i,imax,imin, ind,   j
+    integer          :: jmax,jmin,   k, kdg,kmax
+    integer          :: kmin,   l, nid,nijd, njd
+    double precision :: x,y,z
 !
 !-----------------------------------------------------------------------
 !
-      dimension x(ip00),y(ip00),z(ip00)
+    dimension x(ip00),y(ip00),z(ip00)
 !
-      ind(i,j,k)=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    ind(i,j,k)=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      if (l.eq.1) rewind kdg
+    if (l.eq.1) rewind kdg
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      write(kdg)(((x(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-      write(kdg)(((y(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-      write(kdg)(((z(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+    write(kdg)(((x(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+    write(kdg)(((y(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+    write(kdg)(((z(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine writdg
+end module mod_writdg

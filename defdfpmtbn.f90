@@ -1,7 +1,7 @@
 module mod_defdfpmtbn
-implicit none
+  implicit none
 contains
-      subroutine defdfpmtbn
+  subroutine defdfpmtbn
 !
 !***********************************************************************
 !
@@ -16,19 +16,19 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-   use kcle
-   use modeleturb
-implicit none
+    use para_fige
+    use kcle
+    use modeleturb
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      icytur0=100
-      ncyturb=5
+    icytur0=100
+    ncyturb=5
 !
-      kicytur0=1
-      kncyturb=1
+    kicytur0=1
+    kncyturb=1
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdfpmtbn
+end module mod_defdfpmtbn

@@ -1,14 +1,14 @@
 module mod_initns
-implicit none
+  implicit none
 contains
-      subroutine initns( &
-                 mfb,l,indfb, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 eqt,x,y,z, &
-                 ncbd,nxn,nyn,nzn, &
-                 tnix,tniy,tniz, &
-                 tnjx,tnjy,tnjz, &
-                 tnkx,tnky,tnkz)
+  subroutine initns( &
+       mfb,l,indfb, &
+       imin,imax,jmin,jmax,kmin,kmax, &
+       eqt,x,y,z, &
+       ncbd,nxn,nyn,nzn, &
+       tnix,tniy,tniz, &
+       tnjx,tnjy,tnjz, &
+       tnkx,tnky,tnkz)
 !
 !***********************************************************************
 !
@@ -118,228 +118,185 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-use mod_norm
-implicit none
-integer :: mfb
-integer :: l
-integer :: imin
-integer :: imax
-integer :: jmin
-integer :: jmax
-integer :: kmin
-integer :: kmax
-double precision :: x
-double precision :: y
-double precision :: z
-integer :: ncbd
-double precision :: tnix
-double precision :: tniy
-double precision :: tniz
-double precision :: tnjx
-double precision :: tnjy
-double precision :: tnjz
-double precision :: tnkx
-double precision :: tnky
-double precision :: tnkz
-double precision :: eps
-integer :: i
-integer :: i1
-integer :: i2
-integer :: id
-integer :: is
-integer :: j
-integer :: j1
-integer :: j2
-integer :: jd
-integer :: js
-integer :: k
-integer :: k1
-integer :: k2
-integer :: kd
-integer :: ks
-integer :: m0b
-integer :: m0n
-integer :: m1
-integer :: m1max
-integer :: m1min
-integer :: m2
-integer :: m2max
-integer :: m2min
-integer :: mb
-integer :: mn
-integer :: n0
-integer :: nci
-integer :: ncj
-integer :: nck
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use mod_norm
+    implicit none
+    integer          ::    dm,    i,   i1,   i2,   id
+    integer          ::  imax, imin,   is,    j,   j1
+    integer          ::    j2,   jd, jmax, jmin,   js
+    integer          ::     k,   k1,   k2,   kd, kmax
+    integer          ::  kmin,   ks,    l,  m0b,  m0n
+    integer          ::    m1,m1max,m1min,   m2,m2max
+    integer          :: m2min,   mb,  mfb,   mn,   n0
+    integer          ::  ncbd,  nci,  ncj,  nck,  nid
+    integer          ::  nijd, nip0,  njd
+    double precision ::  eps,  nn, nxn, nyn, nzn
+    double precision :: tnix,tniy,tniz,tnjx,tnjy
+    double precision :: tnjz,tnkx,tnky,tnkz,   x
+    double precision ::    y,   z
 !
 !-----------------------------------------------------------------------
 !
-      character(len=2 ) :: indfb
-      character(len=7 ) :: eqt
-      integer dm,nip0
-      double precision nxn,nyn,nzn,nn
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension tnix(ip00),tniy(ip00),tniz(ip00), &
-                tnjx(ip00),tnjy(ip00),tnjz(ip00), &
-                tnkx(ip00),tnky(ip00),tnkz(ip00)
+    character(len=2 ) :: indfb
+    character(len=7 ) :: eqt
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension tnix(ip00),tniy(ip00),tniz(ip00), &
+         tnjx(ip00),tnjy(ip00),tnjz(ip00), &
+         tnkx(ip00),tnky(ip00),tnkz(ip00)
 !
-      eps=1.e-10
+    eps=1.e-10
 !
-      n0=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      nci=1
-      ncj=nid
-      nck=nijd
+    nci=1
+    ncj=nid
+    nck=nijd
 !
-      m0n=mpn(mfb)
-      m0b=mpb(mfb)
+    m0n=mpn(mfb)
+    m0b=mpb(mfb)
 !
-      nip0=ip00
+    nip0=ip00
 !
 !     calcul des normales interieures
 !
-      if( (indfb.eq.'i1').or.(indfb.eq.'i2') ) then
-      m1min=1
-      m1max=jmax-jmin+1-1
-      m2min=1
-      m2max=kmax-kmin+1-1
-      dm=m1max-m1min+1
+    if( (indfb.eq.'i1').or.(indfb.eq.'i2') ) then
+       m1min=1
+       m1max=jmax-jmin+1-1
+       m2min=1
+       m2max=kmax-kmin+1-1
+       dm=m1max-m1min+1
 !
 !     test sur l'extremite pour correspondance avec les tableaux de normales
 !     (test sur imin=imax)
-      if(imin.eq.i1) is= 1
-      if(imin.eq.i2) is=-1
-      if(imin.eq.i1) id= nci
-      if(imin.eq.i2) id= 0
+       if(imin.eq.i1) is= 1
+       if(imin.eq.i2) is=-1
+       if(imin.eq.i1) id= nci
+       if(imin.eq.i2) id= 0
 !
-            call norm( &
-                 l,x,y,z, &
-                 eqt,nip0, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 tnix,tniy,tniz, &
-                 tnjx,tnjy,tnjz, &
-                 tnkx,tnky,tnkz)
+       call norm( &
+            l,x,y,z, &
+            eqt,nip0, &
+            imin,imax,jmin,jmax,kmin,kmax, &
+            tnix,tniy,tniz, &
+            tnjx,tnjy,tnjz, &
+            tnkx,tnky,tnkz)
 !
-      mn=m0n
-      mb=m0b
-      do k=kmin,kmax-1
-       do j=jmin,jmax-1
-        do i=imin,imax
-        mn=mn+1
-        mb=mb+1
-        nxn(mn)=is*tnix(ncbd(mb)+id-n0)
-        nyn(mn)=is*tniy(ncbd(mb)+id-n0)
-        nzn(mn)=is*tniz(ncbd(mb)+id-n0)
-        enddo
+       mn=m0n
+       mb=m0b
+       do k=kmin,kmax-1
+          do j=jmin,jmax-1
+             do i=imin,imax
+                mn=mn+1
+                mb=mb+1
+                nxn(mn)=is*tnix(ncbd(mb)+id-n0)
+                nyn(mn)=is*tniy(ncbd(mb)+id-n0)
+                nzn(mn)=is*tniz(ncbd(mb)+id-n0)
+             enddo
+          enddo
        enddo
-      enddo
 !
-      elseif ( (indfb.eq.'j1').or.(indfb.eq.'j2') ) then
-      m1min=1
-      m1max=imax-imin+1-1
-      m2min=1
-      m2max=kmax-kmin+1-1
-      dm   =m1max-m1min+1
+    elseif ( (indfb.eq.'j1').or.(indfb.eq.'j2') ) then
+       m1min=1
+       m1max=imax-imin+1-1
+       m2min=1
+       m2max=kmax-kmin+1-1
+       dm   =m1max-m1min+1
 !
 !     test sur l'extremite pour correspondance avec les tableaux de normales
 !     (test sur jmin=jmax)
-      if(jmin.eq.j1) js= 1
-      if(jmin.eq.j2) js=-1
-      if(jmin.eq.j1) jd= ncj
-      if(jmin.eq.j2) jd= 0
+       if(jmin.eq.j1) js= 1
+       if(jmin.eq.j2) js=-1
+       if(jmin.eq.j1) jd= ncj
+       if(jmin.eq.j2) jd= 0
 !
-            call norm( &
-                 l,x,y,z, &
-                 eqt,nip0, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 tnix,tniy,tniz, &
-                 tnjx,tnjy,tnjz, &
-                 tnkx,tnky,tnkz)
+       call norm( &
+            l,x,y,z, &
+            eqt,nip0, &
+            imin,imax,jmin,jmax,kmin,kmax, &
+            tnix,tniy,tniz, &
+            tnjx,tnjy,tnjz, &
+            tnkx,tnky,tnkz)
 !
-      mn=m0n
-      mb=m0b
-      do k=kmin,kmax-1
-      do j=jmin,jmax
-      do i=imin,imax-1
-      mn=mn+1
-      mb=mb+1
-      nxn(mn)=js*tnjx(ncbd(mb)+jd-n0)
-      nyn(mn)=js*tnjy(ncbd(mb)+jd-n0)
-      nzn(mn)=js*tnjz(ncbd(mb)+jd-n0)
-      enddo
-      enddo
-      enddo
+       mn=m0n
+       mb=m0b
+       do k=kmin,kmax-1
+          do j=jmin,jmax
+             do i=imin,imax-1
+                mn=mn+1
+                mb=mb+1
+                nxn(mn)=js*tnjx(ncbd(mb)+jd-n0)
+                nyn(mn)=js*tnjy(ncbd(mb)+jd-n0)
+                nzn(mn)=js*tnjz(ncbd(mb)+jd-n0)
+             enddo
+          enddo
+       enddo
 !
-      elseif ( (indfb.eq.'k1').or.(indfb.eq.'k2') ) then
-      m1min=1
-      m1max=imax-imin+1-1
-      m2min=1
-      m2max=jmax-jmin+1-1
-      dm=m1max-m1min+1
+    elseif ( (indfb.eq.'k1').or.(indfb.eq.'k2') ) then
+       m1min=1
+       m1max=imax-imin+1-1
+       m2min=1
+       m2max=jmax-jmin+1-1
+       dm=m1max-m1min+1
 !
 !     test sur l'extremite pour correspondance avec les tableaux de normales
 !     (test sur kmin=kmax)
-      if(kmin.eq.k1) ks= 1
-      if(kmin.eq.k2) ks=-1
-      if(kmin.eq.k1) kd= nck
-      if(kmin.eq.k2) kd= 0
+       if(kmin.eq.k1) ks= 1
+       if(kmin.eq.k2) ks=-1
+       if(kmin.eq.k1) kd= nck
+       if(kmin.eq.k2) kd= 0
 !
-            call norm( &
-                 l,x,y,z, &
-                 eqt,nip0, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 tnix,tniy,tniz, &
-                 tnjx,tnjy,tnjz, &
-                 tnkx,tnky,tnkz)
+       call norm( &
+            l,x,y,z, &
+            eqt,nip0, &
+            imin,imax,jmin,jmax,kmin,kmax, &
+            tnix,tniy,tniz, &
+            tnjx,tnjy,tnjz, &
+            tnkx,tnky,tnkz)
 !
-      mn=m0n
-      mb=m0b
-      do k=kmin,kmax
-      do j=jmin,jmax-1
-      do i=imin,imax-1
-      mn=mn+1
-      mb=mb+1
-      nxn(mn)=ks*tnkx(ncbd(mb)+kd-n0)
-      nyn(mn)=ks*tnky(ncbd(mb)+kd-n0)
-      nzn(mn)=ks*tnkz(ncbd(mb)+kd-n0)
-      enddo
-      enddo
-      enddo
+       mn=m0n
+       mb=m0b
+       do k=kmin,kmax
+          do j=jmin,jmax-1
+             do i=imin,imax-1
+                mn=mn+1
+                mb=mb+1
+                nxn(mn)=ks*tnkx(ncbd(mb)+kd-n0)
+                nyn(mn)=ks*tnky(ncbd(mb)+kd-n0)
+                nzn(mn)=ks*tnkz(ncbd(mb)+kd-n0)
+             enddo
+          enddo
+       enddo
 !
-      end if
+    end if
 !
 !     m1 : m1min a m1max ,  m2 : m2min a m2max
 !
-      do m1=m1min,m1max
-      do m2=m2min,m2max
-      mn=m0n+m1+(m2-1)*dm
+    do m1=m1min,m1max
+       do m2=m2min,m2max
+          mn=m0n+m1+(m2-1)*dm
 !
-      nn=sqrt(nxn(mn)*nxn(mn)+nyn(mn)*nyn(mn)+nzn(mn)*nzn(mn))
-      nn=nn+(sign(1.,-abs(nn))+1.)*eps
-      nxn(mn)=nxn(mn)/nn
-      nyn(mn)=nyn(mn)/nn
-      nzn(mn)=nzn(mn)/nn
-      enddo
-      enddo
+          nn=sqrt(nxn(mn)*nxn(mn)+nyn(mn)*nyn(mn)+nzn(mn)*nzn(mn))
+          nn=nn+(sign(1.,-abs(nn))+1.)*eps
+          nxn(mn)=nxn(mn)/nn
+          nyn(mn)=nyn(mn)/nn
+          nzn(mn)=nzn(mn)/nn
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine initns
+end module mod_initns

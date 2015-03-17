@@ -1,7 +1,7 @@
 module mod_c_dfpmdsd
-implicit none
+  implicit none
 contains
-      subroutine c_dfpmdsd(mot,imot,nmot)
+  subroutine c_dfpmdsd(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -11,36 +11,32 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier
-use mod_b1_dfpmdsd
-use mod_tcmd_dfpmdsd
-implicit none
-integer :: imot
-integer :: nmot
-integer :: ldom
-integer :: ldomd
-integer :: lgr
-integer :: lgrd
+    use para_fige
+    use sortiefichier
+    use mod_b1_dfpmdsd
+    use mod_tcmd_dfpmdsd
+    implicit none
+    integer          ::  imot, ldom,ldomd,  lgr, lgrd
+    integer          ::  nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
-      dimension ldom(nobj)
-      dimension lgr(nobj)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
+    dimension ldom(nobj)
+    dimension lgr(nobj)
 !
-      call tcmd_dfpmdsd( &
-                 mot,imot,nmot, &
-                 ldom,ldomd, &
-                 lgr,lgrd)
+    call tcmd_dfpmdsd( &
+         mot,imot,nmot, &
+         ldom,ldomd, &
+         lgr,lgrd)
 !
-      if(kimp.ge.1) then
-            call b1_dfpmdsd( &
-                 ldom,ldomd, &
-                 lgr,lgrd)
-      endif
+    if(kimp.ge.1) then
+       call b1_dfpmdsd( &
+            ldom,ldomd, &
+            lgr,lgrd)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfpmdsd
+end module mod_c_dfpmdsd

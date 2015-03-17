@@ -1,9 +1,9 @@
 module mod_rfve
-implicit none
+  implicit none
 contains
-      subroutine rfve( &
-                 t,ps,temp,cson, &
-                 ncbd,ncin)
+  subroutine rfve( &
+       t,ps,temp,cson, &
+       ncbd,ncin)
 !
 !***********************************************************************
 !
@@ -30,49 +30,39 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-implicit none
-double precision :: t
-double precision :: ps
-double precision :: temp
-double precision :: cson
-integer :: ncbd
-integer :: ncin
-integer :: m
-integer :: mb
-integer :: mf
-integer :: mfb
-integer :: mt
-integer :: nd
-integer :: ni
+    use para_var
+    use para_fige
+    use boundary
+    implicit none
+    integer          ::    m,  mb,  mf, mfb,  mt
+    integer          :: ncbd,ncin,  nd,  ni
+    double precision :: cson,  ps,   t,temp
 !
 !-----------------------------------------------------------------------
 !
-      dimension t(ip11,ip60)
-      dimension ncin(ip41),ncbd(ip41)
-      dimension ps(ip11),temp(ip11),cson(ip11)
+    dimension t(ip11,ip60)
+    dimension ncin(ip41),ncbd(ip41)
+    dimension ps(ip11),temp(ip11),cson(ip11)
 !
-      do mf=1,nbd
+    do mf=1,nbd
        mfb=lbd(mf)
        mt=mmb(mfb)
 !!$OMP SIMD
        do m=1,mt
-        mb=mpb(mfb)+m
-        nd=ncbd(mb)
-        ni=ncin(mb)
-        t(nd,1)=t(ni,1)
-        t(nd,2)=t(ni,2)
-        t(nd,3)=t(ni,3)
-        t(nd,4)=t(ni,4)
-        t(nd,5)=t(ni,5)
-        ps(nd)=ps(ni)
-        temp(nd)=temp(ni)
-        cson(nd)=cson(ni)
+          mb=mpb(mfb)+m
+          nd=ncbd(mb)
+          ni=ncin(mb)
+          t(nd,1)=t(ni,1)
+          t(nd,2)=t(ni,2)
+          t(nd,3)=t(ni,3)
+          t(nd,4)=t(ni,4)
+          t(nd,5)=t(ni,5)
+          ps(nd)=ps(ni)
+          temp(nd)=temp(ni)
+          cson(nd)=cson(ni)
        enddo
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rfve
+end module mod_rfve

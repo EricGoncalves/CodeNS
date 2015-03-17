@@ -1,8 +1,8 @@
 module mod_valreel
-use mod_synterr
-implicit none
+  use mod_synterr
+  implicit none
 contains
-      subroutine valreel(mot,imot,nm,rree,krree)
+  subroutine valreel(mot,imot,nm,rree,krree)
 !
 !***********************************************************************
 !
@@ -11,35 +11,31 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use chainecarac
-use mod_reel
-implicit none
-integer :: imot
-integer :: nm
-double precision :: rree
-integer :: krree
-integer :: icmt
-integer :: kerr
+    use para_fige
+    use chainecarac
+    use mod_reel
+    implicit none
+    integer          ::  icmt, imot, kerr,krree,   nm
+    double precision :: rree
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  comment
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  comment
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      do icmt=1,32
-      comment(icmt:icmt)=' '
-      enddo
+    do icmt=1,32
+       comment(icmt:icmt)=' '
+    enddo
 !
-      call reel(mot(nm),imot(nm),rree,kerr)
-      if(kerr.eq.0)then
-        comment=cr
-        call synterr(mot,imot,nm,comment)
-      else
-        krree=2
-      endif
+    call reel(mot(nm),imot(nm),rree,kerr)
+    if(kerr.eq.0)then
+       comment=cr
+       call synterr(mot,imot,nm,comment)
+    else
+       krree=2
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine valreel
+end module mod_valreel

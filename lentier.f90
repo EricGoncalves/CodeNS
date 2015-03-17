@@ -1,7 +1,7 @@
 module mod_lentier
-implicit none
+  implicit none
 contains
-      subroutine lentier(mot,imot,li,lid,lix,klix,kerr)
+  subroutine lentier(mot,imot,li,lid,lix,klix,kerr)
 !
 !***********************************************************************
 !
@@ -10,39 +10,34 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-use mod_entier
-implicit none
-integer :: imot
-integer :: li
-integer :: lid
-integer :: lix
-integer :: klix
-integer :: kerr
-integer :: l
+    use para_var
+    use para_fige
+    use mod_entier
+    implicit none
+    integer          :: imot,kerr,klix,   l,  li
+    integer          ::  lid, lix
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot
-      dimension li(nobj)
+    character(len=32) ::  mot
+    dimension li(nobj)
 !
-      if ((imot.eq.1).and.(mot.eq.'*')) then
-        if(klix.eq.0) then
+    if ((imot.eq.1).and.(mot.eq.'*')) then
+       if(klix.eq.0) then
           kerr=-1
-        else
+       else
           do l=1,lix
-          li(l)=l
+             li(l)=l
           enddo
           lid=lix
           kerr=1
-        endif
-      else
-        call entier(mot,imot,li(1),kerr)
-        lid=1
-      endif
+       endif
+    else
+       call entier(mot,imot,li(1),kerr)
+       lid=1
+    endif
 !
-      return
+    return
 !
-      end subroutine
-end module
+  end subroutine lentier
+end module mod_lentier

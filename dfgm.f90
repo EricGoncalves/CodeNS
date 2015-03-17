@@ -1,7 +1,7 @@
 module mod_dfgm
-implicit none
+  implicit none
 contains
-      subroutine dfgm
+  subroutine dfgm
 !
 !***********************************************************************
 !
@@ -24,26 +24,26 @@ contains
 !
 !***********************************************************************
 !
-      use constantes
-      use definition
-      use chainecarac
-implicit none
+    use constantes
+    use definition
+    use chainecarac
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      if ((config(1:3).eq.'gan').or.(config(1:3).eq.'hel')) then
-         ptrans= 0.
-         protat= 4.*pis2/perio
-      else
-         ptrans= perio
-         protat= 0.
-      endif
-      if ((config(1:3).eq.'gan').or.(config(1:3).eq.'hel')) then
-         perio=protat
-      else
-         perio=ptrans
-      endif
+    if ((config(1:3).eq.'gan').or.(config(1:3).eq.'hel')) then
+       ptrans= 0.
+       protat= 4.*pis2/perio
+    else
+       ptrans= perio
+       protat= 0.
+    endif
+    if ((config(1:3).eq.'gan').or.(config(1:3).eq.'hel')) then
+       perio=protat
+    else
+       perio=ptrans
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine dfgm
+end module mod_dfgm

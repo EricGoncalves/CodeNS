@@ -1,7 +1,7 @@
 module mod_b1_dfpmdtg
-implicit none
+  implicit none
 contains
-      subroutine b1_dfpmdtg
+  subroutine b1_dfpmdtg
 !
 !***********************************************************************
 !
@@ -20,35 +20,35 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-   use sortiefichier
-   use schemanum
-   use kcle
-use mod_convich
-implicit none
+    use para_fige
+    use sortiefichier
+    use schemanum
+    use kcle
+    use mod_convich
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
-      character(len=24) ::  ckdtl,cicychr0,cncychro,cdt1min
+    character(len=1316) :: form
+    character(len=24) ::  ckdtl,cicychr0,cncychro,cdt1min
 !
-      call convich(kkdtl,ckdtl)
-      call convich(kicychr0,cicychr0)
-      call convich(kncychro,cncychro)
-      call convich(kdt1min,cdt1min)
+    call convich(kkdtl,ckdtl)
+    call convich(kicychr0,cicychr0)
+    call convich(kncychro,cncychro)
+    call convich(kdt1min,cdt1min)
 !
-       form='(/,2x,''avance en temps'',/' &
-             //'2x,''---------------'',/' &
-             //'2x,''kdtl                     : '',11x,i5,2x,a/' &
-             //'2x,''icychr0                  : '',11x,i5,2x,a/' &
-             //'2x,''ncychro                  : '',11x,i5,2x,a/' &
-             //'2x,''dt1min                   : '',4x,e12.6,2x,a)'
+    form='(/,2x,''avance en temps'',/' &
+         //'2x,''---------------'',/' &
+         //'2x,''kdtl                     : '',11x,i5,2x,a/' &
+         //'2x,''icychr0                  : '',11x,i5,2x,a/' &
+         //'2x,''ncychro                  : '',11x,i5,2x,a/' &
+         //'2x,''dt1min                   : '',4x,e12.6,2x,a)'
 !
-      write(imp,form) kdtl,ckdtl, &
-                      icychr0,cicychr0, &
-                      ncychro,cncychro, &
-                      dt1min,cdt1min
+    write(imp,form) kdtl,ckdtl, &
+         icychr0,cicychr0, &
+         ncychro,cncychro, &
+         dt1min,cdt1min
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_dfpmdtg
+end module mod_b1_dfpmdtg

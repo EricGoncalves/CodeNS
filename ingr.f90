@@ -1,7 +1,7 @@
 module mod_ingr
-implicit none
+  implicit none
 contains
-      subroutine ingr(l,x,y,z,king)
+  subroutine ingr(l,x,y,z,king)
 !
 !***********************************************************************
 !
@@ -26,42 +26,38 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage 
-      use sortiefichier
-      use definition
-use mod_readdg
-use mod_smg_fcm
-implicit none
-integer :: l
-double precision :: x
-double precision :: y
-double precision :: z
-integer :: king
-integer :: img
+    use para_var
+    use para_fige
+    use maillage 
+    use sortiefichier
+    use definition
+    use mod_readdg
+    use mod_smg_fcm
+    implicit none
+    integer          ::  img,king,   l
+    double precision :: x,y,z
 !
 !-----------------------------------------------------------------------
 !
-      dimension x(ip21),y(ip21),z(ip21)
+    dimension x(ip21),y(ip21),z(ip21)
 !
-      if(king.ne.0) then
+    if(king.ne.0) then
 !     remplissage des tableaux x , y , z dans un sous-programme d'initialisation
 !        call utinig(l,x,y,z)
-      elseif(king.eq.0) then
+    elseif(king.eq.0) then
 !     remplissage des tableaux x , y , z par lecture d' un fichier de reprise
-        call readdg(l,kdgv,x,y,z)
-      endif
+       call readdg(l,kdgv,x,y,z)
+    endif
 !
-      if(lgx.gt.1) then
-      do img = 2,lgx
-        call smg_fcm( &
-                 img-1,img, &
-                 l, &
-                 x,y,z)
-      enddo
-      end if
+    if(lgx.gt.1) then
+       do img = 2,lgx
+          call smg_fcm( &
+               img-1,img, &
+               l, &
+               x,y,z)
+       enddo
+    end if
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine ingr
+end module mod_ingr

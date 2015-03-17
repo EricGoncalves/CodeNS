@@ -1,10 +1,10 @@
 module mod_smg_cn
-implicit none
+  implicit none
 contains
-      subroutine smg_cn( &
-                 img, &
-                 vol,volt, &
-                 vc,vv)
+  subroutine smg_cn( &
+       img, &
+       vol,volt, &
+       vc,vv)
 !
 !***********************************************************************
 !
@@ -16,84 +16,47 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use chainecarac
-implicit none
-integer :: inc
-integer :: indc
-integer :: indn
-integer :: id
-integer :: jd
-integer :: kd
-integer :: i
-integer :: j
-integer :: k
-integer :: img
-double precision :: vol
-double precision :: volt
-double precision :: vc
-double precision :: vv
-double precision :: eps
-integer :: i1
-integer :: i2
-integer :: iinf
-integer :: inc_i
-integer :: inc_ij
-integer :: inc_ijk
-integer :: inc_ik
-integer :: inc_j
-integer :: inc_jk
-integer :: inc_k
-integer :: isup
-integer :: j1
-integer :: j2
-integer :: jinf
-integer :: jsup
-integer :: k1
-integer :: k2
-integer :: kinf
-integer :: ksup
-integer :: l
-integer :: lm
-integer :: n
-integer :: n0c
-integer :: n0n
-integer :: nc
-integer :: ndeb
-integer :: nfin
-integer :: ni
-integer :: nij
-integer :: nj
-integer :: nn
-double precision :: ts
-double precision :: vols
+    use para_var
+    use para_fige
+    use maillage
+    use chainecarac
+    implicit none
+    integer          ::       i,     i1,     i2,     id,   iinf
+    integer          ::     img,    inc,  inc_i, inc_ij,inc_ijk
+    integer          ::  inc_ik,  inc_j, inc_jk,  inc_k,   indc
+    integer          ::    indn,   isup,      j,     j1,     j2
+    integer          ::      jd,   jinf,   jsup,      k,     k1
+    integer          ::      k2,     kd,   kinf,   ksup,      l
+    integer          ::      lm,      n,    n0c,    n0n,     nc
+    integer          ::    ndeb,   nfin,     ni,    nij,     nj
+    integer          ::      nn
+    double precision ::  eps,  ts,  vc, vol,vols
+    double precision :: volt,  vv
 !
 !-----------------------------------------------------------------------
 !
-      dimension vc(ip11,ip60),vv(ip11,ip60)
-      dimension vol(ip11),volt(ip11)
+    dimension vc(ip11,ip60),vv(ip11,ip60)
+    dimension vol(ip11),volt(ip11)
 !
 
 !
-      indn(i,j,k)=n0n+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
-      indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
-      inc(id,jd,kd)=id+jd*ni+kd*nij
-      eps=0.001
+    indn(i,j,k)=n0n+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
+    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
+    inc(id,jd,kd)=id+jd*ni+kd*nij
+    eps=0.001
 !
-      do l = 1,lzx
+    do l = 1,lzx
        lm = l+(img-1)*lz
        ndeb = npn(lm)+1
        nfin = npn(lm)+nnn(lm)
 !
        do n = ndeb,nfin
-        vv(n,1)=0.
-        vv(n,2)=0.
-        vv(n,3)=0.
-        vv(n,4)=0.
-        vv(n,5)=0.
-        volt(n)=0.
+          vv(n,1)=0.
+          vv(n,2)=0.
+          vv(n,3)=0.
+          vv(n,4)=0.
+          vv(n,5)=0.
+          volt(n)=0.
        enddo
 !
        n0n = npn(lm)
@@ -118,130 +81,130 @@ double precision :: vols
        inc_ijk= inc(1,1,1)
 !
        if(equat(3:5).eq.'2dk') then
-        kinf = k1
-        ksup = k2-1
+          kinf = k1
+          ksup = k2-1
        else
-        kinf = k1-1
-        ksup = k2
+          kinf = k1-1
+          ksup = k2
        endif
 !
        if(equat(3:5).eq.'2dj') then
-        jinf = j1
-        jsup = j2-1
+          jinf = j1
+          jsup = j2-1
        else
-        jinf = j1-1
-        jsup = j2
+          jinf = j1-1
+          jsup = j2
        endif
 !
        iinf = i1-1
        isup = i2
 !
        do k=kinf,ksup
-        do j=jinf,jsup
+          do j=jinf,jsup
 !
-         do i=iinf,isup
-          nn = indn(i,j,k)
-          nc = indc(i,j,k)
-          vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
-          vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
-          vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
-          vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
-          vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
-          volt(nn)  = volt(nn)+vol(nc)
-         enddo
+             do i=iinf,isup
+                nn = indn(i,j,k)
+                nc = indc(i,j,k)
+                vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
+                vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
+                vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
+                vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
+                vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
+                volt(nn)  = volt(nn)+vol(nc)
+             enddo
 !
-         do i=iinf,isup
-          nn = indn(i,j,k)+inc_i
-          nc = indc(i,j,k)
-          vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
-          vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
-          vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
-          vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
-          vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
-          volt(nn)  = volt(nn)+vol(nc)
-        enddo
+             do i=iinf,isup
+                nn = indn(i,j,k)+inc_i
+                nc = indc(i,j,k)
+                vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
+                vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
+                vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
+                vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
+                vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
+                volt(nn)  = volt(nn)+vol(nc)
+             enddo
 !
-        do i=iinf,isup
-         nn = indn(i,j,k)+inc_j
-         nc = indc(i,j,k)
-         vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
-         vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
-         vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
-         vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
-         vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
-         volt(nn)  = volt(nn)+vol(nc)
-        enddo
+             do i=iinf,isup
+                nn = indn(i,j,k)+inc_j
+                nc = indc(i,j,k)
+                vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
+                vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
+                vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
+                vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
+                vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
+                volt(nn)  = volt(nn)+vol(nc)
+             enddo
 !
-        do i=iinf,isup
-         nn = indn(i,j,k)+inc_ij
-         nc = indc(i,j,k)
-         vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
-         vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
-         vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
-         vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
-         vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
-         volt(nn)  = volt(nn)+vol(nc)
-        enddo
+             do i=iinf,isup
+                nn = indn(i,j,k)+inc_ij
+                nc = indc(i,j,k)
+                vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
+                vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
+                vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
+                vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
+                vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
+                volt(nn)  = volt(nn)+vol(nc)
+             enddo
 !
-        do i=iinf,isup
-         nn = indn(i,j,k)+inc_k
-         nc = indc(i,j,k)
-         vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
-         vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
-         vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
-         vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
-         vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
-         volt(nn)  = volt(nn)+vol(nc)
-        enddo
+             do i=iinf,isup
+                nn = indn(i,j,k)+inc_k
+                nc = indc(i,j,k)
+                vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
+                vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
+                vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
+                vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
+                vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
+                volt(nn)  = volt(nn)+vol(nc)
+             enddo
 !
-        do i=iinf,isup
-         nn = indn(i,j,k)+inc_ik
-         nc = indc(i,j,k)
-         vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
-         vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
-         vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
-         vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
-         vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
-         volt(nn)  = volt(nn)+vol(nc)
-        enddo
+             do i=iinf,isup
+                nn = indn(i,j,k)+inc_ik
+                nc = indc(i,j,k)
+                vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
+                vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
+                vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
+                vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
+                vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
+                volt(nn)  = volt(nn)+vol(nc)
+             enddo
 !
-        do i=iinf,isup
-         nn = indn(i,j,k)+inc_jk
-         nc = indc(i,j,k)
-         vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
-         vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
-         vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
-         vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
-         vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
-         volt(nn)  = volt(nn)+vol(nc)
-        enddo
+             do i=iinf,isup
+                nn = indn(i,j,k)+inc_jk
+                nc = indc(i,j,k)
+                vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
+                vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
+                vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
+                vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
+                vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
+                volt(nn)  = volt(nn)+vol(nc)
+             enddo
 !
-        do i=iinf,isup
-         nn = indn(i,j,k)+inc_ijk
-         nc = indc(i,j,k)
-         vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
-         vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
-         vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
-         vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
-         vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
-         volt(nn)  = volt(nn)+vol(nc)
-        enddo
+             do i=iinf,isup
+                nn = indn(i,j,k)+inc_ijk
+                nc = indc(i,j,k)
+                vv(nn,1)  = vv(nn,1) +vc(nc,1)*vol(nc)
+                vv(nn,2)  = vv(nn,2) +vc(nc,2)*vol(nc)
+                vv(nn,3)  = vv(nn,3) +vc(nc,3)*vol(nc)
+                vv(nn,4)  = vv(nn,4) +vc(nc,4)*vol(nc)
+                vv(nn,5)  = vv(nn,5) +vc(nc,5)*vol(nc)
+                volt(nn)  = volt(nn)+vol(nc)
+             enddo
 !
+          enddo
        enddo
-      enddo
 !
-      do n = ndeb,nfin
-       ts=sign(0.5,-volt(n))
-       vols = (0.5+ts)*eps+(0.5-ts)*volt(n)
-       vv(n,1)=vv(n,1)/vols
-       vv(n,2)=vv(n,2)/vols
-       vv(n,3)=vv(n,3)/vols
-       vv(n,4)=vv(n,4)/vols
-       vv(n,5)=vv(n,5)/vols
-      enddo
+       do n = ndeb,nfin
+          ts=sign(0.5,-volt(n))
+          vols = (0.5+ts)*eps+(0.5-ts)*volt(n)
+          vv(n,1)=vv(n,1)/vols
+          vv(n,2)=vv(n,2)/vols
+          vv(n,3)=vv(n,3)/vols
+          vv(n,4)=vv(n,4)/vols
+          vv(n,5)=vv(n,5)/vols
+       enddo
 !
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine smg_cn
+end module mod_smg_cn

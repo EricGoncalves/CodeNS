@@ -1,10 +1,10 @@
 module mod_cvcvg
-implicit none
+  implicit none
 contains
-      subroutine cvcvg( &
-                 l, &
-                 x,y,z, &
-                 xx,yy,zz)
+  subroutine cvcvg( &
+       l, &
+       x,y,z, &
+       xx,yy,zz)
 !
 !***********************************************************************
 !
@@ -37,67 +37,50 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-implicit none
-integer :: ind
-integer :: l
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: xx
-double precision :: yy
-double precision :: zz
-integer :: i
-integer :: j
-integer :: k
-integer :: i1
-integer :: i2
-integer :: j1
-integer :: j2
-integer :: k1
-integer :: k2
-integer :: m
-integer :: n
-integer :: n0
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    implicit none
+    integer          ::    i,  i1,  i2, ind,   j
+    integer          ::   j1,  j2,   k,  k1,  k2
+    integer          ::    l,   m,   n,  n0, nid
+    integer          :: nijd, njd
+    double precision ::  x,xx, y,yy, z
+    double precision :: zz
 !
 !-----------------------------------------------------------------------
 !
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension xx(ip00),yy(ip00),zz(ip00)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension xx(ip00),yy(ip00),zz(ip00)
 !
-      ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      n0=npn(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0=npn(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      do k=k1,k2
-      do j=j1,j2
-      do i=i1,i2
-      n=ind(i,j,k)
-      m=n-n0
+    do k=k1,k2
+       do j=j1,j2
+          do i=i1,i2
+             n=ind(i,j,k)
+             m=n-n0
 !
-      xx(m)=x(n)
-      yy(m)=y(n)
-      zz(m)=z(n)
+             xx(m)=x(n)
+             yy(m)=y(n)
+             zz(m)=z(n)
 !
-      enddo
-      enddo
-      enddo
+          enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine cvcvg
+end module mod_cvcvg

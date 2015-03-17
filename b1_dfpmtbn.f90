@@ -1,7 +1,7 @@
 module mod_b1_dfpmtbn
-implicit none
+  implicit none
 contains
-      subroutine b1_dfpmtbn
+  subroutine b1_dfpmtbn
 !
 !***********************************************************************
 !
@@ -17,28 +17,28 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-   use sortiefichier
-   use modeleturb
-   use kcle
-use mod_convich
-implicit none
+    use para_fige
+    use sortiefichier
+    use modeleturb
+    use kcle
+    use mod_convich
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
-      character(len=24) ::  cicytur0,cncyturb
+    character(len=1316) :: form
+    character(len=24) ::  cicytur0,cncyturb
 !
-      call convich(kicytur0,cicytur0)
-      call convich(kncyturb,cncyturb)
+    call convich(kicytur0,cicytur0)
+    call convich(kncyturb,cncyturb)
 !
-       form='(/,2x,''def. des parametres pour modele de turbulence'',/' &
-             //'2x,''---------------------------------------------'',/' &
-             //'2x,''icytur0                  : '',11x,i5,2x,a/' &
-             //'2x,''ncyturb                  : '',11x,i5,2x,a)'
-      write(imp,form) icytur0,cicytur0, &
-                      ncyturb,cncyturb
+    form='(/,2x,''def. des parametres pour modele de turbulence'',/' &
+         //'2x,''---------------------------------------------'',/' &
+         //'2x,''icytur0                  : '',11x,i5,2x,a/' &
+         //'2x,''ncyturb                  : '',11x,i5,2x,a)'
+    write(imp,form) icytur0,cicytur0, &
+         ncyturb,cncyturb
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_dfpmtbn
+end module mod_b1_dfpmtbn

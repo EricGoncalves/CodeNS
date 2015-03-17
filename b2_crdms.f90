@@ -1,7 +1,7 @@
 module mod_b2_crdms
-implicit none
+  implicit none
 contains
-      subroutine b2_crdms(l)
+  subroutine b2_crdms(l)
 !
 !***********************************************************************
 !
@@ -30,39 +30,37 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-   use sortiefichier
-   use maillage
-implicit none
-integer :: l
-integer :: img
-integer :: lm
+    use para_fige
+    use sortiefichier
+    use maillage
+    implicit none
+    integer          :: img,  l, lm
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
+    character(len=1316) :: form
 !
-       form='(/ 2x,''numero de la grille      : '',11x,i5/' &
-             //'2x,''nb de noeuds (dont fic.) : '',10x,i6/' &
-             //'2x,''tot. noeuds dom preced   : '', 9x,i7/' &
-             //'2x,''nb de cellules(dont fic.): '',10x,i6/' &
-             //'2x,''tot. cellules dom preced : '', 9x,i7/' &
-             //'2x,''nb de facettes(dont fic.): '', 9x,i7/' &
-             //'2x,''tot. facettes dom preced : '', 9x,i7/' &
-             //'2x,''domaine d''''indicage       : '',/' &
-             //'2x,5h id1=,i5,6h  ii1=,i5,6h  ii2=,i5,6h  id2=,i5,/' &
-             //'2x,5h jd1=,i5,6h  jj1=,i5,6h  jj2=,i5,6h  jd2=,i5,/' &
-             //'2x,5h kd1=,i5,6h  kk1=,i5,6h  kk2=,i5,6h  kd2=,i5)'
+    form='(/ 2x,''numero de la grille      : '',11x,i5/' &
+         //'2x,''nb de noeuds (dont fic.) : '',10x,i6/' &
+         //'2x,''tot. noeuds dom preced   : '', 9x,i7/' &
+         //'2x,''nb de cellules(dont fic.): '',10x,i6/' &
+         //'2x,''tot. cellules dom preced : '', 9x,i7/' &
+         //'2x,''nb de facettes(dont fic.): '', 9x,i7/' &
+         //'2x,''tot. facettes dom preced : '', 9x,i7/' &
+         //'2x,''domaine d''''indicage       : '',/' &
+         //'2x,5h id1=,i5,6h  ii1=,i5,6h  ii2=,i5,6h  id2=,i5,/' &
+         //'2x,5h jd1=,i5,6h  jj1=,i5,6h  jj2=,i5,6h  jd2=,i5,/' &
+         //'2x,5h kd1=,i5,6h  kk1=,i5,6h  kk2=,i5,6h  kd2=,i5)'
 !
-      do img=1,lgx
-      lm=l+(img-1)*lz
-      write(imp,form) img, &
-                      nnn(lm),npn(lm),nnc(lm),npc(lm),nnfb(lm),npfb(lm), &
-                      id1(lm),ii1(lm),ii2(lm),id2(lm), &
-                      jd1(lm),jj1(lm),jj2(lm),jd2(lm), &
-                      kd1(lm),kk1(lm),kk2(lm),kd2(lm)
-      enddo
+    do img=1,lgx
+       lm=l+(img-1)*lz
+       write(imp,form) img, &
+            nnn(lm),npn(lm),nnc(lm),npc(lm),nnfb(lm),npfb(lm), &
+            id1(lm),ii1(lm),ii2(lm),id2(lm), &
+            jd1(lm),jj1(lm),jj2(lm),jd2(lm), &
+            kd1(lm),kk1(lm),kk2(lm),kd2(lm)
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b2_crdms
+end module mod_b2_crdms

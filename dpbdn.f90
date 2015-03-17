@@ -1,9 +1,9 @@
 module mod_dpbdn
-implicit none
+  implicit none
 contains
-      subroutine dpbdn( &
-                 mfbe,img, &
-                 ncbd,nxn,nyn,nzn)
+  subroutine dpbdn( &
+       mfbe,img, &
+       ncbd,nxn,nyn,nzn)
 !
 !***********************************************************************
 !
@@ -44,79 +44,60 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use maillage
-      use sortiefichier
-implicit none
-integer :: kkn
-integer :: jjn
-integer :: iin
-integer :: mfbe
-integer :: img
-integer :: ncbd
-integer :: n
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-integer :: lm
-integer :: m0b
-integer :: m0n
-integer :: mb
-integer :: mfbi
-integer :: mfbim
-integer :: mm
-integer :: mn
-integer :: mt
-integer :: n0c
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use boundary
+    use maillage
+    use sortiefichier
+    implicit none
+    integer          ::     i,  iin,  img,    j,  jjn
+    integer          ::     k,  kkn,    l,   lm,  m0b
+    integer          ::   m0n,   mb, mfbe, mfbi,mfbim
+    integer          ::    mm,   mn,   mt,    n,  n0c
+    integer          ::  ncbd,  nid, nijd,  njd
+    double precision :: nxn,nyn,nzn
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
 !
-      iin(n)=id1(lm)+mod(n-n0c-1,nid)
-      jjn(n)=jd1(lm)+mod((n-n0c-1-(iin(n)-id1(lm)))/nid,njd)
-      kkn(n)=kd1(lm)+ &
-             (n-n0c-1-(iin(n)-id1(lm))-(jjn(n)-jd1(lm))*nid)/nijd
+    iin(n)=id1(lm)+mod(n-n0c-1,nid)
+    jjn(n)=jd1(lm)+mod((n-n0c-1-(iin(n)-id1(lm)))/nid,njd)
+    kkn(n)=kd1(lm)+ &
+         (n-n0c-1-(iin(n)-id1(lm))-(jjn(n)-jd1(lm))*nid)/nijd
 !
-      mfbi=nfei(mfbe)
+    mfbi=nfei(mfbe)
 !
-      mfbim=mfbi+(img-1)*mtb
+    mfbim=mfbi+(img-1)*mtb
 !
-      mt=mmb(mfbim)
-      m0b=mpb(mfbim)
-      m0n=mpn(mfbim)
+    mt=mmb(mfbim)
+    m0b=mpb(mfbim)
+    m0n=mpn(mfbim)
 !
-      l=ndlb(mfbi)
-      lm=l+(img-1)*lz
+    l=ndlb(mfbi)
+    lm=l+(img-1)*lz
 !
-      n0c =npc(lm)
-      nid =id2(lm)-id1(lm)+1
-      njd =jd2(lm)-jd1(lm)+1
-      nijd=nid*njd
+    n0c =npc(lm)
+    nid =id2(lm)-id1(lm)+1
+    njd =jd2(lm)-jd1(lm)+1
+    nijd=nid*njd
 !
-      do mm=1,mt
-      mb=m0b+mm
-      mn=m0n+mm
-      n=ncbd(mb)
-      i=iin(n)
-      j=jjn(n)
-      k=kkn(n)
-      if (mod(mm,50).eq.1) write(imp,1900)
-      write(imp,1910) mm,l,img,n,i,j,k,nxn(mn),nyn(mn),nzn(mn)
-      enddo
+    do mm=1,mt
+       mb=m0b+mm
+       mn=m0n+mm
+       n=ncbd(mb)
+       i=iin(n)
+       j=jjn(n)
+       k=kkn(n)
+       if (mod(mm,50).eq.1) write(imp,1900)
+       write(imp,1910) mm,l,img,n,i,j,k,nxn(mn),nyn(mn),nzn(mn)
+    enddo
 !
- 1900 format('1     m',4x,'  l',2x,'img',2x,'     n',2x,'  i', &
-             2x,'  j',2x,'  k',2x,'    nxn   ',2x,'    nyn   ', &
-             2x,'    nzn   '/)
- 1910 format(1x,i5,4x,i3,2x,i3,2x,i6,3(2x,i3),3(2x,f10.6))
+1900 format('1     m',4x,'  l',2x,'img',2x,'     n',2x,'  i', &
+         2x,'  j',2x,'  k',2x,'    nxn   ',2x,'    nyn   ', &
+         2x,'    nzn   '/)
+1910 format(1x,i5,4x,i3,2x,i3,2x,i6,3(2x,i3),3(2x,f10.6))
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine dpbdn
+end module mod_dpbdn

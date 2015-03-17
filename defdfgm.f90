@@ -1,7 +1,7 @@
 module mod_defdfgm
-implicit none
+  implicit none
 contains
-      subroutine defdfgm
+  subroutine defdfgm
 !
 !***********************************************************************
 !
@@ -15,19 +15,19 @@ contains
 !
 !***********************************************************************
 !
-      use kcle
-      use chainecarac
-   use definition
-implicit none
+    use kcle
+    use chainecarac
+    use definition
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      config='tuy '
-      kconfig=1
+    config='tuy '
+    kconfig=1
 !
-      perio=0.
-      kperio=1
+    perio=0.
+    kperio=1
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdfgm
+end module mod_defdfgm

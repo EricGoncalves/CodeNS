@@ -256,98 +256,98 @@ program solve
 !
 !-----parameters --------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use maillage
-      use definition
-      use chainecarac
-      use sortiefichier
-use mod_c_svbdn
-use mod_c_dfpmtbkeg
-use mod_c_svfw
-use mod_c_svbdb
-use mod_c_svbdc
-use mod_inimem
-use mod_c_dfst0
-use mod_c_dffw
-use mod_utdon_gen
-use mod_c_intn
-use mod_c_dfpmcfg
-use mod_c_dfph
-use mod_c_crdms
-use mod_utsorfr
-use mod_met_intep3
-use mod_met_yplus
-use mod_rdcmd
-use mod_c_svgr
-use mod_atlecdon
-use mod_c_dfpmtbn
-use mod_c_nzst
-use mod_c_dftl1
-use mod_svdual
-use mod_c_cpfw
-use mod_c_end
-use mod_c_crbds
-use mod_c_cpbd
-use mod_c_dfpmdtg
-use mod_c_dfpmdtd
-use mod_c_dfnzst
-use mod_c_dfgm
-use mod_c_infw
-use mod_c_secpfw
-use mod_c_svbd
-use mod_c_dfpmdsd
-use mod_c_dpdim
-use mod_c_dpbd
-use mod_c_dfnm
-use mod_c_inbdn
-use mod_c_inbdc
-use mod_c_dfpmimd
-use mod_c_ingr
-use mod_c_inbdb
-use mod_c_dfst
-implicit none
+  use para_var
+  use para_fige
+  use boundary
+  use maillage
+  use definition
+  use chainecarac
+  use sortiefichier
+  use mod_c_svbdn
+  use mod_c_dfpmtbkeg
+  use mod_c_svfw
+  use mod_c_svbdb
+  use mod_c_svbdc
+  use mod_inimem
+  use mod_c_dfst0
+  use mod_c_dffw
+  use mod_utdon_gen
+  use mod_c_intn
+  use mod_c_dfpmcfg
+  use mod_c_dfph
+  use mod_c_crdms
+  use mod_utsorfr
+  use mod_met_intep3
+  use mod_met_yplus
+  use mod_rdcmd
+  use mod_c_svgr
+  use mod_atlecdon
+  use mod_c_dfpmtbn
+  use mod_c_nzst
+  use mod_c_dftl1
+  use mod_svdual
+  use mod_c_cpfw
+  use mod_c_end
+  use mod_c_crbds
+  use mod_c_cpbd
+  use mod_c_dfpmdtg
+  use mod_c_dfpmdtd
+  use mod_c_dfnzst
+  use mod_c_dfgm
+  use mod_c_infw
+  use mod_c_secpfw
+  use mod_c_svbd
+  use mod_c_dfpmdsd
+  use mod_c_dpdim
+  use mod_c_dpbd
+  use mod_c_dfnm
+  use mod_c_inbdn
+  use mod_c_inbdc
+  use mod_c_dfpmimd
+  use mod_c_ingr
+  use mod_c_inbdb
+  use mod_c_dfst
+  implicit none
 !
 !-----------------------------------------------------------------------
 !
-      integer           :: iyplus
-      integer           :: img,imot,l,mfbi,mfc,mfn,mfr,mnc,mnpar,mnr,ncbd,ncin
-      integer           :: ncyc,nmot
-      double precision              :: mu,mut,nxn,nyn,nzn
-      double precision  :: aam,bceqt,cfke,cmui1,cmui2,cmuj1,cmuj2,cmuk1
-      double precision  :: cmuk2,cson,cvi,cvj,cvk,d0x,d0y,d0z,dist,dt,exs1
-      double precision  :: exs2,fgam,pres,pression,ptdual,qcx,qcy,qcz,qtx,qty,qtz,r,res,roam
-      double precision  :: rod,roed,roud,rovd,rowd,rpi,rti,sn,tam,tm1,tm10,tm11,tm12,tm13
-      double precision  :: tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tn1,tn10,tn2,tn3,tn4,tn5,tn6,tn7
-      double precision  :: tn8,tn9,tnte1,tnte2,tnte3,tnte4,toxx,toxy,toxz,toyy,toyz,tozz,tp
-      double precision  :: utau,v,vdual,vdual1,vdual2,vol,x,xnr,y,ynr,z,znr,ztemp
-      character(len=32) :: comment,mot(nmx)
+  integer           :: iyplus
+  integer           :: img,imot,l,mfbi,mfc,mfn,mfr,mnc,mnpar,mnr,ncbd,ncin
+  integer           :: ncyc,nmot
+  double precision              :: mu,mut,nxn,nyn,nzn
+  double precision  :: aam,bceqt,cfke,cmui1,cmui2,cmuj1,cmuj2,cmuk1
+  double precision  :: cmuk2,cson,cvi,cvj,cvk,d0x,d0y,d0z,dist,dt,exs1
+  double precision  :: exs2,fgam,pres,pression,ptdual,qcx,qcy,qcz,qtx,qty,qtz,r,res,roam
+  double precision  :: rod,roed,roud,rovd,rowd,rpi,rti,sn,tam,tm1,tm10,tm11,tm12,tm13
+  double precision  :: tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tn1,tn10,tn2,tn3,tn4,tn5,tn6,tn7
+  double precision  :: tn8,tn9,tnte1,tnte2,tnte3,tnte4,toxx,toxy,toxz,toyy,toyz,tozz,tp
+  double precision  :: utau,v,vdual,vdual1,vdual2,vol,x,xnr,y,ynr,z,znr,ztemp
+  character(len=32) :: comment,mot(nmx)
 !
-      dimension imot(nmx)
-      dimension v(ip11,ip60)
-      dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),ptdual(ip11,ip60)
-      dimension r(ip11),dt(ip11),vol(ip11),ztemp(ip11),pression(ip11),cson(ip11)
-      dimension mu(ip12),mut(ip12),dist(ip12), &
-                toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
-                tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12),mnpar(ip12)
-      dimension cfke(ip13),pres(ip40)
-      dimension sn(ip31*ndir)
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension cvi(ip21),cvj(ip21),cvk(ip21), &
-                cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
-      dimension rpi(ip40),rti(ip40),d0x(ip40),d0y(ip40),d0z(ip40), &
-                qtx(ip40),qty(ip40),qtz(ip40),res(ip40),tp(ip40), &
-                rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-      dimension ncbd(ip41),ncin(ip41)
-      dimension bceqt(ip41,neqt)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),fgam(ip42),utau(ip42)
-      dimension mnc(ip43)
-      dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
+  dimension imot(nmx)
+  dimension v(ip11,ip60)
+  dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),ptdual(ip11,ip60)
+  dimension r(ip11),dt(ip11),vol(ip11),ztemp(ip11),pression(ip11),cson(ip11)
+  dimension mu(ip12),mut(ip12),dist(ip12), &
+       toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
+       tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12),mnpar(ip12)
+  dimension cfke(ip13),pres(ip40)
+  dimension sn(ip31*ndir)
+  dimension x(ip21),y(ip21),z(ip21)
+  dimension cvi(ip21),cvj(ip21),cvk(ip21), &
+       cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
+  dimension rpi(ip40),rti(ip40),d0x(ip40),d0y(ip40),d0z(ip40), &
+       qtx(ip40),qty(ip40),qtz(ip40),res(ip40),tp(ip40), &
+       rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
+  dimension ncbd(ip41),ncin(ip41)
+  dimension bceqt(ip41,neqt)
+  dimension nxn(ip42),nyn(ip42),nzn(ip42),fgam(ip42),utau(ip42)
+  dimension mnc(ip43)
+  dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
 !     tableaux de travail
-      dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40), &
-                tm5(ip40),tm6(ip40),tm7(ip40),tm8(ip40), &
-                tm9(ip40),tm10(ip40),tm11(ip40),tm12(ip40),tm13(ip40)
+  dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40), &
+       tm5(ip40),tm6(ip40),tm7(ip40),tm8(ip40), &
+       tm9(ip40),tm10(ip40),tm11(ip40),tm12(ip40),tm13(ip40)
 !    tm14(ip40),tm15(ip40),tm16(ip40), &
 !                tm17(ip40),tm18(ip40),tm19(ip40),tm20(ip40), &
 !                tm21(ip40),tm22(ip40),tm23(ip40),tm24(ip40), &
@@ -356,28 +356,28 @@ implicit none
 !                tm33(ip40),tm34(ip40),tm35(ip40),tm36(ip40), &
 !                tm37(ip40),tm38(ip40),tm39(ip40),tm40(ip40), &
 !                tm41(ip40),tm42(ip40),tm43(ip40),tm44(ip40)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
-                tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
-      dimension tnte1(ip11,ip60),tnte2(ip11,ip60),tnte3(ip11,ip60),tnte4(ip11,ip60)
+  dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
+       tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
+  dimension tnte1(ip11,ip60),tnte2(ip11,ip60),tnte3(ip11,ip60),tnte4(ip11,ip60)
 !
-      exs1= 1.
-      exs2= 0.
+  exs1= 1.
+  exs2= 0.
 !     exr1= 2.
 !     exr2=-1.
 !
 !     reservation des unites logiques generales
 !
-      open(lec  ,file='flec')
-      open(imp  ,file='fimp')
-      open(out  ,file='fout')
-      open(sec  ,file='fsec')
-      open(sor1 ,file='smoy')
-      open(sor2 ,file='pres')
-      open(sor3 ,file='resro')
-      open(kfa  ,file='fcla',form='formatted')
-      open(kdgv ,file='fgv' ,form='unformatted')
-      open(kdgc ,file='fgc' ,form='unformatted')
-      open(kdac ,file='fac' ,form='unformatted')
+  open(lec  ,file='flec')
+  open(imp  ,file='fimp')
+  open(out  ,file='fout')
+  open(sec  ,file='fsec')
+  open(sor1 ,file='smoy')
+  open(sor2 ,file='pres')
+  open(sor3 ,file='resro')
+  open(kfa  ,file='fcla',form='formatted')
+  open(kdgv ,file='fgv' ,form='unformatted')
+  open(kdgc ,file='fgc' ,form='unformatted')
+  open(kdac ,file='fac' ,form='unformatted')
 !      open(kdav ,file='fav' ,form='unformatted')
 !      open(kdgcf,file='fgcf',form='unformatted')
 !      open(kdacf,file='facf',form='unformatted')
@@ -389,285 +389,285 @@ implicit none
 !      open(kres ,file='fres',form='unformatted')
 !
 !     lecture fichier "fatdon" des donnees des modeles 2 equations
-      call atlecdon
+  call atlecdon
 !
 !     initialisations
 !
-       call inimem(          &
-                 dt,v,mu,mut, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 sn, &
-                 vol, &
-                 ptdual,vdual,vdual1,vdual2, &
-                 cvi,cvj,cvk, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
-                 pression,ztemp,cson, &
-                 tnte1,tnte3,tnte4, &
-                 ncyc, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 comment)
+  call inimem(          &
+       dt,v,mu,mut, &
+       toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+       sn, &
+       vol, &
+       ptdual,vdual,vdual1,vdual2, &
+       cvi,cvj,cvk, &
+       cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
+       pression,ztemp,cson, &
+       tnte1,tnte3,tnte4, &
+       ncyc, &
+       tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+       comment)
 !
 !  lecture et interpretation des donnees  ******************************
 !
-      mot=""
-      do while(mot(1)(1:3).ne.'end')
+  mot=""
+  do while(mot(1)(1:3).ne.'end')
 !
-      call rdcmd(mot,imot,nmot)
+     call rdcmd(mot,imot,nmot)
 !
 !--   #
-      if((imot(1).eq.1).and.(mot(1)(1:1).eq.'#')) then
+     if((imot(1).eq.1).and.(mot(1)(1:1).eq.'#')) then
         continue
 !--   CALL
-      elseif((imot(1).eq.4).and.(mot(1)(1:4).eq.'call')) then
+     elseif((imot(1).eq.4).and.(mot(1)(1:4).eq.'call')) then
 !--   CALL UTDON
         if((imot(2).eq.9).and.(mot(2)(1:9).eq.'utdon_gen')) then
-            call utdon_gen( &
-                 config,cl,x,y,z,omg, &
-                 ncbd,v, &
-                 nxn,nyn,nzn)
+           call utdon_gen( &
+                config,cl,x,y,z,omg, &
+                ncbd,v, &
+                nxn,nyn,nzn)
 !
 !--   CALL UTSOR
         elseif((imot(2).eq.5).and.(mot(2)(1:5).eq.'utsor')) then
-          if(equat(1:2).eq.'ns') then
-            call utsorfr( &
-                 ncbd,ncin,v,mu,mut, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 x,y,z,nxn,nyn,nzn, &
-                 pression,ztemp,cson)
+           if(equat(1:2).eq.'ns') then
+              call utsorfr( &
+                   ncbd,ncin,v,mu,mut, &
+                   toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                   x,y,z,nxn,nyn,nzn, &
+                   pression,ztemp,cson)
 !
 !           calcul et ecriture de y+ pour la premiere maille
 !            hauteur demi-maille adjacente aux parois
-            iyplus=1
-            if(iyplus.eq.1) then
-            call  met_yplus( &
-                 ncbd,ncin,v,mu,dist, &
-                 toxx,toxy,toxz,toyy,toyz,tozz, &
-                 x,y,z,nxn,nyn,nzn)
-            endif
+              iyplus=1
+              if(iyplus.eq.1) then
+                 call  met_yplus( &
+                      ncbd,ncin,v,mu,dist, &
+                      toxx,toxy,toxz,toyy,toyz,tozz, &
+                      x,y,z,nxn,nyn,nzn)
+              endif
 !
 !           integration des epaisseurs de couche limite
 !
-            call met_intep3( &
-                 ncbd,ncin,v, &
-                 sn,vol, &
-                 dist,mnpar,mu, &
-                 tn1,tn2,tn3,tn4,tn5, &
-                 toxx,toxy,toxz,toyy,toyz,tozz, &
-                 x,y,z,nxn,nyn,nzn, &
-                 pression,cson,ztemp, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-          else
+              call met_intep3( &
+                   ncbd,ncin,v, &
+                   sn,vol, &
+                   dist,mnpar,mu, &
+                   tn1,tn2,tn3,tn4,tn5, &
+                   toxx,toxy,toxz,toyy,toyz,tozz, &
+                   x,y,z,nxn,nyn,nzn, &
+                   pression,cson,ztemp, &
+                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+           else
 !           calcul Euler
 !
 !            call utsor( &
 !                 ncbd,v,mut, &
 !                 x,y,z,nxn,nyn,nzn)
-          endif
+           endif
 !
         else
-            call synterr(mot,imot,2,cb)
+           call synterr(mot,imot,2,cb)
         endif
 !--   COMPUTE
-      elseif  ((imot(1).eq.7).and.(mot(1)(1:7).eq.'compute')) then
+     elseif  ((imot(1).eq.7).and.(mot(1)(1:7).eq.'compute')) then
 !--   COMPUTE FLOW
         if((imot(2).eq.4).and.(mot(2)(1:4).eq.'flow')) then
 !
-            call c_cpfw( &
-                 mot,imot,nmot, &
-                 ncyc, &
-                 x,y,z,r,exs1,exs2,nxn,nyn,nzn, &
-                 sn, &
-                 vol, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 mu,mut,dist,cfke, &
-                 mnpar,fgam,utau, &
-                 v,dt, &
-                 ptdual,vdual,vdual1,vdual2, &
-                 tnte1,tnte2,tnte3,tnte4, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10, &
-                 tm11,tm12,tm13, &
-                 ncin, &
-                 mnc, &
-                 ncbd,mnr,xnr,ynr,znr, &
-                 bceqt, &
-                 rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,pres,tp, &
-                 rod,roud,rovd,rowd,roed, &
-                 pression,ztemp,cson, &
-                 cvi,cvj,cvk, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+           call c_cpfw( &
+                mot,imot,nmot, &
+                ncyc, &
+                x,y,z,r,exs1,exs2,nxn,nyn,nzn, &
+                sn, &
+                vol, &
+                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                mu,mut,dist,cfke, &
+                mnpar,fgam,utau, &
+                v,dt, &
+                ptdual,vdual,vdual1,vdual2, &
+                tnte1,tnte2,tnte3,tnte4, &
+                toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10, &
+                tm11,tm12,tm13, &
+                ncin, &
+                mnc, &
+                ncbd,mnr,xnr,ynr,znr, &
+                bceqt, &
+                rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,pres,tp, &
+                rod,roud,rovd,rowd,roed, &
+                pression,ztemp,cson, &
+                cvi,cvj,cvk, &
+                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !--   COMPUTE BOUNDARY
         else if((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
-            call c_cpbd( &
-                 mot,imot,nmot, &
-                 ncin,nxn,nyn,nzn,ncbd, &
-                 sn,vol,v,mut, &
-                 bceqt, &
-                 rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,x,y,z,omg, &
-                 pres,tp,rod,roud,rovd,rowd,roed, &
-                 mnr,xnr,ynr,znr,mnc, &
-                 tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
-                 tm12,tm13,pression,ztemp,cson)
+           call c_cpbd( &
+                mot,imot,nmot, &
+                ncin,nxn,nyn,nzn,ncbd, &
+                sn,vol,v,mut, &
+                bceqt, &
+                rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,x,y,z,omg, &
+                pres,tp,rod,roud,rovd,rowd,roed, &
+                mnr,xnr,ynr,znr,mnc, &
+                tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
+                tm12,tm13,pression,ztemp,cson)
 !
         else
-            call synterr(mot,imot,2,cb)
+           call synterr(mot,imot,2,cb)
         endif
 !--   CREATE
-      elseif((imot(1).eq.6).and.(mot(1)(1:6).eq.'create')) then
+     elseif((imot(1).eq.6).and.(mot(1)(1:6).eq.'create')) then
 !--   CREATE DOM
         if((imot(2).eq.3).and.(mot(2)(1:3).eq.'dom')) then
 !--   CREATE DOM ST
-          if((imot(3).eq.2).and.(mot(3)(1:2).eq.'st')) then
-            call c_crdms(mot,imot,nmot)
-          else
-            call synterr(mot,imot,3,cb)
-          endif
+           if((imot(3).eq.2).and.(mot(3)(1:2).eq.'st')) then
+              call c_crdms(mot,imot,nmot)
+           else
+              call synterr(mot,imot,3,cb)
+           endif
 !--   CREATE BOUNDARY
         elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
 !--   CREATE BOUNDARY ST
-          if((imot(3).eq.2).and.(mot(3)(1:2).eq.'st')) then
-            call c_crbds(mot,imot,nmot,ncbd)
-          else
-            call synterr(mot,imot,3,cb)
-          endif
+           if((imot(3).eq.2).and.(mot(3)(1:2).eq.'st')) then
+              call c_crbds(mot,imot,nmot,ncbd)
+           else
+              call synterr(mot,imot,3,cb)
+           endif
         else
-            call synterr(mot,imot,2,cb)
+           call synterr(mot,imot,2,cb)
         endif
 !--   DEFINE
-      elseif((imot(1).eq.6).and.(mot(1)(1:6).eq.'define')) then
+     elseif((imot(1).eq.6).and.(mot(1)(1:6).eq.'define')) then
 !--   DEFINE TITLE
         if((imot(2).eq.5).and.(mot(2)(1:5).eq.'title')) then
-            call c_dftl1(mot,imot,nmot)
+           call c_dftl1(mot,imot,nmot)
 !--   DEFINE GEOMETRY
         elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'geometry')) then
-            call c_dfgm(mot,imot,nmot)
+           call c_dfgm(mot,imot,nmot)
 !--   DEFINE FLOW
         elseif((imot(2).eq.4).and.(mot(2)(1:4).eq.'flow')) then
-            call c_dffw(mot,imot,nmot)
+           call c_dffw(mot,imot,nmot)
 !--   DEFINE PHYSICS
         elseif((imot(2).eq.7).and.(mot(2)(1:7).eq.'physics')) then
-            call c_dfph(mot,imot,nmot)
+           call c_dfph(mot,imot,nmot)
 !--   DEFINE NUMERICS
         elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'numerics')) then
-            call c_dfnm(mot,imot,nmot)
+           call c_dfnm(mot,imot,nmot)
 !--   DEFINE STATE
         elseif((imot(2).eq.5).and.(mot(2)(1:5).eq.'state')) then
-            call c_dfst(mot,imot,nmot)
+           call c_dfst(mot,imot,nmot)
 !--   DEFINE NORMALIZ
         elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'normaliz')) then
-            call c_dfnzst(mot,imot,nmot)
+           call c_dfnzst(mot,imot,nmot)
 !
 !     definition d'un etat amont
-      roam=ronz
-      aam=anz
-      tam=tnz
+           roam=ronz
+           aam=anz
+           tam=tnz
 !
-      call c_dfst0(roam,aam,tam)
+           call c_dfst0(roam,aam,tam)
 !
 !--   normalisation etat
 !
-      call c_nzst(roam,aam,tam)
+           call c_nzst(roam,aam,tam)
 !
 !--   DEFINE PM_DTD
         elseif((imot(2).eq.6).and.(mot(2)(1:6).eq.'pm_dtd')) then
-            call c_dfpmdtd(mot,imot,nmot)
+           call c_dfpmdtd(mot,imot,nmot)
 !--   DEFINE PM_DTG
         elseif((imot(2).eq.6).and.(mot(2)(1:6).eq.'pm_dtg')) then
-            call c_dfpmdtg(mot,imot,nmot)
+           call c_dfpmdtg(mot,imot,nmot)
 !--   DEFINE PM_TURBN
         elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'pm_turbn')) then
-            call c_dfpmtbn(mot,imot,nmot)
+           call c_dfpmtbn(mot,imot,nmot)
 !--   DEFINE PM_TURBP
         elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'pm_turbp')) then
 !--   DEFINE PM_TURBP KEPS
-          if((imot(3).eq.4).and.(mot(3)(1:4).eq.'keps')) then
+           if((imot(3).eq.4).and.(mot(3)(1:4).eq.'keps')) then
 !--   DEFINE PM_TURBP KEPS GENERAL
-            if((imot(4).eq.7).and.(mot(4)(1:7).eq.'general')) then
-            call c_dfpmtbkeg(mot,imot,nmot)
-            else
-                call synterr(mot,imot,4,cb)
-            endif
-          else
+              if((imot(4).eq.7).and.(mot(4)(1:7).eq.'general')) then
+                 call c_dfpmtbkeg(mot,imot,nmot)
+              else
+                 call synterr(mot,imot,4,cb)
+              endif
+           else
               call synterr(mot,imot,3,cb)
-          endif
+           endif
 !--   DEFINE PM_NUMD
         elseif((imot(2).eq.7).and.(mot(2)(1:7).eq.'pm_numd')) then
-            call c_dfpmdsd(mot,imot,nmot)
+           call c_dfpmdsd(mot,imot,nmot)
 !--   DEFINE PM_NUMI
         elseif((imot(2).eq.7).and.(mot(2)(1:7).eq.'pm_numi')) then
-            call c_dfpmimd(mot,imot,nmot)
+           call c_dfpmimd(mot,imot,nmot)
 !--   DEFINE PM_CFG
         elseif((imot(2).eq.6).and.(mot(2)(1:6).eq.'pm_cfg')) then
-            call c_dfpmcfg(mot,imot,nmot)
+           call c_dfpmcfg(mot,imot,nmot)
         else
-            call synterr(mot,imot,2,cb)
+           call synterr(mot,imot,2,cb)
         endif
 !--   DISPLAY
-      elseif((imot(1).eq.7).and.(mot(1)(1:7).eq.'display')) then
+     elseif((imot(1).eq.7).and.(mot(1)(1:7).eq.'display')) then
 !--   DISPLAY BOUNDARY
         if((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
-            call c_dpbd( &
-                 mot,imot,nmot, &
-                 ncbd,ncin, &
-                 nxn,nyn,nzn, &
-                 mnc, &
-                 mnr,xnr,ynr,znr, &
-                 tm1,tm2,tm3, &
-                 tm4,tm5,tm6)
+           call c_dpbd( &
+                mot,imot,nmot, &
+                ncbd,ncin, &
+                nxn,nyn,nzn, &
+                mnc, &
+                mnr,xnr,ynr,znr, &
+                tm1,tm2,tm3, &
+                tm4,tm5,tm6)
 !--   DISPLAY DIMENSION
         elseif((imot(2).eq.9).and.(mot(2)(1:9).eq.'dimension')) then
-            call c_dpdim(mot,imot,nmot)
+           call c_dpdim(mot,imot,nmot)
         endif
 !--   END
-      elseif((imot(1).eq.3).and.(mot(1)(1:3).eq.'end')) then
-         call c_end(mot,imot,nmot)
+     elseif((imot(1).eq.3).and.(mot(1)(1:3).eq.'end')) then
+        call c_end(mot,imot,nmot)
 !--   INIT
-      elseif((imot(1).eq.4).and.(mot(1)(1:4).eq.'init')) then
+     elseif((imot(1).eq.4).and.(mot(1)(1:4).eq.'init')) then
 !--   INIT DOM
         if((imot(2).eq.3).and.(mot(2)(1:3).eq.'dom')) then
 !--   INIT DOM XYZ
-          if((imot(3).eq.3).and.(mot(3)(1:3).eq.'xyz')) then
-            call c_ingr( &
-                 mot,imot,nmot, &
-                 x,y,z)
+           if((imot(3).eq.3).and.(mot(3)(1:3).eq.'xyz')) then
+              call c_ingr( &
+                   mot,imot,nmot, &
+                   x,y,z)
 !--   INIT DOM CSVMUT
-          elseif((imot(3).eq.6).and.(mot(3)(1:6).eq.'csvmut')) then
-            call c_infw( &
-                 mot,imot,nmot, &
-                 x,y,z,v,mut,tnte1,utau, &
-                 vdual,vdual1,vdual2)
+           elseif((imot(3).eq.6).and.(mot(3)(1:6).eq.'csvmut')) then
+              call c_infw( &
+                   mot,imot,nmot, &
+                   x,y,z,v,mut,tnte1,utau, &
+                   vdual,vdual1,vdual2)
 !--   INIT DOM NUMT
-          else if((imot(3).eq.4).and.(mot(3)(1:4).eq.'numt')) then
-            call c_intn(mot,imot,nmot)
-          else
-            call synterr(mot,imot,3,cb)
-          endif
+           else if((imot(3).eq.4).and.(mot(3)(1:4).eq.'numt')) then
+              call c_intn(mot,imot,nmot)
+           else
+              call synterr(mot,imot,3,cb)
+           endif
 !--   INIT BOUNDARY
         elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
 !--   INIT BOUNDARY BASIC
-          if((imot(3).eq.5).and.(mot(3)(1:5).eq.'basic')) then
-            call c_inbdb( &
-                 mot,imot,nmot, &
-                 ncbd,ncin,bceqt)
+           if((imot(3).eq.5).and.(mot(3)(1:5).eq.'basic')) then
+              call c_inbdb( &
+                   mot,imot,nmot, &
+                   ncbd,ncin,bceqt)
 !--   INIT BOUNDARY NORM
-          elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'norm')) then
-            call c_inbdn( &
-                 mot,imot,nmot, &
-                 x,y,z, &
-                 sn, &
-                 ncbd,nxn,nyn,nzn, &
-                 tn1,tn2,tn3,tn4,tn5,tn6, &
-                 tn7,tn8,tn9)
+           elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'norm')) then
+              call c_inbdn( &
+                   mot,imot,nmot, &
+                   x,y,z, &
+                   sn, &
+                   ncbd,nxn,nyn,nzn, &
+                   tn1,tn2,tn3,tn4,tn5,tn6, &
+                   tn7,tn8,tn9)
 !--   INIT BOUNDARY COIN
-          elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'coin')) then
-            call c_inbdc( &
-                 mot,imot,nmot, &
-                 exs1,exs2, &
-                 x,y,z, &
-                 ncbd,ncin,mnc)
+           elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'coin')) then
+              call c_inbdc( &
+                   mot,imot,nmot, &
+                   exs1,exs2, &
+                   x,y,z, &
+                   ncbd,ncin,mnc)
 !--   INIT BOUNDARY NONCOIN
-          elseif((imot(3).eq.7).and.(mot(3)(1:7).eq.'noncoin')) then
+           elseif((imot(3).eq.7).and.(mot(3)(1:7).eq.'noncoin')) then
 !            call c_inbdr( &
 !                 mot,imot,nmot, &
 !                 exr1,exr2,exs1,exs2, &
@@ -679,106 +679,106 @@ implicit none
 !                 tm31,tm32,tm33,tm34,tm35,tm36,tm37,tm38,tm39,tm40, &
 !                 tm41,tm42,tm43,tm44, &
 !                 tn1,tn2,tn3)
-          else
-            call synterr(mot,imot,3,cb)
-          endif
+           else
+              call synterr(mot,imot,3,cb)
+           endif
         else
-            call synterr(mot,imot,2,cb)
+           call synterr(mot,imot,2,cb)
         endif
 !--   SAVE
-      elseif((imot(1).eq.4).and.(mot(1)(1:4).eq.'save')) then
+     elseif((imot(1).eq.4).and.(mot(1)(1:4).eq.'save')) then
 !--   SAVE DOM
         if((imot(2).eq.3).and.(mot(2)(1:3).eq.'dom')) then
 !--   SAVE DOM XYZ
-          if((imot(3).eq.3).and.(mot(3)(1:3).eq.'xyz')) then
-            do l=1,lzx
-            call c_svgr( &
-                 mot,imot,nmot, &
-                 l,x,y,z, &
-                 tn1,tn2,tn3)
-            enddo
+           if((imot(3).eq.3).and.(mot(3)(1:3).eq.'xyz')) then
+              do l=1,lzx
+                 call c_svgr( &
+                      mot,imot,nmot, &
+                      l,x,y,z, &
+                      tn1,tn2,tn3)
+              enddo
 !--   SAVE DOM CSVMUT
-          elseif((imot(3).eq.6).and.(mot(3)(1:6).eq.'csvmut')) then
-            do l=1,lzx
-            call c_svfw( &
-                 mot,imot,nmot, &
-                 l,v,mut,utau, &
-                 ncin,ncbd, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
-            enddo
-          else
-            call synterr(mot,imot,3,cb)
-          endif
+           elseif((imot(3).eq.6).and.(mot(3)(1:6).eq.'csvmut')) then
+              do l=1,lzx
+                 call c_svfw( &
+                      mot,imot,nmot, &
+                      l,v,mut,utau, &
+                      ncin,ncbd, &
+                      tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
+              enddo
+           else
+              call synterr(mot,imot,3,cb)
+           endif
 !--   SAVE DUAL
-         elseif((imot(2).eq.4).and.(mot(2)(1:4).eq.'dual')) then
-          do l=1,lzx
-           call svdual(l,vdual,vdual1,vdual2)
-          enddo
+        elseif((imot(2).eq.4).and.(mot(2)(1:4).eq.'dual')) then
+           do l=1,lzx
+              call svdual(l,vdual,vdual1,vdual2)
+           enddo
 !--   SAVE BOUNDARY
         elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
 !--   SAVE BOUNDARY 'CREATION'
-          if(nmot.eq.2) then
-           do mfbi=1,mtbx
-            call c_svbd( &
-                 mot,imot,nmot, &
-                 mfbi, &
-                 ncbd)
-           enddo
+           if(nmot.eq.2) then
+              do mfbi=1,mtbx
+                 call c_svbd( &
+                      mot,imot,nmot, &
+                      mfbi, &
+                      ncbd)
+              enddo
 !--   SAVE BOUNDARY BASIC
-          else if((imot(3).eq.5).and.(mot(3)(1:5).eq.'basic')) then
-           do mfbi=1,mtbx
-            call c_svbdb( &
-                 mot,imot,nmot, &
-                 mfbi, &
-                 ncin)
-           enddo
+           else if((imot(3).eq.5).and.(mot(3)(1:5).eq.'basic')) then
+              do mfbi=1,mtbx
+                 call c_svbdb( &
+                      mot,imot,nmot, &
+                      mfbi, &
+                      ncin)
+              enddo
 !--   SAVE BOUNDARY NORM
-          elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'norm')) then
-           do mfn=1,mtnx
-           mfbi=nfbn(mfn)
-            call c_svbdn( &
-                 mot,imot,nmot, &
-                 mfbi, &
-                 nxn,nyn,nzn)
-           enddo
+           elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'norm')) then
+              do mfn=1,mtnx
+                 mfbi=nfbn(mfn)
+                 call c_svbdn( &
+                      mot,imot,nmot, &
+                      mfbi, &
+                      nxn,nyn,nzn)
+              enddo
 !--   SAVE BOUNDARY COIN
-          elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'coin')) then
-           do mfc=1,mtcx
-            mfbi=nfbc(mfc)
-            call c_svbdc( &
-                 mot,imot,nmot, &
-                 mfbi, &
-                 mnc)
-      enddo
+           elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'coin')) then
+              do mfc=1,mtcx
+                 mfbi=nfbc(mfc)
+                 call c_svbdc( &
+                      mot,imot,nmot, &
+                      mfbi, &
+                      mnc)
+              enddo
 !--   SAVE BOUNDARY NONCOIN
-          elseif((imot(3).eq.7).and.(mot(3)(1:7).eq.'noncoin')) then
-           do mfr=1,mtrx
-            mfbi=nfbr(mfr)
-            do img=1,lgx
+           elseif((imot(3).eq.7).and.(mot(3)(1:7).eq.'noncoin')) then
+              do mfr=1,mtrx
+                 mfbi=nfbr(mfr)
+                 do img=1,lgx
 !             call c_svbdr( &
 !                 mot,imot,nmot, &
 !                 mfbi,img, &
 !                 mnr,xnr,ynr,znr)
-            enddo
-           enddo
-          else
-            call synterr(mot,imot,3,cb)
-          endif
+                 enddo
+              enddo
+           else
+              call synterr(mot,imot,3,cb)
+           endif
         else
-            call synterr(mot,imot,2,cb)
+           call synterr(mot,imot,2,cb)
         endif
 !--   SET
-      elseif((imot(1).eq.3).and.(mot(1)(1:3).eq.'set')) then
+     elseif((imot(1).eq.3).and.(mot(1)(1:3).eq.'set')) then
 !--   SET ENV_CPFW
         if((imot(2).eq.8).and.(mot(2)(1:8).eq.'env_cpfw')) then
-          call c_secpfw(mot,imot,nmot)
+           call c_secpfw(mot,imot,nmot)
         else
-          call synterr(mot,imot,2,cb)
+           call synterr(mot,imot,2,cb)
         endif
-      else
-         call synterr(mot,imot,1,cb)
-      endif
+     else
+        call synterr(mot,imot,1,cb)
+     endif
 !
-      enddo
+  enddo
 !
-      end program
+end program solve

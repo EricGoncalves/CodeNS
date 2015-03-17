@@ -1,7 +1,7 @@
 module mod_atintrans
-implicit none
+  implicit none
 contains
-      subroutine atintrans(ncin,fgam)
+  subroutine atintrans(ncin,fgam)
 !
 !***********************************************************************
 !
@@ -64,130 +64,92 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use maillage
-      use boundary
-   use sortiefichier
-   use modeleturb
-implicit none
-integer :: ncin
-double precision :: fgam
-integer :: i1
-integer :: i2
-integer :: idm
-integer :: ilmax
-integer :: ilmin
-integer :: imaxf
-integer :: iminf
-integer :: j1
-integer :: j2
-integer :: jlmax
-integer :: jlmin
-integer :: jmaxf
-integer :: jminf
-integer :: k1
-integer :: k2
-integer :: klmax
-integer :: klmin
-integer :: kmaxf
-integer :: kminf
-integer :: l
-integer :: lig
-integer :: m0b
-integer :: m0n
-integer :: m1
-integer :: m1deb
-integer :: m1fin
-integer :: m1max
-integer :: m1maxm1
-integer :: m1min
-integer :: m2
-integer :: m2deb
-integer :: m2fin
-integer :: m2max
-integer :: m2maxm1
-integer :: m2min
-integer :: mfacn
-integer :: mfe
-integer :: mfl
-integer :: n
-integer :: nci
-integer :: ncj
-integer :: nck
-integer :: nfr
-integer :: nfrmx
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use sortiefichier
+    use modeleturb
+    implicit none
+    integer          ::      i1,     i2,    idm,  ilmax,  ilmin
+    integer          ::   imaxf,  iminf,     j1,     j2,  jlmax
+    integer          ::   jlmin,  jmaxf,  jminf,     k1,     k2
+    integer          ::   klmax,  klmin,  kmaxf,  kminf,      l
+    integer          ::     lig,    m0b,    m0n,     m1,  m1deb
+    integer          ::   m1fin,  m1max,m1maxm1,  m1min,     m2
+    integer          ::   m2deb,  m2fin,  m2max,m2maxm1,  m2min
+    integer          ::   mfacn,    mfe,    mfl,      n,    nci
+    integer          ::    ncin,    ncj,    nck,    nfr,  nfrmx
+    integer          ::     nid,   nijd,    njd
+    double precision :: fgam
 !
 !-----------------------------------------------------------------------
 
-      character(len=80) ::  ligne
-      dimension fgam(ip42),ncin(ip41)
+    character(len=80) ::  ligne
+    dimension fgam(ip42),ncin(ip41)
 !
-      open(99,file='fatdon',status='old',err=100)
+    open(99,file='fatdon',status='old',err=100)
 !
 !     recherche de la ligne "TRANSITION"
 !
-       lig=0
-       do
-          lig=lig+1
-          read(99,300,err=304,end=301)ligne
-          if(ligne(1:6).EQ.'TRANSI') exit
-       enddo
+    lig=0
+    do
+       lig=lig+1
+       read(99,300,err=304,end=301)ligne
+       if(ligne(1:6).EQ.'TRANSI') exit
+    enddo
 !
 !     transition fixee
-      ktransi=1
+    ktransi=1
 !
 !     initialisation de "fgam" a 1
-      do n=1,mdimtnx
-        fgam(n)=1.
-      enddo
+    do n=1,mdimtnx
+       fgam(n)=1.
+    enddo
 !
 !     lecture des frontieres laminaires
 !
-      lig=lig+1
-      read(99,*,err=302)nfrmx
-      if(nfrmx.le.0) then
+    lig=lig+1
+    read(99,*,err=302)nfrmx
+    if(nfrmx.le.0) then
 !       le nombre de zones laminaires doit etre positif
-        write(imp,'(/,"!!!atintrans: domaine laminaire mal defini",14x,"nfrmx=",i5)')nfrmx
-        stop
-      endif
+       write(imp,'(/,"!!!atintrans: domaine laminaire mal defini",14x,"nfrmx=",i5)')nfrmx
+       stop
+    endif
 !
-      do nfr=1,nfrmx
-        read(99,*,err=303)mfe,ilmin,ilmax,jlmin,jlmax,klmin,klmax
+    do nfr=1,nfrmx
+       read(99,*,err=303)mfe,ilmin,ilmax,jlmin,jlmax,klmin,klmax
 !
 !       calcul numero facette de la frontiere
 !
-        mfl=nfei(mfe)
-        l =ndlb(mfl)
+       mfl=nfei(mfe)
+       l =ndlb(mfl)
 !
-        i1=ii1(l)
-        i2=ii2(l)
-        j1=jj1(l)
-        j2=jj2(l)
-        k1=kk1(l)
-        k2=kk2(l)
+       i1=ii1(l)
+       i2=ii2(l)
+       j1=jj1(l)
+       j2=jj2(l)
+       k1=kk1(l)
+       k2=kk2(l)
 !
-        nid = id2(l)-id1(l)+1
-        njd = jd2(l)-jd1(l)+1
-        nijd = nid*njd
+       nid = id2(l)-id1(l)+1
+       njd = jd2(l)-jd1(l)+1
+       nijd = nid*njd
 !
-        nci=1
-        ncj=nid
-        nck=nijd
+       nci=1
+       ncj=nid
+       nck=nijd
 !
-        m0b=mpb(mfl)
-        m0n=mpn(mfl)
-        iminf=iminb(mfl)
-        imaxf=imaxb(mfl)
-        jminf=jminb(mfl)
-        jmaxf=jmaxb(mfl)
-        kminf=kminb(mfl)
-        kmaxf=kmaxb(mfl)
-        m1min=1
-        m2min=1
+       m0b=mpb(mfl)
+       m0n=mpn(mfl)
+       iminf=iminb(mfl)
+       imaxf=imaxb(mfl)
+       jminf=jminb(mfl)
+       jmaxf=jmaxb(mfl)
+       kminf=kminb(mfl)
+       kmaxf=kmaxb(mfl)
+       m1min=1
+       m2min=1
 !
 !           m1deb m1fin : limites de variation des facettes parois laminaires
 !           m2deb m2fin : dans numerotation des frontieres a normale stockee
@@ -203,7 +165,7 @@ integer :: njd
 !            m0n=mpn(mfl)                            pointeur normales stockees
 !
 !
-        if (iminf.eq.imaxf) then
+       if (iminf.eq.imaxf) then
 !         frontiere i=cste
           m1max=jmaxf-jminf+1
           m1maxm1=m1max-1
@@ -214,7 +176,7 @@ integer :: njd
           m2deb=klmin-kminf+1
           m2fin=klmax-kminf
 !
-        elseif (jminf.eq.jmaxf) then
+       elseif (jminf.eq.jmaxf) then
 !         frontiere j=cste
           m1max=imaxf-iminf+1
           m1maxm1=m1max-1
@@ -225,7 +187,7 @@ integer :: njd
           m2deb=klmin-kminf+1
           m2fin=klmax-kminf
 !
-        elseif (kminf.eq.kmaxf) then
+       elseif (kminf.eq.kmaxf) then
 !         frontiere k=cste
           m1max=imaxf-iminf+1
           m1maxm1=m1max-1
@@ -235,49 +197,49 @@ integer :: njd
           m1fin=ilmax-iminf
           m2deb=jlmin-jminf+1
           m2fin=jlmax-jminf
-        endif
+       endif
 !
 !
-        idm=m1max-m1min
-        do m2=m2deb,m2fin
+       idm=m1max-m1min
+       do m2=m2deb,m2fin
 !         boucle sur les bandes
           do m1=m1deb,m1fin
 !           boucle sur les cellules de la bande
-            mfacn=m0n+m1+(m2-1)*idm
-            fgam(mfacn)=0.
+             mfacn=m0n+m1+(m2-1)*idm
+             fgam(mfacn)=0.
           enddo
-        enddo
+       enddo
 !     fin boucle sur frontieres laminaires
-      enddo
-      close(99)
+    enddo
+    close(99)
 !
-  300 format(a80)
+300 format(a80)
 !
-      return
+    return
 !
-  301 continue
+301 continue
 !     fin de fichier. Pas de transition
-      ktransi=0
-      write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ou tout turbulent")')
-      close(99)
-      return
+    ktransi=0
+    write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ou tout turbulent")')
+    close(99)
+    return
 !
-  100 continue
-      write(imp,'(/,"!!!atintrans: erreur ouverture fichier fatdon")')
-      stop
+100 continue
+    write(imp,'(/,"!!!atintrans: erreur ouverture fichier fatdon")')
+    stop
 !
-  302 continue
-      write(imp,'(/,"!!!atintrans: erreur nombre de frontieres laminaires ")')
-      stop
+302 continue
+    write(imp,'(/,"!!!atintrans: erreur nombre de frontieres laminaires ")')
+    stop
 !
-  303 continue
-      write(imp,'(/,"!!!atintrans: erreur lecture frontiere ligne",i4)')lig
-      stop
+303 continue
+    write(imp,'(/,"!!!atintrans: erreur lecture frontiere ligne",i4)')lig
+    stop
 !
-  304 continue
-      write(imp,'(/,"!!!atintrans: erreur positionnement dans fatdon")')
-      stop
+304 continue
+    write(imp,'(/,"!!!atintrans: erreur positionnement dans fatdon")')
+    stop
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine atintrans
+end module mod_atintrans

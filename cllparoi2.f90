@@ -1,14 +1,14 @@
 module mod_cllparoi2
-implicit none
+  implicit none
 contains
-      subroutine cllparoi2( &
-                img,ncyc, &
-                v, & 
-                nxn,nyn,nzn, &
-                ncin,ncbd, &
-                toxx,toxy,toxz,toyy,toyz,tozz, &
-                qcx,qcy,qcz, &
-                ztemp,utau,topz)
+  subroutine cllparoi2( &
+       img,ncyc, &
+       v, & 
+       nxn,nyn,nzn, &
+       ncin,ncbd, &
+       toxx,toxy,toxz,toyy,toyz,tozz, &
+       qcx,qcy,qcz, &
+       ztemp,utau,topz)
 !
 !***********************************************************************
 !
@@ -69,70 +69,56 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-use mod_lparoi4
-use mod_lparoi3d
-implicit none
-integer :: img
-integer :: ncyc
-double precision :: v
-integer :: ncin
-integer :: ncbd
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-double precision :: ztemp
-double precision :: utau
-double precision :: topz
-integer :: mfb
-integer :: no
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use mod_lparoi4
+    use mod_lparoi3d
+    implicit none
+    integer          ::  img, mfb,ncbd,ncin,ncyc
+    integer          ::   no
+    double precision ::   nxn,  nyn,  nzn,  qcx,  qcy
+    double precision ::   qcz, topz, toxx, toxy, toxz
+    double precision ::  toyy, toyz, tozz, utau,    v
+    double precision :: ztemp
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
 !
-      dimension v(ip11,ip60)
-      dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-                toyy(ip12),toyz(ip12),tozz(ip12), &
-                qcx(ip12),qcy(ip12),qcz(ip12) 
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),utau(ip42)
-      dimension ncbd(ip41),ncin(ip41)
-      dimension topz(ip11),ztemp(ip11)
+    dimension v(ip11,ip60)
+    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
+         toyy(ip12),toyz(ip12),tozz(ip12), &
+         qcx(ip12),qcy(ip12),qcz(ip12) 
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),utau(ip42)
+    dimension ncbd(ip41),ncin(ip41)
+    dimension topz(ip11),ztemp(ip11)
 
 !    boucle sur toutes les frontieres
-      do no=1,mtbx
-      mfb=nba(no)
+    do no=1,mtbx
+       mfb=nba(no)
 !      lois de paroi en parois adiabatiques
-        if(cl(mfb)(1:3).eq.'lp4') then
+       if(cl(mfb)(1:3).eq.'lp4') then
 !          if((ncyc.lt.icytur0)) then
           call lparoi4( &
-                ncyc, &
-                nxn,nyn,nzn,  &
-                ncin,ncbd,mfb, &
-                toxx,toxy,toxz,toyy,toyz,tozz, &
-                qcx,qcy,qcz, &
-                v,utau,ztemp)
+               ncyc, &
+               nxn,nyn,nzn,  &
+               ncin,ncbd,mfb, &
+               toxx,toxy,toxz,toyy,toyz,tozz, &
+               qcx,qcy,qcz, &
+               v,utau,ztemp)
 !
-        elseif(cl(mfb)(1:3).eq.'lp5') then
-            call lparoi3d( &
-                ncyc, &
-                nxn,nyn,nzn, &
-                ncin,ncbd,mfb, &
-                toxx,toxy,toxz,toyy,toyz,tozz, &
-                qcx,qcy,qcz, &
-                v,utau,ztemp,topz)
-        endif
-      enddo
+       elseif(cl(mfb)(1:3).eq.'lp5') then
+          call lparoi3d( &
+               ncyc, &
+               nxn,nyn,nzn, &
+               ncin,ncbd,mfb, &
+               toxx,toxy,toxz,toyy,toyz,tozz, &
+               qcx,qcy,qcz, &
+               v,utau,ztemp,topz)
+       endif
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine cllparoi2
+end module mod_cllparoi2

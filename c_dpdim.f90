@@ -1,7 +1,7 @@
 module mod_c_dpdim
-implicit none
+  implicit none
 contains
-      subroutine c_dpdim(mot,imot,nmot)
+  subroutine c_dpdim(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -31,71 +31,61 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use chainecarac
-      use schemanum
-      use boundary
-      use sortiefichier
-use mod_b2_dpdim
+    use para_var
+    use para_fige
+    use maillage
+    use chainecarac
+    use schemanum
+    use boundary
+    use sortiefichier
+    use mod_b2_dpdim
 
-implicit none
-integer :: imot
-integer :: nmot
-integer :: kl
-integer :: l
-integer :: mdimtb
-integer :: mdimtc
-integer :: mdimtn
-integer :: mdimtr
-integer :: ndimctb
-integer :: ndimctc
-integer :: ndimctk
-integer :: ndimctv
-integer :: ndimntb
+    implicit none
+    integer          ::    imot,     kl,      l, mdimtb, mdimtc
+    integer          ::  mdimtn, mdimtr,ndimctb,ndimctc,ndimctk
+    integer          :: ndimctv,ndimntb,   nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      ndimctb=nint((1.+kdimg*ccg)*ndimctf)
-      ndimctv=kdimv*(ndimctb-1)+1
-      ndimctk=kdimk*(ndimctb-1)+1
-      ndimctc=nint(kdimg*ccg*ndimctf)
-      ndimntb=nint((1.+kdimg*cng)*ndimnts+ndimntu)
-      mdimtb =nint((1.+kdimg*cfg)*mdimtbf)
-      mdimtn =nint((1.+kdimg*cfg)*mdimtnf)
-      mdimtc =nint((1.+kdimg*cfg)*mdimtcf)
-      mdimtr =nint((1.+kdimg*cfg)*mdimtrf)
+    ndimctb=nint((1.+kdimg*ccg)*ndimctf)
+    ndimctv=kdimv*(ndimctb-1)+1
+    ndimctk=kdimk*(ndimctb-1)+1
+    ndimctc=nint(kdimg*ccg*ndimctf)
+    ndimntb=nint((1.+kdimg*cng)*ndimnts+ndimntu)
+    mdimtb =nint((1.+kdimg*cfg)*mdimtbf)
+    mdimtn =nint((1.+kdimg*cfg)*mdimtnf)
+    mdimtc =nint((1.+kdimg*cfg)*mdimtcf)
+    mdimtr =nint((1.+kdimg*cfg)*mdimtrf)
 !
-      kl=0
-      do l=1,lzx
+    kl=0
+    do l=1,lzx
        kl=max(kl,kmf(l))
-      enddo
+    enddo
 !
-      if (kimp.ge.2) then
-            call b2_dpdim
-      endif
+    if (kimp.ge.2) then
+       call b2_dpdim
+    endif
 !
-      if (lt     .lt.lzx     ) stop 'dimensionnement incorrecte'
-      if (ndimub .lt.ndimubx ) stop 'dimensionnement incorrecte'
-      if (ndimctb.lt.ndimctbx) stop 'dimensionnement incorrecte'
-      if (ndimntb.lt.ndimntbx) stop 'dimensionnement incorrecte'
-      if((kdimg.eq.0).and.(lgx.gt.1)) &
-                               stop 'dimensionnement incorrecte'
-      if((kdimv.eq.0).and.(equat(1:2).eq.'ns')) &
-                               stop 'dimensionnement incorrecte'
-      if((kdimk.eq.0).and.(equat(1:2).eq.'ke')) &
-                               stop 'dimensionnement incorrecte'
-      if (mtb    .lt.mtbx    ) stop 'dimensionnement incorrecte'
-      if (mdimub .lt.mdimubx ) stop 'dimensionnement incorrecte'
-      if (mdimtb .lt.mdimtbx ) stop 'dimensionnement incorrecte'
-      if (mdimtn .lt.mdimtnx ) stop 'dimensionnement incorrecte'
-      if (mdimtc .lt.mdimtcx ) stop 'dimensionnement incorrecte'
-      if (mdimtr .lt.mdimtrx ) stop 'dimensionnement incorrecte'
+    if (lt     .lt.lzx     ) stop 'dimensionnement incorrecte'
+    if (ndimub .lt.ndimubx ) stop 'dimensionnement incorrecte'
+    if (ndimctb.lt.ndimctbx) stop 'dimensionnement incorrecte'
+    if (ndimntb.lt.ndimntbx) stop 'dimensionnement incorrecte'
+    if((kdimg.eq.0).and.(lgx.gt.1)) &
+         stop 'dimensionnement incorrecte'
+    if((kdimv.eq.0).and.(equat(1:2).eq.'ns')) &
+         stop 'dimensionnement incorrecte'
+    if((kdimk.eq.0).and.(equat(1:2).eq.'ke')) &
+         stop 'dimensionnement incorrecte'
+    if (mtb    .lt.mtbx    ) stop 'dimensionnement incorrecte'
+    if (mdimub .lt.mdimubx ) stop 'dimensionnement incorrecte'
+    if (mdimtb .lt.mdimtbx ) stop 'dimensionnement incorrecte'
+    if (mdimtn .lt.mdimtnx ) stop 'dimensionnement incorrecte'
+    if (mdimtc .lt.mdimtcx ) stop 'dimensionnement incorrecte'
+    if (mdimtr .lt.mdimtrx ) stop 'dimensionnement incorrecte'
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dpdim
+end module mod_c_dpdim

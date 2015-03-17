@@ -1,7 +1,7 @@
 module mod_rfsc
-implicit none
+  implicit none
 contains
-      subroutine rfsc(t,ncbd,mnc)
+  subroutine rfsc(t,ncbd,mnc)
 !
 !***********************************************************************
 !
@@ -27,46 +27,38 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-implicit none
-double precision :: t
-integer :: ncbd
-integer :: mnc
-integer :: m
-integer :: mb
-integer :: mc
-integer :: mf
-integer :: mfb
-integer :: mt
-integer :: nc
-integer :: nd
+    use para_var
+    use para_fige
+    use boundary
+    implicit none
+    integer          ::    m,  mb,  mc,  mf, mfb
+    integer          ::  mnc,  mt,  nc,ncbd,  nd
+    double precision :: t
 !
 !-----------------------------------------------------------------------
 !
-      dimension t(ip11)
-      dimension mnc(ip43),ncbd(ip41)
+    dimension t(ip11)
+    dimension mnc(ip43),ncbd(ip41)
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !
-      mfb=lbd(mf)
-      mt=mmb(mfb)
+       mfb=lbd(mf)
+       mt=mmb(mfb)
 !
 !!$OMP SIMD
-      do m=1,mt
-      mc=mpc(mfb)+m
-      nc=mnc(mc)
-      mb=mpb(mfb)+m
-      nd=ncbd(mb)
+       do m=1,mt
+          mc=mpc(mfb)+m
+          nc=mnc(mc)
+          mb=mpb(mfb)+m
+          nd=ncbd(mb)
 !
 !     definition d'un scalaire aux points fictifs
 !
-      t(nd)=t(nc)
+          t(nd)=t(nc)
 !
-      enddo
-      enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rfsc
+end module mod_rfsc

@@ -1,9 +1,9 @@
 module mod_c_inbdb
-implicit none
+  implicit none
 contains
-      subroutine c_inbdb( &
-                 mot,imot,nmot, &
-                 ncbd,ncin,bceqt)
+  subroutine c_inbdb( &
+       mot,imot,nmot, &
+       ncbd,ncin,bceqt)
 !
 !***********************************************************************
 !
@@ -13,61 +13,51 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use sortiefichier
-use mod_tcmd_inbdb
-use mod_b1_inbdb
-use mod_inbdb
-implicit none
-integer :: imot
-integer :: nmot
-integer :: ncbd
-integer :: ncin
-double precision :: bceqt
-integer :: ibdcfl
-integer :: ibdcst
-integer :: ibddim
-integer :: kibdb
-integer :: l
-integer :: lmfb
-integer :: lmfbd
-integer :: nvbc
-double precision :: vbc
+    use para_var
+    use para_fige
+    use sortiefichier
+    use mod_tcmd_inbdb
+    use mod_b1_inbdb
+    use mod_inbdb
+    implicit none
+    integer          :: ibdcfl,ibdcst,ibddim,  imot, kibdb
+    integer          ::      l,  lmfb, lmfbd,  ncbd,  ncin
+    integer          ::   nmot,  nvbc
+    double precision :: bceqt,  vbc
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      character(len=4 ) :: clmf
+    character(len=32) ::  mot(nmx)
+    character(len=4 ) :: clmf
 !
-      dimension imot(nmx)
-      dimension lmfb(mtb)
-      dimension vbc(ista*lsta)
+    dimension imot(nmx)
+    dimension lmfb(mtb)
+    dimension vbc(ista*lsta)
 !
-      dimension ncbd(ip41)
-      dimension ncin(ip41)
-      dimension bceqt(ip41,neqt)
+    dimension ncbd(ip41)
+    dimension ncin(ip41)
+    dimension bceqt(ip41,neqt)
 !
-      call tcmd_inbdb( &
-                 mot,imot,nmot, &
-                 lmfb,lmfbd,clmf,kibdb, &
-                 ibdcst,ibdcfl,ibddim,nvbc,vbc)
+    call tcmd_inbdb( &
+         mot,imot,nmot, &
+         lmfb,lmfbd,clmf,kibdb, &
+         ibdcst,ibdcfl,ibddim,nvbc,vbc)
 !
-      if (kimp.ge.1) then
-            call b1_inbdb( &
-                 lmfb,lmfbd,clmf,kibdb, &
-                 ibdcst,ibdcfl,ibddim,nvbc,vbc)
-      endif
+    if (kimp.ge.1) then
+       call b1_inbdb( &
+            lmfb,lmfbd,clmf,kibdb, &
+            ibdcst,ibdcfl,ibddim,nvbc,vbc)
+    endif
 !
-      do l=1,lmfbd
+    do l=1,lmfbd
 !
-            call inbdb( &
-                 ncbd,ncin, &
-                 lmfb(l),clmf,kibdb, &
-                 ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
+       call inbdb( &
+            ncbd,ncin, &
+            lmfb(l),clmf,kibdb, &
+            ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
 !
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_inbdb
+end module mod_c_inbdb

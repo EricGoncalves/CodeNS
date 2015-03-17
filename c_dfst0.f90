@@ -1,7 +1,7 @@
 module mod_c_dfst0
-implicit none
+  implicit none
 contains
-      subroutine c_dfst0(roam,aam,tam)
+  subroutine c_dfst0(roam,aam,tam)
 !
 !***********************************************************************
 !
@@ -24,19 +24,17 @@ contains
 !
 !***********************************************************************
 !
-      use sortiefichier
-use mod_b1_dfst0
-implicit none
-double precision :: roam
-double precision :: aam
-double precision :: tam
+    use sortiefichier
+    use mod_b1_dfst0
+    implicit none
+    double precision ::  aam,roam, tam
 !
 !-----------------------------------------------------------------------
 !
-      if (kimp.ge.1) then
-         call b1_dfst0(roam,aam,tam)
-      endif
+    if (kimp.ge.1) then
+       call b1_dfst0(roam,aam,tam)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfst0
+end module mod_c_dfst0

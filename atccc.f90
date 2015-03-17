@@ -1,10 +1,10 @@
 module mod_atccc
-implicit none
+  implicit none
 contains
-          subroutine atccc( &
-                 x,y,z, &
-                 xcc,ycc,zcc, &
-                 l)
+  subroutine atccc( &
+       x,y,z, &
+       xcc,ycc,zcc, &
+       l)
 !
 !***********************************************************************
 !
@@ -29,83 +29,65 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use maillage
-implicit none
-integer :: ind
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: xcc
-double precision :: ycc
-double precision :: zcc
-integer :: l
-integer :: j
-integer :: k
-integer :: i
-integer :: i1
-integer :: i2
-integer :: indjk
-integer :: j1
-integer :: j2
-integer :: k1
-integer :: k2
-integer :: m
-integer :: n
-integer :: n0
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    implicit none
+    integer          ::     i,   i1,   i2,  ind,indjk
+    integer          ::     j,   j1,   j2,    k,   k1
+    integer          ::    k2,    l,    m,    n,   n0
+    integer          ::   nid, nijd,  njd
+    double precision ::   x,xcc,  y,ycc,  z
+    double precision :: zcc
 !
 !-----------------------------------------------------------------------
 !
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension xcc(ip00),ycc(ip00),zcc(ip00)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension xcc(ip00),ycc(ip00),zcc(ip00)
 !
-      ind(  j,k)=n0+1+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    ind(  j,k)=n0+1+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      n0=npc(l)
-      i1=ii1(l)
-      j1=jj1(l)
-      k1=kk1(l)
+    n0=npc(l)
+    i1=ii1(l)
+    j1=jj1(l)
+    k1=kk1(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
 !
-      nijd = nid*njd
-      i2=ii2(l)
-      j2=jj2(l)
-      k2=kk2(l)
+    nijd = nid*njd
+    i2=ii2(l)
+    j2=jj2(l)
+    k2=kk2(l)
 !
 !     calcul des centres des facettes pour les plans k=constante (facteur 4)
-      do k=k1,k2
-        do j=j1,j2-1
+    do k=k1,k2
+       do j=j1,j2-1
           indjk=ind(j,k)
           do i=i1,i2-1
-            n=indjk+(i-id1(l))
-            m=n-n0
-            xcc(m)=x(n)+x(n+1)+x(n+nid)+x(n+1+nid)
-            ycc(m)=y(n)+y(n+1)+y(n+nid)+y(n+1+nid)
-            zcc(m)=z(n)+z(n+1)+z(n+nid)+z(n+1+nid)
+             n=indjk+(i-id1(l))
+             m=n-n0
+             xcc(m)=x(n)+x(n+1)+x(n+nid)+x(n+1+nid)
+             ycc(m)=y(n)+y(n+1)+y(n+nid)+y(n+1+nid)
+             zcc(m)=z(n)+z(n+1)+z(n+nid)+z(n+1+nid)
           enddo
-         enddo
-        enddo
+       enddo
+    enddo
 !
 !     moyenne sur k pour coordonnees au centre des cellules
-      do k=k1,k2-1
-        do j=j1,j2-1
+    do k=k1,k2-1
+       do j=j1,j2-1
           indjk=ind(j,k)
           do i=i1,i2-1
-            n=indjk+(i-id1(l))
-            m=n-n0
-            xcc(m)=(xcc(m)+xcc(m+nijd))*0.125
-            ycc(m)=(ycc(m)+ycc(m+nijd))*0.125
-            zcc(m)=(zcc(m)+zcc(m+nijd))*0.125
-           enddo
-         enddo
-        enddo
+             n=indjk+(i-id1(l))
+             m=n-n0
+             xcc(m)=(xcc(m)+xcc(m+nijd))*0.125
+             ycc(m)=(ycc(m)+ycc(m+nijd))*0.125
+             zcc(m)=(zcc(m)+zcc(m+nijd))*0.125
+          enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine atccc
+end module mod_atccc

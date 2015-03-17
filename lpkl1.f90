@@ -1,13 +1,13 @@
 module mod_lpkl1
-implicit none
+  implicit none
 contains
-      subroutine lpkl1( &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,mfb,l, &
-                 mnpar,fgam, &
-                 tprod,ncyc, &
-                 temp)
+  subroutine lpkl1( &
+       v,mu,mut,dist, &
+       nxn,nyn,nzn, &
+       ncin,ncbd,mfb,l, &
+       mnpar,fgam, &
+       tprod,ncyc, &
+       temp)
 !
 !***********************************************************************
 !
@@ -31,141 +31,106 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use proprieteflu
-      use definition
-      use modeleturb
-implicit none
-double precision :: v
-double precision :: dist
-integer :: ncin
-integer :: ncbd
-integer :: mfb
-integer :: l
-integer :: mnpar
-double precision :: fgam
-double precision :: tprod
-integer :: ncyc
-double precision :: temp
-double precision :: cmu1
-double precision :: co
-integer :: iter
-integer :: m
-integer :: m0ns
-integer :: mb
-integer :: mpar
-integer :: mt
-integer :: n0c
-integer :: nc
-integer :: nfacns
-integer :: ni
-integer :: nii
-double precision :: pka
-double precision :: pkb
-double precision :: rhol
-double precision :: rop
-double precision :: t1
-double precision :: t2
-double precision :: t3
-double precision :: temp1
-double precision :: tn
-double precision :: top
-double precision :: tparoi
-double precision :: tt
-double precision :: upyp1
-double precision :: uto
-double precision :: v1t
-double precision :: v1x
-double precision :: v1y
-double precision :: v1z
-double precision :: ye
-double precision :: yp02
-double precision :: yv
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use proprieteflu
+    use definition
+    use modeleturb
+    implicit none
+    integer          ::   iter,     l,     m,  m0ns,    mb
+    integer          ::    mfb, mnpar,  mpar,    mt,   n0c
+    integer          ::     nc,  ncbd,  ncin,  ncyc,nfacns
+    integer          ::     ni,   nii
+    double precision ::   cmu1,    co,  dist,  fgam,    mu
+    double precision ::    mup,   mut,    n1,    n2,    n3
+    double precision ::    nxn,   nyn,   nzn,   pka,   pkb
+    double precision ::   rhol,   rop,    sv,    t1,    t2
+    double precision ::     t3,  temp, temp1,    tn,   top
+    double precision :: tparoi, tprod,    tt, upyp1,   uto
+    double precision ::      v,   v1t,   v1x,   v1y,   v1z
+    double precision ::     ye,  yp02,    yv
+    logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !
-      logical lamin
-      double precision mu,mut,mup,sv
-      double precision nxn,nyn,nzn,n1,n2,n3
 !
-      dimension mu(ip12),mut(ip12)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension ncin(ip41),ncbd(ip41)
-      dimension v(ip11,ip60),dist(ip12)
-      dimension mnpar(ip12),fgam(ip42)
-      dimension tprod(ip00)
-      dimension temp(ip11)
+    dimension mu(ip12),mut(ip12)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension ncin(ip41),ncbd(ip41)
+    dimension v(ip11,ip60),dist(ip12)
+    dimension mnpar(ip12),fgam(ip42)
+    dimension tprod(ip00)
+    dimension temp(ip11)
 !
-      cmu1=1./sqrt(cmu)
-      sv=110.4/tnz !air
+    cmu1=1./sqrt(cmu)
+    sv=110.4/tnz !air
 
-      mt=mmb(mfb)
-      m0ns=mpn(mfb)
-      n0c=npc(l)
+    mt=mmb(mfb)
+    m0ns=mpn(mfb)
+    n0c=npc(l)
 !
 !     boucle sur les facettes d'une frontiere paroi
-      do m=1,mt
-        mb=mpb(mfb)+m
-        ni=ncin(mb)
-        nc=ncbd(mb)
-        nfacns=m0ns+m
-        nii=ni-n0c
-        mpar=mnpar(ni)
+    do m=1,mt
+       mb=mpb(mfb)+m
+       ni=ncin(mb)
+       nc=ncbd(mb)
+       nfacns=m0ns+m
+       nii=ni-n0c
+       mpar=mnpar(ni)
 !       test sur transition et regime d'ecoulement
-        if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
 !         laminaire
           lamin=.true.
-        else
+       else
 !         turbulent
           lamin=.false.
-        endif
+       endif
 !       vitesse cellule adjacente a la paroi (cellule 1)
-        v1x=v(ni,2)/v(ni,1)
-        v1y=v(ni,3)/v(ni,1)
-        v1z=v(ni,4)/v(ni,1)
+       v1x=v(ni,2)/v(ni,1)
+       v1y=v(ni,3)/v(ni,1)
+       v1z=v(ni,4)/v(ni,1)
 !       normale a la paroi
-        n1=nxn(nfacns)
-        n2=nyn(nfacns)
-        n3=nzn(nfacns)
+       n1=nxn(nfacns)
+       n2=nyn(nfacns)
+       n3=nzn(nfacns)
 !       tangente normee a la paroi
-        tn=v1x*n1+v1y*n2+v1z*n3
-        t1=v1x-tn*n1
-        t2=v1y-tn*n2
-        t3=v1z-tn*n3
-        tt=sqrt(t1**2+t2**2+t3**2)
-        t1=t1/tt
-        t2=t2/tt
-        t3=t3/tt
+       tn=v1x*n1+v1y*n2+v1z*n3
+       t1=v1x-tn*n1
+       t2=v1y-tn*n2
+       t3=v1z-tn*n3
+       tt=sqrt(t1**2+t2**2+t3**2)
+       t1=t1/tt
+       t2=t2/tt
+       t3=t3/tt
 !       composante tangentielle de la vitesse dans repere paroi : v1t
-        v1t=v1x*t1+v1y*t2+v1z*t3
+       v1t=v1x*t1+v1y*t2+v1z*t3
 !       temperature cellule 1 : temp1
-        temp1=temp(ni)
+       temp1=temp(ni)
 !       temperature a la paroi : tparoi
-        pka=cp*(mu(ni)/pr+mut(ni)/prt)
-        pkb=mu(ni)+mut(ni)
-        tparoi=temp1+0.5*pkb*v1t**2/pka
+       pka=cp*(mu(ni)/pr+mut(ni)/prt)
+       pkb=mu(ni)+mut(ni)
+       tparoi=temp1+0.5*pkb*v1t**2/pka
 !        tparoi=temp(nc)
 !       viscosite moleculaire a la paroi
-        mup=mu(ni)*sqrt(tparoi/temp1)*(1.+sv/temp1)/(1.+sv/tparoi)
+       mup=mu(ni)*sqrt(tparoi/temp1)*(1.+sv/temp1)/(1.+sv/tparoi)
 !       masse volumique a la paroi
-        rop=v(ni,1)*temp1/tparoi
+       rop=v(ni,1)*temp1/tparoi
 !       correction de compressibilite (loi de Van Driest)
-        co=sqrt(2.*pka*tparoi/pkb)
-        v1t=co*asin(v1t/co)
+       co=sqrt(2.*pka*tparoi/pkb)
+       v1t=co*asin(v1t/co)
 !       contrainte de frottement a la paroi : top
-        upyp1=rop*v1t*dist(ni)/mup
-        yp02=yp0**2
-        if(upyp1.le.yp02 .or. lamin) then
+       upyp1=rop*v1t*dist(ni)/mup
+       yp02=yp0**2
+       if(upyp1.le.yp02 .or. lamin) then
 !         loi lineaire
           top=mup*v1t/dist(ni)
-        else
+       else
 !         loi logarithmique
           top=mup*v1t/dist(ni)
           do iter=1,10
-            top=rop*v1t**2/(log(dist(ni)*sqrt(rop*top)/mup)/vkar+cllog)**2
+             top=rop*v1t**2/(log(dist(ni)*sqrt(rop*top)/mup)/vkar+cllog)**2
           enddo
        endif
 !
@@ -196,24 +161,24 @@ double precision :: yv
 !        end do
 !
 !       calcul de la production de k -> valeur moyenne sur la cellule adjacente
-        uto=sqrt(top/rop)
-        ye=2.*dist(ni)
-        yv=5.*mup/(rop*uto)
+       uto=sqrt(top/rop)
+       ye=2.*dist(ni)
+       yv=5.*mup/(rop*uto)
 !         yplus1=rop*uto*dist(ni)/mup
-        tprod(nii)=top**1.5*log(ye/yv)/(ye*vkar*sqrt(rop))
+       tprod(nii)=top**1.5*log(ye/yv)/(ye*vkar*sqrt(rop))
 !     &             + top*dvdx*(ye-yv)/ye
-        if(dist(ni).lt.yv) tprod(nii)=0.
+       if(dist(ni).lt.yv) tprod(nii)=0.
 !       calcul de k en cellule 1 avec hypothese de Bradshaw
 !        rok=mut(ni)*cmu1*top/(mu(ni)+mut(ni))
 !        v(ni,6)=max(rok,epsk)
 !       calcul de l en cellule 1
-        rhol=vkar*dist(ni)*v(ni,1)
-        v(ni,7)=max(rhol,epse)
-        v(nc,7)=0.
+       rhol=vkar*dist(ni)*v(ni,1)
+       v(ni,7)=max(rhol,epse)
+       v(nc,7)=0.
 !       fin boucle sur facettes paroi
-      enddo
+    enddo
 !
-      return
-      end subroutine
+    return
+  end subroutine lpkl1
 
-end module
+end module mod_lpkl1

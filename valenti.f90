@@ -1,8 +1,8 @@
 module mod_valenti
-use mod_synterr
-implicit none
+  use mod_synterr
+  implicit none
 contains
-      subroutine valenti(mot,imot,nm,ient,kient)
+  subroutine valenti(mot,imot,nm,ient,kient)
 !
 !***********************************************************************
 !
@@ -11,36 +11,32 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use chainecarac
-use mod_entier
-implicit none
-integer :: imot
-integer :: nm
-integer :: ient
-integer :: kient
-integer :: icmt
-integer :: kerr
+    use para_var
+    use para_fige
+    use chainecarac
+    use mod_entier
+    implicit none
+    integer          ::  icmt, ient, imot, kerr,kient
+    integer          ::    nm
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  comment
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  comment
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      do icmt=1,32
-      comment(icmt:icmt)=' '
-      enddo
+    do icmt=1,32
+       comment(icmt:icmt)=' '
+    enddo
 !
-      call entier(mot(nm),imot(nm),ient,kerr)
-      if(kerr.eq.0)then
-        comment=ci
-        call synterr(mot,imot,nm,comment)
-      else
-        kient=2
-      endif
+    call entier(mot(nm),imot(nm),ient,kerr)
+    if(kerr.eq.0)then
+       comment=ci
+       call synterr(mot,imot,nm,comment)
+    else
+       kient=2
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine valenti
+end module mod_valenti

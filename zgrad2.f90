@@ -1,15 +1,15 @@
 module mod_zgrad2
-implicit none
+  implicit none
 contains
-      subroutine zgrad2( &
-                 l, &
-                 equat, &
-                 sn,lgsnlt, &
-                 vol, &
-                 s,temp, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dtx,dty,dtz, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+  subroutine zgrad2( &
+       l, &
+       equat, &
+       sn,lgsnlt, &
+       vol, &
+       s,temp, &
+       dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+       dtx,dty,dtz, &
+       cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !***********************************************************************
 !
@@ -64,193 +64,116 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-implicit none
-integer :: inc
-integer :: ind
-integer :: id
-integer :: jd
-integer :: kd
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-double precision :: sn
-integer :: lgsnlt
-double precision :: vol
-double precision :: s
-double precision :: temp
-double precision :: dvxx
-double precision :: dvxy
-double precision :: dvxz
-double precision :: dvyx
-double precision :: dvyy
-double precision :: dvyz
-double precision :: dvzx
-double precision :: dvzy
-double precision :: dvzz
-double precision :: dtx
-double precision :: dty
-double precision :: dtz
-double precision :: cmui1
-double precision :: cmui2
-double precision :: cmuj1
-double precision :: cmuj2
-double precision :: cmuk1
-double precision :: cmuk2
-double precision :: c0
-double precision :: eps
-integer :: i1
-integer :: i1m1
-integer :: i1p1
-integer :: i2
-integer :: i2m1
-integer :: imax
-integer :: imin
-integer :: ind1
-integer :: ind2
-integer :: j1
-integer :: j1m1
-integer :: j1p1
-integer :: j2
-integer :: j2m1
-integer :: jmax
-integer :: jmin
-integer :: k1
-integer :: k1m1
-integer :: k1p1
-integer :: k2
-integer :: k2m1
-integer :: kmax
-integer :: kmin
-integer :: m
-integer :: n
-integer :: n0
-integer :: nci
-integer :: ncj
-integer :: nck
-integer :: nid
-integer :: nijd
-integer :: njd
-double precision :: sixx
-double precision :: sixy
-double precision :: sixz
-double precision :: siyx
-double precision :: siyy
-double precision :: siyz
-double precision :: sizx
-double precision :: sizy
-double precision :: sizz
-double precision :: sjxx
-double precision :: sjxy
-double precision :: sjxz
-double precision :: sjyx
-double precision :: sjyy
-double precision :: sjyz
-double precision :: sjzx
-double precision :: sjzy
-double precision :: sjzz
-double precision :: skxx
-double precision :: skxy
-double precision :: skxz
-double precision :: skyx
-double precision :: skyy
-double precision :: skyz
-double precision :: skzx
-double precision :: skzy
-double precision :: skzz
-double precision :: stx
-double precision :: sty
-double precision :: stz
-double precision :: ts
-double precision :: vols
+    use para_var
+    use para_fige
+    use maillage
+    implicit none
+    integer          ::      i,    i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,    id,  imax,  imin,   inc
+    integer          ::    ind,  ind1,  ind2,     j,    j1
+    integer          ::   j1m1,  j1p1,    j2,  j2m1,    jd
+    integer          ::   jmax,  jmin,     k,    k1,  k1m1
+    integer          ::   k1p1,    k2,  k2m1,    kd,  kmax
+    integer          ::   kmin,     l,lgsnlt,     m,     n
+    integer          ::     n0,   nci,   ncj,   nck,   nid
+    integer          ::   nijd,   njd
+    double precision ::    c0,cmui1,cmui2,cmuj1,cmuj2
+    double precision :: cmuk1,cmuk2,  dtx,  dty,  dtz
+    double precision ::  dvxx, dvxy, dvxz, dvyx, dvyy
+    double precision ::  dvyz, dvzx, dvzy, dvzz,  eps
+    double precision ::     s, sixx, sixy, sixz, siyx
+    double precision ::  siyy, siyz, sizx, sizy, sizz
+    double precision ::  sjxx, sjxy, sjxz, sjyx, sjyy
+    double precision ::  sjyz, sjzx, sjzy, sjzz, skxx
+    double precision ::  skxy, skxz, skyx, skyy, skyz
+    double precision ::  skzx, skzy, skzz,   sn,  stx
+    double precision ::   sty,  stz, temp,   ts,  vol
+    double precision ::  vols
 !
 !-----------------------------------------------------------------------
 !
-      character(len=7 ) :: equat
-      dimension sn(lgsnlt,nind,ndir)
-      dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-                dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-                dvzx(ip00),dvzy(ip00),dvzz(ip00), &
-                dtx (ip00),dty (ip00),dtz (ip00)
-      dimension vol(ip11),temp(ip11),s(ip11,ip60)
-      dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-                cmuk1(ip21),cmuk2(ip21)
+    character(len=7 ) :: equat
+    dimension sn(lgsnlt,nind,ndir)
+    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
+         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
+         dvzx(ip00),dvzy(ip00),dvzz(ip00), &
+         dtx (ip00),dty (ip00),dtz (ip00)
+    dimension vol(ip11),temp(ip11),s(ip11,ip60)
+    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
+         cmuk1(ip21),cmuk2(ip21)
 
 !
-      ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-      inc(id,jd,kd)=id+jd*nid+kd*nijd
+    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    inc(id,jd,kd)=id+jd*nid+kd*nijd
 
-      REAL,DIMENSION(:),ALLOCATABLE :: vx,vy,vz
-      eps=0.00001
-      ALLOCATE(vx(ip00),vy(ip00),vz(ip00))
+    REAL,DIMENSION(:),ALLOCATABLE :: vx,vy,vz
+    eps=0.00001
+    ALLOCATE(vx(ip00),vy(ip00),vz(ip00))
 
-      n0=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd= nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd= nid*njd
 !
-      i1m1=i1-1
-      j1m1=j1-1
-      k1m1=k1-1
-      i1p1=i1+1
-      j1p1=j1+1
-      k1p1=k1+1
-      i2m1=i2-1
-      j2m1=j2-1
-      k2m1=k2-1
+    i1m1=i1-1
+    j1m1=j1-1
+    k1m1=k1-1
+    i1p1=i1+1
+    j1p1=j1+1
+    k1p1=k1+1
+    i2m1=i2-1
+    j2m1=j2-1
+    k2m1=k2-1
 !
-      nci  = inc(1,0,0)
-      ncj  = inc(0,1,0)
-      nck  = inc(0,0,1)
+    nci  = inc(1,0,0)
+    ncj  = inc(0,1,0)
+    nck  = inc(0,0,1)
 !
 !     composantes de la vitesse
 !
-      imin=i1m1
-      imax=i2
-      jmin=j1m1
-      jmax=j2
-      kmin=k1m1
-      kmax=k2
-      if (equat(3:5).eq.'2di') then
+    imin=i1m1
+    imax=i2
+    jmin=j1m1
+    jmax=j2
+    kmin=k1m1
+    kmax=k2
+    if (equat(3:5).eq.'2di') then
        imin=i1
        imax=i2m1
-      endif
-      if (equat(3:5).eq.'2dj') then
+    endif
+    if (equat(3:5).eq.'2dj') then
        jmin=j1
        jmax=j2m1
-      endif
-      if (equat(3:5).eq.'2dk') then
+    endif
+    if (equat(3:5).eq.'2dk') then
        kmin=k1
        kmax=k2m1
-      endif
+    endif
 !
-      do k=kmin,kmax
+    do k=kmin,kmax
        do j=jmin,jmax
-        ind1=ind(imin,j,k)
-        ind2=ind(imax,j,k)
-        do n=ind1,ind2
-         m=n-n0
-         vx(m)=s(n,2)/s(n,1)
-         vy(m)=s(n,3)/s(n,1)
-         vz(m)=s(n,4)/s(n,1)
-        enddo
+          ind1=ind(imin,j,k)
+          ind2=ind(imax,j,k)
+          do n=ind1,ind2
+             m=n-n0
+             vx(m)=s(n,2)/s(n,1)
+             vy(m)=s(n,3)/s(n,1)
+             vz(m)=s(n,4)/s(n,1)
+          enddo
        enddo
-      enddo
+    enddo
 !
 !     initialisation
-      ind1=ind(id1(l),jd1(l),kd1(l))-n0
-      ind2=ind(id2(l),jd2(l),kd2(l))-n0
-      do m=ind1,ind2
+    ind1=ind(id1(l),jd1(l),kd1(l))-n0
+    ind2=ind(id2(l),jd2(l),kd2(l))-n0
+    do m=ind1,ind2
        dvxx(m)=0.
        dvxy(m)=0.
        dvxz(m)=0.
@@ -263,304 +186,304 @@ double precision :: vols
        dtx (m)=0.
        dty (m)=0.
        dtz (m)=0.
-      enddo
+    enddo
 !--------------------------------------------------------------
 !     direction k (a travers les facettes k=cste)
 !--------------------------------------------------------------
-      if (equat(3:5).ne.'2dk') then
+    if (equat(3:5).ne.'2dk') then
 !
-      do k=k1p1,k2m1
+       do k=k1p1,k2m1
+          do j=j1,j2m1
+             ind1 = ind(i1  ,j,k)
+             ind2 = ind(i2m1,j,k)
+!!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0
+                skxx=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,1)
+                skxy=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,2)
+                skxz=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,3)
+                skyx=(cmuk1(m)*vy(m)+cmuk2(m)*vy(m-nck))*sn(m,3,1)
+                skyy=(cmuk1(m)*vy(m)+cmuk2(m)*vy(m-nck))*sn(m,3,2)
+                skyz=(cmuk1(m)*vy(m)+cmuk2(m)*vy(m-nck))*sn(m,3,3)
+                skzx=(cmuk1(m)*vz(m)+cmuk2(m)*vz(m-nck))*sn(m,3,1)
+                skzy=(cmuk1(m)*vz(m)+cmuk2(m)*vz(m-nck))*sn(m,3,2)
+                skzz=(cmuk1(m)*vz(m)+cmuk2(m)*vz(m-nck))*sn(m,3,3)
+                stx=(cmuk1(m)*temp(n)+cmuk2(m)*temp(n-nck))*sn(m,3,1)
+                sty=(cmuk1(m)*temp(n)+cmuk2(m)*temp(n-nck))*sn(m,3,2)
+                stz=(cmuk1(m)*temp(n)+cmuk2(m)*temp(n-nck))*sn(m,3,3)
+!
+                dvxx(m)=dvxx(m)-skxx
+                dvxy(m)=dvxy(m)-skxy
+                dvxz(m)=dvxz(m)-skxz
+                dvyx(m)=dvyx(m)-skyx
+                dvyy(m)=dvyy(m)-skyy
+                dvyz(m)=dvyz(m)-skyz
+                dvzx(m)=dvzx(m)-skzx
+                dvzy(m)=dvzy(m)-skzy
+                dvzz(m)=dvzz(m)-skzz
+                dtx(m)=dtx(m)-stx
+                dty(m)=dty(m)-sty
+                dtz(m)=dtz(m)-stz
+!
+                dvxx(m-nck)=dvxx(m-nck)+skxx
+                dvxy(m-nck)=dvxy(m-nck)+skxy
+                dvxz(m-nck)=dvxz(m-nck)+skxz
+                dvyx(m-nck)=dvyx(m-nck)+skyx
+                dvyy(m-nck)=dvyy(m-nck)+skyy
+                dvyz(m-nck)=dvyz(m-nck)+skyz
+                dvzx(m-nck)=dvzx(m-nck)+skzx
+                dvzy(m-nck)=dvzy(m-nck)+skzy
+                dvzz(m-nck)=dvzz(m-nck)+skzz
+                dtx(m-nck)=dtx(m-nck)+stx
+                dty(m-nck)=dty(m-nck)+sty
+                dtz(m-nck)=dtz(m-nck)+stz
+             enddo
+          enddo
+       enddo
+!
        do j=j1,j2m1
-        ind1 = ind(i1  ,j,k)
-        ind2 = ind(i2m1,j,k)
+          ind1 = ind(i1  ,j,k1)
+          ind2 = ind(i2m1,j,k1)
 !!$OMP SIMD
-        do n=ind1,ind2
-         m=n-n0
-         skxx=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,1)
-         skxy=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,2)
-         skxz=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,3)
-         skyx=(cmuk1(m)*vy(m)+cmuk2(m)*vy(m-nck))*sn(m,3,1)
-         skyy=(cmuk1(m)*vy(m)+cmuk2(m)*vy(m-nck))*sn(m,3,2)
-         skyz=(cmuk1(m)*vy(m)+cmuk2(m)*vy(m-nck))*sn(m,3,3)
-         skzx=(cmuk1(m)*vz(m)+cmuk2(m)*vz(m-nck))*sn(m,3,1)
-         skzy=(cmuk1(m)*vz(m)+cmuk2(m)*vz(m-nck))*sn(m,3,2)
-         skzz=(cmuk1(m)*vz(m)+cmuk2(m)*vz(m-nck))*sn(m,3,3)
-         stx=(cmuk1(m)*temp(n)+cmuk2(m)*temp(n-nck))*sn(m,3,1)
-         sty=(cmuk1(m)*temp(n)+cmuk2(m)*temp(n-nck))*sn(m,3,2)
-         stz=(cmuk1(m)*temp(n)+cmuk2(m)*temp(n-nck))*sn(m,3,3)
-!
-         dvxx(m)=dvxx(m)-skxx
-         dvxy(m)=dvxy(m)-skxy
-         dvxz(m)=dvxz(m)-skxz
-         dvyx(m)=dvyx(m)-skyx
-         dvyy(m)=dvyy(m)-skyy
-         dvyz(m)=dvyz(m)-skyz
-         dvzx(m)=dvzx(m)-skzx
-         dvzy(m)=dvzy(m)-skzy
-         dvzz(m)=dvzz(m)-skzz
-         dtx(m)=dtx(m)-stx
-         dty(m)=dty(m)-sty
-         dtz(m)=dtz(m)-stz
-!
-         dvxx(m-nck)=dvxx(m-nck)+skxx
-         dvxy(m-nck)=dvxy(m-nck)+skxy
-         dvxz(m-nck)=dvxz(m-nck)+skxz
-         dvyx(m-nck)=dvyx(m-nck)+skyx
-         dvyy(m-nck)=dvyy(m-nck)+skyy
-         dvyz(m-nck)=dvyz(m-nck)+skyz
-         dvzx(m-nck)=dvzx(m-nck)+skzx
-         dvzy(m-nck)=dvzy(m-nck)+skzy
-         dvzz(m-nck)=dvzz(m-nck)+skzz
-         dtx(m-nck)=dtx(m-nck)+stx
-         dty(m-nck)=dty(m-nck)+sty
-         dtz(m-nck)=dtz(m-nck)+stz
-        enddo
+          do n=ind1,ind2
+             m=n-n0
+             dvxx(m)=dvxx(m)-sn(m,3,1)*2*vx(m-nck)
+             dvxy(m)=dvxy(m)-sn(m,3,2)*2*vx(m-nck)
+             dvxz(m)=dvxz(m)-sn(m,3,3)*2*vx(m-nck)
+             dvyx(m)=dvyx(m)-sn(m,3,1)*2*vy(m-nck)
+             dvyy(m)=dvyy(m)-sn(m,3,2)*2*vy(m-nck)
+             dvyz(m)=dvyz(m)-sn(m,3,3)*2*vy(m-nck)
+             dvzx(m)=dvzx(m)-sn(m,3,1)*2*vz(m-nck)
+             dvzy(m)=dvzy(m)-sn(m,3,2)*2*vz(m-nck)
+             dvzz(m)=dvzz(m)-sn(m,3,3)*2*vz(m-nck)
+             dtx(m)=dtx(m)-sn(m,3,1)*2*temp(n-nck)
+             dty(m)=dty(m)-sn(m,3,2)*2*temp(n-nck)
+             dtz(m)=dtz(m)-sn(m,3,3)*2*temp(n-nck)
+          enddo
        enddo
-      enddo
 !
-      do j=j1,j2m1
-       ind1 = ind(i1  ,j,k1)
-       ind2 = ind(i2m1,j,k1)
+       do j=j1,j2m1
+          ind1 = ind(i1  ,j,k2)
+          ind2 = ind(i2m1,j,k2)
 !!$OMP SIMD
-       do n=ind1,ind2
-        m=n-n0
-        dvxx(m)=dvxx(m)-sn(m,3,1)*2*vx(m-nck)
-        dvxy(m)=dvxy(m)-sn(m,3,2)*2*vx(m-nck)
-        dvxz(m)=dvxz(m)-sn(m,3,3)*2*vx(m-nck)
-        dvyx(m)=dvyx(m)-sn(m,3,1)*2*vy(m-nck)
-        dvyy(m)=dvyy(m)-sn(m,3,2)*2*vy(m-nck)
-        dvyz(m)=dvyz(m)-sn(m,3,3)*2*vy(m-nck)
-        dvzx(m)=dvzx(m)-sn(m,3,1)*2*vz(m-nck)
-        dvzy(m)=dvzy(m)-sn(m,3,2)*2*vz(m-nck)
-        dvzz(m)=dvzz(m)-sn(m,3,3)*2*vz(m-nck)
-        dtx(m)=dtx(m)-sn(m,3,1)*2*temp(n-nck)
-        dty(m)=dty(m)-sn(m,3,2)*2*temp(n-nck)
-        dtz(m)=dtz(m)-sn(m,3,3)*2*temp(n-nck)
+          do n=ind1,ind2
+             m=n-n0
+             dvxx(m-nck)=dvxx(m-nck)+sn(m,3,1)*2*vx(m)
+             dvxy(m-nck)=dvxy(m-nck)+sn(m,3,2)*2*vx(m)
+             dvxz(m-nck)=dvxz(m-nck)+sn(m,3,3)*2*vx(m)
+             dvyx(m-nck)=dvyx(m-nck)+sn(m,3,1)*2*vy(m)
+             dvyy(m-nck)=dvyy(m-nck)+sn(m,3,2)*2*vy(m)
+             dvyz(m-nck)=dvyz(m-nck)+sn(m,3,3)*2*vy(m)
+             dvzx(m-nck)=dvzx(m-nck)+sn(m,3,1)*2*vz(m)
+             dvzy(m-nck)=dvzy(m-nck)+sn(m,3,2)*2*vz(m)
+             dvzz(m-nck)=dvzz(m-nck)+sn(m,3,3)*2*vz(m)
+             dtx(m-nck)=dtx(m-nck)+sn(m,3,1)*2*temp(n)
+             dty(m-nck)=dty(m-nck)+sn(m,3,2)*2*temp(n)
+             dtz(m-nck)=dtz(m-nck)+sn(m,3,3)*2*temp(n)
+          enddo
        enddo
-      enddo
 !
-      do j=j1,j2m1
-       ind1 = ind(i1  ,j,k2)
-       ind2 = ind(i2m1,j,k2)
-!!$OMP SIMD
-       do n=ind1,ind2
-        m=n-n0
-        dvxx(m-nck)=dvxx(m-nck)+sn(m,3,1)*2*vx(m)
-        dvxy(m-nck)=dvxy(m-nck)+sn(m,3,2)*2*vx(m)
-        dvxz(m-nck)=dvxz(m-nck)+sn(m,3,3)*2*vx(m)
-        dvyx(m-nck)=dvyx(m-nck)+sn(m,3,1)*2*vy(m)
-        dvyy(m-nck)=dvyy(m-nck)+sn(m,3,2)*2*vy(m)
-        dvyz(m-nck)=dvyz(m-nck)+sn(m,3,3)*2*vy(m)
-        dvzx(m-nck)=dvzx(m-nck)+sn(m,3,1)*2*vz(m)
-        dvzy(m-nck)=dvzy(m-nck)+sn(m,3,2)*2*vz(m)
-        dvzz(m-nck)=dvzz(m-nck)+sn(m,3,3)*2*vz(m)
-        dtx(m-nck)=dtx(m-nck)+sn(m,3,1)*2*temp(n)
-        dty(m-nck)=dty(m-nck)+sn(m,3,2)*2*temp(n)
-        dtz(m-nck)=dtz(m-nck)+sn(m,3,3)*2*temp(n)
-       enddo
-      enddo
-!
-      endif
+    endif
 !---------------------------------------------------------
 !     direction j (a travers les facettes j=cste)
 !---------------------------------------------------------
-      if (equat(3:5).ne.'2dj') then
+    if (equat(3:5).ne.'2dj') then
 !
-      do j=j1p1,j2m1
+       do j=j1p1,j2m1
+          do k=k1,k2m1
+             ind1 = ind(i1  ,j,k)
+             ind2 = ind(i2m1,j,k)
+!!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0
+                sjxx=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,1)
+                sjxy=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,2)
+                sjxz=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,3)
+                sjyx=(cmuj1(m)*vy(m)+cmuj2(m)*vy(m-ncj))*sn(m,2,1)
+                sjyy=(cmuj1(m)*vy(m)+cmuj2(m)*vy(m-ncj))*sn(m,2,2)
+                sjyz=(cmuj1(m)*vy(m)+cmuj2(m)*vy(m-ncj))*sn(m,2,3)
+                sjzx=(cmuj1(m)*vz(m)+cmuj2(m)*vz(m-ncj))*sn(m,2,1)
+                sjzy=(cmuj1(m)*vz(m)+cmuj2(m)*vz(m-ncj))*sn(m,2,2)
+                sjzz=(cmuj1(m)*vz(m)+cmuj2(m)*vz(m-ncj))*sn(m,2,3)
+                stx=(cmuj1(m)*temp(n)+cmuj2(m)*temp(n-ncj))*sn(m,2,1)
+                sty=(cmuj1(m)*temp(n)+cmuj2(m)*temp(n-ncj))*sn(m,2,2)
+                stz=(cmuj1(m)*temp(n)+cmuj2(m)*temp(n-ncj))*sn(m,2,3)
+!
+                dvxx(m)=dvxx(m)-sjxx
+                dvxy(m)=dvxy(m)-sjxy
+                dvxz(m)=dvxz(m)-sjxz
+                dvyx(m)=dvyx(m)-sjyx
+                dvyy(m)=dvyy(m)-sjyy
+                dvyz(m)=dvyz(m)-sjyz
+                dvzx(m)=dvzx(m)-sjzx
+                dvzy(m)=dvzy(m)-sjzy
+                dvzz(m)=dvzz(m)-sjzz
+                dtx(m)=dtx(m)-stx
+                dty(m)=dty(m)-sty
+                dtz(m)=dtz(m)-stz
+!
+                dvxx(m-ncj)=dvxx(m-ncj)+sjxx
+                dvxy(m-ncj)=dvxy(m-ncj)+sjxy
+                dvxz(m-ncj)=dvxz(m-ncj)+sjxz
+                dvyx(m-ncj)=dvyx(m-ncj)+sjyx
+                dvyy(m-ncj)=dvyy(m-ncj)+sjyy
+                dvyz(m-ncj)=dvyz(m-ncj)+sjyz
+                dvzx(m-ncj)=dvzx(m-ncj)+sjzx
+                dvzy(m-ncj)=dvzy(m-ncj)+sjzy
+                dvzz(m-ncj)=dvzz(m-ncj)+sjzz
+                dtx(m-ncj)=dtx(m-ncj)+stx
+                dty(m-ncj)=dty(m-ncj)+sty
+                dtz(m-ncj)=dtz(m-ncj)+stz
+             enddo
+          enddo
+       enddo
+!
        do k=k1,k2m1
-        ind1 = ind(i1  ,j,k)
-        ind2 = ind(i2m1,j,k)
+          ind1 = ind(i1  ,j1,k)
+          ind2 = ind(i2m1,j1,k)
 !!$OMP SIMD
-        do n=ind1,ind2
-         m=n-n0
-         sjxx=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,1)
-         sjxy=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,2)
-         sjxz=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,3)
-         sjyx=(cmuj1(m)*vy(m)+cmuj2(m)*vy(m-ncj))*sn(m,2,1)
-         sjyy=(cmuj1(m)*vy(m)+cmuj2(m)*vy(m-ncj))*sn(m,2,2)
-         sjyz=(cmuj1(m)*vy(m)+cmuj2(m)*vy(m-ncj))*sn(m,2,3)
-         sjzx=(cmuj1(m)*vz(m)+cmuj2(m)*vz(m-ncj))*sn(m,2,1)
-         sjzy=(cmuj1(m)*vz(m)+cmuj2(m)*vz(m-ncj))*sn(m,2,2)
-         sjzz=(cmuj1(m)*vz(m)+cmuj2(m)*vz(m-ncj))*sn(m,2,3)
-         stx=(cmuj1(m)*temp(n)+cmuj2(m)*temp(n-ncj))*sn(m,2,1)
-         sty=(cmuj1(m)*temp(n)+cmuj2(m)*temp(n-ncj))*sn(m,2,2)
-         stz=(cmuj1(m)*temp(n)+cmuj2(m)*temp(n-ncj))*sn(m,2,3)
-!
-         dvxx(m)=dvxx(m)-sjxx
-         dvxy(m)=dvxy(m)-sjxy
-         dvxz(m)=dvxz(m)-sjxz
-         dvyx(m)=dvyx(m)-sjyx
-         dvyy(m)=dvyy(m)-sjyy
-         dvyz(m)=dvyz(m)-sjyz
-         dvzx(m)=dvzx(m)-sjzx
-         dvzy(m)=dvzy(m)-sjzy
-         dvzz(m)=dvzz(m)-sjzz
-         dtx(m)=dtx(m)-stx
-         dty(m)=dty(m)-sty
-         dtz(m)=dtz(m)-stz
-!
-         dvxx(m-ncj)=dvxx(m-ncj)+sjxx
-         dvxy(m-ncj)=dvxy(m-ncj)+sjxy
-         dvxz(m-ncj)=dvxz(m-ncj)+sjxz
-         dvyx(m-ncj)=dvyx(m-ncj)+sjyx
-         dvyy(m-ncj)=dvyy(m-ncj)+sjyy
-         dvyz(m-ncj)=dvyz(m-ncj)+sjyz
-         dvzx(m-ncj)=dvzx(m-ncj)+sjzx
-         dvzy(m-ncj)=dvzy(m-ncj)+sjzy
-         dvzz(m-ncj)=dvzz(m-ncj)+sjzz
-         dtx(m-ncj)=dtx(m-ncj)+stx
-         dty(m-ncj)=dty(m-ncj)+sty
-         dtz(m-ncj)=dtz(m-ncj)+stz
-        enddo
+          do n=ind1,ind2
+             m=n-n0
+             dvxx(m)=dvxx(m)-sn(m,2,1)*2*vx(m-ncj)
+             dvxy(m)=dvxy(m)-sn(m,2,2)*2*vx(m-ncj)
+             dvxz(m)=dvxz(m)-sn(m,2,3)*2*vx(m-ncj)
+             dvyx(m)=dvyx(m)-sn(m,2,1)*2*vy(m-ncj)
+             dvyy(m)=dvyy(m)-sn(m,2,2)*2*vy(m-ncj)
+             dvyz(m)=dvyz(m)-sn(m,2,3)*2*vy(m-ncj)
+             dvzx(m)=dvzx(m)-sn(m,2,1)*2*vz(m-ncj)
+             dvzy(m)=dvzy(m)-sn(m,2,2)*2*vz(m-ncj)
+             dvzz(m)=dvzz(m)-sn(m,2,3)*2*vz(m-ncj)
+             dtx(m)=dtx(m)-sn(m,2,1)*2*temp(n-ncj)
+             dty(m)=dty(m)-sn(m,2,2)*2*temp(n-ncj)
+             dtz(m)=dtz(m)-sn(m,2,3)*2*temp(n-ncj)
+          enddo
        enddo
-      enddo
 !
-      do k=k1,k2m1
-       ind1 = ind(i1  ,j1,k)
-       ind2 = ind(i2m1,j1,k)
+       do k=k1,k2m1
+          ind1 = ind(i1  ,j2,k)
+          ind2 = ind(i2m1,j2,k)
 !!$OMP SIMD
-       do n=ind1,ind2
-        m=n-n0
-        dvxx(m)=dvxx(m)-sn(m,2,1)*2*vx(m-ncj)
-        dvxy(m)=dvxy(m)-sn(m,2,2)*2*vx(m-ncj)
-        dvxz(m)=dvxz(m)-sn(m,2,3)*2*vx(m-ncj)
-        dvyx(m)=dvyx(m)-sn(m,2,1)*2*vy(m-ncj)
-        dvyy(m)=dvyy(m)-sn(m,2,2)*2*vy(m-ncj)
-        dvyz(m)=dvyz(m)-sn(m,2,3)*2*vy(m-ncj)
-        dvzx(m)=dvzx(m)-sn(m,2,1)*2*vz(m-ncj)
-        dvzy(m)=dvzy(m)-sn(m,2,2)*2*vz(m-ncj)
-        dvzz(m)=dvzz(m)-sn(m,2,3)*2*vz(m-ncj)
-        dtx(m)=dtx(m)-sn(m,2,1)*2*temp(n-ncj)
-        dty(m)=dty(m)-sn(m,2,2)*2*temp(n-ncj)
-        dtz(m)=dtz(m)-sn(m,2,3)*2*temp(n-ncj)
+          do n=ind1,ind2
+             m=n-n0
+             dvxx(m-ncj)=dvxx(m-ncj)+sn(m,2,1)*2*vx(m)
+             dvxy(m-ncj)=dvxy(m-ncj)+sn(m,2,2)*2*vx(m)
+             dvxz(m-ncj)=dvxz(m-ncj)+sn(m,2,3)*2*vx(m)
+             dvyx(m-ncj)=dvyx(m-ncj)+sn(m,2,1)*2*vy(m)
+             dvyy(m-ncj)=dvyy(m-ncj)+sn(m,2,2)*2*vy(m)
+             dvyz(m-ncj)=dvyz(m-ncj)+sn(m,2,3)*2*vy(m)
+             dvzx(m-ncj)=dvzx(m-ncj)+sn(m,2,1)*2*vz(m)
+             dvzy(m-ncj)=dvzy(m-ncj)+sn(m,2,2)*2*vz(m)
+             dvzz(m-ncj)=dvzz(m-ncj)+sn(m,2,3)*2*vz(m)
+             dtx(m-ncj)=dtx(m-ncj)+sn(m,2,1)*2*temp(n)
+             dty(m-ncj)=dty(m-ncj)+sn(m,2,2)*2*temp(n)
+             dtz(m-ncj)=dtz(m-ncj)+sn(m,2,3)*2*temp(n)
+          enddo
        enddo
-      enddo
 !
-      do k=k1,k2m1
-       ind1 = ind(i1  ,j2,k)
-       ind2 = ind(i2m1,j2,k)
-!!$OMP SIMD
-       do n=ind1,ind2
-        m=n-n0
-        dvxx(m-ncj)=dvxx(m-ncj)+sn(m,2,1)*2*vx(m)
-        dvxy(m-ncj)=dvxy(m-ncj)+sn(m,2,2)*2*vx(m)
-        dvxz(m-ncj)=dvxz(m-ncj)+sn(m,2,3)*2*vx(m)
-        dvyx(m-ncj)=dvyx(m-ncj)+sn(m,2,1)*2*vy(m)
-        dvyy(m-ncj)=dvyy(m-ncj)+sn(m,2,2)*2*vy(m)
-        dvyz(m-ncj)=dvyz(m-ncj)+sn(m,2,3)*2*vy(m)
-        dvzx(m-ncj)=dvzx(m-ncj)+sn(m,2,1)*2*vz(m)
-        dvzy(m-ncj)=dvzy(m-ncj)+sn(m,2,2)*2*vz(m)
-        dvzz(m-ncj)=dvzz(m-ncj)+sn(m,2,3)*2*vz(m)
-        dtx(m-ncj)=dtx(m-ncj)+sn(m,2,1)*2*temp(n)
-        dty(m-ncj)=dty(m-ncj)+sn(m,2,2)*2*temp(n)
-        dtz(m-ncj)=dtz(m-ncj)+sn(m,2,3)*2*temp(n)
-       enddo
-      enddo
-!
-      endif
+    endif
 !------------------------------------------------------------
 !     direction i (a travers les facettes i=cste)
 !------------------------------------------------------------
-      if (equat(3:5).ne.'2di') then
+    if (equat(3:5).ne.'2di') then
 !
-      do k=k1,k2m1
-       do j=j1,j2m1
-        ind1 = ind(i1p1,j,k)
-        ind2 = ind(i2m1,j,k)
+       do k=k1,k2m1
+          do j=j1,j2m1
+             ind1 = ind(i1p1,j,k)
+             ind2 = ind(i2m1,j,k)
 !!$OMP SIMD
-        do n=ind1,ind2
-         m=n-n0
-         sixx=(cmui1(m)*vx(m)+cmui2(m)*vx(m-nci))*sn(m,1,1)
-         sixy=(cmui1(m)*vx(m)+cmui2(m)*vx(m-nci))*sn(m,1,2)
-         sixz=(cmui1(m)*vx(m)+cmui2(m)*vx(m-nci))*sn(m,1,3)
-         siyx=(cmui1(m)*vy(m)+cmui2(m)*vy(m-nci))*sn(m,1,1)
-         siyy=(cmui1(m)*vy(m)+cmui2(m)*vy(m-nci))*sn(m,1,2)
-         siyz=(cmui1(m)*vy(m)+cmui2(m)*vy(m-nci))*sn(m,1,3)
-         sizx=(cmui1(m)*vz(m)+cmui2(m)*vz(m-nci))*sn(m,1,1)
-         sizy=(cmui1(m)*vz(m)+cmui2(m)*vz(m-nci))*sn(m,1,2)
-         sizz=(cmui1(m)*vz(m)+cmui2(m)*vz(m-nci))*sn(m,1,3)
-         stx=(cmui1(m)*temp(n)+cmui2(m)*temp(n-nci))*sn(m,1,1)
-         sty=(cmui1(m)*temp(n)+cmui2(m)*temp(n-nci))*sn(m,1,2)
-         stz=(cmui1(m)*temp(n)+cmui2(m)*temp(n-nci))*sn(m,1,3)
+             do n=ind1,ind2
+                m=n-n0
+                sixx=(cmui1(m)*vx(m)+cmui2(m)*vx(m-nci))*sn(m,1,1)
+                sixy=(cmui1(m)*vx(m)+cmui2(m)*vx(m-nci))*sn(m,1,2)
+                sixz=(cmui1(m)*vx(m)+cmui2(m)*vx(m-nci))*sn(m,1,3)
+                siyx=(cmui1(m)*vy(m)+cmui2(m)*vy(m-nci))*sn(m,1,1)
+                siyy=(cmui1(m)*vy(m)+cmui2(m)*vy(m-nci))*sn(m,1,2)
+                siyz=(cmui1(m)*vy(m)+cmui2(m)*vy(m-nci))*sn(m,1,3)
+                sizx=(cmui1(m)*vz(m)+cmui2(m)*vz(m-nci))*sn(m,1,1)
+                sizy=(cmui1(m)*vz(m)+cmui2(m)*vz(m-nci))*sn(m,1,2)
+                sizz=(cmui1(m)*vz(m)+cmui2(m)*vz(m-nci))*sn(m,1,3)
+                stx=(cmui1(m)*temp(n)+cmui2(m)*temp(n-nci))*sn(m,1,1)
+                sty=(cmui1(m)*temp(n)+cmui2(m)*temp(n-nci))*sn(m,1,2)
+                stz=(cmui1(m)*temp(n)+cmui2(m)*temp(n-nci))*sn(m,1,3)
 !
-         dvxx(m)=dvxx(m)-sixx
-         dvxy(m)=dvxy(m)-sixy
-         dvxz(m)=dvxz(m)-sixz
-         dvyx(m)=dvyx(m)-siyx
-         dvyy(m)=dvyy(m)-siyy
-         dvyz(m)=dvyz(m)-siyz
-         dvzx(m)=dvzx(m)-sizx
-         dvzy(m)=dvzy(m)-sizy
-         dvzz(m)=dvzz(m)-sizz
-         dtx(m)=dtx(m)-stx
-         dty(m)=dty(m)-sty
-         dtz(m)=dtz(m)-stz
+                dvxx(m)=dvxx(m)-sixx
+                dvxy(m)=dvxy(m)-sixy
+                dvxz(m)=dvxz(m)-sixz
+                dvyx(m)=dvyx(m)-siyx
+                dvyy(m)=dvyy(m)-siyy
+                dvyz(m)=dvyz(m)-siyz
+                dvzx(m)=dvzx(m)-sizx
+                dvzy(m)=dvzy(m)-sizy
+                dvzz(m)=dvzz(m)-sizz
+                dtx(m)=dtx(m)-stx
+                dty(m)=dty(m)-sty
+                dtz(m)=dtz(m)-stz
 !
-         dvxx(m-nci)=dvxx(m-nci)+sixx
-         dvxy(m-nci)=dvxy(m-nci)+sixy
-         dvxz(m-nci)=dvxz(m-nci)+sixz
-         dvyx(m-nci)=dvyx(m-nci)+siyx
-         dvyy(m-nci)=dvyy(m-nci)+siyy
-         dvyz(m-nci)=dvyz(m-nci)+siyz
-         dvzx(m-nci)=dvzx(m-nci)+sizx
-         dvzy(m-nci)=dvzy(m-nci)+sizy
-         dvzz(m-nci)=dvzz(m-nci)+sizz
-         dtx(m-nci)=dtx(m-nci)+stx
-         dty(m-nci)=dty(m-nci)+sty
-         dtz(m-nci)=dtz(m-nci)+stz
-        enddo
+                dvxx(m-nci)=dvxx(m-nci)+sixx
+                dvxy(m-nci)=dvxy(m-nci)+sixy
+                dvxz(m-nci)=dvxz(m-nci)+sixz
+                dvyx(m-nci)=dvyx(m-nci)+siyx
+                dvyy(m-nci)=dvyy(m-nci)+siyy
+                dvyz(m-nci)=dvyz(m-nci)+siyz
+                dvzx(m-nci)=dvzx(m-nci)+sizx
+                dvzy(m-nci)=dvzy(m-nci)+sizy
+                dvzz(m-nci)=dvzz(m-nci)+sizz
+                dtx(m-nci)=dtx(m-nci)+stx
+                dty(m-nci)=dty(m-nci)+sty
+                dtz(m-nci)=dtz(m-nci)+stz
+             enddo
+          enddo
        enddo
-      enddo
 !
-      do k=k1,k2m1
-       ind1 = ind(i1,j1  ,k)
-       ind2 = ind(i1,j2m1,k)
+       do k=k1,k2m1
+          ind1 = ind(i1,j1  ,k)
+          ind2 = ind(i1,j2m1,k)
 !!$OMP SIMD
-       do n=ind1,ind2,ncj
-        m=n-n0
-        dvxx(m)=dvxx(m)-sn(m,1,1)*2*vx(m-nci)
-        dvxy(m)=dvxy(m)-sn(m,1,2)*2*vx(m-nci)
-        dvxz(m)=dvxz(m)-sn(m,1,3)*2*vx(m-nci)
-        dvyx(m)=dvyx(m)-sn(m,1,1)*2*vy(m-nci)
-        dvyy(m)=dvyy(m)-sn(m,1,2)*2*vy(m-nci)
-        dvyz(m)=dvyz(m)-sn(m,1,3)*2*vy(m-nci)
-        dvzx(m)=dvzx(m)-sn(m,1,1)*2*vz(m-nci)
-        dvzy(m)=dvzy(m)-sn(m,1,2)*2*vz(m-nci)
-        dvzz(m)=dvzz(m)-sn(m,1,3)*2*vz(m-nci)
-        dtx(m)=dtx(m)-sn(m,1,1)*2*temp(n-nci)
-        dty(m)=dty(m)-sn(m,1,2)*2*temp(n-nci)
-        dtz(m)=dtz(m)-sn(m,1,3)*2*temp(n-nci)
+          do n=ind1,ind2,ncj
+             m=n-n0
+             dvxx(m)=dvxx(m)-sn(m,1,1)*2*vx(m-nci)
+             dvxy(m)=dvxy(m)-sn(m,1,2)*2*vx(m-nci)
+             dvxz(m)=dvxz(m)-sn(m,1,3)*2*vx(m-nci)
+             dvyx(m)=dvyx(m)-sn(m,1,1)*2*vy(m-nci)
+             dvyy(m)=dvyy(m)-sn(m,1,2)*2*vy(m-nci)
+             dvyz(m)=dvyz(m)-sn(m,1,3)*2*vy(m-nci)
+             dvzx(m)=dvzx(m)-sn(m,1,1)*2*vz(m-nci)
+             dvzy(m)=dvzy(m)-sn(m,1,2)*2*vz(m-nci)
+             dvzz(m)=dvzz(m)-sn(m,1,3)*2*vz(m-nci)
+             dtx(m)=dtx(m)-sn(m,1,1)*2*temp(n-nci)
+             dty(m)=dty(m)-sn(m,1,2)*2*temp(n-nci)
+             dtz(m)=dtz(m)-sn(m,1,3)*2*temp(n-nci)
+          enddo
        enddo
-      enddo
 !
-      do k=k1,k2m1
-       ind1 = ind(i2,j1  ,k)
-       ind2 = ind(i2,j2m1,k)
+       do k=k1,k2m1
+          ind1 = ind(i2,j1  ,k)
+          ind2 = ind(i2,j2m1,k)
 !!$OMP SIMD
-       do n=ind1,ind2,ncj
-        m=n-n0
-        dvxx(m-nci)=dvxx(m-nci)+sn(m,1,1)*2*vx(m)
-        dvxy(m-nci)=dvxy(m-nci)+sn(m,1,2)*2*vx(m)
-        dvxz(m-nci)=dvxz(m-nci)+sn(m,1,3)*2*vx(m)
-        dvyx(m-nci)=dvyx(m-nci)+sn(m,1,1)*2*vy(m)
-        dvyy(m-nci)=dvyy(m-nci)+sn(m,1,2)*2*vy(m)
-        dvyz(m-nci)=dvyz(m-nci)+sn(m,1,3)*2*vy(m)
-        dvzx(m-nci)=dvzx(m-nci)+sn(m,1,1)*2*vz(m)
-        dvzy(m-nci)=dvzy(m-nci)+sn(m,1,2)*2*vz(m)
-        dvzz(m-nci)=dvzz(m-nci)+sn(m,1,3)*2*vz(m)
-        dtx (m-nci)=dtx (m-nci)+sn(m,1,1)*2*temp(n)
-        dty (m-nci)=dty (m-nci)+sn(m,1,2)*2*temp(n)
-        dtz (m-nci)=dtz (m-nci)+sn(m,1,3)*2*temp(n)
+          do n=ind1,ind2,ncj
+             m=n-n0
+             dvxx(m-nci)=dvxx(m-nci)+sn(m,1,1)*2*vx(m)
+             dvxy(m-nci)=dvxy(m-nci)+sn(m,1,2)*2*vx(m)
+             dvxz(m-nci)=dvxz(m-nci)+sn(m,1,3)*2*vx(m)
+             dvyx(m-nci)=dvyx(m-nci)+sn(m,1,1)*2*vy(m)
+             dvyy(m-nci)=dvyy(m-nci)+sn(m,1,2)*2*vy(m)
+             dvyz(m-nci)=dvyz(m-nci)+sn(m,1,3)*2*vy(m)
+             dvzx(m-nci)=dvzx(m-nci)+sn(m,1,1)*2*vz(m)
+             dvzy(m-nci)=dvzy(m-nci)+sn(m,1,2)*2*vz(m)
+             dvzz(m-nci)=dvzz(m-nci)+sn(m,1,3)*2*vz(m)
+             dtx (m-nci)=dtx (m-nci)+sn(m,1,1)*2*temp(n)
+             dty (m-nci)=dty (m-nci)+sn(m,1,2)*2*temp(n)
+             dtz (m-nci)=dtz (m-nci)+sn(m,1,3)*2*temp(n)
+          enddo
        enddo
-      enddo
 !
-      endif
+    endif
 !-------------------------------------------------------
 !-----calcul du gradient :
 !-------------------------------------------------------
-      ind1 = ind(i1  ,j1  ,k1  )
-      ind2 = ind(i2m1,j2m1,k2m1)
-      do n=ind1,ind2
+    ind1 = ind(i1  ,j1  ,k1  )
+    ind2 = ind(i2m1,j2m1,k2m1)
+    do n=ind1,ind2
        m=n-n0
 !      le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t
        ts=sign(0.5,-vol(n))
@@ -580,10 +503,10 @@ double precision :: vols
        dtx(m)=dtx(m)*c0
        dty(m)=dty(m)*c0
        dtz(m)=dtz(m)*c0
-      enddo
+    enddo
 !
-DEALLOCATE(vx,vy,vz)
+    DEALLOCATE(vx,vy,vz)
 
-      return
-      end subroutine
-end module
+    return
+  end subroutine zgrad2
+end module mod_zgrad2

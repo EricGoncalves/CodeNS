@@ -1,11 +1,11 @@
 module mod_zfluto
-implicit none
+  implicit none
 contains
-      subroutine zfluto( &
-                 l,mu,mut,toxx,toxy,toxz,toyy,toyz,tozz, &
-                 qcx,qcy,qcz, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dtx,dty,dtz)
+  subroutine zfluto( &
+       l,mu,mut,toxx,toxy,toxz,toyy,toyz,tozz, &
+       qcx,qcy,qcz, &
+       dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+       dtx,dty,dtz)
 !
 !***********************************************************************
 !
@@ -64,106 +64,72 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use proprieteflu
-implicit none
-integer :: ind
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-double precision :: dvxx
-double precision :: dvxy
-double precision :: dvxz
-double precision :: dvyx
-double precision :: dvyy
-double precision :: dvyz
-double precision :: dvzx
-double precision :: dvzy
-double precision :: dvzz
-double precision :: dtx
-double precision :: dty
-double precision :: dtz
-integer :: i1
-integer :: i2
-integer :: i2m1
-integer :: ind1
-integer :: ind2
-integer :: j1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k2
-integer :: k2m1
-integer :: m
-integer :: n
-integer :: n0
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    use proprieteflu
+    implicit none
+    integer          ::    i,  i1,  i2,i2m1, ind
+    integer          :: ind1,ind2,   j,  j1,  j2
+    integer          :: j2m1,   k,  k1,  k2,k2m1
+    integer          ::    l,   m,   n,  n0, nid
+    integer          :: nijd, njd
+    double precision ::  ds3, dtx, dty, dtz,dvxx
+    double precision :: dvxy,dvxz,dvyx,dvyy,dvyz
+    double precision :: dvzx,dvzy,dvzz,  mu, mut
+    double precision ::  qcx, qcy, qcz,toxx,toxy
+    double precision :: toxz,toyy,toyz,tozz
 !
 !-----------------------------------------------------------------------
 !
-      double precision mu,mut,ds3
-      dimension mu(ip12),mut(ip12)
-      dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-                toyy(ip12),toyz(ip12),tozz(ip12)
-      dimension qcx(ip12),qcy(ip12),qcz(ip12)
-      dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-                dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-                dvzx(ip00),dvzy(ip00),dvzz(ip00), &
-                dtx(ip00),dty(ip00),dtz(ip00)
+    dimension mu(ip12),mut(ip12)
+    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
+         toyy(ip12),toyz(ip12),tozz(ip12)
+    dimension qcx(ip12),qcy(ip12),qcz(ip12)
+    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
+         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
+         dvzx(ip00),dvzy(ip00),dvzz(ip00), &
+         dtx(ip00),dty(ip00),dtz(ip00)
 !
-      ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      n0=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd= nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd= nid*njd
 !
-      i2m1=i2-1
-      j2m1=j2-1
-      k2m1=k2-1
+    i2m1=i2-1
+    j2m1=j2-1
+    k2m1=k2-1
 !
-      ds3=2./3.
+    ds3=2./3.
 !
-      do k=k1,k2m1
+    do k=k1,k2m1
        do j=j1,j2m1
-        ind1=ind(i1  ,j,k)
-        ind2=ind(i2m1,j,k)
-        do n=ind1,ind2
-         m=n-n0
-         toxx(n)=ds3*(mu(n)+mut(n))*(2*dvxx(m)-dvyy(m)-dvzz(m))
-         toyy(n)=ds3*(mu(n)+mut(n))*(2*dvyy(m)-dvxx(m)-dvzz(m))
-         tozz(n)=ds3*(mu(n)+mut(n))*(2*dvzz(m)-dvxx(m)-dvyy(m))
-         toxy(n)=    (mu(n)+mut(n))*(dvxy(m)+dvyx(m))
-         toxz(n)=    (mu(n)+mut(n))*(dvxz(m)+dvzx(m))
-         toyz(n)=    (mu(n)+mut(n))*(dvyz(m)+dvzy(m))
-         qcx (n)=cp*(mu(n)/pr+mut(n)/prt)*dtx(m)
-         qcy (n)=cp*(mu(n)/pr+mut(n)/prt)*dty(m)
-         qcz (n)=cp*(mu(n)/pr+mut(n)/prt)*dtz(m)
-        enddo
+          ind1=ind(i1  ,j,k)
+          ind2=ind(i2m1,j,k)
+          do n=ind1,ind2
+             m=n-n0
+             toxx(n)=ds3*(mu(n)+mut(n))*(2*dvxx(m)-dvyy(m)-dvzz(m))
+             toyy(n)=ds3*(mu(n)+mut(n))*(2*dvyy(m)-dvxx(m)-dvzz(m))
+             tozz(n)=ds3*(mu(n)+mut(n))*(2*dvzz(m)-dvxx(m)-dvyy(m))
+             toxy(n)=    (mu(n)+mut(n))*(dvxy(m)+dvyx(m))
+             toxz(n)=    (mu(n)+mut(n))*(dvxz(m)+dvzx(m))
+             toyz(n)=    (mu(n)+mut(n))*(dvyz(m)+dvzy(m))
+             qcx (n)=cp*(mu(n)/pr+mut(n)/prt)*dtx(m)
+             qcy (n)=cp*(mu(n)/pr+mut(n)/prt)*dty(m)
+             qcz (n)=cp*(mu(n)/pr+mut(n)/prt)*dtz(m)
+          enddo
        enddo
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine zfluto
+end module mod_zfluto

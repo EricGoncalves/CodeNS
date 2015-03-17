@@ -1,7 +1,7 @@
 module mod_c_dfpmtbkeg
-implicit none
+  implicit none
 contains
-      subroutine c_dfpmtbkeg(mot,imot,nmot)
+  subroutine c_dfpmtbkeg(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -17,26 +17,25 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier
-use mod_b1_dfpmtbkeg
+    use para_fige
+    use sortiefichier
+    use mod_b1_dfpmtbkeg
 
-use mod_tcmd_dfpmtbkeg
-implicit none
-integer :: imot
-integer :: nmot
+    use mod_tcmd_dfpmtbkeg
+    implicit none
+    integer          :: imot,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      call tcmd_dfpmtbkeg(mot,imot,nmot)
+    call tcmd_dfpmtbkeg(mot,imot,nmot)
 !
-      if(kimp.ge.1) then
-         call b1_dfpmtbkeg
-      endif
+    if(kimp.ge.1) then
+       call b1_dfpmtbkeg
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfpmtbkeg
+end module mod_c_dfpmtbkeg

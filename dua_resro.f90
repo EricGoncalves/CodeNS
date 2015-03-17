@@ -1,9 +1,9 @@
 module mod_dua_resro
-implicit none
+  implicit none
 contains
-      subroutine dua_resro( &
-                 icyc,ncyc,img, &
-                 u0,v,dt)
+  subroutine dua_resro( &
+       icyc,ncyc,img, &
+       u0,v,dt)
 !
 !--------------------------------------------------------------------
 !
@@ -15,47 +15,27 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use schemanum
-      use sortiefichier         
-implicit none
-integer :: ind
-double precision :: u0
-double precision :: v
-double precision :: dt
-integer :: i
-integer :: j
-integer :: k
-integer :: i1
-integer :: i2
-integer :: i2m1
-integer :: j1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k2
-integer :: k2m1
-integer :: l
-integer :: lm
-integer :: n
-integer :: n0
-integer :: nid
-integer :: nijd
-integer :: njd
-double precision :: resr
+    use para_var
+    use para_fige
+    use maillage
+    use schemanum
+    use sortiefichier         
+    implicit none
+    integer          ::    i,  i1,  i2,i2m1,icyc
+    integer          ::  img, ind,   j,  j1,  j2
+    integer          :: j2m1,   k,  k1,  k2,k2m1
+    integer          ::    l,  lm,   n,  n0,ncyc
+    integer          ::  nid,nijd, njd
+    double precision ::     dt,durmy2,  resr,    u0,     v
 !
 !--------------------------------------------------------------------
 !
-      integer icyc,ncyc,img
-      double precision durmy2
-      dimension u0(ip11,ip60),v(ip11,ip60),dt(ip11)
+    dimension u0(ip11,ip60),v(ip11,ip60),dt(ip11)
 !
-      ind(i,j,k)=n0+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    ind(i,j,k)=n0+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
 !
-      durmy2 = 0.
-      do l=1,lzx
+    durmy2 = 0.
+    do l=1,lzx
        lm=l+(img-1)*lz
        n0=npc(lm)
        i1=ii1(lm)
@@ -73,24 +53,24 @@ double precision :: resr
        nijd=nid*njd
 !
        do k=k1,k2m1
-        do j=j1,j2m1
-         do i=i1,i2m1
-          n=ind(i,j,k)
-          resr=(v(n,1)-u0(n,1))/dt(n)
-          durmy2=durmy2+resr*resr
-         enddo
-        enddo
+          do j=j1,j2m1
+             do i=i1,i2m1
+                n=ind(i,j,k)
+                resr=(v(n,1)-u0(n,1))/dt(n)
+                durmy2=durmy2+resr*resr
+             enddo
+          enddo
        enddo
-      enddo        ! Fin boucle domaines - Grille fine
+    enddo        ! Fin boucle domaines - Grille fine
 !
 !      if(ncyc.eq.1) then
 !       resno1=sqrt(durmy2)
 !       if(resno1.eq.0.) resno1=1.
 !      endif
 !      resite=sqrt(durmy2)/resno1
-      resite=sqrt(durmy2)
-      write(sor3,'(1x,i6,1x,i6,1x,e13.6)') ncyc,icyc,resite
+    resite=sqrt(durmy2)
+    write(sor3,'(1x,i6,1x,i6,1x,e13.6)') ncyc,icyc,resite
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine dua_resro
+end module mod_dua_resro

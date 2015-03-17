@@ -1,12 +1,12 @@
 module mod_clnrd_prcd
-implicit none
+  implicit none
 contains
-      subroutine clnrd_prcd( &
-                 mfb, &
-                 rod,roud,rovd,rowd,roed, &
-                 nxn,nyn,nzn,ncbd,v, &
-                 mmb,mpb,mpn,l, &
-                 pression,temp,cson)
+  subroutine clnrd_prcd( &
+       mfb, &
+       rod,roud,rovd,rowd,roed, &
+       nxn,nyn,nzn,ncbd,v, &
+       mmb,mpb,mpn,l, &
+       pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -56,94 +56,45 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use proprieteflu
-      use schemanum
-      use definition       
-implicit none
-integer :: mfb
-double precision :: rod
-double precision :: roud
-double precision :: rovd
-double precision :: rowd
-double precision :: roed
-integer :: ncbd
-double precision :: v
-integer :: mmb
-integer :: mpb
-integer :: mpn
-integer :: l
-double precision :: pression
-double precision :: temp
-double precision :: cson
-double precision :: a2
-double precision :: alm
-double precision :: alp
-double precision :: am
-double precision :: ap
-double precision :: b0
-double precision :: beta2
-double precision :: bs
-double precision :: eps0
-double precision :: epsm
-double precision :: epsp
-integer :: m
-integer :: mb
-integer :: mn
-integer :: mt
-integer :: n0c
-integer :: n0n
-integer :: nl
-double precision :: p
-double precision :: pd
-double precision :: ps
-double precision :: q2
-double precision :: qn
-double precision :: qnd
-double precision :: qns
-double precision :: qtx
-double precision :: qtxd
-double precision :: qtxs
-double precision :: qty
-double precision :: qtyd
-double precision :: qtys
-double precision :: qtz
-double precision :: qtzd
-double precision :: qtzs
-double precision :: qxd
-double precision :: qxs
-double precision :: qyd
-double precision :: qys
-double precision :: qzd
-double precision :: qzs
-double precision :: rho
-double precision :: rhos
-double precision :: rmd
-double precision :: rms
-double precision :: rocs
-double precision :: rpd
-double precision :: rps
+    use para_var
+    use para_fige
+    use maillage
+    use proprieteflu
+    use schemanum
+    use definition       
+    implicit none
+    integer          ::    l,   m,  mb, mfb, mmb
+    integer          ::   mn, mpb, mpn,  mt, n0c
+    integer          ::  n0n,ncbd,  nl
+    double precision ::       a2,     alm,     alp,      am,      ap
+    double precision ::       b0,   beta2,      bs,    cson,    eps0
+    double precision ::     epsm,    epsp,     nxn,     nyn,     nzn
+    double precision ::        p,      pd,pression,      ps,      q2
+    double precision ::     qinf,      qn,     qnd,     qns,     qtx
+    double precision ::     qtxd,    qtxs,     qty,    qtyd,    qtys
+    double precision ::      qtz,    qtzd,    qtzs,     qxd,     qxs
+    double precision ::      qyd,     qys,     qzd,     qzs,     rho
+    double precision ::     rhos,     rmd,     rms,    rocs,     rod
+    double precision ::     roed,    roud,    rovd,    rowd,     rpd
+    double precision ::      rps,    temp,       v
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn,qinf
 !
-      dimension v(ip11,ip60)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-      dimension mmb(mtt),mpb(mtt)
-      dimension mpn(mtt)
-      dimension pression(ip11),temp(ip11),cson(ip11)
+    dimension v(ip11,ip60)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
+    dimension mmb(mtt),mpb(mtt)
+    dimension mpn(mtt)
+    dimension pression(ip11),temp(ip11),cson(ip11)
 !
-      n0n=npn(l)
-      n0c=npc(l)
-      mt=mmb(mfb)
-      qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
+    n0n=npn(l)
+    n0c=npc(l)
+    mt=mmb(mfb)
+    qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
 !
 !!$OMP SIMD
-      do m=1,mt
+    do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m
        nl=ncbd(mb)
@@ -200,8 +151,8 @@ double precision :: rps
        pression(nl)=p
        temp(nl)=gam*pression(nl)/rho
        cson(nl)=sqrt(temp(nl))
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine clnrd_prcd
+end module mod_clnrd_prcd

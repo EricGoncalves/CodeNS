@@ -1,10 +1,10 @@
 module mod_cccca
-implicit none
+  implicit none
 contains
-      subroutine cccca( &
-                 l,equat, &
-                 v,mut, &
-                 vv1,vv2,vv3,vv4,vv5,vv6,vv7,mmut)
+  subroutine cccca( &
+       l,equat, &
+       v,mut, &
+       vv1,vv2,vv3,vv4,vv5,vv6,vv7,mmut)
 !
 !***********************************************************************
 !
@@ -30,69 +30,59 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use maillage
-implicit none
-integer :: l
-double precision :: v
-double precision :: vv1
-double precision :: vv2
-double precision :: vv3
-double precision :: vv4
-double precision :: vv5
-double precision :: vv6
-double precision :: vv7
-integer :: m
-integer :: n
-integer :: n0
+    use para_var
+    use para_fige
+    use maillage
+    implicit none
+    integer          ::  l, m, n,n0
+    double precision :: mmut, mut,   v, vv1, vv2
+    double precision ::  vv3, vv4, vv5, vv6, vv7
 !
 !-----------------------------------------------------------------------
 !
-      character(len=7 ) :: equat
-      double precision mmut,mut
-      dimension v(ip11,ip60),mut(ip12)
-      dimension vv1(ip00),vv2(ip00),vv3(ip00),vv4(ip00),vv5(ip00), &
-                vv6(ip00),vv7(ip00),mmut(ip00)
+    character(len=7 ) :: equat
+    dimension v(ip11,ip60),mut(ip12)
+    dimension vv1(ip00),vv2(ip00),vv3(ip00),vv4(ip00),vv5(ip00), &
+         vv6(ip00),vv7(ip00),mmut(ip00)
 !
-      n0=npc(l)
+    n0=npc(l)
 !
-      do m=1,nnc(l)
+    do m=1,nnc(l)
        vv1(m)=0.
        vv2(m)=0.
        vv3(m)=0.
        vv4(m)=0.
        vv5(m)=0.
        mmut(m)=0.
-      enddo
-      do m=1,nnc(l)
+    enddo
+    do m=1,nnc(l)
        n=m+n0
        vv1(m)=v(n,1)
        vv2(m)=v(n,2)
        vv3(m)=v(n,3)
        vv4(m)=v(n,4)
        vv5(m)=v(n,5)
-      enddo
+    enddo
 !
-      if (equat(1:2).eq.'ns') then
+    if (equat(1:2).eq.'ns') then
        do m=1,nnc(l)
-        n=m+n0
-        mmut(m)=mut(n)
+          n=m+n0
+          mmut(m)=mut(n)
        enddo
-      endif
+    endif
 !
-      if(equat(6:7).eq.'ke') then
+    if(equat(6:7).eq.'ke') then
        do m=1,nnc(l)
-        vv6(m)=0.
-        vv7(m)=0.
+          vv6(m)=0.
+          vv7(m)=0.
        enddo
        do m=1,nnc(l)
-        n=m+n0
-        vv6(m)=v(n,6)
-        vv7(m)=v(n,7)
+          n=m+n0
+          vv6(m)=v(n,6)
+          vv7(m)=v(n,7)
        enddo
-      endif
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine cccca
+end module mod_cccca

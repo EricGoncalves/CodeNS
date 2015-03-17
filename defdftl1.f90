@@ -1,7 +1,7 @@
 module mod_defdftl1
-implicit none
+  implicit none
 contains
-      subroutine defdftl1
+  subroutine defdftl1
 !
 !***********************************************************************
 !
@@ -11,19 +11,19 @@ contains
 !
 !***********************************************************************
 !
-      use kcle
-      use chainecarac
-implicit none
-integer :: itit
+    use kcle
+    use chainecarac
+    implicit none
+    integer          :: itit
 !
 !-----------------------------------------------------------------------
 !
-     do itit=1,80
-      titrt1(itit:itit)=' '
-     enddo
-     titrt1='  CALCUL RANS  '
-     ktitrt1=1
+    do itit=1,80
+       titrt1(itit:itit)=' '
+    enddo
+    titrt1='  CALCUL RANS  '
+    ktitrt1=1
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdftl1
+end module mod_defdftl1

@@ -1,10 +1,10 @@
 module mod_utprd
-implicit none
+  implicit none
 contains
-      subroutine utprd( &
-                 bceqt, &
-                 mfl,pres,icyc, &
-                 mmb,mpb)
+  subroutine utprd( &
+       bceqt, &
+       mfl,pres,icyc, &
+       mmb,mpb)
 !
 !***********************************************************************
 !
@@ -23,30 +23,24 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-implicit none
-double precision :: bceqt
-integer :: mfl
-double precision :: pres
-integer :: icyc
-integer :: mmb
-integer :: mpb
-integer :: m
-integer :: ml
-integer :: mt
+    use para_var
+    use para_fige
+    implicit none
+    integer          :: icyc,   m, mfl,  ml, mmb
+    integer          ::  mpb,  mt
+    double precision :: bceqt, pres
 !
 !-----------------------------------------------------------------------
 !
-      dimension bceqt(ip41,neqt)
-      dimension pres(ip40)
-      dimension mmb(mtt),mpb(mtt)
+    dimension bceqt(ip41,neqt)
+    dimension pres(ip40)
+    dimension mmb(mtt),mpb(mtt)
 !
-      mt=mmb(mfl)
-      do m=1,mt
+    mt=mmb(mfl)
+    do m=1,mt
        ml=mpb(mfl)+m
        pres(m)=bceqt(ml,1)
-      enddo
+    enddo
 !
-      end subroutine
-end module
+  end subroutine utprd
+end module mod_utprd

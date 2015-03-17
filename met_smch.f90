@@ -1,11 +1,11 @@
 module mod_met_smch
-implicit none
+  implicit none
 contains
-      subroutine met_smch( &
-                 l, &
-                 v,mu,dist,mnpar,utau, &
-                 tprod, &
-                 qcxts5,qcyts6)
+  subroutine met_smch( &
+       l, &
+       v,mu,dist,mnpar,utau, &
+       tprod, &
+       qcxts5,qcyts6)
 !
 !***********************************************************************
 !
@@ -60,72 +60,33 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use modeleturb
-      use chainecarac
-implicit none
-integer :: inc
-integer :: indc
-integer :: id
-integer :: jd
-integer :: kd
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-double precision :: v
-double precision :: dist
-integer :: mnpar
-double precision :: utau
-double precision :: tprod
-double precision :: qcxts5
-double precision :: qcyts6
-double precision :: dist2
-double precision :: epssk
-double precision :: f2
-integer :: i1
-integer :: i1m1
-integer :: i1p1
-integer :: i2
-integer :: i2m1
-integer :: j1
-integer :: j1p1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k1p1
-integer :: k2
-integer :: k2m1
-integer :: m
-integer :: mp
-integer :: n
-integer :: n0c
-integer :: nci
-integer :: ncj
-integer :: nck
-integer :: nid
-integer :: nijd
-integer :: njd
-double precision :: rodst
-double precision :: rtur
-double precision :: sch1
-double precision :: sch2
-double precision :: sch3
-double precision :: xk
-double precision :: yplus
+    use para_var
+    use para_fige
+    use maillage
+    use modeleturb
+    use chainecarac
+    implicit none
+    integer          ::     i,   i1, i1m1, i1p1,   i2
+    integer          ::  i2m1,   id,  inc, indc,    j
+    integer          ::    j1, j1p1,   j2, j2m1,   jd
+    integer          ::     k,   k1, k1p1,   k2, k2m1
+    integer          ::    kd,    l,    m,mnpar,   mp
+    integer          ::     n,  n0c,  nci,  ncj,  nck
+    integer          ::   nid, nijd,  njd
+    double precision ::   dist, dist2, epssk,    f2,    mu
+    double precision :: qcxts5,qcyts6, rodst,  rtur,  sch1
+    double precision ::   sch2,  sch3, tprod,  utau,     v
+    double precision ::     xk, yplus
 !
 !-----------------------------------------------------------------------
 !
-      double precision mu
-      dimension v(ip11,ip60)
-      dimension mu(ip12),dist(ip12),mnpar(ip12),utau(ip42), &
-                qcxts5(ip12),qcyts6 (ip12)
-      dimension tprod(ip00)
+    dimension v(ip11,ip60)
+    dimension mu(ip12),dist(ip12),mnpar(ip12),utau(ip42), &
+         qcxts5(ip12),qcyts6 (ip12)
+    dimension tprod(ip00)
 !
-      indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-      inc(id,jd,kd)=id+jd*nid+kd*nijd
+    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    inc(id,jd,kd)=id+jd*nid+kd*nijd
 !
 !     ----------------------------------------------------------
 !
@@ -134,57 +95,57 @@ double precision :: yplus
 !     c_epsilon_1 <-> cke1
 !     c_epsilon_2 <-> cke2
 !
-      n0c=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0c=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd= nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd= nid*njd
 !
-      i1p1=i1+1
-      j1p1=j1+1
-      k1p1=k1+1
-      i2m1=i2-1
-      j2m1=j2-1
-      k2m1=k2-1
-      i1m1=i1-1
+    i1p1=i1+1
+    j1p1=j1+1
+    k1p1=k1+1
+    i2m1=i2-1
+    j2m1=j2-1
+    k2m1=k2-1
+    i1m1=i1-1
 !
-      nci  = inc(1,0,0)
-      ncj  = inc(0,1,0)
-      nck  = inc(0,0,1)
-      do k=k1,k2m1
-         do j=j1,j2m1
-            n=indc(i1m1,j,k)
-            do i=i1,i2m1
-               n    =n+nci
-               m    =n-n0c
-               mp   =mnpar(n)
-               if(mp.ge.1) then
-                 yplus=max(abs(utau(mp)),utaumin)*dist(n)*v(n,1)/mu(n)
-               else
-                 yplus=1000.
-               end if
-               xk   =v(n,6)/v(n,1)
-               dist2=dist(n)**2
-               rodst=v(n,1)*dist2
-               qcxts5(n)=tprod(m) - v(n,7) - 2.*mu(n)*v(n,6)/rodst
+    nci  = inc(1,0,0)
+    ncj  = inc(0,1,0)
+    nck  = inc(0,0,1)
+    do k=k1,k2m1
+       do j=j1,j2m1
+          n=indc(i1m1,j,k)
+          do i=i1,i2m1
+             n    =n+nci
+             m    =n-n0c
+             mp   =mnpar(n)
+             if(mp.ge.1) then
+                yplus=max(abs(utau(mp)),utaumin)*dist(n)*v(n,1)/mu(n)
+             else
+                yplus=1000.
+             end if
+             xk   =v(n,6)/v(n,1)
+             dist2=dist(n)**2
+             rodst=v(n,1)*dist2
+             qcxts5(n)=tprod(m) - v(n,7) - 2.*mu(n)*v(n,6)/rodst
 !
-               epssk=v(n,7)/v(n,6)
-               rtur =v(n,6)/(mu(n)*epssk)
-               f2   =1.-.22222222*exp(-rtur*rtur/36.)
-               sch1 =cke1*epssk*tprod(m)
-               sch2 =cke2*f2*epssk*v(n,7)
-               sch3 =2.*mu(n)*(v(n,7)/rodst)*exp(-yplus/2.)
-               qcyts6(n)=sch1 - sch2 - sch3
-            enddo
-         enddo
-      enddo
+             epssk=v(n,7)/v(n,6)
+             rtur =v(n,6)/(mu(n)*epssk)
+             f2   =1.-.22222222*exp(-rtur*rtur/36.)
+             sch1 =cke1*epssk*tprod(m)
+             sch2 =cke2*f2*epssk*v(n,7)
+             sch3 =2.*mu(n)*(v(n,7)/rodst)*exp(-yplus/2.)
+             qcyts6(n)=sch1 - sch2 - sch3
+          enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine met_smch
+end module mod_met_smch

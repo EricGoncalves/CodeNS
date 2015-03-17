@@ -1,9 +1,9 @@
 module mod_metric2
-implicit none
+  implicit none
 contains
-      subroutine metric2( &
-                 l,x,y,z, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+  subroutine metric2( &
+       l,x,y,z, &
+       cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !***********************************************************************
 !
@@ -31,106 +31,58 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use chainecarac
-implicit none
-integer :: inc
-integer :: indn
-integer :: id
-integer :: jd
-integer :: kd
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: cmui1
-double precision :: cmui2
-double precision :: cmuj1
-double precision :: cmuj2
-double precision :: cmuk1
-double precision :: cmuk2
-double precision :: dmi
-double precision :: dmj
-double precision :: dmk
-double precision :: dpi
-double precision :: dpj
-double precision :: dpk
-integer :: i1
-integer :: i1p1
-integer :: i2
-integer :: i2m1
-integer :: j1
-integer :: j1p1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k1p1
-integer :: k2
-integer :: k2m1
-integer :: m
-integer :: n
-integer :: n0c
-integer :: nci
-integer :: ncij
-integer :: ncijk
-integer :: ncik
-integer :: ncj
-integer :: ncjk
-integer :: nck
-integer :: nid
-integer :: njd
-double precision :: tk
-double precision :: xe
-double precision :: xn
-double precision :: xp
-double precision :: xr
-double precision :: ye
-double precision :: yn
-double precision :: yp
-double precision :: yr
-double precision :: ze
-double precision :: zn
-double precision :: zp
-double precision :: zr
+    use para_var
+    use para_fige
+    use maillage
+    use chainecarac
+    implicit none
+    integer          ::     i,   i1, i1p1,   i2, i2m1
+    integer          ::    id,  inc, indn,    j,   j1
+    integer          ::  j1p1,   j2, j2m1,   jd,    k
+    integer          ::    k1, k1p1,   k2, k2m1,   kd
+    integer          ::     l,    m,    n,  n0c,  nci
+    integer          ::  ncij,ncijk, ncik,  ncj, ncjk
+    integer          ::   nck,  nid,  njd
+    double precision :: cmui1,cmui2,cmuj1,cmuj2,cmuk1
+    double precision :: cmuk2,  dmi,  dmj,  dmk,  dpi
+    double precision ::   dpj,  dpk,   tk,    x,   xe
+    double precision ::    xn,   xp,   xr,    y,   ye
+    double precision ::    yn,   yp,   yr,    z,   ze
+    double precision ::    zn,   zp,   zr
 !
 !-----------------------------------------------------------------------
 !
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-                cmuk1(ip21),cmuk2(ip21)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
+         cmuk1(ip21),cmuk2(ip21)
 !
-      indn(i,j,k)=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
-      inc(id,jd,kd)=id+jd*nid+kd*nid*njd
+    indn(i,j,k)=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
+    inc(id,jd,kd)=id+jd*nid+kd*nid*njd
 !
-      nid=id2(l)-id1(l)+1
-      njd=jd2(l)-jd1(l)+1
+    nid=id2(l)-id1(l)+1
+    njd=jd2(l)-jd1(l)+1
 !
-      nci = inc(1,0,0)
-      ncj = inc(0,1,0)
-      nck = inc(0,0,1)
-      ncij= inc(1,1,0)
-      ncik= inc(1,0,1)
-      ncjk= inc(0,1,1)
-      ncijk= inc(1,1,1)
+    nci = inc(1,0,0)
+    ncj = inc(0,1,0)
+    nck = inc(0,0,1)
+    ncij= inc(1,1,0)
+    ncik= inc(1,0,1)
+    ncjk= inc(0,1,1)
+    ncijk= inc(1,1,1)
 !
-      n0c=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
-      i1p1=i1+1
-      j1p1=j1+1
-      k1p1=k1+1
-      i2m1=i2-1
-      j2m1=j2-1
-      k2m1=k2-1
+    n0c=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
+    i1p1=i1+1
+    j1p1=j1+1
+    k1p1=k1+1
+    i2m1=i2-1
+    j2m1=j2-1
+    k2m1=k2-1
 !
 !cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 !      calcul des coefficients bi1 (bi2) multiplicateurs a la derivee 1ere (2eme)
@@ -140,12 +92,12 @@ double precision :: zr
 !cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
 !
 !******************************************************************************
-      if(equat(3:5).eq.'2dk') then
+    if(equat(3:5).eq.'2dk') then
 !******************************************************************************
        do j=j1p1,j2m1
-        do i=i1p1,i2m1
-         n=indn(i,j,k1)
-         m=n-n0c
+          do i=i1p1,i2m1
+             n=indn(i,j,k1)
+             m=n-n0c
 !-----------------------------------------------------------------------
 !             pour le flux calcule dans la direction i
 !-----------------------------------------------------------------------
@@ -159,255 +111,255 @@ double precision :: zr
 !      distance ER -> dm
 !      distance RP -> cv
 !
-         xp=0.125*(x(n-nci)+x(n)+x(n+ncj-nci)+x(n+ncij-nci)+ &
-                x(n+nck-nci)+x(n+ncik-nci)+x(n+ncjk-nci)+x(n+ncijk-nci))
-         yp=0.125*(y(n-nci)+y(n)+y(n+ncj-nci)+y(n+ncij-nci)+ &
-                y(n+nck-nci)+y(n+ncik-nci)+y(n+ncjk-nci)+y(n+ncijk-nci))
-         zp=0.125*(z(n-nci)+z(n)+z(n+ncj-nci)+z(n+ncij-nci)+ &
-                z(n+nck-nci)+z(n+ncik-nci)+z(n+ncjk-nci)+z(n+ncijk-nci))
-         xr=0.125*(x(n)+x(n+nci)+x(n+ncj)+x(n+ncij)+ &
-                x(n+nck)+x(n+ncik)+x(n+ncjk)+x(n+ncijk))
-         yr=0.125*(y(n)+y(n+nci)+y(n+ncj)+y(n+ncij)+ &
-                y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
-         zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
-                z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
+             xp=0.125*(x(n-nci)+x(n)+x(n+ncj-nci)+x(n+ncij-nci)+ &
+                  x(n+nck-nci)+x(n+ncik-nci)+x(n+ncjk-nci)+x(n+ncijk-nci))
+             yp=0.125*(y(n-nci)+y(n)+y(n+ncj-nci)+y(n+ncij-nci)+ &
+                  y(n+nck-nci)+y(n+ncik-nci)+y(n+ncjk-nci)+y(n+ncijk-nci))
+             zp=0.125*(z(n-nci)+z(n)+z(n+ncj-nci)+z(n+ncij-nci)+ &
+                  z(n+nck-nci)+z(n+ncik-nci)+z(n+ncjk-nci)+z(n+ncijk-nci))
+             xr=0.125*(x(n)+x(n+nci)+x(n+ncj)+x(n+ncij)+ &
+                  x(n+nck)+x(n+ncik)+x(n+ncjk)+x(n+ncijk))
+             yr=0.125*(y(n)+y(n+nci)+y(n+ncj)+y(n+ncij)+ &
+                  y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
+             zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
+                  z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
 !c------vecteur normal au plan interface--------------------------------
-         xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
-            (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
-         yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
-            (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
-         zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
-            (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
+             xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
+                  (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
+             yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
+                  (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
+             zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
+                  (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
 !c-------coordonnees du point E-------------------------------------------
-         tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
-            (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
-         xe=xp+tk*(xr-xp)
-         ye=yp+tk*(yr-yp)
-         ze=zp+tk*(zr-zp)
-         dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
-         dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
+             tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
+                  (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
+             xe=xp+tk*(xr-xp)
+             ye=yp+tk*(yr-yp)
+             ze=zp+tk*(zr-zp)
+             dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
+             dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
 !--------pour operateur mu pondere------------------------------
 !c       attention! facteur 2 pour calcul des flux
-         cmui1(m)=2.*dpi/(dpi+dmi)
-         cmui2(m)=2.*dmi/(dpi+dmi)
+             cmui1(m)=2.*dpi/(dpi+dmi)
+             cmui2(m)=2.*dmi/(dpi+dmi)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction j
 !------------------------------------------------------------------------
-         xp=0.125*(x(n-ncj)+x(n+nci-ncj)+x(n)+x(n+ncij-ncj)+ &
-                x(n+nck-ncj)+x(n+ncik-ncj)+x(n+ncjk-ncj)+x(n+ncijk-ncj))
-         yp=0.125*(y(n-ncj)+y(n+nci-ncj)+y(n)+y(n+ncij-ncj)+ &
-                y(n+nck-ncj)+y(n+ncik-ncj)+y(n+ncjk-ncj)+y(n+ncijk-ncj))
-         zp=0.125*(z(n-ncj)+z(n+nci-ncj)+z(n)+z(n+ncij-ncj)+ &
-                z(n+nck-ncj)+z(n+ncik-ncj)+z(n+ncjk-ncj)+z(n+ncijk-ncj))
+             xp=0.125*(x(n-ncj)+x(n+nci-ncj)+x(n)+x(n+ncij-ncj)+ &
+                  x(n+nck-ncj)+x(n+ncik-ncj)+x(n+ncjk-ncj)+x(n+ncijk-ncj))
+             yp=0.125*(y(n-ncj)+y(n+nci-ncj)+y(n)+y(n+ncij-ncj)+ &
+                  y(n+nck-ncj)+y(n+ncik-ncj)+y(n+ncjk-ncj)+y(n+ncijk-ncj))
+             zp=0.125*(z(n-ncj)+z(n+nci-ncj)+z(n)+z(n+ncij-ncj)+ &
+                  z(n+nck-ncj)+z(n+ncik-ncj)+z(n+ncjk-ncj)+z(n+ncijk-ncj))
 !--------------------------------------------------------------------
-         xn=(y(n)-y(n+ncik))*(z(n+nck)-z(n+nci))- &
-            (z(n)-z(n+ncik))*(y(n+nck)-y(n+nci))
-         yn=(z(n)-z(n+ncik))*(x(n+nck)-x(n+nci))- &
-            (x(n)-x(n+ncik))*(z(n+nck)-z(n+nci))
-         zn=(x(n)-x(n+ncik))*(y(n+nck)-y(n+nci))- &
-            (y(n)-y(n+ncik))*(x(n+nck)-x(n+nci))
-         tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
-            (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
-         xe=xp+tk*(xr-xp)
-         ye=yp+tk*(yr-yp)
-         ze=zp+tk*(zr-zp)
-         dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
-         dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-         cmuj1(m)=2.*dpj/(dpj+dmj)
-         cmuj2(m)=2.*dmj/(dpj+dmj)
-        enddo
+             xn=(y(n)-y(n+ncik))*(z(n+nck)-z(n+nci))- &
+                  (z(n)-z(n+ncik))*(y(n+nck)-y(n+nci))
+             yn=(z(n)-z(n+ncik))*(x(n+nck)-x(n+nci))- &
+                  (x(n)-x(n+ncik))*(z(n+nck)-z(n+nci))
+             zn=(x(n)-x(n+ncik))*(y(n+nck)-y(n+nci))- &
+                  (y(n)-y(n+ncik))*(x(n+nck)-x(n+nci))
+             tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
+                  (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
+             xe=xp+tk*(xr-xp)
+             ye=yp+tk*(yr-yp)
+             ze=zp+tk*(zr-zp)
+             dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
+             dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
+             cmuj1(m)=2.*dpj/(dpj+dmj)
+             cmuj2(m)=2.*dmj/(dpj+dmj)
+          enddo
        enddo
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2m1
-        m=indn(i1,j,k1)-n0c
-        cmuj1(m)=cmuj1(m+nci)
-        cmuj2(m)=cmuj2(m+nci)
+          m=indn(i1,j,k1)-n0c
+          cmuj1(m)=cmuj1(m+nci)
+          cmuj2(m)=cmuj2(m+nci)
        enddo
 !
        do i=i1p1,i2m1
-        m=indn(i,j1,k1)-n0c
-        cmui1(m)=cmui1(m+ncj)
-        cmui2(m)=cmui2(m+ncj)
+          m=indn(i,j1,k1)-n0c
+          cmui1(m)=cmui1(m+ncj)
+          cmui2(m)=cmui2(m+ncj)
        enddo
 !
 !******************************************************************************
-      elseif(equat(3:5).eq.'2dj') then
+    elseif(equat(3:5).eq.'2dj') then
 !******************************************************************************
 !
        do k=k1p1,k2m1
-        do i=i1p1,i2m1
-         n=indn(i,j1,k)
-         m=n-n0c
+          do i=i1p1,i2m1
+             n=indn(i,j1,k)
+             m=n-n0c
 !-----------------------------------------------------------------------
 !             pour le flux calcule dans la direction i
 !-----------------------------------------------------------------------
-         xp=0.125*(x(n-nci)+x(n)+x(n+ncj-nci)+x(n+ncij-nci)+ &
-                x(n+nck-nci)+x(n+ncik-nci)+x(n+ncjk-nci)+x(n+ncijk-nci))
-         yp=0.125*(y(n-nci)+y(n)+y(n+ncj-nci)+y(n+ncij-nci)+ &
-                y(n+nck-nci)+y(n+ncik-nci)+y(n+ncjk-nci)+y(n+ncijk-nci))
-         zp=0.125*(z(n-nci)+z(n)+z(n+ncj-nci)+z(n+ncij-nci)+ &
-                z(n+nck-nci)+z(n+ncik-nci)+z(n+ncjk-nci)+z(n+ncijk-nci))
-         xr=0.125*(x(n)+x(n+nci)+x(n+ncj)+x(n+ncij)+ &
-                x(n+nck)+x(n+ncik)+x(n+ncjk)+x(n+ncijk))
-         yr=0.125*(y(n)+y(n+nci)+y(n+ncj)+y(n+ncij)+ &
-                y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
-         zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
-                z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
+             xp=0.125*(x(n-nci)+x(n)+x(n+ncj-nci)+x(n+ncij-nci)+ &
+                  x(n+nck-nci)+x(n+ncik-nci)+x(n+ncjk-nci)+x(n+ncijk-nci))
+             yp=0.125*(y(n-nci)+y(n)+y(n+ncj-nci)+y(n+ncij-nci)+ &
+                  y(n+nck-nci)+y(n+ncik-nci)+y(n+ncjk-nci)+y(n+ncijk-nci))
+             zp=0.125*(z(n-nci)+z(n)+z(n+ncj-nci)+z(n+ncij-nci)+ &
+                  z(n+nck-nci)+z(n+ncik-nci)+z(n+ncjk-nci)+z(n+ncijk-nci))
+             xr=0.125*(x(n)+x(n+nci)+x(n+ncj)+x(n+ncij)+ &
+                  x(n+nck)+x(n+ncik)+x(n+ncjk)+x(n+ncijk))
+             yr=0.125*(y(n)+y(n+nci)+y(n+ncj)+y(n+ncij)+ &
+                  y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
+             zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
+                  z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
 !c------vecteur normal au plan interface--------------------------------
-         xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
-            (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
-         yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
-            (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
-         zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
-            (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
+             xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
+                  (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
+             yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
+                  (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
+             zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
+                  (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
 !c-------coordonnees du point E-------------------------------------------
-         tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
-            (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
-         xe=xp+tk*(xr-xp)
-         ye=yp+tk*(yr-yp)
-         ze=zp+tk*(zr-zp)
-         dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
-         dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
+             tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
+                  (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
+             xe=xp+tk*(xr-xp)
+             ye=yp+tk*(yr-yp)
+             ze=zp+tk*(zr-zp)
+             dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
+             dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
 !--------pour operateur mu pondere------------------------------
 !c       attention! facteur 2 pour calcul des flux
-         cmui1(m)=2.*dpi/(dpi+dmi)
-         cmui2(m)=2.*dmi/(dpi+dmi)
+             cmui1(m)=2.*dpi/(dpi+dmi)
+             cmui2(m)=2.*dmi/(dpi+dmi)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction k
 !------------------------------------------------------------------------
-         xp=0.125*(x(n-nck)+x(n+nci-nck)+x(n)+x(n+nci)+ &
-                   x(n-nck+ncj)+x(n+ncj)+x(n+ncij-nck)+x(n+ncij))
-         yp=0.125*(y(n-nck)+y(n+nci-nck)+y(n)+y(n+nci)+ &
-                   y(n-nck+ncj)+y(n+ncj)+y(n+ncij-nck)+y(n+ncij))
-         zp=0.125*(z(n-nck)+z(n+nci-nck)+z(n)+z(n+nci)+ &
-                   z(n-nck+ncj)+z(n+ncj)+z(n+ncij-nck)+z(n+ncij))
+             xp=0.125*(x(n-nck)+x(n+nci-nck)+x(n)+x(n+nci)+ &
+                  x(n-nck+ncj)+x(n+ncj)+x(n+ncij-nck)+x(n+ncij))
+             yp=0.125*(y(n-nck)+y(n+nci-nck)+y(n)+y(n+nci)+ &
+                  y(n-nck+ncj)+y(n+ncj)+y(n+ncij-nck)+y(n+ncij))
+             zp=0.125*(z(n-nck)+z(n+nci-nck)+z(n)+z(n+nci)+ &
+                  z(n-nck+ncj)+z(n+ncj)+z(n+ncij-nck)+z(n+ncij))
 !-----------------------------------------------------------------------
-         xn=(y(n)-y(n+ncij))*(z(n+ncj)-z(n+nci))- &
-            (z(n)-z(n+ncij))*(y(n+ncj)-y(n+nci))
-         yn=(z(n)-z(n+ncij))*(x(n+ncj)-x(n+nci))- &
-            (x(n)-x(n+ncij))*(z(n+ncj)-z(n+nci))
-         zn=(x(n)-x(n+ncij))*(y(n+ncj)-y(n+nci))- &
-            (y(n)-y(n+ncij))*(x(n+ncj)-x(n+nci))
-         tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
-            (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
-         xe=xp+tk*(xr-xp)
-         ye=yp+tk*(yr-yp)
-         ze=zp+tk*(zr-zp)
+             xn=(y(n)-y(n+ncij))*(z(n+ncj)-z(n+nci))- &
+                  (z(n)-z(n+ncij))*(y(n+ncj)-y(n+nci))
+             yn=(z(n)-z(n+ncij))*(x(n+ncj)-x(n+nci))- &
+                  (x(n)-x(n+ncij))*(z(n+ncj)-z(n+nci))
+             zn=(x(n)-x(n+ncij))*(y(n+ncj)-y(n+nci))- &
+                  (y(n)-y(n+ncij))*(x(n+ncj)-x(n+nci))
+             tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
+                  (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
+             xe=xp+tk*(xr-xp)
+             ye=yp+tk*(yr-yp)
+             ze=zp+tk*(zr-zp)
 !------------------------------------------------------------------
-         dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
-         dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-         cmuk1(m)=2.*dpk/(dpk+dmk)
-         cmuk2(m)=2.*dmk/(dpk+dmk)
-        enddo
+             dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
+             dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
+             cmuk1(m)=2.*dpk/(dpk+dmk)
+             cmuk2(m)=2.*dmk/(dpk+dmk)
+          enddo
        enddo
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
        do k=k1p1,k2m1
-        m=indn(i1,j1,k)-n0c
-        cmuk1(m)=cmuk1(m+nci)
-        cmuk2(m)=cmuk2(m+nci)
+          m=indn(i1,j1,k)-n0c
+          cmuk1(m)=cmuk1(m+nci)
+          cmuk2(m)=cmuk2(m+nci)
        enddo
 !
        do i=i1p1,i2m1
-        m=indn(i,j1,k1)-n0c
-        cmui1(m)=cmui1(m+nck)
-        cmui2(m)=cmui2(m+nck)
+          m=indn(i,j1,k1)-n0c
+          cmui1(m)=cmui1(m+nck)
+          cmui2(m)=cmui2(m+nck)
        enddo
 !
 !******************************************************************************
-      elseif(equat(3:5).eq.'2di') then
+    elseif(equat(3:5).eq.'2di') then
 !******************************************************************************
 !
        do k=k1p1,k2m1
-        do j=j1p1,j2m1
-         n=indn(i1,j,k)
-         m=n-n0c
+          do j=j1p1,j2m1
+             n=indn(i1,j,k)
+             m=n-n0c
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction j
 !------------------------------------------------------------------------
-         xp=0.125*(x(n-ncj)+x(n+nci-ncj)+x(n)+x(n+ncij-ncj)+ &
-                x(n+nck-ncj)+x(n+ncik-ncj)+x(n+ncjk-ncj)+x(n+ncijk-ncj))
-         yp=0.125*(y(n-ncj)+y(n+nci-ncj)+y(n)+y(n+ncij-ncj)+ &
-                y(n+nck-ncj)+y(n+ncik-ncj)+y(n+ncjk-ncj)+y(n+ncijk-ncj))
-         zp=0.125*(z(n-ncj)+z(n+nci-ncj)+z(n)+z(n+ncij-ncj)+ &
-                z(n+nck-ncj)+z(n+ncik-ncj)+z(n+ncjk-ncj)+z(n+ncijk-ncj))
-         xr=0.125*(x(n)+x(n+nci)+x(n+ncj)+x(n+ncij)+ &
-                x(n+nck)+x(n+ncik)+x(n+ncjk)+x(n+ncijk))
-         yr=0.125*(y(n)+y(n+nci)+y(n+ncj)+y(n+ncij)+ &
-                y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
-         zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
-                z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
+             xp=0.125*(x(n-ncj)+x(n+nci-ncj)+x(n)+x(n+ncij-ncj)+ &
+                  x(n+nck-ncj)+x(n+ncik-ncj)+x(n+ncjk-ncj)+x(n+ncijk-ncj))
+             yp=0.125*(y(n-ncj)+y(n+nci-ncj)+y(n)+y(n+ncij-ncj)+ &
+                  y(n+nck-ncj)+y(n+ncik-ncj)+y(n+ncjk-ncj)+y(n+ncijk-ncj))
+             zp=0.125*(z(n-ncj)+z(n+nci-ncj)+z(n)+z(n+ncij-ncj)+ &
+                  z(n+nck-ncj)+z(n+ncik-ncj)+z(n+ncjk-ncj)+z(n+ncijk-ncj))
+             xr=0.125*(x(n)+x(n+nci)+x(n+ncj)+x(n+ncij)+ &
+                  x(n+nck)+x(n+ncik)+x(n+ncjk)+x(n+ncijk))
+             yr=0.125*(y(n)+y(n+nci)+y(n+ncj)+y(n+ncij)+ &
+                  y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
+             zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
+                  z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
 !--------------------------------------------------------------------
-         xn=(y(n)-y(n+ncik))*(z(n+nck)-z(n+nci))- &
-            (z(n)-z(n+ncik))*(y(n+nck)-y(n+nci))
-         yn=(z(n)-z(n+ncik))*(x(n+nck)-x(n+nci))- &
-            (x(n)-x(n+ncik))*(z(n+nck)-z(n+nci))
-         zn=(x(n)-x(n+ncik))*(y(n+nck)-y(n+nci))- &
-            (y(n)-y(n+ncik))*(x(n+nck)-x(n+nci))
-         tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
-            (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
-         xe=xp+tk*(xr-xp)
-         ye=yp+tk*(yr-yp)
-         ze=zp+tk*(zr-zp)
-         dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
-         dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-         cmuj1(m)=2.*dpj/(dpj+dmj)
-         cmuj2(m)=2.*dmj/(dpj+dmj)
+             xn=(y(n)-y(n+ncik))*(z(n+nck)-z(n+nci))- &
+                  (z(n)-z(n+ncik))*(y(n+nck)-y(n+nci))
+             yn=(z(n)-z(n+ncik))*(x(n+nck)-x(n+nci))- &
+                  (x(n)-x(n+ncik))*(z(n+nck)-z(n+nci))
+             zn=(x(n)-x(n+ncik))*(y(n+nck)-y(n+nci))- &
+                  (y(n)-y(n+ncik))*(x(n+nck)-x(n+nci))
+             tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
+                  (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
+             xe=xp+tk*(xr-xp)
+             ye=yp+tk*(yr-yp)
+             ze=zp+tk*(zr-zp)
+             dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
+             dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
+             cmuj1(m)=2.*dpj/(dpj+dmj)
+             cmuj2(m)=2.*dmj/(dpj+dmj)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction k
 !------------------------------------------------------------------------
-         xp=0.125*(x(n-nck)+x(n+nci-nck)+x(n)+x(n+nci)+ &
-                   x(n-nck+ncj)+x(n+ncj)+x(n+ncij-nck)+x(n+ncij))
-         yp=0.125*(y(n-nck)+y(n+nci-nck)+y(n)+y(n+nci)+ &
-                   y(n-nck+ncj)+y(n+ncj)+y(n+ncij-nck)+y(n+ncij))
-         zp=0.125*(z(n-nck)+z(n+nci-nck)+z(n)+z(n+nci)+ &
-                   z(n-nck+ncj)+z(n+ncj)+z(n+ncij-nck)+z(n+ncij))
+             xp=0.125*(x(n-nck)+x(n+nci-nck)+x(n)+x(n+nci)+ &
+                  x(n-nck+ncj)+x(n+ncj)+x(n+ncij-nck)+x(n+ncij))
+             yp=0.125*(y(n-nck)+y(n+nci-nck)+y(n)+y(n+nci)+ &
+                  y(n-nck+ncj)+y(n+ncj)+y(n+ncij-nck)+y(n+ncij))
+             zp=0.125*(z(n-nck)+z(n+nci-nck)+z(n)+z(n+nci)+ &
+                  z(n-nck+ncj)+z(n+ncj)+z(n+ncij-nck)+z(n+ncij))
 !-----------------------------------------------------------------------
-         xn=(y(n)-y(n+ncij))*(z(n+ncj)-z(n+nci))- &
-            (z(n)-z(n+ncij))*(y(n+ncj)-y(n+nci))
-         yn=(z(n)-z(n+ncij))*(x(n+ncj)-x(n+nci))- &
-            (x(n)-x(n+ncij))*(z(n+ncj)-z(n+nci))
-         zn=(x(n)-x(n+ncij))*(y(n+ncj)-y(n+nci))- &
-            (y(n)-y(n+ncij))*(x(n+ncj)-x(n+nci))
-         tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
-            (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
-         xe=xp+tk*(xr-xp)
-         ye=yp+tk*(yr-yp)
-         ze=zp+tk*(zr-zp)
+             xn=(y(n)-y(n+ncij))*(z(n+ncj)-z(n+nci))- &
+                  (z(n)-z(n+ncij))*(y(n+ncj)-y(n+nci))
+             yn=(z(n)-z(n+ncij))*(x(n+ncj)-x(n+nci))- &
+                  (x(n)-x(n+ncij))*(z(n+ncj)-z(n+nci))
+             zn=(x(n)-x(n+ncij))*(y(n+ncj)-y(n+nci))- &
+                  (y(n)-y(n+ncij))*(x(n+ncj)-x(n+nci))
+             tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
+                  (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
+             xe=xp+tk*(xr-xp)
+             ye=yp+tk*(yr-yp)
+             ze=zp+tk*(zr-zp)
 !------------------------------------------------------------------
-         dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
-         dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-         cmuk1(m)=2.*dpk/(dpk+dmk)
-         cmuk2(m)=2.*dmk/(dpk+dmk)
-        enddo
+             dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
+             dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
+             cmuk1(m)=2.*dpk/(dpk+dmk)
+             cmuk2(m)=2.*dmk/(dpk+dmk)
+          enddo
        enddo
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2m1
-        m=indn(i1,j,k1)-n0c
-        cmuj1(m)=cmuj1(m+nck)
-        cmuj2(m)=cmuj2(m+nck)
+          m=indn(i1,j,k1)-n0c
+          cmuj1(m)=cmuj1(m+nck)
+          cmuj2(m)=cmuj2(m+nck)
        enddo
 !
        do k=k1p1,k2m1
-        m=indn(i1,j1,k)-n0c
-        cmuk1(m)=cmuk1(m+ncj)
-        cmuk2(m)=cmuk2(m+ncj)
+          m=indn(i1,j1,k)-n0c
+          cmuk1(m)=cmuk1(m+ncj)
+          cmuk2(m)=cmuk2(m+ncj)
        enddo
 !
 !******************************************************************************
-      elseif(equat(3:4).eq.'3d') then
+    elseif(equat(3:4).eq.'3d') then
 !******************************************************************************
 !
-      do k=k1,k2m1
-       do j=j1,j2m1
-        do i=i1,i2m1
-         n=indn(i,j,k)
-         m=n-n0c
+       do k=k1,k2m1
+          do j=j1,j2m1
+             do i=i1,i2m1
+                n=indn(i,j,k)
+                m=n-n0c
 !-----------------------------------------------------------------------
 !             pour le flux calcule dans la direction i
 !-----------------------------------------------------------------------
@@ -421,142 +373,142 @@ double precision :: zr
 !      distance ER -> dm
 !      distance RP -> cv
 !
-         xp=0.125*(x(n-nci)+x(n)+x(n+ncj-nci)+x(n+ncij-nci)+ &
-                x(n+nck-nci)+x(n+ncik-nci)+x(n+ncjk-nci)+x(n+ncijk-nci))
-         yp=0.125*(y(n-nci)+y(n)+y(n+ncj-nci)+y(n+ncij-nci)+ &
-                y(n+nck-nci)+y(n+ncik-nci)+y(n+ncjk-nci)+y(n+ncijk-nci))
-         zp=0.125*(z(n-nci)+z(n)+z(n+ncj-nci)+z(n+ncij-nci)+ &
-                z(n+nck-nci)+z(n+ncik-nci)+z(n+ncjk-nci)+z(n+ncijk-nci))
-         xr=0.125*(x(n)+x(n+nci)+x(n+ncj)+x(n+ncij)+ &
-                x(n+nck)+x(n+ncik)+x(n+ncjk)+x(n+ncijk))
-         yr=0.125*(y(n)+y(n+nci)+y(n+ncj)+y(n+ncij)+ &
-                y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
-         zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
-                z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
+                xp=0.125*(x(n-nci)+x(n)+x(n+ncj-nci)+x(n+ncij-nci)+ &
+                     x(n+nck-nci)+x(n+ncik-nci)+x(n+ncjk-nci)+x(n+ncijk-nci))
+                yp=0.125*(y(n-nci)+y(n)+y(n+ncj-nci)+y(n+ncij-nci)+ &
+                     y(n+nck-nci)+y(n+ncik-nci)+y(n+ncjk-nci)+y(n+ncijk-nci))
+                zp=0.125*(z(n-nci)+z(n)+z(n+ncj-nci)+z(n+ncij-nci)+ &
+                     z(n+nck-nci)+z(n+ncik-nci)+z(n+ncjk-nci)+z(n+ncijk-nci))
+                xr=0.125*(x(n)+x(n+nci)+x(n+ncj)+x(n+ncij)+ &
+                     x(n+nck)+x(n+ncik)+x(n+ncjk)+x(n+ncijk))
+                yr=0.125*(y(n)+y(n+nci)+y(n+ncj)+y(n+ncij)+ &
+                     y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
+                zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
+                     z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
 !c------vecteur normal au plan interface--------------------------------
-         xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
-            (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
-         yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
-            (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
-         zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
-            (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
+                xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
+                     (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
+                yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
+                     (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
+                zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
+                     (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
 !c-------coordonnees du point E-------------------------------------------
-         tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
-            (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
-         xe=xp+tk*(xr-xp)
-         ye=yp+tk*(yr-yp)
-         ze=zp+tk*(zr-zp)
-         dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
-         dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-         cmui1(m)=2.*dpi/(dpi+dmi)
-         cmui2(m)=2.*dmi/(dpi+dmi)
+                tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
+                     (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
+                xe=xp+tk*(xr-xp)
+                ye=yp+tk*(yr-yp)
+                ze=zp+tk*(zr-zp)
+                dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
+                dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
+                cmui1(m)=2.*dpi/(dpi+dmi)
+                cmui2(m)=2.*dmi/(dpi+dmi)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction j
 !------------------------------------------------------------------------
-         xp=0.125*(x(n-nck)+x(n+nci-ncj)+x(n)+x(n+ncij-ncj)+ &
-                x(n+nck-ncj)+x(n+ncik-ncj)+x(n+ncjk-ncj)+x(n+ncijk-ncj))
-         yp=0.125*(y(n-ncj)+y(n+nci-ncj)+y(n)+y(n+ncij-ncj)+ &
-                y(n+nck-ncj)+y(n+ncik-ncj)+y(n+ncjk-ncj)+y(n+ncijk-ncj))
-         zp=0.125*(z(n-ncj)+z(n+nci-ncj)+z(n)+z(n+ncij-ncj)+ &
-                z(n+nck-ncj)+z(n+ncik-ncj)+z(n+ncjk-ncj)+z(n+ncijk-ncj))
+                xp=0.125*(x(n-nck)+x(n+nci-ncj)+x(n)+x(n+ncij-ncj)+ &
+                     x(n+nck-ncj)+x(n+ncik-ncj)+x(n+ncjk-ncj)+x(n+ncijk-ncj))
+                yp=0.125*(y(n-ncj)+y(n+nci-ncj)+y(n)+y(n+ncij-ncj)+ &
+                     y(n+nck-ncj)+y(n+ncik-ncj)+y(n+ncjk-ncj)+y(n+ncijk-ncj))
+                zp=0.125*(z(n-ncj)+z(n+nci-ncj)+z(n)+z(n+ncij-ncj)+ &
+                     z(n+nck-ncj)+z(n+ncik-ncj)+z(n+ncjk-ncj)+z(n+ncijk-ncj))
 !--------------------------------------------------------------------
-         xn=(y(n)-y(n+ncik))*(z(n+nck)-z(n+nci))- &
-            (z(n)-z(n+ncik))*(y(n+nck)-y(n+nci))
-         yn=(z(n)-z(n+ncik))*(x(n+nck)-x(n+nci))- &
-            (x(n)-x(n+ncik))*(z(n+nck)-z(n+nci))
-         zn=(x(n)-x(n+ncik))*(y(n+nck)-y(n+nci))- &
-            (y(n)-y(n+ncik))*(x(n+nck)-x(n+nci))
-         tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
-            (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
-         xe=xp+tk*(xr-xp)
-         ye=yp+tk*(yr-yp)
-         ze=zp+tk*(zr-zp)
-         dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
-         dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-         cmuj1(m)=2.*dpj/(dpj+dmj)
-         cmuj2(m)=2.*dmj/(dpj+dmj)
+                xn=(y(n)-y(n+ncik))*(z(n+nck)-z(n+nci))- &
+                     (z(n)-z(n+ncik))*(y(n+nck)-y(n+nci))
+                yn=(z(n)-z(n+ncik))*(x(n+nck)-x(n+nci))- &
+                     (x(n)-x(n+ncik))*(z(n+nck)-z(n+nci))
+                zn=(x(n)-x(n+ncik))*(y(n+nck)-y(n+nci))- &
+                     (y(n)-y(n+ncik))*(x(n+nck)-x(n+nci))
+                tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
+                     (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
+                xe=xp+tk*(xr-xp)
+                ye=yp+tk*(yr-yp)
+                ze=zp+tk*(zr-zp)
+                dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
+                dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
+                cmuj1(m)=2.*dpj/(dpj+dmj)
+                cmuj2(m)=2.*dmj/(dpj+dmj)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction k
 !------------------------------------------------------------------------
-         xp=0.125*(x(n-nck)+x(n+nci-nck)+x(n)+x(n+nci)+ &
-                   x(n-nck+ncj)+x(n+ncj)+x(n+ncij-nck)+x(n+ncij))
-         yp=0.125*(y(n-nck)+y(n+nci-nck)+y(n)+y(n+nci)+ &
-                   y(n-nck+ncj)+y(n+ncj)+y(n+ncij-nck)+y(n+ncij))
-         zp=0.125*(z(n-nck)+z(n+nci-nck)+z(n)+z(n+nci)+ &
-                   z(n-nck+ncj)+z(n+ncj)+z(n+ncij-nck)+z(n+ncij))
+                xp=0.125*(x(n-nck)+x(n+nci-nck)+x(n)+x(n+nci)+ &
+                     x(n-nck+ncj)+x(n+ncj)+x(n+ncij-nck)+x(n+ncij))
+                yp=0.125*(y(n-nck)+y(n+nci-nck)+y(n)+y(n+nci)+ &
+                     y(n-nck+ncj)+y(n+ncj)+y(n+ncij-nck)+y(n+ncij))
+                zp=0.125*(z(n-nck)+z(n+nci-nck)+z(n)+z(n+nci)+ &
+                     z(n-nck+ncj)+z(n+ncj)+z(n+ncij-nck)+z(n+ncij))
 !-----------------------------------------------------------------------
-         xn=(y(n)-y(n+ncij))*(z(n+ncj)-z(n+nci))- &
-            (z(n)-z(n+ncij))*(y(n+ncj)-y(n+nci))
-         yn=(z(n)-z(n+ncij))*(x(n+ncj)-x(n+nci))- &
-            (x(n)-x(n+ncij))*(z(n+ncj)-z(n+nci))
-         zn=(x(n)-x(n+ncij))*(y(n+ncj)-y(n+nci))- &
-            (y(n)-y(n+ncij))*(x(n+ncj)-x(n+nci))
-         tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
-            (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
-         xe=xp+tk*(xr-xp)
-         ye=yp+tk*(yr-yp)
-         ze=zp+tk*(zr-zp)
+                xn=(y(n)-y(n+ncij))*(z(n+ncj)-z(n+nci))- &
+                     (z(n)-z(n+ncij))*(y(n+ncj)-y(n+nci))
+                yn=(z(n)-z(n+ncij))*(x(n+ncj)-x(n+nci))- &
+                     (x(n)-x(n+ncij))*(z(n+ncj)-z(n+nci))
+                zn=(x(n)-x(n+ncij))*(y(n+ncj)-y(n+nci))- &
+                     (y(n)-y(n+ncij))*(x(n+ncj)-x(n+nci))
+                tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
+                     (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
+                xe=xp+tk*(xr-xp)
+                ye=yp+tk*(yr-yp)
+                ze=zp+tk*(zr-zp)
 !------------------------------------------------------------------
-         dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
-         dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-         cmuk1(m)=2.*dpk/(dpk+dmk)
-         cmuk2(m)=2.*dmk/(dpk+dmk)
-        enddo
+                dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
+                dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
+                cmuk1(m)=2.*dpk/(dpk+dmk)
+                cmuk2(m)=2.*dmk/(dpk+dmk)
+             enddo
+          enddo
        enddo
-      enddo
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
-      do j=j1p1,j2m1
-       do k=k1p1,k2m1
-        m=indn(i1,j,k)-n0c
-        cmuj1(m)=cmuj1(m+nci)
-        cmuj2(m)=cmuj2(m+nci)
-        cmuk1(m)=cmuk1(m+nci)
-        cmuk2(m)=cmuk2(m+nci)
-       enddo
-      enddo
-!
-      do i=i1p1,i2m1
        do j=j1p1,j2m1
-        m=indn(i,j,k1)-n0c
-        cmui1(m)=cmui1(m+nck)
-        cmui2(m)=cmui2(m+nck)
-        cmuj1(m)=cmuj1(m+nck)
-        cmuj2(m)=cmuj2(m+nck)
+          do k=k1p1,k2m1
+             m=indn(i1,j,k)-n0c
+             cmuj1(m)=cmuj1(m+nci)
+             cmuj2(m)=cmuj2(m+nci)
+             cmuk1(m)=cmuk1(m+nci)
+             cmuk2(m)=cmuk2(m+nci)
+          enddo
        enddo
-      enddo
 !
-      do i=i1p1,i2m1
+       do i=i1p1,i2m1
+          do j=j1p1,j2m1
+             m=indn(i,j,k1)-n0c
+             cmui1(m)=cmui1(m+nck)
+             cmui2(m)=cmui2(m+nck)
+             cmuj1(m)=cmuj1(m+nck)
+             cmuj2(m)=cmuj2(m+nck)
+          enddo
+       enddo
+!
+       do i=i1p1,i2m1
+          do k=k1p1,k2m1
+             m=indn(i,j1,k)-n0c
+             cmui1(m)=cmui1(m+ncj)
+             cmui2(m)=cmui2(m+ncj)
+             cmuk1(m)=cmuk1(m+ncj)
+             cmuk2(m)=cmuk2(m+ncj)
+          enddo
+       enddo
+!
+       do i=i1p1,i2m1
+          m=indn(i,j1,k1)-n0c
+          cmui1(m)=cmui1(m+ncj)
+          cmui2(m)=cmui2(m+ncj)
+       enddo
+!
+       do j=j1p1,j2m1
+          m=indn(i1,j,k1)-n0c
+          cmuj1(m)=cmuj1(m+nci)
+          cmuj2(m)=cmuj2(m+nci)
+       enddo
+!
        do k=k1p1,k2m1
-        m=indn(i,j1,k)-n0c
-        cmui1(m)=cmui1(m+ncj)
-        cmui2(m)=cmui2(m+ncj)
-        cmuk1(m)=cmuk1(m+ncj)
-        cmuk2(m)=cmuk2(m+ncj)
+          m=indn(i1,j1,k)-n0c
+          cmuk1(m)=cmuk1(m+ncj)
+          cmuk2(m)=cmuk2(m+ncj)
        enddo
-      enddo
-!
-      do i=i1p1,i2m1
-       m=indn(i,j1,k1)-n0c
-       cmui1(m)=cmui1(m+ncj)
-       cmui2(m)=cmui2(m+ncj)
-      enddo
-!
-      do j=j1p1,j2m1
-       m=indn(i1,j,k1)-n0c
-       cmuj1(m)=cmuj1(m+nci)
-       cmuj2(m)=cmuj2(m+nci)
-      enddo
-!
-      do k=k1p1,k2m1
-       m=indn(i1,j1,k)-n0c
-       cmuk1(m)=cmuk1(m+ncj)
-       cmuk2(m)=cmuk2(m+ncj)
-      enddo
 !******************************************************************
-      endif
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine metric2
+end module mod_metric2

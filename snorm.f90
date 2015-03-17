@@ -1,9 +1,9 @@
 module mod_snorm
-implicit none
+  implicit none
 contains
-      subroutine snorm( &
-                 l,x,y,z, &
-                 sn,lgsnlt)
+  subroutine snorm( &
+       l,x,y,z, &
+       sn,lgsnlt)
 !
 !***********************************************************************
 !
@@ -32,60 +32,46 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use chainecarac
-use mod_norm
-implicit none
-integer :: l
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: sn
-integer :: lgsnlt
-integer :: i1
-integer :: i2
-integer :: imax
-integer :: imin
-integer :: j1
-integer :: j2
-integer :: jmax
-integer :: jmin
-integer :: k1
-integer :: k2
-integer :: kmax
-integer :: kmin
+    use para_var
+    use para_fige
+    use maillage
+    use chainecarac
+    use mod_norm
+    implicit none
+    integer          ::     i1,    i2,  imax,  imin,    j1
+    integer          ::     j2,  jmax,  jmin,    k1,    k2
+    integer          ::   kmax,  kmin,     l,lgsnlt
+    double precision :: sn, x, y, z
 !
 !-----------------------------------------------------------------------
 !
-      character(len=7 ) :: eqt
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension sn(lgsnlt,nind,ndir)
+    character(len=7 ) :: eqt
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension sn(lgsnlt,nind,ndir)
 !
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      imin=i1-1
-      imax=i2+1
-      jmin=j1-1
-      jmax=j2+1
-      kmin=k1-1
-      kmax=k2+1
-      eqt=equat
+    imin=i1-1
+    imax=i2+1
+    jmin=j1-1
+    jmax=j2+1
+    kmin=k1-1
+    kmax=k2+1
+    eqt=equat
 !
-      call norm( &
-                 l,x,y,z, &
-                 eqt,lgsnlt, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 sn(1,1,1),sn(1,1,2),sn(1,1,3), &
-                 sn(1,2,1),sn(1,2,2),sn(1,2,3), &
-                 sn(1,3,1),sn(1,3,2),sn(1,3,3))
+    call norm( &
+         l,x,y,z, &
+         eqt,lgsnlt, &
+         imin,imax,jmin,jmax,kmin,kmax, &
+         sn(1,1,1),sn(1,1,2),sn(1,1,3), &
+         sn(1,2,1),sn(1,2,2),sn(1,2,3), &
+         sn(1,3,1),sn(1,3,2),sn(1,3,3))
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine snorm
+end module mod_snorm

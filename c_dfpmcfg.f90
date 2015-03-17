@@ -1,7 +1,7 @@
 module mod_c_dfpmcfg
-implicit none
+  implicit none
 contains
-      subroutine c_dfpmcfg(mot,imot,nmot)
+  subroutine c_dfpmcfg(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -20,32 +20,31 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier
-      use boundary
-      use maillage
-use mod_b1_dfpmcfg
+    use para_fige
+    use sortiefichier
+    use boundary
+    use maillage
+    use mod_b1_dfpmcfg
 
-use mod_dfpmcfg
+    use mod_dfpmcfg
 
-use mod_tcmd_dfpmcfg
-implicit none
-integer :: imot
-integer :: nmot
+    use mod_tcmd_dfpmcfg
+    implicit none
+    integer          :: imot,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      call tcmd_dfpmcfg(mot,imot,nmot)
+    call tcmd_dfpmcfg(mot,imot,nmot)
 !
-      if(kimp.ge.1) then
-            call b1_dfpmcfg
-      endif
+    if(kimp.ge.1) then
+       call b1_dfpmcfg
+    endif
 !
-      call dfpmcfg
+    call dfpmcfg
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfpmcfg
+end module mod_c_dfpmcfg

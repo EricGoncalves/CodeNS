@@ -1,10 +1,10 @@
 module mod_rbtr
-implicit none
+  implicit none
 contains
-      subroutine rbtr( &
-                 ncbd,mnr,xnr,ynr,znr, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 ncin)
+  subroutine rbtr( &
+       ncbd,mnr,xnr,ynr,znr, &
+       toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+       ncin)
 !
 !***********************************************************************
 !
@@ -65,165 +65,135 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use maillage
-implicit none
-integer :: ncbd
-integer :: mnr
-double precision :: xnr
-double precision :: ynr
-double precision :: znr
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-integer :: ncin
-double precision :: cr
-integer :: l
-integer :: m
-integer :: mb
-integer :: mf
-integer :: mfb
-integer :: mfbm
-integer :: mr
-integer :: mt
-integer :: nd
-integer :: nid
-integer :: njd
-integer :: nr
-double precision :: qcxr
-double precision :: qcyr
-double precision :: qczr
-double precision :: sr
-double precision :: txxr
-double precision :: txyr
-double precision :: txzr
-double precision :: tyyr
-double precision :: tyzr
-double precision :: tzzr
+    use para_var
+    use para_fige
+    use boundary
+    use maillage
+    implicit none
+    integer          ::    l,   m,  mb,  mf, mfb
+    integer          :: mfbm, mnr,  mr,  mt,ncbd
+    integer          :: ncin,  nd, nid, njd,  nr
+    double precision ::   cr, qcx,qcxr, qcy,qcyr
+    double precision ::  qcz,qczr,  sr,toxx,toxy
+    double precision :: toxz,toyy,toyz,tozz,txxr
+    double precision :: txyr,txzr,tyyr,tyzr,tzzr
+    double precision ::  xnr, ynr, znr
 !
 !-----------------------------------------------------------------------
 !
 !
-      dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
-                tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12)
-      dimension ncbd(ip41),ncin(ip41)
-      dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
+    dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
+         tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12)
+    dimension ncbd(ip41),ncin(ip41)
+    dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !
-      mfbm=lbd(mf)
-      mt=mmb(mfbm)
+       mfbm=lbd(mf)
+       mt=mmb(mfbm)
 !
-      mfb =mod(mfbm,mtb)
-      if (mfb.eq.0) mfb=mtb
-      sr =-srotr(mfb)
-      cr = crotr(mfb)
-      l  = ndrr(mfb)
+       mfb =mod(mfbm,mtb)
+       if (mfb.eq.0) mfb=mtb
+       sr =-srotr(mfb)
+       cr = crotr(mfb)
+       l  = ndrr(mfb)
 !
-      nid=id2(l)-id1(l)+1
-      njd=jd2(l)-jd1(l)+1
+       nid=id2(l)-id1(l)+1
+       njd=jd2(l)-jd1(l)+1
 !
 !!$OMP SIMD
-      do m=1,mt
-      mr=mpr(mfbm)+m
-      nr=mnr(mr)
-      mb=mpb(mfbm)+m
-      nd=ncbd(mb)
+       do m=1,mt
+          mr=mpr(mfbm)+m
+          nr=mnr(mr)
+          mb=mpb(mfbm)+m
+          nd=ncbd(mb)
 !
 !     definition des variables aux bords (centre des facettes frontieres)
 !
-      toxx(nd)= &
-          (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*toxx(nr              )+ &
-          (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *toxx(nr      +nid*njd)+ &
-          (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*toxx(nr  +nid        )+ &
-          (1-xnr(mr))*   ynr(mr) *   znr(mr) *toxx(nr  +nid+nid*njd)+ &
-             xnr(mr) *(1-ynr(mr))*(1-znr(mr))*toxx(nr+1            )+ &
-             xnr(mr) *(1-ynr(mr))*   znr(mr) *toxx(nr+1    +nid*njd)+ &
-             xnr(mr) *   ynr(mr) *(1-znr(mr))*toxx(nr+1+nid        )+ &
-             xnr(mr) *   ynr(mr) *   znr(mr) *toxx(nr+1+nid+nid*njd)
-      toyy(nd)= &
-          (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*toyy(nr              )+ &
-          (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *toyy(nr      +nid*njd)+ &
-          (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*toyy(nr  +nid        )+ &
-          (1-xnr(mr))*   ynr(mr) *   znr(mr) *toyy(nr  +nid+nid*njd)+ &
-             xnr(mr) *(1-ynr(mr))*(1-znr(mr))*toyy(nr+1            )+ &
-             xnr(mr) *(1-ynr(mr))*   znr(mr) *toyy(nr+1    +nid*njd)+ &
-             xnr(mr) *   ynr(mr) *(1-znr(mr))*toyy(nr+1+nid        )+ &
-             xnr(mr) *   ynr(mr) *   znr(mr) *toyy(nr+1+nid+nid*njd)
-      tozz(nd)= &
-          (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*tozz(nr              )+ &
-          (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *tozz(nr      +nid*njd)+ &
-          (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*tozz(nr  +nid        )+ &
-          (1-xnr(mr))*   ynr(mr) *   znr(mr) *tozz(nr  +nid+nid*njd)+ &
-             xnr(mr) *(1-ynr(mr))*(1-znr(mr))*tozz(nr+1            )+ &
-             xnr(mr) *(1-ynr(mr))*   znr(mr) *tozz(nr+1    +nid*njd)+ &
-             xnr(mr) *   ynr(mr) *(1-znr(mr))*tozz(nr+1+nid        )+ &
-             xnr(mr) *   ynr(mr) *   znr(mr) *tozz(nr+1+nid+nid*njd)
-      toxy(nd)= &
-          (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*toxy(nr              )+ &
-          (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *toxy(nr      +nid*njd)+ &
-          (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*toxy(nr  +nid        )+ &
-          (1-xnr(mr))*   ynr(mr) *   znr(mr) *toxy(nr  +nid+nid*njd)+ &
-             xnr(mr) *(1-ynr(mr))*(1-znr(mr))*toxy(nr+1            )+ &
-             xnr(mr) *(1-ynr(mr))*   znr(mr) *toxy(nr+1    +nid*njd)+ &
-             xnr(mr) *   ynr(mr) *(1-znr(mr))*toxy(nr+1+nid        )+ &
-             xnr(mr) *   ynr(mr) *   znr(mr) *toxy(nr+1+nid+nid*njd)
+          toxx(nd)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*toxx(nr              )+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *toxx(nr      +nid*njd)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*toxx(nr  +nid        )+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *toxx(nr  +nid+nid*njd)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*toxx(nr+1            )+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *toxx(nr+1    +nid*njd)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*toxx(nr+1+nid        )+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *toxx(nr+1+nid+nid*njd)
+          toyy(nd)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*toyy(nr              )+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *toyy(nr      +nid*njd)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*toyy(nr  +nid        )+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *toyy(nr  +nid+nid*njd)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*toyy(nr+1            )+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *toyy(nr+1    +nid*njd)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*toyy(nr+1+nid        )+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *toyy(nr+1+nid+nid*njd)
+          tozz(nd)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*tozz(nr              )+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *tozz(nr      +nid*njd)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*tozz(nr  +nid        )+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *tozz(nr  +nid+nid*njd)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*tozz(nr+1            )+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *tozz(nr+1    +nid*njd)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*tozz(nr+1+nid        )+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *tozz(nr+1+nid+nid*njd)
+          toxy(nd)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*toxy(nr              )+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *toxy(nr      +nid*njd)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*toxy(nr  +nid        )+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *toxy(nr  +nid+nid*njd)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*toxy(nr+1            )+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *toxy(nr+1    +nid*njd)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*toxy(nr+1+nid        )+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *toxy(nr+1+nid+nid*njd)
 !
-      toxz(nd)= &
-          (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*toxz(nr              )+ &
-          (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *toxz(nr      +nid*njd)+ &
-          (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*toxz(nr  +nid        )+ &
-          (1-xnr(mr))*   ynr(mr) *   znr(mr) *toxz(nr  +nid+nid*njd)+ &
-             xnr(mr) *(1-ynr(mr))*(1-znr(mr))*toxz(nr+1            )+ &
-             xnr(mr) *(1-ynr(mr))*   znr(mr) *toxz(nr+1    +nid*njd)+ &
-             xnr(mr) *   ynr(mr) *(1-znr(mr))*toxz(nr+1+nid        )+ &
-             xnr(mr) *   ynr(mr) *   znr(mr) *toxz(nr+1+nid+nid*njd)
+          toxz(nd)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*toxz(nr              )+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *toxz(nr      +nid*njd)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*toxz(nr  +nid        )+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *toxz(nr  +nid+nid*njd)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*toxz(nr+1            )+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *toxz(nr+1    +nid*njd)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*toxz(nr+1+nid        )+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *toxz(nr+1+nid+nid*njd)
 !
-      toyz(nd)= &
-          (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*toyz(nr              )+ &
-          (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *toyz(nr      +nid*njd)+ &
-          (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*toyz(nr  +nid        )+ &
-          (1-xnr(mr))*   ynr(mr) *   znr(mr) *toyz(nr  +nid+nid*njd)+ &
-             xnr(mr) *(1-ynr(mr))*(1-znr(mr))*toyz(nr+1            )+ &
-             xnr(mr) *(1-ynr(mr))*   znr(mr) *toyz(nr+1    +nid*njd)+ &
-             xnr(mr) *   ynr(mr) *(1-znr(mr))*toyz(nr+1+nid        )+ &
-             xnr(mr) *   ynr(mr) *   znr(mr) *toyz(nr+1+nid+nid*njd)
+          toyz(nd)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*toyz(nr              )+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *toyz(nr      +nid*njd)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*toyz(nr  +nid        )+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *toyz(nr  +nid+nid*njd)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*toyz(nr+1            )+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *toyz(nr+1    +nid*njd)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*toyz(nr+1+nid        )+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *toyz(nr+1+nid+nid*njd)
 !
-       qcx(nd)= &
-          (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))* qcx(nr              )+ &
-          (1-xnr(mr))*(1-ynr(mr))*   znr(mr) * qcx(nr      +nid*njd)+ &
-          (1-xnr(mr))*   ynr(mr) *(1-znr(mr))* qcx(nr  +nid        )+ &
-          (1-xnr(mr))*   ynr(mr) *   znr(mr) * qcx(nr  +nid+nid*njd)+ &
-             xnr(mr) *(1-ynr(mr))*(1-znr(mr))* qcx(nr+1            )+ &
-             xnr(mr) *(1-ynr(mr))*   znr(mr) * qcx(nr+1    +nid*njd)+ &
-             xnr(mr) *   ynr(mr) *(1-znr(mr))* qcx(nr+1+nid        )+ &
-             xnr(mr) *   ynr(mr) *   znr(mr) * qcx(nr+1+nid+nid*njd)
-       qcy(nd)= &
-          (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))* qcy(nr              )+ &
-          (1-xnr(mr))*(1-ynr(mr))*   znr(mr) * qcy(nr      +nid*njd)+ &
-          (1-xnr(mr))*   ynr(mr) *(1-znr(mr))* qcy(nr  +nid        )+ &
-          (1-xnr(mr))*   ynr(mr) *   znr(mr) * qcy(nr  +nid+nid*njd)+ &
-             xnr(mr) *(1-ynr(mr))*(1-znr(mr))* qcy(nr+1            )+ &
-             xnr(mr) *(1-ynr(mr))*   znr(mr) * qcy(nr+1    +nid*njd)+ &
-             xnr(mr) *   ynr(mr) *(1-znr(mr))* qcy(nr+1+nid        )+ &
-             xnr(mr) *   ynr(mr) *   znr(mr) * qcy(nr+1+nid+nid*njd)
-       qcz(nd)= &
-          (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))* qcz(nr              )+ &
-          (1-xnr(mr))*(1-ynr(mr))*   znr(mr) * qcz(nr      +nid*njd)+ &
-          (1-xnr(mr))*   ynr(mr) *(1-znr(mr))* qcz(nr  +nid        )+ &
-          (1-xnr(mr))*   ynr(mr) *   znr(mr) * qcz(nr  +nid+nid*njd)+ &
-             xnr(mr) *(1-ynr(mr))*(1-znr(mr))* qcz(nr+1            )+ &
-             xnr(mr) *(1-ynr(mr))*   znr(mr) * qcz(nr+1    +nid*njd)+ &
-             xnr(mr) *   ynr(mr) *(1-znr(mr))* qcz(nr+1+nid        )+ &
-             xnr(mr) *   ynr(mr) *   znr(mr) * qcz(nr+1+nid+nid*njd)
+          qcx(nd)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))* qcx(nr              )+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) * qcx(nr      +nid*njd)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))* qcx(nr  +nid        )+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) * qcx(nr  +nid+nid*njd)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))* qcx(nr+1            )+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) * qcx(nr+1    +nid*njd)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))* qcx(nr+1+nid        )+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) * qcx(nr+1+nid+nid*njd)
+          qcy(nd)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))* qcy(nr              )+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) * qcy(nr      +nid*njd)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))* qcy(nr  +nid        )+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) * qcy(nr  +nid+nid*njd)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))* qcy(nr+1            )+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) * qcy(nr+1    +nid*njd)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))* qcy(nr+1+nid        )+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) * qcy(nr+1+nid+nid*njd)
+          qcz(nd)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))* qcz(nr              )+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) * qcz(nr      +nid*njd)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))* qcz(nr  +nid        )+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) * qcz(nr  +nid+nid*njd)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))* qcz(nr+1            )+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) * qcz(nr+1    +nid*njd)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))* qcz(nr+1+nid        )+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) * qcz(nr+1+nid+nid*njd)
 !
 !  Attention : le sens de rotation est le sens direct.
 !  ----------
@@ -239,29 +209,29 @@ double precision :: tzzr
 !
 !        A       = P^-1 * A * P
 !
-      txxr=toxx(nd)
-      txyr=cr*toxy(nd)-sr*toxz(nd)
-      txzr=cr*toxz(nd)+sr*toxy(nd)
-      tyyr=cr*cr*toyy(nd)-2.*cr*sr*toyz(nd)+sr*sr*tozz(nd)
-      tyzr=-cr*sr*(tozz(nd)-toyy(nd))+(2.*cr*cr-1.)*toyz(nd)
-      tzzr=sr*sr*toyy(nd)+2.*cr*sr*toyz(nd)+cr*cr*tozz(nd)
-      qcxr=qcx(nd)
-      qcyr=cr*qcy(nd)-sr*qcz(nd)
-      qczr=cr*qcz(nd)+sr*qcy(nd)
+          txxr=toxx(nd)
+          txyr=cr*toxy(nd)-sr*toxz(nd)
+          txzr=cr*toxz(nd)+sr*toxy(nd)
+          tyyr=cr*cr*toyy(nd)-2.*cr*sr*toyz(nd)+sr*sr*tozz(nd)
+          tyzr=-cr*sr*(tozz(nd)-toyy(nd))+(2.*cr*cr-1.)*toyz(nd)
+          tzzr=sr*sr*toyy(nd)+2.*cr*sr*toyz(nd)+cr*cr*tozz(nd)
+          qcxr=qcx(nd)
+          qcyr=cr*qcy(nd)-sr*qcz(nd)
+          qczr=cr*qcz(nd)+sr*qcy(nd)
 !
-      toxx(nd)=(txxr+toxx(ncin(mb)))*.5
-      toxy(nd)=(txyr+toxy(ncin(mb)))*.5
-      toxz(nd)=(txzr+toxz(ncin(mb)))*.5
-      toyy(nd)=(tyyr+toyy(ncin(mb)))*.5
-      toyz(nd)=(tyzr+toyz(ncin(mb)))*.5
-      tozz(nd)=(tzzr+tozz(ncin(mb)))*.5
-       qcx(nd)=(qcxr+ qcx(ncin(mb)))*.5
-       qcy(nd)=(qcyr+ qcy(ncin(mb)))*.5
-       qcz(nd)=(qczr+ qcz(ncin(mb)))*.5
+          toxx(nd)=(txxr+toxx(ncin(mb)))*.5
+          toxy(nd)=(txyr+toxy(ncin(mb)))*.5
+          toxz(nd)=(txzr+toxz(ncin(mb)))*.5
+          toyy(nd)=(tyyr+toyy(ncin(mb)))*.5
+          toyz(nd)=(tyzr+toyz(ncin(mb)))*.5
+          tozz(nd)=(tzzr+tozz(ncin(mb)))*.5
+          qcx(nd)=(qcxr+ qcx(ncin(mb)))*.5
+          qcy(nd)=(qcyr+ qcy(ncin(mb)))*.5
+          qcz(nd)=(qczr+ qcz(ncin(mb)))*.5
 !
-      enddo
-      enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rbtr
+end module mod_rbtr

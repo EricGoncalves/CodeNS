@@ -1,9 +1,9 @@
 module mod_idirch
-implicit none
+  implicit none
 contains
-      function idirch(ch)
-implicit none
-integer :: idir
+  function idirch(ch)
+    implicit none
+    integer          ::   idir,idirch
 !
 !***********************************************************************
 !
@@ -21,38 +21,37 @@ integer :: idir
 !
 !-----------------------------------------------------------------------
 !
-      character(len=2 ) :: ch
-      integer idirch
+    character(len=2 ) :: ch
 !
-      idirch = 0
+    idirch = 0
 !
-      if(ch(2:2).eq.'2') then
+    if(ch(2:2).eq.'2') then
        idir = -1
-      elseif(ch(2:2).eq.'1') then
+    elseif(ch(2:2).eq.'1') then
        idir = +1
-      else
+    else
        write(*,1000)
        stop
-      end if
+    end if
 !
-      if(ch(1:1).eq.'i') then
+    if(ch(1:1).eq.'i') then
        idirch = 1*idir
-      elseif(ch(1:1).eq.'j') then
+    elseif(ch(1:1).eq.'j') then
        idirch = 2*idir
-      elseif (ch(1:1).eq.'k') then
+    elseif (ch(1:1).eq.'k') then
        idirch = 3*idir
-      else
+    else
        write(*,1000)
        stop
-      end if
+    end if
 !
-      if (idirch.eq.0) then
+    if (idirch.eq.0) then
        write(*,1000)
        stop
-      end if
+    end if
 !
- 1000 format(10x,'caracter - type of subdomain face incomprehensible')
+1000 format(10x,'caracter - type of subdomain face incomprehensible')
 !
-      return
-      end function
-end module
+    return
+  end function idirch
+end module mod_idirch

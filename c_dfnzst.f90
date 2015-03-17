@@ -1,7 +1,7 @@
 module mod_c_dfnzst
-implicit none
+  implicit none
 contains
-      subroutine c_dfnzst(mot,imot,nmot)
+  subroutine c_dfnzst(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -41,31 +41,29 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier
-use mod_tcmd_dfnzst
-use mod_b1_dfnzst
-use mod_dfnzst
-implicit none
-integer :: imot
-integer :: nmot
-integer :: nonzst
+    use para_fige
+    use sortiefichier
+    use mod_tcmd_dfnzst
+    use mod_b1_dfnzst
+    use mod_dfnzst
+    implicit none
+    integer          ::   imot,  nmot,nonzst
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      call tcmd_dfnzst( &
-                 mot,imot,nmot, &
-                 nonzst)
+    call tcmd_dfnzst( &
+         mot,imot,nmot, &
+         nonzst)
 !
-      if (kimp.ge.1) then
-         call b1_dfnzst(nonzst)
-      endif
+    if (kimp.ge.1) then
+       call b1_dfnzst(nonzst)
+    endif
 !
-      call dfnzst(nonzst)
+    call dfnzst(nonzst)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfnzst
+end module mod_c_dfnzst

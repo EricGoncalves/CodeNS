@@ -1,7 +1,7 @@
 module mod_rfspstf
-implicit none
+  implicit none
 contains
-      subroutine rfspstf(t0,ncin,ncbd)
+  subroutine rfspstf(t0,ncin,ncbd)
 !
 !***********************************************************************
 !
@@ -24,40 +24,34 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-implicit none
-double precision :: t0
-integer :: ncin
-integer :: ncbd
-integer :: m
-integer :: mf
-integer :: mfb
-integer :: ml
-integer :: mt
-integer :: n
+    use para_var
+    use para_fige
+    use boundary
+    implicit none
+    integer          ::    m,  mf, mfb,  ml,  mt
+    integer          ::    n,ncbd,ncin
+    double precision :: t0
 !
 !-----------------------------------------------------------------------
 !
-      dimension t0(ip11)
-      dimension ncin(ip41),ncbd(ip41)
+    dimension t0(ip11)
+    dimension ncin(ip41),ncbd(ip41)
 !
 !     definition des variables aux points fictifs
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !
-      mfb=lbd(mf)
-      mt=mmb(mfb)
+       mfb=lbd(mf)
+       mt=mmb(mfb)
 !
 !!!$OMP SIMD
-      do m=1,mt
-      ml=mpb(mfb)+m
-      n=ncbd(ml)
-      t0(n) = 2*t0(n)-t0(ncin(ml))
-      enddo
-      enddo
+       do m=1,mt
+          ml=mpb(mfb)+m
+          n=ncbd(ml)
+          t0(n) = 2*t0(n)-t0(ncin(ml))
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rfspstf
+end module mod_rfspstf

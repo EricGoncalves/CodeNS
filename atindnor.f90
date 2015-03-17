@@ -1,11 +1,11 @@
 module mod_atindnor
-implicit none
+  implicit none
 contains
-      subroutine atindnor( &
-                 nfbe, &
-                 m10,m20,m30, &
-                 m1min,m1max,m2min,m2max,m3min,m3max, &
-                 dm1,dm2,dm3,isens3)
+  subroutine atindnor( &
+       nfbe, &
+       m10,m20,m30, &
+       m1min,m1max,m2min,m2max,m3min,m3max, &
+       dm1,dm2,dm3,isens3)
 !
 !***********************************************************************
 !
@@ -52,36 +52,19 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-   use maillage
-   use boundary
-implicit none
-integer :: nfbe
-integer :: m10
-integer :: m20
-integer :: m30
-integer :: m1min
-integer :: m1max
-integer :: m2min
-integer :: m2max
-integer :: m3min
-integer :: m3max
-integer :: isens3
-integer :: imax
-integer :: imin
-integer :: jmax
-integer :: jmin
-integer :: kmax
-integer :: kmin
-integer :: l
-integer :: mfbi
-integer :: nid
-integer :: njd
+    use para_fige
+    use maillage
+    use boundary
+    implicit none
+    integer          ::    dm1,   dm2,   dm3,  imax,  imin
+    integer          :: isens3,  jmax,  jmin,  kmax,  kmin
+    integer          ::      l,   m10, m1max, m1min,   m20
+    integer          ::  m2max, m2min,   m30, m3max, m3min
+    integer          ::   mfbi,  nfbe,   nid,   njd
 !
 !-----------------------------------------------------------------------
 !
-      character(len=2 ) :: indmf
-      integer dm1,dm2,dm3
+    character(len=2 ) :: indmf
 !
 !     ..................................................................
 !     l           : numero de domaine
@@ -91,35 +74,35 @@ integer :: njd
 !     imax        : indice max en i de la frontiere
 !     ..................................................................
 !
-      mfbi=nfei(nfbe)
-      l   =ndlb(mfbi)
-      indmf=indfl(mfbi)
-      imin=iminb(mfbi)
-      imax=imaxb(mfbi)
-      jmin=jminb(mfbi)
-      jmax=jmaxb(mfbi)
-      kmin=kminb(mfbi)
-      kmax=kmaxb(mfbi)
-      nid=id2(l)-id1(l)+1
-      njd=jd2(l)-jd1(l)+1
+    mfbi=nfei(nfbe)
+    l   =ndlb(mfbi)
+    indmf=indfl(mfbi)
+    imin=iminb(mfbi)
+    imax=imaxb(mfbi)
+    jmin=jminb(mfbi)
+    jmax=jmaxb(mfbi)
+    kmin=kminb(mfbi)
+    kmax=kmaxb(mfbi)
+    nid=id2(l)-id1(l)+1
+    njd=jd2(l)-jd1(l)+1
 !
-      if(indmf(1:1).eq.'i') then
+    if(indmf(1:1).eq.'i') then
 !
 !       normale perpendiculaire au plan "i=imin" ou "i=imax"
 !       On a la correspondance :
 !       ind=n0+(i -id1(l))*1  +(j -jd1(l))*nid+(k -kd1(l))*nij
 !       ind=n0+(m3-m30   )*dm3+(m1-m10   )*dm1+(m2-m20   )*dm2
 !
-        m1min=jmin
-        m1max=jmax
-        m10  =jd1(l)
-        dm1  =nid
-        m2min=kmin
-        m2max=kmax
-        m20  =kd1(l)
-        dm2  =nid*njd
+       m1min=jmin
+       m1max=jmax
+       m10  =jd1(l)
+       dm1  =nid
+       m2min=kmin
+       m2max=kmax
+       m20  =kd1(l)
+       dm2  =nid*njd
 !
-        if(indmf.eq.'i1') then
+       if(indmf.eq.'i1') then
 !
 !         normale dirigee de "imin" vers "imax"
 !
@@ -128,7 +111,7 @@ integer :: njd
           m3max =ii2(l)
           m30   =id1(l)
           dm3   =isens3*1
-        else
+       else
 !
 !         normale dirigee de "imax" vers "imin"
 !
@@ -139,24 +122,24 @@ integer :: njd
           m30   =id1(l)
 !         dm3   =isens3*1
           dm3   =1
-        end if
-      else if(indmf(1:1).eq.'j') then
+       end if
+    else if(indmf(1:1).eq.'j') then
 !
 !       normale perpendiculaire au plan "j=jmin" ou "j=jmax"
 !       On a la correspondance :
 !       ind=n0+(i -id1(l))*1  +(j -jd1(l))*nid+(k -kd1(l))*nij
 !       ind=n0+(m1-m10   )*dm1+(m2-m20   )*dm2+(m3-m30   )*dm3
 !
-        m1min=imin
-        m1max=imax
-        m10  =id1(l)
-        dm1  =1
-        m2min=kmin
-        m2max=kmax
-        m20  =kd1(l)
-        dm2  =nid*njd
+       m1min=imin
+       m1max=imax
+       m10  =id1(l)
+       dm1  =1
+       m2min=kmin
+       m2max=kmax
+       m20  =kd1(l)
+       dm2  =nid*njd
 !
-        if(indmf.eq.'j1') then
+       if(indmf.eq.'j1') then
 !
 !         normale dirigee de "jmin" vers "jmax"
 !
@@ -165,7 +148,7 @@ integer :: njd
           m3max =jj2(l)
           m30   =jd1(l)
           dm3   =isens3*nid
-        else
+       else
 !
 !         normale dirigee de "jmax" vers "jmin"
 !
@@ -176,24 +159,24 @@ integer :: njd
           m30   =jd1(l)
 !         dm3   =isens3*nid
           dm3   =nid
-        end if
-      else if(indmf(1:1).eq.'k') then
+       end if
+    else if(indmf(1:1).eq.'k') then
 !
 !       normale perpendiculaire au plan "k=kmin" ou "k=kmax"
 !       On a la correspondance :
 !       ind=n0+(i -id1(l))*1  +(j -jd1(l))*nid+(k -kd1(l))*nij
 !       ind=n0+(m1-m10   )*dm1+(m2-m20   )*dm2+(m3-m30   )*dm3
 !
-        m1min=imin
-        m1max=imax
-        m10  =id1(l)
-        dm1  =1
-        m2min=jmin
-        m2max=jmax
-        m20  =jd1(l)
-        dm2  =nid
+       m1min=imin
+       m1max=imax
+       m10  =id1(l)
+       dm1  =1
+       m2min=jmin
+       m2max=jmax
+       m20  =jd1(l)
+       dm2  =nid
 !
-        if(indmf.eq.'k1') then
+       if(indmf.eq.'k1') then
 !
 !         normale dirigee de "kmin" vers "kmax"
 !
@@ -202,7 +185,7 @@ integer :: njd
           m3max =kk2(l)
           m30   =kd1(l)
           dm3   =isens3*nid*njd
-        else
+       else
 !
 !         normale dirigee de "kmax" vers "kmin"
 !
@@ -213,9 +196,9 @@ integer :: njd
           m30   =kd1(l)
 !         dm3   =isens3*nid*njd
           dm3   =nid*njd
-        end if
-      end if
+       end if
+    end if
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine atindnor
+end module mod_atindnor

@@ -1,12 +1,12 @@
 module mod_met_iniko
-implicit none
+  implicit none
 contains
-      subroutine met_iniko( &
-                 l,ncin,ncbd, &
-                 v,mut,mu,dist,mnpar, &
-                 sn,vol,s, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+  subroutine met_iniko( &
+       l,ncin,ncbd, &
+       v,mut,mu,dist,mnpar, &
+       sn,vol,s, &
+       dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+       cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !***********************************************************************
 !
@@ -16,79 +16,60 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use modeleturb
-use mod_met_cutked
-use mod_met_brko
-use mod_met_kocmut
-use mod_met_komut
-implicit none
-integer :: l
-integer :: ncin
-integer :: ncbd
-double precision :: v
-double precision :: dist
-integer :: mnpar
-double precision :: sn
-double precision :: vol
-double precision :: s
-double precision :: dvxx
-double precision :: dvxy
-double precision :: dvxz
-double precision :: dvyx
-double precision :: dvyy
-double precision :: dvyz
-double precision :: dvzx
-double precision :: dvzy
-double precision :: dvzz
-double precision :: cmui1
-double precision :: cmui2
-double precision :: cmuj1
-double precision :: cmuj2
-double precision :: cmuk1
-double precision :: cmuk2
+    use para_var
+    use para_fige
+    use modeleturb
+    use mod_met_cutked
+    use mod_met_brko
+    use mod_met_kocmut
+    use mod_met_komut
+    implicit none
+    integer          ::     l,mnpar, ncbd, ncin
+    double precision :: cmui1,cmui2,cmuj1,cmuj2,cmuk1
+    double precision :: cmuk2, dist, dvxx, dvxy, dvxz
+    double precision ::  dvyx, dvyy, dvyz, dvzx, dvzy
+    double precision ::  dvzz,   mu,  mut,    s,   sn
+    double precision ::     v,  vol
 !
 !-----------------------------------------------------------------------
 !
-      double precision mut,mu
-      dimension v(ip11,ip60)
-      dimension mut(ip12),mu(ip12),dist(ip12),mnpar(ip12)
-      dimension ncin(ip41),ncbd(ip41),vol(ip11)
-      dimension sn(ip31*ndir)
-      dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-                dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-                dvzx(ip00),dvzy(ip00),dvzz(ip00),s(ip00)
-      dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-                cmuk1(ip21),cmuk2(ip21)
+    dimension v(ip11,ip60)
+    dimension mut(ip12),mu(ip12),dist(ip12),mnpar(ip12)
+    dimension ncin(ip41),ncbd(ip41),vol(ip11)
+    dimension sn(ip31*ndir)
+    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
+         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
+         dvzx(ip00),dvzy(ip00),dvzz(ip00),s(ip00)
+    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
+         cmuk1(ip21),cmuk2(ip21)
 !
 !com  calcul de grad(V)
-      call teq_gradv( &
-                 l, &
-                 sn, &
-                 vol,v, &
-                 s , &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+    call teq_gradv( &
+         l, &
+         sn, &
+         vol,v, &
+         s , &
+         dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+         cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !com  initialisation de k et omega a partir de mut
-      call met_brko( &
-                 l, &
-                 mut,v, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz)
+    call met_brko( &
+         l, &
+         mut,v, &
+         dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz)
 !
 !com  troncature des variables k-omega
-      call met_cutked(l,v)
+    call met_cutked(l,v)
 !
 !com  calcul de mut a partir de k et omega
-      if(kcmut.eq.4) then
-         call met_komut( &
-                 l, &
-                 sn,vol,s, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dist,v,mu,mut, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-      else if(kcmut.eq.8) then
+    if(kcmut.eq.4) then
+       call met_komut( &
+            l, &
+            sn,vol,s, &
+            dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+            dist,v,mu,mut, &
+            cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+    else if(kcmut.eq.8) then
 !         call met_kokmut(
 !     &
 !     &           l,
@@ -96,14 +77,14 @@ double precision :: cmuk2
 !     &           dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,
 !     &           dist,v,mu,mut,
 !     &           cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-         call met_kocmut( &
-                 l, &
-                 sn,vol,s, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dist,v,mu,mut, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-      endif
+       call met_kocmut( &
+            l, &
+            sn,vol,s, &
+            dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+            dist,v,mu,mut, &
+            cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine met_iniko
+end module mod_met_iniko

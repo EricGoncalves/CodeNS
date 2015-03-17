@@ -1,12 +1,12 @@
 module mod_chrono
-implicit none
+  implicit none
 contains
-      subroutine chrono( &
-                 img, &
-                 mu,mut,u,dt,dtmin, &
-                 sn,vol, &
-                 tn1,tn2,tn3,tn4, &
-                 cson,pression)
+  subroutine chrono( &
+       img, &
+       mu,mut,u,dt,dtmin, &
+       sn,vol, &
+       tn1,tn2,tn3,tn4, &
+       cson,pression)
 !
 !***********************************************************************
 !
@@ -57,123 +57,103 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use schemanum
-      use constantes
-      use chainecarac
-      use sortiefichier 
-use mod_chronos_prcd
-use mod_chronos
-implicit none
-integer :: indc
-integer :: img
-double precision :: u
-double precision :: dt
-double precision :: sn
-double precision :: vol
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-double precision :: tn4
-double precision :: cson
-double precision :: pression
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-integer :: lgsnlt
-integer :: lm
-integer :: n
-integer :: ndeb
-integer :: nfin
-integer :: nid
-integer :: nijd
-integer :: njd
-integer :: npsn
+    use para_var
+    use para_fige
+    use maillage
+    use schemanum
+    use constantes
+    use chainecarac
+    use sortiefichier 
+    use mod_chronos_prcd
+    use mod_chronos
+    implicit none
+    integer          ::      i,   img,  indc,     j,     k
+    integer          ::      l,lgsnlt,    lm,     n,  ndeb
+    integer          ::   nfin,   nid,  nijd,   njd,  npsn
+    double precision ::     cson,      dt,   dtmin,      mu,     mut
+    double precision :: pression,      sn,     tn1,     tn2,     tn3
+    double precision ::      tn4,       u,     vol
 !
 !-----------------------------------------------------------------------
 !
-      double precision mu,mut,dtmin
-      dimension u(ip11,ip60)
-      dimension dt(ip11),cson(ip11),vol(ip11),pression(ip11)
-      dimension mu(ip12),mut(ip12)
-      dimension sn(ip31*ndir)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00)
+    dimension u(ip11,ip60)
+    dimension dt(ip11),cson(ip11),vol(ip11),pression(ip11)
+    dimension mu(ip12),mut(ip12)
+    dimension sn(ip31*ndir)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00)
 
-      indc(i,j,k)=npc(lm)+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    indc(i,j,k)=npc(lm)+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
 
 !-----calcul du pas de temps local en stationnaire--------------------
 !
-      do l=1,lzx
+    do l=1,lzx
        lm=l+(img-1)*lz
        npsn  =ndir*npfb(lm)+1
        lgsnlt=nnn(lm)
 !
        if(kprec.eq.0) then
-            call chronos( &
-                 lm,eta(lm),mu,mut, &
-                 u, &
-                 dt,equat, &
-                 sn(npsn),lgsnlt, &
-                 vol, &
-                 tn1,tn2,tn3,tn4, &
-                 cson)
+          call chronos( &
+               lm,eta(lm),mu,mut, &
+               u, &
+               dt,equat, &
+               sn(npsn),lgsnlt, &
+               vol, &
+               tn1,tn2,tn3,tn4, &
+               cson)
 !
-      elseif(kprec.ge.1) then
-           call chronos_prcd( &
-                 lm,eta(lm),mu,mut, &
-                 u, &
-                 dt,equat, &
-                 sn(npsn),lgsnlt, &
-                 vol, &
-                 tn1,tn2,tn3,tn4, &
-                 cson,pression)
-      endif
+       elseif(kprec.ge.1) then
+          call chronos_prcd( &
+               lm,eta(lm),mu,mut, &
+               u, &
+               dt,equat, &
+               sn(npsn),lgsnlt, &
+               vol, &
+               tn1,tn2,tn3,tn4, &
+               cson,pression)
+       endif
 !
-      enddo
+    enddo
 !
 !-----calcul instationnaire avec pas de temps global---------------
 !
-      if(kdtl.eq.0) then
+    if(kdtl.eq.0) then
        dtmin=reelmx
 !
        do l=1,lzx
-        lm=l+(img-1)*lz
-        nid  = id2(lm)-id1(lm)+1
-        njd  = jd2(lm)-jd1(lm)+1
-        nijd = nid*njd
-        do k = kk1(lm),kk2(lm)-1
-         do j = jj1(lm),jj2(lm)-1
-          do i = ii1(lm),ii2(lm)-1
-           n = indc(i,j,k)
-           dtmin=min(dtmin,dt(n))
+          lm=l+(img-1)*lz
+          nid  = id2(lm)-id1(lm)+1
+          njd  = jd2(lm)-jd1(lm)+1
+          nijd = nid*njd
+          do k = kk1(lm),kk2(lm)-1
+             do j = jj1(lm),jj2(lm)-1
+                do i = ii1(lm),ii2(lm)-1
+                   n = indc(i,j,k)
+                   dtmin=min(dtmin,dt(n))
+                enddo
+             enddo
           enddo
-         enddo
-        enddo
 !
-      enddo
-!
-      dtmin=min(dt1min,dtmin)
-      if(dtmin.lt.dt1min) then
-       write(imp,'("===> chrono")')
-       write(imp,'(2(1pe11.3))') &
-           dtmin,dt1min
-       STOP
-      endif
-!
-      do l=1,lzx
-       lm=l+(img-1)*lz
-       ndeb = indc(id1(lm),jd1(lm),kd1(lm))
-       nfin = indc(id2(lm),jd2(lm),kd2(lm))
-       do n = ndeb,nfin
-        dt(n)=dtmin
        enddo
-      enddo
 !
-      endif
+       dtmin=min(dt1min,dtmin)
+       if(dtmin.lt.dt1min) then
+          write(imp,'("===> chrono")')
+          write(imp,'(2(1pe11.3))') &
+               dtmin,dt1min
+          STOP
+       endif
 !
-      return
-      end subroutine
-end module
+       do l=1,lzx
+          lm=l+(img-1)*lz
+          ndeb = indc(id1(lm),jd1(lm),kd1(lm))
+          nfin = indc(id2(lm),jd2(lm),kd2(lm))
+          do n = ndeb,nfin
+             dt(n)=dtmin
+          enddo
+       enddo
+!
+    endif
+!
+    return
+  end subroutine chrono
+end module mod_chrono

@@ -1,9 +1,9 @@
 module mod_tcmd_inbdn
-implicit none
+  implicit none
 contains
-      subroutine tcmd_inbdn( &
-                 mot,imot,nmot, &
-                 lmfb,lmfbd,kibdn)
+  subroutine tcmd_inbdn( &
+       mot,imot,nmot, &
+       lmfb,lmfbd,kibdn)
 !
 !***********************************************************************
 !
@@ -13,51 +13,45 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use chainecarac
-      use maillage
-      use kcle
-use mod_valenti
-use mod_vallent
-implicit none
-integer :: imot
-integer :: nmot
-integer :: lmfb
-integer :: lmfbd
-integer :: kibdn
-integer :: icmt
-integer :: kval
-integer :: nm
+    use para_fige
+    use chainecarac
+    use maillage
+    use kcle
+    use mod_valenti
+    use mod_vallent
+    implicit none
+    integer          ::  icmt, imot,kibdn, kval, lmfb
+    integer          :: lmfbd,   nm, nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  comment
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
-      dimension lmfb(nobj)
+    character(len=32) ::  comment
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
+    dimension lmfb(nobj)
 !
-      do icmt=1,32
-      comment(icmt:icmt)=' '
-      enddo
-      kval=0
+    do icmt=1,32
+       comment(icmt:icmt)=' '
+    enddo
+    kval=0
 !
-      nm=3
-      nm=nm+1
-      if(nmot.lt.nm) then
-        comment=cm
-        call synterr(mot,imot,nmot,comment)
-      else
-        call vallent(mot,imot,nm,lmfb,lmfbd,mtbx,kmtbx)
-      endif
+    nm=3
+    nm=nm+1
+    if(nmot.lt.nm) then
+       comment=cm
+       call synterr(mot,imot,nmot,comment)
+    else
+       call vallent(mot,imot,nm,lmfb,lmfbd,mtbx,kmtbx)
+    endif
 !
-      nm=nm+1
-      if(nmot.lt.nm) then
-        comment=ci
-        call synterr(mot,imot,nmot,comment)
-      else
-        call valenti(mot,imot,nm,kibdn,kval)
-      endif
+    nm=nm+1
+    if(nmot.lt.nm) then
+       comment=ci
+       call synterr(mot,imot,nmot,comment)
+    else
+       call valenti(mot,imot,nm,kibdn,kval)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine tcmd_inbdn
+end module mod_tcmd_inbdn

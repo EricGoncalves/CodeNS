@@ -1,13 +1,13 @@
 module mod_lparoi3d
-implicit none
+  implicit none
 contains
-      subroutine lparoi3d(  &
-                 ncyc, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,mfb, &
-                 toxx,toxy,toxz,toyy,toyz,tozz, &
-                 qcx,qcy,qcz, &
-                 v,utau,temp,topz)
+  subroutine lparoi3d(  &
+       ncyc, &
+       nxn,nyn,nzn, &
+       ncin,ncbd,mfb, &
+       toxx,toxy,toxz,toyy,toyz,tozz, &
+       qcx,qcy,qcz, &
+       v,utau,temp,topz)
 !
 !***********************************************************************
 !
@@ -71,122 +71,96 @@ contains
 !
 !***********************************************************************
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use proprieteflu
-      use modeleturb
-      use definition
-implicit none
-integer :: ncyc
-integer :: ncin
-integer :: ncbd
-integer :: mfb
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-double precision :: v
-double precision :: utau
-double precision :: temp
-double precision :: topz
-integer :: m
-integer :: m0ns
-integer :: mb
-integer :: mt
-integer :: nc
-integer :: nfacns
-integer :: ni
-double precision :: qc1
-double precision :: rop
-double precision :: t1
-double precision :: t2
-double precision :: t3
-double precision :: tn
-double precision :: topx
-double precision :: tt
-double precision :: v1x
-double precision :: v1y
-double precision :: v1z
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use proprieteflu
+    use modeleturb
+    use definition
+    implicit none
+    integer          ::      m,  m0ns,    mb,   mfb,    mt
+    integer          ::     nc,  ncbd,  ncin,  ncyc,nfacns
+    integer          ::     ni
+    double precision ::   e1,  e2,  e3,  n1,  n2
+    double precision ::   n3, nxn, nyn, nzn, qc1
+    double precision ::  qcx, qcy, qcz, rop,  t1
+    double precision ::   t2,  t3,temp,  tn,topx
+    double precision :: topz,toxx,toxy,toxz,toyy
+    double precision :: toyz,tozz,  tt,utau,   v
+    double precision ::  v1x, v1y, v1z
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn,n1,n2,n3,e1,e2,e3
 !
-      dimension v(ip11,ip60)
-      dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-                toyy(ip12),toyz(ip12),tozz(ip12), &
-                qcx(ip12),qcy(ip12),qcz(ip12)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension ncin(ip41),ncbd(ip41)
-      dimension utau(ip42),temp(ip11),topz(ip11)
+    dimension v(ip11,ip60)
+    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
+         toyy(ip12),toyz(ip12),tozz(ip12), &
+         qcx(ip12),qcy(ip12),qcz(ip12)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension ncin(ip41),ncbd(ip41)
+    dimension utau(ip42),temp(ip11),topz(ip11)
 !
-      mt=mmb(mfb)
-      m0ns=mpn(mfb)
+    mt=mmb(mfb)
+    m0ns=mpn(mfb)
 !
-      do m=1,mt
-        mb=mpb(mfb)+m
-        ni=ncin(mb)
-        nc=ncbd(mb)
-        nfacns=m0ns+m
+    do m=1,mt
+       mb=mpb(mfb)+m
+       ni=ncin(mb)
+       nc=ncbd(mb)
+       nfacns=m0ns+m
 !       vitesse cellule 1
-        v1x=v(ni,2)/v(ni,1)
-        v1y=v(ni,3)/v(ni,1)
-        v1z=v(ni,4)/v(ni,1)
+       v1x=v(ni,2)/v(ni,1)
+       v1y=v(ni,3)/v(ni,1)
+       v1z=v(ni,4)/v(ni,1)
 !       normale a la paroi
-        n1=nxn(nfacns)
-        n2=nyn(nfacns)
-        n3=nzn(nfacns)
+       n1=nxn(nfacns)
+       n2=nyn(nfacns)
+       n3=nzn(nfacns)
 !       tangente normee a la paroi
-        tn=v1x*n1 + v1y*n2 + v1z*n3
-        t1=v1x-tn*n1
-        t2=v1y-tn*n2
-        t3=v1z-tn*n3
-        tt=sqrt(t1**2+t2**2+t3**2)
-        t1=t1/tt
-        t2=t2/tt
-        t3=t3/tt
+       tn=v1x*n1 + v1y*n2 + v1z*n3
+       t1=v1x-tn*n1
+       t2=v1y-tn*n2
+       t3=v1z-tn*n3
+       tt=sqrt(t1**2+t2**2+t3**2)
+       t1=t1/tt
+       t2=t2/tt
+       t3=t3/tt
 !       vecteur direction profondeur : e = t vectoriel n
-        e1=n2*t3-n3*t2
-        e2=n3*t1-n1*t3
-        e3=n1*t2-n2*t1
+       e1=n2*t3-n3*t2
+       e2=n3*t1-n1*t3
+       e3=n1*t2-n2*t1
 !       masse volumique a la paroi
-        rop=v(ni,1)*temp(ni)/temp(nc)
+       rop=v(ni,1)*temp(ni)/temp(nc)
 !       calcul du topx
-        topx=rop*utau(nfacns)*abs(utau(nfacns))
+       topx=rop*utau(nfacns)*abs(utau(nfacns))
 !       tenseur des contraintes a la paroi dans repere general
-        toxx(nc)=2*t1*n1*topx + 2.*e1*n1*topz(nc)
-        toyy(nc)=2*t2*n2*topx + 2.*e2*n2*topz(nc)
-        tozz(nc)=2*t3*n3*topx + 2.*e3*n3*topz(nc)
-        toxy(nc)=(t2*n1+t1*n2)*topx+(e1*n2+n1*e2)*topz(nc)
-        toxz(nc)=(t1*n3+t3*n1)*topx+(e1*n3+n1*e3)*topz(nc)
-        toyz(nc)=(t2*n3+t3*n2)*topx+(e2*n3+n2*e3)*topz(nc)
+       toxx(nc)=2*t1*n1*topx + 2.*e1*n1*topz(nc)
+       toyy(nc)=2*t2*n2*topx + 2.*e2*n2*topz(nc)
+       tozz(nc)=2*t3*n3*topx + 2.*e3*n3*topz(nc)
+       toxy(nc)=(t2*n1+t1*n2)*topx+(e1*n2+n1*e2)*topz(nc)
+       toxz(nc)=(t1*n3+t3*n1)*topx+(e1*n3+n1*e3)*topz(nc)
+       toyz(nc)=(t2*n3+t3*n2)*topx+(e2*n3+n2*e3)*topz(nc)
 !       tenseur des contraintes en 1 dans repere general
-        toxx(ni)=toxx(nc)
-        toyy(ni)=toyy(nc)
-        tozz(ni)=tozz(nc)
-        toxy(ni)=toxy(nc)
-        toxz(ni)=toxz(nc)
-        toyz(ni)=toyz(nc)
+       toxx(ni)=toxx(nc)
+       toyy(ni)=toyy(nc)
+       tozz(ni)=tozz(nc)
+       toxy(ni)=toxy(nc)
+       toxz(ni)=toxz(nc)
+       toyz(ni)=toyz(nc)
 !       flux de chaleur dans cellule 1 dans repere general
 !       ATTENTION! le signe 'moins' provient de la convention utilisee
-        qc1=topx*(v1x*t1+v1y*t2+v1z*t3)+topz(nc)*(v1x*e1+v1y*e2+v1z*e3)
-        qcx(ni)=-n1*qc1
-        qcy(ni)=-n2*qc1
-        qcz(ni)=-n3*qc1
+       qc1=topx*(v1x*t1+v1y*t2+v1z*t3)+topz(nc)*(v1x*e1+v1y*e2+v1z*e3)
+       qcx(ni)=-n1*qc1
+       qcy(ni)=-n2*qc1
+       qcz(ni)=-n3*qc1
 !       flux de chaleur a la paroi dans repere general
-        qcx(nc)=0.
-        qcy(nc)=0.
-        qcy(nc)=0.
+       qcx(nc)=0.
+       qcy(nc)=0.
+       qcy(nc)=0.
 !     fin boucle sur facettes d'une frontiere paroi
-      end do
+    end do
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine lparoi3d
+end module mod_lparoi3d

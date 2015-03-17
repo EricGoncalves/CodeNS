@@ -1,7 +1,7 @@
 module mod_lecture_acou
-implicit none
+  implicit none
 contains
-      subroutine lecture_acou(l,v)
+  subroutine lecture_acou(l,v)
 !
 !***********************************************************************
 !
@@ -29,67 +29,52 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-implicit none
-integer :: ind
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-double precision :: v
-integer :: i1
-integer :: i2
-integer :: i2m1
-integer :: j1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k2
-integer :: k2m1
-integer :: n
-integer :: n0
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    implicit none
+    integer          ::    i,  i1,  i2,i2m1, ind
+    integer          ::    j,  j1,  j2,j2m1,   k
+    integer          ::   k1,  k2,k2m1,   l,   n
+    integer          ::   n0, nid,nijd, njd
+    double precision :: v
 !
 !-----------------------------------------------------------------------
 !
-      dimension v(ip11,ip60)
+    dimension v(ip11,ip60)
 !
-      ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      n0=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
-      i2m1=i2-1
-      j2m1=j2-1
-      k2m1=k2-1
+    n0=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
+    i2m1=i2-1
+    j2m1=j2-1
+    k2m1=k2-1
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
 !
-      open(unit=77,file='sortieacou',form='formatted',status='unknown')
+    open(unit=77,file='sortieacou',form='formatted',status='unknown')
 !
-       do j=j1,j2m1
-        do i=i1,i2m1
+    do j=j1,j2m1
+       do i=i1,i2m1
           n=ind(i,j,0)
-         read(77,*) v(n,1),v(n,2),v(n,3),v(n,4),v(n,5)
-        enddo
+          read(77,*) v(n,1),v(n,2),v(n,3),v(n,4),v(n,5)
        enddo
+    enddo
 !
 !      read(98)(( v(ind(i,0,k),1),i=i1,i2m1),k=k1,k2m1)
 !      read(98)(( v(ind(i,0,k),2),i=i1,i2m1),k=k1,k2m1)
 !      read(98)(( v(ind(i,0,k),3),i=i1,i2m1),k=k1,k2m1)
 !      read(98)(( v(ind(i,0,k),5),i=i1,i2m1),k=k1,k2m1)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine lecture_acou
+end module mod_lecture_acou

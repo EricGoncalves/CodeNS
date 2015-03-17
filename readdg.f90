@@ -1,8 +1,8 @@
 module mod_readdg
-implicit none
+  implicit none
 contains
-      subroutine readdg( &
-                 l,kdg,x,y,z)
+  subroutine readdg( &
+       l,kdg,x,y,z)
 !
 !***********************************************************************
 !
@@ -34,90 +34,76 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use sortiefichier
-      use maillage
-implicit none
-integer :: indn
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-integer :: kdg
-double precision :: x
-double precision :: y
-double precision :: z
-integer :: i1
-integer :: i2
-integer :: j1
-integer :: j2
-integer :: k1
-integer :: k2
-integer :: n
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use sortiefichier
+    use maillage
+    implicit none
+    integer          ::    i,  i1,  i2,indn,   j
+    integer          ::   j1,  j2,   k,  k1,  k2
+    integer          ::  kdg,   l,   n, nid,nijd
+    integer          ::  njd
+    double precision :: x,y,z
+    logical          :: ecri
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1) coord
-      dimension x(ip21),y(ip21),z(ip21)
-      logical ecri
+    character(len=1) coord
+    dimension x(ip21),y(ip21),z(ip21)
 !
-      indn(i,j,k)=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    indn(i,j,k)=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      ecri=.false.
+    ecri=.false.
 !      ecri=.true.
 !
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      read(kdg,err=10) &
-               (((x(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
-      read(kdg,err=11) &
-               (((y(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
-      read(kdg,err=12) &
-               (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
+    read(kdg,err=10) &
+         (((x(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
+    read(kdg,err=11) &
+         (((y(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
+    read(kdg,err=12) &
+         (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
 !
-      return
+    return
 !
-   10 continue
-      coord='x'
-      write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
-   11 continue
-      coord='y'
-      write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
-   12 continue
-      coord='z'
-      write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
-      write(imp,'(10x,"i2=",i5,3x,"j2=",i5,3x,"k2=",i5)')i2,j2,k2
-      stop
+10  continue
+    coord='x'
+    write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
+11  continue
+    coord='y'
+    write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
+12  continue
+    coord='z'
+    write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
+    write(imp,'(10x,"i2=",i5,3x,"j2=",i5,3x,"k2=",i5)')i2,j2,k2
+    stop
 !
-      if(ecri) then
+    if(ecri) then
 !       ecriture plaque plane 1 domaine
-        k=1
-        do k=1,2
-         do i=1,i2,50
-          write(out,'("===>readdg: l=",i3)')l
-          write(out,'("   i   j   k       n",t25,"x",t36,"y",t47,"z")')
-          do j=1,j2,2
-           n=indn(i,j,k)
-           write(out,'(3i4,i8,5(1pe11.3))') &
-             i,j,k,n,x(n),y(n),z(n)
+       k=1
+       do k=1,2
+          do i=1,i2,50
+             write(out,'("===>readdg: l=",i3)')l
+             write(out,'("   i   j   k       n",t25,"x",t36,"y",t47,"z")')
+             do j=1,j2,2
+                n=indn(i,j,k)
+                write(out,'(3i4,i8,5(1pe11.3))') &
+                     i,j,k,n,x(n),y(n),z(n)
+             enddo
           enddo
-         enddo
-        enddo
-      endif
+       enddo
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine readdg
+end module mod_readdg

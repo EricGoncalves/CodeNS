@@ -1,11 +1,11 @@
 module mod_clgli2
-implicit none
+  implicit none
 contains
-      subroutine clgli2( &
-                 ncbd,ncin, &
-                 mfb,mmb,mpb,mpn, &
-                 nxn,nyn,nzn, &
-                 v,pression,temp,cson)
+  subroutine clgli2( &
+       ncbd,ncin, &
+       mfb,mmb,mpb,mpn, &
+       nxn,nyn,nzn, &
+       v,pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -40,47 +40,28 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use proprieteflu
-implicit none
-integer :: ncbd
-integer :: ncin
-integer :: mfb
-integer :: mmb
-integer :: mpb
-integer :: mpn
-double precision :: v
-double precision :: pression
-double precision :: temp
-double precision :: cson
-integer :: m
-integer :: mb
-integer :: mn
-integer :: mt
-integer :: ni
-integer :: nl
-double precision :: qn
-double precision :: qtx
-double precision :: qty
-double precision :: qtz
-double precision :: qx
-double precision :: qy
-double precision :: qz
-double precision :: rho
+    use para_var
+    use para_fige
+    use proprieteflu
+    implicit none
+    integer          ::    m,  mb, mfb, mmb,  mn
+    integer          ::  mpb, mpn,  mt,ncbd,ncin
+    integer          ::   ni,  nl
+    double precision ::     cson,     nxn,     nyn,     nzn,pression
+    double precision ::       qn,     qtx,     qty,     qtz,      qx
+    double precision ::       qy,      qz,     rho,    temp,       v
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
-      dimension v(ip11,ip60)
-      dimension ncbd(ip41),ncin(ip41)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension mmb(mtt),mpb(mtt),mpn(mtt)
-      dimension pression(ip11),temp(ip11),cson(ip11)
+    dimension v(ip11,ip60)
+    dimension ncbd(ip41),ncin(ip41)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension mmb(mtt),mpb(mtt),mpn(mtt)
+    dimension pression(ip11),temp(ip11),cson(ip11)
 !
-      mt=mmb(mfb)
+    mt=mmb(mfb)
 !
-      do m=1,mt
+    do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m
        nl=ncbd(mb)
@@ -103,8 +84,8 @@ double precision :: rho
        v(nl,5)=pression(nl)/gam1+pinfl+0.5*rho*(qtx**2+qty**2+qtz**2)
        temp(nl)=temp(ni)              !flux de chaleur nul: dTdn=0
        cson(nl)=cson(ni)
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine clgli2
+end module mod_clgli2

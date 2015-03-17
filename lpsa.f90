@@ -1,12 +1,12 @@
 module mod_lpsa
-implicit none
+  implicit none
 contains
-      subroutine lpsa( &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,l, &
-                 mnpar,fgam,ncyc,tp, &
-                 ztemp)
+  subroutine lpsa( &
+       v,mu,mut,dist, &
+       nxn,nyn,nzn, &
+       ncin,ncbd,l, &
+       mnpar,fgam,ncyc,tp, &
+       ztemp)
 !
 !***********************************************************************
 !
@@ -49,76 +49,65 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-use mod_lpsa1
-use mod_lpsa2
-implicit none
-double precision :: v
-double precision :: dist
-integer :: ncin
-integer :: ncbd
-integer :: l
-integer :: mnpar
-double precision :: fgam
-integer :: ncyc
-double precision :: tp
-double precision :: ztemp
-integer :: ldom
-integer :: mf
-integer :: mfb
-integer :: no
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use mod_lpsa1
+    use mod_lpsa2
+    implicit none
+    integer          ::     l, ldom,   mf,  mfb,mnpar
+    integer          ::  ncbd, ncin, ncyc,   no
+    double precision ::  dist, fgam,   mu,  mut,  nxn
+    double precision ::   nyn,  nzn,   tp,    v,ztemp
 !
 !-----------------------------------------------------------------------
 !
-      double precision mu,mut,nxn,nyn,nzn
 !
-      dimension mu(ip12),mut(ip12)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension ncin(ip41),ncbd(ip41)
-      dimension v(ip11,ip60),dist(ip12)
-      dimension mnpar(ip12),fgam(ip42),tp(ip40)
-      dimension ztemp(ip11)
+    dimension mu(ip12),mut(ip12)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension ncin(ip41),ncbd(ip41)
+    dimension v(ip11,ip60),dist(ip12)
+    dimension mnpar(ip12),fgam(ip42),tp(ip40)
+    dimension ztemp(ip11)
 !
-      nbd=0
-      do no=1,mtbx
+    nbd=0
+    do no=1,mtbx
 !c    boucle sur toutes les frontieres
-        mfb=nba(no)
-        ldom=ndlb(mfb)
-        if((cl(mfb)(1:2).eq.'lp').and.(l.eq.ldom)) then
+       mfb=nba(no)
+       ldom=ndlb(mfb)
+       if((cl(mfb)(1:2).eq.'lp').and.(l.eq.ldom)) then
 !c      la frontiere est une paroi et appartient au domaine en cours de traitement
           nbd=nbd+1
           lbd(nbd)=mfb
-        endif
-      enddo
+       endif
+    enddo
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !c    boucle sur les frontieres a traiter (parois)
-        mfb=lbd(mf)
-        if(cl(mfb)(1:3).eq.'lp2') then
+       mfb=lbd(mf)
+       if(cl(mfb)(1:3).eq.'lp2') then
 !c      parois adiabatiques
           call lpsa1( &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,mfb,l, &
-                 mnpar,fgam,ncyc, &
-                 ztemp)
+               v,mu,mut,dist, &
+               nxn,nyn,nzn, &
+               ncin,ncbd,mfb,l, &
+               mnpar,fgam,ncyc, &
+               ztemp)
 !
-        else if(cl(mfb)(1:3).eq.'lp3') then
+       else if(cl(mfb)(1:3).eq.'lp3') then
 !c      parois isothermes
           call lpsa2( &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,mfb,l, &
-                 mnpar,fgam,ncyc,tp, &
-                 ztemp)
-        end if
+               v,mu,mut,dist, &
+               nxn,nyn,nzn, &
+               ncin,ncbd,mfb,l, &
+               mnpar,fgam,ncyc,tp, &
+               ztemp)
+       end if
 !
-      end do
+    end do
 !
-      return
-      end subroutine
+    return
+  end subroutine lpsa
 
-end module
+end module mod_lpsa

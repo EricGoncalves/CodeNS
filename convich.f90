@@ -1,7 +1,7 @@
 module mod_convich
-implicit none
+  implicit none
 contains
-      subroutine convich(kvar,cvar)
+  subroutine convich(kvar,cvar)
 !
 !***********************************************************************
 !
@@ -11,21 +11,21 @@ contains
 !
 !***********************************************************************
 !
-      use chainecarac 
-implicit none
-integer :: kvar
-      character(len=24) ::  cvar
+    use chainecarac 
+    implicit none
+    integer          :: kvar
+    character(len=24) ::  cvar
 !
-      if(kvar.eq.0) then
-        cvar=c0
-      else if (kvar.eq.1) then
-        cvar=c1
-      else if (kvar.eq.2) then
-        cvar=c2
-      else if (kvar.eq.3) then
-        cvar=c3
-      endif
+    if(kvar.eq.0) then
+       cvar=c0
+    else if (kvar.eq.1) then
+       cvar=c1
+    else if (kvar.eq.2) then
+       cvar=c2
+    else if (kvar.eq.3) then
+       cvar=c3
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine convich
+end module mod_convich

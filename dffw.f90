@@ -1,7 +1,7 @@
 module mod_dffw
-implicit none
+  implicit none
 contains
-      subroutine dffw
+  subroutine dffw
 !
 !***********************************************************************
 !
@@ -19,22 +19,22 @@ contains
 !
 !***********************************************************************
 !
-      use constantes
-      use definition
-      use chainecarac
-   use maillage
-implicit none
+    use constantes
+    use definition
+    use chainecarac
+    use maillage
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      omg=4.*pis2/60.* omg
-      omg=omg*dnz/anz
+    omg=4.*pis2/60.* omg
+    omg=omg*dnz/anz
 !
-      neqtx=5
-      if (equat(6:7).eq.'ke') then
+    neqtx=5
+    if (equat(6:7).eq.'ke') then
        neqtx=7
-      endif
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine dffw
+end module mod_dffw

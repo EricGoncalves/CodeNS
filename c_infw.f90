@@ -1,10 +1,10 @@
 module mod_c_infw
-implicit none
+  implicit none
 contains
-      subroutine c_infw( &
-                 mot,imot,nmot, &
-                 x,y,z,v,mut,tnte1,utau, &
-                 vdual,vdual1,vdual2)
+  subroutine c_infw( &
+       mot,imot,nmot, &
+       x,y,z,v,mut,tnte1,utau, &
+       vdual,vdual1,vdual2)
 !
 !***********************************************************************
 !
@@ -14,61 +14,49 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use sortiefichier
-      use modeleturb
-use mod_infw
-use mod_tcmd_infw
-use mod_b1_infw
-implicit none
-integer :: imot
-integer :: nmot
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: v
-double precision :: tnte1
-double precision :: utau
-double precision :: vdual
-double precision :: vdual1
-double precision :: vdual2
-integer :: kina
-integer :: l
-integer :: ldom
-integer :: ldomd
+    use para_var
+    use para_fige
+    use sortiefichier
+    use modeleturb
+    use mod_infw
+    use mod_tcmd_infw
+    use mod_b1_infw
+    implicit none
+    integer          ::  imot, kina,    l, ldom,ldomd
+    integer          ::  nmot
+    double precision ::    mut, tnte1,  utau,     v, vdual
+    double precision :: vdual1,vdual2,     x,     y,     z
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      double precision mut
+    character(len=32) ::  mot(nmx)
 !
-      dimension imot(nmx)
-      dimension ldom(nobj)
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension v(ip11,ip60)
-      dimension mut  (ip12)
-      dimension tnte1(ip11,ip60)
-      dimension utau(ip42)
-      dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
+    dimension imot(nmx)
+    dimension ldom(nobj)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension v(ip11,ip60)
+    dimension mut  (ip12)
+    dimension tnte1(ip11,ip60)
+    dimension utau(ip42)
+    dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
 !
-      call tcmd_infw( &
-                 mot,imot,nmot, &
-                 ldom,ldomd,kina)
+    call tcmd_infw( &
+         mot,imot,nmot, &
+         ldom,ldomd,kina)
 !
-      if (kimp.ge.1) then
-         call b1_infw(ldom,ldomd,kina)
-      endif
+    if (kimp.ge.1) then
+       call b1_infw(ldom,ldomd,kina)
+    endif
 !
-      do l=1,ldomd
+    do l=1,ldomd
 !
-        call infw( &
-                 ldom(l),x,y,z,v,mut,tnte1, &
-                 kina,utau, &
-                 vdual,vdual1,vdual2)
+       call infw( &
+            ldom(l),x,y,z,v,mut,tnte1, &
+            kina,utau, &
+            vdual,vdual1,vdual2)
 !
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_infw
+end module mod_c_infw

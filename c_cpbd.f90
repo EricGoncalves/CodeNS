@@ -1,16 +1,16 @@
 module mod_c_cpbd
-implicit none
+  implicit none
 contains
-      subroutine c_cpbd( &
-                 mot,imot,nmot, &
-                 ncin,nxn,nyn,nzn,ncbd, &
-                 sn,vol,v,mut, &
-                 bceqt, &
-                 rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,x,y,z,omg, &
-                 pres,tp,rod,roud,rovd,rowd,roed, &
-                 mnr,xnr,ynr,znr,mnc, &
-                 tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
-                 tm12,tm13,pression,ztemp,cson)
+  subroutine c_cpbd( &
+       mot,imot,nmot, &
+       ncin,nxn,nyn,nzn,ncbd, &
+       sn,vol,v,mut, &
+       bceqt, &
+       rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,x,y,z,omg, &
+       pres,tp,rod,roud,rovd,rowd,roed, &
+       mnr,xnr,ynr,znr,mnc, &
+       tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
+       tm12,tm13,pression,ztemp,cson)
 !
 !***********************************************************************
 !
@@ -75,106 +75,68 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use schemanum
-      use sortiefichier
-use mod_b1_cpbd
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use schemanum
+    use sortiefichier
+    use mod_b1_cpbd
 
-use mod_cpbd
-use mod_tcmd_cpbd
-implicit none
-integer :: imot
-integer :: nmot
-integer :: ncin
-integer :: ncbd
-double precision :: sn
-double precision :: vol
-double precision :: v
-double precision :: bceqt
-double precision :: rpi
-double precision :: rti
-double precision :: d0x
-double precision :: d0y
-double precision :: d0z
-double precision :: qtx
-double precision :: qty
-double precision :: qtz
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: omg
-double precision :: pres
-double precision :: tp
-double precision :: rod
-double precision :: roud
-double precision :: rovd
-double precision :: rowd
-double precision :: roed
-integer :: mnr
-double precision :: xnr
-double precision :: ynr
-double precision :: znr
-integer :: mnc
-double precision :: tm1
-double precision :: tm2
-double precision :: tm3
-double precision :: tm4
-double precision :: tm5
-double precision :: tm6
-double precision :: tm7
-double precision :: tm8
-double precision :: tm9
-double precision :: tm10
-double precision :: tm11
-double precision :: tm12
-double precision :: tm13
-double precision :: pression
-double precision :: ztemp
-double precision :: cson
+    use mod_cpbd
+    use mod_tcmd_cpbd
+    implicit none
+    integer          :: imot, mnc, mnr,ncbd,ncin
+    integer          :: nmot
+    double precision ::    bceqt,    cson,     d0x,     d0y,     d0z
+    double precision ::      mut,     nxn,     nyn,     nzn,     omg
+    double precision ::     pres,pression,     qtx,     qty,     qtz
+    double precision ::      rod,    roed,    roud,    rovd,    rowd
+    double precision ::      rpi,     rti,      sn,     tm1,    tm10
+    double precision ::     tm11,    tm12,    tm13,     tm2,     tm3
+    double precision ::      tm4,     tm5,     tm6,     tm7,     tm8
+    double precision ::      tm9,      tp,       v,     vol,       x
+    double precision ::      xnr,       y,     ynr,       z,     znr
+    double precision ::    ztemp
 !
 !-----------------------------------------------------------------------
 !
 !
-      character(len=32) ::  mot(nmx)
-      double precision nxn,nyn,nzn
-      double precision mut
+    character(len=32) ::  mot(nmx)
 !
-      dimension imot(nmx)
-      dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
-                tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
-                tm11(ip40),tm12(ip40),tm13(ip40)
-      dimension bceqt(ip41,neqt)
-      dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40)
-      dimension d0x(ip40),d0y(ip40),d0z(ip40)
-      dimension qtx(ip40),qty(ip40),qtz(ip40)
-      dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension v(ip11,ip60)
-      dimension sn(ip31*ndir)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
-      dimension ncin(ip41),mnc(ip43),mut(ip12)
-      dimension pression(ip11),ztemp(ip11),cson(ip11),vol(ip11)
+    dimension imot(nmx)
+    dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
+         tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
+         tm11(ip40),tm12(ip40),tm13(ip40)
+    dimension bceqt(ip41,neqt)
+    dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40)
+    dimension d0x(ip40),d0y(ip40),d0z(ip40)
+    dimension qtx(ip40),qty(ip40),qtz(ip40)
+    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension v(ip11,ip60)
+    dimension sn(ip31*ndir)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
+    dimension ncin(ip41),mnc(ip43),mut(ip12)
+    dimension pression(ip11),ztemp(ip11),cson(ip11),vol(ip11)
 !
-      call tcmd_cpbd(mot,imot,nmot)
+    call tcmd_cpbd(mot,imot,nmot)
 !
-      if (kimp.ge.1) then
-            call b1_cpbd
-      endif
+    if (kimp.ge.1) then
+       call b1_cpbd
+    endif
 !
-      call cpbd( &
-                 ncin,nxn,nyn,nzn,ncbd, &
-                 sn,vol,v,mut, &
-                 bceqt, &
-                 rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,x,y,z,omg, &
-                 pres,tp,rod,roud,rovd,rowd,roed, &
-                 mnr,xnr,ynr,znr,mnc, &
-                 tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
-                 tm12,tm13,pression,ztemp,cson)
+    call cpbd( &
+         ncin,nxn,nyn,nzn,ncbd, &
+         sn,vol,v,mut, &
+         bceqt, &
+         rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,x,y,z,omg, &
+         pres,tp,rod,roud,rovd,rowd,roed, &
+         mnr,xnr,ynr,znr,mnc, &
+         tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
+         tm12,tm13,pression,ztemp,cson)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_cpbd
+end module mod_c_cpbd

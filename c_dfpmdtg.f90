@@ -1,7 +1,7 @@
 module mod_c_dfpmdtg
-implicit none
+  implicit none
 contains
-      subroutine c_dfpmdtg(mot,imot,nmot)
+  subroutine c_dfpmdtg(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -17,26 +17,25 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier
-use mod_b1_dfpmdtg
+    use para_fige
+    use sortiefichier
+    use mod_b1_dfpmdtg
 
-use mod_tcmd_dfpmdtg
-implicit none
-integer :: imot
-integer :: nmot
+    use mod_tcmd_dfpmdtg
+    implicit none
+    integer          :: imot,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      call tcmd_dfpmdtg(mot,imot,nmot)
+    call tcmd_dfpmdtg(mot,imot,nmot)
 !
-      if(kimp.ge.1) then
-            call b1_dfpmdtg
-      endif
+    if(kimp.ge.1) then
+       call b1_dfpmdtg
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfpmdtg
+end module mod_c_dfpmdtg

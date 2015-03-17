@@ -1,29 +1,29 @@
 module mod_smg_flu
-implicit none
+  implicit none
 contains
-      subroutine smg_flu( &
-                 img,itypdf, &
-                 ff, &
-                 icyc,ncyc,icycle, &
-                 x,y,z,r,nxn,nyn,nzn, &
-                 sn, &
-                 vol, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 u,mu,mut,dist, &
-                 v,d, &
-                 ptdual, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10, &
-                 tm11,tm12,tm13, &
-                 ncin,mnpar,fgam, &
-                 mnc, &
-                 ncbd,mnr,xnr,ynr,znr, &
-                 bceqt, &
-                 rpi,rti,d0x,d0y,d0z,pres,tp, &
-                 rod,roud,rovd,rowd,roed, &
-                 pression,ztemp,cson, &
-                 cvi,cvj,cvk, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+  subroutine smg_flu( &
+       img,itypdf, &
+       ff, &
+       icyc,ncyc,icycle, &
+       x,y,z,r,nxn,nyn,nzn, &
+       sn, &
+       vol, &
+       tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+       u,mu,mut,dist, &
+       v,d, &
+       ptdual, &
+       toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+       tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10, &
+       tm11,tm12,tm13, &
+       ncin,mnpar,fgam, &
+       mnc, &
+       ncbd,mnr,xnr,ynr,znr, &
+       bceqt, &
+       rpi,rti,d0x,d0y,d0z,pres,tp, &
+       rod,roud,rovd,rowd,roed, &
+       pression,ztemp,cson, &
+       cvi,cvj,cvk, &
+       cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !***********************************************************************
 !
@@ -34,433 +34,360 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use chainecarac
-      use schemanum
-      use maillage
-      use boundary
-      use modeleturb
-      use proprieteflu
-      use definition
-use mod_sch_ausmp
-use mod_sch_jameson3pond
-use mod_sch_rusanov
-use mod_sch_ausmp_prcd
-use mod_sch_weno5pond
-use mod_sch_jameson_pond
-use mod_sch_hllc_prcd
-use mod_dissip_jameson
-use mod_sch_dual
-use mod_sch_jameson3
-use mod_zvisqc
-use mod_sch_hllc_euler
-use mod_sch_weno3pond_3d
-use mod_sch_roe_pond
-use mod_sch_weno5_3d
-use mod_sch_jameson
-use mod_rbord
-use mod_sch_dual2
-use mod_sch_weno3pond
-use mod_sch_roe_prcd
-use mod_sch_weno3_3d
-use mod_rfve
-use mod_rfvc
-use mod_sch_roe_euler
-use mod_cllparoi1
-use mod_zpres
-use mod_sch_hllc
-use mod_sch_weno5
-use mod_sch_roe
-use mod_sch_weno3
-use mod_smg_res
-use mod_dissip_jameson_prcd2
-use mod_sch_ausmp_pond
-use mod_zvismo
-use mod_sch_rusanov_prcd
-implicit none
-integer :: img
-integer :: itypdf
-double precision :: ff
-integer :: icyc
-integer :: ncyc
-integer :: icycle
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: r
-double precision :: sn
-double precision :: vol
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-double precision :: tn4
-double precision :: tn5
-double precision :: tn6
-double precision :: tn7
-double precision :: tn8
-double precision :: tn9
-double precision :: tn10
-double precision :: u
-double precision :: dist
-double precision :: v
-double precision :: d
-double precision :: ptdual
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-double precision :: tm1
-double precision :: tm2
-double precision :: tm3
-double precision :: tm4
-double precision :: tm5
-double precision :: tm6
-double precision :: tm7
-double precision :: tm8
-double precision :: tm9
-double precision :: tm10
-double precision :: tm11
-double precision :: tm12
-double precision :: tm13
-integer :: ncin
-integer :: mnpar
-double precision :: fgam
-integer :: mnc
-integer :: ncbd
-integer :: mnr
-double precision :: xnr
-double precision :: ynr
-double precision :: znr
-double precision :: bceqt
-double precision :: rpi
-double precision :: rti
-double precision :: d0x
-double precision :: d0y
-double precision :: d0z
-double precision :: pres
-double precision :: tp
-double precision :: rod
-double precision :: roud
-double precision :: rovd
-double precision :: rowd
-double precision :: roed
-double precision :: pression
-double precision :: ztemp
-double precision :: cson
-double precision :: cvi
-double precision :: cvj
-double precision :: cvk
-double precision :: cmui1
-double precision :: cmui2
-double precision :: cmuj1
-double precision :: cmuj2
-double precision :: cmuk1
-double precision :: cmuk2
-double precision :: dt
-integer :: l
-integer :: lgsnlt
-integer :: lm
-integer :: mcyturb
-integer :: mfc
-integer :: mfn
-integer :: npsn
+    use para_var
+    use para_fige
+    use chainecarac
+    use schemanum
+    use maillage
+    use boundary
+    use modeleturb
+    use proprieteflu
+    use definition
+    use mod_sch_ausmp
+    use mod_sch_jameson3pond
+    use mod_sch_rusanov
+    use mod_sch_ausmp_prcd
+    use mod_sch_weno5pond
+    use mod_sch_jameson_pond
+    use mod_sch_hllc_prcd
+    use mod_dissip_jameson
+    use mod_sch_dual
+    use mod_sch_jameson3
+    use mod_zvisqc
+    use mod_sch_hllc_euler
+    use mod_sch_weno3pond_3d
+    use mod_sch_roe_pond
+    use mod_sch_weno5_3d
+    use mod_sch_jameson
+    use mod_rbord
+    use mod_sch_dual2
+    use mod_sch_weno3pond
+    use mod_sch_roe_prcd
+    use mod_sch_weno3_3d
+    use mod_rfve
+    use mod_rfvc
+    use mod_sch_roe_euler
+    use mod_cllparoi1
+    use mod_zpres
+    use mod_sch_hllc
+    use mod_sch_weno5
+    use mod_sch_roe
+    use mod_sch_weno3
+    use mod_smg_res
+    use mod_dissip_jameson_prcd2
+    use mod_sch_ausmp_pond
+    use mod_zvismo
+    use mod_sch_rusanov_prcd
+    implicit none
+    integer          ::    icyc, icycle,    img, itypdf,      l
+    integer          ::  lgsnlt,     lm,mcyturb,    mfc,    mfn
+    integer          ::     mnc,  mnpar,    mnr,   ncbd,   ncin
+    integer          ::    ncyc,   npsn
+    double precision ::    bceqt,   cmui1,   cmui2,   cmuj1,   cmuj2
+    double precision ::    cmuk1,   cmuk2,    cson,     cvi,     cvj
+    double precision ::      cvk,       d,     d0x,     d0y,     d0z
+    double precision ::     dist,      dt,      ff,    fgam,      mu
+    double precision ::      mut,     nxn,     nyn,     nzn,    pres
+    double precision :: pression,  ptdual,     qcx,     qcy,     qcz
+    double precision ::        r,     rod,    roed,    roud,    rovd
+    double precision ::     rowd,     rpi,     rti,      sn,     tm1
+    double precision ::     tm10,    tm11,    tm12,    tm13,     tm2
+    double precision ::      tm3,     tm4,     tm5,     tm6,     tm7
+    double precision ::      tm8,     tm9,     tn1,    tn10,     tn2
+    double precision ::      tn3,     tn4,     tn5,     tn6,     tn7
+    double precision ::      tn8,     tn9,    toxx,    toxy,    toxz
+    double precision ::     toyy,    toyz,    tozz,      tp,       u
+    double precision ::        v,     vol,       x,     xnr,       y
+    double precision ::      ynr,       z,     znr,   ztemp
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
-      double precision mu,mut
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60),ff(ip11,ip60)
-      dimension ptdual(ip11,ip60)
-      dimension sn(ip31*ndir)
-      dimension vol(ip11),r(ip11),pression(ip11),ztemp(ip11),cson(ip11)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension bceqt(ip41,neqt)
-      dimension rpi(ip40),rti(ip40)
-      dimension d0x(ip40),d0y(ip40),d0z(ip40)
-      dimension pres(ip40),tp(ip40)
-      dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-      dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
-      dimension mu(ip12),mut(ip12),toxx(ip12),toxy(ip12),toxz(ip12), &
-                toyy(ip12),toyz(ip12),tozz(ip12),qcx(ip12),qcy(ip12), &
-                qcz(ip12),dist(ip12)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
-                tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
-      dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
-                tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40), &
-                tm10(ip40),tm11(ip40),tm12(ip40),tm13(ip40)
-      dimension ncin(ip41),mnpar(ip12),fgam(ip42),mnc(ip43)
-      dimension cvi(ip21),cvj(ip21),cvk(ip21),cmui1(ip21),cmui2(ip21), &
-                cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
-      dimension dt(ip11)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60),ff(ip11,ip60)
+    dimension ptdual(ip11,ip60)
+    dimension sn(ip31*ndir)
+    dimension vol(ip11),r(ip11),pression(ip11),ztemp(ip11),cson(ip11)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension bceqt(ip41,neqt)
+    dimension rpi(ip40),rti(ip40)
+    dimension d0x(ip40),d0y(ip40),d0z(ip40)
+    dimension pres(ip40),tp(ip40)
+    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
+    dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
+    dimension mu(ip12),mut(ip12),toxx(ip12),toxy(ip12),toxz(ip12), &
+         toyy(ip12),toyz(ip12),tozz(ip12),qcx(ip12),qcy(ip12), &
+         qcz(ip12),dist(ip12)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
+         tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
+    dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
+         tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40), &
+         tm10(ip40),tm11(ip40),tm12(ip40),tm13(ip40)
+    dimension ncin(ip41),mnpar(ip12),fgam(ip42),mnc(ip43)
+    dimension cvi(ip21),cvj(ip21),cvk(ip21),cmui1(ip21),cmui2(ip21), &
+         cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
+    dimension dt(ip11)
 
 !
-      if (equat(1:2).eq.'ns') then
-        if ( ncyturb .gt. 1 ) then
+    if (equat(1:2).eq.'ns') then
+       if ( ncyturb .gt. 1 ) then
           mcyturb=mod(ncyc,ncyturb)
-        else
+       else
           mcyturb = 1
-        endif
-      endif
+       endif
+    endif
 !
-      do l=1,lzx
+    do l=1,lzx
        lm=l+(img-1)*lz
 !
-          call zpres( &
-                 lm,v, &
-                 pression,ztemp,cson)
+       call zpres( &
+            lm,v, &
+            pression,ztemp,cson)
 !
 !-------calcul de la viscosite moleculaire----------------------------
 !
-        if (equat(1:2).eq.'ns') then
-            call zvismo(lm,mu,v,ztemp)
-        endif
-      enddo
+       if (equat(1:2).eq.'ns') then
+          call zvismo(lm,mu,v,ztemp)
+       endif
+    enddo
 !
 !-------calcul de la dissipation artificielle Jameson----------------------
 !
-        if(ischema.le.4) then
-         do mfn=1,mtnx
+    if(ischema.le.4) then
+       do mfn=1,mtnx
           lbd(mfn)=nfbn(mfn)+(img-1)*mtb
-         enddo
-         nbd=mtnx
-         call rfve( &
-                 v,pression,ztemp,cson, &
-                 ncbd,ncin)
+       enddo
+       nbd=mtnx
+       call rfve( &
+            v,pression,ztemp,cson, &
+            ncbd,ncin)
 !
-         do mfc=1,mtcx
+       do mfc=1,mtcx
           lbd(mfc)=nfbc(mfc)+(img-1)*mtb
-         enddo
-         nbd=mtcx
-          call rfvc( & 
-                v,ncbd,mnc, &
-                pression,ztemp,cson)
+       enddo
+       nbd=mtcx
+       call rfvc( & 
+            v,ncbd,mnc, &
+            pression,ztemp,cson)
 !
-         do l=1,lzx
+       do l=1,lzx
           lm=l+(img-1)*lz
           npsn  =ndir*npfb(lm)+1
           lgsnlt=nnn(lm)
 !
           if(kprec.eq.0) then
              call dissip_jameson( &
-                 lm,v,d, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,pression,cson)
+                  lm,v,d, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,pression,cson)
 
-           elseif(kprec.eq.1) then
+          elseif(kprec.eq.1) then
 !               call dissip_jameson_prcd( &
 !                 lm,v,d, &
 !                 equat, &
 !                 sn(npsn),lgsnlt, &
 !                 tn2,tn3,pression,ztemp,cson)
 
-           elseif(kprec.eq.2) then
+          elseif(kprec.eq.2) then
              call dissip_jameson_prcd2( &
-                 lm,v,d, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,pression,cson)
-           endif
-         enddo
-        endif
+                  lm,v,d, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,pression,cson)
+          endif
+       enddo
+    endif
 !
 !---remplissage des valeurs de v aux bords (centres des facettes frontieres)
 !
-            call rbord( &
-                 0,img, &
-                 mnc,ncin,mnr,xnr,ynr,znr,nxn,nyn,nzn,ncbd, &
-                 sn,vol,v,dt, &
-                 bceqt, &
-                 rpi,rti,d0x,d0y,d0z,x,y,z, &
-                 pres,tp,rod,roud,rovd,rowd,roed, &
-                 icyc, &
-                 tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
-                 tm12,tm13, &
-                 pression,ztemp,cson)
+    call rbord( &
+         0,img, &
+         mnc,ncin,mnr,xnr,ynr,znr,nxn,nyn,nzn,ncbd, &
+         sn,vol,v,dt, &
+         bceqt, &
+         rpi,rti,d0x,d0y,d0z,x,y,z, &
+         pres,tp,rod,roud,rovd,rowd,roed, &
+         icyc, &
+         tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
+         tm12,tm13, &
+         pression,ztemp,cson)
 !
 !-----calcul des termes visqueux---------------------------------------------
 !
-      if (equat(1:2).eq.'ns') then
+    if (equat(1:2).eq.'ns') then
 !
-            call zvisqc( &
-                 img, &
-                 v,mu,v(1,1), &
-                 x,y,z,mut,dist,mnpar,fgam, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 icyc,mcyturb, &
-                 ncbd,ncin,mnc, &
-                 sn,vol, & 
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
-                 ztemp)
+       call zvisqc( &
+            img, &
+            v,mu,v(1,1), &
+            x,y,z,mut,dist,mnpar,fgam, &
+            toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+            icyc,mcyturb, &
+            ncbd,ncin,mnc, &
+            sn,vol, & 
+            tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+            cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
+            ztemp)
 !
 !-------application de la condition aux limites lois de paroi-------------------
 !
-         if((img.eq.mgl).and.(lparoi.eq.1)) then
-            call cllparoi1( &
-                 img,ncyc, &
-                 v,dist, &
-                 mu,mut, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd, &
-                 toxx,toxy,toxz,toyy,toyz,tozz, &
-                 qcx,qcy,qcz, &
-                 mnpar,fgam,tp, &
-                 ztemp)
-         endif
-      endif
+       if((img.eq.mgl).and.(lparoi.eq.1)) then
+          call cllparoi1( &
+               img,ncyc, &
+               v,dist, &
+               mu,mut, &
+               nxn,nyn,nzn, &
+               ncin,ncbd, &
+               toxx,toxy,toxz,toyy,toyz,tozz, &
+               qcx,qcy,qcz, &
+               mnpar,fgam,tp, &
+               ztemp)
+       endif
+    endif
 !
 !----application du schema numerique--------------------------------
 !
-      do l=1,lzx
+    do l=1,lzx
 !
        lm=l+(img-1)*lz
        npsn  =ndir*npfb(lm)+1
        lgsnlt=nnn(lm)
 !
 !********JAMESON**************************************************
-         if(ischema.eq.1) then
+       if(ischema.eq.1) then
           call sch_jameson( &
-                 lm,0, &
-                 u,v,d,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                 pression)
+               lm,0, &
+               u,v,d,ff, &
+               toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+               equat, &
+               sn(npsn),lgsnlt, &
+               tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+               pression)
 !
-         elseif(ischema.eq.2) then
+       elseif(ischema.eq.2) then
           call sch_jameson_pond( &
-                 lm,0, &
-                 u,v,d,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                 pression, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+               lm,0, &
+               u,v,d,ff, &
+               toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+               equat, &
+               sn(npsn),lgsnlt, &
+               tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+               pression, &
+               cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-         elseif(ischema.eq.3) then
-         call sch_jameson3( &
-                 lm,0, &
-                 u,v,d,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                 pression)
+       elseif(ischema.eq.3) then
+          call sch_jameson3( &
+               lm,0, &
+               u,v,d,ff, &
+               toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+               equat, &
+               sn(npsn),lgsnlt, &
+               tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+               pression)
 !
-         elseif(ischema.eq.4) then
+       elseif(ischema.eq.4) then
           call sch_jameson3pond( &
-                 lm,0, &
-                 u,v,d,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                 pression, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
-                 cvi,cvj,cvk)
+               lm,0, &
+               u,v,d,ff, &
+               toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+               equat, &
+               sn(npsn),lgsnlt, &
+               tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+               pression, &
+               cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
+               cvi,cvj,cvk)
 !
 !********AUSM+ de LIOU**************************************************
-         elseif(ischema.eq.5) then
+       elseif(ischema.eq.5) then
 !
           if(equat(1:2).eq.'ns') then
-            if(kprec.eq.0) then
-             call sch_ausmp( &
-                 lm,0, &
-                 u,v,d,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression)
-            elseif(kprec.ge.1) then
-              call sch_ausmp_prcd( &
-                 lm,0, &
-                 u,v,d,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression)
-            endif
-           endif
+             if(kprec.eq.0) then
+                call sch_ausmp( &
+                     lm,0, &
+                     u,v,d,ff, &
+                     toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                     equat, &
+                     sn(npsn),lgsnlt, &
+                     tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                     pression)
+             elseif(kprec.ge.1) then
+                call sch_ausmp_prcd( &
+                     lm,0, &
+                     u,v,d,ff, &
+                     toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                     equat, &
+                     sn(npsn),lgsnlt, &
+                     tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                     pression)
+             endif
+          endif
 !
 !********AUSM+ pondere *************************************************
-         elseif(ischema.eq.6) then
+       elseif(ischema.eq.6) then
 !
           if(equat(1:2).eq.'ns') then
-            if(kprec.eq.0) then
-             call sch_ausmp_pond( &
-                 lm,0, &
-                 u,v,d,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
-                 cvi,cvj,cvk)
-            endif
-           endif
+             if(kprec.eq.0) then
+                call sch_ausmp_pond( &
+                     lm,0, &
+                     u,v,d,ff, &
+                     toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                     equat, &
+                     sn(npsn),lgsnlt, &
+                     tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                     pression, &
+                     cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
+                     cvi,cvj,cvk)
+             endif
+          endif
 !
 !********ROE**************************************************
-         elseif(ischema.eq.7) then
+       elseif(ischema.eq.7) then
 !
           if(equat(1:2).eq.'ns') then
-           if(kprec.eq.0) then
-            call sch_roe( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression)
+             if(kprec.eq.0) then
+                call sch_roe( &
+                     lm,0, &
+                     u,v,ff, &
+                     toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                     equat, &
+                     sn(npsn),lgsnlt, &
+                     tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                     pression)
 !
-           elseif(kprec.ge.1) then
-              call sch_roe_prcd( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression)
+             elseif(kprec.ge.1) then
+                call sch_roe_prcd( &
+                     lm,0, &
+                     u,v,ff, &
+                     toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                     equat, &
+                     sn(npsn),lgsnlt, &
+                     tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                     pression)
 
-           endif
+             endif
           elseif(equat(1:2).eq.'eu') then
-           call sch_roe_euler( &
-                 lm,0, &
-                 u,v,ff, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression)
+             call sch_roe_euler( &
+                  lm,0, &
+                  u,v,ff, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                  pression)
           endif
 !
 !--------Schema de Roe pondere------------------------------------
 !
-         elseif(ischema.eq.8) then
+       elseif(ischema.eq.8) then
           if(kprec.eq.0) then
-           call sch_roe_pond( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression, &
-                 cvi,cvj,cvk, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+             call sch_roe_pond( &
+                  lm,0, &
+                  u,v,ff, &
+                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                  pression, &
+                  cvi,cvj,cvk, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
           elseif(kprec.ge.1) then
 !           call sch_roe_pond_prcd( &
 !                 lm,0, &
@@ -476,113 +403,113 @@ integer :: npsn
 !
 !--------Schema de Rusanov------------------------------------
 !
-         elseif(ischema.eq.9) then
-            if(kprec.eq.0) then
-              call sch_rusanov( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression)
-            elseif(kprec.ge.1) then
-              call sch_rusanov_prcd( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression)
-            endif
+       elseif(ischema.eq.9) then
+          if(kprec.eq.0) then
+             call sch_rusanov( &
+                  lm,0, &
+                  u,v,ff, &
+                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                  pression)
+          elseif(kprec.ge.1) then
+             call sch_rusanov_prcd( &
+                  lm,0, &
+                  u,v,ff, &
+                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                  pression)
+          endif
 !
 !--------Schema de Jiang&Chu WENO ordre 3-----------------------------------
 !
-         elseif(ischema.eq.10) then
-           if(equat(3:4).eq.'2d') then
-              call sch_weno3( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                 pression)
-           elseif(equat(3:4).eq.'3d') then
-              call sch_weno3_3d( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                 pression)
-           endif
+       elseif(ischema.eq.10) then
+          if(equat(3:4).eq.'2d') then
+             call sch_weno3( &
+                  lm,0, &
+                  u,v,ff, &
+                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+                  pression)
+          elseif(equat(3:4).eq.'3d') then
+             call sch_weno3_3d( &
+                  lm,0, &
+                  u,v,ff, &
+                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+                  pression)
+          endif
 !
 !-------------- WENO 3 pondere-----------------------------------------
 !     
-         elseif(ischema.eq.11) then
-            if(equat(3:4).eq.'2d') then
-              call sch_weno3pond( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                 pression, &
-     cvi,cvj,cmui1,cmui2,cmuj1,cmuj2)
-            elseif(equat(3:4).eq.'3d') then
-              call sch_weno3pond_3d( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                 pression, &
-                 cvi,cvj,cvk, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-           endif 
+       elseif(ischema.eq.11) then
+          if(equat(3:4).eq.'2d') then
+             call sch_weno3pond( &
+                  lm,0, &
+                  u,v,ff, &
+                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+                  pression, &
+                  cvi,cvj,cmui1,cmui2,cmuj1,cmuj2)
+          elseif(equat(3:4).eq.'3d') then
+             call sch_weno3pond_3d( &
+                  lm,0, &
+                  u,v,ff, &
+                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+                  pression, &
+                  cvi,cvj,cvk, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          endif
 !
 !--------Schema WENO ordre 5-----------------------------------
 !
-         elseif(ischema.eq.12) then
-            if(equat(3:4).eq.'2d') then
+       elseif(ischema.eq.12) then
+          if(equat(3:4).eq.'2d') then
              call sch_weno5( &
-                lm,0, &
-                u,v,ff, &
-                toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                equat, &
-                sn(npsn),lgsnlt, &
-                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                pression)
-            elseif(equat(3:4).eq.'3d') then
-              call sch_weno5_3d( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                 pression)
-           endif
+                  lm,0, &
+                  u,v,ff, &
+                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+                  pression)
+          elseif(equat(3:4).eq.'3d') then
+             call sch_weno5_3d( &
+                  lm,0, &
+                  u,v,ff, &
+                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+                  pression)
+          endif
 !
 !--------Schema WENO ordre 5 pondere----------------------------
 !
-         elseif(ischema.eq.13) then
-            if(equat(3:4).eq.'2d') then
+       elseif(ischema.eq.13) then
+          if(equat(3:4).eq.'2d') then
              call sch_weno5pond( &
-                lm,0, &
-                u,v,ff, &
-                toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                equat, &
-                sn(npsn),lgsnlt, &
-                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
-                pression, &
-                cvi,cvj,cmui1,cmui2,cmuj1,cmuj2)
-            elseif(equat(3:4).eq.'3d') then
+                  lm,0, &
+                  u,v,ff, &
+                  toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
+                  pression, &
+                  cvi,cvj,cmui1,cmui2,cmuj1,cmuj2)
+          elseif(equat(3:4).eq.'3d') then
 !              call sch_weno5pond_3d( &
 !                 lm,0, &
 !                 u,v,ff, &
@@ -593,64 +520,64 @@ integer :: npsn
 !                 pression, &
 !                 cvi,cvj,cvk, &
 !                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-           endif                      
+          endif
 !
 !*********Schema HLLC avec extrapolation MUSCL*******************
 !
-         elseif(ischema.eq.15) then
+       elseif(ischema.eq.15) then
           if(equat(1:2).eq.'ns') then
-            if(kprec.eq.0) then
-              call sch_hllc( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression)
-            elseif(kprec.ge.1) then
+             if(kprec.eq.0) then
+                call sch_hllc( &
+                     lm,0, &
+                     u,v,ff, &
+                     toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                     equat, &
+                     sn(npsn),lgsnlt, &
+                     tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                     pression)
+             elseif(kprec.ge.1) then
                 call sch_hllc_prcd( &
-                 lm,0, &
-                 u,v,ff, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression)
-           endif
+                     lm,0, &
+                     u,v,ff, &
+                     toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                     equat, &
+                     sn(npsn),lgsnlt, &
+                     tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                     pression)
+             endif
           elseif(equat(1:2).eq.'eu') then
-              call sch_hllc_euler( &
-                 lm,0, &
-                 u,v,ff, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 pression)
-         endif
-        endif
+             call sch_hllc_euler( &
+                  lm,0, &
+                  u,v,ff, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                  pression)
+          endif
+       endif
 !
 !------calcul du residu instationnaire------------------------------------
 !
-        if(kfmg.eq.3) then
-           if((kdualns.eq.0).or.(kdualns.eq.1)) then
+       if(kfmg.eq.3) then
+          if((kdualns.eq.0).or.(kdualns.eq.1)) then
              call sch_dual( &
                   lm,u,v,icycle, &
                   vol,ptdual)
-           elseif(kdualns.eq.2) then
+          elseif(kdualns.eq.2) then
              call sch_dual2( &
                   lm,u,v,icycle, &
                   vol,ptdual)
-           endif
-         endif
+          endif
+       endif
 !
 !---calcul du bilan de flux et accumulation de "forcing function"-------
 !
-            call smg_res( &
-                 itypdf, &
-                 lm,u,ff)
+       call smg_res( &
+            itypdf, &
+            lm,u,ff)
 !
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine smg_flu
+end module mod_smg_flu

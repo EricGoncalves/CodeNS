@@ -1,7 +1,7 @@
 module mod_c_end
-implicit none
+  implicit none
 contains
-      subroutine c_end(mot,imot,nmot)
+  subroutine c_end(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -11,23 +11,22 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-use mod_eend
+    use para_fige
+    use mod_eend
 
-use mod_b1_end
+    use mod_b1_end
 
-implicit none
-integer :: imot
-integer :: nmot
+    implicit none
+    integer          :: imot,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      call b1_end
-      call eend
+    call b1_end
+    call eend
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_end
+end module mod_c_end

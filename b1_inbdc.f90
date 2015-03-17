@@ -1,9 +1,9 @@
 module mod_b1_inbdc
-implicit none
+  implicit none
 contains
-      subroutine b1_inbdc( &
-                 krr,mfbea,mfbeb,kibdc,epsmsh, &
-                 iba,jba,kba,tvi,tvj,tvk)
+  subroutine b1_inbdc( &
+       krr,mfbea,mfbeb,kibdc,epsmsh, &
+       iba,jba,kba,tvi,tvj,tvk)
 !
 !***********************************************************************
 !
@@ -33,42 +33,37 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-   use sortiefichier
-implicit none
-integer :: krr
-integer :: mfbea
-integer :: mfbeb
-integer :: kibdc
-double precision :: epsmsh
-integer :: iba
-integer :: jba
-integer :: kba
+    use para_fige
+    use sortiefichier
+    implicit none
+    integer          ::   iba,  jba,  kba,kibdc,  krr
+    integer          :: mfbea,mfbeb
+    double precision :: epsmsh
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
-      character(len=2 ) :: tvi,tvj,tvk
+    character(len=1316) :: form
+    character(len=2 ) :: tvi,tvj,tvk
 !
-          form='(/,2x,''calculs pour frontiere coincidente'',/' &
-                //'2x,''----------------------------------'',/' &
-                //'2x,''numero de la frontiere   : '',11x,i5/' &
-                //'2x,''no frontiere qui coincide: '',11x,i5/' &
-                //'2x,''cle calcul pts coincid.  : '',11x,i5)'
-      write(imp,form) mfbea,mfbeb,kibdc
-      if (kibdc.eq.1) then
-          form='(2x,''cle positionnement front : '',11x,i5)'
-      write(imp,form) krr
-        if (krr.eq.1) then
+    form='(/,2x,''calculs pour frontiere coincidente'',/' &
+         //'2x,''----------------------------------'',/' &
+         //'2x,''numero de la frontiere   : '',11x,i5/' &
+         //'2x,''no frontiere qui coincide: '',11x,i5/' &
+         //'2x,''cle calcul pts coincid.  : '',11x,i5)'
+    write(imp,form) mfbea,mfbeb,kibdc
+    if (kibdc.eq.1) then
+       form='(2x,''cle positionnement front : '',11x,i5)'
+       write(imp,form) krr
+       if (krr.eq.1) then
           form='(2x,''dist max de 2 pts coinc. : '',4x,e12.5)'
-      write(imp,form) epsmsh
-        else if (krr.eq.0) then
+          write(imp,form) epsmsh
+       else if (krr.eq.0) then
           form='(2x,''indices du 1er pt coinc. : '',3(11x,i5)/' &
-                //'2x,''correspondance des dir.  : '',3(14x,a))'
-      write(imp,form) iba,jba,kba,tvi,tvj,tvk
-        endif
-      endif
+               //'2x,''correspondance des dir.  : '',3(14x,a))'
+          write(imp,form) iba,jba,kba,tvi,tvj,tvk
+       endif
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_inbdc
+end module mod_b1_inbdc

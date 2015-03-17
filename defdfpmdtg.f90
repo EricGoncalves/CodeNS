@@ -1,7 +1,7 @@
 module mod_defdfpmdtg
-implicit none
+  implicit none
 contains
-      subroutine defdfpmdtg
+  subroutine defdfpmdtg
 !
 !***********************************************************************
 !
@@ -18,24 +18,24 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-      use kcle
-      use constantes
-   use schemanum
-implicit none
+    use para_fige
+    use kcle
+    use constantes
+    use schemanum
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      kdtl   =intmx
-      icychr0=10
-      ncychro=intmx
-      dt1min =reelmx
+    kdtl   =intmx
+    icychr0=10
+    ncychro=intmx
+    dt1min =reelmx
 !
-      kkdtl   =0
-      kicychr0=1
-      kncychro=0
-      kdt1min =0
+    kkdtl   =0
+    kicychr0=1
+    kncychro=0
+    kdt1min =0
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdfpmdtg
+end module mod_defdfpmdtg

@@ -1,7 +1,7 @@
 module mod_c_dfnm
-implicit none
+  implicit none
 contains
-      subroutine c_dfnm(mot,imot,nmot)
+  subroutine c_dfnm(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -11,26 +11,25 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier
-use mod_tcmd_dfnm
-use mod_b1_dfnm
+    use para_fige
+    use sortiefichier
+    use mod_tcmd_dfnm
+    use mod_b1_dfnm
 
-implicit none
-integer :: imot
-integer :: nmot
+    implicit none
+    integer          :: imot,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      call tcmd_dfnm(mot,imot,nmot)
+    call tcmd_dfnm(mot,imot,nmot)
 !
-      if (kimp.ge.1) then
-         call b1_dfnm
-      endif
+    if (kimp.ge.1) then
+       call b1_dfnm
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfnm
+end module mod_c_dfnm

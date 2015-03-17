@@ -1,7 +1,7 @@
 module mod_b1_cpfw
-implicit none
+  implicit none
 contains
-      subroutine b1_cpfw
+  subroutine b1_cpfw
 !
 !***********************************************************************
 !
@@ -13,17 +13,17 @@ contains
 !
 !***********************************************************************
 !
-      use sortiefichier
-implicit none
+    use sortiefichier
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
+    character(len=1316) :: form
 !
-       form='(/,2x,''realisation du calcul'',/' &
-             //'2x,''---------------------'')'
-      write(imp,form)
+    form='(/,2x,''realisation du calcul'',/' &
+         //'2x,''---------------------'')'
+    write(imp,form)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_cpfw
+end module mod_b1_cpfw

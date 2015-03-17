@@ -1,7 +1,7 @@
 module mod_c_nzst
-implicit none
+  implicit none
 contains
-      subroutine c_nzst(roam,aam,tam)
+  subroutine c_nzst(roam,aam,tam)
 !
 !***********************************************************************
 !
@@ -45,22 +45,20 @@ contains
 !
 !***********************************************************************
 !
-   use sortiefichier
-   use proprieteflu
-      use definition
-implicit none
-double precision :: roam
-double precision :: aam
-double precision :: tam
+    use sortiefichier
+    use proprieteflu
+    use definition
+    implicit none
+    double precision ::  aam,roam, tam
 !
 !-----------------------------------------------------------------------
 !
-      roa1=roam/ronz
-      aa1=aam/anz
-      ta1=tam/tnz
-      pa1=roa1*ta1/gam
-      ha1=cp*ta1
+    roa1=roam/ronz
+    aa1=aam/anz
+    ta1=tam/tnz
+    pa1=roa1*ta1/gam
+    ha1=cp*ta1
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_nzst
+end module mod_c_nzst

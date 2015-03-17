@@ -1,10 +1,10 @@
 module mod_inbdb
-implicit none
+  implicit none
 contains
-      subroutine inbdb( &
-                 ncbd,ncin, &
-                 mfbe,clmf,kibdb, &
-                 ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
+  subroutine inbdb( &
+       ncbd,ncin, &
+       mfbe,clmf,kibdb, &
+       ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
 !
 !***********************************************************************
 !
@@ -35,102 +35,86 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use maillage
-      use sortiefichier
-use mod_initbs
-use mod_inbdbfl
-use mod_inbdbdf
-use mod_inbdbst
-implicit none
-integer :: ncbd
-integer :: ncin
-integer :: mfbe
-integer :: kibdb
-integer :: ibdcst
-integer :: ibdcfl
-integer :: ibddim
-integer :: nvbc
-double precision :: vbc
-double precision :: bceqt
-integer :: img
-integer :: l
-integer :: lm
-integer :: m
-integer :: m0
-integer :: mfbi
-integer :: mfbim
-integer :: mflm
-integer :: ml
-integer :: mt
-integer :: nv
+    use para_var
+    use para_fige
+    use boundary
+    use maillage
+    use sortiefichier
+    use mod_initbs
+    use mod_inbdbfl
+    use mod_inbdbdf
+    use mod_inbdbst
+    implicit none
+    integer          :: ibdcfl,ibdcst,ibddim,   img, kibdb
+    integer          ::      l,    lm,     m,    m0,  mfbe
+    integer          ::   mfbi, mfbim,  mflm,    ml,    mt
+    integer          ::   ncbd,  ncin,    nv,  nvbc
+    double precision :: bceqt,  vbc
 !
 !-----------------------------------------------------------------------
 !
-      character(len=4 ) :: clmf
-      dimension vbc(ista*lsta)
-      dimension bceqt(ip41,neqt)
-      dimension ncbd(ip41),ncin(ip41)
+    character(len=4 ) :: clmf
+    dimension vbc(ista*lsta)
+    dimension bceqt(ip41,neqt)
+    dimension ncbd(ip41),ncin(ip41)
 !
-      mfbi=nfei(mfbe)
-      cl(mfbi)=clmf
-      l=ndlb(mfbi)
+    mfbi=nfei(mfbe)
+    cl(mfbi)=clmf
+    l=ndlb(mfbi)
 !
 !  Utilisation d'un etat thermodynamique pour appliquer une condition limite
 !
-      if(ibdcst.ne.0) then
-         call inbdbst(clmf,ibdcst,nvbc,vbc)
-      endif
+    if(ibdcst.ne.0) then
+       call inbdbst(clmf,ibdcst,nvbc,vbc)
+    endif
 !
 !  Utilisation des informations contenues dans la grille de donnees
 !
-      if(nvbc.ne.0) then
-         call inbdbdf(clmf,ibddim,nvbc,vbc)
-      endif
+    if(nvbc.ne.0) then
+       call inbdbdf(clmf,ibddim,nvbc,vbc)
+    endif
 !
-      nbdc(mfbi)=nvbc
-      do nv=1,nvbc
-        bc(mfbi,nv)=vbc(nv)
-      enddo
+    nbdc(mfbi)=nvbc
+    do nv=1,nvbc
+       bc(mfbi,nv)=vbc(nv)
+    enddo
 !
 !  Preparation du tableau de conditions aux limites
 !
-      do nv=1,nvbc
-        do img=1,lgx
+    do nv=1,nvbc
+       do img=1,lgx
           mflm = mfbi + (img-1)*mtb
           mt = mmb(mflm)
           do m=1,mt
-            ml=mpb(mflm)+m
-            bceqt(ml,nv)=vbc(nv)
+             ml=mpb(mflm)+m
+             bceqt(ml,nv)=vbc(nv)
           enddo
-        enddo
-      enddo
+       enddo
+    enddo
 !
-      if(ibdcfl.ne.0) then
-         call inbdbfl(ibdcfl,mfbi,bceqt,mpb)
-      endif
+    if(ibdcfl.ne.0) then
+       call inbdbfl(ibdcfl,mfbi,bceqt,mpb)
+    endif
 !
-      do img=1,lgx
+    do img=1,lgx
 !
-      lm=l+(img-1)*lz
-      mfbim=mfbi+(img-1)*mtb
-      mt=mmb(mfbim)
-      m0=mpb(mfbim)
+       lm=l+(img-1)*lz
+       mfbim=mfbi+(img-1)*mtb
+       mt=mmb(mfbim)
+       m0=mpb(mfbim)
 !
-      if(kibdb.eq.1) then
-         call initbs( &
-                 mfbim,lm,indfl(mfbi), &
-                 ncin,ncbd, &
-                 mt,m0)
-      elseif(kibdb.eq.0) then
+       if(kibdb.eq.1) then
+          call initbs( &
+               mfbim,lm,indfl(mfbi), &
+               ncin,ncbd, &
+               mt,m0)
+       elseif(kibdb.eq.0) then
 !            call readfb( &
 !                 kfb,ncin, &
 !                 mt,m0)
-      endif
-      enddo
+       endif
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine inbdb
+end module mod_inbdb

@@ -1,11 +1,11 @@
 module mod_clidi
-implicit none
+  implicit none
 contains
-      subroutine clidi( &
-                 mfb,l,rpi,rti, &
-                 nxn,nyn,nzn,ncbd,v, &
-                 mmb,mpb,mpn, &
-                 pression,temp,cson)
+  subroutine clidi( &
+       mfb,l,rpi,rti, &
+       nxn,nyn,nzn,ncbd,v, &
+       mmb,mpb,mpn, &
+       pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -63,91 +63,56 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use proprieteflu
-      use schemanum
-      use definition
-implicit none
-integer :: inc
-integer :: mfb
-integer :: l
-double precision :: rpi
-double precision :: rti
-integer :: ncbd
-double precision :: v
-integer :: mmb
-integer :: mpb
-integer :: mpn
-double precision :: pression
-double precision :: temp
-double precision :: cson
-integer :: id
-integer :: jd
-integer :: kd
-double precision :: b
-double precision :: gam2t
-double precision :: gam6
-double precision :: gamt
-integer :: m
-integer :: mb
-integer :: mn
-integer :: mt
-integer :: n0c
-integer :: n0n
-integer :: nc
-integer :: nci
-integer :: ncij
-integer :: ncijk
-integer :: ncik
-integer :: ncj
-integer :: ncjk
-integer :: nck
-integer :: nid
-integer :: nijd
-integer :: njd
-double precision :: pres
-double precision :: qinf
-double precision :: qn
-double precision :: qxs
-double precision :: qys
-double precision :: qzs
-double precision :: rho
+    use para_var
+    use para_fige
+    use maillage
+    use proprieteflu
+    use schemanum
+    use definition
+    implicit none
+    integer          ::    id,  inc,   jd,   kd,    l
+    integer          ::     m,   mb,  mfb,  mmb,   mn
+    integer          ::   mpb,  mpn,   mt,  n0c,  n0n
+    integer          ::    nc, ncbd,  nci, ncij,ncijk
+    integer          ::  ncik,  ncj, ncjk,  nck,  nid
+    integer          ::  nijd,  njd
+    double precision ::        b,    cson,   gam2t,    gam6,    gamt
+    double precision ::      nxn,     nyn,     nzn,    pres,pression
+    double precision ::     qinf,      qn,     qxs,     qys,     qzs
+    double precision ::      rho,     rpi,     rti,    temp,       v
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
 !
-      dimension rpi(ip40),rti(ip40)
-      dimension v(ip11,ip60),pression(ip11),temp(ip11),cson(ip11)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension mmb(mtt),mpb(mtt),mpn(mtt)
+    dimension rpi(ip40),rti(ip40)
+    dimension v(ip11,ip60),pression(ip11),temp(ip11),cson(ip11)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension mmb(mtt),mpb(mtt),mpn(mtt)
 !
-      inc(id,jd,kd)=id+jd*nid+kd*nijd
+    inc(id,jd,kd)=id+jd*nid+kd*nijd
 !
-      n0n=npn(l)
-      n0c=npc(l)
+    n0n=npn(l)
+    n0c=npc(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      nci = inc(1,0,0)
-      ncj = inc(0,1,0)
-      nck = inc(0,0,1)
-      ncij = inc(1,1,0)
-      ncik = inc(1,0,1)
-      ncjk = inc(0,1,1)
-      ncijk= inc(1,1,1)
+    nci = inc(1,0,0)
+    ncj = inc(0,1,0)
+    nck = inc(0,0,1)
+    ncij = inc(1,1,0)
+    ncik = inc(1,0,1)
+    ncjk = inc(0,1,1)
+    ncijk= inc(1,1,1)
 !
-      mt=mmb(mfb)
-      gam6=gam/gam1
-      gamt=gam/aa1**2
-      gam2t=0.5*gam1/aa1**2
-      qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
+    mt=mmb(mfb)
+    gam6=gam/gam1
+    gamt=gam/aa1**2
+    gam2t=0.5*gam1/aa1**2
+    qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
 !
-      do m=1,mt
+    do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m
        nc=ncbd(mb)
@@ -172,8 +137,8 @@ double precision :: rho
        pression(nc)=pres
        temp(nc)=gam*pres/rho
        cson(nc)=sqrt(temp(nc))
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine clidi
+end module mod_clidi

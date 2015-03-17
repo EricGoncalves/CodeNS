@@ -1,7 +1,7 @@
 module mod_c_dfph
-implicit none
+  implicit none
 contains
-      subroutine c_dfph(mot,imot,nmot)
+  subroutine c_dfph(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -21,30 +21,29 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier
-use mod_dfph
+    use para_fige
+    use sortiefichier
+    use mod_dfph
 
-use mod_b1_dfph
+    use mod_b1_dfph
 
-use mod_tcmd_dfph
-implicit none
-integer :: imot
-integer :: nmot
+    use mod_tcmd_dfph
+    implicit none
+    integer          :: imot,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      call tcmd_dfph(mot,imot,nmot)
+    call tcmd_dfph(mot,imot,nmot)
 !
-      if(kimp.ge.1) then
-        call b1_dfph
-      endif
+    if(kimp.ge.1) then
+       call b1_dfph
+    endif
 !
-      call dfph
+    call dfph
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfph
+end module mod_c_dfph

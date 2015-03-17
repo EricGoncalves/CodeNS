@@ -1,10 +1,10 @@
 module mod_utitfr
-implicit none
+  implicit none
 contains
-      subroutine utitfr( &
-                 x,y,z,v,ncbd,nxn,nyn,nzn,icyc, &
-                 toxx,toxy,toxz,toyy,toyz,tozz, &
-                 ps)
+  subroutine utitfr( &
+       x,y,z,v,ncbd,nxn,nyn,nzn,icyc, &
+       toxx,toxy,toxz,toyy,toyz,tozz, &
+       ps)
 !
 !***********************************************************************
 !
@@ -92,185 +92,79 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use definition
-      use proprieteflu
-      use sortiefichier
-      use schemanum 
-      use constantes
-implicit none
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: v
-integer :: ncbd
-integer :: icyc
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: ps
-double precision :: alfar
-double precision :: betar
-double precision :: claefr
-double precision :: claero
-double precision :: clav
-double precision :: clavfr
-double precision :: clavtfr
-double precision :: clavtot
-double precision :: cmaefr
-double precision :: cmaero
-double precision :: cmav
-double precision :: cmavfr
-double precision :: cmavtfr
-double precision :: cmavtot
-double precision :: cnaefr
-double precision :: cnaero
-double precision :: cnav
-double precision :: cnavfr
-double precision :: cnavtfr
-double precision :: cnavtot
-double precision :: csal
-double precision :: csbe
-double precision :: cxaefr
-double precision :: cxaero
-double precision :: cxav
-double precision :: cxavfr
-double precision :: cxavtfr
-double precision :: cxavtot
-double precision :: cyaefr
-double precision :: cyaero
-double precision :: cyav
-double precision :: cyavfr
-double precision :: cyavtfr
-double precision :: cyavtot
-double precision :: czaefr
-double precision :: czaero
-double precision :: czav
-double precision :: czavfr
-double precision :: czavtfr
-double precision :: czavtot
-double precision :: dcl
-double precision :: dclfr
-double precision :: dcm
-double precision :: dcmfr
-double precision :: dcn
-double precision :: dcnfr
-double precision :: dcx
-double precision :: dcxfr
-double precision :: dcy
-double precision :: dcyfr
-double precision :: dcz
-double precision :: dczfr
-double precision :: dsml
-double precision :: dsxy
-double precision :: dsxz
-double precision :: dsyz
-double precision :: dx1
-double precision :: dx2
-double precision :: dy1
-double precision :: dy2
-double precision :: dz1
-double precision :: dz2
-integer :: i1
-integer :: i2
-integer :: icyexpl
-integer :: idf1
-integer :: idf2
-integer :: idfac
-integer :: idm
-integer :: imaxf
-integer :: iminf
-integer :: j1
-integer :: j2
-integer :: jmaxf
-integer :: jminf
-integer :: k1
-integer :: k2
-integer :: kmaxf
-integer :: kminf
-integer :: l
-integer :: m0b
-integer :: m0n
-integer :: m1
-integer :: m1max
-integer :: m1maxm1
-integer :: m1min
-integer :: m2
-integer :: m2max
-integer :: m2maxm1
-integer :: m2min
-integer :: mf
-integer :: mfac
-integer :: mfacn
-integer :: mfl
-integer :: n0c
-integer :: n0n
-integer :: nci
-integer :: ncj
-integer :: nck
-integer :: nfac1
-integer :: nfac2
-integer :: nfac3
-integer :: nfac4
-integer :: nfacf
-integer :: nid
-integer :: nijd
-integer :: njd
-double precision :: pspi0
-double precision :: snal
-double precision :: snbe
-double precision :: taunorm
-double precision :: tauref0
-double precision :: utx
-double precision :: utxt
-double precision :: uty
-double precision :: utyt
-double precision :: utz
-double precision :: utzt
-double precision :: xcfac
-double precision :: ycfac
-double precision :: zcfac
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use definition
+    use proprieteflu
+    use sortiefichier
+    use schemanum 
+    use constantes
+    implicit none
+    integer          ::      i1,     i2,   icyc,icyexpl,   idf1
+    integer          ::    idf2,  idfac,    idm,  imaxf,  iminf
+    integer          ::      j1,     j2,  jmaxf,  jminf,     k1
+    integer          ::      k2,  kmaxf,  kminf,      l,    m0b
+    integer          ::     m0n,     m1,  m1max,m1maxm1,  m1min
+    integer          ::      m2,  m2max,m2maxm1,  m2min,     mf
+    integer          ::    mfac,  mfacn,    mfl,    n0c,    n0n
+    integer          ::    ncbd,    nci,    ncj,    nck,  nfac1
+    integer          ::   nfac2,  nfac3,  nfac4,  nfacf,    nid
+    integer          ::    nijd,    njd
+    double precision ::   alfar,  betar, claefr, claero,   clav
+    double precision ::  clavfr,clavtfr,clavtot, cmaefr, cmaero
+    double precision ::    cmav, cmavfr,cmavtfr,cmavtot, cnaefr
+    double precision ::  cnaero,   cnav, cnavfr,cnavtfr,cnavtot
+    double precision ::    csal,   csbe, cxaefr, cxaero,   cxav
+    double precision ::  cxavfr,cxavtfr,cxavtot, cyaefr, cyaero
+    double precision ::    cyav, cyavfr,cyavtfr,cyavtot, czaefr
+    double precision ::  czaero,   czav, czavfr,czavtfr,czavtot
+    double precision ::     dcl,  dclfr,    dcm,  dcmfr,    dcn
+    double precision ::   dcnfr,    dcx,  dcxfr,    dcy,  dcyfr
+    double precision ::     dcz,  dczfr,   dsml,   dsxy,   dsxz
+    double precision ::    dsyz,    dx1,    dx2,    dy1,    dy2
+    double precision ::     dz1,    dz2,    nxn,    nyn,    nzn
+    double precision ::    pres,     ps,  pspi0,   snal,   snbe
+    double precision :: taunorm,tauref0,   toxx,   toxy,   toxz
+    double precision ::    toyy,   toyz,   tozz,    utx,   utxt
+    double precision ::     uty,   utyt,    utz,   utzt,      v
+    double precision ::       x,  xcfac,      y,  ycfac,      z
+    double precision ::   zcfac
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn,pres
 !
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
-      dimension v(ip11,ip60)
-      dimension ncbd(ip41),ps(ip11)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
+    dimension v(ip11,ip60)
+    dimension ncbd(ip41),ps(ip11)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
 !
-      icyexpl=mod(icyc,ncyexpl)
+    icyexpl=mod(icyc,ncyexpl)
 !
-      if(kvglo.eq.0) return
-      if(nbfll.eq.0) return
+    if(kvglo.eq.0) return
+    if(nbfll.eq.0) return
 !
-      alfar=alpha0/raddeg
-      betar=beta0/raddeg
-      csal=cos(alfar)
-      snal=sin(alfar)
-      csbe=cos(betar)
-      snbe=sin(betar)
+    alfar=alpha0/raddeg
+    betar=beta0/raddeg
+    csal=cos(alfar)
+    snal=sin(alfar)
+    csbe=cos(betar)
+    snbe=sin(betar)
 !
-      if(abs(pa1).le.tiny(1.)) then
-        write(imp,'("!!!utit: pa1=0, devient 1")')
-        pa1=1.
-      end if
-      if(abs(q0spi0).le.tiny(1.)) then
-        write(imp,'("!!!utit: q0spi0=0, devient 1")')
-        q0spi0=1.
-      endif
-      if(abs(sref).le.tiny(1.)) then
-        write(imp,'("!!!utit: sref=0, devient 1")')
-        sref=1.
-      endif
+    if(abs(pa1).le.tiny(1.)) then
+       write(imp,'("!!!utit: pa1=0, devient 1")')
+       pa1=1.
+    end if
+    if(abs(q0spi0).le.tiny(1.)) then
+       write(imp,'("!!!utit: q0spi0=0, devient 1")')
+       q0spi0=1.
+    endif
+    if(abs(sref).le.tiny(1.)) then
+       write(imp,'("!!!utit: sref=0, devient 1")')
+       sref=1.
+    endif
 !
 !     -------------------------------------------------------
 !     adimensionnement du frottement
@@ -290,58 +184,58 @@ double precision :: zcfac
 !     tauref = 2 * rho_i * a_i**2 / ( rho_inf * V_inf**2 )
 !                  <-----grandeurs avec dimension------>
 !
-      tauref0=2.*(1.+gam2*rm0**2)**(gam/gam1)/rm0**2
+    tauref0=2.*(1.+gam2*rm0**2)**(gam/gam1)/rm0**2
 !
 !     -------------------------------------------------------
 !
 !     pression
-      cxavtot=0.
-      cyavtot=0.
-      czavtot=0.
-      clavtot=0.
-      cmavtot=0.
-      cnavtot=0.
+    cxavtot=0.
+    cyavtot=0.
+    czavtot=0.
+    clavtot=0.
+    cmavtot=0.
+    cnavtot=0.
 !     frottement
-      cxavtfr=0.
-      cyavtfr=0.
-      czavtfr=0.
-      clavtfr=0.
-      cmavtfr=0.
-      cnavtfr=0.
+    cxavtfr=0.
+    cyavtfr=0.
+    czavtfr=0.
+    clavtfr=0.
+    cmavtfr=0.
+    cnavtfr=0.
 !
-      do mf=1,nbfll
-        mfl=nmfint(mf)
-        l=ndlb(mfl)
+    do mf=1,nbfll
+       mfl=nmfint(mf)
+       l=ndlb(mfl)
 !
-        i1=ii1(l)
-        i2=ii2(l)
-        j1=jj1(l)
-        j2=jj2(l)
-        k1=kk1(l)
-        k2=kk2(l)
-        n0n=npn(l)
-        n0c=npc(l)
+       i1=ii1(l)
+       i2=ii2(l)
+       j1=jj1(l)
+       j2=jj2(l)
+       k1=kk1(l)
+       k2=kk2(l)
+       n0n=npn(l)
+       n0c=npc(l)
 !
-        nid = id2(l)-id1(l)+1
-        njd = jd2(l)-jd1(l)+1
-        nijd = nid*njd
+       nid = id2(l)-id1(l)+1
+       njd = jd2(l)-jd1(l)+1
+       nijd = nid*njd
 !
-        nci=1
-        ncj=nid
-        nck=nijd
+       nci=1
+       ncj=nid
+       nck=nijd
 !
-        m0b=mpb(mfl)
-        m0n=mpn(mfl)
-        iminf=iminb(mfl)
-        imaxf=imaxb(mfl)
-        jminf=jminb(mfl)
-        jmaxf=jmaxb(mfl)
-        kminf=kminb(mfl)
-        kmaxf=kmaxb(mfl)
+       m0b=mpb(mfl)
+       m0n=mpn(mfl)
+       iminf=iminb(mfl)
+       imaxf=imaxb(mfl)
+       jminf=jminb(mfl)
+       jmaxf=jmaxb(mfl)
+       kminf=kminb(mfl)
+       kmaxf=kmaxb(mfl)
 !
-        m1min=1
-        m2min=1
-        if (iminf.eq.imaxf) then
+       m1min=1
+       m2min=1
+       if (iminf.eq.imaxf) then
           m1max=jmaxf-jminf+1
           m1maxm1=m1max-1
           m2max=kmaxf-kminf+1
@@ -352,7 +246,7 @@ double precision :: zcfac
           if(iminf.eq.i1) idfac=nci
           if(iminf.eq.i2) idfac=0
 !
-        elseif (jminf.eq.jmaxf) then
+       elseif (jminf.eq.jmaxf) then
           m1max=imaxf-iminf+1
           m1maxm1=m1max-1
           m2max=kmaxf-kminf+1
@@ -363,7 +257,7 @@ double precision :: zcfac
           if(jminf.eq.j1) idfac=ncj
           if(jminf.eq.j2) idfac=0
 !
-        elseif (kminf.eq.kmaxf) then
+       elseif (kminf.eq.kmaxf) then
           m1max=imaxf-iminf+1
           m1maxm1=m1max-1
           m2max=jmaxf-jminf+1
@@ -374,157 +268,157 @@ double precision :: zcfac
           if(kminf.eq.k1) idfac=nck
           if(kminf.eq.k2) idfac=0
 !
-        endif
+       endif
 !
-        idm=m1max-m1min
+       idm=m1max-m1min
 !
 !       pression
-        cxav=0.
-        cyav=0.
-        czav=0.
-        clav=0.
-        cmav=0.
-        cnav=0.
+       cxav=0.
+       cyav=0.
+       czav=0.
+       clav=0.
+       cmav=0.
+       cnav=0.
 !       frottement
-        cxavfr=0.
-        cyavfr=0.
-        czavfr=0.
-        clavfr=0.
-        cmavfr=0.
-        cnavfr=0.
+       cxavfr=0.
+       cyavfr=0.
+       czavfr=0.
+       clavfr=0.
+       cmavfr=0.
+       cnavfr=0.
 !
-        do m2=m2min,m2maxm1
+       do m2=m2min,m2maxm1
           do m1=m1min,m1maxm1
-            mfac =m0b+m1+(m2-1)*idm
-            mfacn=m0n+m1+(m2-1)*idm
-            nfac1=ncbd(mfac)-n0c+n0n+idfac
-            nfac2=ncbd(mfac)-n0c+n0n+idfac+idf1
-            nfac3=ncbd(mfac)-n0c+n0n+idfac+idf1+idf2
-            nfac4=ncbd(mfac)-n0c+n0n+idfac+idf2
-            nfacf=ncbd(mfac)
+             mfac =m0b+m1+(m2-1)*idm
+             mfacn=m0n+m1+(m2-1)*idm
+             nfac1=ncbd(mfac)-n0c+n0n+idfac
+             nfac2=ncbd(mfac)-n0c+n0n+idfac+idf1
+             nfac3=ncbd(mfac)-n0c+n0n+idfac+idf1+idf2
+             nfac4=ncbd(mfac)-n0c+n0n+idfac+idf2
+             nfacf=ncbd(mfac)
 !
 !           pres=gam1*( v(nfacf,5) - pinfl &
 !              -0.5*(v(nfacf,2)**2+v(nfacf,3)**2+v(nfacf,4)**2)/v(nfacf,1))
-            pres=ps(nfacf)
-            pspi0=pres/pa1          !pa1=1/gam
-            xcfac=0.25*(x(nfac1)+x(nfac2)+x(nfac3)+x(nfac4))
-            ycfac=0.25*(y(nfac1)+y(nfac2)+y(nfac3)+y(nfac4))
-            zcfac=0.25*(z(nfac1)+z(nfac2)+z(nfac3)+z(nfac4))
-            dx1=x(nfac3)-x(nfac1)
-            dy1=y(nfac3)-y(nfac1)
-            dz1=z(nfac3)-z(nfac1)
-            dx2=x(nfac4)-x(nfac2)
-            dy2=y(nfac4)-y(nfac2)
-            dz2=z(nfac4)-z(nfac2)
-            dsyz=abs(dy1*dz2-dz1*dy2)/2.
-            dsxz=abs(dz1*dx2-dx1*dz2)/2.
-            dsxy=abs(dx1*dy2-dy1*dx2)/2.
-            dsml=sqrt(dsyz*dsyz+dsxz*dsxz+dsxy*dsxy)
+             pres=ps(nfacf)
+             pspi0=pres/pa1          !pa1=1/gam
+             xcfac=0.25*(x(nfac1)+x(nfac2)+x(nfac3)+x(nfac4))
+             ycfac=0.25*(y(nfac1)+y(nfac2)+y(nfac3)+y(nfac4))
+             zcfac=0.25*(z(nfac1)+z(nfac2)+z(nfac3)+z(nfac4))
+             dx1=x(nfac3)-x(nfac1)
+             dy1=y(nfac3)-y(nfac1)
+             dz1=z(nfac3)-z(nfac1)
+             dx2=x(nfac4)-x(nfac2)
+             dy2=y(nfac4)-y(nfac2)
+             dz2=z(nfac4)-z(nfac2)
+             dsyz=abs(dy1*dz2-dz1*dy2)/2.
+             dsxz=abs(dz1*dx2-dx1*dz2)/2.
+             dsxy=abs(dx1*dy2-dy1*dx2)/2.
+             dsml=sqrt(dsyz*dsyz+dsxz*dsxz+dsxy*dsxy)
 !           pression
-            dcx=(p0spi0-pspi0)*dsyz*sign(1.,nxn(mfacn))
-            dcy=(p0spi0-pspi0)*dsxz*sign(1.,nyn(mfacn))
-            dcz=(p0spi0-pspi0)*dsxy*sign(1.,nzn(mfacn))
-            dcl=dcy*(zcfac-zref)-dcz*(ycfac-yref)
-            dcm=dcx*(zcfac-zref)-dcz*(xcfac-xref)
-            dcn=dcx*(ycfac-yref)-dcy*(xcfac-xref)
-            cxav=cxav+dcx
-            cyav=cyav+dcy
-            czav=czav+dcz
-            clav=clav+dcl
-            cmav=cmav+dcm
-            cnav=cnav+dcn
+             dcx=(p0spi0-pspi0)*dsyz*sign(1.,nxn(mfacn))
+             dcy=(p0spi0-pspi0)*dsxz*sign(1.,nyn(mfacn))
+             dcz=(p0spi0-pspi0)*dsxy*sign(1.,nzn(mfacn))
+             dcl=dcy*(zcfac-zref)-dcz*(ycfac-yref)
+             dcm=dcx*(zcfac-zref)-dcz*(xcfac-xref)
+             dcn=dcx*(ycfac-yref)-dcy*(xcfac-xref)
+             cxav=cxav+dcx
+             cyav=cyav+dcy
+             czav=czav+dcz
+             clav=clav+dcl
+             cmav=cmav+dcm
+             cnav=cnav+dcn
 !
 !           frottement
-            utx=toxx(nfacf)*nxn(mfacn)+toxy(nfacf)*nyn(mfacn)+ &
-                toxz(nfacf)*nzn(mfacn)
-            uty=toxy(nfacf)*nxn(mfacn)+toyy(nfacf)*nyn(mfacn)+ &
-                toyz(nfacf)*nzn(mfacn)
-            utz=toxz(nfacf)*nxn(mfacn)+toyz(nfacf)*nyn(mfacn)+ &
-                tozz(nfacf)*nzn(mfacn)
+             utx=toxx(nfacf)*nxn(mfacn)+toxy(nfacf)*nyn(mfacn)+ &
+                  toxz(nfacf)*nzn(mfacn)
+             uty=toxy(nfacf)*nxn(mfacn)+toyy(nfacf)*nyn(mfacn)+ &
+                  toyz(nfacf)*nzn(mfacn)
+             utz=toxz(nfacf)*nxn(mfacn)+toyz(nfacf)*nyn(mfacn)+ &
+                  tozz(nfacf)*nzn(mfacn)
 !           projection du frottement sur la surface
-            taunorm=utx*nxn(mfacn)+uty*nyn(mfacn)+utz*nzn(mfacn)
-            utxt=utx-taunorm*nxn(mfacn)
-            utyt=uty-taunorm*nyn(mfacn)
-            utzt=utz-taunorm*nzn(mfacn)
-            dcxfr=utxt*dsml
-            dcyfr=utyt*dsml
-            dczfr=utzt*dsml
-            dclfr=dcyfr*(zcfac-zref)-dczfr*(ycfac-yref)
-            dcmfr=dcxfr*(zcfac-zref)-dczfr*(xcfac-xref)
-            dcnfr=dcxfr*(ycfac-yref)-dcyfr*(xcfac-xref)
-            cxavfr=cxavfr+dcxfr
-            cyavfr=cyavfr+dcyfr
-            czavfr=czavfr+dczfr
-            clavfr=clavfr+dclfr
-            cmavfr=cmavfr+dcmfr
-            cnavfr=cnavfr+dcnfr
+             taunorm=utx*nxn(mfacn)+uty*nyn(mfacn)+utz*nzn(mfacn)
+             utxt=utx-taunorm*nxn(mfacn)
+             utyt=uty-taunorm*nyn(mfacn)
+             utzt=utz-taunorm*nzn(mfacn)
+             dcxfr=utxt*dsml
+             dcyfr=utyt*dsml
+             dczfr=utzt*dsml
+             dclfr=dcyfr*(zcfac-zref)-dczfr*(ycfac-yref)
+             dcmfr=dcxfr*(zcfac-zref)-dczfr*(xcfac-xref)
+             dcnfr=dcxfr*(ycfac-yref)-dcyfr*(xcfac-xref)
+             cxavfr=cxavfr+dcxfr
+             cyavfr=cyavfr+dcyfr
+             czavfr=czavfr+dczfr
+             clavfr=clavfr+dclfr
+             cmavfr=cmavfr+dcmfr
+             cnavfr=cnavfr+dcnfr
           enddo
-        enddo
+       enddo
 !
 !       pression
-        cxav=cxav/(q0spi0*sref)
-        cyav=cyav/(q0spi0*sref)
-        czav=czav/(q0spi0*sref)
-        clav=clav/(q0spi0*sref*xlref)
-        cmav=cmav/(q0spi0*sref*xlref)
-        cnav=cnav/(q0spi0*sref*xlref)
-        cxaero=cxav*csal*csbe-cyav*snbe+czav*snal*csbe
-        cyaero=cxav*csal*snbe+cyav*csbe+czav*snal*snbe
-        czaero=-cxav*snal+czav*csal
-        claero=clav*csal*csbe+cmav*snbe+cnav*snal*csbe
-        cmaero=-clav*csal*snbe+cmav*csbe-cnav*snal*snbe
-        cnaero=-clav*snal+cnav*csal
-        cxavtot=cxavtot+cxav
-        cyavtot=cyavtot+cyav
-        czavtot=czavtot+czav
-        clavtot=clavtot+clav
-        cmavtot=cmavtot+cmav
-        cnavtot=cnavtot+cnav
+       cxav=cxav/(q0spi0*sref)
+       cyav=cyav/(q0spi0*sref)
+       czav=czav/(q0spi0*sref)
+       clav=clav/(q0spi0*sref*xlref)
+       cmav=cmav/(q0spi0*sref*xlref)
+       cnav=cnav/(q0spi0*sref*xlref)
+       cxaero=cxav*csal*csbe-cyav*snbe+czav*snal*csbe
+       cyaero=cxav*csal*snbe+cyav*csbe+czav*snal*snbe
+       czaero=-cxav*snal+czav*csal
+       claero=clav*csal*csbe+cmav*snbe+cnav*snal*csbe
+       cmaero=-clav*csal*snbe+cmav*csbe-cnav*snal*snbe
+       cnaero=-clav*snal+cnav*csal
+       cxavtot=cxavtot+cxav
+       cyavtot=cyavtot+cyav
+       czavtot=czavtot+czav
+       clavtot=clavtot+clav
+       cmavtot=cmavtot+cmav
+       cnavtot=cnavtot+cnav
 !
 !       frottement
-        cxavfr=cxavfr*tauref0/sref
-        cyavfr=cyavfr*tauref0/sref
-        czavfr=czavfr*tauref0/sref
-        clavfr=clavfr*tauref0/(sref*xlref)
-        cmavfr=cmavfr*tauref0/(sref*xlref)
-        cnavfr=cnavfr*tauref0/(sref*xlref)
+       cxavfr=cxavfr*tauref0/sref
+       cyavfr=cyavfr*tauref0/sref
+       czavfr=czavfr*tauref0/sref
+       clavfr=clavfr*tauref0/(sref*xlref)
+       cmavfr=cmavfr*tauref0/(sref*xlref)
+       cnavfr=cnavfr*tauref0/(sref*xlref)
 !
-        cxavtfr=cxavtfr+cxavfr
-        cyavtfr=cyavtfr+cyavfr
-        czavtfr=czavtfr+czavfr
-        clavtfr=clavtfr+clavfr
-        cmavtfr=cmavtfr+cmavfr
-        cnavtfr=cnavtfr+cnavfr
-      enddo !fin boucle sur les parois
+       cxavtfr=cxavtfr+cxavfr
+       cyavtfr=cyavtfr+cyavfr
+       czavtfr=czavtfr+czavfr
+       clavtfr=clavtfr+clavfr
+       cmavtfr=cmavtfr+cmavfr
+       cnavtfr=cnavtfr+cnavfr
+    enddo !fin boucle sur les parois
 !
 !     pression
-      cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
-      cyaero= cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
-      czaero=-cxavtot*snal+czavtot*csal
-      claero= clavtot*csal*csbe+cmavtot*snbe+cnavtot*snal*csbe
-      cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
-      cnaero=-clavtot*snal+cnavtot*csal
+    cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
+    cyaero= cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
+    czaero=-cxavtot*snal+czavtot*csal
+    claero= clavtot*csal*csbe+cmavtot*snbe+cnavtot*snal*csbe
+    cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
+    cnaero=-clavtot*snal+cnavtot*csal
 !
 !     frottement
-      cxaefr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
-      cyaefr= cxavtfr*csal*snbe+cyavtfr*csbe+czavtfr*snal*snbe
-      czaefr=-cxavtfr*snal+czavtfr*csal
-      claefr= clavtfr*csal*csbe+cmavtfr*snbe+cnavtfr*snal*csbe
-      cmaefr=-clavtfr*csal*snbe+cmavtfr*csbe-cnavtfr*snal*snbe
-      cnaefr=-clavtfr*snal+cnavtfr*csal
+    cxaefr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
+    cyaefr= cxavtfr*csal*snbe+cyavtfr*csbe+czavtfr*snal*snbe
+    czaefr=-cxavtfr*snal+czavtfr*csal
+    claefr= clavtfr*csal*csbe+cmavtfr*snbe+cnavtfr*snal*csbe
+    cmaefr=-clavtfr*csal*snbe+cmavtfr*csbe-cnavtfr*snal*snbe
+    cnaefr=-clavtfr*snal+cnavtfr*csal
 !
-      if(icyexpl.eq.0) then
+    if(icyexpl.eq.0) then
 !       repere avion
-        write(out,3801) icyc,cxavtot,cyavtot,czavtot, &
-                           clavtot,cmavtot,cnavtot
- 3801   format('=>utitfr p: ',i6,1x,6(1pe11.3))
-        write(out,3802) icyc,cxavtfr,cyavtfr,czavtfr,clavtfr, &
-                        cmavtfr,cnavtfr
- 3802   format('=>utitfr f: ',i6,1x,6(1pe11.3))
-      endif
+       write(out,3801) icyc,cxavtot,cyavtot,czavtot, &
+            clavtot,cmavtot,cnavtot
+3801   format('=>utitfr p: ',i6,1x,6(1pe11.3))
+       write(out,3802) icyc,cxavtfr,cyavtfr,czavtfr,clavtfr, &
+            cmavtfr,cnavtfr
+3802   format('=>utitfr f: ',i6,1x,6(1pe11.3))
+    endif
 !
 !      vrtcz=czaero
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine utitfr
+end module mod_utitfr

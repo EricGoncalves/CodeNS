@@ -1,10 +1,10 @@
 module mod_c_svbdc
-implicit none
+  implicit none
 contains
-      subroutine c_svbdc( &
-                 mot,imot,nmot, &
-                 mfbi, &
-                 mnc)
+  subroutine c_svbdc( &
+       mot,imot,nmot, &
+       mfbi, &
+       mnc)
 !
 !***********************************************************************
 !
@@ -28,32 +28,28 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use boundary
-   use sortiefichier
-implicit none
-integer :: imot
-integer :: nmot
-integer :: mfbi
-integer :: mnc
-integer :: m0c
-integer :: mt
+    use para_var
+    use para_fige
+    use boundary
+    use sortiefichier
+    implicit none
+    integer          :: imot, m0c,mfbi, mnc,  mt
+    integer          :: nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
-      dimension mnc(ip43)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
+    dimension mnc(ip43)
 !
 !     mfbi=nfei(mfbe)
-      m0c =mpc(mfbi)
-      mt  =mmb(mfbi)
+    m0c =mpc(mfbi)
+    mt  =mmb(mfbi)
 !
 !            call writfc( &
 !                 kfc,mnc, &
 !                 mt,m0c)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_svbdc
+end module mod_c_svbdc

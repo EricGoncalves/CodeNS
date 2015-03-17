@@ -1,7 +1,7 @@
 module mod_b2_dpdim
-implicit none
+  implicit none
 contains
-      subroutine b2_dpdim
+  subroutine b2_dpdim
 !
 !***********************************************************************
 !
@@ -31,70 +31,62 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use sortiefichier
-   use schemanum
-   use maillage
-   use chainecarac
-implicit none
-integer :: kl
-integer :: l
-integer :: mdimtb
-integer :: mdimtc
-integer :: mdimtn
-integer :: mdimtr
-integer :: ndimctb
-integer :: ndimctc
-integer :: ndimctk
-integer :: ndimctv
-integer :: ndimntb
+    use para_var
+    use para_fige
+    use sortiefichier
+    use schemanum
+    use maillage
+    use chainecarac
+    implicit none
+    integer          ::      kl,      l, mdimtb, mdimtc, mdimtn
+    integer          ::  mdimtr,ndimctb,ndimctc,ndimctk,ndimctv
+    integer          :: ndimntb
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
+    character(len=1316) :: form
 !
-      ndimctb=nint((1.+kdimg*ccg)*ndimctf)
-      ndimctv=kdimv*(ndimctb-1)+1
-      ndimctk=kdimk*(ndimctb-1)+1
-      ndimctc=nint(kdimg*ccg*ndimctf)
-      ndimntb=nint((1.+kdimg*cng)*ndimnts+ndimntu)
-      mdimtb =nint((1.+kdimg*cfg)*mdimtbf)
-      mdimtn =nint((1.+kdimg*cfg)*mdimtnf)
-      mdimtc =nint((1.+kdimg*cfg)*mdimtcf)
-      mdimtr =nint((1.+kdimg*cfg)*mdimtrf)
+    ndimctb=nint((1.+kdimg*ccg)*ndimctf)
+    ndimctv=kdimv*(ndimctb-1)+1
+    ndimctk=kdimk*(ndimctb-1)+1
+    ndimctc=nint(kdimg*ccg*ndimctf)
+    ndimntb=nint((1.+kdimg*cng)*ndimnts+ndimntu)
+    mdimtb =nint((1.+kdimg*cfg)*mdimtbf)
+    mdimtn =nint((1.+kdimg*cfg)*mdimtnf)
+    mdimtc =nint((1.+kdimg*cfg)*mdimtcf)
+    mdimtr =nint((1.+kdimg*cfg)*mdimtrf)
 !
-      kl=0
-      do l=1,lzx
+    kl=0
+    do l=1,lzx
        kl=max(kl,kmf(l))
-      enddo
+    enddo
 !
-           form='(''1'',''Verification du dimensionnement du code:'',/,' &
-                       //'1x,39(1h-),                             //,' &
-                       //'1x,''code     '',  11x,''calcul    '',7x/,' &
-                       //'1x,''----     '',  11x,''------    '',7x//,' &
-                       //'1x,''lz     = '',i7,4x,''lzx     = '',i7//,' &
-                       //'1x,''ndimub = '',i7,4x,''ndimubx = '',i7//,' &
-                       //'1x,''ndimctb= '',i7,4x,''ndimctbx= '',i7//,' &
-                       //'1x,''ndimntb= '',i7,4x,''ndimntbx= '',i7//,' &
-                       //'1x,''nvar   = '',i7,4x,''equat   = '',2x,a//,' &
-                       //'1x,''kdimv  = '',i7,//,' &
-                       //'1x,''kdimk  = '',i7,//,' &
-                       //'1x,''kdimg  = '',i7,4x,''lgx     = '',i7/)'
-      write(imp,form)lz,lzx,ndimub,ndimubx,ndimctb,ndimctbx, &
-                     ndimntb,ndimntbx, &
-                     nvar,equat,kdimv,kdimk,kdimg,lgx
-           form='(' &
-                       //'1x,''mtb     = '',i7,4x,''mtbx    = '',i7//,' &
-                       //'1x,''mdimub  = '',i7,4x,''mdimubx = '',i7//,' &
-                       //'1x,''mdimtb  = '',i7,4x,''mdimtbx = '',i7//,' &
-                       //'1x,''mdimtn  = '',i7,4x,''mdimtnx = '',i7//,' &
-                       //'1x,''mdimtc  = '',i7,4x,''mdimtcx = '',i7//,' &
-                       //'1x,''mdimtr  = '',i7,4x,''mdimtrx = '',i7//)'
-      write(imp,form)mtb,mtbx, &
-                     mdimub,mdimubx,mdimtb,mdimtbx,mdimtn,mdimtnx, &
-                     mdimtc,mdimtcx,mdimtr,mdimtrx
+    form='(''1'',''Verification du dimensionnement du code:'',/,' &
+         //'1x,39(1h-),                             //,' &
+         //'1x,''code     '',  11x,''calcul    '',7x/,' &
+         //'1x,''----     '',  11x,''------    '',7x//,' &
+         //'1x,''lz     = '',i7,4x,''lzx     = '',i7//,' &
+         //'1x,''ndimub = '',i7,4x,''ndimubx = '',i7//,' &
+         //'1x,''ndimctb= '',i7,4x,''ndimctbx= '',i7//,' &
+         //'1x,''ndimntb= '',i7,4x,''ndimntbx= '',i7//,' &
+         //'1x,''nvar   = '',i7,4x,''equat   = '',2x,a//,' &
+         //'1x,''kdimv  = '',i7,//,' &
+         //'1x,''kdimk  = '',i7,//,' &
+         //'1x,''kdimg  = '',i7,4x,''lgx     = '',i7/)'
+    write(imp,form)lz,lzx,ndimub,ndimubx,ndimctb,ndimctbx, &
+         ndimntb,ndimntbx, &
+         nvar,equat,kdimv,kdimk,kdimg,lgx
+    form='(' &
+         //'1x,''mtb     = '',i7,4x,''mtbx    = '',i7//,' &
+         //'1x,''mdimub  = '',i7,4x,''mdimubx = '',i7//,' &
+         //'1x,''mdimtb  = '',i7,4x,''mdimtbx = '',i7//,' &
+         //'1x,''mdimtn  = '',i7,4x,''mdimtnx = '',i7//,' &
+         //'1x,''mdimtc  = '',i7,4x,''mdimtcx = '',i7//,' &
+         //'1x,''mdimtr  = '',i7,4x,''mdimtrx = '',i7//)'
+    write(imp,form)mtb,mtbx, &
+         mdimub,mdimubx,mdimtb,mdimtbx,mdimtn,mdimtnx, &
+         mdimtc,mdimtcx,mdimtr,mdimtrx
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b2_dpdim
+end module mod_b2_dpdim

@@ -1,12 +1,12 @@
 module mod_inbdc
-implicit none
+  implicit none
 contains
-      subroutine inbdc( &
-                 exs1,exs2, &
-                 x,y,z, &
-                 ncbd,ncin,mnc, &
-                 krr,mfbea,mfbeb,kibdc,epsmsh, &
-                 iba,jba,kba,tvi,tvj,tvk)
+  subroutine inbdc( &
+       exs1,exs2, &
+       x,y,z, &
+       ncbd,ncin,mnc, &
+       krr,mfbea,mfbeb,kibdc,epsmsh, &
+       iba,jba,kba,tvi,tvj,tvk)
 !
 !***********************************************************************
 !
@@ -104,164 +104,126 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use sortiefichier
-      use chainecarac
-use mod_initcs
-use mod_extmhg
-implicit none
-double precision :: exs1
-double precision :: exs2
-double precision :: x
-double precision :: y
-double precision :: z
-integer :: ncbd
-integer :: ncin
-integer :: mnc
-integer :: krr
-integer :: mfbea
-integer :: mfbeb
-integer :: kibdc
-double precision :: epsmsh
-integer :: iba
-integer :: jba
-integer :: kba
-integer :: ia1
-integer :: ia2
-integer :: ib1
-integer :: ib2
-integer :: ibam
-integer :: img
-integer :: imgi
-integer :: imgj
-integer :: imgk
-integer :: ja1
-integer :: ja2
-integer :: jb1
-integer :: jb2
-integer :: jbam
-integer :: ka1
-integer :: ka2
-integer :: kb1
-integer :: kb2
-integer :: kbam
-integer :: kinitc
-integer :: la
-integer :: lam
-integer :: lb
-integer :: lbm
-integer :: m0c
-integer :: mdncb
-integer :: mfbia
-integer :: mfbiam
-integer :: mfbib
-integer :: mfbibm
-integer :: mfc
-integer :: mlb
-integer :: mt
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use sortiefichier
+    use chainecarac
+    use mod_initcs
+    use mod_extmhg
+    implicit none
+    integer          ::    ia1,   ia2,   ib1,   ib2,   iba
+    integer          ::   ibam,   img,  imgi,  imgj,  imgk
+    integer          ::    ja1,   ja2,   jb1,   jb2,   jba
+    integer          ::   jbam,   ka1,   ka2,   kb1,   kb2
+    integer          ::    kba,  kbam, kibdc,kinitc,   krr
+    integer          ::     la,   lam,    lb,   lbm,   m0c
+    integer          ::  mdncb, mfbea, mfbeb, mfbia,mfbiam
+    integer          ::  mfbib,mfbibm,   mfc,   mlb,   mnc
+    integer          ::     mt,  ncbd,  ncin
+    double precision :: epsmsh,  exs1,  exs2,     x,     y
+    double precision ::      z
 !
 !-----------------------------------------------------------------------
 !
-      character(len=2 ) :: tvi,tvj,tvk
-      character(len=7 ) :: eqt
-      character(len=6 ) :: typa,typb
+    character(len=2 ) :: tvi,tvj,tvk
+    character(len=7 ) :: eqt
+    character(len=6 ) :: typa,typb
 !
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension ncbd(ip41),ncin(ip41)
-      dimension mnc(ip43)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension ncbd(ip41),ncin(ip41)
+    dimension mnc(ip43)
 !
-      mfbia=nfei(mfbea)
-      mfbib=nfei(mfbeb)
+    mfbia=nfei(mfbea)
+    mfbib=nfei(mfbeb)
 !
-      la=ndlb(mfbia)
-      lb=ndlb(mfbib)
+    la=ndlb(mfbia)
+    lb=ndlb(mfbib)
 !
-      if (cl(mfbia)(1:2).ne.'rh') then
-      mtcx=mtcx+1
-      mfc =mtcx
-      nfbc(mfc)=mfbia
-      endif
+    if (cl(mfbia)(1:2).ne.'rh') then
+       mtcx=mtcx+1
+       mfc =mtcx
+       nfbc(mfc)=mfbia
+    endif
 !
-      do img=1,lgx
+    do img=1,lgx
 !
-      mfbibm=mfbib+(img-1)*mtb
-      mfbiam=mfbia+(img-1)*mtb
+       mfbibm=mfbib+(img-1)*mtb
+       mfbiam=mfbia+(img-1)*mtb
 !
-      mlb=mpb(mfbibm)+1
-      mdncb=ncin(mlb)-ncbd(mlb)
-      mdnc(mfbiam)=mdncb
+       mlb=mpb(mfbibm)+1
+       mdncb=ncin(mlb)-ncbd(mlb)
+       mdnc(mfbiam)=mdncb
 !
-      mt=mmb(mfbiam)
+       mt=mmb(mfbiam)
 !
-      mpc(mfbiam)=mdimtcx
-      m0c=mpc(mfbiam)
+       mpc(mfbiam)=mdimtcx
+       m0c=mpc(mfbiam)
 !
-      mdimtcx=mdimtcx+mt
+       mdimtcx=mdimtcx+mt
 !
-      ndcc(mfbia)=lb
+       ndcc(mfbia)=lb
 !
-      kinitc=0
+       kinitc=0
 !
-      if(kibdc.eq.1) then
+       if(kibdc.eq.1) then
 !
-      typa=indfl(mfbia)
-      ia1=iminb(mfbiam)
-      ia2=imaxb(mfbiam)
-      ja1=jminb(mfbiam)
-      ja2=jmaxb(mfbiam)
-      ka1=kminb(mfbiam)
-      ka2=kmaxb(mfbiam)
-      typb=indfl(mfbib)
-      ib1=iminb(mfbibm)
-      ib2=imaxb(mfbibm)
-      jb1=jminb(mfbibm)
-      jb2=jmaxb(mfbibm)
-      kb1=kminb(mfbibm)
-      kb2=kmaxb(mfbibm)
-      eqt=equat
+          typa=indfl(mfbia)
+          ia1=iminb(mfbiam)
+          ia2=imaxb(mfbiam)
+          ja1=jminb(mfbiam)
+          ja2=jmaxb(mfbiam)
+          ka1=kminb(mfbiam)
+          ka2=kmaxb(mfbiam)
+          typb=indfl(mfbib)
+          ib1=iminb(mfbibm)
+          ib2=imaxb(mfbibm)
+          jb1=jminb(mfbibm)
+          jb2=jmaxb(mfbibm)
+          kb1=kminb(mfbibm)
+          kb2=kmaxb(mfbibm)
+          eqt=equat
 !
-      lam=la+(img-1)*lz
-      lbm=lb+(img-1)*lz
+          lam=la+(img-1)*lz
+          lbm=lb+(img-1)*lz
 !
           if(krr.eq.1) then
-            call extmhg(lam,x,y,z,exs1,exs2)
-            call extmhg(lbm,x,y,z,exs1,exs2)
+             call extmhg(lam,x,y,z,exs1,exs2)
+             call extmhg(lbm,x,y,z,exs1,exs2)
           endif
 !
-      imgi=img
-      imgj=img
-      imgk=img
-      if (equat(3:5).eq.'2di') imgi = 1
-      if (equat(3:5).eq.'2dj') imgj = 1
-      if (equat(3:5).eq.'2dk') imgk = 1
-      if (equat(3:5).eq.'2xk') imgk = 1
+          imgi=img
+          imgj=img
+          imgk=img
+          if (equat(3:5).eq.'2di') imgi = 1
+          if (equat(3:5).eq.'2dj') imgj = 1
+          if (equat(3:5).eq.'2dk') imgk = 1
+          if (equat(3:5).eq.'2xk') imgk = 1
 !
-      ibam=(iba-ii1(lam))/2**(imgi-1)+ii1(lam)
-      jbam=(jba-jj1(lam))/2**(imgj-1)+jj1(lam)
-      kbam=(kba-kk1(lam))/2**(imgk-1)+kk1(lam)
+          ibam=(iba-ii1(lam))/2**(imgi-1)+ii1(lam)
+          jbam=(jba-jj1(lam))/2**(imgj-1)+jj1(lam)
+          kbam=(kba-kk1(lam))/2**(imgk-1)+kk1(lam)
 !
-            call initcs( &
-                 x,y,z,krr,epsmsh,kinitc, &
-                 mfbiam, &
-                 lam,typa,ia1,ia2,ja1,ja2,ka1,ka2, &
-                 lbm,typb,ib1,ib2,jb1,jb2,kb1,kb2, &
-                 ibam,jbam,kbam,tvi,tvj,tvk, &
-                 eqt, &
-                 mnc)
+          call initcs( &
+               x,y,z,krr,epsmsh,kinitc, &
+               mfbiam, &
+               lam,typa,ia1,ia2,ja1,ja2,ka1,ka2, &
+               lbm,typb,ib1,ib2,jb1,jb2,kb1,kb2, &
+               ibam,jbam,kbam,tvi,tvj,tvk, &
+               eqt, &
+               mnc)
 !
 !     arret en cas de probleme dans les raccords coincidents
-      if (kinitc.eq.1) stop 'initc'
+          if (kinitc.eq.1) stop 'initc'
 
-      elseif(kibdc.eq.0) then
- !           call readfc( &
- !                kfc,mnc, &
- !                mt,m0c)
-      end if
-      enddo
+       elseif(kibdc.eq.0) then
+!           call readfc( &
+!                kfc,mnc, &
+!                mt,m0c)
+       end if
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine inbdc
+end module mod_inbdc

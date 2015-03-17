@@ -1,13 +1,13 @@
 module mod_clidd
-implicit none
+  implicit none
 contains
-      subroutine clidd( &
-                 mfb,l,rpi,rti,d0x,d0y,d0z, &
-                 nxn,nyn,nzn,ncbd,v, &
-                 y,z, &
-                 mmb,mpb,mpn, &
-                 usdn2,roc0,am0,qn,p,resi,ro,un,usdn, &
-                 ym,zm,pression,temp,cson)
+  subroutine clidd( &
+       mfb,l,rpi,rti,d0x,d0y,d0z, &
+       nxn,nyn,nzn,ncbd,v, &
+       y,z, &
+       mmb,mpb,mpn, &
+       usdn2,roc0,am0,qn,p,resi,ro,un,usdn, &
+       ym,zm,pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -99,132 +99,79 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use proprieteflu
-      use definition
-implicit none
-integer :: inc
-integer :: mfb
-integer :: l
-double precision :: rpi
-double precision :: rti
-double precision :: d0x
-double precision :: d0y
-double precision :: d0z
-integer :: ncbd
-double precision :: v
-double precision :: y
-double precision :: z
-integer :: mmb
-integer :: mpb
-integer :: mpn
-double precision :: usdn2
-double precision :: roc0
-double precision :: am0
-double precision :: qn
-double precision :: p
-double precision :: resi
-double precision :: ro
-double precision :: un
-double precision :: usdn
-double precision :: ym
-double precision :: zm
-double precision :: pression
-double precision :: temp
-double precision :: cson
-integer :: id
-integer :: jd
-integer :: kd
-double precision :: b
-double precision :: df
-double precision :: dqn
-double precision :: eps
-double precision :: f
-double precision :: gam2t
-double precision :: gam6
-double precision :: gamt
-integer :: m
-integer :: mb
-integer :: mn
-integer :: mt
-integer :: n0c
-integer :: n0n
-integer :: nc
-integer :: nci
-integer :: ncij
-integer :: ncijk
-integer :: ncik
-integer :: ncj
-integer :: ncjk
-integer :: nck
-integer :: nid
-integer :: nijd
-integer :: nitn
-integer :: njd
-integer :: nn
-double precision :: ps
-double precision :: qxs
-double precision :: qys
-double precision :: qzs
-double precision :: residu
-double precision :: w
-double precision :: wn
+    use para_var
+    use para_fige
+    use maillage
+    use proprieteflu
+    use definition
+    implicit none
+    integer          ::    id,  inc,   jd,   kd,    l
+    integer          ::     m,   mb,  mfb,  mmb,   mn
+    integer          ::   mpb,  mpn,   mt,  n0c,  n0n
+    integer          ::    nc, ncbd,  nci, ncij,ncijk
+    integer          ::  ncik,  ncj, ncjk,  nck,  nid
+    integer          ::  nijd, nitn,  njd,   nn
+    double precision ::      am0,       b,    cson,     d0x,     d0y
+    double precision ::      d0z,      df,     dqn,     eps,       f
+    double precision ::    gam2t,    gam6,    gamt,     nxn,     nyn
+    double precision ::      nzn,       p,pression,      ps,      qn
+    double precision ::      qxs,     qys,     qzs,    resi,  residu
+    double precision ::       ro,    roc0,     rpi,     rti,    temp
+    double precision ::       un,    usdn,   usdn2,       v,       w
+    double precision ::       wn,       y,      ym,       z,      zm
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
 !
-      dimension rpi(ip40),rti(ip40)
-      dimension d0x(ip40),d0y(ip40),d0z(ip40)
-      dimension v(ip11,ip60),pression(ip11),temp(ip11),cson(ip11)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension mmb(mtt),mpb(mtt)
-      dimension mpn(mtt)
-      dimension usdn2(ip40),roc0(ip40),am0(ip40), &
-                qn(ip40),p(ip40),resi(ip40),ro(ip40), &
-                un(ip40),usdn(ip40),ym(ip40),zm(ip40)
-      dimension y(ip21),z(ip21)
+    dimension rpi(ip40),rti(ip40)
+    dimension d0x(ip40),d0y(ip40),d0z(ip40)
+    dimension v(ip11,ip60),pression(ip11),temp(ip11),cson(ip11)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension mmb(mtt),mpb(mtt)
+    dimension mpn(mtt)
+    dimension usdn2(ip40),roc0(ip40),am0(ip40), &
+         qn(ip40),p(ip40),resi(ip40),ro(ip40), &
+         un(ip40),usdn(ip40),ym(ip40),zm(ip40)
+    dimension y(ip21),z(ip21)
 !
-      inc(id,jd,kd)=id+jd*nid+kd*nijd
+    inc(id,jd,kd)=id+jd*nid+kd*nijd
 !
-      eps=0.0000001
-      n0n=npn(l)
-      n0c=npc(l)
+    eps=0.0000001
+    n0n=npn(l)
+    n0c=npc(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      nci = inc(1,0,0)
-      ncj = inc(0,1,0)
-      nck = inc(0,0,1)
-      ncij = inc(1,1,0)
-      ncik = inc(1,0,1)
-      ncjk = inc(0,1,1)
-      ncijk= inc(1,1,1)
+    nci = inc(1,0,0)
+    ncj = inc(0,1,0)
+    nck = inc(0,0,1)
+    ncij = inc(1,1,0)
+    ncik = inc(1,0,1)
+    ncjk = inc(0,1,1)
+    ncijk= inc(1,1,1)
 !
-      mt=mmb(mfb)
+    mt=mmb(mfb)
 !
-      gam6=gam/gam1
-      gamt=gam/aa1**2
-      gam2t=0.5*gam1/aa1**2
+    gam6=gam/gam1
+    gamt=gam/aa1**2
+    gam2t=0.5*gam1/aa1**2
 !
-      do m=1,mt
+    do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m
        nc=ncbd(mb)
        nn=nc-n0c+n0n
 !
        ym(m) = 0.125*( y (nn     )+y (nn+nci  ) &
-                      +y (nn+ncj )+y (nn+ncij ) &
-                      +y (nn+nck )+y (nn+ncik ) &
-                      +y (nn+ncjk)+y (nn+ncijk) )
+            +y (nn+ncj )+y (nn+ncij ) &
+            +y (nn+nck )+y (nn+ncik ) &
+            +y (nn+ncjk)+y (nn+ncijk) )
        zm(m) = 0.125*( z (nn     )+z (nn+nci  ) &
-                      +z (nn+ncj )+z (nn+ncij ) &
-                      +z (nn+nck )+z (nn+ncik ) &
-                      +z (nn+ncjk)+z (nn+ncijk) )
+            +z (nn+ncj )+z (nn+ncij ) &
+            +z (nn+nck )+z (nn+ncik ) &
+            +z (nn+ncjk)+z (nn+ncijk) )
 !
        usdn(m)=1./(d0x(m)*nxn(mn)+d0y(m)*nyn(mn)+d0z(m)*nzn(mn))
        usdn2(m)=usdn(m)**2
@@ -237,34 +184,34 @@ double precision :: wn
        ps=gam1*(v(nc,5)-0.5*(qxs*v(nc,2)+qys*v(nc,3)+qzs*v(nc,4))-pinfl)
        roc0(m)=-sqrt(gam*ps*v(nc,1))                  !attention au sign
        am0(m)=ps+roc0(m)*qn(m)
-      enddo
+    enddo
 !
 !   resolution de p - rho*c*qn -am0 = 0 par algorithme de Newton
 !
-      nitn=0
-      residu=1.
-      do while( (residu.gt.eps).and.(nitn.lt.20) )
+    nitn=0
+    residu=1.
+    do while( (residu.gt.eps).and.(nitn.lt.20) )
        do m=1,mt
-        mb=mpb(mfb)+m
+          mb=mpb(mfb)+m
 !------la notation b designe la quantite 1/(1+((gam-1)/2)m**2)
-        b=1./(1.+gam2t/rti(m)*usdn2(m)*(qn(m)+un(m))**2)
-        p(m)=pa1*rpi(m)*b**gam6
-        ro(m)=gamt*p(m)/(b*rti(m))
-        f=p(m)+roc0(m)*qn(m)-am0(m)
-        df=roc0(m)-ro(m)*(qn(m)+un(m))*usdn2(m)
-        dqn=-f/df
-        resi(m)=abs(dqn)/qn(m)
-        qn(m)=qn(m)+dqn
+          b=1./(1.+gam2t/rti(m)*usdn2(m)*(qn(m)+un(m))**2)
+          p(m)=pa1*rpi(m)*b**gam6
+          ro(m)=gamt*p(m)/(b*rti(m))
+          f=p(m)+roc0(m)*qn(m)-am0(m)
+          df=roc0(m)-ro(m)*(qn(m)+un(m))*usdn2(m)
+          dqn=-f/df
+          resi(m)=abs(dqn)/qn(m)
+          qn(m)=qn(m)+dqn
        enddo
 !
        residu=0.
        do m=1,mt
-        residu=max(residu,resi(m))
+          residu=max(residu,resi(m))
        enddo
        nitn=nitn+1
-      enddo
+    enddo
 !
-      do m=1,mt
+    do m=1,mt
        mb=mpb(mfb)+m
        nc=ncbd(mb)
 !
@@ -283,8 +230,8 @@ double precision :: wn
        pression(nc)=p(m)
        temp(nc)=gam*p(m)/ro(m)
        cson(nc)=sqrt(temp(nc))
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine clidd
+end module mod_clidd

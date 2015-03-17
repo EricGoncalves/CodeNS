@@ -1,12 +1,12 @@
 module mod_chdacc
-implicit none
+  implicit none
 contains
-      subroutine chdacc( &
-                 l,disc,ncin,ncbd, &
-                 equat, &
-                 v,mut, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8, &
-                 imin,imax,jmin,jmax,kmin,kmax,kda)
+  subroutine chdacc( &
+       l,disc,ncin,ncbd, &
+       equat, &
+       v,mut, &
+       tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8, &
+       imin,imax,jmin,jmax,kmin,kmax,kda)
 !
 !***********************************************************************
 !
@@ -59,80 +59,64 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use maillage
-   use boundary
-   use sortiefichier
-use mod_cccca
-use mod_rfspstc
-use mod_rfspstf
-use mod_cccva
-implicit none
-integer :: l
-integer :: ncin
-integer :: ncbd
-double precision :: v
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-double precision :: tn4
-double precision :: tn5
-double precision :: tn6
-double precision :: tn7
-double precision :: tn8
-integer :: imin
-integer :: imax
-integer :: jmin
-integer :: jmax
-integer :: kmin
-integer :: kmax
-integer :: kda
-integer :: mfb
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use sortiefichier
+    use mod_cccca
+    use mod_rfspstc
+    use mod_rfspstf
+    use mod_cccva
+    implicit none
+    integer          :: imax,imin,jmax,jmin, kda
+    integer          :: kmax,kmin,   l, mfb,ncbd
+    integer          :: ncin
+    double precision :: mut,tn1,tn2,tn3,tn4
+    double precision :: tn5,tn6,tn7,tn8,  v
 !
 !-----------------------------------------------------------------------
 !
-      double precision mut
-      character(len=7 ) :: equat
-      character(len=4 ) :: disc
-      dimension v(ip11,ip60)
-      dimension mut(ip12)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
-                tn6(ip00),tn7(ip00),tn8(ip00)
-      dimension ncbd(ip41),ncin(ip41)
+    character(len=7 ) :: equat
+    character(len=4 ) :: disc
+    dimension v(ip11,ip60)
+    dimension mut(ip12)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
+         tn6(ip00),tn7(ip00),tn8(ip00)
+    dimension ncbd(ip41),ncin(ip41)
 !
-      if(disc.eq.'cccc') then
-            call cccca( &
-                 l,equat, &
-                 v,mut, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
-      imin=ii1(l)
-      imax=ii2(l)-1
-      jmin=jj1(l)
-      jmax=jj2(l)-1
-      kmin=kk1(l)
-      kmax=kk2(l)-1
-      kda=kdac
-      elseif(disc.eq.'cccf') then
-            call cccca( &
-                 l,equat, &
-                 v,mut, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
-      imin=ii1(l)-1
-      imax=ii2(l)
-      jmin=jj1(l)-1
-      jmax=jj2(l)
-      kmin=kk1(l)-1
-      kmax=kk2(l)
-      kda=kdacf
+    if(disc.eq.'cccc') then
+       call cccca( &
+            l,equat, &
+            v,mut, &
+            tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
+       imin=ii1(l)
+       imax=ii2(l)-1
+       jmin=jj1(l)
+       jmax=jj2(l)-1
+       kmin=kk1(l)
+       kmax=kk2(l)-1
+       kda=kdac
+    elseif(disc.eq.'cccf') then
+       call cccca( &
+            l,equat, &
+            v,mut, &
+            tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
+       imin=ii1(l)-1
+       imax=ii2(l)
+       jmin=jj1(l)-1
+       jmax=jj2(l)
+       kmin=kk1(l)-1
+       kmax=kk2(l)
+       kda=kdacf
 !
-      elseif(disc.eq.'cccv') then
+    elseif(disc.eq.'cccv') then
        nbd=0
        do mfb=1,mtbx
-        if(ndlb(mfb).eq.l) then
-         nbd=nbd+1
-         lbd(nbd)=mfb
-        endif
+          if(ndlb(mfb).eq.l) then
+             nbd=nbd+1
+             lbd(nbd)=mfb
+          endif
        enddo
        call rfspstf(v(1,1),ncin,ncbd)
        call rfspstc(l,v(1,1))
@@ -145,28 +129,28 @@ integer :: mfb
        call rfspstf(v(1,5),ncin,ncbd)
        call rfspstc(l,v(1,5))
        if(equat(1:2).eq.'ns') then
-         call rfspstf(mut,ncin,ncbd)
-         call rfspstc(l,mut)
+          call rfspstf(mut,ncin,ncbd)
+          call rfspstc(l,mut)
        endif
        if(equat(6:7).eq.'ke') then
-         call rfspstf(v(1,6),ncin,ncbd)
-         call rfspstc(l,v(1,6))
-         call rfspstf(v(1,7),ncin,ncbd)
-         call rfspstc(l,v(1,7))
+          call rfspstf(v(1,6),ncin,ncbd)
+          call rfspstc(l,v(1,6))
+          call rfspstf(v(1,7),ncin,ncbd)
+          call rfspstc(l,v(1,7))
        endif
-        call cccva( &
-                 l,equat, &
-                 v,mut, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
-        imin=ii1(l)
-        imax=ii2(l)
-        jmin=jj1(l)
-        jmax=jj2(l)
-        kmin=kk1(l)
-        kmax=kk2(l)
-        kda=kdav
-      endif
+       call cccva( &
+            l,equat, &
+            v,mut, &
+            tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
+       imin=ii1(l)
+       imax=ii2(l)
+       jmin=jj1(l)
+       jmax=jj2(l)
+       kmin=kk1(l)
+       kmax=kk2(l)
+       kda=kdav
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine chdacc
+end module mod_chdacc

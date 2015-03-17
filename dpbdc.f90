@@ -1,10 +1,10 @@
 module mod_dpbdc
-implicit none
+  implicit none
 contains
-      subroutine dpbdc( &
-                 mfbe,img, &
-                 mnc, &
-                 pi,pj,pk)
+  subroutine dpbdc( &
+       mfbe,img, &
+       mnc, &
+       pi,pj,pk)
 !
 !***********************************************************************
 !
@@ -43,78 +43,61 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use sortiefichier
-implicit none
-integer :: mfbe
-integer :: img
-integer :: mnc
-double precision :: pi
-double precision :: pj
-double precision :: pk
-integer :: ii
-integer :: jj
-integer :: kk
-integer :: lc
-integer :: lcm
-integer :: ll
-integer :: m
-integer :: m0c
-integer :: mfbi
-integer :: mfbim
-integer :: mt
-integer :: n0c
-integer :: nc
-integer :: nid
-integer :: njd
-integer :: nn
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use sortiefichier
+    implicit none
+    integer          ::    ii,  img,   jj,   kk,   lc
+    integer          ::   lcm,   ll,    m,  m0c, mfbe
+    integer          ::  mfbi,mfbim,  mnc,   mt,  n0c
+    integer          ::    nc,  nid,  njd,   nn
+    double precision :: pi,pj,pk
 !
 !-----------------------------------------------------------------------
 !
-      dimension mnc(ip43)
-      dimension pi(ip40),pj(ip40),pk(ip40)
+    dimension mnc(ip43)
+    dimension pi(ip40),pj(ip40),pk(ip40)
 !
-      mfbi=nfei(mfbe)
-      mfbim=mfbi+(img-1)*mtb
+    mfbi=nfei(mfbe)
+    mfbim=mfbi+(img-1)*mtb
 !
-      lc=ndcc(mfbi)
-      lcm=lc+(img-1)*lz
+    lc=ndcc(mfbi)
+    lcm=lc+(img-1)*lz
 !
-      n0c=npc(lcm)
-      nid = id2(lcm)-id1(lcm)+1
-      njd = jd2(lcm)-jd1(lcm)+1
+    n0c=npc(lcm)
+    nid = id2(lcm)-id1(lcm)+1
+    njd = jd2(lcm)-jd1(lcm)+1
 !
-      ll=ndlb(mfbi)
+    ll=ndlb(mfbi)
 !
-      m0c=mpc(mfbim)
-      mt =mmb(mfbim)
+    m0c=mpc(mfbim)
+    mt =mmb(mfbim)
 !
-      write(imp,1900) mfbe,ll,lc,img
+    write(imp,1900) mfbe,ll,lc,img
 !
-      do m=1,mt
-      nc=mnc(m0c+m)
-      nn=nc-1-n0c
-      ii=id1(lcm)+mod(nn,nid)
-      nn=(nn-(ii-id1(lcm)))/nid
-      jj=jd1(lcm)+mod(nn,njd)
-      kk=kd1(lcm)+(nn-(jj-jd1(lcm)))/njd
-      pi(m)=ii
-      pj(m)=jj
-      pk(m)=kk
-      if (mod(m,50).eq.1) write(imp,1910)
-      write(imp,1920) m,nc,nint(pi(m)),nint(pj(m)),nint(pk(m))
-      enddo
+    do m=1,mt
+       nc=mnc(m0c+m)
+       nn=nc-1-n0c
+       ii=id1(lcm)+mod(nn,nid)
+       nn=(nn-(ii-id1(lcm)))/nid
+       jj=jd1(lcm)+mod(nn,njd)
+       kk=kd1(lcm)+(nn-(jj-jd1(lcm)))/njd
+       pi(m)=ii
+       pj(m)=jj
+       pk(m)=kk
+       if (mod(m,50).eq.1) write(imp,1910)
+       write(imp,1920) m,nc,nint(pi(m)),nint(pj(m)),nint(pk(m))
+    enddo
 !
- 1900 format('1 Frontiere ',i5,' appartenant au domaine ',i5, &
-             ' coincidente avec le domaine ',i5, &
-             ' grille numero ',i3//)
- 1910 format(1x,'    m', &
-             4x,'  nc',2x,' ic',2x,' jc', 2x,' kc'/)
- 1920 format(1x,i5,2x,i6,3(2x,i3))
+1900 format('1 Frontiere ',i5,' appartenant au domaine ',i5, &
+         ' coincidente avec le domaine ',i5, &
+         ' grille numero ',i3//)
+1910 format(1x,'    m', &
+         4x,'  nc',2x,' ic',2x,' jc', 2x,' kc'/)
+1920 format(1x,i5,2x,i6,3(2x,i3))
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine dpbdc
+end module mod_dpbdc

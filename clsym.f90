@@ -1,10 +1,10 @@
 module mod_clsym
-implicit none
+  implicit none
 contains
-      subroutine clsym( &
-                 mfb, &
-                 nxn,nyn,nzn,ncin,ncbd,v, &
-                 mmb,mpb,mpn)
+  subroutine clsym( &
+       mfb, &
+       nxn,nyn,nzn,ncin,ncbd,v, &
+       mmb,mpb,mpn)
 !
 !***********************************************************************
 !
@@ -38,45 +38,28 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-implicit none
-integer :: mfb
-integer :: ncin
-integer :: ncbd
-double precision :: v
-integer :: mmb
-integer :: mpb
-integer :: mpn
-integer :: m
-integer :: mb
-integer :: mn
-integer :: mt
-integer :: ni
-integer :: nl
-double precision :: qn1
-double precision :: qtx
-double precision :: qty
-double precision :: qtz
-double precision :: qx1
-double precision :: qy1
-double precision :: qz1
-double precision :: ro1
-double precision :: roe1
+    use para_var
+    use para_fige
+    implicit none
+    integer          ::    m,  mb, mfb, mmb,  mn
+    integer          ::  mpb, mpn,  mt,ncbd,ncin
+    integer          ::   ni,  nl
+    double precision ::  nxn, nyn, nzn, qn1, qtx
+    double precision ::  qty, qtz, qx1, qy1, qz1
+    double precision ::  ro1,roe1,   v
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
-      dimension v(ip11,ip60)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension ncin(ip41),ncbd(ip41)
-      dimension mmb(mtt),mpb(mtt)
-      dimension mpn(mtt)
+    dimension v(ip11,ip60)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension ncin(ip41),ncbd(ip41)
+    dimension mmb(mtt),mpb(mtt)
+    dimension mpn(mtt)
 !
-      mt=mmb(mfb)
+    mt=mmb(mfb)
 !
 !!$OMP SIMD
-      do m=1,mt
+    do m=1,mt
        mb  =mpb(mfb)+m
        mn  =mpn(mfb)+m
        nl  =ncbd(mb)
@@ -98,8 +81,8 @@ double precision :: roe1
        v(nl,3)=ro1*qty
        v(nl,4)=ro1*qtz
        v(nl,5)=roe1
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine clsym
+end module mod_clsym

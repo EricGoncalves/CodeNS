@@ -1,10 +1,10 @@
 module mod_utidi
-implicit none
+  implicit none
 contains
-      subroutine utidi( &
-                 bceqt, &
-                 mfl,rpi,rti,ncbd, &
-                 mmb,mpb)
+  subroutine utidi( &
+       bceqt, &
+       mfl,rpi,rti,ncbd, &
+       mmb,mpb)
 !
 !***********************************************************************
 !
@@ -35,34 +35,27 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-implicit none
-double precision :: bceqt
-integer :: mfl
-double precision :: rpi
-double precision :: rti
-integer :: ncbd
-integer :: mmb
-integer :: mpb
-integer :: m
-integer :: ml
-integer :: mt
+    use para_var
+    use para_fige
+    implicit none
+    integer          ::    m, mfl,  ml, mmb, mpb
+    integer          ::   mt,ncbd
+    double precision :: bceqt,  rpi,  rti
 !
 !-----------------------------------------------------------------------
 !
-      dimension bceqt(ip41,neqt)
-      dimension ncbd(ip41)
-      dimension rpi(ip40),rti(ip40)
-      dimension mmb(mtt),mpb(mtt)
+    dimension bceqt(ip41,neqt)
+    dimension ncbd(ip41)
+    dimension rpi(ip40),rti(ip40)
+    dimension mmb(mtt),mpb(mtt)
 !
-      mt=mmb(mfl)
-      do m=1,mt
+    mt=mmb(mfl)
+    do m=1,mt
        ml=mpb(mfl)+m
        rpi(m)=bceqt(ml,1)
        rti(m)=bceqt(ml,2)
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine utidi
+end module mod_utidi

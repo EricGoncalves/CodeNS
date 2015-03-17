@@ -1,11 +1,11 @@
 module mod_chdgcv
-implicit none
+  implicit none
 contains
-      subroutine chdgcv( &
-                 l,disc, &
-                 x,y,z, &
-                 tn1,tn2,tn3, &
-                 imin,imax,jmin,jmax,kmin,kmax,kdg)
+  subroutine chdgcv( &
+       l,disc, &
+       x,y,z, &
+       tn1,tn2,tn3, &
+       imin,imax,jmin,jmax,kmin,kmax,kdg)
 !
 !***********************************************************************
 !
@@ -44,72 +44,62 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use maillage
-   use sortiefichier
-use mod_cvccg
-use mod_cvcvg
-implicit none
-integer :: l
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-integer :: imin
-integer :: imax
-integer :: jmin
-integer :: jmax
-integer :: kmin
-integer :: kmax
-integer :: kdg
+    use para_var
+    use para_fige
+    use maillage
+    use sortiefichier
+    use mod_cvccg
+    use mod_cvcvg
+    implicit none
+    integer          :: imax,imin,jmax,jmin, kdg
+    integer          :: kmax,kmin,   l
+    double precision :: tn1,tn2,tn3,  x,  y
+    double precision ::   z
 !
 !-----------------------------------------------------------------------
 !
-      character(len=4 ) :: disc
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00)
+    character(len=4 ) :: disc
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
-      if(disc.eq.'cvcc') then
-        call cvccg( &
-                 l, &
-                 x,y,z, &
-                 tn1,tn2,tn3)
-      imin=ii1(l)
-      imax=ii2(l)-1
-      jmin=jj1(l)
-      jmax=jj2(l)-1
-      kmin=kk1(l)
-      kmax=kk2(l)-1
-      kdg=kdgc
-      elseif(disc.eq.'cvcf') then
-            call cvccg( &
-                 l, &
-                 x,y,z, &
-                 tn1,tn2,tn3)
-      imin=ii1(l)-1
-      imax=ii2(l)
-      jmin=jj1(l)-1
-      jmax=jj2(l)
-      kmin=kk1(l)-1
-      kmax=kk2(l)
-      kdg=kdgcf
-      elseif(disc.eq.'cvcv') then
-            call cvcvg( &
-                 l, &
-                 x,y,z, &
-                 tn1,tn2,tn3)
-      imin=ii1(l)
-      imax=ii2(l)
-      jmin=jj1(l)
-      jmax=jj2(l)
-      kmin=kk1(l)
-      kmax=kk2(l)
-      kdg=kdgv
-      endif
+    if(disc.eq.'cvcc') then
+       call cvccg( &
+            l, &
+            x,y,z, &
+            tn1,tn2,tn3)
+       imin=ii1(l)
+       imax=ii2(l)-1
+       jmin=jj1(l)
+       jmax=jj2(l)-1
+       kmin=kk1(l)
+       kmax=kk2(l)-1
+       kdg=kdgc
+    elseif(disc.eq.'cvcf') then
+       call cvccg( &
+            l, &
+            x,y,z, &
+            tn1,tn2,tn3)
+       imin=ii1(l)-1
+       imax=ii2(l)
+       jmin=jj1(l)-1
+       jmax=jj2(l)
+       kmin=kk1(l)-1
+       kmax=kk2(l)
+       kdg=kdgcf
+    elseif(disc.eq.'cvcv') then
+       call cvcvg( &
+            l, &
+            x,y,z, &
+            tn1,tn2,tn3)
+       imin=ii1(l)
+       imax=ii2(l)
+       jmin=jj1(l)
+       jmax=jj2(l)
+       kmin=kk1(l)
+       kmax=kk2(l)
+       kdg=kdgv
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine chdgcv
+end module mod_chdgcv

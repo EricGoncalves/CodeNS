@@ -1,7 +1,7 @@
 module mod_defdfpmdtd
-implicit none
+  implicit none
 contains
-      subroutine defdfpmdtd
+  subroutine defdfpmdtd
 !
 !***********************************************************************
 !
@@ -11,22 +11,22 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-   use schemanum
-   use kcle
-implicit none
-integer :: l
+    use para_fige
+    use schemanum
+    use kcle
+    implicit none
+    integer          :: l
 !
 !-----------------------------------------------------------------------
 !
-      do l=1,lz
-      eta(l) =1.0
-      enddo
+    do l=1,lz
+       eta(l) =1.0
+    enddo
 !
-      do l=1,lz
-      keta(l)=1
-      enddo
+    do l=1,lz
+       keta(l)=1
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdfpmdtd
+end module mod_defdfpmdtd

@@ -1,8 +1,8 @@
 module mod_b1_crdms
-implicit none
+  implicit none
 contains
-      subroutine b1_crdms( &
-                 l,ni,nj,nk)
+  subroutine b1_crdms( &
+       l,ni,nj,nk)
 !
 !***********************************************************************
 !
@@ -19,24 +19,21 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-   use sortiefichier
-implicit none
-integer :: l
-integer :: ni
-integer :: nj
-integer :: nk
+    use para_fige
+    use sortiefichier
+    implicit none
+    integer          ::  l,ni,nj,nk
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
+    character(len=1316) :: form
 !
-       form='(/,2x,''creation d''''un domaine '',/' &
-             //'2x,''----------------------'',/' &
-             //'2x,''numero                   : '',11x,i5/' &
-             //'2x,''nb de pts du maillage fin: '',11x,3i5)'
-      write(imp,form) l,ni,nj,nk
+    form='(/,2x,''creation d''''un domaine '',/' &
+         //'2x,''----------------------'',/' &
+         //'2x,''numero                   : '',11x,i5/' &
+         //'2x,''nb de pts du maillage fin: '',11x,3i5)'
+    write(imp,form) l,ni,nj,nk
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_crdms
+end module mod_b1_crdms

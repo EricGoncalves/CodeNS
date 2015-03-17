@@ -1,9 +1,9 @@
 module mod_rfsr
-implicit none
+  implicit none
 contains
-      subroutine rfsr( &
-                 t, &
-                 ncbd,mnr,xnr,ynr,znr)
+  subroutine rfsr( &
+       t, &
+       ncbd,mnr,xnr,ynr,znr)
 !
 !***********************************************************************
 !
@@ -41,70 +41,56 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use maillage
-implicit none
-double precision :: t
-integer :: ncbd
-integer :: mnr
-double precision :: xnr
-double precision :: ynr
-double precision :: znr
-integer :: l
-integer :: m
-integer :: mf
-integer :: mfb
-integer :: mfbm
-integer :: ml
-integer :: mr
-integer :: mt
-integer :: nd
-integer :: nid
-integer :: njd
-integer :: nr
+    use para_var
+    use para_fige
+    use boundary
+    use maillage
+    implicit none
+    integer          ::    l,   m,  mf, mfb,mfbm
+    integer          ::   ml, mnr,  mr,  mt,ncbd
+    integer          ::   nd, nid, njd,  nr
+    double precision ::   t,xnr,ynr,znr
 !
 !-----------------------------------------------------------------------
 !
-      dimension t(ip11)
-      dimension ncbd(ip41)
-      dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
+    dimension t(ip11)
+    dimension ncbd(ip41)
+    dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !
-      mfbm=lbd(mf)
-      mt=mmb(mfbm)
+       mfbm=lbd(mf)
+       mt=mmb(mfbm)
 !
-      mfb =mod(mfbm,mtb)
-      if (mfb.eq.0) mfb=mtb
-      l  = ndrr(mfb)
+       mfb =mod(mfbm,mtb)
+       if (mfb.eq.0) mfb=mtb
+       l  = ndrr(mfb)
 !
-      nid=id2(l)-id1(l)+1
-      njd=jd2(l)-jd1(l)+1
+       nid=id2(l)-id1(l)+1
+       njd=jd2(l)-jd1(l)+1
 !
 !!$OMP SIMD
-      do m=1,mt
-      mr=mpr(mfbm)+m
-      nr=mnr(mr)
-      ml=mpb(mfbm)+m
-      nd=ncbd(ml)
+       do m=1,mt
+          mr=mpr(mfbm)+m
+          nr=mnr(mr)
+          ml=mpb(mfbm)+m
+          nd=ncbd(ml)
 !
 !     definition du scalaire aux points fictifs
 !
-      t(nd)= &
-             (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              )+ &
-             (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd)+ &
-             (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        )+ &
-             (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd)+ &
-                xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            )+ &
-                xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd)+ &
-                xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        )+ &
-                xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd)
+          t(nd)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              )+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        )+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            )+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        )+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd)
 !
-      enddo
-      enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rfsr
+end module mod_rfsr

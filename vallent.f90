@@ -1,8 +1,8 @@
 module mod_vallent
-use mod_synterr
-implicit none
+  use mod_synterr
+  implicit none
 contains
-      subroutine vallent(mot,imot,nm,lent,lentd,lx,klx)
+  subroutine vallent(mot,imot,nm,lent,lentd,lx,klx)
 !
 !***********************************************************************
 !
@@ -11,41 +11,35 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use chainecarac
-use mod_lentier
-implicit none
-integer :: imot
-integer :: nm
-integer :: lent
-integer :: lentd
-integer :: lx
-integer :: klx
-integer :: icmt
-integer :: kerr
+    use para_var
+    use para_fige
+    use chainecarac
+    use mod_lentier
+    implicit none
+    integer          ::  icmt, imot, kerr,  klx, lent
+    integer          :: lentd,   lx,   nm
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  comment
-      character(len=32) ::  mot(nmx)
+    character(len=32) ::  comment
+    character(len=32) ::  mot(nmx)
 !
-      dimension imot(nmx)
-      dimension lent(nobj)
+    dimension imot(nmx)
+    dimension lent(nobj)
 !
-      do icmt=1,32
-      comment(icmt:icmt)=' '
-      enddo
+    do icmt=1,32
+       comment(icmt:icmt)=' '
+    enddo
 !
-        call lentier(mot(nm),imot(nm),lent,lentd,lx,klx,kerr)
-        if(kerr.eq.-1) then
-          comment=cd
-          call synterr(mot,imot,nm,comment)
-        else if(kerr.eq.0)then
-          comment=cm
-          call synterr(mot,imot,nm,comment)
-        endif
+    call lentier(mot(nm),imot(nm),lent,lentd,lx,klx,kerr)
+    if(kerr.eq.-1) then
+       comment=cd
+       call synterr(mot,imot,nm,comment)
+    else if(kerr.eq.0)then
+       comment=cm
+       call synterr(mot,imot,nm,comment)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine vallent
+end module mod_vallent

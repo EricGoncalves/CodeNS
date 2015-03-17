@@ -1,10 +1,10 @@
 module mod_svgr
-implicit none
+  implicit none
 contains
-      subroutine svgr( &
-                 l,x,y,z, &
-                 tn1,tn2,tn3, &
-                 disc)
+  subroutine svgr( &
+       l,x,y,z, &
+       tn1,tn2,tn3, &
+       disc)
 !
 !***********************************************************************
 !
@@ -27,48 +27,38 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use sortiefichier
-use mod_writdg
-use mod_chdgcv
-implicit none
-integer :: l
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-integer :: imax
-integer :: imin
-integer :: jmax
-integer :: jmin
-integer :: kdg
-integer :: kmax
-integer :: kmin
+    use para_var
+    use para_fige
+    use sortiefichier
+    use mod_writdg
+    use mod_chdgcv
+    implicit none
+    integer          :: imax,imin,jmax,jmin, kdg
+    integer          :: kmax,kmin,   l
+    double precision :: tn1,tn2,tn3,  x,  y
+    double precision ::   z
 !
 !-----------------------------------------------------------------------
 !
-      character(len=4 ) :: disc
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00)
+    character(len=4 ) :: disc
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
 !     changement eventuel de discretisation
 !
-      call chdgcv( &
-                 l,disc, &
-                 x,y,z, &
-                 tn1,tn2,tn3, &
-                 imin,imax,jmin,jmax,kmin,kmax,kdg)
+    call chdgcv( &
+         l,disc, &
+         x,y,z, &
+         tn1,tn2,tn3, &
+         imin,imax,jmin,jmax,kmin,kmax,kdg)
 !
 !     stockage du maillage
 !
-      call writdg( &
-                 l,kdg, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 tn1,tn2,tn3)
+    call writdg( &
+         l,kdg, &
+         imin,imax,jmin,jmax,kmin,kmax, &
+         tn1,tn2,tn3)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine svgr
+end module mod_svgr

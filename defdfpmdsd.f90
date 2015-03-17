@@ -1,7 +1,7 @@
 module mod_defdfpmdsd
-implicit none
+  implicit none
 contains
-      subroutine defdfpmdsd
+  subroutine defdfpmdsd
 !
 !***********************************************************************
 !
@@ -15,24 +15,24 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-   use kcle
-   use schemanum
-implicit none
-integer :: l
+    use para_fige
+    use kcle
+    use schemanum
+    implicit none
+    integer          :: l
 !
 !-----------------------------------------------------------------------
 !
-      do l=1,lz
+    do l=1,lz
        ki2(l)=0.0
        ki4(l)=0.032
-      enddo
+    enddo
 !
-      do l=1,lz
+    do l=1,lz
        kki2(l)=1
        kki4(l)=1
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdfpmdsd
+end module mod_defdfpmdsd

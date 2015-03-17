@@ -1,7 +1,7 @@
 module mod_tcmd_intn
-implicit none
+  implicit none
 contains
-      subroutine tcmd_intn(mot,imot,nmot)
+  subroutine tcmd_intn(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -11,44 +11,41 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use chainecarac
-      use kcle
-      use schemanum
-use mod_valenti
-implicit none
-integer :: imot
-integer :: nmot
-integer :: icmt
-integer :: nm
+    use para_fige
+    use chainecarac
+    use kcle
+    use schemanum
+    use mod_valenti
+    implicit none
+    integer          :: icmt,imot,  nm,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  comment
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  comment
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      do icmt=1,32
-      comment(icmt:icmt)=' '
-      enddo
+    do icmt=1,32
+       comment(icmt:icmt)=' '
+    enddo
 !
-      if(knumt.eq.2) knumt=3
+    if(knumt.eq.2) knumt=3
 !
-      if(nmot.eq.3)then
-        comment=cb
-        call synterr(mot,imot,2,comment)
-      endif
+    if(nmot.eq.3)then
+       comment=cb
+       call synterr(mot,imot,2,comment)
+    endif
 !
-      nm=3
+    nm=3
 !
-      nm=nm+1
-        if(nmot.lt.nm) then
-          comment=ci
-          call synterr(mot,imot,nmot,comment)
-        else
-          call valenti(mot,imot,nm,numt,knumt)
-        endif
+    nm=nm+1
+    if(nmot.lt.nm) then
+       comment=ci
+       call synterr(mot,imot,nmot,comment)
+    else
+       call valenti(mot,imot,nm,numt,knumt)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine tcmd_intn
+end module mod_tcmd_intn

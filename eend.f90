@@ -1,8 +1,8 @@
 module mod_eend
-implicit none
+  implicit none
 contains
-      subroutine eend
-implicit none
+  subroutine eend
+    implicit none
 !
 !***********************************************************************
 !
@@ -11,8 +11,8 @@ implicit none
 !
 !***********************************************************************
 !
-      stop
+    stop
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine eend
+end module mod_eend

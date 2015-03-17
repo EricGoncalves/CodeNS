@@ -1,14 +1,14 @@
 module mod_chronos_prcd
-implicit none
+  implicit none
 contains
-      subroutine chronos_prcd( &
-                 l,etal,mu,mut, &
-                 t, &
-                 dt,equat, &
-                 sn,lgsnlt, &
-                 vol,  &
-                 sfsi,sfsj,sfsk,dism, &
-                 cson,ps)
+  subroutine chronos_prcd( &
+       l,etal,mu,mut, &
+       t, &
+       dt,equat, &
+       sn,lgsnlt, &
+       vol,  &
+       sfsi,sfsj,sfsk,dism, &
+       cson,ps)
 !
 !***********************************************************************
 !
@@ -64,178 +64,130 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use schemanum
-      use definition
-      use maillage
-      use proprieteflu
-implicit none
-integer :: inc
-integer :: indc
-integer :: indn
-integer :: l
-double precision :: etal
-double precision :: t
-double precision :: dt
-double precision :: sn
-integer :: lgsnlt
-double precision :: vol
-double precision :: sfsi
-double precision :: sfsj
-double precision :: sfsk
-double precision :: dism
-double precision :: cson
-double precision :: ps
-integer :: id
-integer :: jd
-integer :: kd
-integer :: i
-integer :: j
-integer :: k
-double precision :: a2
-double precision :: betv
-integer :: i1
-integer :: i2
-integer :: i2m1
-integer :: isortie
-integer :: ivisq
-integer :: j1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k2
-integer :: k2m1
-integer :: m
-integer :: mc
-integer :: mn
-integer :: n
-integer :: n0c
-integer :: n0n
-integer :: n1
-integer :: n2
-integer :: nc
-integer :: nci
-integer :: ncj
-integer :: nck
-integer :: nid
-integer :: nijd
-integer :: njd
-double precision :: q
-double precision :: q2
-double precision :: qinf
-double precision :: simax
-double precision :: sjmax
-double precision :: skmax
-double precision :: smoy
-double precision :: uu
-double precision :: vv
-double precision :: ww
-double precision :: xm0
-double precision :: xmach2
+    use para_var
+    use para_fige
+    use schemanum
+    use definition
+    use maillage
+    use proprieteflu
+    implicit none
+    integer          ::       i,     i1,     i2,   i2m1,     id
+    integer          ::     inc,   indc,   indn,isortie,  ivisq
+    integer          ::       j,     j1,     j2,   j2m1,     jd
+    integer          ::       k,     k1,     k2,   k2m1,     kd
+    integer          ::       l, lgsnlt,      m,     mc,     mn
+    integer          ::       n,    n0c,    n0n,     n1,     n2
+    integer          ::      nc,    nci,    ncj,    nck,    nid
+    integer          ::    nijd,    njd
+    double precision ::   Lref,    a2, beta2,beta2e, betau
+    double precision ::   betv,  cflc,   cpi,  cson,  dism
+    double precision ::    dpi,   dpj,   dpm,    dt,   dte
+    double precision ::    dtv,  etal,    mu,   mut,    ps
+    double precision ::      q,    q2,  qinf,  rlam,    rv
+    double precision ::    rv1,  sfsi,  sfsj,  sfsk, simax
+    double precision ::  sjmax, skmax,  smoy,    sn,     t
+    double precision ::     uu,   vol,    vv,    ww,   xm0
+    double precision ::  xmach,xmach2
 !
 !-----------------------------------------------------------------------
 !
-      double precision mu,mut,Lref,rv,rlam,dte,dtv,rv1
-      double precision beta2,beta2e,betau,cpi,xmach,cflc
-      double precision dpi,dpj,dpm
-      character(len=7 ) :: equat
-      dimension t(ip11,ip60)
-      dimension dt(ip11),vol(ip11),cson(ip11),ps(ip11)
-      dimension mu(ip12),mut(ip12)
-      dimension sn(lgsnlt,nind,ndir)
-      dimension sfsi(ip00),sfsj(ip00),sfsk(ip00),dism(ip00)
+    character(len=7 ) :: equat
+    dimension t(ip11,ip60)
+    dimension dt(ip11),vol(ip11),cson(ip11),ps(ip11)
+    dimension mu(ip12),mut(ip12)
+    dimension sn(lgsnlt,nind,ndir)
+    dimension sfsi(ip00),sfsj(ip00),sfsk(ip00),dism(ip00)
 !
-      indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-      indn(i,j,k)=n0n+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-      inc(id,jd,kd)=id+jd*nid+kd*nijd
+    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    indn(i,j,k)=n0n+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    inc(id,jd,kd)=id+jd*nid+kd*nijd
 !
-      DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE     :: beta2v
-      ALLOCATE(beta2v(ip21))
+    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE     :: beta2v
+    ALLOCATE(beta2v(ip21))
 
-      n0c =npc(l)
-      n0n =npn(l)
-      i1  =ii1(l)
-      i2  =ii2(l)
-      j1  =jj1(l)
-      j2  =jj2(l)
-      k1  =kk1(l)
-      k2  =kk2(l)
+    n0c =npc(l)
+    n0n =npn(l)
+    i1  =ii1(l)
+    i2  =ii2(l)
+    j1  =jj1(l)
+    j2  =jj2(l)
+    k1  =kk1(l)
+    k2  =kk2(l)
 !
-      nid  = id2(l)-id1(l)+1
-      njd  = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid  = id2(l)-id1(l)+1
+    njd  = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      nci = inc(1,0,0)
-      ncj = inc(0,1,0)
-      nck = inc(0,0,1)
+    nci = inc(1,0,0)
+    ncj = inc(0,1,0)
+    nck = inc(0,0,1)
 !
-      i2m1=i2-1
-      j2m1=j2-1
-      k2m1=k2-1
+    i2m1=i2-1
+    j2m1=j2-1
+    k2m1=k2-1
 !
-      n1=indc(i1,j1,k1)
-      n2=indc(i2,j2,k2)
-      do n=n1,n2
-        dt(n)=0.
-      enddo
+    n1=indc(i1,j1,k1)
+    n2=indc(i2,j2,k2)
+    do n=n1,n2
+       dt(n)=0.
+    enddo
 !
-      do k=k1,k2m1
+    do k=k1,k2m1
        do j=j1,j2m1
 !!$OMP SIMD
-        do i=i1,i2
-         n=indn(i,j,k)
-         m=n-n0n
-         sfsi(m)=sn(m,1,1)*sn(m,1,1)+ &
-                 sn(m,1,2)*sn(m,1,2)+ &
-                 sn(m,1,3)*sn(m,1,3)
-        enddo
+          do i=i1,i2
+             n=indn(i,j,k)
+             m=n-n0n
+             sfsi(m)=sn(m,1,1)*sn(m,1,1)+ &
+                  sn(m,1,2)*sn(m,1,2)+ &
+                  sn(m,1,3)*sn(m,1,3)
+          enddo
        enddo
-      enddo
+    enddo
 !
-      do k=k1,k2m1
+    do k=k1,k2m1
        do j=j1,j2
 !!$OMP SIMD
-        do i=i1,i2m1
-         n=indn(i,j,k)
-         m=n-n0n
-         sfsj(m)=sn(m,2,1)*sn(m,2,1)+ &
-                 sn(m,2,2)*sn(m,2,2)+ &
-                 sn(m,2,3)*sn(m,2,3)
-        enddo
+          do i=i1,i2m1
+             n=indn(i,j,k)
+             m=n-n0n
+             sfsj(m)=sn(m,2,1)*sn(m,2,1)+ &
+                  sn(m,2,2)*sn(m,2,2)+ &
+                  sn(m,2,3)*sn(m,2,3)
+          enddo
        enddo
-      enddo
+    enddo
 !
-      do k=k1,k2
+    do k=k1,k2
        do j=j1,j2m1
 !!$OMP SIMD
-        do i=i1,i2m1
-         n=indn(i,j,k)
-         m=n-n0n
-         sfsk(m)=sn(m,3,1)*sn(m,3,1)+ &
-                 sn(m,3,2)*sn(m,3,2)+ &
-                 sn(m,3,3)*sn(m,3,3)
-        enddo
+          do i=i1,i2m1
+             n=indn(i,j,k)
+             m=n-n0n
+             sfsk(m)=sn(m,3,1)*sn(m,3,1)+ &
+                  sn(m,3,2)*sn(m,3,2)+ &
+                  sn(m,3,3)*sn(m,3,3)
+          enddo
        enddo
-      enddo
+    enddo
 !
-      do k=k1,k2m1
+    do k=k1,k2m1
        do j=j1,j2m1
-        mn=indn(i1-1,j,k)-n0n
-        mc=indc(i1-1,j,k)-n0c
+          mn=indn(i1-1,j,k)-n0n
+          mc=indc(i1-1,j,k)-n0c
 !!$OMP SIMD
-        do i=i1,i2m1
-         mn=mn+nci
-         mc=mc+nci
-         nc=mc+n0c
-         simax=max(sfsi(mn+nci),sfsi(mn))
-         sjmax=max(sfsj(mn+ncj),sfsj(mn))
-         skmax=max(sfsk(mn+nck),sfsk(mn))
-         smoy =sqrt(simax+sjmax+skmax)
-         dism(mc)=vol(nc)/smoy
-        enddo
+          do i=i1,i2m1
+             mn=mn+nci
+             mc=mc+nci
+             nc=mc+n0c
+             simax=max(sfsi(mn+nci),sfsi(mn))
+             sjmax=max(sfsj(mn+ncj),sfsj(mn))
+             skmax=max(sfsk(mn+nck),sfsk(mn))
+             smoy =sqrt(simax+sjmax+skmax)
+             dism(mc)=vol(nc)/smoy
+          enddo
        enddo
-      enddo
+    enddo
 !
 !-----precond avec formulation max grad P pour toutes les faces
 !      do k=k1,k2m1
@@ -256,109 +208,109 @@ double precision :: xmach2
 !      enddo
 !
 !
-      qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
+    qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
 !
-      do k=k1,k2m1
+    do k=k1,k2m1
        do j=j1,j2m1
-        do i=i1,i2m1
-         nc=indc(i,j,k)
-         mc=nc-n0c
-         q2=(t(nc,2)**2+t(nc,3)**2+t(nc,4)**2)/t(nc,1)**2
-         q=sqrt(q2)
-         a2=cson(nc)**2
-         beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
+          do i=i1,i2m1
+             nc=indc(i,j,k)
+             mc=nc-n0c
+             q2=(t(nc,2)**2+t(nc,3)**2+t(nc,4)**2)/t(nc,1)**2
+             q=sqrt(q2)
+             a2=cson(nc)**2
+             beta2=min(max(q2/a2,cte*qinf**2/a2),1.)
 !         beta2e=max(q2/a2,cte*qinf**2/a2)
 !         beta2=min(max(beta2e,beta2v(m)),1.)
-         rlam=0.5*((1.+beta2)*q+sqrt(((1.-beta2)*q)**2+4.*beta2*a2))
-         dte=dism(mc)/rlam
-         dt(nc)=etal*dte
-        enddo
+             rlam=0.5*((1.+beta2)*q+sqrt(((1.-beta2)*q)**2+4.*beta2*a2))
+             dte=dism(mc)/rlam
+             dt(nc)=etal*dte
+          enddo
        enddo
-      enddo
+    enddo
 !
-      if (equat(1:2).eq.'ns') then
+    if (equat(1:2).eq.'ns') then
        do k=k1,k2m1
-        do j=j1,j2m1
-         do i=i1,i2m1
-          nc=indc(i,j,k)
-          mc=nc-n0c
-          rv1=gam*(mu(nc)/pr+mut(nc)/prt)/t(nc,1)
-          rv=max(rv1,4./3.*(mu(nc)+mut(nc))/t(nc,1))
-          dtv=etal*0.5*dism(mc)**2/rv
-          dt(nc)=min(dt(nc),dtv)
-         enddo
-        enddo
+          do j=j1,j2m1
+             do i=i1,i2m1
+                nc=indc(i,j,k)
+                mc=nc-n0c
+                rv1=gam*(mu(nc)/pr+mut(nc)/prt)/t(nc,1)
+                rv=max(rv1,4./3.*(mu(nc)+mut(nc))/t(nc,1))
+                dtv=etal*0.5*dism(mc)**2/rv
+                dt(nc)=min(dt(nc),dtv)
+             enddo
+          enddo
        enddo
-      endif
+    endif
 !
 !--------beta2 pour instationnaire---------------------------------
 !
-       if((kfmg.eq.3).and.(kvisq.eq.1)) then
+    if((kfmg.eq.3).and.(kvisq.eq.1)) then
        Lref=1.25
        cpi=3.14159265
        xm0=0.6
-        do k=k1,k2m1
-         do j=j1,j2m1
-          do i=i1,i2m1
-           nc=indc(i,j,k)
-           mc=nc-n0c
-           q2=(t(nc,2)**2+t(nc,3)**2+t(nc,4)**2)/t(nc,1)**2
-           q=sqrt(q2)
-           xmach=q/cson(nc)
-           xmach2=xmach**2
+       do k=k1,k2m1
+          do j=j1,j2m1
+             do i=i1,i2m1
+                nc=indc(i,j,k)
+                mc=nc-n0c
+                q2=(t(nc,2)**2+t(nc,3)**2+t(nc,4)**2)/t(nc,1)**2
+                q=sqrt(q2)
+                xmach=q/cson(nc)
+                xmach2=xmach**2
 !           cflc=cson(nc)*dt(nc)/dism(mc)
 !           betau=(Lref/(cpi*dt(nc)*cson(nc)))**2
 !           betau=xmach/cpi**2
 !           betau=xmach**2+1./cflc**2
-           betau=xmach2*(1.+xmach2*(1.-xm0**2)/xm0**4)
-           beta2v(mc)=min(max(beta2v(mc),betau),1.)
+                betau=xmach2*(1.+xmach2*(1.-xm0**2)/xm0**4)
+                beta2v(mc)=min(max(beta2v(mc),betau),1.)
+             enddo
           enddo
-         enddo
-        enddo
-       endif
+       enddo
+    endif
 !
 !--------beta2 pour ecoulements visqueux----------------------------
 !
-       ivisq=0
-       if(ivisq.eq.1) then
+    ivisq=0
+    if(ivisq.eq.1) then
        do k=k1,k2m1
-        do j=j1,j2m1
-         mn=indn(i1-1,j,k)-n0n
-         mc=indc(i1-1,j,k)-n0c
-         do i=i1,i2m1
-          mn=mn+nci
-          mc=mc+nci
-          nc=mc+n0c
-          uu=t(nc,2)/t(nc,1)
-          vv=t(nc,3)/t(nc,1)
-          ww=t(nc,4)/t(nc,1)
-          q2=uu**2+vv**2+ww**2
-          a2=cson(nc)**2
-          q=sqrt(q2)
-          betv=7.
-          beta2v(mc)=betv
-         enddo
-        enddo
+          do j=j1,j2m1
+             mn=indn(i1-1,j,k)-n0n
+             mc=indc(i1-1,j,k)-n0c
+             do i=i1,i2m1
+                mn=mn+nci
+                mc=mc+nci
+                nc=mc+n0c
+                uu=t(nc,2)/t(nc,1)
+                vv=t(nc,3)/t(nc,1)
+                ww=t(nc,4)/t(nc,1)
+                q2=uu**2+vv**2+ww**2
+                a2=cson(nc)**2
+                q=sqrt(q2)
+                betv=7.
+                beta2v(mc)=betv
+             enddo
+          enddo
        enddo
-      endif
+    endif
 !
-      isortie=0
-      if(isortie.eq.1) then
+    isortie=0
+    if(isortie.eq.1) then
        write(6,'("===>chronos_prcd")')
        k=1
 !       i=175
        do i=i1,i2m1
-        do j=j1,j2m1
-         n=indc(i,j,k)
-         m=n-n0c
-         write(6,'(2i4,i6,(1pe12.4))') &
-          i,j,n,beta2v(m)
-        enddo
+          do j=j1,j2m1
+             n=indc(i,j,k)
+             m=n-n0c
+             write(6,'(2i4,i6,(1pe12.4))') &
+                  i,j,n,beta2v(m)
+          enddo
        enddo
-      endif
+    endif
 
-DEALLOCATE(beta2v)
+    DEALLOCATE(beta2v)
 
-      return
-      end subroutine
-end module
+    return
+  end subroutine chronos_prcd
+end module mod_chronos_prcd

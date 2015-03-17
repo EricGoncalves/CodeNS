@@ -1,9 +1,9 @@
 module mod_tcmd_crdms
-implicit none
+  implicit none
 contains
-      subroutine tcmd_crdms( &
-                 mot,imot,nmot, &
-                 l,ni,nj,nk)
+  subroutine tcmd_crdms( &
+       mot,imot,nmot, &
+       l,ni,nj,nk)
 !
 !***********************************************************************
 !
@@ -13,64 +13,57 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use chainecarac
-use mod_valenti
-implicit none
-integer :: imot
-integer :: nmot
-integer :: l
-integer :: ni
-integer :: nj
-integer :: nk
-integer :: icmt
-integer :: kval
-integer :: nm
+    use para_fige
+    use chainecarac
+    use mod_valenti
+    implicit none
+    integer          :: icmt,imot,kval,   l,  ni
+    integer          ::   nj,  nk,  nm,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  comment
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  comment
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      do icmt=1,32
-      comment(icmt:icmt)=' '
-      enddo
-      kval=0
+    do icmt=1,32
+       comment(icmt:icmt)=' '
+    enddo
+    kval=0
 !
-      nm=3
-      nm=nm+1
-      if(nmot.lt.nm) then
-        comment=ci
-        call synterr(mot,imot,nmot,comment)
-      else
-        call valenti(mot,imot,nm,l,kval)
-      endif
+    nm=3
+    nm=nm+1
+    if(nmot.lt.nm) then
+       comment=ci
+       call synterr(mot,imot,nmot,comment)
+    else
+       call valenti(mot,imot,nm,l,kval)
+    endif
 !
-      nm=nm+1
-      if(nmot.lt.nm) then
-        comment=ci
-        call synterr(mot,imot,nmot,comment)
-      else
-        call valenti(mot,imot,nm,ni,kval)
-      endif
+    nm=nm+1
+    if(nmot.lt.nm) then
+       comment=ci
+       call synterr(mot,imot,nmot,comment)
+    else
+       call valenti(mot,imot,nm,ni,kval)
+    endif
 !
-      nm=nm+1
-      if(nmot.lt.nm) then
-        comment=ci
-        call synterr(mot,imot,nmot,comment)
-      else
-        call valenti(mot,imot,nm,nj,kval)
-      endif
+    nm=nm+1
+    if(nmot.lt.nm) then
+       comment=ci
+       call synterr(mot,imot,nmot,comment)
+    else
+       call valenti(mot,imot,nm,nj,kval)
+    endif
 !
-      nm=nm+1
-      if(nmot.lt.nm) then
-        comment=ci
-        call synterr(mot,imot,nmot,comment)
-      else
-        call valenti(mot,imot,nm,nk,kval)
-      endif
+    nm=nm+1
+    if(nmot.lt.nm) then
+       comment=ci
+       call synterr(mot,imot,nmot,comment)
+    else
+       call valenti(mot,imot,nm,nk,kval)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine tcmd_crdms
+end module mod_tcmd_crdms

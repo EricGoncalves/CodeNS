@@ -1,7 +1,7 @@
 module mod_extmhg
-implicit none
+  implicit none
 contains
-      subroutine extmhg(l,x,y,z,ex1,ex2)
+  subroutine extmhg(l,x,y,z,ex1,ex2)
 !
 !***********************************************************************
 !
@@ -35,134 +35,100 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-implicit none
-integer :: inc
-integer :: ind
-integer :: l
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: ex1
-double precision :: ex2
-integer :: id
-integer :: jd
-integer :: kd
-integer :: i
-integer :: j
-integer :: k
-integer :: i1
-integer :: i1m1
-integer :: i2
-integer :: i2p1
-integer :: iinc
-integer :: is
-integer :: j1
-integer :: j1m1
-integer :: j2
-integer :: j2p1
-integer :: jinc
-integer :: js
-integer :: k1
-integer :: k1m1
-integer :: k2
-integer :: k2p1
-integer :: kinc
-integer :: ks
-integer :: n
-integer :: n0
-integer :: nci
-integer :: nci2
-integer :: ncj
-integer :: ncj2
-integer :: nck
-integer :: nck2
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    implicit none
+    integer          ::    i,  i1,i1m1,  i2,i2p1
+    integer          ::   id,iinc, inc, ind,  is
+    integer          ::    j,  j1,j1m1,  j2,j2p1
+    integer          ::   jd,jinc,  js,   k,  k1
+    integer          :: k1m1,  k2,k2p1,  kd,kinc
+    integer          ::   ks,   l,   n,  n0, nci
+    integer          :: nci2, ncj,ncj2, nck,nck2
+    integer          ::  nid,nijd, njd
+    double precision :: ex1,ex2,  x,  y,  z
 !
 !-----------------------------------------------------------------------
 !
-      dimension x(ip21),y(ip21),z(ip21)
+    dimension x(ip21),y(ip21),z(ip21)
 !
 !----- extrapolation d' ordre 0 ou 1
 !
-      ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-      inc(id,jd,kd)=id+jd*nid+kd*nijd
+    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    inc(id,jd,kd)=id+jd*nid+kd*nijd
 !
-      n0=npn(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0=npn(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      i1m1=i1-1
-      j1m1=j1-1
-      k1m1=k1-1
-      i2p1=i2+1
-      j2p1=j2+1
-      k2p1=k2+1
+    i1m1=i1-1
+    j1m1=j1-1
+    k1m1=k1-1
+    i2p1=i2+1
+    j2p1=j2+1
+    k2p1=k2+1
 !
-      nci = inc(1,0,0)
-      ncj = inc(0,1,0)
-      nck = inc(0,0,1)
-      nci2= inc(2,0,0)
-      ncj2= inc(0,2,0)
-      nck2= inc(0,0,2)
+    nci = inc(1,0,0)
+    ncj = inc(0,1,0)
+    nck = inc(0,0,1)
+    nci2= inc(2,0,0)
+    ncj2= inc(0,2,0)
+    nck2= inc(0,0,2)
 !
 !     extrapolation des coordonnees
 !
-      iinc = i2p1-i1m1
-      jinc = j2p1-j1m1
-      kinc = k2p1-k1m1
+    iinc = i2p1-i1m1
+    jinc = j2p1-j1m1
+    kinc = k2p1-k1m1
 !
-      ks = -1
-      do k = k1m1,k2p1,kinc
-      ks = -ks
-      do j = j1,j2
-      do i = i1,i2
-         n = ind(i,j,k)
-          x(n) = ex1*x(n+ks*nck)+ex2*x(n+ks*nck2)
-          y(n) = ex1*y(n+ks*nck)+ex2*y(n+ks*nck2)
-          z(n) = ex1*z(n+ks*nck)+ex2*z(n+ks*nck2)
-      enddo
-      enddo
-      enddo
+    ks = -1
+    do k = k1m1,k2p1,kinc
+       ks = -ks
+       do j = j1,j2
+          do i = i1,i2
+             n = ind(i,j,k)
+             x(n) = ex1*x(n+ks*nck)+ex2*x(n+ks*nck2)
+             y(n) = ex1*y(n+ks*nck)+ex2*y(n+ks*nck2)
+             z(n) = ex1*z(n+ks*nck)+ex2*z(n+ks*nck2)
+          enddo
+       enddo
+    enddo
 !
-      do k = k1m1,k2p1
-      do j = j1,j2
-      is = -1
-      do i = i1m1,i2p1,iinc
-         is = -is
-         n = ind(i,j,k)
-          x(n) = ex1*x(n+is*nci)+ex2*x(n+is*nci2)
-          y(n) = ex1*y(n+is*nci)+ex2*y(n+is*nci2)
-          z(n) = ex1*z(n+is*nci)+ex2*z(n+is*nci2)
-      enddo
-      enddo
-      enddo
+    do k = k1m1,k2p1
+       do j = j1,j2
+          is = -1
+          do i = i1m1,i2p1,iinc
+             is = -is
+             n = ind(i,j,k)
+             x(n) = ex1*x(n+is*nci)+ex2*x(n+is*nci2)
+             y(n) = ex1*y(n+is*nci)+ex2*y(n+is*nci2)
+             z(n) = ex1*z(n+is*nci)+ex2*z(n+is*nci2)
+          enddo
+       enddo
+    enddo
 !
-      do k = k1m1,k2p1
-      js = -1
-      do j = j1m1,j2p1,jinc
-      js = -js
-      do i = i1m1,i2p1
-         n = ind(i,j,k)
-          x(n) = ex1*x(n+js*ncj)+ex2*x(n+js*ncj2)
-          y(n) = ex1*y(n+js*ncj)+ex2*y(n+js*ncj2)
-          z(n) = ex1*z(n+js*ncj)+ex2*z(n+js*ncj2)
-      enddo
-      enddo
-      enddo
+    do k = k1m1,k2p1
+       js = -1
+       do j = j1m1,j2p1,jinc
+          js = -js
+          do i = i1m1,i2p1
+             n = ind(i,j,k)
+             x(n) = ex1*x(n+js*ncj)+ex2*x(n+js*ncj2)
+             y(n) = ex1*y(n+js*ncj)+ex2*y(n+js*ncj2)
+             z(n) = ex1*z(n+js*ncj)+ex2*z(n+js*ncj2)
+          enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine extmhg
+end module mod_extmhg

@@ -1,7 +1,7 @@
 module mod_c_secpfw
-implicit none
+  implicit none
 contains
-      subroutine c_secpfw(mot,imot,nmot)
+  subroutine c_secpfw(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -10,31 +10,28 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-   use sortiefichier
-use mod_tcmd_secpfw
-use mod_b1_secpfw
-implicit none
-integer :: imot
-integer :: nmot
-integer :: lgr
-integer :: lgrd
+    use para_fige
+    use sortiefichier
+    use mod_tcmd_secpfw
+    use mod_b1_secpfw
+    implicit none
+    integer          :: imot, lgr,lgrd,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
+    character(len=32) ::  mot(nmx)
 !
-      dimension imot(nmx)
-      dimension lgr(nobj)
+    dimension imot(nmx)
+    dimension lgr(nobj)
 !
-      call tcmd_secpfw( &
-                 mot,imot,nmot, &
-                 lgr,lgrd)
+    call tcmd_secpfw( &
+         mot,imot,nmot, &
+         lgr,lgrd)
 !
-      if(kimp.ge.1) then
-            call b1_secpfw(lgr,lgrd)
-      endif
+    if(kimp.ge.1) then
+       call b1_secpfw(lgr,lgrd)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_secpfw
+end module mod_c_secpfw

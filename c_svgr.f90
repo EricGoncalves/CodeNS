@@ -1,10 +1,10 @@
 module mod_c_svgr
-implicit none
+  implicit none
 contains
-      subroutine c_svgr( &
-                 mot,imot,nmot, &
-                 l,x,y,z, &
-                 tn1,tn2,tn3)
+  subroutine c_svgr( &
+       mot,imot,nmot, &
+       l,x,y,z, &
+       tn1,tn2,tn3)
 !
 !***********************************************************************
 !
@@ -28,44 +28,38 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-     use sortiefichier
-use mod_svgr
-use mod_tcmd_svgr
-implicit none
-integer :: imot
-integer :: nmot
-integer :: l
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
+    use para_var
+    use para_fige
+    use sortiefichier
+    use mod_svgr
+    use mod_tcmd_svgr
+    implicit none
+    integer          :: imot,   l,nmot
+    double precision :: tn1,tn2,tn3,  x,  y
+    double precision ::   z
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      character(len=4 ) :: disc
+    character(len=32) ::  mot(nmx)
+    character(len=4 ) :: disc
 !
-      dimension imot(nmx)
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00)
+    dimension imot(nmx)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
-       call tcmd_svgr( &
-                 mot,imot,nmot, &
-                 disc)
+    call tcmd_svgr( &
+         mot,imot,nmot, &
+         disc)
 !
 !      if ((kimp.ge.1).and.(l.eq.1)) then
 !            call b1_svgr(disc)
 !      endif
 !
-       call svgr( &
-                 l,x,y,z, &
-                 tn1,tn2,tn3, &
-                 disc)
+    call svgr( &
+         l,x,y,z, &
+         tn1,tn2,tn3, &
+         disc)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_svgr
+end module mod_c_svgr

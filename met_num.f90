@@ -1,23 +1,23 @@
 module mod_met_num
-use mod_zvismo
-use mod_met_uttau
-implicit none
+  use mod_zvismo
+  use mod_met_uttau
+  implicit none
 contains
-      subroutine met_num( &
-                 ncbd,ncin,mnc,ncyc, &
-                 mnr,xnr,ynr,znr, &
-                 bceqt, &
-                 u,v,dt,d,mut,mu,cfke, &
-                 mnpar,dist,fgam,utau,topz, &
-                 nxn,nyn,nzn, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 qcxts5,qcyts6,qcz000, &
-                 sn,vol, &
-                 icycle,ptdual, &
-                 x,y,z, &
-                 tn1,tn2,tn3,t,tprod,dtdx,dtdy,dtdz,tn9,tn10, &
-                 tp,cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
-                 pression,ztemp,cson)
+  subroutine met_num( &
+       ncbd,ncin,mnc,ncyc, &
+       mnr,xnr,ynr,znr, &
+       bceqt, &
+       u,v,dt,d,mut,mu,cfke, &
+       mnpar,dist,fgam,utau,topz, &
+       nxn,nyn,nzn, &
+       txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+       qcxts5,qcyts6,qcz000, &
+       sn,vol, &
+       icycle,ptdual, &
+       x,y,z, &
+       tn1,tn2,tn3,t,tprod,dtdx,dtdy,dtdz,tn9,tn10, &
+       tp,cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
+       pression,ztemp,cson)
 !
 !***********************************************************************
 !
@@ -29,161 +29,112 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use modeleturb
-      use schemanum
-      use proprieteflu
-      use chainecarac
-      use sortiefichier
-use mod_lp2ke
-use mod_met_samut
-use mod_lp2kl
-use mod_met_chmut
-use mod_met_fludcsa
-use mod_met_roe2oh
-use mod_met_smsa
-use mod_lp2kw
-use mod_met_smklsas
-use mod_sch_turb2
-use mod_met_smdes
-use mod_impli2_eqt_3d
-use mod_sch_turb
-use mod_met_komutr
-use mod_met_roe2o
-use mod_met_kocmut
-use mod_met_bord
-use mod_lpker
-use mod_at_cutke
-use mod_met_roe
-use mod_met_mutke2
-use mod_met_fludmt
-use mod_lpke
-use mod_met_klrmut
-use mod_met_klsmut
-use mod_atctranske
-use mod_lpkl
-use mod_met_dual2
-use mod_lp2sa
-use mod_lpkomega
-use mod_met_gradtr
-use mod_met_fludc
-use mod_met_smch
-use mod_met_smsasas
-use mod_met_kemutr
-use mod_met_fludko
-use mod_met_smmtr
-use mod_impli2_eqt
-use mod_met_kemutm
-use mod_met_smkor
-use mod_met_rbsc
-use mod_met_rbse
-use mod_met_parko
-use mod_lpsa
-use mod_met_smmt
-use mod_met_klmut
-use mod_met_komut
-use mod_met_prod
-use mod_met_dual
-use mod_met_smke
-use mod_met_rbsr
-use mod_lpkomegar
-use mod_met_kemut
-use mod_met_smkl
-use mod_met_smko
-implicit none
-integer :: ncbd
-integer :: ncin
-integer :: mnc
-integer :: ncyc
-integer :: mnr
-double precision :: xnr
-double precision :: ynr
-double precision :: znr
-double precision :: bceqt
-double precision :: u
-double precision :: v
-double precision :: dt
-double precision :: d
-double precision :: cfke
-integer :: mnpar
-double precision :: dist
-double precision :: fgam
-double precision :: utau
-double precision :: topz
-double precision :: txxf5x
-double precision :: txyf5y
-double precision :: txzf5z
-double precision :: tyyf6x
-double precision :: tyzf6y
-double precision :: tzzf6z
-double precision :: qcxts5
-double precision :: qcyts6
-double precision :: qcz000
-double precision :: sn
-double precision :: vol
-double precision :: ptdual
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-double precision :: t
-double precision :: tprod
-double precision :: dtdx
-double precision :: dtdy
-double precision :: dtdz
-double precision :: tn9
-double precision :: tn10
-double precision :: tp
-double precision :: cmui1
-double precision :: cmui2
-double precision :: cmuj1
-double precision :: cmuj2
-double precision :: cmuk1
-double precision :: cmuk2
-double precision :: pression
-double precision :: ztemp
-double precision :: cson
-double precision :: coefe
-integer :: l
-integer :: lgsnlt
-integer :: mf
-integer :: mfc
-integer :: mfr
-integer :: npsn
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use modeleturb
+    use schemanum
+    use proprieteflu
+    use chainecarac
+    use sortiefichier
+    use mod_lp2ke
+    use mod_met_samut
+    use mod_lp2kl
+    use mod_met_chmut
+    use mod_met_fludcsa
+    use mod_met_roe2oh
+    use mod_met_smsa
+    use mod_lp2kw
+    use mod_met_smklsas
+    use mod_sch_turb2
+    use mod_met_smdes
+    use mod_impli2_eqt_3d
+    use mod_sch_turb
+    use mod_met_komutr
+    use mod_met_roe2o
+    use mod_met_kocmut
+    use mod_met_bord
+    use mod_lpker
+    use mod_at_cutke
+    use mod_met_roe
+    use mod_met_mutke2
+    use mod_met_fludmt
+    use mod_lpke
+    use mod_met_klrmut
+    use mod_met_klsmut
+    use mod_atctranske
+    use mod_lpkl
+    use mod_met_dual2
+    use mod_lp2sa
+    use mod_lpkomega
+    use mod_met_gradtr
+    use mod_met_fludc
+    use mod_met_smch
+    use mod_met_smsasas
+    use mod_met_kemutr
+    use mod_met_fludko
+    use mod_met_smmtr
+    use mod_impli2_eqt
+    use mod_met_kemutm
+    use mod_met_smkor
+    use mod_met_rbsc
+    use mod_met_rbse
+    use mod_met_parko
+    use mod_lpsa
+    use mod_met_smmt
+    use mod_met_klmut
+    use mod_met_komut
+    use mod_met_prod
+    use mod_met_dual
+    use mod_met_smke
+    use mod_met_rbsr
+    use mod_lpkomegar
+    use mod_met_kemut
+    use mod_met_smkl
+    use mod_met_smko
+    implicit none
+    integer          :: icycle,     l,lgsnlt,    mf,   mfc
+    integer          ::    mfr,   mnc, mnpar,   mnr,  ncbd
+    integer          ::   ncin,  ncyc,  npsn
+    double precision ::    bceqt,    cfke,   cmui1,   cmui2,   cmuj1
+    double precision ::    cmuj2,   cmuk1,   cmuk2,   coefe,    cson
+    double precision ::        d,    dist,      dt,    dtdx,    dtdy
+    double precision ::     dtdz,    fgam,      mu,     mut,     nxn
+    double precision ::      nyn,     nzn,pression,  ptdual,  qcxts5
+    double precision ::   qcyts6,  qcz000,      sn,       t,     tn1
+    double precision ::     tn10,     tn2,     tn3,     tn9,    topz
+    double precision ::       tp,   tprod,  txxf5x,  txyf5y,  txzf5z
+    double precision ::   tyyf6x,  tyzf6y,  tzzf6z,       u,    utau
+    double precision ::        v,     vol,       x,     xnr,       y
+    double precision ::      ynr,       z,     znr,   ztemp
 !
 !-----------------------------------------------------------------------
 !
-      integer icycle
-      double precision nxn,nyn,nzn,mu,mut
 !
-      dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60),ptdual(ip11,ip60)
-      dimension dt(ip11),vol(ip11),ztemp(ip11),cson(ip11),pression(ip11),topz(ip11)
-      dimension mut(ip12),mu(ip12), &
-                txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &
-                tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12), &
-                qcxts5(ip12),qcyts6(ip12),qcz000(ip12)
-      dimension cfke(ip13)
-      dimension bceqt(ip41,neqt)
-      dimension sn(ip31*ndir)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00),t(ip00),tprod(ip00), &
-             dtdx(ip00),dtdy(ip00),dtdz(ip00),tn9(ip00),tn10(ip00)
-      dimension tp(ip40),ncbd(ip41),ncin(ip41),mnc(ip43)
-      dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension mnpar(ip12),dist(ip12),fgam(ip42),utau(ip42)
-      dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-                cmuk1(ip21),cmuk2(ip21)
-      dimension coefe(ndir,ip00)
-      dimension x(ip21),y(ip21),z(ip21)
-      DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz, &
-                                                dvzx,dvzy,dvzz,fracmod
-      ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-            dvzx(ip00),dvzy(ip00),dvzz(ip00),fracmod(ip12))
+    dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60),ptdual(ip11,ip60)
+    dimension dt(ip11),vol(ip11),ztemp(ip11),cson(ip11),pression(ip11),topz(ip11)
+    dimension mut(ip12),mu(ip12), &
+         txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &
+         tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12), &
+         qcxts5(ip12),qcyts6(ip12),qcz000(ip12)
+    dimension cfke(ip13)
+    dimension bceqt(ip41,neqt)
+    dimension sn(ip31*ndir)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00),t(ip00),tprod(ip00), &
+         dtdx(ip00),dtdy(ip00),dtdz(ip00),tn9(ip00),tn10(ip00)
+    dimension tp(ip40),ncbd(ip41),ncin(ip41),mnc(ip43)
+    dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension mnpar(ip12),dist(ip12),fgam(ip42),utau(ip42)
+    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
+         cmuk1(ip21),cmuk2(ip21)
+    dimension coefe(ndir,ip00)
+    dimension x(ip21),y(ip21),z(ip21)
+    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz, &
+         dvzx,dvzy,dvzz,fracmod
+    ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
+         dvzx(ip00),dvzy(ip00),dvzz(ip00),fracmod(ip12))
 !
 !     choix des appels : a initialiser en fonction du modele
 !     Fait dans "atlecdon.f"
@@ -192,44 +143,44 @@ integer :: npsn
 !     ksecmb =1
 !     kcmut  =1
 !
-         if((kutau.eq.1).and.(ncyc.ne.1)) then
+    if((kutau.eq.1).and.(ncyc.ne.1)) then
 !
 !          modele de Chien - modele k-omega bas Reynolds de Wilcox
 !          et modeles k-omega de Wilcox ou Menter avec rugosite
 !          il faut "utau" a partir du tenseur des contraintes
 !          visqueuses et turbulentes.
 !
-           call met_uttau( &
-                 ncbd, &
-                 nxn,nyn,nzn, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 v,utau)
+       call met_uttau( &
+            ncbd, &
+            nxn,nyn,nzn, &
+            txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+            v,utau)
 !
-         endif
+    endif
 !
 !-----------application des condition aux limites----------------------------------------
 !
-            call met_bord( &
-                 0, &
-                 bceqt, &
-                 mnc,ncin,mnr,xnr,ynr,znr,ncbd, &
-                 v,utau,mu)
+    call met_bord( &
+         0, &
+         bceqt, &
+         mnc,ncin,mnr,xnr,ynr,znr,ncbd, &
+         v,utau,mu)
 !
-            if((kparoi.eq.1).and.(lparoi.lt.1)) then
+    if((kparoi.eq.1).and.(lparoi.lt.1)) then
 !
 !              condition limite sur omega en 6*nu/y**2 pour Wilcox et Menter
 !              traitement de toutes les surfaces
 !
-               call met_parko( &
-                 0,ncin,ncbd, &
-                 v,mut,mu,dist,mnpar)
-            endif
+       call met_parko( &
+            0,ncin,ncbd, &
+            v,mut,mu,dist,mnpar)
+    endif
 !
 ! --------------------------------------------------------------------------
-         do l=1,lzx
+    do l=1,lzx
 !
 !          calcul de la viscosite moleculaire
-             call zvismo(l,mu,v,ztemp)
+       call zvismo(l,mu,v,ztemp)
 
 !           ----------------------------------------------------------
 !com        teq_gradv --> grad(v) aux points interieurs au domaine
@@ -238,74 +189,74 @@ integer :: npsn
 !           | dvyx,dvyy,dvyz | => | dv/dx dv/dy dv/dz |
 !           | dvzx,dvzy,dvzz |    | dw/dx dw/dy dw/dz |
 !
-            call teq_gradv( &
-                 l, &
-                 sn, &
-                 vol,v, &
-                 t, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+       call teq_gradv( &
+            l, &
+            sn, &
+            vol,v, &
+            t, &
+            dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+            cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !           ----------------------------------------------------------
 !com        met_prod --> calcul de v x production de k
 !
-            call met_prod( &
-                 l,ncyc, &
-                 mut,v, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 tprod)
+       call met_prod( &
+            l,ncyc, &
+            mut,v, &
+            dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+            tprod)
 !           ----------------------------------------------------------
 !com        application de la condition aux limites lois de paroi
 !
-            if(lparoi.eq.1) then
-              if((equatt(1:3).eq.'2JL').or.(equatt(1:3).eq.'2LS')) then
+       if(lparoi.eq.1) then
+          if((equatt(1:3).eq.'2JL').or.(equatt(1:3).eq.'2LS')) then
 !              Modele k-epsilon de Jones Launder
 !              production de k et epsilon dans cellule adjacente aux parois
-               if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S').or. &
+             if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S').or. &
                   (equatt(4:4).eq.'C').or.(equatt(4:4).eq.'L')) then
                 call lpke( &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,l, &
-                 mnpar,fgam,ncyc, &
-                 tprod,tp, &
-                 ztemp)
+                     v,mu,mut,dist, &
+                     nxn,nyn,nzn, &
+                     ncin,ncbd,l, &
+                     mnpar,fgam,ncyc, &
+                     tprod,tp, &
+                     ztemp)
 !
-               elseif (equatt(4:4).eq.'R') then
-                 call lpker( &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,l, &
-                 mnpar,fgam,tprod, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 ztemp)
-               endif
+             elseif (equatt(4:4).eq.'R') then
+                call lpker( &
+                     v,mu,mut,dist, &
+                     nxn,nyn,nzn, &
+                     ncin,ncbd,l, &
+                     mnpar,fgam,tprod, &
+                     dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                     ztemp)
+             endif
 !
-              else if(equatt(1:3).eq.'2Sm') then
+          else if(equatt(1:3).eq.'2Sm') then
 !              Modele k-l de Smith
 !              production de k et l imposee dans cellule adjacente aux parois
-                call lpkl( &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,l, &
-                 mnpar,fgam, &
-                 tprod,ncyc,tp, &
-                 ztemp)
+             call lpkl( &
+                  v,mu,mut,dist, &
+                  nxn,nyn,nzn, &
+                  ncin,ncbd,l, &
+                  mnpar,fgam, &
+                  tprod,ncyc,tp, &
+                  ztemp)
 !
-              else if((equatt(1:3).eq.'2WL').or.(equatt(1:3).eq.'2KO') &
-                .or.(equatt(1:3).eq.'2MT')) then
+          else if((equatt(1:3).eq.'2WL').or.(equatt(1:3).eq.'2KO') &
+               .or.(equatt(1:3).eq.'2MT')) then
 !             Modele k-omega de Wilcox et Menter
 !             production de k et omega dans cellule adjacente aux parois
-               if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
-                 call lpkomega( &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,l, &
-                 mnpar,fgam, &
-                 tprod,ncyc,tp, &
-                 ztemp)
+             if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
+                call lpkomega( &
+                     v,mu,mut,dist, &
+                     nxn,nyn,nzn, &
+                     ncin,ncbd,l, &
+                     mnpar,fgam, &
+                     tprod,ncyc,tp, &
+                     ztemp)
 !
-               elseif(equatt(4:4).eq.'G') then  !earsm gatski
+             elseif(equatt(4:4).eq.'G') then  !earsm gatski
 !                 call lpkomegag( &
 !                 v,mu,mut,dist, &
 !                 nxn,nyn,nzn, &
@@ -313,225 +264,225 @@ integer :: npsn
 !                 mnpar,fgam,tprod,tp, &
 !                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz)
 !
-                elseif((equatt(4:4).eq.'R').or. &
-                       (equatt(5:5).eq.'R')) then    !realisabilite durbin
-                 call lpkomegar( &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,l, &
-                 mnpar,fgam,tprod,tp, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 ztemp)
-               endif
+             elseif((equatt(4:4).eq.'R').or. &
+                  (equatt(5:5).eq.'R')) then    !realisabilite durbin
+                call lpkomegar( &
+                     v,mu,mut,dist, &
+                     nxn,nyn,nzn, &
+                     ncin,ncbd,l, &
+                     mnpar,fgam,tprod,tp, &
+                     dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                     ztemp)
+             endif
 !
-              else if(equatt(1:3).eq.'1SA') then
+          else if(equatt(1:3).eq.'1SA') then
 !              Modele de Spalart-Allmaras
 !              nutilde imposee dans cellule adjacente aux parois
-                call lpsa( &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,l, &
-                 mnpar,fgam,ncyc,tp, &
-                 ztemp)
-              endif
+             call lpsa( &
+                  v,mu,mut,dist, &
+                  nxn,nyn,nzn, &
+                  ncin,ncbd,l, &
+                  mnpar,fgam,ncyc,tp, &
+                  ztemp)
+          endif
 !
-            elseif(lparoi.eq.2) then
-             if(ncyc.ne.1) then
-               call met_uttau( &
-                 ncbd, &
-                 nxn,nyn,nzn, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 v,utau)
-             endif
-             if(equatt(1:3).eq.'2Sm') then
+       elseif(lparoi.eq.2) then
+          if(ncyc.ne.1) then
+             call met_uttau( &
+                  ncbd, &
+                  nxn,nyn,nzn, &
+                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+                  v,utau)
+          endif
+          if(equatt(1:3).eq.'2Sm') then
 !              Modele k-l de Smith
-               call lp2kl( &
-                v,mu,mut,dist, &
-                nxn,nyn,nzn, &
-                ncin,ncbd,l, &
-                vol,sn,ncyc, &   
-                mnpar,fgam,  &   
-                tprod,tp,utau,topz, &
-                tn1,tn2,tn3, & 
-                pression,ztemp)
-             elseif((equatt(1:3).eq.'2JL').or.(equatt(1:3).eq.'2LS')) then
+             call lp2kl( &
+                  v,mu,mut,dist, &
+                  nxn,nyn,nzn, &
+                  ncin,ncbd,l, &
+                  vol,sn,ncyc, &   
+                  mnpar,fgam,  &   
+                  tprod,tp,utau,topz, &
+                  tn1,tn2,tn3, & 
+                  pression,ztemp)
+          elseif((equatt(1:3).eq.'2JL').or.(equatt(1:3).eq.'2LS')) then
 !              Modele k-eps de Jones-Launder ou de Launder-Sharma
-               call lp2ke( &
-                v,mu,mut,dist, &
-                nxn,nyn,nzn, &
-                ncin,ncbd,l, &
-                vol,sn,ncyc, &   
-                mnpar,fgam,  &   
-                tprod,tp,utau, &
-                tn1,tn2,tn3, & 
-                pression,ztemp)
-             elseif((equatt(1:3).eq.'2WL').or.(equatt(1:3).eq.'2KO') &
-                .or.(equatt(1:3).eq.'2MT')) then
+             call lp2ke( &
+                  v,mu,mut,dist, &
+                  nxn,nyn,nzn, &
+                  ncin,ncbd,l, &
+                  vol,sn,ncyc, &   
+                  mnpar,fgam,  &   
+                  tprod,tp,utau, &
+                  tn1,tn2,tn3, & 
+                  pression,ztemp)
+          elseif((equatt(1:3).eq.'2WL').or.(equatt(1:3).eq.'2KO') &
+               .or.(equatt(1:3).eq.'2MT')) then
 !              Modele k-omega de Wilcox ou Menter
-               call lp2kw( &
-                v,mu,mut,dist, &
-                nxn,nyn,nzn, &
-                ncin,ncbd,l, &
-                vol,sn,ncyc, &   
-                mnpar,fgam,  &   
-                tprod,tp,utau, &
-                tn1,tn2,tn3, & 
-                pression,ztemp)
-              elseif(equatt(1:3).eq.'1SA') then
+             call lp2kw( &
+                  v,mu,mut,dist, &
+                  nxn,nyn,nzn, &
+                  ncin,ncbd,l, &
+                  vol,sn,ncyc, &   
+                  mnpar,fgam,  &   
+                  tprod,tp,utau, &
+                  tn1,tn2,tn3, & 
+                  pression,ztemp)
+          elseif(equatt(1:3).eq.'1SA') then
 !              Modele de Spalart-Allmaras
-               call lp2sa( &
-                v,mu,mut,dist, &
-                nxn,nyn,nzn, &
-                ncin,ncbd,l, &
-                vol,sn,ncyc, &   
-                mnpar,fgam,  &   
-                tp,utau,     &
-                tn1,tn2,tn3, & 
-                pression,ztemp)
-             endif
-           endif
+             call lp2sa( &
+                  v,mu,mut,dist, &
+                  nxn,nyn,nzn, &
+                  ncin,ncbd,l, &
+                  vol,sn,ncyc, &   
+                  mnpar,fgam,  &   
+                  tp,utau,     &
+                  tn1,tn2,tn3, & 
+                  pression,ztemp)
+          endif
+       endif
 !           ----------------------------------------------------------
 !com        grad(k)=>txxf5x,txyf5y,txzf5z points interieurs au domaine
 !com        grad(e)=>tyyf6x,tyzf6y,tzzf6z
 !
-            call met_gradtr( &
-                 l, &
-                 sn, &
-                 vol,v,mu,mut, &
-                 t,dtdx,dtdy,dtdz, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+       call met_gradtr( &
+            l, &
+            sn, &
+            vol,v,mu,mut, &
+            t,dtdx,dtdy,dtdz, &
+            txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+            cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !           -----------------------------------------------------------
 !
 !com        calcul terme source des equations de transport
 !
-            if(ksecmb.le.1) then
+       if(ksecmb.le.1) then
 !
 !              modele de Jones Launder 
 !
-               call met_smke( &
-                 l, &
-                 sn, &
-                 vol,v,mu,mut,tprod,cfke, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 t,dtdx,dtdy,dtdz,tn9,tn10, &
-                 qcxts5,qcyts6, &
-                 tn1,tn2,tn3, &
-                 cson, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          call met_smke( &
+               l, &
+               sn, &
+               vol,v,mu,mut,tprod,cfke, &
+               dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+               t,dtdx,dtdy,dtdz,tn9,tn10, &
+               qcxts5,qcyts6, &
+               tn1,tn2,tn3, &
+               cson, &
+               cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-            else if(ksecmb.eq.2) then
+       else if(ksecmb.eq.2) then
 !
-              if(equatt(1:4).eq.'1SA ') then
+          if(equatt(1:4).eq.'1SA ') then
 !
 !              modele de Spalart-Allmaras
 !
-               call met_smsa( &
-                 l, &
-                 sn, &
-                 vol,v,mu,dist, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 txxf5x,txyf5y,txzf5z,cfke, &
-                 t,dtdx,dtdy,dtdz,tn9, &
-                 qcxts5,qcyts6, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+             call met_smsa( &
+                  l, &
+                  sn, &
+                  vol,v,mu,dist, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  txxf5x,txyf5y,txzf5z,cfke, &
+                  t,dtdx,dtdy,dtdz,tn9, &
+                  qcxts5,qcyts6, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-              elseif(equatt(1:4).eq.'1SAL') then
+          elseif(equatt(1:4).eq.'1SAL') then
 !
 !              modele de Spalart-Allmaras SAS
 !
-               call met_smsasas( &
-                 l, &
-                 sn, &
-                 vol,v,mu,dist, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 txxf5x,txyf5y,txzf5z,cfke,  &
-                 t,dtdx,dtdy,dtdz,tn9, &
-                 qcxts5,qcyts6, &
-                 tn1,tn2,tn3,tn10, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+             call met_smsasas( &
+                  l, &
+                  sn, &
+                  vol,v,mu,dist, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  txxf5x,txyf5y,txzf5z,cfke,  &
+                  t,dtdx,dtdy,dtdz,tn9, &
+                  qcxts5,qcyts6, &
+                  tn1,tn2,tn3,tn10, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-              elseif(equatt(1:4).eq.'1SAD') then
+          elseif(equatt(1:4).eq.'1SAD') then
 !
 !              DES de Spalart
 !
-               call met_smdes( &
-                 l,x,y,z,tn9, &
-                 sn, &
-                 vol,v,mu,dist, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 txxf5x,txyf5y,txzf5z,cfke, &
-                 t,dtdx,dtdy,dtdz,tn10, &
-                 qcxts5,qcyts6, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-              endif
+             call met_smdes( &
+                  l,x,y,z,tn9, &
+                  sn, &
+                  vol,v,mu,dist, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  txxf5x,txyf5y,txzf5z,cfke, &
+                  t,dtdx,dtdy,dtdz,tn10, &
+                  qcxts5,qcyts6, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          endif
 !
-            else if(ksecmb.eq.3) then
+       else if(ksecmb.eq.3) then
 !
 !              modele k-l de Smith
 !              modele k-l de Smith Scale-Adaptative
 !
-             if(equatt(4:4).eq.'L') then
-               call met_smklsas( &
-                 l, &
-                 sn, &
-                 vol,v,mu,mut,dist,mnpar, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 tprod,cfke, &
-                 t,dtdx,dtdy,dtdz,tn10, &
-                 qcxts5,qcyts6, &
-                 tn1,tn2,tn3,tn9, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-             else
-               call met_smkl( &
-                 l, &
-                 sn, &
-                 vol,v,mu,mut,dist,mnpar, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 tprod,cfke, &
-                 t,dtdx,dtdy,dtdz,tn9, &
-                 qcxts5,qcyts6, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-             endif
+          if(equatt(4:4).eq.'L') then
+             call met_smklsas( &
+                  l, &
+                  sn, &
+                  vol,v,mu,mut,dist,mnpar, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+                  tprod,cfke, &
+                  t,dtdx,dtdy,dtdz,tn10, &
+                  qcxts5,qcyts6, &
+                  tn1,tn2,tn3,tn9, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          else
+             call met_smkl( &
+                  l, &
+                  sn, &
+                  vol,v,mu,mut,dist,mnpar, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+                  tprod,cfke, &
+                  t,dtdx,dtdy,dtdz,tn9, &
+                  qcxts5,qcyts6, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          endif
 !
-            else if(ksecmb.eq.4) then
+       else if(ksecmb.eq.4) then
 !
 !              modeles k-omega de Wilcox, Menter, Menter SST
 !              modeles k-omega de Menter + realisabilite de Durbin
 !
-             if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
-               call met_smmt( &
-                 l,ncyc, &
-                 v,mu,mut,dist,mnpar,ncin, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 tprod,cfke, &
-                 tn9,qcz000, &
-                 qcxts5,qcyts6)
+          if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
+             call met_smmt( &
+                  l,ncyc, &
+                  v,mu,mut,dist,mnpar,ncin, &
+                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+                  tprod,cfke, &
+                  tn9,qcz000, &
+                  qcxts5,qcyts6)
 !
-              elseif(equatt(4:4).eq.'R') then
-               call met_smmtr( &
-                 l, &
-                 v,mu,mut,dist,mnpar,ncin, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 tprod,cfke,fracmod, &
-                 qcxts5,qcyts6)
-               endif
+          elseif(equatt(4:4).eq.'R') then
+             call met_smmtr( &
+                  l, &
+                  v,mu,mut,dist,mnpar,ncin, &
+                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  tprod,cfke,fracmod, &
+                  qcxts5,qcyts6)
+          endif
 !
-            else if(ksecmb.eq.5) then
+       else if(ksecmb.eq.5) then
 !
 !              modele de Chien
 !
-               call met_smch( &
-                 l, &
-                 v,mu,dist,mnpar,utau, &
-                 tprod, &
-                 qcxts5,qcyts6)
+          call met_smch( &
+               l, &
+               v,mu,dist,mnpar,utau, &
+               tprod, &
+               qcxts5,qcyts6)
 !
-            else if(ksecmb.eq.6) then
+       else if(ksecmb.eq.6) then
 !
 !             modele RNG de Yakhot, Orzag, Thangam, Gatski et Speziale
 !
@@ -547,30 +498,30 @@ integer :: npsn
 !                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !
-            else if(ksecmb.eq.8) then
+       else if(ksecmb.eq.8) then
 !
 !             modele k-omega de Wilcox compressible
 !
-             if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
-               call met_smko( &
-                 l,v, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 tprod,cfke, &
-                 qcxts5,qcyts6,cson)
+          if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
+             call met_smko( &
+                  l,v, &
+                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+                  tprod,cfke, &
+                  qcxts5,qcyts6,cson)
 !
-              elseif(equatt(4:4).eq.'R') then  !Kok realisable
-               call met_smkor( &
-                 l,v, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 tprod,cfke, &
-                 qcxts5,qcyts6)
-              endif
+          elseif(equatt(4:4).eq.'R') then  !Kok realisable
+             call met_smkor( &
+                  l,v, &
+                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  tprod,cfke, &
+                  qcxts5,qcyts6)
+          endif
 !
-            else
-              write(imp,'(/,''!!!met_num: modele non prevu'')')
-              stop
-            endif
+       else
+          write(imp,'(/,''!!!met_num: modele non prevu'')')
+          stop
+       endif
 !
 ! -----------------------------------------------------------------
 !        calcul des densites de flux dissipatifs
@@ -578,152 +529,152 @@ integer :: npsn
 !           (txxf5x,txyf5y,txzf5z)<=grad(k) devient (mu+mut/.)grad(k)
 !           (tyyf6x,tyzf6y,tzzf6z)<=grad(e) devient (mu+mut/.)grad(e)
 !
-            if(kfludis.eq.1) then !sigma_k et sigma_e constants
-               call met_fludc( &
-                 l, &
-                 v,mu,mut, &
-                 t,dtdx,dtdy,dtdz, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
+       if(kfludis.eq.1) then !sigma_k et sigma_e constants
+          call met_fludc( &
+               l, &
+               v,mu,mut, &
+               t,dtdx,dtdy,dtdz, &
+               txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
 !
-            else if(kfludis.eq.2) then !modele Spalart Allmaras
-              call met_fludcsa( &
-                 l, &
-                 v,mu, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
+       else if(kfludis.eq.2) then !modele Spalart Allmaras
+          call met_fludcsa( &
+               l, &
+               v,mu, &
+               txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
 !
-            else if(kfludis.eq.4) then ! modele de Menter avec fonction de raccordement
-              call met_fludmt( &
-                 l, &
-                 v,mu,mut, &
-                 qcz000, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
+       else if(kfludis.eq.4) then ! modele de Menter avec fonction de raccordement
+          call met_fludmt( &
+               l, &
+               v,mu,mut, &
+               qcz000, &
+               txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
 !
-            else if(kfludis.eq.5) then !modele kw de Kok et Wilcox compressible
-              call met_fludko( &
-                 l,mu,mut, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
+       else if(kfludis.eq.5) then !modele kw de Kok et Wilcox compressible
+          call met_fludko( &
+               l,mu,mut, &
+               txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
 !
-            else if(kfludis.eq.6) then ! modele RNG de Yakhot et al
+       else if(kfludis.eq.6) then ! modele RNG de Yakhot et al
 !              call met_fludrng( &
 !                 l, &
 !                 v,mu,mut, &
 !                 fracmod, &
 !                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
 
-            else
-              write(imp,'(/,''!!!met_num: kfludis non prevu'')')
-              stop
-            endif
+       else
+          write(imp,'(/,''!!!met_num: kfludis non prevu'')')
+          stop
+       endif
 !
 !           fin de boucle sur les domaines
-         enddo
+    enddo
 !
 !-------------------------------------------------------------------------------
 !        continuite des densites de flux dissipatifs entre les domaines a tn
 !-------------------------------------------------------------------------------
 !
 !        frontieres a normales stockees
-         do mf=1,mtnx
-            lbd(mf)=nfbn(mf)
-         enddo
-         nbd=mtnx
-         call met_rbse( &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 ncbd,ncin)
+    do mf=1,mtnx
+       lbd(mf)=nfbn(mf)
+    enddo
+    nbd=mtnx
+    call met_rbse( &
+         txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+         ncbd,ncin)
 
 !       frontieres autres
-         do mf=1,mtax
-            lbd(mf)=nfba(mf)
-         enddo
-         nbd=mtax
-         call met_rbse( &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 ncbd,ncin)
+    do mf=1,mtax
+       lbd(mf)=nfba(mf)
+    enddo
+    nbd=mtax
+    call met_rbse( &
+         txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+         ncbd,ncin)
 
 !        frontieres coincidentes
-         do mfc=1,mtcx
-            lbd(mfc)=nfbc(mfc)
-         enddo
-         nbd=mtcx
-         call met_rbsc( &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 ncbd,ncin,mnc)
+    do mfc=1,mtcx
+       lbd(mfc)=nfbc(mfc)
+    enddo
+    nbd=mtcx
+    call met_rbsc( &
+         txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+         ncbd,ncin,mnc)
 
 !        frontiere recouverte
-         do mfr=1,mtrx
-            lbd(mfr)=nfbr(mfr)
-         enddo
-         nbd=mtrx
-         call met_rbsr( &
-                 ncbd,mnr,xnr,ynr,znr, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 ncin)
+    do mfr=1,mtrx
+       lbd(mfr)=nfbr(mfr)
+    enddo
+    nbd=mtrx
+    call met_rbsr( &
+         ncbd,mnr,xnr,ynr,znr, &
+         txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+         ncin)
 !
 !********************************************************************
 !         application du schema numerique
 !********************************************************************
 !
-          do l=1,lzx
-           npsn  =ndir*npfb(l)+1
-           lgsnlt=nnn(l)
+    do l=1,lzx
+       npsn  =ndir*npfb(l)+1
+       lgsnlt=nnn(l)
 !
 !-------calcul de la dissipation du schema de  Roe------------------
 !
-           if(kditur.eq.2) then
-            if(klroe.eq.1) then
+       if(kditur.eq.2) then
+          if(klroe.eq.1) then
 !            schema ordre 1
              call met_roe( &
-                   l,v,d, &
-                   equat, &
-                   sn(npsn),lgsnlt, &
-                   vol)
-            elseif(klroe.eq.2) then
+                  l,v,d, &
+                  equat, &
+                  sn(npsn),lgsnlt, &
+                  vol)
+          elseif(klroe.eq.2) then
 !            schema ordre 2 - sans correction de Harten
-              if(abs(epsroe).le.tiny(1.)) then
+             if(abs(epsroe).le.tiny(1.)) then
                 call met_roe2o( &
                      l,v,d, &
                      sn(npsn),lgsnlt, &
                      vol,dvxx,dvxy)
-                else
+             else
 !            schema ordre 2 - avec correction de Harten
 !            vitesse du son donne par loi d'etat
                 call met_roe2oh( &
                      l,v,d, &
                      sn(npsn),lgsnlt, &
                      vol,dvxx,dvxy)
-               endif
-              endif
              endif
+          endif
+       endif
 !
 !------------------------------------------------------------------------
 !           increment explicite
 !-----------------------------------------------------------------------
 !
-           if((kditur.eq.1).or.(kditur.eq.2)) then
-            if((ischema.eq.2).or.(ischema.eq.4).or.(ischema.eq.6).or. &
-              (ischema.eq.8).or.(ischema.eq.11).or.(ischema.eq.13)) then
+       if((kditur.eq.1).or.(kditur.eq.2)) then
+          if((ischema.eq.2).or.(ischema.eq.4).or.(ischema.eq.6).or. &
+               (ischema.eq.8).or.(ischema.eq.11).or.(ischema.eq.13)) then
 !             schemas ponderes de Jameson et de Roe
-               call sch_turb2( &
-                 l,u,v,d, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 qcxts5,qcyts6, &
-                 equat,ncin, &
-                 sn(npsn),lgsnlt, &
-                 vol, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-            else
+             call sch_turb2( &
+                  l,u,v,d, &
+                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+                  qcxts5,qcyts6, &
+                  equat,ncin, &
+                  sn(npsn),lgsnlt, &
+                  vol, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          else
 !            schemas de Jameson standard et de Roe
-               call sch_turb( &
-                 l,u,v,d, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 qcxts5,qcyts6, &
-                 equat,ncin, &
-                 sn(npsn),lgsnlt, &
-                 vol, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz)
-            endif
-           elseif(kditur.eq.4) then
+             call sch_turb( &
+                  l,u,v,d, &
+                  txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+                  qcxts5,qcyts6, &
+                  equat,ncin, &
+                  sn(npsn),lgsnlt, &
+                  vol, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz)
+          endif
+       elseif(kditur.eq.4) then
 !           schema de Roe avec extrapolation MUSCL
 !                call sch_turb_roe_muscl( &
 !                 l,u,v, &
@@ -732,137 +683,137 @@ integer :: npsn
 !                 equat, &
 !                 sn(npsn),lgsnlt, &
 !                 vol,dvxx,dvxy,dvxz,dvyx)
-           endif
+       endif
 !
 !       ----------------------------------------------------------
 !      Residu instationnaire DTS pour equation de transport
 !
-        if (kfmg.eq.3) then
-         if(kdualns.eq.2) then
-          call met_dual2( &
-                 icycle,l,u,v, &
-                 vol,ptdual)
-         else
-          call met_dual( &
-                 icycle,l,u,v, &
-                 vol,ptdual)
-         endif
-        endif
+       if (kfmg.eq.3) then
+          if(kdualns.eq.2) then
+             call met_dual2( &
+                  icycle,l,u,v, &
+                  vol,ptdual)
+          else
+             call met_dual( &
+                  icycle,l,u,v, &
+                  vol,ptdual)
+          endif
+       endif
 !------------------------------------------------------------------
 !         phase implicite
 !------------------------------------------------------------------
 !
 !         Jacobi par lignes alternes
-          if(equat(3:4).eq.'2d') then
-            call impli2_eqt( &
-                 l,u,dt,v, &
-                 mu,mut,cfke,ncin, &
-                 ncyc, &
-                 sn(npsn),lgsnlt, &
-                 vol, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy, &
-                 dvyz,dvzx,dvzy,dvzz,dtdx)
-          elseif(equat(3:4).eq.'3d') then
-             call impli2_eqt_3d( &
-                 l,u,dt,v, &
-                 mu,mut,cfke,ncin, &
-                 ncyc, &
-                 sn(npsn),lgsnlt, &
-                 vol, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy, &
-                 dvyz,dvzx,dvzy,dvzz,dtdx)
-          endif           
+       if(equat(3:4).eq.'2d') then
+          call impli2_eqt( &
+               l,u,dt,v, &
+               mu,mut,cfke,ncin, &
+               ncyc, &
+               sn(npsn),lgsnlt, &
+               vol, &
+               dvxx,dvxy,dvxz,dvyx,dvyy, &
+               dvyz,dvzx,dvzy,dvzz,dtdx)
+       elseif(equat(3:4).eq.'3d') then
+          call impli2_eqt_3d( &
+               l,u,dt,v, &
+               mu,mut,cfke,ncin, &
+               ncyc, &
+               sn(npsn),lgsnlt, &
+               vol, &
+               dvxx,dvxy,dvxz,dvyx,dvyy, &
+               dvyz,dvzx,dvzy,dvzz,dtdx)
+       endif
 !
 !          application des limiteurs
-             call at_cutke(l,v)
+       call at_cutke(l,v)
 !
-            enddo  !fin de boucle sur les domaines
+    enddo  !fin de boucle sur les domaines
 !
 !*********************************************************************
 !       calcul de la viscosite turbulente mut
 !*********************************************************************
 !
-      do l=1,lzx
+    do l=1,lzx
 !
 !------------------------------------------------------------------
 !       Modele k-eps de Jones Launder ou Launder Sharma
 !--------------------------------------------------------------------
 !
-         if(kcmut.eq.1) then
+       if(kcmut.eq.1) then
 !
-           if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S').or. &
-              (equatt(4:4).eq.'C').or.(equatt(4:4).eq.'L')) then
+          if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S').or. &
+               (equatt(4:4).eq.'C').or.(equatt(4:4).eq.'L')) then
 !            modele de base ou avec correction SST
              call met_kemut( &
-                 l, &
-                 sn,vol,t, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dist,v,mu,mut, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+                  l, &
+                  sn,vol,t, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  dist,v,mu,mut, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-           else if(equatt(4:4).eq.'R') then
+          else if(equatt(4:4).eq.'R') then
 !            modele de Jones Launder realisable
              call met_kemutr( &
-                 l,ncyc, &
-                 sn,vol,t, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 v,mu,mut, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-           else if(equatt(4:4).eq.'M') then
+                  l,ncyc, &
+                  sn,vol,t, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  v,mu,mut, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          else if(equatt(4:4).eq.'M') then
 !            modele de Jones Launder modifie avec C_mu variable
              call met_kemutm( &
-                 l, &
-                 sn,vol,t, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 v,mu,mut, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-           endif
+                  l, &
+                  sn,vol,t, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  v,mu,mut, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          endif
 !
 !------------------------------------------------------------------
 !       Modele de Spalart-Allmaras
 !------------------------------------------------------------------
 !
-         else if(kcmut.eq.2) then
+       else if(kcmut.eq.2) then
 !
-            call met_samut(l,v,mu,mut)
+          call met_samut(l,v,mu,mut)
 !
 !------------------------------------------------------------------
 !       Modele k-l de Smith
 !------------------------------------------------------------------
 !
-         else if(kcmut.eq.3) then
+       else if(kcmut.eq.3) then
 !
-           if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'L')) then
+          if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'L')) then
 !            modele k-l de base et SAS
              call met_klmut(l,v,mu,mut,dist)
 !
-           elseif(equatt(4:4).eq.'S') then
+          elseif(equatt(4:4).eq.'S') then
 !            modele k-l avec correction SST
              call met_klsmut( &
-                 l, &
-                 sn,vol,t, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dist,v,mu,mut, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-           elseif(equatt(4:4).eq.'R') then
+                  l, &
+                  sn,vol,t, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  dist,v,mu,mut, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          elseif(equatt(4:4).eq.'R') then
 !            modele k-l realisable
              call met_klrmut( &
-                 l, &
-                 sn,vol,t, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dist,v,mu,mut, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+                  l, &
+                  sn,vol,t, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  dist,v,mu,mut, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-           else
+          else
              write(imp,'(/,''!!!met_num: modele k-l de Smith '',''non prevu'')')
              stop
-           endif
+          endif
 !
 !-------------------------------------------------------------
 !       Modele k-w de Wilcox et de Menter
 !-------------------------------------------------------------
 !
-         else if(kcmut.eq.4) then
+       else if(kcmut.eq.4) then
 !
           if(equatt(4:4).eq.'G') then
 !         modele EASM de Gatski et Speziale
@@ -873,33 +824,33 @@ integer :: npsn
 !                 v,mu,mut, &
 !                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
           elseif((equatt(4:4).eq.'R').or. &
-                 (equatt(5:5).eq.'R')) then
+               (equatt(5:5).eq.'R')) then
 !         Modeles k-omega de Menter avec realisabilite de Durbin
-            call met_komutr( &
-                 l, &
-                 sn,vol,t, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dist,v,mu,mut, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+             call met_komutr( &
+                  l, &
+                  sn,vol,t, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  dist,v,mu,mut, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
           else
 !         Modeles k-omega de Wilcox et Menter
-            call met_komut( &
-                 l, &
-                 sn,vol,t, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dist,v,mu,mut, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-           endif
+             call met_komut( &
+                  l, &
+                  sn,vol,t, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  dist,v,mu,mut, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          endif
 !
 !------------------------------------------------------------------
 !       Modele k-eps de Chieng
 !------------------------------------------------------------------
 !
-         else if(kcmut.eq.5) then
+       else if(kcmut.eq.5) then
 !
-            call met_chmut( &
-                 l, &
-                 v,mu,mut,dist,mnpar,utau)
+          call met_chmut( &
+               l, &
+               v,mu,mut,dist,mnpar,utau)
 !
 !------------------------------------------------------------------
 !       Modele k-eps de Jones Launder ou Launder Sharma avec correction
@@ -907,19 +858,19 @@ integer :: npsn
 !       et les sillages
 !------------------------------------------------------------------
 !
-         else if(kcmut.eq.6) then
+       else if(kcmut.eq.6) then
 !
-            call met_mutke2( &
-                 l,ncyc, &
-                 v,mu,mut,dist,mnpar,ncin, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 qcz000)
+          call met_mutke2( &
+               l,ncyc, &
+               v,mu,mut,dist,mnpar,ncin, &
+               txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+               qcz000)
 !
 !------------------------------------------------------------------
 !       Modele bicouche k-eps RNG avec k-l a la paroi
 !------------------------------------------------------------------
 !
-         else if(kcmut.eq.7) then
+       else if(kcmut.eq.7) then
 !
 !            call met_rngmut( &
 !                 l, &
@@ -929,16 +880,16 @@ integer :: npsn
 !       Modele k-omega de Kok et Wilcox compressible
 !------------------------------------------------------------------
 !
-         else if(kcmut.eq.8) then
+       else if(kcmut.eq.8) then
 !
           if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
 !           modele standard ou SST
-            call met_kocmut( &
-                 l, &
-                 sn,vol,t, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dist,v,mu,mut, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+             call met_kocmut( &
+                  l, &
+                  sn,vol,t, &
+                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                  dist,v,mu,mut, &
+                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !            call met_kokmut(
 !     &           l,
 !     &           sn,vol,t,
@@ -946,7 +897,7 @@ integer :: npsn
 !     &           dist,v,mu,mut,
 !     &           cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-           else if(equatt(4:4).eq.'R') then
+          else if(equatt(4:4).eq.'R') then
 !           modele avec realisabilite de Durbin
 !            call met_kokmutr( &
 !                 l, &
@@ -955,23 +906,23 @@ integer :: npsn
 !                 v,mu,mut, &
 !                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-         else
-            write(imp,'(/,''!!!met_num:  non prevu'')')
-            stop
-         endif
+          else
+             write(imp,'(/,''!!!met_num:  non prevu'')')
+             stop
+          endif
        endif
 !
 !------------------------------------------------------------------
 !       Transition fixee
 !------------------------------------------------------------------
 !
-         if(ktransi.eq.1) then
-           call atctranske(l,v,mu,mut,mnpar,fgam)
-         endif
-      enddo  !fin de boucle sur les domaines
+       if(ktransi.eq.1) then
+          call atctranske(l,v,mu,mut,mnpar,fgam)
+       endif
+    enddo  !fin de boucle sur les domaines
 
-DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,fracmod)
+    DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,fracmod)
 
-      return
-      end subroutine
-end module
+    return
+  end subroutine met_num
+end module mod_met_num

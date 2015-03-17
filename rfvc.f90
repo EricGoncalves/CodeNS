@@ -1,9 +1,9 @@
 module mod_rfvc
-implicit none
+  implicit none
 contains
-      subroutine rfvc( &
-              t,ncbd,mnc, &
-              ps,temp,cson)
+  subroutine rfvc( &
+       t,ncbd,mnc, &
+       ps,temp,cson)
 !
 !***********************************************************************
 !
@@ -29,55 +29,43 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use definition
-implicit none
-double precision :: t
-integer :: ncbd
-integer :: mnc
-double precision :: ps
-double precision :: temp
-double precision :: cson
-integer :: m
-integer :: mb
-integer :: mc
-integer :: mf
-integer :: mfb
-integer :: mt
-integer :: nc
-integer :: nd
-double precision :: tper
+    use para_var
+    use para_fige
+    use boundary
+    use definition
+    implicit none
+    integer          ::    m,  mb,  mc,  mf, mfb
+    integer          ::  mnc,  mt,  nc,ncbd,  nd
+    double precision :: cson,  ps,   t,temp,tper
 !
 !-----------------------------------------------------------------------
 !
-      dimension t(ip11,ip60)
-      dimension mnc(ip43),ncbd(ip41)
-      dimension ps(ip11),temp(ip11),cson(ip11)
+    dimension t(ip11,ip60)
+    dimension mnc(ip43),ncbd(ip41)
+    dimension ps(ip11),temp(ip11),cson(ip11)
 !
-      do mf=1,nbd
+    do mf=1,nbd
        mfb=lbd(mf)
        mt =mmb(mfb)
        tper=protat*real(mper(mfb))
 !!$OMP SIMD
        do m=1,mt
-        mc=mpc(mfb)+m
-        nc=mnc(mc)
-        mb=mpb(mfb)+m
-        nd=ncbd(mb)
+          mc=mpc(mfb)+m
+          nc=mnc(mc)
+          mb=mpb(mfb)+m
+          nd=ncbd(mb)
 !       definition des variables aux points fictifs
-        t(nd,1)= t(nc,1)
-        t(nd,2)= t(nc,2)
-        t(nd,3)= t(nc,3)*cos(tper)+t(nc,4)*sin(tper)
-        t(nd,4)= t(nc,4)*cos(tper)-t(nc,3)*sin(tper)
-        t(nd,5)= t(nc,5)
-        ps(nd) = ps(nc)
-        temp(nd)=temp(nc)
-        cson(nd)=cson(nc)
+          t(nd,1)= t(nc,1)
+          t(nd,2)= t(nc,2)
+          t(nd,3)= t(nc,3)*cos(tper)+t(nc,4)*sin(tper)
+          t(nd,4)= t(nc,4)*cos(tper)-t(nc,3)*sin(tper)
+          t(nd,5)= t(nc,5)
+          ps(nd) = ps(nc)
+          temp(nd)=temp(nc)
+          cson(nd)=cson(nc)
        enddo
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rfvc
+end module mod_rfvc

@@ -1,10 +1,10 @@
 module mod_metrics
-implicit none
+  implicit none
 contains
-      subroutine metrics( &
-                 l,x,y,z,r,exs1,exs2, &
-                 sn,vol, &
-                 tn1,tn2,tn3)
+  subroutine metrics( &
+       l,x,y,z,r,exs1,exs2, &
+       sn,vol, &
+       tn1,tn2,tn3)
 !
 !***********************************************************************
 !
@@ -55,107 +55,79 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use sortiefichier
-use mod_vervol
-use mod_snorm
-use mod_svol
-use mod_extmhg
-implicit none
-integer :: inc
-integer :: indc
-integer :: indn
-integer :: id
-integer :: jd
-integer :: kd
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: r
-double precision :: exs1
-double precision :: exs2
-double precision :: sn
-double precision :: vol
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-integer :: lgsnlt
-integer :: nc
-integer :: nci
-integer :: ncij
-integer :: ncijk
-integer :: ncik
-integer :: ncj
-integer :: ncjk
-integer :: nck
-integer :: nid
-integer :: njd
-integer :: nn
-integer :: npsn
-double precision :: yc
-double precision :: zc
+    use para_var
+    use para_fige
+    use maillage
+    use sortiefichier
+    use mod_vervol
+    use mod_snorm
+    use mod_svol
+    use mod_extmhg
+    implicit none
+    integer          ::      i,    id,   inc,  indc,  indn
+    integer          ::      j,    jd,     k,    kd,     l
+    integer          :: lgsnlt,    nc,   nci,  ncij, ncijk
+    integer          ::   ncik,   ncj,  ncjk,   nck,   nid
+    integer          ::    njd,    nn,  npsn
+    double precision :: exs1,exs2,   r,  sn, tn1
+    double precision ::  tn2, tn3, vol,   x,   y
+    double precision ::   yc,   z,  zc
 !
 !-----------------------------------------------------------------------
 !
-      dimension x(ip21),y(ip21),z(ip21),r(ip11),vol(ip11)
-      dimension sn(ip31*ndir)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00)
+    dimension x(ip21),y(ip21),z(ip21),r(ip11),vol(ip11)
+    dimension sn(ip31*ndir)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
-      indn(i,j,k)=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
-      indc(i,j,k)=npc(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
-      inc(id,jd,kd)=id+jd*nid+kd*nid*njd
+    indn(i,j,k)=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
+    indc(i,j,k)=npc(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
+    inc(id,jd,kd)=id+jd*nid+kd*nid*njd
 !
-      nid=id2(l)-id1(l)+1
-      njd=jd2(l)-jd1(l)+1
+    nid=id2(l)-id1(l)+1
+    njd=jd2(l)-jd1(l)+1
 !
-      nci = inc(1,0,0)
-      ncj = inc(0,1,0)
-      nck = inc(0,0,1)
-      ncij = inc(1,1,0)
-      ncik = inc(1,0,1)
-      ncjk = inc(0,1,1)
-      ncijk= inc(1,1,1)
+    nci = inc(1,0,0)
+    ncj = inc(0,1,0)
+    nck = inc(0,0,1)
+    ncij = inc(1,1,0)
+    ncik = inc(1,0,1)
+    ncjk = inc(0,1,1)
+    ncijk= inc(1,1,1)
 !
-      do k=kk1(l),kk2(l)-1
+    do k=kk1(l),kk2(l)-1
        do j=jj1(l),jj2(l)-1
-        do i=ii1(l),ii2(l)-1
-         nn=indn(i,j,k)
-         nc=indc(i,j,k)
-         yc=0.125*( y(nn     )+y(nn+nci  ) &
-                   +y(nn+ncj )+y(nn+ncij ) &
-                   +y(nn+nck )+y(nn+ncik ) &
-                   +y(nn+ncjk)+y(nn+ncijk))
-         zc=0.125*( z(nn     )+z(nn+nci  ) &
-                   +z(nn+ncj )+z(nn+ncij ) &
-                   +z(nn+nck )+z(nn+ncik ) &
-                   +z(nn+ncjk)+z(nn+ncijk))
-         r(nc)=sqrt(yc**2+zc**2)
-        enddo
+          do i=ii1(l),ii2(l)-1
+             nn=indn(i,j,k)
+             nc=indc(i,j,k)
+             yc=0.125*( y(nn     )+y(nn+nci  ) &
+                  +y(nn+ncj )+y(nn+ncij ) &
+                  +y(nn+nck )+y(nn+ncik ) &
+                  +y(nn+ncjk)+y(nn+ncijk))
+             zc=0.125*( z(nn     )+z(nn+nci  ) &
+                  +z(nn+ncj )+z(nn+ncij ) &
+                  +z(nn+nck )+z(nn+ncik ) &
+                  +z(nn+ncjk)+z(nn+ncijk))
+             r(nc)=sqrt(yc**2+zc**2)
+          enddo
        enddo
-      enddo
+    enddo
 !
-      call extmhg(l,x,y,z,exs1,exs2)
+    call extmhg(l,x,y,z,exs1,exs2)
 !
-      npsn  =ndir*npfb(l)+1
-      lgsnlt=nnn(l)
+    npsn  =ndir*npfb(l)+1
+    lgsnlt=nnn(l)
 !
-       call snorm( &
-                 l,x,y,z, &
-                 sn(npsn),lgsnlt)
-       call svol( &
-                 l,x,y,z, &
-                 sn(npsn),lgsnlt,vol, &
-                 tn1,tn2,tn3)
-      if(kvn.eq.1) then
-         call vervol(l,vol)
-      endif
+    call snorm( &
+         l,x,y,z, &
+         sn(npsn),lgsnlt)
+    call svol( &
+         l,x,y,z, &
+         sn(npsn),lgsnlt,vol, &
+         tn1,tn2,tn3)
+    if(kvn.eq.1) then
+       call vervol(l,vol)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine metrics
+end module mod_metrics

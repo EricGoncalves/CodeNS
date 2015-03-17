@@ -1,11 +1,11 @@
 module mod_svol
-implicit none
+  implicit none
 contains
-      subroutine svol( &
-                 l,x,y,z, &
-                 sn,lgsnlt, &
-                 vol, &
-                 siv,sjv,skv)
+  subroutine svol( &
+       l,x,y,z, &
+       sn,lgsnlt, &
+       vol, &
+       siv,sjv,skv)
 !
 !***********************************************************************
 !
@@ -47,144 +47,111 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-implicit none
-integer :: inc
-integer :: indc
-integer :: indn
-integer :: id
-integer :: jd
-integer :: kd
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: sn
-integer :: lgsnlt
-double precision :: vol
-double precision :: siv
-double precision :: sjv
-double precision :: skv
-integer :: i1
-integer :: i1m1
-integer :: i2
-integer :: i2p1
-integer :: j1
-integer :: j1m1
-integer :: j2
-integer :: j2p1
-integer :: k1
-integer :: k1m1
-integer :: k2
-integer :: k2p1
-integer :: m
-integer :: m1
-integer :: m2
-integer :: m4
-integer :: m5
-integer :: n
-integer :: n0c
-integer :: n0n
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    implicit none
+    integer          ::      i,    i1,  i1m1,    i2,  i2p1
+    integer          ::     id,   inc,  indc,  indn,     j
+    integer          ::     j1,  j1m1,    j2,  j2p1,    jd
+    integer          ::      k,    k1,  k1m1,    k2,  k2p1
+    integer          ::     kd,     l,lgsnlt,     m,    m1
+    integer          ::     m2,    m4,    m5,     n,   n0c
+    integer          ::    n0n,   nid,  nijd,   njd
+    double precision :: siv,sjv,skv, sn,vol
+    double precision ::   x,  y,  z
 !
 !-----------------------------------------------------------------------
 !
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension sn(lgsnlt,nind,ndir)
-      dimension siv(ip00),sjv(ip00),skv(ip00),vol(ip11)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension sn(lgsnlt,nind,ndir)
+    dimension siv(ip00),sjv(ip00),skv(ip00),vol(ip11)
 !
-      indn(i,j,k)=n0n+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-      indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-      inc(id,jd,kd)=id+jd*nid+kd*nijd
+    indn(i,j,k)=n0n+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    inc(id,jd,kd)=id+jd*nid+kd*nijd
 !
-      n0n=npn(l)
-      n0c=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0n=npn(l)
+    n0c=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      i1m1=i1-1
-      j1m1=j1-1
-      k1m1=k1-1
-      i2p1=i2+1
-      j2p1=j2+1
-      k2p1=k2+1
+    i1m1=i1-1
+    j1m1=j1-1
+    k1m1=k1-1
+    i2p1=i2+1
+    j2p1=j2+1
+    k2p1=k2+1
 !
 !     calcul de volume des cellules
 !
-      do k=k1m1,k2p1
-      do j=j1m1,j2
-      do i=i1m1,i2
-         n=indn(i,j,k)
-         m=n-n0n
-         skv(m)=(x(n)+x(n+inc(1,0,0))+x(n+inc(0,1,0))+x(n+inc(1,1,0))) &
-                *sn(m,3,1)+ &
-                (y(n)+y(n+inc(1,0,0))+y(n+inc(0,1,0))+y(n+inc(1,1,0))) &
-                *sn(m,3,2)+ &
-                (z(n)+z(n+inc(1,0,0))+z(n+inc(0,1,0))+z(n+inc(1,1,0))) &
-                *sn(m,3,3)
-      enddo
-      enddo
-      enddo
+    do k=k1m1,k2p1
+       do j=j1m1,j2
+          do i=i1m1,i2
+             n=indn(i,j,k)
+             m=n-n0n
+             skv(m)=(x(n)+x(n+inc(1,0,0))+x(n+inc(0,1,0))+x(n+inc(1,1,0))) &
+                  *sn(m,3,1)+ &
+                  (y(n)+y(n+inc(1,0,0))+y(n+inc(0,1,0))+y(n+inc(1,1,0))) &
+                  *sn(m,3,2)+ &
+                  (z(n)+z(n+inc(1,0,0))+z(n+inc(0,1,0))+z(n+inc(1,1,0))) &
+                  *sn(m,3,3)
+          enddo
+       enddo
+    enddo
 !
-      do j=j1m1,j2p1
-      do k=k1m1,k2
-      do i=i1m1,i2
-         n=indn(i,j,k)
-         m=n-n0n
-         sjv(m)=(x(n)+x(n+inc(1,0,0))+x(n+inc(0,0,1))+x(n+inc(1,0,1))) &
-                *sn(m,2,1)+ &
-                (y(n)+y(n+inc(1,0,0))+y(n+inc(0,0,1))+y(n+inc(1,0,1))) &
-                *sn(m,2,2)+ &
-                (z(n)+z(n+inc(1,0,0))+z(n+inc(0,0,1))+z(n+inc(1,0,1))) &
-                *sn(m,2,3)
-      enddo
-      enddo
-      enddo
+    do j=j1m1,j2p1
+       do k=k1m1,k2
+          do i=i1m1,i2
+             n=indn(i,j,k)
+             m=n-n0n
+             sjv(m)=(x(n)+x(n+inc(1,0,0))+x(n+inc(0,0,1))+x(n+inc(1,0,1))) &
+                  *sn(m,2,1)+ &
+                  (y(n)+y(n+inc(1,0,0))+y(n+inc(0,0,1))+y(n+inc(1,0,1))) &
+                  *sn(m,2,2)+ &
+                  (z(n)+z(n+inc(1,0,0))+z(n+inc(0,0,1))+z(n+inc(1,0,1))) &
+                  *sn(m,2,3)
+          enddo
+       enddo
+    enddo
 !
-      do i=i1m1,i2p1
-      do k=k1m1,k2
-      do j=j1m1,j2
-         n=indn(i,j,k)
-         m=n-n0n
-         siv(m)=(x(n)+x(n+inc(0,1,0))+x(n+inc(0,0,1))+x(n+inc(0,1,1))) &
-                *sn(m,1,1)+ &
-                (y(n)+y(n+inc(0,1,0))+y(n+inc(0,0,1))+y(n+inc(0,1,1))) &
-                *sn(m,1,2)+ &
-                (z(n)+z(n+inc(0,1,0))+z(n+inc(0,0,1))+z(n+inc(0,1,1))) &
-                *sn(m,1,3)
-      enddo
-      enddo
-      enddo
+    do i=i1m1,i2p1
+       do k=k1m1,k2
+          do j=j1m1,j2
+             n=indn(i,j,k)
+             m=n-n0n
+             siv(m)=(x(n)+x(n+inc(0,1,0))+x(n+inc(0,0,1))+x(n+inc(0,1,1))) &
+                  *sn(m,1,1)+ &
+                  (y(n)+y(n+inc(0,1,0))+y(n+inc(0,0,1))+y(n+inc(0,1,1))) &
+                  *sn(m,1,2)+ &
+                  (z(n)+z(n+inc(0,1,0))+z(n+inc(0,0,1))+z(n+inc(0,1,1))) &
+                  *sn(m,1,3)
+          enddo
+       enddo
+    enddo
 !
-      do k=k1m1,k2
-      do j=j1m1,j2
-      do i=i1m1,i2
-         n = indc(i,j,k)
-         m1 = n-n0c
-         m2 = m1+inc(1,0,0)
-         m4 = m1+inc(0,1,0)
-         m5 = m1+inc(0,0,1)
-         vol(n) = 0.25*(siv(m2)-siv(m1)+sjv(m4)-sjv(m1) &
-                       +skv(m5)-skv(m1))/3
-      enddo
-      enddo
-      enddo
+    do k=k1m1,k2
+       do j=j1m1,j2
+          do i=i1m1,i2
+             n = indc(i,j,k)
+             m1 = n-n0c
+             m2 = m1+inc(1,0,0)
+             m4 = m1+inc(0,1,0)
+             m5 = m1+inc(0,0,1)
+             vol(n) = 0.25*(siv(m2)-siv(m1)+sjv(m4)-sjv(m1) &
+                  +skv(m5)-skv(m1))/3
+          enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine svol
+end module mod_svol

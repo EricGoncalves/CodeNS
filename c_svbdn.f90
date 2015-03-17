@@ -1,10 +1,10 @@
 module mod_c_svbdn
-implicit none
+  implicit none
 contains
-      subroutine c_svbdn( &
-                 mot,imot,nmot, &
-                 mfbi, &
-                 nxn,nyn,nzn)
+  subroutine c_svbdn( &
+       mot,imot,nmot, &
+       mfbi, &
+       nxn,nyn,nzn)
 !
 !***********************************************************************
 !
@@ -33,31 +33,27 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use sortiefichier
-      use boundary
-implicit none
-integer :: imot
-integer :: nmot
-integer :: mfbi
-integer :: m0n
-integer :: mt
+    use para_var
+    use para_fige
+    use sortiefichier
+    use boundary
+    implicit none
+    integer          :: imot, m0n,mfbi,  mt,nmot
+    double precision :: nxn,nyn,nzn
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      double precision nxn,nyn,nzn
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension imot(nmx)
 !
-      m0n =mpn(mfbi)
-      mt  =mmb(mfbi)
+    m0n =mpn(mfbi)
+    mt  =mmb(mfbi)
 !
 !            call writfn( &
 !                 kfn,nxn,nyn,nzn, &
 !                 mt,m0n)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_svbdn
+end module mod_c_svbdn

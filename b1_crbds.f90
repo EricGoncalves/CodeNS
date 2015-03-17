@@ -1,9 +1,9 @@
 module mod_b1_crbds
-implicit none
+  implicit none
 contains
-      subroutine b1_crbds( &
-                 mfb,kini,l,imin,imax,jmin,jmax,kmin,kmax, &
-                 indfl)
+  subroutine b1_crbds( &
+       mfb,kini,l,imin,imax,jmin,jmax,kmin,kmax, &
+       indfl)
 !
 !***********************************************************************
 !
@@ -27,45 +27,38 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-   use sortiefichier
-implicit none
-integer :: mfb
-integer :: kini
-integer :: l
-integer :: imin
-integer :: imax
-integer :: jmin
-integer :: jmax
-integer :: kmin
-integer :: kmax
+    use para_fige
+    use sortiefichier
+    implicit none
+    integer          :: imax,imin,jmax,jmin,kini
+    integer          :: kmax,kmin,   l, mfb
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
-      character(len=2 ) :: indfl
+    character(len=1316) :: form
+    character(len=2 ) :: indfl
 !
-      if ((kini.eq.1).or.(kini.eq.2)) then
+    if ((kini.eq.1).or.(kini.eq.2)) then
        form='(/,2x,''creation d''''une frontiere rectangle'',/' &
-             //'2x,''----------------------------------'',/' &
-             //'2x,''numero de la frontiere   : '',11x,i5/'  &
-             //'2x,''numero du domaine        : '',11x,i5/'  &
-             //'2x,''definition du rectangle  : '',11x,6i5/' &
-             //'2x,''type de surface          : '',14x,a/'   &
-             //'2x,''cle d''''initialisation     : '',11x,i5)'
-      elseif (kini.eq.0) then
+            //'2x,''----------------------------------'',/' &
+            //'2x,''numero de la frontiere   : '',11x,i5/'  &
+            //'2x,''numero du domaine        : '',11x,i5/'  &
+            //'2x,''definition du rectangle  : '',11x,6i5/' &
+            //'2x,''type de surface          : '',14x,a/'   &
+            //'2x,''cle d''''initialisation     : '',11x,i5)'
+    elseif (kini.eq.0) then
        form='(/,2x,''creation d''''une frontiere par'',' &
-             //','' fichier d''''indices'',/' &
-             //'2x,''----------------------------------------------'',/' &
-             //'2x,''fichier d''''indices'',/' &
-             //'2x,''numero de la frontiere   : '',11x,i5/'  &
-             //'2x,''numero du domaine        : '',11x,i5/'  &
-             //'2x,''definition du rectangle  : '',11x,6i5/' &
-             //'2x,''type de surface          : '',14x,a/'   &
-             //'2x,''cle d''''initialisation     : '',11x,i5)'
-      endif
-      write(imp,form) mfb,l,imin,imax,jmin,jmax,kmin,kmax,indfl,kini
+            //','' fichier d''''indices'',/' &
+            //'2x,''----------------------------------------------'',/' &
+            //'2x,''fichier d''''indices'',/' &
+            //'2x,''numero de la frontiere   : '',11x,i5/'  &
+            //'2x,''numero du domaine        : '',11x,i5/'  &
+            //'2x,''definition du rectangle  : '',11x,6i5/' &
+            //'2x,''type de surface          : '',14x,a/'   &
+            //'2x,''cle d''''initialisation     : '',11x,i5)'
+    endif
+    write(imp,form) mfb,l,imin,imax,jmin,jmax,kmin,kmax,indfl,kini
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_crbds
+end module mod_b1_crbds

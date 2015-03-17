@@ -1,11 +1,11 @@
 module mod_clextr
-implicit none
+  implicit none
 contains
-      subroutine clextr( &
-                 mfb, &
-                 ncbd,v, &
-                 mmb,mpb,ncin, &
-                 pression,temp,cson)
+  subroutine clextr( &
+       mfb, &
+       ncbd,v, &
+       mmb,mpb,ncin, &
+       pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -25,34 +25,23 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-implicit none
-integer :: mfb
-integer :: ncbd
-double precision :: v
-integer :: mmb
-integer :: mpb
-integer :: ncin
-double precision :: pression
-double precision :: temp
-double precision :: cson
-integer :: m
-integer :: mb
-integer :: mt
-integer :: ni
-integer :: nl
+    use para_var
+    use para_fige
+    implicit none
+    integer          ::    m,  mb, mfb, mmb, mpb
+    integer          ::   mt,ncbd,ncin,  ni,  nl
+    double precision ::     cson,pression,    temp,       v
 !
 !-----------------------------------------------------------------------
 !
-      dimension ncbd(ip41),ncin(ip41)
-      dimension v(ip11,ip60)
-      dimension mmb(mtt),mpb(mtt)
-      dimension pression(ip11),temp(ip11),cson(ip11)
+    dimension ncbd(ip41),ncin(ip41)
+    dimension v(ip11,ip60)
+    dimension mmb(mtt),mpb(mtt)
+    dimension pression(ip11),temp(ip11),cson(ip11)
 !
-      mt=mmb(mfb)
+    mt=mmb(mfb)
 !
-      do m=1,mt
+    do m=1,mt
        mb=mpb(mfb)+m
        nl=ncbd(mb)
        ni=ncin(mb)
@@ -64,8 +53,8 @@ integer :: nl
        pression(nl)=pression(ni)
        temp(nl)=temp(ni)
        cson(nl)=cson(ni)
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine clextr
+end module mod_clextr

@@ -1,17 +1,17 @@
 module mod_zvisqc
-implicit none
+  implicit none
 contains
-      subroutine zvisqc( &
-                 img, &
-                 s,mu,ro, &
-                 x,y,z,mut,dist,mnpar,fgam, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 icyc,mcyturb, &
-                 ncbd,ncin,mnc, &
-                 sn,vol, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
-                 ztemp)
+  subroutine zvisqc( &
+       img, &
+       s,mu,ro, &
+       x,y,z,mut,dist,mnpar,fgam, &
+       toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+       icyc,mcyturb, &
+       ncbd,ncin,mnc, &
+       sn,vol, &
+       dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+       cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
+       ztemp)
 !
 !***********************************************************************
 !
@@ -99,163 +99,126 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use maillage
-      use chainecarac
-      use schemanum
-      use modeleturb
-use mod_smg_fcs
-use mod_zfluto
-use mod_atctranske
-use mod_zgrad
-use mod_rbte
-use mod_zgrad2
-use mod_rbtc
-implicit none
-integer :: img
-double precision :: s
-double precision :: ro
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: dist
-integer :: mnpar
-double precision :: fgam
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-integer :: icyc
-integer :: mcyturb
-integer :: ncbd
-integer :: ncin
-integer :: mnc
-double precision :: sn
-double precision :: vol
-double precision :: dvxx
-double precision :: dvxy
-double precision :: dvxz
-double precision :: dvyx
-double precision :: dvyy
-double precision :: dvyz
-double precision :: dvzx
-double precision :: dvzy
-double precision :: dvzz
-double precision :: cmui1
-double precision :: cmui2
-double precision :: cmuj1
-double precision :: cmuj2
-double precision :: cmuk1
-double precision :: cmuk2
-double precision :: ztemp
-integer :: l
-integer :: lgsnlt
-integer :: lm
-integer :: mf
-integer :: mfc
-integer :: npsn
+    use para_var
+    use para_fige
+    use boundary
+    use maillage
+    use chainecarac
+    use schemanum
+    use modeleturb
+    use mod_smg_fcs
+    use mod_zfluto
+    use mod_atctranske
+    use mod_zgrad
+    use mod_rbte
+    use mod_zgrad2
+    use mod_rbtc
+    implicit none
+    integer          ::    icyc,    img,      l, lgsnlt,     lm
+    integer          :: mcyturb,     mf,    mfc,    mnc,  mnpar
+    integer          ::    ncbd,   ncin,   npsn
+    double precision :: cmui1,cmui2,cmuj1,cmuj2,cmuk1
+    double precision :: cmuk2, dist, dvxx, dvxy, dvxz
+    double precision ::  dvyx, dvyy, dvyz, dvzx, dvzy
+    double precision ::  dvzz, fgam,   mu,  mut,  qcx
+    double precision ::   qcy,  qcz,   ro,    s,   sn
+    double precision ::  toxx, toxy, toxz, toyy, toyz
+    double precision ::  tozz,  vol,    x,    y,    z
+    double precision :: ztemp
 !
 !-----------------------------------------------------------------------
 !
-      double precision mu,mut
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension s(ip11,ip60)
-      dimension ro(ip11),vol(ip11),ztemp(ip11)
-      dimension mu(ip12),mut(ip12),mnpar(ip12), &
-                toxx(ip12),toxy(ip12),toxz(ip12), &
-                toyy(ip12),toyz(ip12),tozz(ip12), &
-                qcx(ip12),qcy(ip12),qcz(ip12),dist(ip12)
-      dimension dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00), &
-                dvyz(ip00),dvzx(ip00),dvzy(ip00),dvzz(ip00)
-      dimension ncbd(ip41),ncin(ip41),fgam(ip42),mnc(ip43)
-      dimension sn(ip31*ndir)
-      dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-                cmuk1(ip21),cmuk2(ip21)
-      REAL,DIMENSION(:),ALLOCATABLE :: dtx,dty,dtz
-      ALLOCATE(dtx(ip00),dty(ip00),dtz(ip00))
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension s(ip11,ip60)
+    dimension ro(ip11),vol(ip11),ztemp(ip11)
+    dimension mu(ip12),mut(ip12),mnpar(ip12), &
+         toxx(ip12),toxy(ip12),toxz(ip12), &
+         toyy(ip12),toyz(ip12),tozz(ip12), &
+         qcx(ip12),qcy(ip12),qcz(ip12),dist(ip12)
+    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00), &
+         dvyz(ip00),dvzx(ip00),dvzy(ip00),dvzz(ip00)
+    dimension ncbd(ip41),ncin(ip41),fgam(ip42),mnc(ip43)
+    dimension sn(ip31*ndir)
+    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
+         cmuk1(ip21),cmuk2(ip21)
+    REAL,DIMENSION(:),ALLOCATABLE :: dtx,dty,dtz
+    ALLOCATE(dtx(ip00),dty(ip00),dtz(ip00))
 !
-      do l=1,lzx
+    do l=1,lzx
        lm=l+(img-1)*lz
        npsn  =ndir*npfb(lm)+1
        lgsnlt=nnn(lm)
 !
-        if(ischema.eq.1) then
+       if(ischema.eq.1) then
           call zgrad( &
-                 lm, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 vol, &
-                 s,ztemp, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dtx,dty,dtz)
-         else
-             call zgrad2( &
-                 lm, &
-                 equat, &
-                 sn(npsn),lgsnlt, &
-                 vol, &
-                 s,ztemp, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dtx,dty,dtz, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-          endif
-!
-      if(icyc.gt.icytur0) then
-       if(mcyturb.eq.1) then
-        if(img.eq.mgl) then!
-         if(ktransi.eq.1) then  ! transition fixee
-              call atctranske(l,s,mu,mut,mnpar,fgam)
-          endif
-        else  ! fine to coarse transfer of mut
-            call smg_fcs( &
-                 img-1,img, &
-                 vol,mut)
-        endif
+               lm, &
+               equat, &
+               sn(npsn),lgsnlt, &
+               vol, &
+               s,ztemp, &
+               dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+               dtx,dty,dtz)
+       else
+          call zgrad2( &
+               lm, &
+               equat, &
+               sn(npsn),lgsnlt, &
+               vol, &
+               s,ztemp, &
+               dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+               dtx,dty,dtz, &
+               cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
        endif
-      endif
 !
-      call zfluto( &
-                 lm,mu,mut,toxx,toxy,toxz,toyy,toyz,tozz, &
-                 qcx,qcy,qcz, &
-                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                 dtx,dty,dtz)
+       if(icyc.gt.icytur0) then
+          if(mcyturb.eq.1) then
+             if(img.eq.mgl) then!
+                if(ktransi.eq.1) then  ! transition fixee
+                   call atctranske(l,s,mu,mut,mnpar,fgam)
+                endif
+             else  ! fine to coarse transfer of mut
+                call smg_fcs( &
+                     img-1,img, &
+                     vol,mut)
+             endif
+          endif
+       endif
 !
-      enddo
+       call zfluto( &
+            lm,mu,mut,toxx,toxy,toxz,toyy,toyz,tozz, &
+            qcx,qcy,qcz, &
+            dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+            dtx,dty,dtz)
 !
-      do mf=1,mtnx
+    enddo
+!
+    do mf=1,mtnx
        lbd(mf)=nfbn(mf)+(img-1)*mtb
-      enddo
-      nbd=mtnx
-            call rbte( &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 ncbd,ncin)
+    enddo
+    nbd=mtnx
+    call rbte( &
+         toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+         ncbd,ncin)
 !
-      do mf=1,mtax
+    do mf=1,mtax
        lbd(mf)=nfba(mf)+(img-1)*mtb
-      enddo
-      nbd=mtax
-            call rbte( &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 ncbd,ncin)
+    enddo
+    nbd=mtax
+    call rbte( &
+         toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+         ncbd,ncin)
 !
 !
-      do mfc=1,mtcx
+    do mfc=1,mtcx
        lbd(mfc)=nfbc(mfc)+(img-1)*mtb
-      enddo
-      nbd=mtcx
-            call rbtc( &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 ncbd,ncin,mnc)
+    enddo
+    nbd=mtcx
+    call rbtc( &
+         toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+         ncbd,ncin,mnc)
 
-DEALLOCATE(dtx,dty,dtz)
+    DEALLOCATE(dtx,dty,dtz)
 
-      return
-      end subroutine
-end module
+    return
+  end subroutine zvisqc
+end module mod_zvisqc

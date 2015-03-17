@@ -1,8 +1,8 @@
 module mod_crdms
-implicit none
+  implicit none
 contains
-      subroutine crdms( &
-                 l,ni,nj,nk)
+  subroutine crdms( &
+       l,ni,nj,nk)
 !
 !***********************************************************************
 !
@@ -51,75 +51,65 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use maillage
-      use kcle
-      use chainecarac
-      use schemanum
-implicit none
-integer :: l
-integer :: ni
-integer :: nj
-integer :: nk
-integer :: img
-integer :: imgi
-integer :: imgj
-integer :: imgk
-integer :: lm
-integer :: nid
-integer :: njd
-integer :: nkd
-integer :: nptfs
+    use para_fige
+    use maillage
+    use kcle
+    use chainecarac
+    use schemanum
+    implicit none
+    integer          ::   img, imgi, imgj, imgk,    l
+    integer          ::    lm,   ni,  nid,   nj,  njd
+    integer          ::    nk,  nkd,nptfs
 !
 !-----------------------------------------------------------------------
 !
-      lzx=lzx+1
-      klzx=2
+    lzx=lzx+1
+    klzx=2
 !
-      do img=1,lgx
+    do img=1,lgx
 !
-      lm=l+(img-1)*lz
+       lm=l+(img-1)*lz
 !
-      imgi = img
-      imgj = img
-      imgk = img
-      if (equat(3:5).eq.'2di') imgi = 1
-      if (equat(3:5).eq.'2dj') imgj = 1
-      if (equat(3:5).eq.'2dk') imgk = 1
+       imgi = img
+       imgj = img
+       imgk = img
+       if (equat(3:5).eq.'2di') imgi = 1
+       if (equat(3:5).eq.'2dj') imgj = 1
+       if (equat(3:5).eq.'2dk') imgk = 1
 !
-      ii1(lm)=1
-      jj1(lm)=1
-      kk1(lm)=1
+       ii1(lm)=1
+       jj1(lm)=1
+       kk1(lm)=1
 !
-      ii2(lm)= (ni-1)/2**(imgi-1)+1
-      jj2(lm)= (nj-1)/2**(imgj-1)+1
-      kk2(lm)= (nk-1)/2**(imgk-1)+1
+       ii2(lm)= (ni-1)/2**(imgi-1)+1
+       jj2(lm)= (nj-1)/2**(imgj-1)+1
+       kk2(lm)= (nk-1)/2**(imgk-1)+1
 !
-      id1(lm)=ii1(lm)-nfi
-      jd1(lm)=jj1(lm)-nfi
-      kd1(lm)=kk1(lm)-nfi
-      id2(lm)=ii2(lm)+nfi
-      jd2(lm)=jj2(lm)+nfi
-      kd2(lm)=kk2(lm)+nfi
+       id1(lm)=ii1(lm)-nfi
+       jd1(lm)=jj1(lm)-nfi
+       kd1(lm)=kk1(lm)-nfi
+       id2(lm)=ii2(lm)+nfi
+       jd2(lm)=jj2(lm)+nfi
+       kd2(lm)=kk2(lm)+nfi
 !
-      nid=id2(lm)-id1(lm)+1
-      njd=jd2(lm)-jd1(lm)+1
-      nkd=kd2(lm)-kd1(lm)+1
-      nptfs =nid*njd*nkd
-      nnn(lm)=nptfs
-      nnc(lm)=nptfs
-      nnfb(lm)=nind*nptfs
+       nid=id2(lm)-id1(lm)+1
+       njd=jd2(lm)-jd1(lm)+1
+       nkd=kd2(lm)-kd1(lm)+1
+       nptfs =nid*njd*nkd
+       nnn(lm)=nptfs
+       nnc(lm)=nptfs
+       nnfb(lm)=nind*nptfs
 !
-      npn(lm)=ndimntbx
-      npc(lm)=ndimctbx
-      npfb(lm)=nind*ndimntbx
+       npn(lm)=ndimntbx
+       npc(lm)=ndimctbx
+       npfb(lm)=nind*ndimntbx
 !
-      ndimubx =max(ndimubx,nnn(lm))
-      ndimubx =max(ndimubx,nnc(lm))
-      ndimctbx=ndimctbx+nnc(lm)
-      ndimntbx=ndimntbx+nnn(lm)
-      enddo
+       ndimubx =max(ndimubx,nnn(lm))
+       ndimubx =max(ndimubx,nnc(lm))
+       ndimctbx=ndimctbx+nnc(lm)
+       ndimntbx=ndimntbx+nnn(lm)
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine crdms
+end module mod_crdms

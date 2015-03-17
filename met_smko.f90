@@ -1,11 +1,11 @@
 module mod_met_smko
-implicit none
+  implicit none
 contains
-      subroutine met_smko( &
-                 l,v, &
-                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-                 tprod,cfke, &
-                 qcxts5,qcyts6,cson)
+  subroutine met_smko( &
+       l,v, &
+       txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
+       tprod,cfke, &
+       qcxts5,qcyts6,cson)
 !
 !***********************************************************************
 !
@@ -46,109 +46,80 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use modeleturb
-implicit none
-integer :: indc
-double precision :: aa
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-double precision :: v
-double precision :: txxf5x
-double precision :: txyf5y
-double precision :: txzf5z
-double precision :: tyyf6x
-double precision :: tyzf6y
-double precision :: tzzf6z
-double precision :: tprod
-double precision :: cfke
-double precision :: qcxts5
-double precision :: qcyts6
-double precision :: cson
-double precision :: cd
-integer :: i1
-integer :: i2
-integer :: i2m1
-integer :: ind1
-integer :: ind2
-integer :: j1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k2
-integer :: k2m1
-integer :: m
-integer :: n
-integer :: n0c
-integer :: nid
-integer :: nijd
-integer :: njd
-double precision :: xmt0
-double precision :: fmt
+    use para_var
+    use para_fige
+    use maillage
+    use modeleturb
+    implicit none
+    integer          ::    i,  i1,  i2,i2m1,ind1
+    integer          :: ind2,indc,   j,  j1,  j2
+    integer          :: j2m1,   k,  k1,  k2,k2m1
+    integer          ::    l,   m,   n, n0c, nid
+    integer          :: nijd, njd
+    double precision ::     aa, betac,betasc,    cd,  cfke
+    double precision ::   cson,   fmt,  gkgo,  omeg,qcxts5
+    double precision :: qcyts6, tprod,txxf5x,txyf5y,txzf5z
+    double precision :: tyyf6x,tyzf6y,tzzf6z,     v,   xmt
+    double precision ::   xmt0,    xw
 !
 !-----------------------------------------------------------------------
 !
-      double precision betasc,betac,xmt,xw,omeg,gkgo
-      dimension v(ip11,ip60)
-      dimension cson(ip11)
-      dimension txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &
-                tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12), &
-                qcxts5(ip12),qcyts6(ip12)
-      dimension tprod(ip00)
-      dimension cfke(ip13)
+    dimension v(ip11,ip60)
+    dimension cson(ip11)
+    dimension txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &
+         tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12), &
+         qcxts5(ip12),qcyts6(ip12)
+    dimension tprod(ip00)
+    dimension cfke(ip13)
 !
-      indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      fmt(aa)=0.5*(1.+sign(1.,aa-xmt0))*(aa**2-xmt0**2)
+    fmt(aa)=0.5*(1.+sign(1.,aa-xmt0))*(aa**2-xmt0**2)
 !
-      n0c=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0c=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd= nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd= nid*njd
 !
-      i2m1=i2-1
-      j2m1=j2-1
-      k2m1=k2-1
+    i2m1=i2-1
+    j2m1=j2-1
+    k2m1=k2-1
 !
 !      xw=beta/betas-sigmw*0.41**2/sqrt(betas)
-       xw=5./9.
+    xw=5./9.
 !       xmt0=0.8  !coupure Mach turbulent
 !       xmt0=0.5  !coupure Mach turbulent
 !       xmt0=0.25  !coupure Mach turbulent
-       xmt0=0.1  !coupure Mach turbulent
+    xmt0=0.1  !coupure Mach turbulent
 !
-      do k=k1,k2m1
+    do k=k1,k2m1
        do j=j1,j2m1
-        ind1 = indc(i1  ,j,k)
-        ind2 = indc(i2m1,j,k)
-        do n=ind1,ind2
-         m=n-n0c
+          ind1 = indc(i1  ,j,k)
+          ind2 = indc(i2m1,j,k)
+          do n=ind1,ind2
+             m=n-n0c
 !         gkgo=tyyf6x(n)*txxf5x(n)+tyzf6y(n)*txyf5y(n)+
 !     &        tzzf6z(n)*txzf5z(n)
-         omeg=v(n,7)/v(n,1)
+             omeg=v(n,7)/v(n,1)
 !         cd=sigmd*v(n,1)*max(gkgo,0.)/omeg
-         cd=0.
-         xmt=sqrt(2.*v(n,6)/v(n,1))/cson(n)
-         betasc=betas*(1.+1.5*fmt(xmt))
-         betac=beta-betas*1.5*fmt(xmt)
-         qcxts5(n)=tprod(m)-betasc*v(n,6)*omeg
-         qcyts6(n)=xw*tprod(m)*v(n,7)/v(n,6)-betac*v(n,7)*omeg+cd
-         cfke(n)=0.18*omeg   !=2*betas*omega
-        enddo
+             cd=0.
+             xmt=sqrt(2.*v(n,6)/v(n,1))/cson(n)
+             betasc=betas*(1.+1.5*fmt(xmt))
+             betac=beta-betas*1.5*fmt(xmt)
+             qcxts5(n)=tprod(m)-betasc*v(n,6)*omeg
+             qcyts6(n)=xw*tprod(m)*v(n,7)/v(n,6)-betac*v(n,7)*omeg+cd
+             cfke(n)=0.18*omeg   !=2*betas*omega
+          enddo
        enddo
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine met_smko
+end module mod_met_smko

@@ -1,7 +1,7 @@
 module mod_b1_dfnzst
-implicit none
+  implicit none
 contains
-      subroutine b1_dfnzst(nonzst)
+  subroutine b1_dfnzst(nonzst)
 !
 !***********************************************************************
 !
@@ -17,19 +17,19 @@ contains
 !
 !***********************************************************************
 !
-      use sortiefichier
-implicit none
-integer :: nonzst
+    use sortiefichier
+    implicit none
+    integer          :: nonzst
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
+    character(len=1316) :: form
 !
-      form='(//,2x,''definition de la normalisation''/' &
-             //'2x,''------------------------------'',/' &
-             //'2x,''numero de l''''etat         : '',9x,i2)'
-      write(imp,form)nonzst
+    form='(//,2x,''definition de la normalisation''/' &
+         //'2x,''------------------------------'',/' &
+         //'2x,''numero de l''''etat         : '',9x,i2)'
+    write(imp,form)nonzst
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_dfnzst
+end module mod_b1_dfnzst

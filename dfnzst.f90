@@ -1,7 +1,7 @@
 module mod_dfnzst
-implicit none
+  implicit none
 contains
-      subroutine dfnzst(nonzst)
+  subroutine dfnzst(nonzst)
 !
 !***********************************************************************
 !
@@ -44,29 +44,29 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-      use definition
-   use kcle
-      use proprieteflu
-implicit none
-integer :: nonzst
+    use para_fige
+    use definition
+    use kcle
+    use proprieteflu
+    implicit none
+    integer          :: nonzst
 !
 !-----------------------------------------------------------------------
 !
-       ronz=varst(nonzst,1)
-       tnz =varst(nonzst,3)
-       dnz =varst(nonzst,4)
-       rnz=rd
-       anz=sqrt(gam*rnz*tnz)
-       pnz=ronz*anz**2/gam
+    ronz=varst(nonzst,1)
+    tnz =varst(nonzst,3)
+    dnz =varst(nonzst,4)
+    rnz=rd
+    anz=sqrt(gam*rnz*tnz)
+    pnz=ronz*anz**2/gam
 !       anz =varst(nonzst,2)
 !       pnz =ronz/gam*anz**2
 !       rnz=anz**2/(gam*tnz)
 !
-      rgp=1./gam
-      cp=1./(gam-1.)
-      cv=cp/gam
+    rgp=1./gam
+    cp=1./(gam-1.)
+    cv=cp/gam
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine dfnzst
+end module mod_dfnzst

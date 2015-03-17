@@ -1,7 +1,7 @@
 module mod_defdfpmcfg
-implicit none
+  implicit none
 contains
-      subroutine defdfpmcfg
+  subroutine defdfpmcfg
 !
 !***********************************************************************
 !
@@ -15,21 +15,21 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-   use kcle
-   use maillage
-   use boundary
-implicit none
-integer :: m
+    use para_fige
+    use kcle
+    use maillage
+    use boundary
+    implicit none
+    integer          :: m
 !
 !-----------------------------------------------------------------------
 !
-      do m=1,mtb
+    do m=1,mtb
        nba(m)=m
-      enddo
+    enddo
 !
-      knba=1
+    knba=1
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdfpmcfg
+end module mod_defdfpmcfg

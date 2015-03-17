@@ -1,9 +1,9 @@
 module mod_smg_fcv
-implicit none
+  implicit none
 contains
-      subroutine smg_fcv( &
-                 imgf,imgc, &
-                 vol,v)
+  subroutine smg_fcv( &
+       imgf,imgc, &
+       vol,v)
 !
 !***********************************************************************
 !
@@ -15,70 +15,33 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use chainecarac
-      use schemanum
-implicit none
-integer :: incf
-integer :: indc
-integer :: indf
-integer :: id
-integer :: jd
-integer :: kd
-integer :: i
-integer :: j
-integer :: k
-integer :: imgf
-integer :: imgc
-double precision :: vol
-double precision :: v
-integer :: i1c
-integer :: i2c
-integer :: ic
-integer :: if
-integer :: incf_i
-integer :: incf_j
-integer :: incf_k
-integer :: j1c
-integer :: j2c
-integer :: jc
-integer :: jf
-integer :: k1c
-integer :: k2c
-integer :: kc
-integer :: kf
-integer :: l
-integer :: lmc
-integer :: lmf
-integer :: n0c
-integer :: n0f
-integer :: nc
-integer :: nf1
-integer :: nf2
-integer :: nf3
-integer :: nf4
-integer :: nf5
-integer :: nf6
-integer :: nf7
-integer :: nf8
-integer :: nic
-integer :: nif
-integer :: nijc
-integer :: nijf
-integer :: njc
-integer :: njf
+    use para_var
+    use para_fige
+    use maillage
+    use chainecarac
+    use schemanum
+    implicit none
+    integer          ::      i,   i1c,   i2c,    ic,    id
+    integer          ::     if,  imgc,  imgf,  incf,incf_i
+    integer          :: incf_j,incf_k,  indc,  indf,     j
+    integer          ::    j1c,   j2c,    jc,    jd,    jf
+    integer          ::      k,   k1c,   k2c,    kc,    kd
+    integer          ::     kf,     l,   lmc,   lmf,   n0c
+    integer          ::    n0f,    nc,   nf1,   nf2,   nf3
+    integer          ::    nf4,   nf5,   nf6,   nf7,   nf8
+    integer          ::    nic,   nif,  nijc,  nijf,   njc
+    integer          ::    njf
+    double precision ::   v,vol
 !
 !-----------------------------------------------------------------------
 !
-      dimension vol(ip11),v(ip11,ip60)
+    dimension vol(ip11),v(ip11,ip60)
 !
-      indc(i,j,k)=n0c+1+(i-id1(lmc))+(j-jd1(lmc))*nic+(k-kd1(lmc))*nijc
-      indf(i,j,k)=n0f+1+(i-id1(lmf))+(j-jd1(lmf))*nif+(k-kd1(lmf))*nijf
-      incf(id,jd,kd)=id+jd*nif+kd*nijf
+    indc(i,j,k)=n0c+1+(i-id1(lmc))+(j-jd1(lmc))*nic+(k-kd1(lmc))*nijc
+    indf(i,j,k)=n0f+1+(i-id1(lmf))+(j-jd1(lmf))*nif+(k-kd1(lmf))*nijf
+    incf(id,jd,kd)=id+jd*nif+kd*nijf
 !
-      do l = 1,lzx
+    do l = 1,lzx
        lmc  = l+(imgc-1)*lz
        lmf  = l+(imgf-1)*lz
 !
@@ -103,93 +66,93 @@ integer :: njf
        incf_j  = incf(0,1,0)
        incf_k  = incf(0,0,1)
 !
-      if(equat(3:5).eq.'2dk') then
+       if(equat(3:5).eq.'2dk') then
 !
-      do kc = k1c,k2c-1
-       kf = kc
-       do jc = j1c,j2c-1
-        jf = 2*jc -1
+          do kc = k1c,k2c-1
+             kf = kc
+             do jc = j1c,j2c-1
+                jf = 2*jc -1
 !!!$OMP SIMD
-        do ic = i1c,i2c-1
-         if = 2*ic - 1
-         nf1= indf(if,jf,kf)
-         nf2= nf1 + incf_i
-         nf4= nf1 + incf_j
-         nf3= nf4 + incf_i
-         nc = indc(ic,jc,kc)
+                do ic = i1c,i2c-1
+                   if = 2*ic - 1
+                   nf1= indf(if,jf,kf)
+                   nf2= nf1 + incf_i
+                   nf4= nf1 + incf_j
+                   nf3= nf4 + incf_i
+                   nc = indc(ic,jc,kc)
 !
-         v(nc,1) = (vol(nf1)*v(nf1,1) + vol(nf2)*v(nf2,1) &
-                   +vol(nf3)*v(nf3,1) + vol(nf4)*v(nf4,1))/vol(nc)
-         v(nc,2) = (vol(nf1)*v(nf1,2) + vol(nf2)*v(nf2,2) &
-                   +vol(nf3)*v(nf3,2) + vol(nf4)*v(nf4,2))/vol(nc)
-         v(nc,3) = (vol(nf1)*v(nf1,3) + vol(nf2)*v(nf2,3) &
-                   +vol(nf3)*v(nf3,3) + vol(nf4)*v(nf4,3))/vol(nc)
-         v(nc,4) = (vol(nf1)*v(nf1,4) + vol(nf2)*v(nf2,4) &
-                   +vol(nf3)*v(nf3,4) + vol(nf4)*v(nf4,4))/vol(nc)
-         v(nc,5) = (vol(nf1)*v(nf1,5) + vol(nf2)*v(nf2,5) &
-                   +vol(nf3)*v(nf3,5) + vol(nf4)*v(nf4,5))/vol(nc)
-        enddo
-       enddo
-      enddo
+                   v(nc,1) = (vol(nf1)*v(nf1,1) + vol(nf2)*v(nf2,1) &
+                        +vol(nf3)*v(nf3,1) + vol(nf4)*v(nf4,1))/vol(nc)
+                   v(nc,2) = (vol(nf1)*v(nf1,2) + vol(nf2)*v(nf2,2) &
+                        +vol(nf3)*v(nf3,2) + vol(nf4)*v(nf4,2))/vol(nc)
+                   v(nc,3) = (vol(nf1)*v(nf1,3) + vol(nf2)*v(nf2,3) &
+                        +vol(nf3)*v(nf3,3) + vol(nf4)*v(nf4,3))/vol(nc)
+                   v(nc,4) = (vol(nf1)*v(nf1,4) + vol(nf2)*v(nf2,4) &
+                        +vol(nf3)*v(nf3,4) + vol(nf4)*v(nf4,4))/vol(nc)
+                   v(nc,5) = (vol(nf1)*v(nf1,5) + vol(nf2)*v(nf2,5) &
+                        +vol(nf3)*v(nf3,5) + vol(nf4)*v(nf4,5))/vol(nc)
+                enddo
+             enddo
+          enddo
 !
-      else if(equat(3:5).eq.'2dj') then
-       stop 'MG2dj'
+       else if(equat(3:5).eq.'2dj') then
+          stop 'MG2dj'
 !
-      else if(equat(3:5).eq.'2di') then
-       stop 'MG2di'
+       else if(equat(3:5).eq.'2di') then
+          stop 'MG2di'
 !
-      else if(equat(3:4).eq.'3d') then
+       else if(equat(3:4).eq.'3d') then
 !
-      do kc = k1c,k2c-1
-       kf = 2*kc -1
-       do jc = j1c,j2c-1
-        jf = 2*jc -1
+          do kc = k1c,k2c-1
+             kf = 2*kc -1
+             do jc = j1c,j2c-1
+                jf = 2*jc -1
 !!$OMP SIMD
-        do ic = i1c,i2c-1
-         if = 2*ic - 1
+                do ic = i1c,i2c-1
+                   if = 2*ic - 1
 !
-         nf1= indf(if,jf,kf)
-         nf2= nf1 + incf_i
-         nf4= nf1 + incf_j
-         nf3= nf4 + incf_i
+                   nf1= indf(if,jf,kf)
+                   nf2= nf1 + incf_i
+                   nf4= nf1 + incf_j
+                   nf3= nf4 + incf_i
 !
-         nf5= nf1 + incf_k
-         nf6= nf2 + incf_k
-         nf7= nf3 + incf_k
-         nf8= nf4 + incf_k
+                   nf5= nf1 + incf_k
+                   nf6= nf2 + incf_k
+                   nf7= nf3 + incf_k
+                   nf8= nf4 + incf_k
 !
-         nc = indc(ic,jc,kc)
+                   nc = indc(ic,jc,kc)
 !
-         v(nc,1) = (vol(nf1)*v(nf1,1) + vol(nf2)*v(nf2,1) &
-                   +vol(nf3)*v(nf3,1) + vol(nf4)*v(nf4,1) &
-                   +vol(nf5)*v(nf5,1) + vol(nf6)*v(nf6,1) &
-                   +vol(nf7)*v(nf7,1) + vol(nf8)*v(nf8,1))/vol(nc)
-         v(nc,2) = (vol(nf1)*v(nf1,2) + vol(nf2)*v(nf2,2) &
-                   +vol(nf3)*v(nf3,2) + vol(nf4)*v(nf4,2) &
-                   +vol(nf5)*v(nf5,2) + vol(nf6)*v(nf6,2) &
-                   +vol(nf7)*v(nf7,2) + vol(nf8)*v(nf8,2))/vol(nc)
-         v(nc,3) = (vol(nf1)*v(nf1,3) + vol(nf2)*v(nf2,3) &
-                   +vol(nf3)*v(nf3,3) + vol(nf4)*v(nf4,3) &
-                   +vol(nf5)*v(nf5,3) + vol(nf6)*v(nf6,3) &
-                   +vol(nf7)*v(nf7,3) + vol(nf8)*v(nf8,3))/vol(nc)
-         v(nc,4) = (vol(nf1)*v(nf1,4) + vol(nf2)*v(nf2,4) &
-                   +vol(nf3)*v(nf3,4) + vol(nf4)*v(nf4,4) &
-                   +vol(nf5)*v(nf5,4) + vol(nf6)*v(nf6,4) &
-                   +vol(nf7)*v(nf7,4) + vol(nf8)*v(nf8,4))/vol(nc)
-         v(nc,5) = (vol(nf1)*v(nf1,5) + vol(nf2)*v(nf2,5) &
-                   +vol(nf3)*v(nf3,5) + vol(nf4)*v(nf4,5) &
-                   +vol(nf5)*v(nf5,5) + vol(nf6)*v(nf6,5) &
-                   +vol(nf7)*v(nf7,5) + vol(nf8)*v(nf8,5))/vol(nc)
-        enddo
-       enddo
-      enddo
+                   v(nc,1) = (vol(nf1)*v(nf1,1) + vol(nf2)*v(nf2,1) &
+                        +vol(nf3)*v(nf3,1) + vol(nf4)*v(nf4,1) &
+                        +vol(nf5)*v(nf5,1) + vol(nf6)*v(nf6,1) &
+                        +vol(nf7)*v(nf7,1) + vol(nf8)*v(nf8,1))/vol(nc)
+                   v(nc,2) = (vol(nf1)*v(nf1,2) + vol(nf2)*v(nf2,2) &
+                        +vol(nf3)*v(nf3,2) + vol(nf4)*v(nf4,2) &
+                        +vol(nf5)*v(nf5,2) + vol(nf6)*v(nf6,2) &
+                        +vol(nf7)*v(nf7,2) + vol(nf8)*v(nf8,2))/vol(nc)
+                   v(nc,3) = (vol(nf1)*v(nf1,3) + vol(nf2)*v(nf2,3) &
+                        +vol(nf3)*v(nf3,3) + vol(nf4)*v(nf4,3) &
+                        +vol(nf5)*v(nf5,3) + vol(nf6)*v(nf6,3) &
+                        +vol(nf7)*v(nf7,3) + vol(nf8)*v(nf8,3))/vol(nc)
+                   v(nc,4) = (vol(nf1)*v(nf1,4) + vol(nf2)*v(nf2,4) &
+                        +vol(nf3)*v(nf3,4) + vol(nf4)*v(nf4,4) &
+                        +vol(nf5)*v(nf5,4) + vol(nf6)*v(nf6,4) &
+                        +vol(nf7)*v(nf7,4) + vol(nf8)*v(nf8,4))/vol(nc)
+                   v(nc,5) = (vol(nf1)*v(nf1,5) + vol(nf2)*v(nf2,5) &
+                        +vol(nf3)*v(nf3,5) + vol(nf4)*v(nf4,5) &
+                        +vol(nf5)*v(nf5,5) + vol(nf6)*v(nf6,5) &
+                        +vol(nf7)*v(nf7,5) + vol(nf8)*v(nf8,5))/vol(nc)
+                enddo
+             enddo
+          enddo
 !
-      else
-       stop 'smg_fcv'
-      endif
+       else
+          stop 'smg_fcv'
+       endif
 !
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine smg_fcv
+end module mod_smg_fcv

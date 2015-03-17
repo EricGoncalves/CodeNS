@@ -1,7 +1,7 @@
 module mod_defcpbd
-implicit none
+  implicit none
 contains
-      subroutine defcpbd
+  subroutine defcpbd
 !
 !***********************************************************************
 !
@@ -15,15 +15,15 @@ contains
 !
 !***********************************************************************
 !
-      use kcle
-      use boundary
-implicit none
+    use kcle
+    use boundary
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      kexl=1
-      kkexl=1
+    kexl=1
+    kkexl=1
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defcpbd
+end module mod_defcpbd

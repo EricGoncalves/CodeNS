@@ -1,7 +1,8 @@
 module para_fige
-implicit none
-      integer :: ndir,nind,lz,lg,lt,mtb,mtt,neqt,nsta,lsta,ista,nobj
-      integer :: nmx,lgcmdx
+  implicit none
+  integer          ::   ista,    lg,lgcmdx,  lsta,    lt
+  integer          ::     lz,   mtb,   mtt,  ndir,  neqt
+  integer          ::   nind,   nmx,  nobj,  nsta
   parameter(  ndir=3     )
   parameter(  nind=3     )
   parameter(    lz=50    )
@@ -20,11 +21,12 @@ end module para_fige
 !
 module para_var
 implicit none
-      integer :: ndimub,ndimctf,ndimnts,ndimntu,kdimg,kdimv,kdimk
-      integer :: mdimub,mdimtbf,mdimtnf,mdimtcf,mdimtrf,nvar
-      integer :: ip00,ip11,ip12,ip13,ip60,ip40,ip21,ip31,ip41
-      integer :: ip42,ip43,ip44
-      double precision :: ccg,cfg,cng
+  integer          ::    ip00,   ip11,   ip12,   ip13,   ip21
+  integer          ::    ip31,   ip40,   ip41,   ip42,   ip43
+  integer          ::    ip44,   ip60,  kdimg,  kdimk,  kdimv
+  integer          :: mdimtbf,mdimtcf,mdimtnf,mdimtrf, mdimub
+  integer          :: ndimctf,ndimnts,ndimntu, ndimub,   nvar
+  double precision :: ccg,cfg,cng
   parameter(ndimub =120000)
   parameter(ndimctf=100000)
   parameter(ndimnts=100000)
@@ -60,16 +62,15 @@ end module para_var
 module boundary
   use para_fige
 implicit none
+  integer          :: crotr,imaxb,iminb,jmaxb,jminb
+  integer          ::  kexl,kmaxb,kminb,  lbd,lbdko
+  integer          ::  mdnc,  mmb,  mpb,  mpc, mper
+  integer          ::   mpn,  mpr,  nba,  nbd, nbdc
+  integer          :: nbdko, ndcc, ndlb, ndrr, nfba
+  integer          ::  nfbc, nfbn, nfbr, nfei,srotr
+  double precision :: bc
   character(len=4) :: cl
   character(len=2) :: indfl
-  integer iminb,imaxb,jminb,jmaxb,kminb,kmaxb
-  integer mpn,nfbn
-  integer mpr,nfbr,ndrr,srotr,crotr
-  integer nbd,lbd,nbdko,lbdko
-  integer nfba,nbdc,kexl
-  integer mmb,mpb,nba,ndlb,nfei
-  integer mpc,nfbc,ndcc,mdnc,mper
-      double precision bc
   dimension nbdc(mtb),bc(mtb,ista*lsta)
   dimension iminb(mtt),imaxb(mtt),jminb(mtt),jmaxb(mtt),kminb(mtt),kmaxb(mtt)
   dimension mpn(mtt),nfbn(mtb)
@@ -83,12 +84,15 @@ end module boundary
 module maillage
   use para_fige
 implicit none
-  integer nptot,npn,nnn,npc,nnc,npfb,nnfb
-  integer kvn,kcaldis,kecrdis,klecdis
-  integer lzx,lgx,mtbx,mtnx,mtcx,mtrx,mtax,ndimubx,ndimctbx,ndimntbx, &
-          mdimubx,mdimtbx,mdimtnx,mdimtcx,mdimtrx,neqtx
-  integer id1,ii1,ii2,id2,jd1,jj1,jj2,jd2,kd1,kk1,kk2,kd2
-  integer nbdrat,npbrat,lbdrat
+  integer          ::      id1,     id2,     ii1,     ii2,     jd1
+  integer          ::      jd2,     jj1,     jj2, kcaldis,     kd1
+  integer          ::      kd2, kecrdis,     kk1,     kk2, klecdis
+  integer          ::      kvn,  lbdrat,     lgx,     lzx, mdimtbx
+  integer          ::  mdimtcx, mdimtnx, mdimtrx, mdimubx,    mtax
+  integer          ::     mtbx,    mtcx,    mtnx,    mtrx,  nbdrat
+  integer          :: ndimctbx,ndimntbx, ndimubx,   neqtx,     nnc
+  integer          ::     nnfb,     nnn,  npbrat,     npc,    npfb
+  integer          ::      npn,   nptot
   dimension npn(lt),nnn(lt),npc(lt),nnc(lt),npfb(lt),nnfb(lt)
   dimension id1(lt),ii1(lt),ii2(lt),id2(lt),jd1(lt),jj1(lt), &
             jj2(lt),jd2(lt),kd1(lt),kk1(lt),kk2(lt),kd2(lt)
@@ -98,11 +102,11 @@ end module maillage
 module definition
   use para_fige
 implicit none
-  integer klomg
-      double precision roa1,aa1,ta1,pa1,ha1
-      double precision perio,ptrans,protat,omg
-      double precision ronz,anz,tnz,dnz,pnz,rnz
-      double precision varst
+  integer          :: klomg
+  double precision ::    aa1,   anz,   dnz,   ha1,   omg
+  double precision ::    pa1, perio,   pnz,protat,ptrans
+  double precision ::    rnz,  roa1,  ronz,   ta1,   tnz
+  double precision ::  varst
   dimension varst(nsta,lsta)
 end module definition
 !
@@ -130,9 +134,8 @@ end module chainecarac
 !
 module constantes
 implicit none
-  integer linx ,intmx
-      double precision reelmx,reelmn
-      double precision pis2,raddeg,degrad
+  integer          :: intmx, linx
+  double precision :: degrad,  pis2,raddeg,reelmn,reelmx
   data linx/132/
 !  data intmx/999999/
 !  data reelmx/999999999./
@@ -144,32 +147,29 @@ end module constantes
 !
 module proprieteflu
 implicit none
-      double precision gam,gam1,gam2,gam3,gam4,gam5,rd
-      double precision pr,prt,reynz
-      double precision rgp,cp,cv
-      double precision pinfl,ql
+  double precision ::    cp,   cv,  gam, gam1, gam2
+  double precision ::  gam3, gam4, gam5,pinfl,   pr
+  double precision ::   prt,   ql,   rd,reynz,  rgp
 end module proprieteflu
 !
 module kcle
   use para_fige
 implicit none
-  integer klzx,klgx,kmtbx,kmtnx,kmtcx,kmtrx,kmtax,kndimubx,kndimctbx, &
-          kndimntbx,kmdimubx,kmdimtbx, &
-          kmdimtnx,kmdimtcx,kmdimtrx,kneqtx
-  integer kkdualns,ktol,ktolke,kniter,knitur
-  integer kischema,kmuscl,kilim,kxk
-  integer kkprec,kcte,kkvisq
-  integer kgam,krd,kpr,kprt,kreynz
-  integer kpinfl,kql
-  integer knba,kkvn,knfi,kkfmg,kkcg
-  integer kncyresi,kncysave,kncyexpl,kdiscsv
-  integer kequat,kconfig,kkexl,ktitrt1
-  integer kklomg,komg,kperio
-  integer kronz,kanz,ktnz,kdnz,kpnz,krnz
-  integer kkdtl,kicychr0,kncychro,kdt1min,keta
-  integer kki2,kki4,kkmf,klmax,knumt,kncycle
-  integer kicytur0,kncyturb,kpctvort
-  integer kvarst
+  integer          ::      kanz,  kconfig,     kcte,  kdiscsv,     kdnz
+  integer          ::   kdt1min,   kequat,     keta,     kgam, kicychr0
+  integer          ::  kicytur0,    kilim, kischema,     kkcg,    kkdtl
+  integer          ::  kkdualns,    kkexl,    kkfmg,     kki2,     kki4
+  integer          ::    kklomg,     kkmf,   kkprec,   kkvisq,     kkvn
+  integer          ::      klgx,    klmax,     klzx, kmdimtbx, kmdimtcx
+  integer          ::  kmdimtnx, kmdimtrx, kmdimubx,    kmtax,    kmtbx
+  integer          ::     kmtcx,    kmtnx,    kmtrx,   kmuscl,     knba
+  integer          ::  kncychro,  kncycle, kncyexpl, kncyresi, kncysave
+  integer          ::  kncyturb,kndimctbx,kndimntbx, kndimubx,   kneqtx
+  integer          ::      knfi,   kniter,   knitur,    knumt,     komg
+  integer          ::  kpctvort,   kperio,   kpinfl,     kpnz,      kpr
+  integer          ::      kprt,      kql,      krd,   kreynz,     krnz
+  integer          ::     kronz,  ktitrt1,     ktnz,     ktol,   ktolke
+  integer          ::    kvarst,      kxk
   dimension keta(lt)
   dimension kki2(lt),kki4(lt)
   dimension kkmf(lt),klmax(lt)
@@ -181,21 +181,19 @@ end module kcle
 module schemanum
   use para_fige
 implicit none
+  integer          :: icychr0,   ilim,ischema,    kcg,   kdtl
+  integer          :: kdualns,kdualto,   kfmg,  klroe,    kmf
+  integer          ::   kprec, ktrans,  kvisq,  lacou,   lmax
+  integer          ::     mgl,  muscl,ncychro, ncycle,ncyexpl
+  integer          :: ncyresi,ncysave,    nfi,  niter,  nitur
+  integer          ::    numt
+  double precision ::      al0,     be0,     cga,     cte,  dt1min
+  double precision ::   epsroe,     eta,    freq,     ki2,     ki4
+  double precision ::   resite,  reske1,reskeite,  resno1,   rki2t
+  double precision ::    rki4t,     rm0,     tol,   tolke,  vrtalp
+  double precision ::    vrtcz,  vrtlre,  vrtmac,  vrtxre,  vrtzre
+  double precision ::       x0,      xk,      y0,      z0
    character(len=4) :: discsv
-  integer muscl,ilim,ischema,lacou
-  integer kdualns,kdualto
-  integer niter,nitur,mgl
-  integer ktrans,kprec,kvisq,klroe
-  integer ncyresi,ncysave,ncyexpl
-  integer nfi,kfmg,kcg
-  integer kmf,lmax,numt,ncycle
-  integer kdtl,icychr0,ncychro
-      double precision rki2t,rki4t,xk,cte,epsroe
-      double precision resno1,resite,reske1,reskeite
-      double precision rm0,al0,be0,tol,tolke
-      double precision vrtmac,vrtalp,vrtcz,vrtlre,vrtxre,vrtzre
-      double precision x0,y0,z0,freq,cga
-      double precision ki2,ki4,eta,dt1min
   dimension ki2(lt),ki4(lt)
   dimension kmf(lt),lmax(lt)
   dimension ncycle(lg) 
@@ -205,41 +203,45 @@ end module schemanum
 module modeleturb
   use para_fige
 implicit none
-  integer keasm,keinit,kesst,kfracom,kditur,kwsst,ktransi
-  integer ncycrac,naprng,ncytuke0,ncycke
-  integer imxclko,komsst,icytur0,ncyturb,lparoi
-  integer kcutke,kfludis,ksecmb,kcmut,kclkep,kinke,kparoi,kutau
-      double precision utaumin,rapvisq
-      double precision cb1,sigma,cb2,kappa,cw1,cw2,cw3,cv1,ct1,ct2,ct3,ct4
-      double precision rokinf,roeinf,epsk,epse,rkplus
-      double precision cmu,cke1,cke2,alfak,alfae
-      double precision rtrac,drtrac,vkar,cllog,yp0
-      double precision sigme1,sigma1,beta1,wsig1,betae,okappa
-      double precision sigme2,sigma2,beta2,wsig2
-      double precision allfae0,allfa0,rrk,romeg,rbeta,bheta,sigmeb,sigmab,bethae
-      double precision sigmk,sigmw,sigmd,beta,betas
-      double precision ccmu,cc1,cc2,ce2,cgl,ceta,sigk,sige
-      double precision cmukl,cklb1,ckle2,sigmak,sigmal,xkappa
-      double precision epspid,epstaud,epsvord
-      double precision pctvort
+  integer          ::  icytur0, imxclko,  kclkep,   kcmut,  kcutke
+  integer          ::   kditur,   keasm,  keinit,   kesst, kfludis
+  integer          ::  kfracom,   kinke,  komsst,  kparoi,  ksecmb
+  integer          ::  ktransi,   kutau,   kwsst,  lparoi,  naprng
+  integer          ::   ncycke, ncycrac,ncytuke0, ncyturb
+  double precision ::   alfae,  alfak, allfa0,allfae0,   beta
+  double precision ::   beta1,  beta2,  betae,  betas, bethae
+  double precision ::   bheta,    cb1,    cb2,    cc1,    cc2
+  double precision ::    ccmu,    ce2,   ceta,    cgl,   cke1
+  double precision ::    cke2,  cklb1,  ckle2,  cllog,    cmu
+  double precision ::   cmukl,    ct1,    ct2,    ct3,    ct4
+  double precision ::     cv1,    cw1,    cw2,    cw3, drtrac
+  double precision ::    epse,   epsk, epspid,epstaud,epsvord
+  double precision ::   kappa, okappa,pctvort,rapvisq,  rbeta
+  double precision ::  rkplus, roeinf, rokinf,  romeg,    rrk
+  double precision ::   rtrac,   sige,   sigk,  sigma, sigma1
+  double precision ::  sigma2, sigmab, sigmak, sigmal,  sigmd
+  double precision ::  sigme1, sigme2, sigmeb,  sigmk,  sigmw
+  double precision :: utaumin,   vkar,  wsig1,  wsig2, xkappa
+  double precision ::     yp0
   dimension pctvort(lt)
 end module modeleturb
 !
 module sortiefichier
   use para_fige
 implicit none
-  integer lsortie,nfreq
-  integer kimp,kfa,lec,imp,out,sec,sor1,sor2,sor3
-  integer kdgv,kdgc,kdac,kdgcf,kdacf,kres
-  integer don1,inia1,sorf1,sorf2
-  integer inig1,kdav,kfi,kfb,kfn,kfc,kfr
+  integer          ::    don1,    imp,  inia1,  inig1,   kdac
+  integer          ::   kdacf,   kdav,   kdgc,  kdgcf,   kdgv
+  integer          ::     kfa,    kfb,    kfc,    kfi,    kfn
+  integer          ::     kfr,   kimp,   kres,  kvglo,    lec
+  integer          :: lsortie,  nbfll,  nfreq, nmfint,    out
+  integer          ::     sec,   sor1,   sor2,   sor3,  sorf1
+  integer          ::   sorf2
+  double precision :: alpha0, beta0,p0spi0,q0spi0,  sref
+  double precision ::     v0, xlref,  xref,  yref,  zref
   data kimp/3/
   data lec,imp,out,sec,sor1,sor2,kfa,sor3/11,12,13,14,15,16,17,18/
   data kdgv,kdav,kdgc,kdac/21,22,23,24/
 !  data inig1,kfi,kfb,kfn,kfc,kfr,kdgcf,kdacf,kres/31,32,33,34,35,36,37,38,39/
   data don1,inia1,sorf1,sorf2/41,42,43,44/
-  integer kvglo,nbfll,nmfint
-      double precision xref,yref,zref,sref,xlref
-      double precision alpha0,beta0,p0spi0,q0spi0,v0
   dimension nmfint(mtb)
 end module sortiefichier

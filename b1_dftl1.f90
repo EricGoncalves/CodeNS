@@ -1,7 +1,7 @@
 module mod_b1_dftl1
-implicit none
+  implicit none
 contains
-      subroutine b1_dftl1
+  subroutine b1_dftl1
 !
 !***********************************************************************
 !
@@ -14,24 +14,24 @@ contains
 !
 !***********************************************************************
 !
-      use sortiefichier
-   use chainecarac
-   use kcle
-use mod_convich
-implicit none
+    use sortiefichier
+    use chainecarac
+    use kcle
+    use mod_convich
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
-      character(len=24) ::  ctitrt1
+    character(len=1316) :: form
+    character(len=24) ::  ctitrt1
 !
-      call convich(ktitrt1,ctitrt1)
+    call convich(ktitrt1,ctitrt1)
 !
-           form='(/,2x,''titre du calcul : '',/' &
-                 //'2x,''---------------'',/' &
-                 //'2x,a,2x,a)'
-      write(imp,form) titrt1,ctitrt1
+    form='(/,2x,''titre du calcul : '',/' &
+         //'2x,''---------------'',/' &
+         //'2x,a,2x,a)'
+    write(imp,form) titrt1,ctitrt1
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_dftl1
+end module mod_b1_dftl1

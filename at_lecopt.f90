@@ -1,8 +1,8 @@
 module mod_at_lecopt
-implicit none
+  implicit none
 contains
-      subroutine at_lecopt( &
-                 igr,jgr,kgr,raptat,idefaut)
+  subroutine at_lecopt( &
+       igr,jgr,kgr,raptat,idefaut)
 !
 !***********************************************************************
 !
@@ -22,43 +22,33 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use sortiefichier
-   use maillage
-implicit none
-integer :: igr
-integer :: jgr
-integer :: kgr
-double precision :: raptat
-integer :: idefaut
-integer :: ierr
-integer :: igrl
-integer :: jgrl
-integer :: kgrl
-integer :: l
-integer :: lig
-integer :: llu
-integer :: nf
-double precision :: raptatl
+    use para_var
+    use para_fige
+    use sortiefichier
+    use maillage
+    implicit none
+    integer          :: idefaut,   ierr,    igr,   igrl,    jgr
+    integer          ::    jgrl,    kgr,   kgrl,      l,    lig
+    integer          ::     llu,     nf
+    double precision ::  raptat,raptatl
 !
 !-----------------------------------------------------------------------
 !
-      character(len=80) ligne
-      dimension igr(lz),jgr(lz),kgr(lz),raptat(mtb)
+    character(len=80) ligne
+    dimension igr(lz),jgr(lz),kgr(lz),raptat(mtb)
 !
-      write(imp,'(/,"==>at_lecopt: lecture relations domaines-paroi pour calcul optimise de la distance",/)')
+    write(imp,'(/,"==>at_lecopt: lecture relations domaines-paroi pour calcul optimise de la distance",/)')
 !
-      open(99,file='fatdon',form='formatted',err=100)
+    open(99,file='fatdon',form='formatted',err=100)
 !
-      lig=0
-       do
+    lig=0
+    do
 !       boucle sur les lignes de "fatdon"
 !
-        read(99,  300,err=20)ligne
-        write(imp,300)ligne
-        lig=lig+1
-        if(ligne(1:6).eq.'optimi' .or. ligne(1:6).eq.'OPTIMI') then
+       read(99,  300,err=20)ligne
+       write(imp,300)ligne
+       lig=lig+1
+       if(ligne(1:6).eq.'optimi' .or. ligne(1:6).eq.'OPTIMI') then
 !
 !         lecture des informations obligatoires pour l'optimisation
 !
@@ -73,100 +63,100 @@ double precision :: raptatl
 !
 !         valeurs par defaut
           do l=1,lzx
-            igr(l)=igrl
-            jgr(l)=jgrl
-            kgr(l)=kgrl
-            raptat(l)=raptatl
+             igr(l)=igrl
+             jgr(l)=jgrl
+             kgr(l)=kgrl
+             raptat(l)=raptatl
           enddo
 !
 !         modification eventuelle pour certains domaines
           read(99,300,err=20)ligne
           lig=lig+1
           if(ligne(1:6).ne.'modifi' .and. ligne(1:6).ne.'MODIFI') then
-            write(imp,'("!!!at_lecopt: manque MODIFICATION")')
-            stop
+             write(imp,'("!!!at_lecopt: manque MODIFICATION")')
+             stop
           endif
           do
-            read(99,300,err=21)ligne
-            lig=lig+1
-            if(ligne(1:3).ne.'fin' .and. ligne(1:3).ne.'FIN') then
-              backspace 99
-              read(99,*,err=22)l,igr(l),jgr(l),kgr(l),raptat(l)
-            else
-              exit
-            endif
+             read(99,300,err=21)ligne
+             lig=lig+1
+             if(ligne(1:3).ne.'fin' .and. ligne(1:3).ne.'FIN') then
+                backspace 99
+                read(99,*,err=22)l,igr(l),jgr(l),kgr(l),raptat(l)
+             else
+                exit
+             endif
           enddo
 !
           read(99,300,err=24,end=31)ligne
           lig=lig+1
           if(ligne(1:5).eq.'liste' .or. ligne(1:5).eq.'LISTE') then
 !         lecture facultative des listes de parois rattachees a chaque domaine
-            idefaut=0
-            ierr=0
-            npbrat(1)=0
-            do l=1,lzx
-              read(99,*,err=25)llu,nbdrat(l)
-              if(abs(llu).ne.l) then
-                write(imp,'("!!!at_lecopt: erreur sur numero bloc l=",i4,3x,"l lu=",i4)')
-                ierr=ierr+1
-              endif
-              if(l.lt.lz) then
-                npbrat(l+1)=npbrat(l)+nbdrat(l)
-              endif
-              read(99,*,err=25)(lbdrat(npbrat(l)+nf),nf=1,nbdrat(l))
-            enddo
-            if(ierr.ne.0) then
+             idefaut=0
+             ierr=0
+             npbrat(1)=0
+             do l=1,lzx
+                read(99,*,err=25)llu,nbdrat(l)
+                if(abs(llu).ne.l) then
+                   write(imp,'("!!!at_lecopt: erreur sur numero bloc l=",i4,3x,"l lu=",i4)')
+                   ierr=ierr+1
+                endif
+                if(l.lt.lz) then
+                   npbrat(l+1)=npbrat(l)+nbdrat(l)
+                endif
+                read(99,*,err=25)(lbdrat(npbrat(l)+nf),nf=1,nbdrat(l))
+             enddo
+             if(ierr.ne.0) then
 !             detection erreurs lecture. Arret.
-              write(imp,'("!!!at_lecopt: detection erruers. ARRET")')
-              stop
-            endif
-            exit  !fin des lectures
+                write(imp,'("!!!at_lecopt: detection erruers. ARRET")')
+                stop
+             endif
+             exit  !fin des lectures
           else
-            idefaut=1
+             idefaut=1
           endif ! fin lecture facultative listes parois attachees a chaq
 !
           exit
-        endif ! pas de mot cle OPTIMI trouve, lire ligne suivante
-      enddo
+       endif ! pas de mot cle OPTIMI trouve, lire ligne suivante
+    enddo
 !
-   31 continue
-      close(99)
-      return
+31  continue
+    close(99)
+    return
 !
-   20 continue
-      write(imp,'("!!!at_lecopt: fin de fichier prematuree")')
-      stop
-   21 continue
-      write(imp,'("!!!at_lecopt: pas de FIN sequence MODIFICATION")')
-      stop
-   22 continue
-      write(imp,'("!!!at_lecopt: erreur lecture donnees MODIFICATION")')
-      stop
-   23 continue
-      write(imp,'("!!!at_lecopt: pas de FIN sequence MODIFICATION")')
-      stop
-   24 continue
-      write(imp,'("!!!at_lecopt: erreur recherche LISTE")')
-      stop
-   25 continue
-      write(imp,'("!!!at_lecopt: erreur lecture donnees LISTE")')
-      stop
-   10 continue
-      write(imp,'("!!!at_lecopt: erreur lecture mot-cle OPTIMI")')
-      stop
-   11 continue
-      write(imp,'("!!!at_lecopt: erreur lecture igr,jgr,kgr,raptat")')
-      stop
-   12 continue
-      write(imp,'("!!!at_lecopt: erreur lecture mot-cle LISTE")')
-      stop
-  100 continue
+20  continue
+    write(imp,'("!!!at_lecopt: fin de fichier prematuree")')
+    stop
+21  continue
+    write(imp,'("!!!at_lecopt: pas de FIN sequence MODIFICATION")')
+    stop
+22  continue
+    write(imp,'("!!!at_lecopt: erreur lecture donnees MODIFICATION")')
+    stop
+23  continue
+    write(imp,'("!!!at_lecopt: pas de FIN sequence MODIFICATION")')
+    stop
+24  continue
+    write(imp,'("!!!at_lecopt: erreur recherche LISTE")')
+    stop
+25  continue
+    write(imp,'("!!!at_lecopt: erreur lecture donnees LISTE")')
+    stop
+10  continue
+    write(imp,'("!!!at_lecopt: erreur lecture mot-cle OPTIMI")')
+    stop
+11  continue
+    write(imp,'("!!!at_lecopt: erreur lecture igr,jgr,kgr,raptat")')
+    stop
+12  continue
+    write(imp,'("!!!at_lecopt: erreur lecture mot-cle LISTE")')
+    stop
+100 continue
 !     erreur ouverture fichier
-      write(imp,'(/,''!!!at_lecopt: probleme ouverture fichier '',''atlecdon'')')
-      stop
+    write(imp,'(/,''!!!at_lecopt: probleme ouverture fichier '',''atlecdon'')')
+    stop
 !
-  300 format(a80)
+300 format(a80)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine at_lecopt
+end module mod_at_lecopt

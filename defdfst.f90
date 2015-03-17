@@ -1,7 +1,7 @@
 module mod_defdfst
-implicit none
+  implicit none
 contains
-      subroutine defdfst
+  subroutine defdfst
 !
 !***********************************************************************
 !
@@ -11,20 +11,19 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-      use constantes
-      use kcle
-      use definition
-implicit none
-integer :: lst
-integer :: nst
+    use para_fige
+    use constantes
+    use kcle
+    use definition
+    implicit none
+    integer          :: lst,nst
 !
 !-----------------------------------------------------------------------
 !
-      do nst=1,nsta
+    do nst=1,nsta
        do lst=1,lsta
-        varst(nst,lst)=reelmx
-        kvarst(nst,lst)=0
+          varst(nst,lst)=reelmx
+          kvarst(nst,lst)=0
        enddo
        varst(nst,1)=1.
        varst(nst,2)=1.
@@ -34,10 +33,10 @@ integer :: nst
        varst(nst,6)=0.
        varst(nst,7)=0.
        do lst=1,7
-        kvarst(nst,lst)=1
+          kvarst(nst,lst)=1
        enddo
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdfst
+end module mod_defdfst

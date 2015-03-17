@@ -1,10 +1,10 @@
 module mod_svfw
-implicit none
+  implicit none
 contains
-      subroutine svfw( &
-                 l,v,mut,utau, &
-                 disc,ncin,ncbd, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
+  subroutine svfw( &
+       l,v,mut,utau, &
+       disc,ncin,ncbd, &
+       tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
 !
 !***********************************************************************
 !
@@ -26,61 +26,46 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use sortiefichier
-      use chainecarac
-use mod_chdacc
-use mod_writda
-implicit none
-integer :: l
-double precision :: v
-double precision :: utau
-integer :: ncin
-integer :: ncbd
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-double precision :: tn4
-double precision :: tn5
-double precision :: tn6
-double precision :: tn7
-double precision :: tn8
-integer :: imax
-integer :: imin
-integer :: jmax
-integer :: jmin
-integer :: kmax
-integer :: kmin
+    use para_var
+    use para_fige
+    use sortiefichier
+    use chainecarac
+    use mod_chdacc
+    use mod_writda
+    implicit none
+    integer          :: imax,imin,jmax,jmin,kmax
+    integer          :: kmin,   l,ncbd,ncin
+    double precision ::  mut, tn1, tn2, tn3, tn4
+    double precision ::  tn5, tn6, tn7, tn8,utau
+    double precision ::    v
 !
 !-----------------------------------------------------------------------
 !
-      character(len=4 ) :: disc
-      double precision mut
+    character(len=4 ) :: disc
 !
-      dimension utau(ip42)
-      dimension v(ip11,ip60)
-      dimension mut(ip12)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00), &
-                tn5(ip00),tn6(ip00),tn7(ip00),tn8(ip00)
-      dimension ncin(ip41),ncbd(ip41)
+    dimension utau(ip42)
+    dimension v(ip11,ip60)
+    dimension mut(ip12)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00), &
+         tn5(ip00),tn6(ip00),tn7(ip00),tn8(ip00)
+    dimension ncin(ip41),ncbd(ip41)
 !
 !     changement eventuel de discretisation
 !
-       call chdacc( &
-                 l,disc,ncin,ncbd, &
-                 equat, &
-                 v,mut, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8, &
-                 imin,imax,jmin,jmax,kmin,kmax,kdac)
+    call chdacc( &
+         l,disc,ncin,ncbd, &
+         equat, &
+         v,mut, &
+         tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8, &
+         imin,imax,jmin,jmax,kmin,kmax,kdac)
 !
 !     stockage des variables aerodynamiques
 !
-       call writda( &
-                 l,kdac,equat,utau, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,ip12,tn8)
+    call writda( &
+         l,kdac,equat,utau, &
+         imin,imax,jmin,jmax,kmin,kmax, &
+         tn1,tn2,tn3,tn4,tn5,tn6,tn7,ip12,tn8)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine svfw
+end module mod_svfw

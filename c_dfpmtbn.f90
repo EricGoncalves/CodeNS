@@ -1,7 +1,7 @@
 module mod_c_dfpmtbn
-implicit none
+  implicit none
 contains
-      subroutine c_dfpmtbn(mot,imot,nmot)
+  subroutine c_dfpmtbn(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -17,27 +17,26 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier
-      use modeleturb
-use mod_tcmd_dfpmtbn
-use mod_b1_dfpmtbn
+    use para_fige
+    use sortiefichier
+    use modeleturb
+    use mod_tcmd_dfpmtbn
+    use mod_b1_dfpmtbn
 
-implicit none
-integer :: imot
-integer :: nmot
+    implicit none
+    integer          :: imot,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      call tcmd_dfpmtbn(mot,imot,nmot)
+    call tcmd_dfpmtbn(mot,imot,nmot)
 !
-      if(kimp.ge.1) then
-            call b1_dfpmtbn
-      endif
+    if(kimp.ge.1) then
+       call b1_dfpmtbn
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfpmtbn
+end module mod_c_dfpmtbn

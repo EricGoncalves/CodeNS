@@ -1,7 +1,7 @@
 module mod_sch_duin
-implicit none
+  implicit none
 contains
-      subroutine sch_duin( &
+  subroutine sch_duin( &
        v,img,ptdual,vdual,vdual1,vdual2)
 !
 !***********************************************************************
@@ -20,67 +20,46 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use schemanum
-implicit none
-integer :: indc
-integer :: i
-integer :: j
-integer :: k
-double precision :: v
-double precision :: ptdual
-double precision :: vdual
-double precision :: vdual1
-double precision :: vdual2
-integer :: i1
-integer :: i2
-integer :: i2m1
-integer :: ind1
-integer :: ind2
-integer :: j1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k2
-integer :: k2m1
-integer :: m
-integer :: n0c
-integer :: nc
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    use schemanum
+    implicit none
+    integer          ::    i,  i1,  i2,i2m1, img
+    integer          :: ind1,ind2,indc,   j,  j1
+    integer          ::   j2,j2m1,   k,  k1,  k2
+    integer          :: k2m1,   l,  lm,   m, n0c
+    integer          ::   nc, nid,nijd, njd
+    double precision ::     c1,ptdual,     v, vdual,vdual1
+    double precision :: vdual2
 !
 !-----------------------------------------------------------------------
 !
-      integer l,lm,img
-      double precision c1
-      dimension v(ip11,ip60),ptdual(ip11,ip60)
-      dimension vdual1(ip11,ip60),vdual(ip11,ip60),vdual2(ip11,ip60)
+    dimension v(ip11,ip60),ptdual(ip11,ip60)
+    dimension vdual1(ip11,ip60),vdual(ip11,ip60),vdual2(ip11,ip60)
 !
-      indc(i,j,k)=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
-      c1=1./3.
+    indc(i,j,k)=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    c1=1./3.
 !
-      do l = 1,lzx
-        lm = l + (img-1)*lz
-        n0c=npc(lm)
-        i1=ii1(lm)
-        i2=ii2(lm)
-        j1=jj1(lm)
-        j2=jj2(lm)
-        k1=kk1(lm)
-        k2=kk2(lm)
-        nid = id2(lm)-id1(lm)+1
-        njd = jd2(lm)-jd1(lm)+1
-        nijd = nid*njd
-        i2m1=i2-1
-        j2m1=j2-1
-        k2m1=k2-1
-        ind1 = indc(i1  ,j1  ,k1  )
-        ind2 = indc(i2m1,j2m1,k2m1)
+    do l = 1,lzx
+       lm = l + (img-1)*lz
+       n0c=npc(lm)
+       i1=ii1(lm)
+       i2=ii2(lm)
+       j1=jj1(lm)
+       j2=jj2(lm)
+       k1=kk1(lm)
+       k2=kk2(lm)
+       nid = id2(lm)-id1(lm)+1
+       njd = jd2(lm)-jd1(lm)+1
+       nijd = nid*njd
+       i2m1=i2-1
+       j2m1=j2-1
+       k2m1=k2-1
+       ind1 = indc(i1  ,j1  ,k1  )
+       ind2 = indc(i2m1,j2m1,k2m1)
 !
-        do m=ind1,ind2
+       do m=ind1,ind2
           nc=m+n0c
 !
 ! Initialisation a l'ORDRE 1 de la derivee en temps physique
@@ -127,9 +106,9 @@ integer :: njd
 !         ptdual(nc,5) = -3.*vdual(nc,5) + 1.5*vdual1(nc,5) - c1*vdual2(nc,5)
 !         ptdual(nc,6) = -3.*vdual(nc,6) + 1.5*vdual1(nc,6) - c1*vdual2(nc,6)
 !         ptdual(nc,7) = -3.*vdual(nc,7) + 1.5*vdual1(nc,7) - c1*vdual2(nc,7)
-        enddo
-      enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine sch_duin
+end module mod_sch_duin

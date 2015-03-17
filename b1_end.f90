@@ -1,7 +1,7 @@
 module mod_b1_end
-implicit none
+  implicit none
 contains
-      subroutine b1_end
+  subroutine b1_end
 !
 !***********************************************************************
 !
@@ -10,17 +10,17 @@ contains
 !
 !***********************************************************************
 !
-      use sortiefichier
-implicit none
+    use sortiefichier
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
+    character(len=1316) :: form
 !
-          form='(/,2x,''essai termine'',/' &
-                //'2x,''-------------'',)'
-      write(imp,form)
+    form='(/,2x,''essai termine'',/' &
+         //'2x,''-------------'',)'
+    write(imp,form)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_end
+end module mod_b1_end

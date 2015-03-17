@@ -1,7 +1,7 @@
 module mod_c_dfgm
-implicit none
+  implicit none
 contains
-      subroutine c_dfgm(mot,imot,nmot)
+  subroutine c_dfgm(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -22,30 +22,29 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier 
-use mod_tcmd_dfgm
-use mod_b1_dfgm
+    use para_fige
+    use sortiefichier 
+    use mod_tcmd_dfgm
+    use mod_b1_dfgm
 
-use mod_dfgm
+    use mod_dfgm
 
-implicit none
-integer :: imot
-integer :: nmot
+    implicit none
+    integer          :: imot,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      call tcmd_dfgm(mot,imot,nmot)
+    call tcmd_dfgm(mot,imot,nmot)
 !
-      if (kimp.ge.1) then
-        call b1_dfgm
-      endif
+    if (kimp.ge.1) then
+       call b1_dfgm
+    endif
 !
-      call dfgm
+    call dfgm
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfgm
+end module mod_c_dfgm

@@ -1,7 +1,7 @@
 module mod_defsecpfw
-implicit none
+  implicit none
 contains
-      subroutine defsecpfw
+  subroutine defsecpfw
 !
 !***********************************************************************
 !
@@ -19,34 +19,34 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-      use constantes
-      use kcle
-      use schemanum
-      use maillage
-implicit none
-integer :: ng
+    use para_fige
+    use constantes
+    use kcle
+    use schemanum
+    use maillage
+    implicit none
+    integer          :: ng
 !
 !-----------------------------------------------------------------------
 !
-      kvn   =0
-      kkvn  =1
+    kvn   =0
+    kkvn  =1
 !
-      ncyresi =25
-      ncysave =1000000
-      ncyexpl =1000000
-      kncyresi=1
-      kncysave=1
-      kncyexpl=1
+    ncyresi =25
+    ncysave =1000000
+    ncyexpl =1000000
+    kncyresi=1
+    kncysave=1
+    kncyexpl=1
 !
-      discsv ='cccc'
-      kdiscsv=1
+    discsv ='cccc'
+    kdiscsv=1
 !
-      do ng=1,lg
-      ncycle(ng)=intmx
-      kncycle(ng)=0
-      enddo
+    do ng=1,lg
+       ncycle(ng)=intmx
+       kncycle(ng)=0
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defsecpfw
+end module mod_defsecpfw

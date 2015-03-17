@@ -1,11 +1,11 @@
 module mod_clpara
-implicit none
+  implicit none
 contains
-      subroutine clpara( &
-                 mfb, &
-                 ncbd,v, &
-                 mmb,mpb,ncin, &
-                 pression,temp,cson)
+  subroutine clpara( &
+       mfb, &
+       ncbd,v, &
+       mmb,mpb,ncin, &
+       pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -29,36 +29,24 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-implicit none
-integer :: mfb
-integer :: ncbd
-double precision :: v
-integer :: mmb
-integer :: mpb
-integer :: ncin
-double precision :: pression
-double precision :: temp
-double precision :: cson
-integer :: m
-integer :: mb
-integer :: mt
-integer :: nc
-integer :: ni
+    use para_var
+    use para_fige
+    implicit none
+    integer          ::    m,  mb, mfb, mmb, mpb
+    integer          ::   mt,  nc,ncbd,ncin,  ni
+    double precision ::     cson,pression,   rhoe1,    temp,       v
 !
 !-----------------------------------------------------------------------
 !
-      double precision rhoe1
-      dimension v(ip11,ip60)
-      dimension ncbd(ip41),ncin(ip41)
-      dimension mmb(mtt),mpb(mtt)
-      dimension pression(ip11),temp(ip11),cson(ip11)
+    dimension v(ip11,ip60)
+    dimension ncbd(ip41),ncin(ip41)
+    dimension mmb(mtt),mpb(mtt)
+    dimension pression(ip11),temp(ip11),cson(ip11)
 !
-      mt=mmb(mfb)
+    mt=mmb(mfb)
 !
 !!$OMP SIMD
-      do m=1,mt
+    do m=1,mt
        mb=mpb(mfb)+m
        nc=ncbd(mb)
        ni=ncin(mb)
@@ -73,8 +61,8 @@ integer :: ni
        pression(nc)=pression(ni)      !hypothese dPdn=0
        temp(nc)=temp(ni)              !flux de chaleur nul: dTdn=0
        cson(nc)=cson(ni)
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine clpara
+end module mod_clpara

@@ -1,10 +1,10 @@
 module mod_met_rbvr
-implicit none
+  implicit none
 contains
-      subroutine met_rbvr( &
-                 ncbd,mnr,xnr,ynr,znr, &
-                 t, &
-                 ncin)
+  subroutine met_rbvr( &
+       ncbd,mnr,xnr,ynr,znr, &
+       t, &
+       ncin)
 !
 !***********************************************************************
 !
@@ -12,84 +12,69 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use boundary
-      use maillage
-implicit none
-integer :: ncbd
-integer :: mnr
-double precision :: xnr
-double precision :: ynr
-double precision :: znr
-double precision :: t
-integer :: ncin
-double precision :: cr
-integer :: l
-integer :: m
-integer :: mf
-integer :: mfb
-integer :: ml
-integer :: mr
-integer :: mt
-integer :: nd
-integer :: nid
-integer :: njd
-integer :: nr
-double precision :: sr
+    use para_var
+    use para_fige
+    use boundary
+    use maillage
+    implicit none
+    integer          ::    l,   m,  mf, mfb,  ml
+    integer          ::  mnr,  mr,  mt,ncbd,ncin
+    integer          ::   nd, nid, njd,  nr
+    double precision ::  cr, sr,  t,xnr,ynr
+    double precision :: znr
 !
 !-----------------------------------------------------------------------
 !
-      dimension t(ip11,ip60)
-      dimension ncbd(ip41)
-      dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
-      dimension ncin(ip41)
+    dimension t(ip11,ip60)
+    dimension ncbd(ip41)
+    dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
+    dimension ncin(ip41)
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !
-         mfb=lbd(mf)
-         mt=mmb(mfb)
-         sr=-srotr(mfb)
-         cr=crotr(mfb)
-         l=ndrr(mfb)
-         nid=id2(l)-id1(l)+1
-         njd=jd2(l)-jd1(l)+1
+       mfb=lbd(mf)
+       mt=mmb(mfb)
+       sr=-srotr(mfb)
+       cr=crotr(mfb)
+       l=ndrr(mfb)
+       nid=id2(l)-id1(l)+1
+       njd=jd2(l)-jd1(l)+1
 !
 !!$OMP SIMD
-         do m=1,mt
-            mr=mpr(mfb)+m
-            nr=mnr(mr)
-            ml=mpb(mfb)+m
-            nd=ncbd(ml)
+       do m=1,mt
+          mr=mpr(mfb)+m
+          nr=mnr(mr)
+          ml=mpb(mfb)+m
+          nd=ncbd(ml)
 !
 !
 !     definition des variables aux bords (centre des facettes frontieres)
 !
-      t(nd,6)= &
-           ((1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,6)+ &
-            (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,6)+ &
-            (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,6)+ &
-            (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,6)+ &
+          t(nd,6)= &
+               ((1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,6)+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,6)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,6)+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,6)+ &
                xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,6)+ &
                xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,6)+ &
                xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,6)+ &
                xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,6) &
-           +t(ncin(ml),6))*.5
-      t(nd,7)= &
-           ((1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,7)+ &
-            (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,7)+ &
-            (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,7)+ &
-            (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,7)+ &
+               +t(ncin(ml),6))*.5
+          t(nd,7)= &
+               ((1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,7)+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,7)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,7)+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,7)+ &
                xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,7)+ &
                xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,7)+ &
                xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,7)+ &
                xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,7) &
-           +t(ncin(ml),7))*.5
+               +t(ncin(ml),7))*.5
 !
-         enddo
+       enddo
 !
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine met_rbvr
+end module mod_met_rbvr

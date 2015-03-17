@@ -1,15 +1,15 @@
 module mod_met_laplaciens
-implicit none
+  implicit none
 contains
-      subroutine met_laplaciens( &
-                 l, &
-                 equat, &
-                 sn,lgsnlt, &
-                 vol, &
-                 v, &
-                 dsx,dsy,dsz, &
-                 dsd2x,dsd2y,dsd2z, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+  subroutine met_laplaciens( &
+       l, &
+       equat, &
+       sn,lgsnlt, &
+       vol, &
+       v, &
+       dsx,dsy,dsz, &
+       dsd2x,dsd2y,dsd2z, &
+       cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !***********************************************************************
 !
@@ -27,472 +27,418 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use schemanum
-implicit none
-integer :: inc
-integer :: indc
-integer :: id
-integer :: jd
-integer :: kd
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-double precision :: sn
-integer :: lgsnlt
-double precision :: vol
-double precision :: v
-double precision :: dsx
-double precision :: dsy
-double precision :: dsz
-double precision :: dsd2x
-double precision :: dsd2y
-double precision :: dsd2z
-double precision :: cmui1
-double precision :: cmui2
-double precision :: cmuj1
-double precision :: cmuj2
-double precision :: cmuk1
-double precision :: cmuk2
-double precision :: c0
-double precision :: eps
-integer :: i1
-integer :: i1m1
-integer :: i1p1
-integer :: i2
-integer :: i2m1
-integer :: i2p1
-integer :: ind1
-integer :: ind2
-integer :: j1
-integer :: j1m1
-integer :: j1p1
-integer :: j2
-integer :: j2m1
-integer :: j2p1
-integer :: k1
-integer :: k1m1
-integer :: k1p1
-integer :: k2
-integer :: k2m1
-integer :: k2p1
-integer :: kdir
-integer :: m
-integer :: n
-integer :: n0c
-integer :: nci
-integer :: ncj
-integer :: nck
-integer :: nid
-integer :: nijd
-integer :: ninc
-integer :: njd
-double precision :: si1
-double precision :: si2
-double precision :: si3
-double precision :: sj1
-double precision :: sj2
-double precision :: sj3
-double precision :: sk1
-double precision :: sk2
-double precision :: sk3
-double precision :: ts
-double precision :: vols
+    use para_var
+    use para_fige
+    use maillage
+    use schemanum
+    implicit none
+    integer          ::      i,    i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  i2p1,    id,   inc,  ind1
+    integer          ::   ind2,  indc,     j,    j1,  j1m1
+    integer          ::   j1p1,    j2,  j2m1,  j2p1,    jd
+    integer          ::      k,    k1,  k1m1,  k1p1,    k2
+    integer          ::   k2m1,  k2p1,    kd,  kdir,     l
+    integer          :: lgsnlt,     m,     n,   n0c,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,  ninc
+    integer          ::    njd
+    double precision ::    c0,cmui1,cmui2,cmuj1,cmuj2
+    double precision :: cmuk1,cmuk2,dsd2x,dsd2y,dsd2z
+    double precision ::   dsx,  dsy,  dsz,  eps,  si1
+    double precision ::   si2,  si3,  sj1,  sj2,  sj3
+    double precision ::   sk1,  sk2,  sk3,   sn,   ts
+    double precision ::     v,  vol, vols
 !
 !-----------------------------------------------------------------------
 !
-      character(len=7 ) :: equat
-      dimension sn(lgsnlt,nind,ndir), &
-                vol(ip11)
-      dimension dsx(ip00),dsy(ip00),dsz(ip00), &
-                dsd2x(ip00),dsd2y(ip00),dsd2z(ip00)
-      dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-                cmuk1(ip21),cmuk2(ip21)
-      dimension v(ip11,ip60)
+    character(len=7 ) :: equat
+    dimension sn(lgsnlt,nind,ndir), &
+         vol(ip11)
+    dimension dsx(ip00),dsy(ip00),dsz(ip00), &
+         dsd2x(ip00),dsd2y(ip00),dsd2z(ip00)
+    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
+         cmuk1(ip21),cmuk2(ip21)
+    dimension v(ip11,ip60)
 !
 
 !
-      indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-      inc(id,jd,kd)=id+jd*nid+kd*nijd
-      eps=0.000001
+    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    inc(id,jd,kd)=id+jd*nid+kd*nijd
+    eps=0.000001
 !
-      n0c=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0c=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd= nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd= nid*njd
 !
-      i1p1=i1+1
-      j1p1=j1+1
-      k1p1=k1+1
-      i2m1=i2-1
-      j2m1=j2-1
-      k2m1=k2-1
-      i2p1=i2+1
-      j2p1=j2+1
-      k2p1=k2+1
-      i1m1=i1-1
-      j1m1=j1-1
-      k1m1=k1-1
+    i1p1=i1+1
+    j1p1=j1+1
+    k1p1=k1+1
+    i2m1=i2-1
+    j2m1=j2-1
+    k2m1=k2-1
+    i2p1=i2+1
+    j2p1=j2+1
+    k2p1=k2+1
+    i1m1=i1-1
+    j1m1=j1-1
+    k1m1=k1-1
 !
-      nci=inc(1,0,0)
-      ncj=inc(0,1,0)
-      nck=inc(0,0,1)
+    nci=inc(1,0,0)
+    ncj=inc(0,1,0)
+    nck=inc(0,0,1)
 !
 !     initialisation
-      ind1=indc(i1m1,j1m1,k1m1)-n0c
-      ind2=indc(i2p1,j2p1,k2p1)-n0c
-      do m=ind1,ind2
+    ind1=indc(i1m1,j1m1,k1m1)-n0c
+    ind2=indc(i2p1,j2p1,k2p1)-n0c
+    do m=ind1,ind2
        dsd2x(m)=0.
        dsd2y(m)=0.
        dsd2z(m)=0.
-      enddo
+    enddo
 !
 !cc   test sur le schema numerique
-      if(ischema.eq.1) then
+    if(ischema.eq.1) then
 !--------------------------------------------------------------------
 !     direction k (a travers les facettes k=cste)
 !--------------------------------------------------------------------
-      if (equat(3:5).ne.'2dk') then
+       if (equat(3:5).ne.'2dk') then
 !
-         kdir=3
-         ninc=nck
+          kdir=3
+          ninc=nck
 !
-         do k=k1p1,k2m1
+          do k=k1p1,k2m1
+             do j=j1,j2m1
+                ind1 = indc(i1  ,j,k)
+                ind2 = indc(i2m1,j,k)
+!!$OMP SIMD
+                do n=ind1,ind2
+                   m=n-n0c
+                   dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
+                   dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
+                   dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
+                   dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
+                   dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
+                   dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
+                enddo
+             enddo
+          enddo
+!
           do j=j1,j2m1
-           ind1 = indc(i1  ,j,k)
-           ind2 = indc(i2m1,j,k)
+             ind1 = indc(i1  ,j,k1)
+             ind2 = indc(i2m1,j,k1)
 !!$OMP SIMD
-           do n=ind1,ind2
-            m=n-n0c
-           dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
-           dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
-           dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
-           dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
-           dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
-           dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
-           enddo
+             do n=ind1,ind2
+                m=n-n0c
+                dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
+                dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
+                dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
+             enddo
           enddo
-         enddo
 !
-         do j=j1,j2m1
-           ind1 = indc(i1  ,j,k1)
-           ind2 = indc(i2m1,j,k1)
+          do j=j1,j2m1
+             ind1 = indc(i1  ,j,k2)
+             ind2 = indc(i2m1,j,k2)
 !!$OMP SIMD
-           do n=ind1,ind2
-             m=n-n0c
-             dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
-             dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
-             dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
-           enddo
-         enddo
+             do n=ind1,ind2
+                m=n-n0c
+                dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
+                dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
+                dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
+             enddo
+          enddo
 !
-         do j=j1,j2m1
-           ind1 = indc(i1  ,j,k2)
-           ind2 = indc(i2m1,j,k2)
-!!$OMP SIMD
-           do n=ind1,ind2
-             m=n-n0c
-             dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
-             dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
-             dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
-           enddo
-         enddo
-!
-      endif
+       endif
 !--------------------------------------------------------------
 !     direction j (a travers les facettes j=cste)
 !--------------------------------------------------------------
-      if (equat(3:5).ne.'2dj') then
+       if (equat(3:5).ne.'2dj') then
 !
-         ninc=ncj
-         kdir=2
+          ninc=ncj
+          kdir=2
 !
-         do j=j1p1,j2m1
-          do k=k1,k2m1
-           ind1 = indc(i1  ,j,k)
-           ind2 = indc(i2m1,j,k)
+          do j=j1p1,j2m1
+             do k=k1,k2m1
+                ind1 = indc(i1  ,j,k)
+                ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
-           do n=ind1,ind2
-            m=n-n0c
-           dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*(dsx(m)+dsy(m-ninc))
-           dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
-           dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
-           dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
-           dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
-           dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
-           enddo
+                do n=ind1,ind2
+                   m=n-n0c
+                   dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*(dsx(m)+dsy(m-ninc))
+                   dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
+                   dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
+                   dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
+                   dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
+                   dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
+                enddo
+             enddo
           enddo
-         enddo
 !
-         do k=k1,k2m1
-           ind1 = indc(i1  ,j1,k)
-           ind2 = indc(i2m1,j1,k)
+          do k=k1,k2m1
+             ind1 = indc(i1  ,j1,k)
+             ind2 = indc(i2m1,j1,k)
 !!$OMP SIMD
-           do n=ind1,ind2
-             m=n-n0c
-             dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
-             dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
-             dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
-           enddo
-         enddo
+             do n=ind1,ind2
+                m=n-n0c
+                dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
+                dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
+                dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
+             enddo
+          enddo
 !
-         do k=k1,k2m1
-           ind1 = indc(i1  ,j2,k)
-           ind2 = indc(i2m1,j2,k)
+          do k=k1,k2m1
+             ind1 = indc(i1  ,j2,k)
+             ind2 = indc(i2m1,j2,k)
 !!$OMP SIMD
-           do n=ind1,ind2
-             m=n-n0c
-             dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
-             dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
-             dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
-           enddo
-         enddo
+             do n=ind1,ind2
+                m=n-n0c
+                dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
+                dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
+                dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
+             enddo
+          enddo
 !
-      endif
+       endif
 !---------------------------------------------------------------------
 !     direction i (a travers les facettes i=cste)
 !---------------------------------------------------------------------
-      if (equat(3:5).ne.'2di') then
+       if (equat(3:5).ne.'2di') then
 !
-         ninc=nci
-         kdir=1
+          ninc=nci
+          kdir=1
 !
-        do k=k1,k2m1
-         do j=j1,j2m1
-          ind1 = indc(i1p1,j,k)
-          ind2 = indc(i2m1,j,k)
+          do k=k1,k2m1
+             do j=j1,j2m1
+                ind1 = indc(i1p1,j,k)
+                ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
-          do n=ind1,ind2
-           m=n-n0c
-           dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
-           dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
-           dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
-           dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
-           dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
-           dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
-           enddo
+                do n=ind1,ind2
+                   m=n-n0c
+                   dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
+                   dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
+                   dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
+                   dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
+                   dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*(dsy(m)+dsy(m-ninc))
+                   dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*(dsz(m)+dsz(m-ninc))
+                enddo
+             enddo
           enddo
-         enddo
 !
-         do k=k1,k2m1
-           ind1 = indc(i1,j1  ,k)
-           ind2 = indc(i1,j2m1,k)
+          do k=k1,k2m1
+             ind1 = indc(i1,j1  ,k)
+             ind2 = indc(i1,j2m1,k)
 !!$OMP SIMD
-           do n=ind1,ind2,ncj
-            m=n-n0c
-             dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
-             dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
-             dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
+             do n=ind1,ind2,ncj
+                m=n-n0c
+                dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
+                dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
+                dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
+             enddo
           enddo
-         enddo
 !
-         do k=k1,k2m1
-           ind1 = indc(i2,j1  ,k)
-           ind2 = indc(i2,j2m1,k)
+          do k=k1,k2m1
+             ind1 = indc(i2,j1  ,k)
+             ind2 = indc(i2,j2m1,k)
 !!$OMP SIMD
-           do n=ind1,ind2,ncj
-             m=n-n0c
-             dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
-             dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
-             dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
-           enddo
-         enddo
+             do n=ind1,ind2,ncj
+                m=n-n0c
+                dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
+                dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
+                dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
+             enddo
+          enddo
 !
-      endif
+       endif
 !********************************************************************
-      else   !schemas ponderes
+    else   !schemas ponderes
 !
 !--------------------------------------------------------------------
 !     direction k (a travers les facettes k=cste)
 !--------------------------------------------------------------------
-      if (equat(3:5).ne.'2dk') then
+       if (equat(3:5).ne.'2dk') then
 !
-         kdir=3
-         ninc=nck
+          kdir=3
+          ninc=nck
 !
-         do k=k1p1,k2m1
-           do j=j1,j2m1
-             ind1 = indc(i1,j,k)
-             ind2 = indc(i2m1,j,k)
+          do k=k1p1,k2m1
+             do j=j1,j2m1
+                ind1 = indc(i1,j,k)
+                ind2 = indc(i2m1,j,k)
+!!$OMP SIMD
+                do n=ind1,ind2
+                   m=n-n0c
+                   sk1=(cmuk1(m)*dsx(m)+cmuk2(m)*dsx(m-ninc))*sn(m,kdir,1)
+                   sk2=(cmuk1(m)*dsy(m)+cmuk2(m)*dsy(m-ninc))*sn(m,kdir,2)
+                   sk3=(cmuk1(m)*dsz(m)+cmuk2(m)*dsz(m-ninc))*sn(m,kdir,3)
+                   dsd2x(m)=dsd2x(m)-sk1
+                   dsd2y(m)=dsd2y(m)-sk2
+                   dsd2z(m)=dsd2z(m)-sk3
+                   dsd2x(m-ninc)=dsd2x(m-ninc)+sk1
+                   dsd2y(m-ninc)=dsd2y(m-ninc)+sk2
+                   dsd2z(m-ninc)=dsd2z(m-ninc)+sk3
+                enddo
+             enddo
+          enddo
+!
+          do j=j1,j2m1
+             ind1 = indc(i1 ,j,k1)
+             ind2 = indc(i2m1,j,k1)
 !!$OMP SIMD
              do n=ind1,ind2
-               m=n-n0c
-               sk1=(cmuk1(m)*dsx(m)+cmuk2(m)*dsx(m-ninc))*sn(m,kdir,1)
-               sk2=(cmuk1(m)*dsy(m)+cmuk2(m)*dsy(m-ninc))*sn(m,kdir,2)
-               sk3=(cmuk1(m)*dsz(m)+cmuk2(m)*dsz(m-ninc))*sn(m,kdir,3)
-               dsd2x(m)=dsd2x(m)-sk1
-               dsd2y(m)=dsd2y(m)-sk2
-               dsd2z(m)=dsd2z(m)-sk3
-               dsd2x(m-ninc)=dsd2x(m-ninc)+sk1
-               dsd2y(m-ninc)=dsd2y(m-ninc)+sk2
-               dsd2z(m-ninc)=dsd2z(m-ninc)+sk3
+                m=n-n0c
+                dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
+                dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
+                dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
              enddo
-           enddo
-         enddo
-!
-         do j=j1,j2m1
-          ind1 = indc(i1 ,j,k1)
-          ind2 = indc(i2m1,j,k1)
-!!$OMP SIMD
-          do n=ind1,ind2
-           m=n-n0c
-            dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
-            dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
-            dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
           enddo
-         enddo
 !
-         do j=j1,j2m1
-          ind1 = indc(i1 ,j,k2)
-          ind2 = indc(i2m1,j,k2)
+          do j=j1,j2m1
+             ind1 = indc(i1 ,j,k2)
+             ind2 = indc(i2m1,j,k2)
 !!$OMP SIMD
-          do n=ind1,ind2
-           m=n-n0c
-            dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
-            dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
-            dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
+             do n=ind1,ind2
+                m=n-n0c
+                dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
+                dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
+                dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
+             enddo
           enddo
-         enddo
 !
-      endif
+       endif
 !--------------------------------------------------------------
 !     direction j (a travers les facettes j=cste)
 !--------------------------------------------------------------
-      if (equat(3:5).ne.'2dj') then
+       if (equat(3:5).ne.'2dj') then
 !
-         kdir=2
-         ninc=ncj
+          kdir=2
+          ninc=ncj
 !
-         do j=j1p1,j2m1
+          do j=j1p1,j2m1
+             do k=k1,k2m1
+                ind1 = indc(i1  ,j,k)
+                ind2 = indc(i2m1,j,k)
+!!$OMP SIMD
+                do n=ind1,ind2
+                   m=n-n0c
+                   sj1=(cmuj1(m)*dsx(m)+cmuj2(m)*dsx(m-ninc))*sn(m,kdir,1)
+                   sj2=(cmuj1(m)*dsy(m)+cmuj2(m)*dsy(m-ninc))*sn(m,kdir,2)
+                   sj3=(cmuj1(m)*dsz(m)+cmuj2(m)*dsz(m-ninc))*sn(m,kdir,3)
+                   dsd2x(m)=dsd2x(m)-sj1
+                   dsd2y(m)=dsd2y(m)-sj2
+                   dsd2z(m)=dsd2z(m)-sj3
+                   dsd2x(m-ninc)=dsd2x(m-ninc)+sj1
+                   dsd2y(m-ninc)=dsd2y(m-ninc)+sj2
+                   dsd2z(m-ninc)=dsd2z(m-ninc)+sj3
+                enddo
+             enddo
+          enddo
+!
           do k=k1,k2m1
-           ind1 = indc(i1  ,j,k)
-           ind2 = indc(i2m1,j,k)
+             ind1=indc(i1  ,j1,k)
+             ind2=indc(i2m1,j1,k)
 !!$OMP SIMD
-           do n=ind1,ind2
-            m=n-n0c
-             sj1=(cmuj1(m)*dsx(m)+cmuj2(m)*dsx(m-ninc))*sn(m,kdir,1)
-             sj2=(cmuj1(m)*dsy(m)+cmuj2(m)*dsy(m-ninc))*sn(m,kdir,2)
-             sj3=(cmuj1(m)*dsz(m)+cmuj2(m)*dsz(m-ninc))*sn(m,kdir,3)
-             dsd2x(m)=dsd2x(m)-sj1
-             dsd2y(m)=dsd2y(m)-sj2
-             dsd2z(m)=dsd2z(m)-sj3
-             dsd2x(m-ninc)=dsd2x(m-ninc)+sj1
-             dsd2y(m-ninc)=dsd2y(m-ninc)+sj2
-             dsd2z(m-ninc)=dsd2z(m-ninc)+sj3
-           enddo
+             do n=ind1,ind2
+                m=n-n0c
+                dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
+                dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
+                dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
+             enddo
           enddo
-         enddo
 !
-         do k=k1,k2m1
-           ind1=indc(i1  ,j1,k)
-           ind2=indc(i2m1,j1,k)
+          do k=k1,k2m1
+             ind1 = indc(i1  ,j2,k)
+             ind2 = indc(i2m1,j2,k)
 !!$OMP SIMD
-           do n=ind1,ind2
-             m=n-n0c
-             dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
-             dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
-             dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
-           enddo
-         enddo
-!
-         do k=k1,k2m1
-           ind1 = indc(i1  ,j2,k)
-           ind2 = indc(i2m1,j2,k)
-!!$OMP SIMD
-           do n=ind1,ind2
-             m=n-n0c
-             dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
-             dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
-             dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
+             do n=ind1,ind2
+                m=n-n0c
+                dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
+                dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
+                dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
+             enddo
           enddo
-         enddo
 !
-      endif
+       endif
 !---------------------------------------------------------------------
 !     direction i (a travers les facettes i=cste)
 !---------------------------------------------------------------------
-      if (equat(3:5).ne.'2di') then
+       if (equat(3:5).ne.'2di') then
 !
-         kdir=1
-         ninc=nci
+          kdir=1
+          ninc=nci
 !
-         do k=k1,k2m1
-           do j=j1,j2m1
-             ind1 = indc(i1p1,j,k)
-             ind2 = indc(i2m1,j,k)
+          do k=k1,k2m1
+             do j=j1,j2m1
+                ind1 = indc(i1p1,j,k)
+                ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
-             do n=ind1,ind2
-               m=n-n0c
-               si1=(cmui1(m)*dsx(m)+cmui2(m)*dsx(m-ninc))*sn(m,kdir,1)
-               si2=(cmui1(m)*dsy(m)+cmui2(m)*dsy(m-ninc))*sn(m,kdir,2)
-               si3=(cmui1(m)*dsz(m)+cmui2(m)*dsz(m-ninc))*sn(m,kdir,3)
-               dsd2x(m)=dsd2x(m)-si1
-               dsd2y(m)=dsd2y(m)-si2
-               dsd2z(m)=dsd2z(m)-si3
-               dsd2x(m-ninc)=dsd2x(m-ninc)+si1
-               dsd2y(m-ninc)=dsd2y(m-ninc)+si2
-               dsd2z(m-ninc)=dsd2z(m-ninc)+si3
+                do n=ind1,ind2
+                   m=n-n0c
+                   si1=(cmui1(m)*dsx(m)+cmui2(m)*dsx(m-ninc))*sn(m,kdir,1)
+                   si2=(cmui1(m)*dsy(m)+cmui2(m)*dsy(m-ninc))*sn(m,kdir,2)
+                   si3=(cmui1(m)*dsz(m)+cmui2(m)*dsz(m-ninc))*sn(m,kdir,3)
+                   dsd2x(m)=dsd2x(m)-si1
+                   dsd2y(m)=dsd2y(m)-si2
+                   dsd2z(m)=dsd2z(m)-si3
+                   dsd2x(m-ninc)=dsd2x(m-ninc)+si1
+                   dsd2y(m-ninc)=dsd2y(m-ninc)+si2
+                   dsd2z(m-ninc)=dsd2z(m-ninc)+si3
+                enddo
              enddo
-           enddo
-         enddo
+          enddo
 !
-         do k=k1,k2m1
-            ind1 = indc(i1,j1  ,k)
-            ind2 = indc(i1,j2m1,k)
+          do k=k1,k2m1
+             ind1 = indc(i1,j1  ,k)
+             ind2 = indc(i1,j2m1,k)
 !!$OMP SIMD
-            do n=ind1,ind2,ncj
-               m=n-n0c
-               dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
-               dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
-               dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
-            enddo
-         enddo
+             do n=ind1,ind2,ncj
+                m=n-n0c
+                dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
+                dsd2y(m)=dsd2y(m)-sn(m,kdir,2)*2*dsy(m-ninc)
+                dsd2z(m)=dsd2z(m)-sn(m,kdir,3)*2*dsz(m-ninc)
+             enddo
+          enddo
 !
-         do k=k1,k2m1
-            ind1 = indc(i2,j1  ,k)
-            ind2 = indc(i2,j2m1,k)
+          do k=k1,k2m1
+             ind1 = indc(i2,j1  ,k)
+             ind2 = indc(i2,j2m1,k)
 !!$OMP SIMD
-            do n=ind1,ind2,ncj
-               m=n-n0c
-               dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
-               dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
-               dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
-            enddo
-         enddo
+             do n=ind1,ind2,ncj
+                m=n-n0c
+                dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
+                dsd2y(m-ninc)=dsd2y(m-ninc)+sn(m,kdir,2)*2*dsy(m)
+                dsd2z(m-ninc)=dsd2z(m-ninc)+sn(m,kdir,3)*2*dsz(m)
+             enddo
+          enddo
 !
-      endif
+       endif
 !
-      endif  ! fin test sur schema
+    endif  ! fin test sur schema
 !-----------------------------------------------------------------
 !-     calcul du laplacien :
 !----------------------------------------------------------------
 !
-      ind1 = indc(i1  ,j1  ,k1  )
-      ind2 = indc(i2m1,j2m1,k2m1)
-      do n=ind1,ind2
-        m=n-n0c
+    ind1 = indc(i1  ,j1  ,k1  )
+    ind2 = indc(i2m1,j2m1,k2m1)
+    do n=ind1,ind2
+       m=n-n0c
 !       le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t
-        ts=sign(0.5,-vol(n))
-        vols=(0.5+ts)*eps+(0.5-ts)*vol(n)
-        c0=0.5/vols
+       ts=sign(0.5,-vol(n))
+       vols=(0.5+ts)*eps+(0.5-ts)*vol(n)
+       c0=0.5/vols
 !        c0=0.5/vol(n)
-        dsd2x(m)=dsd2x(m)*c0
-        dsd2y(m)=dsd2y(m)*c0
-        dsd2z(m)=dsd2z(m)*c0
+       dsd2x(m)=dsd2x(m)*c0
+       dsd2y(m)=dsd2y(m)*c0
+       dsd2z(m)=dsd2z(m)*c0
 !      laplacien de ds
-        dsd2x(m)=dsd2x(m)+dsd2y(m)+dsd2z(m)
-      enddo
+       dsd2x(m)=dsd2x(m)+dsd2y(m)+dsd2z(m)
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine met_laplaciens
+end module mod_met_laplaciens

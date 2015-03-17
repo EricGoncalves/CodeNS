@@ -1,11 +1,11 @@
 module mod_c_svfw
-implicit none
+  implicit none
 contains
-      subroutine c_svfw( &
-                 mot,imot,nmot, &
-                 l,v,mut,utau, &
-                 ncin,ncbd, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
+  subroutine c_svfw( &
+       mot,imot,nmot, &
+       l,v,mut,utau, &
+       ncin,ncbd, &
+       tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
 !
 !***********************************************************************
 !
@@ -36,55 +36,43 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use sortiefichier
-use mod_svfw
-use mod_tcmd_svfw
-use mod_b1_svfw
-implicit none
-integer :: imot
-integer :: nmot
-integer :: l
-double precision :: v
-double precision :: utau
-integer :: ncin
-integer :: ncbd
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-double precision :: tn4
-double precision :: tn5
-double precision :: tn6
-double precision :: tn7
-double precision :: tn8
+    use para_var
+    use para_fige
+    use sortiefichier
+    use mod_svfw
+    use mod_tcmd_svfw
+    use mod_b1_svfw
+    implicit none
+    integer          :: imot,   l,ncbd,ncin,nmot
+    double precision ::  mut, tn1, tn2, tn3, tn4
+    double precision ::  tn5, tn6, tn7, tn8,utau
+    double precision ::    v
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      character(len=4 ) :: disc
-      double precision mut
+    character(len=32) ::  mot(nmx)
+    character(len=4 ) :: disc
 !
-      dimension imot(nmx)
-      dimension utau(ip42),mut(ip12)
-      dimension v(ip11,ip60)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00), &
-                tn5(ip00),tn6(ip00),tn7(ip00),tn8(ip00)
-      dimension ncin(ip41),ncbd(ip41)
+    dimension imot(nmx)
+    dimension utau(ip42),mut(ip12)
+    dimension v(ip11,ip60)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00), &
+         tn5(ip00),tn6(ip00),tn7(ip00),tn8(ip00)
+    dimension ncin(ip41),ncbd(ip41)
 !
-      call tcmd_svfw( &
-                 mot,imot,nmot, &
-                 disc)
+    call tcmd_svfw( &
+         mot,imot,nmot, &
+         disc)
 !
-     if ((kimp.ge.1).and.(l.eq.1)) then
-            call b1_svfw(disc)
-      endif
+    if ((kimp.ge.1).and.(l.eq.1)) then
+       call b1_svfw(disc)
+    endif
 !
-       call svfw( &
-                 l,v,mut,utau, &
-                 disc,ncin,ncbd, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
+    call svfw( &
+         l,v,mut,utau, &
+         disc,ncin,ncbd, &
+         tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_svfw
+end module mod_c_svfw

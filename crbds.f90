@@ -1,11 +1,11 @@
 module mod_crbds
-implicit none
+  implicit none
 contains
-      subroutine crbds( &
-                 mfbe,kini,l, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 indmf, &
-                 ncbd)
+  subroutine crbds( &
+       mfbe,kini,l, &
+       imin,imax,jmin,jmax,kmin,kmax, &
+       indmf, &
+       ncbd)
 !
 !***********************************************************************
 !
@@ -51,93 +51,78 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use kcle
-      use chainecarac
-      use sortiefichier
-      use boundary
-use mod_initis
-implicit none
-integer :: mfbe
-integer :: kini
-integer :: l
-integer :: imin
-integer :: imax
-integer :: jmin
-integer :: jmax
-integer :: kmin
-integer :: kmax
-integer :: ncbd
-integer :: img
-integer :: imgi
-integer :: imgj
-integer :: imgk
-integer :: lm
-integer :: m0
-integer :: mfbi
-integer :: mfbim
-integer :: mt
+    use para_var
+    use para_fige
+    use maillage
+    use kcle
+    use chainecarac
+    use sortiefichier
+    use boundary
+    use mod_initis
+    implicit none
+    integer          ::  imax,  img, imgi, imgj, imgk
+    integer          ::  imin, jmax, jmin, kini, kmax
+    integer          ::  kmin,    l,   lm,   m0, mfbe
+    integer          ::  mfbi,mfbim,   mt, ncbd
 !
 !-----------------------------------------------------------------------
 !
-      character(len=2 ) :: indmf
-      dimension ncbd(ip41)
+    character(len=2 ) :: indmf
+    dimension ncbd(ip41)
 !
-      mtbx=mtbx+1
-      kmtbx=2
+    mtbx=mtbx+1
+    kmtbx=2
 !
-      mfbi=mtbx
-      nfei(mfbe)=mfbi
-      ndlb(mfbi)=l
-      indfl(mfbi)=indmf
+    mfbi=mtbx
+    nfei(mfbe)=mfbi
+    ndlb(mfbi)=l
+    indfl(mfbi)=indmf
 !
-      do img=1,lgx
+    do img=1,lgx
 !
-      lm=l+(img-1)*lz
-      mfbim=mfbi+(img-1)*mtb
+       lm=l+(img-1)*lz
+       mfbim=mfbi+(img-1)*mtb
 !
-      imgi=img
-      imgj=img
-      imgk=img
-      if (equat(3:5).eq.'2di') imgi = 1
-      if (equat(3:5).eq.'2dj') imgj = 1
-      if (equat(3:5).eq.'2dk') imgk = 1
-      if (equat(3:5).eq.'2xk') imgk = 1
+       imgi=img
+       imgj=img
+       imgk=img
+       if (equat(3:5).eq.'2di') imgi = 1
+       if (equat(3:5).eq.'2dj') imgj = 1
+       if (equat(3:5).eq.'2dk') imgk = 1
+       if (equat(3:5).eq.'2xk') imgk = 1
 !
-      iminb(mfbim)=(imin-ii1(lm))/2**(imgi-1)+ii1(lm)
-      imaxb(mfbim)=(imax-ii1(lm))/2**(imgi-1)+ii1(lm)
-      jminb(mfbim)=(jmin-jj1(lm))/2**(imgj-1)+jj1(lm)
-      jmaxb(mfbim)=(jmax-jj1(lm))/2**(imgj-1)+jj1(lm)
-      kminb(mfbim)=(kmin-kk1(lm))/2**(imgk-1)+kk1(lm)
-      kmaxb(mfbim)=(kmax-kk1(lm))/2**(imgk-1)+kk1(lm)
+       iminb(mfbim)=(imin-ii1(lm))/2**(imgi-1)+ii1(lm)
+       imaxb(mfbim)=(imax-ii1(lm))/2**(imgi-1)+ii1(lm)
+       jminb(mfbim)=(jmin-jj1(lm))/2**(imgj-1)+jj1(lm)
+       jmaxb(mfbim)=(jmax-jj1(lm))/2**(imgj-1)+jj1(lm)
+       kminb(mfbim)=(kmin-kk1(lm))/2**(imgk-1)+kk1(lm)
+       kmaxb(mfbim)=(kmax-kk1(lm))/2**(imgk-1)+kk1(lm)
 !
-      mpb(mfbim)=mdimtbx
-      m0=mpb(mfbim)
+       mpb(mfbim)=mdimtbx
+       m0=mpb(mfbim)
 !
 !     remplissage des tableaux  ncbd, mmb
 !
-      if((kini.eq.1).or.(img.gt.1)) then
-            call initis( &
-                 lm, &
-                 iminb(mfbim),imaxb(mfbim), &
-                 jminb(mfbim),jmaxb(mfbim), &
-                 kminb(mfbim),kmaxb(mfbim), &
-                 indmf,ncbd, &
-                 mt,m0)
-      elseif(kini.eq.0) then
+       if((kini.eq.1).or.(img.gt.1)) then
+          call initis( &
+               lm, &
+               iminb(mfbim),imaxb(mfbim), &
+               jminb(mfbim),jmaxb(mfbim), &
+               kminb(mfbim),kmaxb(mfbim), &
+               indmf,ncbd, &
+               mt,m0)
+       elseif(kini.eq.0) then
 !            call readfi( &
 !                 kfi,ncbd, &
 !                 mt,m0)
-      endif
+       endif
 !
-      mmb(mfbim)=mt
-      mdimubx=max(mdimubx,mmb(mfbim))
-      mdimtbx=mdimtbx+mmb(mfbim)
+       mmb(mfbim)=mt
+       mdimubx=max(mdimubx,mmb(mfbim))
+       mdimtbx=mdimtbx+mmb(mfbim)
 !
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine crbds
+end module mod_crbds

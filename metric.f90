@@ -1,12 +1,12 @@
 module mod_metric
-implicit none
+  implicit none
 contains
-      subroutine metric( &
-                 x,y,z,r,exs1,exs2, &
-                 sn,vol, &
-                 ncbd,mnc, &
-                 mnr,xnr,ynr,znr, &
-                 tn1,tn2,tn3)
+  subroutine metric( &
+       x,y,z,r,exs1,exs2, &
+       sn,vol, &
+       ncbd,mnc, &
+       mnr,xnr,ynr,znr, &
+       tn1,tn2,tn3)
 !
 !***********************************************************************
 !
@@ -30,85 +30,68 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use schemanum
-      use chainecarac 
-use mod_metrics
-use mod_rfsc
-use mod_rfsr
-implicit none
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: r
-double precision :: exs1
-double precision :: exs2
-double precision :: sn
-double precision :: vol
-integer :: ncbd
-integer :: mnc
-integer :: mnr
-double precision :: xnr
-double precision :: ynr
-double precision :: znr
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-integer :: img
-integer :: l
-integer :: lm
-integer :: mfc
-integer :: mfr
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use schemanum
+    use chainecarac 
+    use mod_metrics
+    use mod_rfsc
+    use mod_rfsr
+    implicit none
+    integer          ::  img,   l,  lm, mfc, mfr
+    integer          ::  mnc, mnr,ncbd
+    double precision :: exs1,exs2,   r,  sn, tn1
+    double precision ::  tn2, tn3, vol,   x, xnr
+    double precision ::    y, ynr,   z, znr
 !
 !-----------------------------------------------------------------------
 !
-      dimension x(ip21),y(ip21),z(ip21),r(ip11),vol(ip11)
-      dimension sn(ip31*ndir)
-      dimension ncbd(ip41),mnc(ip43)
-      dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00)
+    dimension x(ip21),y(ip21),z(ip21),r(ip11),vol(ip11)
+    dimension sn(ip31*ndir)
+    dimension ncbd(ip41),mnc(ip43)
+    dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
-      do l=1,lzx
+    do l=1,lzx
 !
-        do img=1,lgx
+       do img=1,lgx
           lm=l+(img-1)*lz
           if ((img.eq.1).or.(kcg.eq.1)) then
-            call metrics( &
-                 lm,x,y,z,r,exs1,exs2, &
-                 sn,vol, &
-                 tn1,tn2,tn3)
+             call metrics( &
+                  lm,x,y,z,r,exs1,exs2, &
+                  sn,vol, &
+                  tn1,tn2,tn3)
           else
-           stop 'img ne 1 et kcg ne 1 !!! '
+             stop 'img ne 1 et kcg ne 1 !!! '
           endif
        enddo
 !
-      enddo
+    enddo
 !
-      if (mtcx.gt.0) then
+    if (mtcx.gt.0) then
        do img=1,lgx
-        do mfc=1,mtcx
-         lbd(mfc)=nfbc(mfc)+(img-1)*mtb
-        enddo
-        nbd=mtcx
-        call rfsc(vol,ncbd,mnc)
+          do mfc=1,mtcx
+             lbd(mfc)=nfbc(mfc)+(img-1)*mtb
+          enddo
+          nbd=mtcx
+          call rfsc(vol,ncbd,mnc)
 !
        enddo
-      endif
+    endif
 !
-      if (mtrx.gt.0) then
+    if (mtrx.gt.0) then
        do img=1,lgx
-        do mfr=1,mtrx
-         lbd(mfr)=nfbr(mfr)+(img-1)*mtb
-        enddo
-        nbd=mtrx
-        call rfsr(vol,ncbd,mnr,xnr,ynr,znr)
+          do mfr=1,mtrx
+             lbd(mfr)=nfbr(mfr)+(img-1)*mtb
+          enddo
+          nbd=mtrx
+          call rfsr(vol,ncbd,mnr,xnr,ynr,znr)
 !
        enddo
-      endif
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine metric
+end module mod_metric

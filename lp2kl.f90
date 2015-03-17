@@ -1,15 +1,15 @@
 module mod_lp2kl
-implicit none
+  implicit none
 contains
-      subroutine lp2kl( &
-                v,mu,mut,dist, &
-                nxn,nyn,nzn, &
-                ncin,ncbd,l, &
-                vol,sn,ncyc, &   
-                mnpar,fgam,  &   
-                tprod,tp,utau,topz, &
-                tn1,tn2,tn3, & 
-                pression,ztemp)
+  subroutine lp2kl( &
+       v,mu,mut,dist, &
+       nxn,nyn,nzn, &
+       ncin,ncbd,l, &
+       vol,sn,ncyc, &   
+       mnpar,fgam,  &   
+       tprod,tp,utau,topz, &
+       tn1,tn2,tn3, & 
+       pression,ztemp)
 !
 !***********************************************************************
 !
@@ -52,89 +52,71 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-use mod_lp2kl3d
-use mod_lp2kl1
-implicit none
-double precision :: v
-double precision :: dist
-integer :: ncin
-integer :: ncbd
-integer :: l
-double precision :: vol
-double precision :: sn
-integer :: ncyc
-integer :: mnpar
-double precision :: fgam
-double precision :: tprod
-double precision :: tp
-double precision :: utau
-double precision :: topz
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-double precision :: pression
-double precision :: ztemp
-integer :: ldom
-integer :: mf
-integer :: mfb
-integer :: no
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use mod_lp2kl3d
+    use mod_lp2kl1
+    implicit none
+    integer          ::     l, ldom,   mf,  mfb,mnpar
+    integer          ::  ncbd, ncin, ncyc,   no
+    double precision ::     dist,    fgam,      mu,     mut,     nxn
+    double precision ::      nyn,     nzn,pression,      sn,     tn1
+    double precision ::      tn2,     tn3,    topz,      tp,   tprod
+    double precision ::     utau,       v,     vol,   ztemp
 !
 !-----------------------------------------------------------------------
 !
-      double precision mu,mut,nxn,nyn,nzn
 !
-      dimension v(ip11,ip60)
-      dimension mu(ip12),mut(ip12),mnpar(ip12),dist(ip12)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),fgam(ip42),utau(ip42)
-      dimension ncin(ip41),ncbd(ip41),tp(ip40)
-      dimension tprod(ip00)
-      dimension pression(ip11),ztemp(ip11),vol(ip11),topz(ip11)     
-      dimension sn(ip31*ndir)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00)
+    dimension v(ip11,ip60)
+    dimension mu(ip12),mut(ip12),mnpar(ip12),dist(ip12)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),fgam(ip42),utau(ip42)
+    dimension ncin(ip41),ncbd(ip41),tp(ip40)
+    dimension tprod(ip00)
+    dimension pression(ip11),ztemp(ip11),vol(ip11),topz(ip11)     
+    dimension sn(ip31*ndir)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
-      nbd=0
-      do no=1,mtbx
+    nbd=0
+    do no=1,mtbx
 !     boucle sur toutes les frontieres
-        mfb=nba(no)
-        ldom=ndlb(mfb)
-        if((cl(mfb)(1:2).eq.'lp').and.(l.eq.ldom)) then
+       mfb=nba(no)
+       ldom=ndlb(mfb)
+       if((cl(mfb)(1:2).eq.'lp').and.(l.eq.ldom)) then
 !       la frontiere est une paroi et appartient au domaine en cours de traitement
           nbd=nbd+1
           lbd(nbd)=mfb
-        endif
-      enddo
+       endif
+    enddo
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !     boucle sur les frontieres a traiter (parois)     
-        mfb=lbd(mf)
-        if(cl(mfb)(1:3).eq.'lp4') then
+       mfb=lbd(mf)
+       if(cl(mfb)(1:3).eq.'lp4') then
 !       parois adiabatiques
           call lp2kl1( &
-                v,mu,mut,dist, &
-                nxn,nyn,nzn, &
-                ncin,ncbd,mfb,l, &
-                vol,sn,ncyc,  &
-                mnpar,fgam,  &        
-                tprod,utau, &
-                tn1,tn2,tn3, & 
-                pression,ztemp) 
+               v,mu,mut,dist, &
+               nxn,nyn,nzn, &
+               ncin,ncbd,mfb,l, &
+               vol,sn,ncyc,  &
+               mnpar,fgam,  &        
+               tprod,utau, &
+               tn1,tn2,tn3, & 
+               pression,ztemp) 
 !
-        elseif(cl(mfb)(1:3).eq.'lp5') then
+       elseif(cl(mfb)(1:3).eq.'lp5') then
           call lp2kl3d( &
-                v,mu,mut,dist, &
-                nxn,nyn,nzn, &
-                ncin,ncbd,mfb,l, &
-                vol,sn,ncyc,  &
-                mnpar,fgam,  &        
-                tprod,utau,topz, &
-                tn1,tn2,tn3, & 
-                pression,ztemp)
+               v,mu,mut,dist, &
+               nxn,nyn,nzn, &
+               ncin,ncbd,mfb,l, &
+               vol,sn,ncyc,  &
+               mnpar,fgam,  &        
+               tprod,utau,topz, &
+               tn1,tn2,tn3, & 
+               pression,ztemp)
 !
-        elseif(cl(mfb)(1:3).eq.'lp6') then
+       elseif(cl(mfb)(1:3).eq.'lp6') then
 !      integration couplee - parois adiabatiques
 !          call lp2kl6( &
 !                v,mu,mut,dist, &
@@ -143,11 +125,11 @@ integer :: no
 !                vol,sn,ncyc, &
 !                mnpar,fgam, &
 !                tprod,utau)    
-        endif
+       endif
 !
-      enddo
+    enddo
 !      
-      return
-      end subroutine
-      
-end module
+    return
+  end subroutine lp2kl
+
+end module mod_lp2kl

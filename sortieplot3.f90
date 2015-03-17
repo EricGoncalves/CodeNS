@@ -1,10 +1,10 @@
 module mod_sortieplot3
-implicit none
+  implicit none
 contains
-      subroutine sortieplot3( &
-                 x,y,z,l,t, &
-                 mu,mut, &
-                 ps,cson,temp)
+  subroutine sortieplot3( &
+       x,y,z,l,t, &
+       mu,mut, &
+       ps,cson,temp)
 !
 !***********************************************************************
 !
@@ -19,79 +19,54 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use sortiefichier
-      use chainecarac
-      use proprieteflu
-implicit none
-integer :: indc
-integer :: i
-integer :: j
-integer :: k
-double precision :: x
-double precision :: y
-double precision :: z
-integer :: l
-double precision :: t
-double precision :: ps
-double precision :: cson
-double precision :: temp
-integer :: i1
-integer :: i1m1
-integer :: i2
-integer :: i2m1
-integer :: j1
-integer :: j1m1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k1m1
-integer :: k2
-integer :: k2m1
-integer :: m
-integer :: n
-integer :: n0c
-integer :: nid
-integer :: nijd
-integer :: njd
-double precision :: xcc
-double precision :: ycc
-double precision :: zcc
+    use para_var
+    use para_fige
+    use maillage
+    use sortiefichier
+    use chainecarac
+    use proprieteflu
+    implicit none
+    integer          ::    i,  i1,i1m1,  i2,i2m1
+    integer          :: indc,   j,  j1,j1m1,  j2
+    integer          :: j2m1,   k,  k1,k1m1,  k2
+    integer          :: k2m1,   l,   m,   n, n0c
+    integer          ::  nid,nijd, njd
+    double precision :: coef,cson,   e,  mu, mut
+    double precision ::   ps,  qq,   t,temp,   u
+    double precision ::    v,   w,   x, xcc, xme
+    double precision ::    y, ycc,   z, zcc
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1 ) :: c
-      double precision u,v,w,e,qq,xme,mu,mut,coef
+    character(len=1 ) :: c
 !
-      dimension t(ip11,ip60)
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension mu(ip12),mut(ip12)
-      dimension ps(ip11),cson(ip11),temp(ip11)
+    dimension t(ip11,ip60)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension mu(ip12),mut(ip12)
+    dimension ps(ip11),cson(ip11),temp(ip11)
 !
-      indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      n0c=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0c=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd= nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd= nid*njd
 !
-      i1m1=i1-1
-      j1m1=j1-1
-      k1m1=k1-1
-      i2m1=i2-1
-      j2m1=j2-1
-      k2m1=k2-1
+    i1m1=i1-1
+    j1m1=j1-1
+    k1m1=k1-1
+    i2m1=i2-1
+    j2m1=j2-1
+    k2m1=k2-1
 !     double cote
-      c=char(34)
+    c=char(34)
 !
 !        write(sec,'(''TITLE='',a1,a50,a1)')c,titrt1,c
 !        write(sec,'(''VARIABLES = '',a1,9(a,a1,'', '',a1),a,a1)') &
@@ -99,35 +74,35 @@ double precision :: zcc
 !          c,'u',c, c,'M',c, c,'alpha',c, c,'cson',c, c,'T',c
 !        write(sec,'("ZONE F=POINT, I=",i3," J=",i4)')j2m1,i2m1
 !
-        do k=k1,k2m1
-         do i=i1,i2m1
+    do k=k1,k2m1
+       do i=i1,i2m1
           j=(j1+j2)/2
 !          do j=j1,j2m1
-           n=indc(i,j,k)
-           m=n-n0c
+          n=indc(i,j,k)
+          m=n-n0c
 !
-           xcc=(x(n)     +x(n     +1)+x(n     +nid)+x(n     +nid+1) &
+          xcc=(x(n)     +x(n     +1)+x(n     +nid)+x(n     +nid+1) &
                +x(n+nijd)+x(n+nijd+1)+x(n+nijd+nid)+x(n+nijd+nid+1))*0.125
-           ycc=(y(n)     +y(n     +1)+y(n     +nid)+y(n     +nid+1) &
+          ycc=(y(n)     +y(n     +1)+y(n     +nid)+y(n     +nid+1) &
                +y(n+nijd)+y(n+nijd+1)+y(n+nijd+nid)+y(n+nijd+nid+1))*0.125
-           zcc=(z(n)     +z(n     +1)+z(n     +nid)+z(n     +nid+1) &
+          zcc=(z(n)     +z(n     +1)+z(n     +nid)+z(n     +nid+1) &
                +z(n+nijd)+z(n+nijd+1)+z(n+nijd+nid)+z(n+nijd+nid+1))*0.125
 !
-           u=t(n,2)/t(n,1)
-           v=t(n,3)/t(n,1)
-           w=t(n,4)/t(n,1)
-           e=t(n,5)/t(n,1)
-           qq=u*u+v*v+w*w
-           xme=sqrt(qq)/cson(n)
+          u=t(n,2)/t(n,1)
+          v=t(n,3)/t(n,1)
+          w=t(n,4)/t(n,1)
+          e=t(n,5)/t(n,1)
+          qq=u*u+v*v+w*w
+          xme=sqrt(qq)/cson(n)
 !           coef=gam*(1.023+1.E4)  !gam*(Pi+Pinf)
-           coef=gam*(0.92+121.1)
+          coef=gam*(0.92+121.1)
 !
-           write(sec,'(7(1pe16.8))') &
-             xcc,(ps(n)-pinfl)*coef,t(n,1),u,xme,cson(n),temp(n)
-          enddo
+          write(sec,'(7(1pe16.8))') &
+               xcc,(ps(n)-pinfl)*coef,t(n,1),u,xme,cson(n),temp(n)
+       enddo
 !         enddo
-        enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine sortieplot3
+end module mod_sortieplot3

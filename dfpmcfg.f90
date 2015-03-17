@@ -1,7 +1,7 @@
 module mod_dfpmcfg
-implicit none
+  implicit none
 contains
-      subroutine dfpmcfg
+  subroutine dfpmcfg
 !
 !***********************************************************************
 !
@@ -18,21 +18,20 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-   use sortiefichier
-   use maillage
-   use boundary
-implicit none
-integer :: mfbe
-integer :: no
+    use para_fige
+    use sortiefichier
+    use maillage
+    use boundary
+    implicit none
+    integer          :: mfbe,  no
 !
 !-----------------------------------------------------------------------
 !
-      do no=1,mtbx
-      mfbe=nba(no)
-      nba(no)=nfei(mfbe)
-      enddo
+    do no=1,mtbx
+       mfbe=nba(no)
+       nba(no)=nfei(mfbe)
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine dfpmcfg
+end module mod_dfpmcfg

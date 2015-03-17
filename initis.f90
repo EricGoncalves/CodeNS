@@ -1,10 +1,10 @@
 module mod_initis
-implicit none
+  implicit none
 contains
-      subroutine initis( &
-                 l,imin,imax,jmin,jmax,kmin,kmax, &
-                 indfl,ncbd, &
-                 mt,m0)
+  subroutine initis( &
+       l,imin,imax,jmin,jmax,kmin,kmax, &
+       indfl,ncbd, &
+       mt,m0)
 !
 !***********************************************************************
 !
@@ -40,110 +40,93 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-implicit none
-integer :: ind
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-integer :: imin
-integer :: imax
-integer :: jmin
-integer :: jmax
-integer :: kmin
-integer :: kmax
-integer :: ncbd
-integer :: mt
-integer :: m0
-integer :: ii
-integer :: jj
-integer :: kk
-integer :: m
-integer :: n0
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    implicit none
+    integer          ::    i,  ii,imax,imin, ind
+    integer          ::    j,  jj,jmax,jmin,   k
+    integer          ::   kk,kmax,kmin,   l,   m
+    integer          ::   m0,  mt,  n0,ncbd, nid
+    integer          :: nijd, njd
 !
 !-----------------------------------------------------------------------
 !
-      character(len=2 ) :: indfl
-      dimension ncbd(ip41)
+    character(len=2 ) :: indfl
+    dimension ncbd(ip41)
 !
-      ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      n0=npc(l)
+    n0=npc(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      m=m0
+    m=m0
 !
-      if (indfl.eq.'i1') then
-      ii=imin-1
-      do k=kmin,kmax-1
-      do j=jmin,jmax-1
-      m=m+1
-      ncbd(m)=ind(ii,j,k)
-      enddo
-      enddo
-      mt=(kmax-kmin)*(jmax-jmin)
+    if (indfl.eq.'i1') then
+       ii=imin-1
+       do k=kmin,kmax-1
+          do j=jmin,jmax-1
+             m=m+1
+             ncbd(m)=ind(ii,j,k)
+          enddo
+       enddo
+       mt=(kmax-kmin)*(jmax-jmin)
 !
-      else if (indfl.eq.'i2') then
-      ii=imax
-      do k=kmin,kmax-1
-      do j=jmin,jmax-1
-      m=m+1
-      ncbd(m)=ind(ii,j,k)
-      enddo
-      enddo
-      mt=(kmax-kmin)*(jmax-jmin)
+    else if (indfl.eq.'i2') then
+       ii=imax
+       do k=kmin,kmax-1
+          do j=jmin,jmax-1
+             m=m+1
+             ncbd(m)=ind(ii,j,k)
+          enddo
+       enddo
+       mt=(kmax-kmin)*(jmax-jmin)
 !
-      elseif (indfl.eq.'j1') then
-      jj=jmin-1
-      do k=kmin,kmax-1
-      do i=imin,imax-1
-      m=m+1
-      ncbd(m)=ind(i,jj,k)
-      enddo
-      enddo
-      mt=(kmax-kmin)*(imax-imin)
+    elseif (indfl.eq.'j1') then
+       jj=jmin-1
+       do k=kmin,kmax-1
+          do i=imin,imax-1
+             m=m+1
+             ncbd(m)=ind(i,jj,k)
+          enddo
+       enddo
+       mt=(kmax-kmin)*(imax-imin)
 !
-      elseif (indfl.eq.'j2') then
-      jj=jmax
-      do k=kmin,kmax-1
-      do i=imin,imax-1
-      m=m+1
-      ncbd(m)=ind(i,jj,k)
-      enddo
-      enddo
-      mt=(kmax-kmin)*(imax-imin)
+    elseif (indfl.eq.'j2') then
+       jj=jmax
+       do k=kmin,kmax-1
+          do i=imin,imax-1
+             m=m+1
+             ncbd(m)=ind(i,jj,k)
+          enddo
+       enddo
+       mt=(kmax-kmin)*(imax-imin)
 !
-      elseif (indfl.eq.'k1') then
-      kk=kmin-1
-      do j=jmin,jmax-1
-      do i=imin,imax-1
-      m=m+1
-      ncbd(m)=ind(i,j,kk)
-      enddo
-      enddo
-      mt=(jmax-jmin)*(imax-imin)
+    elseif (indfl.eq.'k1') then
+       kk=kmin-1
+       do j=jmin,jmax-1
+          do i=imin,imax-1
+             m=m+1
+             ncbd(m)=ind(i,j,kk)
+          enddo
+       enddo
+       mt=(jmax-jmin)*(imax-imin)
 !
-      elseif (indfl.eq.'k2') then
-      kk=kmax
-      do j=jmin,jmax-1
-      do i=imin,imax-1
-      m=m+1
-      ncbd(m)=ind(i,j,kk)
-      enddo
-      enddo
-      mt=(jmax-jmin)*(imax-imin)
+    elseif (indfl.eq.'k2') then
+       kk=kmax
+       do j=jmin,jmax-1
+          do i=imin,imax-1
+             m=m+1
+             ncbd(m)=ind(i,j,kk)
+          enddo
+       enddo
+       mt=(jmax-jmin)*(imax-imin)
 !
-      end if
+    end if
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine initis
+end module mod_initis

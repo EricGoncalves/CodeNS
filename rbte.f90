@@ -1,9 +1,9 @@
 module mod_rbte
-implicit none
+  implicit none
 contains
-      subroutine rbte( &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 ncbd,ncin)
+  subroutine rbte( &
+       toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+       ncbd,ncin)
 !
 !***********************************************************************
 !
@@ -24,56 +24,42 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-implicit none
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-integer :: ncbd
-integer :: ncin
-integer :: m
-integer :: mb
-integer :: mf
-integer :: mfb
-integer :: mt
-integer :: nd
-integer :: ndm
+    use para_var
+    use para_fige
+    use boundary
+    implicit none
+    integer          ::    m,  mb,  mf, mfb,  mt
+    integer          :: ncbd,ncin,  nd, ndm
+    double precision ::  qcx, qcy, qcz,toxx,toxy
+    double precision :: toxz,toyy,toyz,tozz
 !
 !-----------------------------------------------------------------------
 !
-      dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
-                tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12)
-      dimension ncin(ip41),ncbd(ip41)
+    dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
+         tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12)
+    dimension ncin(ip41),ncbd(ip41)
 
 !
-      do mf=1,nbd
+    do mf=1,nbd
        mfb=lbd(mf)
        mt=mmb(mfb)
 !!$OMP SIMD
        do m=1,mt
-        mb=mpb(mfb)+m
-        nd=ncbd(mb)
-        ndm=ncin(mb)
-        toxx(nd)=toxx(ndm)
-        toxy(nd)=toxy(ndm)
-        toxz(nd)=toxz(ndm)
-        toyy(nd)=toyy(ndm)
-        toyz(nd)=toyz(ndm)
-        tozz(nd)=tozz(ndm)
-        qcx(nd)=qcx(ndm)
-        qcy(nd)=qcy(ndm)
-        qcz(nd)=qcz(ndm)
+          mb=mpb(mfb)+m
+          nd=ncbd(mb)
+          ndm=ncin(mb)
+          toxx(nd)=toxx(ndm)
+          toxy(nd)=toxy(ndm)
+          toxz(nd)=toxz(ndm)
+          toyy(nd)=toyy(ndm)
+          toyz(nd)=toyz(ndm)
+          tozz(nd)=tozz(ndm)
+          qcx(nd)=qcx(ndm)
+          qcy(nd)=qcy(ndm)
+          qcz(nd)=qcz(ndm)
        enddo
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rbte
+end module mod_rbte

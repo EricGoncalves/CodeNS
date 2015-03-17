@@ -1,7 +1,7 @@
 module mod_dfph
-implicit none
+  implicit none
 contains
-      subroutine dfph
+  subroutine dfph
 !
 !***********************************************************************
 !
@@ -22,18 +22,18 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use proprieteflu
-implicit none
+    use para_fige
+    use proprieteflu
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      gam1=gam-1.
-      gam2=.5*gam1
-      gam3=1./gam
-      gam4=1./gam1
-      gam5=gam*gam1
+    gam1=gam-1.
+    gam2=.5*gam1
+    gam3=1./gam
+    gam4=1./gam1
+    gam5=gam*gam1
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine dfph
+end module mod_dfph

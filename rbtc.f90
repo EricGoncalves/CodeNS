@@ -1,9 +1,9 @@
 module mod_rbtc
-implicit none
+  implicit none
 contains
-      subroutine rbtc( &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 ncbd,ncin,mnc)
+  subroutine rbtc( &
+       toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+       ncbd,ncin,mnc)
 !
 !***********************************************************************
 !
@@ -47,92 +47,67 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use definition
-implicit none
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-integer :: ncbd
-integer :: ncin
-integer :: mnc
-double precision :: cr
-integer :: m
-integer :: mb
-integer :: mc
-integer :: mf
-integer :: mfb
-integer :: mt
-integer :: nc
-integer :: nd
-integer :: ndm
-double precision :: qcxr
-double precision :: qcyr
-double precision :: qczr
-double precision :: sr
-double precision :: txxr
-double precision :: txyr
-double precision :: txzr
-double precision :: tyyr
-double precision :: tyzr
-double precision :: tzzr
+    use para_var
+    use para_fige
+    use boundary
+    use definition
+    implicit none
+    integer          ::    m,  mb,  mc,  mf, mfb
+    integer          ::  mnc,  mt,  nc,ncbd,ncin
+    integer          ::   nd, ndm
+    double precision ::   cr, qcx,qcxr, qcy,qcyr
+    double precision ::  qcz,qczr,  sr,toxx,toxy
+    double precision :: toxz,toyy,toyz,tozz,txxr
+    double precision :: txyr,txzr,tyyr,tyzr,tzzr
 !
 !-----------------------------------------------------------------------
 !
-      dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-                toyy(ip12),toyz(ip12),tozz(ip12), &
-                qcx(ip12),qcy(ip12),qcz(ip12)
-      dimension ncin(ip41),ncbd(ip41)
-      dimension mnc(ip43)
+    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
+         toyy(ip12),toyz(ip12),tozz(ip12), &
+         qcx(ip12),qcy(ip12),qcz(ip12)
+    dimension ncin(ip41),ncbd(ip41)
+    dimension mnc(ip43)
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !
-      mfb=lbd(mf)
-      mt=mmb(mfb)
-      sr=-sin(real(mper(mfb))*protat)
-      cr= cos(real(mper(mfb))*protat)
+       mfb=lbd(mf)
+       mt=mmb(mfb)
+       sr=-sin(real(mper(mfb))*protat)
+       cr= cos(real(mper(mfb))*protat)
 !
 !!$OMP SIMD
-      do m=1,mt
-      mc =mpc(mfb)+m
-      nc =mnc(mc)
-      mb =mpb(mfb)+m
-      nd =ncbd(mb)
-      ndm=ncin(mb)
+       do m=1,mt
+          mc =mpc(mfb)+m
+          nc =mnc(mc)
+          mb =mpb(mfb)+m
+          nd =ncbd(mb)
+          ndm=ncin(mb)
 !
-      txxr=toxx(nc)
-      txyr=cr*toxy(nc)-sr*toxz(nc)
-      txzr=cr*toxz(nc)+sr*toxy(nc)
-      tyyr=cr*cr*toyy(nc)-2.*cr*sr*toyz(nc)+sr*sr*tozz(nc)
-      tyzr=-cr*sr*(tozz(nc)-toyy(nc))+(2.*cr*cr-1.)*toyz(nc)
-      tzzr=sr*sr*toyy(nc)+2.*cr*sr*toyz(nc)+cr*cr*tozz(nc)
-      qcxr=qcx(nc)
-      qcyr=cr*qcy(nc)-sr*qcz(nc)
-      qczr=cr*qcz(nc)+sr*qcy(nc)
+          txxr=toxx(nc)
+          txyr=cr*toxy(nc)-sr*toxz(nc)
+          txzr=cr*toxz(nc)+sr*toxy(nc)
+          tyyr=cr*cr*toyy(nc)-2.*cr*sr*toyz(nc)+sr*sr*tozz(nc)
+          tyzr=-cr*sr*(tozz(nc)-toyy(nc))+(2.*cr*cr-1.)*toyz(nc)
+          tzzr=sr*sr*toyy(nc)+2.*cr*sr*toyz(nc)+cr*cr*tozz(nc)
+          qcxr=qcx(nc)
+          qcyr=cr*qcy(nc)-sr*qcz(nc)
+          qczr=cr*qcz(nc)+sr*qcy(nc)
 !
 !     definition des variables aux bords (centre des facettes frontieres)
 !
-      toxx(nd) = 0.5*( toxx(ndm)+txxr )
-      toxy(nd) = 0.5*( toxy(ndm)+txyr )
-      toxz(nd) = 0.5*( toxz(ndm)+txzr )
-      toyy(nd) = 0.5*( toyy(ndm)+tyyr )
-      toyz(nd) = 0.5*( toyz(ndm)+tyzr )
-      tozz(nd) = 0.5*( tozz(ndm)+tzzr )
-       qcx(nd) = 0.5*(  qcx(ndm)+ qcxr )
-       qcy(nd) = 0.5*(  qcy(ndm)+ qcyr )
-       qcz(nd) = 0.5*(  qcz(ndm)+ qczr )
+          toxx(nd) = 0.5*( toxx(ndm)+txxr )
+          toxy(nd) = 0.5*( toxy(ndm)+txyr )
+          toxz(nd) = 0.5*( toxz(ndm)+txzr )
+          toyy(nd) = 0.5*( toyy(ndm)+tyyr )
+          toyz(nd) = 0.5*( toyz(ndm)+tyzr )
+          tozz(nd) = 0.5*( tozz(ndm)+tzzr )
+          qcx(nd) = 0.5*(  qcx(ndm)+ qcxr )
+          qcy(nd) = 0.5*(  qcy(ndm)+ qcyr )
+          qcz(nd) = 0.5*(  qcz(ndm)+ qczr )
 !
-      enddo
-      enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rbtc
+end module mod_rbtc

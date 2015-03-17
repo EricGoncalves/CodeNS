@@ -1,10 +1,10 @@
 module mod_initbs
-implicit none
+  implicit none
 contains
-      subroutine initbs( &
-                 mfbi,l,indf, &
-                 ncin,ncbd, &
-                 mt,m0)
+  subroutine initbs( &
+       mfbi,l,indf, &
+       ncin,ncbd, &
+       mt,m0)
 !
 !***********************************************************************
 !
@@ -39,43 +39,35 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-implicit none
-integer :: mfbi
-integer :: l
-integer :: ncin
-integer :: ncbd
-integer :: mt
-integer :: m0
-integer :: m
-integer :: mdnmfb
-integer :: ml
-integer :: nid
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    implicit none
+    integer          ::      l,     m,    m0,mdnmfb,  mfbi
+    integer          ::     ml,    mt,  ncbd,  ncin,   nid
+    integer          ::    njd
 !
 !-----------------------------------------------------------------------
 !
-      character(len=2 ) :: indf
-      dimension ncin(ip41),ncbd(ip41)
+    character(len=2 ) :: indf
+    dimension ncin(ip41),ncbd(ip41)
 !
-      nid=id2(l)-id1(l)+1
-      njd=jd2(l)-jd1(l)+1
+    nid=id2(l)-id1(l)+1
+    njd=jd2(l)-jd1(l)+1
 !
-      if (indf(1:1).eq.'i') &
-              mdnmfb=sign(1,-abs(ii1(l)-iminb(mfbi)))*1
-      if (indf(1:1).eq.'j') &
-              mdnmfb=sign(1,-abs(jj1(l)-jminb(mfbi)))*nid
-      if (indf(1:1).eq.'k') &
-              mdnmfb=sign(1,-abs(kk1(l)-kminb(mfbi)))*nid*njd
+    if (indf(1:1).eq.'i') &
+         mdnmfb=sign(1,-abs(ii1(l)-iminb(mfbi)))*1
+    if (indf(1:1).eq.'j') &
+         mdnmfb=sign(1,-abs(jj1(l)-jminb(mfbi)))*nid
+    if (indf(1:1).eq.'k') &
+         mdnmfb=sign(1,-abs(kk1(l)-kminb(mfbi)))*nid*njd
 !
-      do m=1,mt
-      ml=m0+m
-      ncin(ml)=ncbd(ml)+mdnmfb
-      enddo
+    do m=1,mt
+       ml=m0+m
+       ncin(ml)=ncbd(ml)+mdnmfb
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine initbs
+end module mod_initbs

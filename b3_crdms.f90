@@ -1,7 +1,7 @@
 module mod_b3_crdms
-implicit none
+  implicit none
 contains
-      subroutine b3_crdms(l,ni,nj,nk)
+  subroutine b3_crdms(l,ni,nj,nk)
 !
 !***********************************************************************
 !
@@ -18,28 +18,25 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-   use sortiefichier
-   use maillage
-implicit none
-integer :: l
-integer :: ni
-integer :: nj
-integer :: nk
+    use para_fige
+    use sortiefichier
+    use maillage
+    implicit none
+    integer          ::  l,ni,nj,nk
 !
 !-----------------------------------------------------------------------
 !
-      if(l.eq.1) then
+    if(l.eq.1) then
        nptot=ni*nj*nk
-      else
+    else
        nptot=nptot+ni*nj*nk
-      endif
+    endif
 !
-      if(l.eq.lzx) write(imp,999) nptot
+    if(l.eq.lzx) write(imp,999) nptot
 !
- 999  format(   /2x,'Nb tot de pts (hors fic.):',9x,i8, &
-                /2x,'-------------------------')
+999 format(   /2x,'Nb tot de pts (hors fic.):',9x,i8, &
+         /2x,'-------------------------')
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b3_crdms
+end module mod_b3_crdms

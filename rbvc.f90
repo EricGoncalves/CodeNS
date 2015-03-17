@@ -1,7 +1,7 @@
 module mod_rbvc
-implicit none
+  implicit none
 contains
-      subroutine rbvc(t,ncbd,ncin,mnc)
+  subroutine rbvc(t,ncbd,ncin,mnc)
 !
 !***********************************************************************
 !
@@ -29,56 +29,46 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use definition
-implicit none
-double precision :: t
-integer :: ncbd
-integer :: ncin
-integer :: mnc
-integer :: m
-integer :: mb
-integer :: mc
-integer :: mf
-integer :: mfb
-integer :: mt
-integer :: nc
-integer :: nd
-integer :: ndm
-double precision :: tper
+    use para_var
+    use para_fige
+    use boundary
+    use definition
+    implicit none
+    integer          ::    m,  mb,  mc,  mf, mfb
+    integer          ::  mnc,  mt,  nc,ncbd,ncin
+    integer          ::   nd, ndm
+    double precision ::    t,tper
 !
 !-----------------------------------------------------------------------
 !
-      dimension t(ip11,ip60)
-      dimension ncbd(ip41),ncin(ip41)
-      dimension mnc(ip43)
+    dimension t(ip11,ip60)
+    dimension ncbd(ip41),ncin(ip41)
+    dimension mnc(ip43)
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !
-      mfb=lbd(mf)
-      mt=mmb(mfb)
-      tper=protat*real(mper(mfb))
+       mfb=lbd(mf)
+       mt=mmb(mfb)
+       tper=protat*real(mper(mfb))
 !
-      do m=1,mt
-      mc=mpc(mfb)+m
-      nc=mnc(mc)
-      mb=mpb(mfb)+m
-      nd=ncbd(mb)
-      ndm=ncin(mb)
+       do m=1,mt
+          mc=mpc(mfb)+m
+          nc=mnc(mc)
+          mb=mpb(mfb)+m
+          nd=ncbd(mb)
+          ndm=ncin(mb)
 !
 !     definition des variables aux bords (centre des facettes frontieres)
 !
-      t(nd,1) = 0.5*( t(ndm,1)+t(nc,1) )
-      t(nd,2) = 0.5*( t(ndm,2)+t(nc,2) )
-      t(nd,3) = 0.5*( t(ndm,3)+t(nc,3)*cos(tper)+t(nc,4)*sin(tper))
-      t(nd,4) = 0.5*( t(ndm,4)+t(nc,4)*cos(tper)-t(nc,3)*sin(tper))
-      t(nd,5) = 0.5*( t(ndm,5)+t(nc,5) )
+          t(nd,1) = 0.5*( t(ndm,1)+t(nc,1) )
+          t(nd,2) = 0.5*( t(ndm,2)+t(nc,2) )
+          t(nd,3) = 0.5*( t(ndm,3)+t(nc,3)*cos(tper)+t(nc,4)*sin(tper))
+          t(nd,4) = 0.5*( t(ndm,4)+t(nc,4)*cos(tper)-t(nc,3)*sin(tper))
+          t(nd,5) = 0.5*( t(ndm,5)+t(nc,5) )
 !
-      enddo
-      enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rbvc
+end module mod_rbvc

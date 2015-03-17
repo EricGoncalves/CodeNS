@@ -1,7 +1,7 @@
 module mod_tcmd_dftl1
-implicit none
+  implicit none
 contains
-      subroutine tcmd_dftl1(mot,imot,nmot)
+  subroutine tcmd_dftl1(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -11,37 +11,34 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use chainecarac
-      use kcle
-use mod_cctcmd
-implicit none
-integer :: imot
-integer :: nmot
-integer :: itit
-integer :: lgcmd
+    use para_fige
+    use chainecarac
+    use kcle
+    use mod_cctcmd
+    implicit none
+    integer          ::  imot, itit,lgcmd, nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: command
-      character(len=32)   :: mot(nmx)
-      dimension imot(nmx)
+    character(len=1316) :: command
+    character(len=32)   :: mot(nmx)
+    dimension imot(nmx)
 !
-      if(ktitrt1.eq.2) ktitrt1=3
+    if(ktitrt1.eq.2) ktitrt1=3
 !
-      if(nmot.eq.2)then
-        do itit=1,80
-        titrt1(itit:itit)=' '
-        enddo
-      else
-        call cctcmd(command,lgcmd,mot,imot,3,nmot)
-        do itit=1,80
-        titrt1(itit:itit)=command(itit:itit)
-        enddo
-      endif
+    if(nmot.eq.2)then
+       do itit=1,80
+          titrt1(itit:itit)=' '
+       enddo
+    else
+       call cctcmd(command,lgcmd,mot,imot,3,nmot)
+       do itit=1,80
+          titrt1(itit:itit)=command(itit:itit)
+       enddo
+    endif
 !
-      ktitrt1=2
+    ktitrt1=2
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine tcmd_dftl1
+end module mod_tcmd_dftl1

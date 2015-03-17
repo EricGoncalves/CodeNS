@@ -1,9 +1,9 @@
 module mod_rfvr
-implicit none
+  implicit none
 contains
-      subroutine rfvr( &
-                 t, &
-                 ncbd,mnr,xnr,ynr,znr)
+  subroutine rfvr( &
+       t, &
+       ncbd,mnr,xnr,ynr,znr)
 !
 !***********************************************************************
 !
@@ -44,98 +44,82 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use maillage
-implicit none
-double precision :: t
-integer :: ncbd
-integer :: mnr
-double precision :: xnr
-double precision :: ynr
-double precision :: znr
-double precision :: aux
-double precision :: cr
-integer :: l
-integer :: m
-integer :: mf
-integer :: mfb
-integer :: mfbm
-integer :: ml
-integer :: mr
-integer :: mt
-integer :: nd
-integer :: nid
-integer :: njd
-integer :: nr
-double precision :: sr
+    use para_var
+    use para_fige
+    use boundary
+    use maillage
+    implicit none
+    integer          ::    l,   m,  mf, mfb,mfbm
+    integer          ::   ml, mnr,  mr,  mt,ncbd
+    integer          ::   nd, nid, njd,  nr
+    double precision :: aux, cr, sr,  t,xnr
+    double precision :: ynr,znr
 !
 !-----------------------------------------------------------------------
 !
-      dimension t(ip11,ip60)
-      dimension ncbd(ip41)
-      dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
+    dimension t(ip11,ip60)
+    dimension ncbd(ip41)
+    dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !
-      mfbm=lbd(mf)
-      mt=mmb(mfbm)
+       mfbm=lbd(mf)
+       mt=mmb(mfbm)
 !
-      mfb =mod(mfbm,mtb)
-      if (mfb.eq.0) mfb=mtb
-      sr =-srotr(mfb)
-      cr = crotr(mfb)
-      l  = ndrr(mfb)
+       mfb =mod(mfbm,mtb)
+       if (mfb.eq.0) mfb=mtb
+       sr =-srotr(mfb)
+       cr = crotr(mfb)
+       l  = ndrr(mfb)
 !
-      nid=id2(l)-id1(l)+1
-      njd=jd2(l)-jd1(l)+1
+       nid=id2(l)-id1(l)+1
+       njd=jd2(l)-jd1(l)+1
 !
 !!$OMP SIMD
-      do m=1,mt
-      mr=mpr(mfbm)+m
-      nr=mnr(mr)
-      ml=mpb(mfbm)+m
-      nd=ncbd(ml)
+       do m=1,mt
+          mr=mpr(mfbm)+m
+          nr=mnr(mr)
+          ml=mpb(mfbm)+m
+          nd=ncbd(ml)
 !
 !     definition des variables aux points fictifs
 !
-      t(nd,1)= &
-             (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,1)+ &
-             (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,1)+ &
-             (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,1)+ &
-             (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,1)+ &
-                xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,1)+ &
-                xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,1)+ &
-                xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,1)+ &
-                xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,1)
-      t(nd,2)= &
-             (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,2)+ &
-             (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,2)+ &
-             (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,2)+ &
-             (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,2)+ &
-                xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,2)+ &
-                xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,2)+ &
-                xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,2)+ &
-                xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,2)
-      t(nd,3)= &
-             (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,3)+ &
-             (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,3)+ &
-             (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,3)+ &
-             (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,3)+ &
-                xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,3)+ &
-                xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,3)+ &
-                xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,3)+ &
-                xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,3)
-      t(nd,4)= &
-             (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,4)+ &
-             (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,4)+ &
-             (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,4)+ &
-             (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,4)+ &
-                xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,4)+ &
-                xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,4)+ &
-                xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,4)+ &
-                xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,4)
+          t(nd,1)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,1)+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,1)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,1)+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,1)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,1)+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,1)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,1)+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,1)
+          t(nd,2)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,2)+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,2)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,2)+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,2)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,2)+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,2)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,2)+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,2)
+          t(nd,3)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,3)+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,3)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,3)+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,3)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,3)+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,3)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,3)+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,3)
+          t(nd,4)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,4)+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,4)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,4)+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,4)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,4)+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,4)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,4)+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,4)
 !
 !  Attention : le sens de rotation est le sens direct.
 !  ----------
@@ -151,23 +135,23 @@ double precision :: sr
 !
 !        A       = P^-1 * A * P
 !
-      aux =t(nd,3)
-      t(nd,3) =aux*cr-t(nd,4)*sr
-      t(nd,4) =t(nd,4)*cr+aux*sr
+          aux =t(nd,3)
+          t(nd,3) =aux*cr-t(nd,4)*sr
+          t(nd,4) =t(nd,4)*cr+aux*sr
 !
-      t(nd,5)= &
-             (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,5)+ &
-             (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,5)+ &
-             (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,5)+ &
-             (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,5)+ &
-                xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,5)+ &
-                xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,5)+ &
-                xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,5)+ &
-                xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,5)
+          t(nd,5)= &
+               (1-xnr(mr))*(1-ynr(mr))*(1-znr(mr))*t(nr              ,5)+ &
+               (1-xnr(mr))*(1-ynr(mr))*   znr(mr) *t(nr      +nid*njd,5)+ &
+               (1-xnr(mr))*   ynr(mr) *(1-znr(mr))*t(nr  +nid        ,5)+ &
+               (1-xnr(mr))*   ynr(mr) *   znr(mr) *t(nr  +nid+nid*njd,5)+ &
+               xnr(mr) *(1-ynr(mr))*(1-znr(mr))*t(nr+1            ,5)+ &
+               xnr(mr) *(1-ynr(mr))*   znr(mr) *t(nr+1    +nid*njd,5)+ &
+               xnr(mr) *   ynr(mr) *(1-znr(mr))*t(nr+1+nid        ,5)+ &
+               xnr(mr) *   ynr(mr) *   znr(mr) *t(nr+1+nid+nid*njd,5)
 !
-      enddo
-      enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rfvr
+end module mod_rfvr

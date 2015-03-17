@@ -1,10 +1,10 @@
 module mod_utidd
-implicit none
+  implicit none
 contains
-      subroutine utidd( &
-                 bceqt, &
-                 mfl,rpi,rti,d0x,d0y,d0z,ncbd, &
-                 mmb,mpb)
+  subroutine utidd( &
+       bceqt, &
+       mfl,rpi,rti,d0x,d0y,d0z,ncbd, &
+       mmb,mpb)
 !
 !***********************************************************************
 !
@@ -43,40 +43,31 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-implicit none
-double precision :: bceqt
-integer :: mfl
-double precision :: rpi
-double precision :: rti
-double precision :: d0x
-double precision :: d0y
-double precision :: d0z
-integer :: ncbd
-integer :: mmb
-integer :: mpb
-integer :: m
-integer :: ml
-integer :: mt
+    use para_var
+    use para_fige
+    implicit none
+    integer          ::    m, mfl,  ml, mmb, mpb
+    integer          ::   mt,ncbd
+    double precision :: bceqt,  d0x,  d0y,  d0z,  rpi
+    double precision ::   rti
 !
 !-----------------------------------------------------------------------
 !
-      dimension bceqt(ip41,neqt)
-      dimension ncbd(ip41)
-      dimension rpi(ip40),rti(ip40),d0x(ip40),d0y(ip40),d0z(ip40)
-      dimension mmb(mtt),mpb(mtt)
+    dimension bceqt(ip41,neqt)
+    dimension ncbd(ip41)
+    dimension rpi(ip40),rti(ip40),d0x(ip40),d0y(ip40),d0z(ip40)
+    dimension mmb(mtt),mpb(mtt)
 !
-      mt=mmb(mfl)
-      do m=1,mt
+    mt=mmb(mfl)
+    do m=1,mt
        ml=mpb(mfl)+m
        rpi(m)=bceqt(ml,1)
        rti(m)=bceqt(ml,2)
        d0x(m)=bceqt(ml,3)
        d0y(m)=bceqt(ml,4)
        d0z(m)=bceqt(ml,5)
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine utidd
+end module mod_utidd

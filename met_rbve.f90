@@ -1,7 +1,7 @@
 module mod_met_rbve
-implicit none
+  implicit none
 contains
-      subroutine met_rbve(t,ncin,ncbd)
+  subroutine met_rbve(t,ncin,ncbd)
 !
 !***********************************************************************
 !
@@ -10,42 +10,35 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use boundary
-implicit none
-double precision :: t
-integer :: ncin
-integer :: ncbd
-integer :: m
-integer :: mf
-integer :: mfb
-integer :: ml
-integer :: mt
-integer :: n
-integer :: ni
+    use para_var
+    use para_fige
+    use boundary
+    implicit none
+    integer          ::    m,  mf, mfb,  ml,  mt
+    integer          ::    n,ncbd,ncin,  ni
+    double precision :: t
 !
 !-----------------------------------------------------------------------
 !
-      dimension t(ip11,ip60)
-      dimension ncbd(ip41)
-      dimension ncin(ip41)
+    dimension t(ip11,ip60)
+    dimension ncbd(ip41)
+    dimension ncin(ip41)
 !
 !     definition des variables aux bords (centre des facettes frontieres)
 !
-      do mf=1,nbd
-        mfb=lbd(mf)
-        mt=mmb(mfb)
+    do mf=1,nbd
+       mfb=lbd(mf)
+       mt=mmb(mfb)
 !!$OMP SIMD
-         do m=1,mt
-            ml=mpb(mfb)+m
-            n=ncbd(ml)
-            ni=ncin(ml)
-            t(n,6) = t(ni,6)
-            t(n,7) = t(ni,7)
-         enddo
-      enddo
+       do m=1,mt
+          ml=mpb(mfb)+m
+          n=ncbd(ml)
+          ni=ncin(ml)
+          t(n,6) = t(ni,6)
+          t(n,7) = t(ni,7)
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine met_rbve
+end module mod_met_rbve

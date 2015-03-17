@@ -1,7 +1,7 @@
 module mod_b2_crbds
-implicit none
+  implicit none
 contains
-      subroutine b2_crbds(mfbe)
+  subroutine b2_crbds(mfbe)
 !
 !***********************************************************************
 !
@@ -17,31 +17,28 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-   use sortiefichier
-   use maillage
-   use boundary
-implicit none
-integer :: mfbe
-integer :: img
-integer :: mfbi
-integer :: mfbim
+    use para_fige
+    use sortiefichier
+    use maillage
+    use boundary
+    implicit none
+    integer          ::   img, mfbe, mfbi,mfbim
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
+    character(len=1316) :: form
 !
-      mfbi=nfei(mfbe)
+    mfbi=nfei(mfbe)
 !
-      form='(/ 2x,''numero de la grille      : '',11x,i5/' &
-            //'2x,''nb de pts de la frontiere: '',11x,i5/' &
-            //'2x,''tot. pts des front preced: '',11x,i5)'
+    form='(/ 2x,''numero de la grille      : '',11x,i5/' &
+         //'2x,''nb de pts de la frontiere: '',11x,i5/' &
+         //'2x,''tot. pts des front preced: '',11x,i5)'
 !
-      do img=1,lgx
-      mfbim=mfbi+(img-1)*mtb
-      write(imp,form) img,mmb(mfbim),mpb(mfbim)
-      enddo
+    do img=1,lgx
+       mfbim=mfbi+(img-1)*mtb
+       write(imp,form) img,mmb(mfbim),mpb(mfbim)
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b2_crbds
+end module mod_b2_crbds

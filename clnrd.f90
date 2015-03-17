@@ -1,12 +1,12 @@
 module mod_clnrd
-implicit none
+  implicit none
 contains
-      subroutine clnrd( &
-                 mfb, &
-                 rod,roud,rovd,rowd,roed, &
-                 nxn,nyn,nzn,ncbd,v, &
-                 mmb,mpb,mpn,l, &
-                 pression,temp,cson)
+  subroutine clnrd( &
+       mfb, &
+       rod,roud,rovd,rowd,roed, &
+       nxn,nyn,nzn,ncbd,v, &
+       mmb,mpb,mpn,l, &
+       pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -54,85 +54,41 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use proprieteflu
-implicit none
-integer :: mfb
-double precision :: rod
-double precision :: roud
-double precision :: rovd
-double precision :: rowd
-double precision :: roed
-integer :: ncbd
-double precision :: v
-integer :: mmb
-integer :: mpb
-integer :: mpn
-integer :: l
-double precision :: pression
-double precision :: temp
-double precision :: cson
-double precision :: am
-double precision :: ap
-double precision :: b0
-double precision :: bs
-double precision :: eps0
-double precision :: epsm
-double precision :: epsp
-integer :: m
-integer :: mb
-integer :: mn
-integer :: mt
-integer :: n0c
-integer :: n0n
-integer :: nl
-double precision :: p
-double precision :: pd
-double precision :: ps
-double precision :: ps0
-double precision :: qn
-double precision :: qnd
-double precision :: qns
-double precision :: qtx
-double precision :: qtxd
-double precision :: qtxs
-double precision :: qty
-double precision :: qtyd
-double precision :: qtys
-double precision :: qtz
-double precision :: qtzd
-double precision :: qtzs
-double precision :: qxd
-double precision :: qxs
-double precision :: qyd
-double precision :: qys
-double precision :: qzd
-double precision :: qzs
-double precision :: ro
-double precision :: ro0
-double precision :: roc0
-double precision :: roqn0
-double precision :: ros
+    use para_var
+    use para_fige
+    use maillage
+    use proprieteflu
+    implicit none
+    integer          ::    l,   m,  mb, mfb, mmb
+    integer          ::   mn, mpb, mpn,  mt, n0c
+    integer          ::  n0n,ncbd,  nl
+    double precision ::       am,      ap,      b0,      bs,    cson
+    double precision ::     eps0,    epsm,    epsp,     nxn,     nyn
+    double precision ::      nzn,       p,      pd,pression,      ps
+    double precision ::      ps0,      qn,     qnd,     qns,     qtx
+    double precision ::     qtxd,    qtxs,     qty,    qtyd,    qtys
+    double precision ::      qtz,    qtzd,    qtzs,     qxd,     qxs
+    double precision ::      qyd,     qys,     qzd,     qzs,      ro
+    double precision ::      ro0,    roc0,     rod,    roed,   roqn0
+    double precision ::      ros,    roud,    rovd,    rowd,    temp
+    double precision ::        v
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
 !
-      dimension v(ip11,ip60)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-      dimension mmb(mtt),mpb(mtt)
-      dimension mpn(mtt)
-      dimension pression(ip11),temp(ip11),cson(ip11)
+    dimension v(ip11,ip60)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
+    dimension mmb(mtt),mpb(mtt)
+    dimension mpn(mtt)
+    dimension pression(ip11),temp(ip11),cson(ip11)
 !
-      n0n=npn(l)
-      n0c=npc(l)
-      mt=mmb(mfb)
+    n0n=npn(l)
+    n0c=npc(l)
+    mt=mmb(mfb)
 !
 !!$OMP SIMD
-      do m=1,mt
+    do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m
        nl=ncbd(mb)
@@ -184,8 +140,8 @@ double precision :: ros
        pression(nl)=p
        temp(nl)=gam*pression(nl)/ro
        cson(nl)=sqrt(temp(nl))
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine clnrd
+end module mod_clnrd

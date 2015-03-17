@@ -1,7 +1,7 @@
 module mod_b1_dffw
-implicit none
+  implicit none
 contains
-      subroutine b1_dffw
+  subroutine b1_dffw
 !
 !***********************************************************************
 !
@@ -17,32 +17,32 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-      use sortiefichier
-   use chainecarac
-   use definition
-   use kcle
-use mod_convich
-implicit none
+    use sortiefichier
+    use chainecarac
+    use definition
+    use kcle
+    use mod_convich
+    implicit none
 !
 !-----------------------------------------------------------------------
 
-      character(len=1316) :: form
-      character(len=24) ::  cequat,cklomg,comg
+    character(len=1316) :: form
+    character(len=24) ::  cequat,cklomg,comg
 !
-      call convich(kequat,cequat)
-      call convich(kklomg,cklomg)
-      call convich(komg,comg)
+    call convich(kequat,cequat)
+    call convich(kklomg,cklomg)
+    call convich(komg,comg)
 !
-       form='(/,2x,''definition de l''''ecoulement'',/' &
-             //'2x,''--------------------------'',/' &
-             //'2x,''equat                    : '',9x,a,2x,a/' &
-             //'2x,''klomg                    : '',11x,i5,2x,a/' &
-             //'2x,''omg                      : '',e12.6,''t/mn'',' &
-             //'2x,a)'
-      write(imp,form) equat,cequat, &
-                      klomg,cklomg, &
-                      omg,comg
+    form='(/,2x,''definition de l''''ecoulement'',/' &
+         //'2x,''--------------------------'',/' &
+         //'2x,''equat                    : '',9x,a,2x,a/' &
+         //'2x,''klomg                    : '',11x,i5,2x,a/' &
+         //'2x,''omg                      : '',e12.6,''t/mn'',' &
+         //'2x,a)'
+    write(imp,form) equat,cequat, &
+         klomg,cklomg, &
+         omg,comg
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_dffw
+end module mod_b1_dffw

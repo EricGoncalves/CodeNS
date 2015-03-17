@@ -1,7 +1,7 @@
 module mod_b1_dfpmtbkeg
-implicit none
+  implicit none
 contains
-      subroutine b1_dfpmtbkeg
+  subroutine b1_dfpmtbkeg
 !
 !***********************************************************************
 !
@@ -19,38 +19,38 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-      use sortiefichier
-      use modeleturb
-      use schemanum
-implicit none
+    use sortiefichier
+    use modeleturb
+    use schemanum
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
+    character(len=1316) :: form
 !
-       form='(/,2x,''definition des parametres ke''/' &
-             //'2x,''----------------------------'',/' &
-             //'2x,''rokinf                   : '',4x,e12.6/' &
-             //'2x,''roeinf                   : '',4x,e12.6/' &
-             //'2x,''epsk                     : '',4x,e12.6/' &
-             //'2x,''epse                     : '',4x,e12.6/' &
-             //'2x,''cke1                     : '',4x,e12.6/' &
-             //'2x,''cke2                     : '',4x,e12.6/' &
-             //'2x,''alfak                    : '',4x,e12.6/' &
-             //'2x,''alfae                    : '',4x,e12.6/' &
-             //'2x,''rki2t                    : '',4x,e12.6/' &
-             //'2x,''rki4t                    : '',4x,e12.6)'
-      write(imp,form) rokinf, &
-                      roeinf, &
-                      epsk, &
-                      epse, &
-                      cke1, &
-                      cke2, &
-                      alfak, &
-                      alfae, &
-                      rki2t, &
-                      rki4t  
+    form='(/,2x,''definition des parametres ke''/' &
+         //'2x,''----------------------------'',/' &
+         //'2x,''rokinf                   : '',4x,e12.6/' &
+         //'2x,''roeinf                   : '',4x,e12.6/' &
+         //'2x,''epsk                     : '',4x,e12.6/' &
+         //'2x,''epse                     : '',4x,e12.6/' &
+         //'2x,''cke1                     : '',4x,e12.6/' &
+         //'2x,''cke2                     : '',4x,e12.6/' &
+         //'2x,''alfak                    : '',4x,e12.6/' &
+         //'2x,''alfae                    : '',4x,e12.6/' &
+         //'2x,''rki2t                    : '',4x,e12.6/' &
+         //'2x,''rki4t                    : '',4x,e12.6)'
+    write(imp,form) rokinf, &
+         roeinf, &
+         epsk, &
+         epse, &
+         cke1, &
+         cke2, &
+         alfak, &
+         alfae, &
+         rki2t, &
+         rki4t  
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_dfpmtbkeg
+end module mod_b1_dfpmtbkeg

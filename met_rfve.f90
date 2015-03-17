@@ -1,45 +1,38 @@
 module mod_met_rfve
-implicit none
+  implicit none
 contains
-      subroutine met_rfve(t,ncbd,ncin)
+  subroutine met_rfve(t,ncbd,ncin)
 !
 !***********************************************************************
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use boundary
-implicit none
-double precision :: t
-integer :: ncbd
-integer :: ncin
-integer :: m
-integer :: mb
-integer :: mf
-integer :: mfb
-integer :: mt
-integer :: nd
-integer :: ni
+    use para_var
+    use para_fige
+    use boundary
+    implicit none
+    integer          ::    m,  mb,  mf, mfb,  mt
+    integer          :: ncbd,ncin,  nd,  ni
+    double precision :: t
 !
 !-----------------------------------------------------------------------
 !
-      dimension t(ip11,ip60)
-      dimension ncin(ip41),ncbd(ip41)
+    dimension t(ip11,ip60)
+    dimension ncin(ip41),ncbd(ip41)
 !
-      do mf=1,nbd
+    do mf=1,nbd
        mfb=lbd(mf)
        mt=mmb(mfb)
 !!$OMP SIMD
        do m=1,mt
-        mb=mpb(mfb)+m
-        nd=ncbd(mb)
-        ni=ncin(mb)
-        t(nd,6)=t(ni,6)
-        t(nd,7)=t(ni,7)
+          mb=mpb(mfb)+m
+          nd=ncbd(mb)
+          ni=ncin(mb)
+          t(nd,6)=t(ni,6)
+          t(nd,7)=t(ni,7)
        enddo
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine met_rfve
+end module mod_met_rfve

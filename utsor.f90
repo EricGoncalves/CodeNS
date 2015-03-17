@@ -1,9 +1,9 @@
 module mod_utsor
-implicit none
+  implicit none
 contains
-      subroutine utsor( &
-                 ncbd,s,mut, &
-                 x,y,z,nxn,nyn,nzn)
+  subroutine utsor( &
+       ncbd,s,mut, &
+       x,y,z,nxn,nyn,nzn)
 !
 !***********************************************************************
 !
@@ -144,453 +144,356 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use sortiefichier
-      use proprieteflu 
-      use definition
-      use chainecarac
-implicit none
-integer :: ncbd
-double precision :: s
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: akp
-double precision :: alfar
-double precision :: betar
-double precision :: claero
-double precision :: claerob
-double precision :: clav
-double precision :: clavb
-double precision :: clavtot
-double precision :: cmaero
-double precision :: cmaerob
-double precision :: cmav
-double precision :: cmavb
-double precision :: cmavtot
-double precision :: cnaero
-double precision :: cnaerob
-double precision :: cnav
-double precision :: cnavb
-double precision :: cnavtot
-double precision :: csal
-double precision :: csbe
-double precision :: cxaero
-double precision :: cxaerob
-double precision :: cxav
-double precision :: cxavb
-double precision :: cxavtot
-double precision :: cyaero
-double precision :: cyaerob
-double precision :: cyav
-double precision :: cyavb
-double precision :: cyavtot
-double precision :: czaero
-double precision :: czaerob
-double precision :: czav
-double precision :: czavb
-double precision :: czavtot
-double precision :: dcl
-double precision :: dcm
-double precision :: dcn
-double precision :: dcx
-double precision :: dcy
-double precision :: dcz
-double precision :: dsml
-double precision :: dsxy
-double precision :: dsxz
-double precision :: dsyz
-double precision :: dx1
-double precision :: dx2
-double precision :: dy1
-double precision :: dy2
-double precision :: dz1
-double precision :: dz2
-integer :: i1
-integer :: i2
-integer :: idf1
-integer :: idf2
-integer :: idfac
-integer :: idm
-integer :: imaxf
-integer :: iminf
-integer :: j1
-integer :: j2
-integer :: jmaxf
-integer :: jminf
-integer :: k1
-integer :: k2
-integer :: kmaxf
-integer :: kminf
-integer :: l
-integer :: m0b
-integer :: m0n
-integer :: m1
-integer :: m1max
-integer :: m1maxm1
-integer :: m1min
-integer :: m2
-integer :: m2max
-integer :: m2maxm1
-integer :: m2min
-integer :: mf
-integer :: mfac
-integer :: mfacn
-integer :: mfl
-integer :: n0c
-integer :: n0n
-integer :: nci
-integer :: ncj
-integer :: nck
-integer :: nfac1
-integer :: nfac2
-integer :: nfac3
-integer :: nfac4
-integer :: nfacf
-integer :: nid
-integer :: nijd
-integer :: njd
-double precision :: pa
-double precision :: paspa1
-double precision :: pis2
-double precision :: ps
-double precision :: pspi0
-double precision :: qq
-double precision :: raddeg
-double precision :: rm2
-double precision :: sml
-double precision :: snal
-double precision :: snbe
-double precision :: sxy
-double precision :: sxyb
-double precision :: sxz
-double precision :: syz
-double precision :: u
-double precision :: v
-double precision :: w
-double precision :: xcfac
-double precision :: ycfac
-double precision :: zcfac
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use sortiefichier
+    use proprieteflu 
+    use definition
+    use chainecarac
+    implicit none
+    integer          ::      i1,     i2,   idf1,   idf2,  idfac
+    integer          ::     idm,  imaxf,  iminf,     j1,     j2
+    integer          ::   jmaxf,  jminf,     k1,     k2,  kmaxf
+    integer          ::   kminf,      l,    m0b,    m0n,     m1
+    integer          ::   m1max,m1maxm1,  m1min,     m2,  m2max
+    integer          :: m2maxm1,  m2min,     mf,   mfac,  mfacn
+    integer          ::     mfl,    n0c,    n0n,   ncbd,    nci
+    integer          ::     ncj,    nck,  nfac1,  nfac2,  nfac3
+    integer          ::   nfac4,  nfacf,    nid,   nijd,    njd
+    double precision ::     akp,  alfar,  betar, claero,claerob
+    double precision ::    clav,  clavb,clavtot, cmaero,cmaerob
+    double precision ::    cmav,  cmavb,cmavtot, cnaero,cnaerob
+    double precision ::    cnav,  cnavb,cnavtot,   csal,   csbe
+    double precision ::  cxaero,cxaerob,   cxav,  cxavb,cxavtot
+    double precision ::  cyaero,cyaerob,   cyav,  cyavb,cyavtot
+    double precision ::  czaero,czaerob,   czav,  czavb,czavtot
+    double precision ::     dcl,    dcm,    dcn,    dcx,    dcy
+    double precision ::     dcz,   dsml,   dsxy,   dsxz,   dsyz
+    double precision ::     dx1,    dx2,    dy1,    dy2,    dz1
+    double precision ::     dz2,    mut,    nxn,    nyn,    nzn
+    double precision ::      pa, paspa1,   pis2,     ps,  pspi0
+    double precision ::      qq, raddeg,    rm2,      s,    sml
+    double precision ::    snal,   snbe,    sxy,   sxyb,    sxz
+    double precision ::     syz,      u,      v,      w,      x
+    double precision ::   xcfac,      y,  ycfac,      z,  zcfac
 !
 !-----------------------------------------------------------------------
 !
-      double precision mut,nxn,nyn,nzn
 !
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension s(ip11,ip60)
-      dimension mut(ip12),nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension s(ip11,ip60)
+    dimension mut(ip12),nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
 !
 !     SORTIES POUR EXPLOITATION
 !
-      open(sorf1,file='fsor1')
+    open(sorf1,file='fsor1')
 !
-      write(sorf1,1000) equat
+    write(sorf1,1000) equat
 !
-      if(equat(1:2).eq.'eu') then
-      write(sorf1,2000) cp,cv
-      elseif(equat(1:2).eq.'ns') then
-      write(sorf1,2000) cp,cv,pr,prt,reynz
-      endif
+    if(equat(1:2).eq.'eu') then
+       write(sorf1,2000) cp,cv
+    elseif(equat(1:2).eq.'ns') then
+       write(sorf1,2000) cp,cv,pr,prt,reynz
+    endif
 !
-      write(sorf1,2000) tnz,ronz,anz,dnz
-      write(sorf1,2000) roa1,aa1,ta1,pa1,ha1
-      write(sorf1,2000) omg,perio
+    write(sorf1,2000) tnz,ronz,anz,dnz
+    write(sorf1,2000) roa1,aa1,ta1,pa1,ha1
+    write(sorf1,2000) omg,perio
 !
- 1000 format(a)
- 2000 format(5e14.7)
+1000 format(a)
+2000 format(5e14.7)
 !
 !     SORTIES RELATIVES A DES VALEURS SUR LES PAROIS
 !
-      if(kvglo.eq.0) return
-      if(nbfll.eq.0) return
+    if(kvglo.eq.0) return
+    if(nbfll.eq.0) return
 !
-      open(sorf2,file='fsor2')
+    open(sorf2,file='fsor2')
 !
-      pis2=atan2(1.,0.)
-      raddeg=90./pis2
+    pis2=atan2(1.,0.)
+    raddeg=90./pis2
 !
-      alfar=alpha0/raddeg
-      betar=beta0/raddeg
-      csal=cos(alfar)
-      snal=sin(alfar)
-      csbe=cos(betar)
-      snbe=sin(betar)
+    alfar=alpha0/raddeg
+    betar=beta0/raddeg
+    csal=cos(alfar)
+    snal=sin(alfar)
+    csbe=cos(betar)
+    snbe=sin(betar)
 !
-      cxavtot=0.
-      cyavtot=0.
-      czavtot=0.
-      clavtot=0.
-      cmavtot=0.
-      cnavtot=0.
+    cxavtot=0.
+    cyavtot=0.
+    czavtot=0.
+    clavtot=0.
+    cmavtot=0.
+    cnavtot=0.
 !
-      do mf=1,nbfll
+    do mf=1,nbfll
 !
-      mfl=nmfint(mf)
-      l=ndlb(mfl)
+       mfl=nmfint(mf)
+       l=ndlb(mfl)
 !
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
-      n0n=npn(l)
-      n0c=npc(l)
+       i1=ii1(l)
+       i2=ii2(l)
+       j1=jj1(l)
+       j2=jj2(l)
+       k1=kk1(l)
+       k2=kk2(l)
+       n0n=npn(l)
+       n0c=npc(l)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+       nid = id2(l)-id1(l)+1
+       njd = jd2(l)-jd1(l)+1
+       nijd = nid*njd
 !
-      nci=1
-      ncj=nid
-      nck=nijd
+       nci=1
+       ncj=nid
+       nck=nijd
 !
-      m0b=mpb(mfl)
-      m0n=mpn(mfl)
-      iminf=iminb(mfl)
-      imaxf=imaxb(mfl)
-      jminf=jminb(mfl)
-      jmaxf=jmaxb(mfl)
-      kminf=kminb(mfl)
-      kmaxf=kmaxb(mfl)
+       m0b=mpb(mfl)
+       m0n=mpn(mfl)
+       iminf=iminb(mfl)
+       imaxf=imaxb(mfl)
+       jminf=jminb(mfl)
+       jmaxf=jmaxb(mfl)
+       kminf=kminb(mfl)
+       kmaxf=kmaxb(mfl)
 !
-      if(kimp.eq.1) then
-       write(imp,987) l,mfl,iminf,imaxf,jminf,jmaxf,kminf,kmaxf
-      endif
-  987 format("integration des pressions par frontiere : ",39("-") &
-      //1x,"zone ",i3,"   - frontiere ",i3/1x,26("-"), &
-      //5x,"imin = ",i3,5x,"imax = ",i3, &
-      //5x,"jmin = ",i3,5x,"jmax = ",i3, &
-      //5x,"kmin = ",i3,5x,"kmax = ",i3/)
+       if(kimp.eq.1) then
+          write(imp,987) l,mfl,iminf,imaxf,jminf,jmaxf,kminf,kmaxf
+       endif
+987    format("integration des pressions par frontiere : ",39("-") &
+            //1x,"zone ",i3,"   - frontiere ",i3/1x,26("-"), &
+            //5x,"imin = ",i3,5x,"imax = ",i3, &
+            //5x,"jmin = ",i3,5x,"jmax = ",i3, &
+            //5x,"kmin = ",i3,5x,"kmax = ",i3/)
 !
-      m1min=1
-      m2min=1
-          if (iminf.eq.imaxf) then
-      m1max=jmaxf-jminf+1
-      m1maxm1=m1max-1
-      m2max=kmaxf-kminf+1
-      m2maxm1=m2max-1
-      idf1=ncj
-      idf2=nck
+       m1min=1
+       m2min=1
+       if (iminf.eq.imaxf) then
+          m1max=jmaxf-jminf+1
+          m1maxm1=m1max-1
+          m2max=kmaxf-kminf+1
+          m2maxm1=m2max-1
+          idf1=ncj
+          idf2=nck
 !
-      if(iminf.eq.i1) idfac=nci
-      if(iminf.eq.i2) idfac=0
+          if(iminf.eq.i1) idfac=nci
+          if(iminf.eq.i2) idfac=0
 !
-      elseif (jminf.eq.jmaxf) then
-      m1max=imaxf-iminf+1
-      m1maxm1=m1max-1
-      m2max=kmaxf-kminf+1
-      m2maxm1=m2max-1
-      idf1=nci
-      idf2=nck
+       elseif (jminf.eq.jmaxf) then
+          m1max=imaxf-iminf+1
+          m1maxm1=m1max-1
+          m2max=kmaxf-kminf+1
+          m2maxm1=m2max-1
+          idf1=nci
+          idf2=nck
 !
-      if(jminf.eq.j1) idfac=ncj
-      if(jminf.eq.j2) idfac=0
+          if(jminf.eq.j1) idfac=ncj
+          if(jminf.eq.j2) idfac=0
 !
-      elseif (kminf.eq.kmaxf) then
-      m1max=imaxf-iminf+1
-      m1maxm1=m1max-1
-      m2max=jmaxf-jminf+1
-      m2maxm1=m2max-1
-      idf1=nci
-      idf2=ncj
+       elseif (kminf.eq.kmaxf) then
+          m1max=imaxf-iminf+1
+          m1maxm1=m1max-1
+          m2max=jmaxf-jminf+1
+          m2maxm1=m2max-1
+          idf1=nci
+          idf2=ncj
 !
-      if(kminf.eq.k1) idfac=nck
-      if(kminf.eq.k2) idfac=0
+          if(kminf.eq.k1) idfac=nck
+          if(kminf.eq.k2) idfac=0
 !
-      endif
+       endif
 !
-      idm=m1max-m1min
+       idm=m1max-m1min
 !
-      cxav=0.
-      cyav=0.
-      czav=0.
-      clav=0.
-      cmav=0.
-      cnav=0.
-      syz=0.
-      sxz=0.
-      sxy=0.
-      sml=0.
+       cxav=0.
+       cyav=0.
+       czav=0.
+       clav=0.
+       cmav=0.
+       cnav=0.
+       syz=0.
+       sxz=0.
+       sxy=0.
+       sml=0.
 !
-      do m2=m2min,m2maxm1
-      cxavb=0.
-      cyavb=0.
-      czavb=0.
-      clavb=0.
-      cmavb=0.
-      cnavb=0.
-      sxyb=0.
+       do m2=m2min,m2maxm1
+          cxavb=0.
+          cyavb=0.
+          czavb=0.
+          clavb=0.
+          cmavb=0.
+          cnavb=0.
+          sxyb=0.
 !
-      do m1=m1min,m1maxm1
-      mfac=m0b+m1+(m2-1)*idm
-      mfacn=m0n+m1+(m2-1)*idm
-      nfac1=ncbd(mfac)-n0c+n0n+idfac
-      nfac2=ncbd(mfac)-n0c+n0n+idfac+idf1
-      nfac3=ncbd(mfac)-n0c+n0n+idfac+idf1+idf2
-      nfac4=ncbd(mfac)-n0c+n0n+idfac+idf2
-      nfacf=ncbd(mfac)
-      ps =gam1*( s(nfacf,1)*s(nfacf,5) &
-           -0.5*(s(nfacf,2)**2+s(nfacf,3)**2+s(nfacf,4)**2))/s(nfacf,1)
-      pspi0=ps/pa1
-      xcfac=(x(nfac1)+x(nfac2)+x(nfac3)+x(nfac4))/4.
-      ycfac=(y(nfac1)+y(nfac2)+y(nfac3)+y(nfac4))/4.
-      zcfac=(z(nfac1)+z(nfac2)+z(nfac3)+z(nfac4))/4.
-      dx1=x(nfac3)-x(nfac1)
-      dy1=y(nfac3)-y(nfac1)
-      dz1=z(nfac3)-z(nfac1)
-      dx2=x(nfac4)-x(nfac2)
-      dy2=y(nfac4)-y(nfac2)
-      dz2=z(nfac4)-z(nfac2)
-      dsyz=abs(dy1*dz2-dz1*dy2)/2.
-      dsxz=abs(dz1*dx2-dx1*dz2)/2.
-      dsxy=abs(dx1*dy2-dy1*dx2)/2.
-      dsml=sqrt(dsyz*dsyz+dsxz*dsxz+dsxy*dsxy)
-      dcx=(p0spi0-pspi0)*dsyz*sign(1.,nxn(mfacn))
-      dcy=(p0spi0-pspi0)*dsxz*sign(1.,nyn(mfacn))
-      dcz=(p0spi0-pspi0)*dsxy*sign(1.,nzn(mfacn))
-      dcl=dcy*(zcfac-zref)-dcz*(ycfac-yref)
-      dcm=dcx*(zcfac-zref)-dcz*(xcfac-xref)
-      dcn=dcx*(ycfac-yref)-dcy*(xcfac-xref)
-      cxav=cxav+dcx
-      cyav=cyav+dcy
-      czav=czav+dcz
-      clav=clav+dcl
-      cmav=cmav+dcm
-      cnav=cnav+dcn
-      syz=syz+dsyz
-      sxz=sxz+dsxz
-      sxy=sxy+dsxy
-      sml=sml+dsml
-      cxavb=cxavb+dcx
-      cyavb=cyavb+dcy
-      czavb=czavb+dcz
-      clavb=clavb+dcl
-      cmavb=cmavb+dcm
-      cnavb=cnavb+dcn
-      sxyb=sxyb+dsxy
-      enddo
+          do m1=m1min,m1maxm1
+             mfac=m0b+m1+(m2-1)*idm
+             mfacn=m0n+m1+(m2-1)*idm
+             nfac1=ncbd(mfac)-n0c+n0n+idfac
+             nfac2=ncbd(mfac)-n0c+n0n+idfac+idf1
+             nfac3=ncbd(mfac)-n0c+n0n+idfac+idf1+idf2
+             nfac4=ncbd(mfac)-n0c+n0n+idfac+idf2
+             nfacf=ncbd(mfac)
+             ps =gam1*( s(nfacf,1)*s(nfacf,5) &
+                  -0.5*(s(nfacf,2)**2+s(nfacf,3)**2+s(nfacf,4)**2))/s(nfacf,1)
+             pspi0=ps/pa1
+             xcfac=(x(nfac1)+x(nfac2)+x(nfac3)+x(nfac4))/4.
+             ycfac=(y(nfac1)+y(nfac2)+y(nfac3)+y(nfac4))/4.
+             zcfac=(z(nfac1)+z(nfac2)+z(nfac3)+z(nfac4))/4.
+             dx1=x(nfac3)-x(nfac1)
+             dy1=y(nfac3)-y(nfac1)
+             dz1=z(nfac3)-z(nfac1)
+             dx2=x(nfac4)-x(nfac2)
+             dy2=y(nfac4)-y(nfac2)
+             dz2=z(nfac4)-z(nfac2)
+             dsyz=abs(dy1*dz2-dz1*dy2)/2.
+             dsxz=abs(dz1*dx2-dx1*dz2)/2.
+             dsxy=abs(dx1*dy2-dy1*dx2)/2.
+             dsml=sqrt(dsyz*dsyz+dsxz*dsxz+dsxy*dsxy)
+             dcx=(p0spi0-pspi0)*dsyz*sign(1.,nxn(mfacn))
+             dcy=(p0spi0-pspi0)*dsxz*sign(1.,nyn(mfacn))
+             dcz=(p0spi0-pspi0)*dsxy*sign(1.,nzn(mfacn))
+             dcl=dcy*(zcfac-zref)-dcz*(ycfac-yref)
+             dcm=dcx*(zcfac-zref)-dcz*(xcfac-xref)
+             dcn=dcx*(ycfac-yref)-dcy*(xcfac-xref)
+             cxav=cxav+dcx
+             cyav=cyav+dcy
+             czav=czav+dcz
+             clav=clav+dcl
+             cmav=cmav+dcm
+             cnav=cnav+dcn
+             syz=syz+dsyz
+             sxz=sxz+dsxz
+             sxy=sxy+dsxy
+             sml=sml+dsml
+             cxavb=cxavb+dcx
+             cyavb=cyavb+dcy
+             czavb=czavb+dcz
+             clavb=clavb+dcl
+             cmavb=cmavb+dcm
+             cnavb=cnavb+dcn
+             sxyb=sxyb+dsxy
+          enddo
 !
-      if(sxyb.gt.0.) then
-      cxavb=cxavb/(q0spi0*sxyb)
-      cyavb=cyavb/(q0spi0*sxyb)
-      czavb=czavb/(q0spi0*sxyb)
-      clavb=clavb/(q0spi0*sxyb*xlref)
-      cmavb=cmavb/(q0spi0*sxyb*xlref)
-      cnavb=cnavb/(q0spi0*sxyb*xlref)
-      cxaerob=cxavb*csal*csbe-cyavb*snbe+czavb*snal*csbe
-      cyaerob=cxavb*csal*snbe+cyavb*csbe+czavb*snal*snbe
-      czaerob=-cxavb*snal+czavb*csal
-      claerob=clavb*csal*csbe+cmavb*snbe+cnavb*snal*csbe
-      cmaerob=-clavb*csal*snbe+cmavb*csbe-cnavb*snal*snbe
-      cnaerob=-clavb*snal+cnavb*csal
+          if(sxyb.gt.0.) then
+             cxavb=cxavb/(q0spi0*sxyb)
+             cyavb=cyavb/(q0spi0*sxyb)
+             czavb=czavb/(q0spi0*sxyb)
+             clavb=clavb/(q0spi0*sxyb*xlref)
+             cmavb=cmavb/(q0spi0*sxyb*xlref)
+             cnavb=cnavb/(q0spi0*sxyb*xlref)
+             cxaerob=cxavb*csal*csbe-cyavb*snbe+czavb*snal*csbe
+             cyaerob=cxavb*csal*snbe+cyavb*csbe+czavb*snal*snbe
+             czaerob=-cxavb*snal+czavb*csal
+             claerob=clavb*csal*csbe+cmavb*snbe+cnavb*snal*csbe
+             cmaerob=-clavb*csal*snbe+cmavb*csbe-cnavb*snal*snbe
+             cnaerob=-clavb*snal+cnavb*csal
 !
-      if(kimp.eq.1) then
-      write(imp,991) m2,sxyb,cxavb,cyavb,czavb,clavb,cmavb,cnavb, &
-      cxaerob,cyaerob,czaerob,claerob,cmaerob,cnaerob
-      endif
-  991 format(//,1x,"bande numero ",i3," :",/,1x,18("-"),// &
-      /,1x,"surface mouillee projetee sur xy : ",e12.4,/ &
-      /,1x,"efforts dans le repere avion : ",/ &
-      /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
-      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4,// &
-      /,1x,"efforts dans le repere aerodynamique : ",/ &
-      /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
-      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
+             if(kimp.eq.1) then
+                write(imp,991) m2,sxyb,cxavb,cyavb,czavb,clavb,cmavb,cnavb, &
+                     cxaerob,cyaerob,czaerob,claerob,cmaerob,cnaerob
+             endif
+991          format(//,1x,"bande numero ",i3," :",/,1x,18("-"),// &
+                  /,1x,"surface mouillee projetee sur xy : ",e12.4,/ &
+                  /,1x,"efforts dans le repere avion : ",/ &
+                  /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+                  ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4,// &
+                  /,1x,"efforts dans le repere aerodynamique : ",/ &
+                  /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+                  ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
 !
-      endif
+          endif
 !
 !  ecriture des variables aux centres des mailles surfaciques :
 !
 !     x, y, z, u/v0, v/v0, w/v0, kp, pa/pa1
 !
-      do m1=m1min,m1maxm1
-      mfac=m0b+m1+(m2-1)*idm
-      nfac1=ncbd(mfac)-n0c+n0n+idfac
-      nfac2=ncbd(mfac)-n0c+n0n+idfac+idf1
-      nfac3=ncbd(mfac)-n0c+n0n+idfac+idf1+idf2
-      nfac4=ncbd(mfac)-n0c+n0n+idfac+idf2
-      nfacf=ncbd(mfac)
-      ps =gam1*( s(nfacf,1)*s(nfacf,5) &
-           -0.5*(s(nfacf,2)**2+s(nfacf,3)**2+s(nfacf,4)**2)) &
-               /s(nfacf,1)
-      pspi0=ps/pa1
-      xcfac=(x(nfac1)+x(nfac2)+x(nfac3)+x(nfac4))/4.
-      ycfac=(y(nfac1)+y(nfac2)+y(nfac3)+y(nfac4))/4.
-      zcfac=(z(nfac1)+z(nfac2)+z(nfac3)+z(nfac4))/4.
-      u=s(nfacf,2)/(s(nfacf,1)*v0)
-      v=s(nfacf,3)/(s(nfacf,1)*v0)
-      w=s(nfacf,4)/(s(nfacf,1)*v0)
-      qq=(u*u+v*v+w*w)*v0*v0
-      rm2=qq*s(nfacf,1)/(gam*ps)
-      pa=ps*(1.+gam2*rm2)**(gam*gam4)
-      paspa1=pa/pa1
-      akp=(pspi0-p0spi0)/q0spi0
-      write(sorf2,555) xcfac,ycfac,zcfac,u,v,w,akp,paspa1
- 555  format(8f10.6)
-      enddo
+          do m1=m1min,m1maxm1
+             mfac=m0b+m1+(m2-1)*idm
+             nfac1=ncbd(mfac)-n0c+n0n+idfac
+             nfac2=ncbd(mfac)-n0c+n0n+idfac+idf1
+             nfac3=ncbd(mfac)-n0c+n0n+idfac+idf1+idf2
+             nfac4=ncbd(mfac)-n0c+n0n+idfac+idf2
+             nfacf=ncbd(mfac)
+             ps =gam1*( s(nfacf,1)*s(nfacf,5) &
+                  -0.5*(s(nfacf,2)**2+s(nfacf,3)**2+s(nfacf,4)**2)) &
+                  /s(nfacf,1)
+             pspi0=ps/pa1
+             xcfac=(x(nfac1)+x(nfac2)+x(nfac3)+x(nfac4))/4.
+             ycfac=(y(nfac1)+y(nfac2)+y(nfac3)+y(nfac4))/4.
+             zcfac=(z(nfac1)+z(nfac2)+z(nfac3)+z(nfac4))/4.
+             u=s(nfacf,2)/(s(nfacf,1)*v0)
+             v=s(nfacf,3)/(s(nfacf,1)*v0)
+             w=s(nfacf,4)/(s(nfacf,1)*v0)
+             qq=(u*u+v*v+w*w)*v0*v0
+             rm2=qq*s(nfacf,1)/(gam*ps)
+             pa=ps*(1.+gam2*rm2)**(gam*gam4)
+             paspa1=pa/pa1
+             akp=(pspi0-p0spi0)/q0spi0
+             write(sorf2,555) xcfac,ycfac,zcfac,u,v,w,akp,paspa1
+555          format(8f10.6)
+          enddo
 !
-      enddo
+       enddo
 !
-      cxav=cxav/(q0spi0*sref)
-      cyav=cyav/(q0spi0*sref)
-      czav=czav/(q0spi0*sref)
-      clav=clav/(q0spi0*sref*xlref)
-      cmav=cmav/(q0spi0*sref*xlref)
-      cnav=cnav/(q0spi0*sref*xlref)
-      cxaero=cxav*csal*csbe-cyav*snbe+czav*snal*csbe
-      cyaero=cxav*csal*snbe+cyav*csbe+czav*snal*snbe
-      czaero=-cxav*snal+czav*csal
-      claero=clav*csal*csbe+cmav*snbe+cnav*snal*csbe
-      cmaero=-clav*csal*snbe+cmav*csbe-cnav*snal*snbe
-      cnaero=-clav*snal+cnav*csal
-      cxavtot=cxavtot+cxav
-      cyavtot=cyavtot+cyav
-      czavtot=czavtot+czav
-      clavtot=clavtot+clav
-      cmavtot=cmavtot+cmav
-      cnavtot=cnavtot+cnav
+       cxav=cxav/(q0spi0*sref)
+       cyav=cyav/(q0spi0*sref)
+       czav=czav/(q0spi0*sref)
+       clav=clav/(q0spi0*sref*xlref)
+       cmav=cmav/(q0spi0*sref*xlref)
+       cnav=cnav/(q0spi0*sref*xlref)
+       cxaero=cxav*csal*csbe-cyav*snbe+czav*snal*csbe
+       cyaero=cxav*csal*snbe+cyav*csbe+czav*snal*snbe
+       czaero=-cxav*snal+czav*csal
+       claero=clav*csal*csbe+cmav*snbe+cnav*snal*csbe
+       cmaero=-clav*csal*snbe+cmav*csbe-cnav*snal*snbe
+       cnaero=-clav*snal+cnav*csal
+       cxavtot=cxavtot+cxav
+       cyavtot=cyavtot+cyav
+       czavtot=czavtot+czav
+       clavtot=clavtot+clav
+       cmavtot=cmavtot+cmav
+       cnavtot=cnavtot+cnav
 !
-      if(kimp.eq.1) then
-       write(imp,985)
-       write(imp,989) sml,sxy,syz,sxz,cxav,cyav,czav,clav,cmav, &
-       cnav,cxaero,cyaero,czaero,claero,cmaero,cnaero
-      endif
-  985 format(//,1x,"frontiere complete :",/,1x,20("-"),/)
-  989 format(/,1x,"surface mouillee          : ",e12.4,/ &
-      /,1x,"surface mouillee projetee sur xy : ",e12.4,/ &
-      /,1x,"surface mouillee projetee sur yz : ",e12.4,/ &
-      /,1x,"surface mouillee projetee sur xz : ",e12.4,// &
-      /,1x,"efforts dans le repere avion : ",/ &
-      /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
-      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4,// &
-      /,1x,"efforts dans le repere aerodynamique : ",/ &
-      /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
-      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
-      enddo
+       if(kimp.eq.1) then
+          write(imp,985)
+          write(imp,989) sml,sxy,syz,sxz,cxav,cyav,czav,clav,cmav, &
+               cnav,cxaero,cyaero,czaero,claero,cmaero,cnaero
+       endif
+985    format(//,1x,"frontiere complete :",/,1x,20("-"),/)
+989    format(/,1x,"surface mouillee          : ",e12.4,/ &
+            /,1x,"surface mouillee projetee sur xy : ",e12.4,/ &
+            /,1x,"surface mouillee projetee sur yz : ",e12.4,/ &
+            /,1x,"surface mouillee projetee sur xz : ",e12.4,// &
+            /,1x,"efforts dans le repere avion : ",/ &
+            /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+            ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4,// &
+            /,1x,"efforts dans le repere aerodynamique : ",/ &
+            /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+            ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
+    enddo
 !
-      cxaero=cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
-      cyaero=cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
-      czaero=-cxavtot*snal+czavtot*csal
-      claero=clavtot*csal*csbe+cmavtot*snbe+cnavtot*snal*csbe
-      cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
-      cnaero=-clavtot*snal+cnavtot*csal
+    cxaero=cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
+    cyaero=cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
+    czaero=-cxavtot*snal+czavtot*csal
+    claero=clavtot*csal*csbe+cmavtot*snbe+cnavtot*snal*csbe
+    cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
+    cnaero=-clavtot*snal+cnavtot*csal
 !
-      if(kimp.eq.1) then
-      write(imp,990) cxavtot,cyavtot,czavtot,clavtot,cmavtot,cnavtot, &
-      cxaero,cyaero,czaero,claero,cmaero,cnaero
-      endif
-  990 format("efforts globaux - configuration complete :"/,1x, &
-      40("-"),//,1x,"repere avion :",/ &
-      /5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
-      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4,// &
-      /,1x,"repere aerodynamique :",/ &
-      /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
-      ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4)
+    if(kimp.eq.1) then
+       write(imp,990) cxavtot,cyavtot,czavtot,clavtot,cmavtot,cnavtot, &
+            cxaero,cyaero,czaero,claero,cmaero,cnaero
+    endif
+990 format("efforts globaux - configuration complete :"/,1x, &
+         40("-"),//,1x,"repere avion :",/ &
+         /5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+         ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4,// &
+         /,1x,"repere aerodynamique :",/ &
+         /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
+         ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine utsor
+end module mod_utsor

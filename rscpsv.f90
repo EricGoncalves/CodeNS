@@ -1,13 +1,13 @@
 module mod_rscpsv
-implicit none
+  implicit none
 contains
-      subroutine rscpsv( &
-                 img, &
-                 u,v,dt, &
-                 res1xx,res2yy,res3zz,res4,res5,res6,res7, &
-                 tn8, &
-                 icyc,ncyc,ncycle, &
-                 x,y,z,utau)
+  subroutine rscpsv( &
+       img, &
+       u,v,dt, &
+       res1xx,res2yy,res3zz,res4,res5,res6,res7, &
+       tn8, &
+       icyc,ncyc,ncycle, &
+       x,y,z,utau)
 !
 !***********************************************************************
 !
@@ -53,163 +53,134 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use sortiefichier
-      use chainecarac
-use mod_cvccg
-use mod_writdg
-use mod_residu
-implicit none
-integer :: img
-double precision :: u
-double precision :: v
-double precision :: dt
-double precision :: res1xx
-double precision :: res2yy
-double precision :: res3zz
-double precision :: res4
-double precision :: res5
-double precision :: res6
-double precision :: res7
-double precision :: tn8
-integer :: icyc
-integer :: ncyc
-integer :: ncycle
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: utau
-integer :: imax
-integer :: imin
-integer :: jmax
-integer :: jmin
-integer :: kmax
-integer :: kmin
-integer :: l
-integer :: lm
-integer :: m
-integer :: n0
-integer :: ni
-integer :: nid
-integer :: nijd
-integer :: nj
-integer :: njd
-integer :: nk
-integer :: nmax
-integer :: npts
+    use para_var
+    use para_fige
+    use maillage
+    use sortiefichier
+    use chainecarac
+    use mod_cvccg
+    use mod_writdg
+    use mod_residu
+    implicit none
+    integer          ::   icyc,  imax,   img,  imin,  jmax
+    integer          ::   jmin,  kmax,  kmin,     l,    lm
+    integer          ::      m,    n0,  ncyc,ncycle,    ni
+    integer          ::    nid,  nijd,    nj,   njd,    nk
+    integer          ::   nmax,  npts
+    double precision ::     dt,res1xx,res2yy,res3zz,  res4
+    double precision ::   res5,  res6,  res7,   tn8,     u
+    double precision ::   utau,     v,     x,     y,     z
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
-      dimension u(ip11,ip60),v(ip11,ip60)
-      dimension dt(ip11),x(ip21),y(ip21),z(ip21),utau(ip42)
-      dimension res1xx(ip00),res2yy(ip00),res3zz(ip00),res4(ip00), &
-                res5(ip00),res6(ip00),res7(ip00),tn8(ip00)
-      INTEGER,DIMENSION(:),ALLOCATABLE          :: idumx,jdumx,kdumx
-      REAL,DIMENSION(:),ALLOCATABLE :: dumy1,dumy2,dumax,dumy2g,dumaxg
-      ALLOCATE(idumx(neqt),jdumx(neqt),kdumx(neqt), &
-               dumy1(neqt),dumy2(neqt),dumax(neqt),dumy2g(neqt),dumaxg(neqt))
+    character(len=1316) :: form
+    dimension u(ip11,ip60),v(ip11,ip60)
+    dimension dt(ip11),x(ip21),y(ip21),z(ip21),utau(ip42)
+    dimension res1xx(ip00),res2yy(ip00),res3zz(ip00),res4(ip00), &
+         res5(ip00),res6(ip00),res7(ip00),tn8(ip00)
+    INTEGER,DIMENSION(:),ALLOCATABLE          :: idumx,jdumx,kdumx
+    REAL,DIMENSION(:),ALLOCATABLE :: dumy1,dumy2,dumax,dumy2g,dumaxg
+    ALLOCATE(idumx(neqt),jdumx(neqt),kdumx(neqt), &
+         dumy1(neqt),dumy2(neqt),dumax(neqt),dumy2g(neqt),dumaxg(neqt))
 
-      do m=1,neqtx
+    do m=1,neqtx
        dumy2g(m)=0.
        dumaxg(m)=0.
-      enddo
+    enddo
 !
-      if (kimp.ge.1) then
-        form='(/1x,2h--,1x,i7,13h ieme cycle :,3x,' &
-              //'20hnb total de cycles =,i6)'
-      write(imp,form) icyc,ncycle
-      endif
+    if (kimp.ge.1) then
+       form='(/1x,2h--,1x,i7,13h ieme cycle :,3x,' &
+            //'20hnb total de cycles =,i6)'
+       write(imp,form) icyc,ncycle
+    endif
 !
-      npts=0
-      do l=1,lzx
+    npts=0
+    do l=1,lzx
        lm=l+(img-1)*lz
        if (kimp.ge.1) then
-        form='(/10x,10hzone no : ,i5,5x,12hgrille no : ,i3/)'
-        write(imp,form) l,img
+          form='(/10x,10hzone no : ,i5,5x,12hgrille no : ,i3/)'
+          write(imp,form) l,img
        endif
 !
        call residu( &
-                 img, &
-                 lm, &
-                 u,v,dt, &
-                 res1xx,res2yy,res3zz,res4,res5,res6,res7, &
-                 icyc, &
-                 dumy1,dumy2,dumax, &
-                 idumx,jdumx,kdumx)
+            img, &
+            lm, &
+            u,v,dt, &
+            res1xx,res2yy,res3zz,res4,res5,res6,res7, &
+            icyc, &
+            dumy1,dumy2,dumax, &
+            idumx,jdumx,kdumx)
 !
-      if(img.eq.1) then
-       if(ncyc.eq.ncycle) then
-         imin=ii1(l)
-         imax=ii2(l)-1
-         jmin=jj1(l)
-         jmax=jj2(l)-1
-         kmin=kk1(l)
-         kmax=kk2(l)-1
+       if(img.eq.1) then
+          if(ncyc.eq.ncycle) then
+             imin=ii1(l)
+             imax=ii2(l)-1
+             jmin=jj1(l)
+             jmax=jj2(l)-1
+             kmin=kk1(l)
+             kmax=kk2(l)-1
 !
 !         call writda( &
 !                 l,kres,' res   ',utau, &
 !                 imin,imax,jmin,jmax,kmin,kmax, &
 !                 res1xx,res2yy,res3zz,res4,res5,res6,res7,1,tn8)
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd= nid*njd
-      n0  = npc(l)
+             nid = id2(l)-id1(l)+1
+             njd = jd2(l)-jd1(l)+1
+             nijd= nid*njd
+             n0  = npc(l)
 !
-            call cvccg( &
-                 l, &
-                 x,y,z, &
-                 res1xx,res2yy,res3zz)
-            call writdg( &
-                 l,kdgc, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 res1xx,res2yy,res3zz)
-      endif
+             call cvccg( &
+                  l, &
+                  x,y,z, &
+                  res1xx,res2yy,res3zz)
+             call writdg( &
+                  l,kdgc, &
+                  imin,imax,jmin,jmax,kmin,kmax, &
+                  res1xx,res2yy,res3zz)
+          endif
 !
-      ni = ii2(l)-ii1(l)
-      nj = jj2(l)-jj1(l)
-      nk = kk2(l)-kk1(l)
+          ni = ii2(l)-ii1(l)
+          nj = jj2(l)-jj1(l)
+          nk = kk2(l)-kk1(l)
 !
-      nmax=ni*nj*nk
-      npts=npts+nmax
+          nmax=ni*nj*nk
+          npts=npts+nmax
 !
-      if(equat(6:7).eq.'ke') then
-       do m=1,7
-        dumy2g(m)=dumy2g(m)+nmax*dumy2(m)**2
-        dumaxg(m)=max(dumaxg(m),abs(dumax(m)))
-       enddo
-      else
-       do m=1,5
-        dumy2g(m)=dumy2g(m)+nmax*dumy2(m)**2
-        dumaxg(m)=max(dumaxg(m),abs(dumax(m)))
-       enddo
-      endif
-      endif !gin test img
+          if(equat(6:7).eq.'ke') then
+             do m=1,7
+                dumy2g(m)=dumy2g(m)+nmax*dumy2(m)**2
+                dumaxg(m)=max(dumaxg(m),abs(dumax(m)))
+             enddo
+          else
+             do m=1,5
+                dumy2g(m)=dumy2g(m)+nmax*dumy2(m)**2
+                dumaxg(m)=max(dumaxg(m),abs(dumax(m)))
+             enddo
+          endif
+       endif !gin test img
 !
-      enddo
+    enddo
 !
-      if(img.eq.1) then
+    if(img.eq.1) then
        if(equat(6:7).eq.'ke') then
-        do m=1,7
-         dumy2g(m)=sqrt(dumy2g(m)/npts)
-        enddo
+          do m=1,7
+             dumy2g(m)=sqrt(dumy2g(m)/npts)
+          enddo
 !        form='(i6,1x,7e10.4)'
 !        write(imp,form) icyc,(dumy2g(m),m=1,7)
 !        write(imp,form) icyc,(dumaxg(m),m=1,7)
        else
-        do m=1,5
-         dumy2g(m)=sqrt(dumy2g(m)/npts)
-        enddo
+          do m=1,5
+             dumy2g(m)=sqrt(dumy2g(m)/npts)
+          enddo
 !        form='(i6,1x,10e10.4)'
 !        write(out,form) icyc,(dumy2g(m),m=1,5),(dumaxg(m),m=1,5)
        endif
-      endif
+    endif
 
-DEALLOCATE(idumx,jdumx,kdumx,dumy1,dumy2,dumax,dumy2g,dumaxg)
+    DEALLOCATE(idumx,jdumx,kdumx,dumy1,dumy2,dumax,dumy2g,dumaxg)
 
-      return
-      end subroutine
-end module
+    return
+  end subroutine rscpsv
+end module mod_rscpsv

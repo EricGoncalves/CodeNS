@@ -1,7 +1,7 @@
 module mod_defdfpmimd
-implicit none
+  implicit none
 contains
-      subroutine defdfpmimd
+  subroutine defdfpmimd
 !
 !***********************************************************************
 !
@@ -15,24 +15,24 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-      use schemanum
-      use kcle
-implicit none
-integer :: l
+    use para_fige
+    use schemanum
+    use kcle
+    implicit none
+    integer          :: l
 !
 !-----------------------------------------------------------------------
 !
-      do l=1,lz
+    do l=1,lz
        kmf(l) =1
        lmax(l)=10
-      enddo
+    enddo
 !
-      do l=1,lz
+    do l=1,lz
        kkmf(l) =1
        klmax(l)=1
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdfpmimd
+end module mod_defdfpmimd

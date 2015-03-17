@@ -1,10 +1,10 @@
 module mod_c_svbd
-implicit none
+  implicit none
 contains
-      subroutine c_svbd( &
-                 mot,imot,nmot, &
-                 mfbi, &
-                 ncbd)
+  subroutine c_svbd( &
+       mot,imot,nmot, &
+       mfbi, &
+       ncbd)
 !
 !***********************************************************************
 !
@@ -29,31 +29,27 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use boundary
-   use sortiefichier
-implicit none
-integer :: imot
-integer :: nmot
-integer :: mfbi
-integer :: ncbd
-integer :: m0
-integer :: mt
+    use para_var
+    use para_fige
+    use boundary
+    use sortiefichier
+    implicit none
+    integer          :: imot,  m0,mfbi,  mt,ncbd
+    integer          :: nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
-      dimension ncbd(ip41)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
+    dimension ncbd(ip41)
 !
-      m0  =mpb(mfbi)
-      mt  =mmb(mfbi)
+    m0  =mpb(mfbi)
+    mt  =mmb(mfbi)
 !
 !       call writfi( &
 !                 kfi,ncbd, &
 !                 mt,m0)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_svbd
+end module mod_c_svbd

@@ -1,10 +1,10 @@
 module mod_writda
-implicit none
+  implicit none
 contains
-      subroutine writda( &
-                 l,kda,eqt,utau, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 v1,v2,v3,v4,v5,v6,v7,ndmut,mut)
+  subroutine writda( &
+       l,kda,eqt,utau, &
+       imin,imax,jmin,jmax,kmin,kmax, &
+       v1,v2,v3,v4,v5,v6,v7,ndmut,mut)
 !
 !***********************************************************************
 !
@@ -40,84 +40,64 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use chainecarac
-      use maillage
-      use modeleturb
-implicit none
-integer :: ind
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-integer :: kda
-double precision :: utau
-integer :: imin
-integer :: imax
-integer :: jmin
-integer :: jmax
-integer :: kmin
-integer :: kmax
-double precision :: v1
-double precision :: v2
-double precision :: v3
-double precision :: v4
-double precision :: v5
-double precision :: v6
-double precision :: v7
-integer :: ndmut
-integer :: m
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use chainecarac
+    use maillage
+    use modeleturb
+    implicit none
+    integer          ::     i, imax, imin,  ind,    j
+    integer          ::  jmax, jmin,    k,  kda, kmax
+    integer          ::  kmin,    l,    m,ndmut,  nid
+    integer          ::  nijd,  njd
+    double precision ::  mut,utau,  v1,  v2,  v3
+    double precision ::   v4,  v5,  v6,  v7
 !
 !-----------------------------------------------------------------------
 !
-      character(len=7 ) :: eqt
-      double precision mut
-      dimension v1(ip00),v2(ip00),v3(ip00),v4(ip00), &
-                v5(ip00),v6(ip00),v7(ip00)
-      dimension mut(ndmut)
-      dimension utau(ip42)
+    character(len=7 ) :: eqt
+    dimension v1(ip00),v2(ip00),v3(ip00),v4(ip00), &
+         v5(ip00),v6(ip00),v7(ip00)
+    dimension mut(ndmut)
+    dimension utau(ip42)
 !
-      ind(i,j,k)=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    ind(i,j,k)=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      if(l.eq.1) rewind kda
+    if(l.eq.1) rewind kda
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      write(kda) &
-      ((( v1(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-      write(kda) &
-      ((( v2(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-      write(kda) &
-      ((( v3(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-      write(kda) &
-      ((( v4(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-      write(kda) &
-      ((( v5(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-      if(eqt(1:2).eq.'ns') then
-        write(kda) &
-        (((mut(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-      endif
+    write(kda) &
+         ((( v1(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+    write(kda) &
+         ((( v2(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+    write(kda) &
+         ((( v3(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+    write(kda) &
+         ((( v4(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+    write(kda) &
+         ((( v5(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+    if(eqt(1:2).eq.'ns') then
+       write(kda) &
+            (((mut(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+    endif
 !
-      if(eqt(6:7).eq.'ke') then
+    if(eqt(6:7).eq.'ke') then
 !      if (eqt(6:7).eq.'ke' .or. &
 !         (eqt(2:4).eq.'res' .and. ip60.eq.7) ) then
-         write(kda) &
-         ((( v6(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-         write(kda) &
-         ((( v7(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-         if (eqt(6:7).eq.'ke'.and. (kutau.eq.1)) then
+       write(kda) &
+            ((( v6(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+       write(kda) &
+            ((( v7(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
+       if (eqt(6:7).eq.'ke'.and. (kutau.eq.1)) then
 !          modeles de Chien ou k-omega bas Reynolds de Wilcox
 !          ou modeles de Wilcox, Menter avec rugosite
-           write(kda)mdimtnx
-           write(kda)(utau(m),m=1,mdimtnx)
-         endif
-      endif
+          write(kda)mdimtnx
+          write(kda)(utau(m),m=1,mdimtnx)
+       endif
+    endif
 
 !     open(100,file='testecri.tec',form='formatted',status='unknown')
 !     do j=1,jmax
@@ -131,6 +111,6 @@ integer :: njd
 !      enddo
 !      close(100)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine writda
+end module mod_writda

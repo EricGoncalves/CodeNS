@@ -1,18 +1,18 @@
 module mod_rbc
-use mod_rfvr
-use mod_rfvc
-implicit none
+  use mod_rfvr
+  use mod_rfvc
+  implicit none
 contains
-      subroutine rbc( &
-                 ncin,nxn,nyn,nzn,ncbd, &
-                 sn,vol,v,mut, &
-                 bceqt, &
-                 rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,x,y,z,omg, &
-                 pres,tp,rod,roud,rovd,rowd,roed, &
-                 icyc, &
-                 mnr,xnr,ynr,znr,mnc, &
-                 tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
-                 tm12,tm13,pression,ztemp,cson)
+  subroutine rbc( &
+       ncin,nxn,nyn,nzn,ncbd, &
+       sn,vol,v,mut, &
+       bceqt, &
+       rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,x,y,z,omg, &
+       pres,tp,rod,roud,rovd,rowd,roed, &
+       icyc, &
+       mnr,xnr,ynr,znr,mnc, &
+       tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
+       tm12,tm13,pression,ztemp,cson)
 !
 !***********************************************************************
 !
@@ -95,161 +95,120 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-      use maillage
-      use chainecarac
-      use schemanum
-use mod_rbord
-use mod_rbse
-use mod_rfspstc
-use mod_rfve
-implicit none
-integer :: ncin
-integer :: ncbd
-double precision :: sn
-double precision :: vol
-double precision :: v
-double precision :: bceqt
-double precision :: rpi
-double precision :: rti
-double precision :: d0x
-double precision :: d0y
-double precision :: d0z
-double precision :: qtx
-double precision :: qty
-double precision :: qtz
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: omg
-double precision :: pres
-double precision :: tp
-double precision :: rod
-double precision :: roud
-double precision :: rovd
-double precision :: rowd
-double precision :: roed
-integer :: icyc
-integer :: mnr
-double precision :: xnr
-double precision :: ynr
-double precision :: znr
-integer :: mnc
-double precision :: tm1
-double precision :: tm2
-double precision :: tm3
-double precision :: tm4
-double precision :: tm5
-double precision :: tm6
-double precision :: tm7
-double precision :: tm8
-double precision :: tm9
-double precision :: tm10
-double precision :: tm11
-double precision :: tm12
-double precision :: tm13
-double precision :: pression
-double precision :: ztemp
-double precision :: cson
-integer :: l
-integer :: mf
-integer :: mfc
-integer :: mfr
+    use para_var
+    use para_fige
+    use boundary
+    use maillage
+    use chainecarac
+    use schemanum
+    use mod_rbord
+    use mod_rbse
+    use mod_rfspstc
+    use mod_rfve
+    implicit none
+    integer          :: icyc,   l,  mf, mfc, mfr
+    integer          ::  mnc, mnr,ncbd,ncin
+    double precision ::    bceqt,    cson,     d0x,     d0y,     d0z
+    double precision ::      mut,     nxn,     nyn,     nzn,     omg
+    double precision ::     pres,pression,     qtx,     qty,     qtz
+    double precision ::      rod,    roed,    roud,    rovd,    rowd
+    double precision ::      rpi,     rti,      sn,     tm1,    tm10
+    double precision ::     tm11,    tm12,    tm13,     tm2,     tm3
+    double precision ::      tm4,     tm5,     tm6,     tm7,     tm8
+    double precision ::      tm9,      tp,       v,     vol,       x
+    double precision ::      xnr,       y,     ynr,       z,     znr
+    double precision ::    ztemp
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
-      double precision mut
-      dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
-                tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
-                tm11(ip40),tm12(ip40),tm13(ip40)
-      dimension bceqt(ip41,neqt)
-      dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40)
-      dimension d0x(ip40),d0y(ip40),d0z(ip40)
-      dimension qtx(ip40),qty(ip40),qtz(ip40)
-      dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-      dimension x(ip21),y(ip21),z(ip21),mut(ip12)
-      dimension v(ip11,ip60)
-      dimension sn(ip31*ndir)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
-      dimension mnc(ip43),ncin(ip41),ncbd(ip41)
-      dimension vol(ip11),pression(ip11),ztemp(ip11),cson(ip11)
+    dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
+         tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
+         tm11(ip40),tm12(ip40),tm13(ip40)
+    dimension bceqt(ip41,neqt)
+    dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40)
+    dimension d0x(ip40),d0y(ip40),d0z(ip40)
+    dimension qtx(ip40),qty(ip40),qtz(ip40)
+    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
+    dimension x(ip21),y(ip21),z(ip21),mut(ip12)
+    dimension v(ip11,ip60)
+    dimension sn(ip31*ndir)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
+    dimension mnc(ip43),ncin(ip41),ncbd(ip41)
+    dimension vol(ip11),pression(ip11),ztemp(ip11),cson(ip11)
 !
 !-----remplissage des valeurs de v aux points fictifs pour
 !     les CL couplees avec le champs
 !
-      do mf=1,mtnx
+    do mf=1,mtnx
        lbd(mf)=nfbn(mf)
-      enddo
-      nbd=mtnx
-            call rfve( &
-                 v,pression,ztemp,cson, &
-                 ncbd,ncin)
+    enddo
+    nbd=mtnx
+    call rfve( &
+         v,pression,ztemp,cson, &
+         ncbd,ncin)
 !
-      do mf=1,mtax
+    do mf=1,mtax
        lbd(mf)=nfba(mf)
-      enddo
-      nbd=mtax
-            call rfve( &
-                 v,pression,ztemp,cson, &
-                 ncbd,ncin)
+    enddo
+    nbd=mtax
+    call rfve( &
+         v,pression,ztemp,cson, &
+         ncbd,ncin)
 !
-      do mfc=1,mtcx
+    do mfc=1,mtcx
        lbd(mfc)=nfbc(mfc)
-      enddo
-      nbd=mtcx
-       call rfvc( & 
-              v,ncbd,mnc, &
-              pression,ztemp,cson)
+    enddo
+    nbd=mtcx
+    call rfvc( & 
+         v,ncbd,mnc, &
+         pression,ztemp,cson)
 !
-      do mfr=1,mtrx
+    do mfr=1,mtrx
        lbd(mfr)=nfbr(mfr)
-      enddo
-      nbd=mtrx
-            call rfvr(v,ncbd,mnr,xnr,ynr,znr)
+    enddo
+    nbd=mtrx
+    call rfvr(v,ncbd,mnr,xnr,ynr,znr)
 !
-            call rbord( &
-                 1,1, &
-                 mnc,ncin,mnr,xnr,ynr,znr,nxn,nyn,nzn,ncbd, &
-                 sn,vol,v,vol, &
-                 bceqt, &
-                 rpi,rti,d0x,d0y,d0z,x,y,z, &
-                 pres,tp,rod,roud,rovd,rowd,roed, &
-                 icyc, &
-                 tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
-                 tm12,tm13, &
-                 pression,ztemp,cson)
+    call rbord( &
+         1,1, &
+         mnc,ncin,mnr,xnr,ynr,znr,nxn,nyn,nzn,ncbd, &
+         sn,vol,v,vol, &
+         bceqt, &
+         rpi,rti,d0x,d0y,d0z,x,y,z, &
+         pres,tp,rod,roud,rovd,rowd,roed, &
+         icyc, &
+         tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
+         tm12,tm13, &
+         pression,ztemp,cson)
 !
-      if (equat(1:2).eq.'ns') then
-      do mf=1,mtbx
-       lbd(mf)=mf
-      enddo
-      nbd=mtbx
-            call rbse(mut,ncin,ncbd)
-      endif
-      if (equat(6:7).eq.'ke') then
-            call rbse(v(1,6),ncin,ncbd)
-            call rbse(v(1,7),ncin,ncbd)
-      endif
+    if (equat(1:2).eq.'ns') then
+       do mf=1,mtbx
+          lbd(mf)=mf
+       enddo
+       nbd=mtbx
+       call rbse(mut,ncin,ncbd)
+    endif
+    if (equat(6:7).eq.'ke') then
+       call rbse(v(1,6),ncin,ncbd)
+       call rbse(v(1,7),ncin,ncbd)
+    endif
 !
-      do l=1,lzx
+    do l=1,lzx
        call rfspstc(l,v(1,1))
        call rfspstc(l,v(1,2))
        call rfspstc(l,v(1,3))
        call rfspstc(l,v(1,4))
        call rfspstc(l,v(1,5))
        if(equat(1:2).eq.'ns') then
-         call rfspstc(l,mut)
+          call rfspstc(l,mut)
        endif
        if(equat(6:7).eq.'ke') then
-         call rfspstc(l,v(1,6))
-         call rfspstc(l,v(1,7))
+          call rfspstc(l,v(1,6))
+          call rfspstc(l,v(1,7))
        endif
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rbc
+end module mod_rbc

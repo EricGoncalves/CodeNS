@@ -1,10 +1,10 @@
 module mod_tcmd_inbdb
-implicit none
+  implicit none
 contains
-      subroutine tcmd_inbdb( &
-                 mot,imot,nmot, &
-                 lmfb,lmfbd,clmf,kibdb, &
-                 ibdcst,ibdcfl,ibddim,nvbc,vbc)
+  subroutine tcmd_inbdb( &
+       mot,imot,nmot, &
+       lmfb,lmfbd,clmf,kibdb, &
+       ibdcst,ibdcfl,ibddim,nvbc,vbc)
 !
 !***********************************************************************
 !
@@ -14,125 +14,114 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use chainecarac
-      use maillage
-      use kcle
-use mod_valenti
-use mod_valreel
-use mod_vallent
-implicit none
-integer :: imot
-integer :: nmot
-integer :: lmfb
-integer :: lmfbd
-integer :: kibdb
-integer :: ibdcst
-integer :: ibdcfl
-integer :: ibddim
-integer :: nvbc
-double precision :: vbc
-integer :: icmt
-integer :: im
-integer :: kval
-integer :: nm
-integer :: nmr
+    use para_fige
+    use chainecarac
+    use maillage
+    use kcle
+    use mod_valenti
+    use mod_valreel
+    use mod_vallent
+    implicit none
+    integer          :: ibdcfl,ibdcst,ibddim,  icmt,    im
+    integer          ::   imot, kibdb,  kval,  lmfb, lmfbd
+    integer          ::     nm,  nmot,   nmr,  nvbc
+    double precision :: vbc
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  comment
-      character(len=32) ::  mot(nmx)
-      character(len=4 ) :: clmf
-      dimension imot(nmx)
-      dimension lmfb(mtb)
-      dimension vbc(ista*lsta)
+    character(len=32) ::  comment
+    character(len=32) ::  mot(nmx)
+    character(len=4 ) :: clmf
+    dimension imot(nmx)
+    dimension lmfb(mtb)
+    dimension vbc(ista*lsta)
 !
-      do icmt=1,32
+    do icmt=1,32
        comment(icmt:icmt)=' '
-      enddo
+    enddo
 !
-      kval=0
-      ibdcst=0
-      ibdcfl=0
-      ibddim=0
-      nvbc=0
+    kval=0
+    ibdcst=0
+    ibdcfl=0
+    ibddim=0
+    nvbc=0
 !
-      nm=3
-      nm=nm+1
-      if(nmot.lt.nm) then
-        comment=cm
-        call synterr(mot,imot,nmot,comment)
-      else
-        call vallent(mot,imot,nm,lmfb,lmfbd,mtbx,kmtbx)
-      endif
+    nm=3
+    nm=nm+1
+    if(nmot.lt.nm) then
+       comment=cm
+       call synterr(mot,imot,nmot,comment)
+    else
+       call vallent(mot,imot,nm,lmfb,lmfbd,mtbx,kmtbx)
+    endif
 !
-      nm=nm+1
-      if(nmot.lt.nm) then
-        comment=ch
-        call synterr(mot,imot,nmot,comment)
-      else
-        if(imot(nm).gt.4)then
+    nm=nm+1
+    if(nmot.lt.nm) then
+       comment=ch
+       call synterr(mot,imot,nmot,comment)
+    else
+       if(imot(nm).gt.4)then
           comment=cc
           call synterr(mot,imot,nm,comment)
-        else
+       else
           clmf(1:4)='    '
           do im=1,imot(nm)
-          clmf(im:im)=mot(nm)(im:im)
+             clmf(im:im)=mot(nm)(im:im)
           enddo
-        endif
-      endif
+       endif
+    endif
 !
-      nm=nm+1
-      if(nmot.lt.nm) then
-        comment=ci
-        call synterr(mot,imot,nmot,comment)
-      else
-        call valenti(mot,imot,nm,kibdb,kval)
-      endif
+    nm=nm+1
+    if(nmot.lt.nm) then
+       comment=ci
+       call synterr(mot,imot,nmot,comment)
+    else
+       call valenti(mot,imot,nm,kibdb,kval)
+    endif
 !
-      nm=nm+1
-      if(nmot.lt.nm) return
+    nm=nm+1
+    if(nmot.lt.nm) return
 !
-      if((imot(nm).eq.4).and.(mot(nm).eq.'file')) then
-        nm=nm+1
-          call valenti(mot,imot,nm,ibdcfl,kval)
-      else
-        nm=nm-1
-      endif
+    if((imot(nm).eq.4).and.(mot(nm).eq.'file')) then
+       nm=nm+1
+       call valenti(mot,imot,nm,ibdcfl,kval)
+    else
+       nm=nm-1
+    endif
 !
-      nm=nm+1
-      if(nmot.lt.nm) return
+    nm=nm+1
+    if(nmot.lt.nm) return
 !
-      if((imot(nm).eq.5).and.(mot(nm).eq.'state')) then
-        ibddim=1
-        nm=nm+1
-          call valenti(mot,imot,nm,ibdcst,kval)
+    if((imot(nm).eq.5).and.(mot(nm).eq.'state')) then
+       ibddim=1
+       nm=nm+1
+       call valenti(mot,imot,nm,ibdcst,kval)
 !
-      else if((imot(nm).eq.7).and.(mot(nm).eq.'val/usi')) then
-        ibddim=1
-        nm=nm+1
-        nvbc=0
-        do nmr=nm,nmot
+    else if((imot(nm).eq.7).and.(mot(nm).eq.'val/usi')) then
+       ibddim=1
+       nm=nm+1
+       nvbc=0
+       do nmr=nm,nmot
           nvbc=nvbc+1
-            call valreel(mot,imot,nmr,vbc(nvbc),kval)
-        enddo
-        nm=nmot
+          call valreel(mot,imot,nmr,vbc(nvbc),kval)
+       enddo
+       nm=nmot
 !
-      else if((imot(nm).eq.7).and.(mot(nm).eq.'val/ref')) then
-        ibddim=0
-        nm=nm+1
-        nvbc=0
-        do nmr=nm,nmot
+    else if((imot(nm).eq.7).and.(mot(nm).eq.'val/ref')) then
+       ibddim=0
+       nm=nm+1
+       nvbc=0
+       do nmr=nm,nmot
           nvbc=nvbc+1
-            call valreel(mot,imot,nmr,vbc(nvbc),kval)
-        enddo
-        nm=nmot
+          call valreel(mot,imot,nmr,vbc(nvbc),kval)
+       enddo
+       nm=nmot
 !
-      else
-        comment=cb
-        call synterr(mot,imot,nm,comment)
-      endif
+    else
+       comment=cb
+       call synterr(mot,imot,nm,comment)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine tcmd_inbdb
+end module mod_tcmd_inbdb

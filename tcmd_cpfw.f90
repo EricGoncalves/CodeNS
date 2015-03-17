@@ -1,7 +1,7 @@
 module mod_tcmd_cpfw
-implicit none
+  implicit none
 contains
-      subroutine tcmd_cpfw(mot,imot,nmot)
+  subroutine tcmd_cpfw(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -11,17 +11,16 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use chainecarac
-implicit none
-integer :: imot
-integer :: nmot
+    use para_fige
+    use chainecarac
+    implicit none
+    integer          :: imot,nmot
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine tcmd_cpfw
+end module mod_tcmd_cpfw

@@ -1,14 +1,14 @@
 module mod_atdist_1
-implicit none
+  implicit none
 contains
-          subroutine atdist_1( &
-                 x,y,z, &
-                 nxn,nyn,nzn, &
-                 xpar,ypar,zpar, &
-                 xcc,ycc,zcc, &
-                 dist,mnpar, &
-                 ncin,m3min,m3max,dm3,isens3, &
-                 nfbi)
+  subroutine atdist_1( &
+       x,y,z, &
+       nxn,nyn,nzn, &
+       xpar,ypar,zpar, &
+       xcc,ycc,zcc, &
+       dist,mnpar, &
+       ncin,m3min,m3max,dm3,isens3, &
+       nfbi)
 !
 !***********************************************************************
 !
@@ -48,62 +48,35 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use sortiefichier
-   use maillage
-   use boundary
-implicit none
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: xpar
-double precision :: ypar
-double precision :: zpar
-double precision :: xcc
-double precision :: ycc
-double precision :: zcc
-double precision :: dist
-integer :: mnpar
-integer :: ncin
-integer :: m3min
-integer :: m3max
-integer :: isens3
-integer :: nfbi
-double precision :: distn
-integer :: ierr
-integer :: l
-integer :: m
-integer :: m0b
-integer :: m0n
-integer :: m3
-integer :: mb
-integer :: mbn
-integer :: mt
-integer :: n0
-integer :: nc
-integer :: nci
-integer :: ncil
-integer :: ncl
-integer :: ncm1
-integer :: ncm1l
+    use para_var
+    use para_fige
+    use sortiefichier
+    use maillage
+    use boundary
+    implicit none
+    integer          ::    dm3,  ierr,isens3,     l,     m
+    integer          ::    m0b,   m0n,    m3, m3max, m3min
+    integer          ::     mb,   mbn, mnpar,    mt,    n0
+    integer          ::     nc,   nci,  ncil,  ncin,   ncl
+    integer          ::   ncm1, ncm1l,  nfbi
+    double precision ::  dist,distn,  nxn,  nyn,  nzn
+    double precision ::     x,  xcc, xpar,    y,  ycc
+    double precision ::  ypar,    z,  zcc, zpar
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
-      integer dm3
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension xpar(ip00),ypar(ip00),zpar(ip00)
-      dimension xcc (ip00),ycc (ip00),zcc (ip00)
-      dimension dist(ip12),mnpar(ip12)
-      dimension ncin(ip41)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension xpar(ip00),ypar(ip00),zpar(ip00)
+    dimension xcc (ip00),ycc (ip00),zcc (ip00)
+    dimension dist(ip12),mnpar(ip12)
+    dimension ncin(ip41)
 !
-      m0b=mpb(nfbi)
-      m0n=mpn(nfbi)
-      mt =mmb(nfbi)
-      l  =ndlb(nfbi)
-      n0 =npc(l)
+    m0b=mpb(nfbi)
+    m0n=mpn(nfbi)
+    mt =mmb(nfbi)
+    l  =ndlb(nfbi)
+    n0 =npc(l)
 !
 !                   m0b mb  : pointeur dans tab toutes frontieres
 !                   m0n mbn : pointeur dans tab frontieres a normales stockees
@@ -121,52 +94,52 @@ integer :: ncm1l
 !
 !
 !     boucle sur tous les points de la paroi
-      do m=1,mt
-        ierr=0
-        mb =m0b+m
-        mbn=m0n+m
+    do m=1,mt
+       ierr=0
+       mb =m0b+m
+       mbn=m0n+m
 !
 !       initialisation de l'integration des distances
 !       projection de la disatnce sur la normale
 !
-        nci  =ncin(mb)
-        ncil =nci-n0
-        distn=(xcc(ncil)-xpar(mbn))*nxn(mbn)+ &
-              (ycc(ncil)-ypar(mbn))*nyn(mbn)+ &
-              (zcc(ncil)-zpar(mbn))*nzn(mbn)
-        if(distn.lt.0.) ierr=ierr+1
-        if(distn.lt.dist(nci)) then
+       nci  =ncin(mb)
+       ncil =nci-n0
+       distn=(xcc(ncil)-xpar(mbn))*nxn(mbn)+ &
+            (ycc(ncil)-ypar(mbn))*nyn(mbn)+ &
+            (zcc(ncil)-zpar(mbn))*nzn(mbn)
+       if(distn.lt.0.) ierr=ierr+1
+       if(distn.lt.dist(nci)) then
           dist(nci) =distn
           mnpar(nci)=mbn
-        else !passage au point suivant de la frontiere
+       else !passage au point suivant de la frontiere
           exit
-        endif
+       endif
 !
 !       integration suivant la ligne de maillage
-        ncm1l=ncil
-        do m3=m3min+isens3,m3max-isens3,isens3
+       ncm1l=ncil
+       do m3=m3min+isens3,m3max-isens3,isens3
           ncl  =ncm1l+dm3*isens3
           nc   =ncl  +n0
           ncm1 =ncm1l+n0
           distn=(xcc(ncl)-xcc(ncm1l))*nxn(mbn)+ &
-                (ycc(ncl)-ycc(ncm1l))*nyn(mbn)+ &
-                (zcc(ncl)-zcc(ncm1l))*nzn(mbn)
+               (ycc(ncl)-ycc(ncm1l))*nyn(mbn)+ &
+               (zcc(ncl)-zcc(ncm1l))*nzn(mbn)
           distn=dist(ncm1)+abs(distn)
           if(distn.lt.dist(nc)) then
-            dist(nc) =distn
-            mnpar(nc)=mbn
+             dist(nc) =distn
+             mnpar(nc)=mbn
           else !passage au point suivant de la frontiere
-            exit
+             exit
           endif
           ncm1l=ncl
-        enddo
+       enddo
 !
-        if(ierr.ne.0) then
+       if(ierr.ne.0) then
           write(imp,'(/,''!!!atdist_1: probleme orientation pour '',''calcul distance'')')
           stop
-        end if
-      enddo
+       end if
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine atdist_1
+end module mod_atdist_1

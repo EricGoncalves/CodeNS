@@ -1,7 +1,7 @@
 module mod_defdfnzst
-implicit none
+  implicit none
 contains
-      subroutine defdfnzst
+  subroutine defdfnzst
 !
 !***********************************************************************
 !
@@ -11,31 +11,31 @@ contains
 !
 !***********************************************************************
 !
-      use kcle
-      use constantes
-   use definition
-implicit none
+    use kcle
+    use constantes
+    use definition
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      ronz=reelmx
-      kronz=0
+    ronz=reelmx
+    kronz=0
 !
-      anz=reelmx
-      kanz=0
+    anz=reelmx
+    kanz=0
 !
-      tnz=reelmx
-      ktnz=0
+    tnz=reelmx
+    ktnz=0
 !
-      dnz=reelmx
-      kdnz=0
+    dnz=reelmx
+    kdnz=0
 !
-      pnz=reelmx
-      kpnz=0
+    pnz=reelmx
+    kpnz=0
 !
-      rnz=reelmx
-      krnz=0
+    rnz=reelmx
+    krnz=0
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdfnzst
+end module mod_defdfnzst

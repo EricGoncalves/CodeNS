@@ -1,7 +1,7 @@
 module mod_cctcmd
-implicit none
+  implicit none
 contains
-      subroutine cctcmd(command,lgcmd,mot,imot,nm1,nm2)
+  subroutine cctcmd(command,lgcmd,mot,imot,nm1,nm2)
 !
 !***********************************************************************
 !
@@ -11,36 +11,31 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-implicit none
-integer :: lgcmd
-integer :: imot
-integer :: nm1
-integer :: nm2
-integer :: icmd
-integer :: ipos
-integer :: nm
+    use para_fige
+    implicit none
+    integer          ::  icmd, imot, ipos,lgcmd,   nm
+    integer          ::   nm1,  nm2
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: command
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=1316) :: command
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      do icmd=1,lgcmdx
-      command(icmd:icmd)=' '
-      enddo
+    do icmd=1,lgcmdx
+       command(icmd:icmd)=' '
+    enddo
 !
-      lgcmd=0
-      do nm=nm1,nm2
-      lgcmd=lgcmd+1
-      command(lgcmd:lgcmd)=' '
-      do ipos=1,imot(nm)
-      lgcmd=lgcmd+1
-      command(lgcmd:lgcmd)=mot(nm)(ipos:ipos)
-      enddo
-      enddo
+    lgcmd=0
+    do nm=nm1,nm2
+       lgcmd=lgcmd+1
+       command(lgcmd:lgcmd)=' '
+       do ipos=1,imot(nm)
+          lgcmd=lgcmd+1
+          command(lgcmd:lgcmd)=mot(nm)(ipos:ipos)
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine cctcmd
+end module mod_cctcmd

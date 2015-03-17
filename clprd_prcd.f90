@@ -1,11 +1,11 @@
 module mod_clprd_prcd
-implicit none
+  implicit none
 contains
-      subroutine clprd_prcd( &
-                 mfb,pres, &
-                 nxn,nyn,nzn,ncbd,v, &
-                 mmb,mpb,mpn,l, &
-                 pression,temp,cson)
+  subroutine clprd_prcd( &
+       mfb,pres, &
+       nxn,nyn,nzn,ncbd,v, &
+       mmb,mpb,mpn,l, &
+       pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -47,63 +47,37 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use proprieteflu
-      use definition
-      use schemanum
-implicit none
-integer :: mfb
-double precision :: pres
-integer :: ncbd
-double precision :: v
-integer :: mmb
-integer :: mpb
-integer :: mpn
-integer :: l
-double precision :: pression
-double precision :: temp
-double precision :: cson
-double precision :: a2
-double precision :: alp
-double precision :: beta2
-double precision :: dqn
-integer :: m
-integer :: mb
-integer :: mn
-integer :: mt
-integer :: n0c
-integer :: n0n
-integer :: nl
-double precision :: ps
-double precision :: q2
-double precision :: qns
-double precision :: qx
-double precision :: qxs
-double precision :: qy
-double precision :: qys
-double precision :: qz
-double precision :: qzs
-double precision :: rho
-double precision :: roc
+    use para_var
+    use para_fige
+    use maillage
+    use proprieteflu
+    use definition
+    use schemanum
+    implicit none
+    integer          ::    l,   m,  mb, mfb, mmb
+    integer          ::   mn, mpb, mpn,  mt, n0c
+    integer          ::  n0n,ncbd,  nl
+    double precision ::       a2,     alp,   beta2,    cson,     dqn
+    double precision ::      nxn,     nyn,     nzn,    pres,pression
+    double precision ::       ps,      q2,    qinf,     qns,      qx
+    double precision ::      qxs,      qy,     qys,      qz,     qzs
+    double precision ::      rho,     roc,    temp,       v
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn,qinf
-      dimension pres(ip40)
-      dimension v(ip11,ip60)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension mmb(mtt),mpb(mtt)
-      dimension mpn(mtt)
-      dimension pression(ip11),temp(ip11),cson(ip11)
+    dimension pres(ip40)
+    dimension v(ip11,ip60)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension mmb(mtt),mpb(mtt)
+    dimension mpn(mtt)
+    dimension pression(ip11),temp(ip11),cson(ip11)
 !
-      n0n=npn(l)
-      n0c=npc(l)
-      mt=mmb(mfb)
-      qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
+    n0n=npn(l)
+    n0c=npc(l)
+    mt=mmb(mfb)
+    qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
 !
-      do m=1,mt
+    do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m
        nl=ncbd(mb)
@@ -133,8 +107,8 @@ double precision :: roc
        pression(nl)=pres(m)
        temp(nl)=gam*pression(nl)/v(nl,1)
        cson(nl)=sqrt(temp(nl))
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine clprd_prcd
+end module mod_clprd_prcd

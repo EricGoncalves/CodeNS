@@ -1,13 +1,13 @@
 module mod_inbdn
-implicit none
+  implicit none
 contains
-      subroutine inbdn( &
-                 mfbe,kibdn, &
-                 x,y,z, &
-                 sn, &
-                 ncbd,nxn,nyn,nzn, &
-                 tn1,tn2,tn3,tn4,tn5,tn6, &
-                 tn7,tn8,tn9)
+  subroutine inbdn( &
+       mfbe,kibdn, &
+       x,y,z, &
+       sn, &
+       ncbd,nxn,nyn,nzn, &
+       tn1,tn2,tn3,tn4,tn5,tn6, &
+       tn7,tn8,tn9)
 !
 !***********************************************************************
 !
@@ -75,103 +75,80 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use chainecarac
-      use sortiefichier
-use mod_initns
-implicit none
-integer :: mfbe
-integer :: kibdn
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: sn
-integer :: ncbd
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-double precision :: tn4
-double precision :: tn5
-double precision :: tn6
-double precision :: tn7
-double precision :: tn8
-double precision :: tn9
-integer :: imax
-integer :: img
-integer :: imin
-integer :: jmax
-integer :: jmin
-integer :: kmax
-integer :: kmin
-integer :: l
-integer :: lm
-integer :: m0n
-integer :: mfbi
-integer :: mfbim
-integer :: mfn
-integer :: mt
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use chainecarac
+    use sortiefichier
+    use mod_initns
+    implicit none
+    integer          ::  imax,  img, imin, jmax, jmin
+    integer          :: kibdn, kmax, kmin,    l,   lm
+    integer          ::   m0n, mfbe, mfbi,mfbim,  mfn
+    integer          ::    mt, ncbd
+    double precision :: nxn,nyn,nzn, sn,tn1
+    double precision :: tn2,tn3,tn4,tn5,tn6
+    double precision :: tn7,tn8,tn9,  x,  y
+    double precision ::   z
 !
 !-----------------------------------------------------------------------
 !
-      character(len=2 ) :: indfb
-      character(len=7 ) :: eqt
-      double precision nxn,nyn,nzn
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension sn(ip31*ndir)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00), &
-                tn4(ip00),tn5(ip00),tn6(ip00), &
-                tn7(ip00),tn8(ip00),tn9(ip00)
+    character(len=2 ) :: indfb
+    character(len=7 ) :: eqt
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension sn(ip31*ndir)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00), &
+         tn4(ip00),tn5(ip00),tn6(ip00), &
+         tn7(ip00),tn8(ip00),tn9(ip00)
 !
-      mfbi=nfei(mfbe)
+    mfbi=nfei(mfbe)
 !
-      mtnx=mtnx+1
-      mfn =mtnx
-      nfbn(mfn)=mfbi
-      l=ndlb(mfbi)
+    mtnx=mtnx+1
+    mfn =mtnx
+    nfbn(mfn)=mfbi
+    l=ndlb(mfbi)
 !
-      do img=1,lgx
+    do img=1,lgx
 !
-      mfbim=mfbi+(img-1)*mtb
-      mt=mmb(mfbim)
-      mpn(mfbim)=mdimtnx
-      m0n=mpn(mfbim)
-      mdimtnx=mdimtnx+mt
+       mfbim=mfbi+(img-1)*mtb
+       mt=mmb(mfbim)
+       mpn(mfbim)=mdimtnx
+       m0n=mpn(mfbim)
+       mdimtnx=mdimtnx+mt
 !
 !     remplissage des tableaux  nxn , nyn , nzn
 !
-      if((kibdn.eq.1).or.(img.gt.1)) then
+       if((kibdn.eq.1).or.(img.gt.1)) then
 !
-      lm=l+(img-1)*lz
+          lm=l+(img-1)*lz
 !
-      imin=iminb(mfbim)
-      imax=imaxb(mfbim)
-      jmin=jminb(mfbim)
-      jmax=jmaxb(mfbim)
-      kmin=kminb(mfbim)
-      kmax=kmaxb(mfbim)
-      indfb=indfl(mfbi)
-      eqt=equat
+          imin=iminb(mfbim)
+          imax=imaxb(mfbim)
+          jmin=jminb(mfbim)
+          jmax=jmaxb(mfbim)
+          kmin=kminb(mfbim)
+          kmax=kmaxb(mfbim)
+          indfb=indfl(mfbi)
+          eqt=equat
 
-        call initns( &
-                 mfbim,lm,indfb, &
-                 imin,imax,jmin,jmax,kmin,kmax, &
-                 eqt,x,y,z, &
-                 ncbd,nxn,nyn,nzn, &
-                 tn1,tn2,tn3,tn4,tn5,tn6, &
-                 tn7,tn8,tn9)
+          call initns( &
+               mfbim,lm,indfb, &
+               imin,imax,jmin,jmax,kmin,kmax, &
+               eqt,x,y,z, &
+               ncbd,nxn,nyn,nzn, &
+               tn1,tn2,tn3,tn4,tn5,tn6, &
+               tn7,tn8,tn9)
 !
-      elseif(kibdn.eq.0) then
+       elseif(kibdn.eq.0) then
 !       call readfn( &
 !                 kfn,nxn,nyn,nzn, &
 !                 mt,m0n)
-      endif
+       endif
 
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine inbdn
+end module mod_inbdn

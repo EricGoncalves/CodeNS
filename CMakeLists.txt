@@ -20,7 +20,7 @@ if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 message( STATUS "Fortran compiler: " ${CMAKE_Fortran_COMPILER} )
 #set(CMAKE_Fortran_FLAGS_RELEASE "-Ofast -march=native -ffast-math -funsafe-math-optimizations -ffree-line-length-none") #-ftree-loop-distribution -ftree-loop-im
 set(CMAKE_Fortran_FLAGS_RELEASE "-O3 -march=native -ffast-math -funsafe-math-optimizations -ffree-line-length-none ") #-ftree-loop-distribution -ftree-loop-im
-set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g3 -Wall -fbacktrace -ffpe-trap=zero,overflow,invalid -fbounds-check -Wextra -fimplicit-none -Wno-unused-dummy-argument -Wno-unused-parameter -Wno-unused") #-pedantic -std=f2008 -finit-real=snan
+set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra -fimplicit-none -Wimplicit-interface -Wno-unused-dummy-argument -Wno-unused-parameter -Wno-unused -fPIC -fcheck=all -fbacktrace") #-pedantic -std=f2008 -finit-real=snan
 set(DOUBLE "-fdefault-real-8 -fdefault-double-8")
 set(OPENMP "-fopenmp")
 endif ()

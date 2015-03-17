@@ -1,12 +1,12 @@
 module mod_atecrfp
-implicit none
+  implicit none
 contains
-        subroutine atecrfp( &
-                 x,y,z, &
-                 xpar,ypar,zpar, &
-                 nxn,nyn,nzn, &
-                 ncin, &
-                 nfbi)
+  subroutine atecrfp( &
+       x,y,z, &
+       xpar,ypar,zpar, &
+       nxn,nyn,nzn, &
+       ncin, &
+       nfbi)
 !
 !***********************************************************************
 !
@@ -42,75 +42,56 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use boundary
-implicit none
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: xpar
-double precision :: ypar
-double precision :: zpar
-integer :: ncin
-integer :: nfbi
-integer :: idm
-integer :: imaxf
-integer :: iminf
-integer :: jmaxf
-integer :: jminf
-integer :: kmaxf
-integer :: kminf
-integer :: l
-integer :: m0b
-integer :: m0n
-integer :: m1
-integer :: m1max
-integer :: m2
-integer :: m2max
-integer :: mfac
-integer :: mfacn
+    use para_var
+    use para_fige
+    use boundary
+    implicit none
+    integer          ::   idm,imaxf,iminf,jmaxf,jminf
+    integer          :: kmaxf,kminf,    l,  m0b,  m0n
+    integer          ::    m1,m1max,   m2,m2max, mfac
+    integer          :: mfacn, ncin, nfbi
+    double precision ::  nxn, nyn, nzn,   x,xpar
+    double precision ::    y,ypar,   z,zpar
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
 !
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension xpar(ip00),ypar(ip00),zpar(ip00)
-      dimension ncin(ip41)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension xpar(ip00),ypar(ip00),zpar(ip00)
+    dimension ncin(ip41)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
 !
-      l=ndlb(nfbi)
-      m0b=mpb(nfbi)
-      m0n=mpn(nfbi)
+    l=ndlb(nfbi)
+    m0b=mpb(nfbi)
+    m0n=mpn(nfbi)
 !
-      iminf=iminb(nfbi)
-      imaxf=imaxb(nfbi)
-      jminf=jminb(nfbi)
-      jmaxf=jmaxb(nfbi)
-      kminf=kminb(nfbi)
-      kmaxf=kmaxb(nfbi)
+    iminf=iminb(nfbi)
+    imaxf=imaxb(nfbi)
+    jminf=jminb(nfbi)
+    jmaxf=jmaxb(nfbi)
+    kminf=kminb(nfbi)
+    kmaxf=kmaxb(nfbi)
 !
-      if (iminf.eq.imaxf) then
-        m1max=jmaxf-jminf+1
-        m2max=kmaxf-kminf+1
-       elseif (jminf.eq.jmaxf) then
-        m1max=imaxf-iminf+1
-        m2max=kmaxf-kminf+1
-      elseif (kminf.eq.kmaxf) then
-        m1max=imaxf-iminf+1
-        m2max=jmaxf-jminf+1
-      end if
-      idm=m1max-1
+    if (iminf.eq.imaxf) then
+       m1max=jmaxf-jminf+1
+       m2max=kmaxf-kminf+1
+    elseif (jminf.eq.jmaxf) then
+       m1max=imaxf-iminf+1
+       m2max=kmaxf-kminf+1
+    elseif (kminf.eq.kmaxf) then
+       m1max=imaxf-iminf+1
+       m2max=jmaxf-jminf+1
+    end if
+    idm=m1max-1
 !
 !     boucle sur toutes les facettes de la paroi
-      do m2=1,m2max-1
-        do m1=1,m1max-1
+    do m2=1,m2max-1
+       do m1=1,m1max-1
           mfac =m0b+m1+(m2-1)*idm
           mfacn=m0n+m1+(m2-1)*idm
-        enddo
-      enddo
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine atecrfp
+end module mod_atecrfp

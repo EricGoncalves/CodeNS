@@ -1,7 +1,7 @@
 module mod_met_pardis
-implicit none
+  implicit none
 contains
-      subroutine met_pardis(ncin,d)
+  subroutine met_pardis(ncin,d)
 !
 !***********************************************************************
 !
@@ -13,70 +13,54 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-use mod_atindnor
-implicit none
-integer :: ncin
-double precision :: d
-integer :: isens3
-integer :: m
-integer :: m10
-integer :: m1max
-integer :: m1min
-integer :: m20
-integer :: m2max
-integer :: m2min
-integer :: m3
-integer :: m30
-integer :: m3max
-integer :: m3min
-integer :: mb
-integer :: mfb
-integer :: mt
-integer :: n
-integer :: ni
-integer :: no
-integer :: nper
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use mod_atindnor
+    implicit none
+    integer          ::    dm1,   dm2,   dm3,isens3,     m
+    integer          ::    m10, m1max, m1min,   m20, m2max
+    integer          ::  m2min,    m3,   m30, m3max, m3min
+    integer          ::     mb,   mfb,    mt,     n,  ncin
+    integer          ::     ni,    no,  nper
+    double precision :: d
 !
 !-----------------------------------------------------------------------
 !
-      integer dm1,dm2,dm3
-      dimension d(ip11,ip60)
-      dimension ncin(ip41)
+    dimension d(ip11,ip60)
+    dimension ncin(ip41)
 !
 !c    boucle sur toutes les frontieres
-      do no=1,mtbx
+    do no=1,mtbx
        mfb=nba(no)
        if (cl(mfb)(1:3).eq.'par') then
-        mt=mmb(mfb)
+          mt=mmb(mfb)
 !c      suppression de la dissipation artificielle pour omega pres
 !c      de la paroi (sur nper couches de cellules perpendiculairement
 !c      a la paroi)
 !c      calculs des indices direction parallele et normale a la paroi
           call atindnor( &
-                 mfb, &
-                 m10,m20,m30, &
-                 m1min,m1max,m2min,m2max,m3min,m3max, &
-                 dm1,dm2,dm3,isens3)
+               mfb, &
+               m10,m20,m30, &
+               m1min,m1max,m2min,m2max,m3min,m3max, &
+               dm1,dm2,dm3,isens3)
 !
-         nper=3
-         m3max=m3min+isens3*(nper-1)
-         do m=1,mt
-          mb=mpb(mfb)+m
-          ni=ncin(mb)
-          do m3=m3min,m3max,isens3
+          nper=3
+          m3max=m3min+isens3*(nper-1)
+          do m=1,mt
+             mb=mpb(mfb)+m
+             ni=ncin(mb)
+             do m3=m3min,m3max,isens3
 !c         boucle sur les nper points perpendiculaire a la paroi
-           n=ni+(m3-m3min)*dm3
-           d(n,7)=0.
+                n=ni+(m3-m3min)*dm3
+                d(n,7)=0.
+             enddo
           enddo
-         enddo
-        endif
-      enddo
+       endif
+    enddo
 !
-      return
-      end subroutine
+    return
+  end subroutine met_pardis
 
-end module
+end module mod_met_pardis

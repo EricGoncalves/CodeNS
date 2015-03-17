@@ -1,7 +1,7 @@
 module mod_defdffw
-implicit none
+  implicit none
 contains
-      subroutine defdffw
+  subroutine defdffw
 !
 !***********************************************************************
 !
@@ -11,22 +11,22 @@ contains
 !
 !***********************************************************************
 !
-      use kcle
-      use definition
-   use chainecarac
-implicit none
+    use kcle
+    use definition
+    use chainecarac
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      equat='eu3d '
-      kequat=1
+    equat='eu3d '
+    kequat=1
 !
-      klomg=0
-      kklomg=1
+    klomg=0
+    kklomg=1
 !
-      omg=0.
-      komg=1
+    omg=0.
+    komg=1
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdffw
+end module mod_defdffw

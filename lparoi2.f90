@@ -1,15 +1,15 @@
 module mod_lparoi2
-implicit none
+  implicit none
 contains
-      subroutine lparoi2( &
-                 lm,ncyc, &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,mfbm, &
-                 toxx,toxy,toxz,toyy,toyz,tozz, &
-                 qcx,qcy,qcz, &
-                 mnpar,fgam,tp, &
-                 temp)
+  subroutine lparoi2( &
+       lm,ncyc, &
+       v,mu,mut,dist, &
+       nxn,nyn,nzn, &
+       ncin,ncbd,mfbm, &
+       toxx,toxy,toxz,toyy,toyz,tozz, &
+       qcx,qcy,qcz, &
+       mnpar,fgam,tp, &
+       temp)
 !
 !***********************************************************************
 !
@@ -77,147 +77,108 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use proprieteflu
-      use modeleturb
-      use definition
-implicit none
-integer :: lm
-integer :: ncyc
-double precision :: v
-double precision :: dist
-integer :: ncin
-integer :: ncbd
-integer :: mfbm
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-integer :: mnpar
-double precision :: fgam
-double precision :: tp
-double precision :: temp
-double precision :: cta
-double precision :: ctb
-double precision :: denom
-integer :: iter
-integer :: m
-integer :: m0ns
-integer :: mb
-integer :: mpar
-integer :: mt
-integer :: n0c
-integer :: nc
-integer :: nfacns
-integer :: ni
-integer :: nii
-double precision :: phip
-double precision :: qc1
-double precision :: rop
-double precision :: t1
-double precision :: t2
-double precision :: t3
-double precision :: temp1
-double precision :: tn
-double precision :: top
-double precision :: tt
-double precision :: upyp1
-double precision :: v1t
-double precision :: v1x
-double precision :: v1y
-double precision :: v1z
-double precision :: yp02
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use proprieteflu
+    use modeleturb
+    use definition
+    implicit none
+    integer          ::   iter,    lm,     m,  m0ns,    mb
+    integer          ::   mfbm, mnpar,  mpar,    mt,   n0c
+    integer          ::     nc,  ncbd,  ncin,  ncyc,nfacns
+    integer          ::     ni,   nii
+    double precision ::   cta,  ctb,denom, dist, fgam
+    double precision ::    mu,  mup,  mut,   n1,   n2
+    double precision ::    n3,  nxn,  nyn,  nzn, phip
+    double precision ::   qc1,  qcx,  qcy,  qcz,  rop
+    double precision ::    sv,   t1,   t2,   t3, temp
+    double precision :: temp1,   tn,  top, toxx, toxy
+    double precision ::  toxz, toyy, toyz, tozz,   tp
+    double precision ::    tt,upyp1,    v,  v1t,  v1x
+    double precision ::   v1y,  v1z, yp02
+    logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !
-      logical lamin
-      double precision mu,mut,mup,sv
-      double precision nxn,nyn,nzn,n1,n2,n3
 !
-      dimension mu(ip12),mut(ip12), &
-                toxx(ip12),toxy(ip12),toxz(ip12), &
-                toyy(ip12),toyz(ip12),tozz(ip12), &
-                qcx(ip12),qcy(ip12),qcz(ip12)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension ncin(ip41),ncbd(ip41)
-      dimension v(ip11,ip60),dist(ip12)
-      dimension mnpar(ip12),fgam(ip42)
-      dimension tp(ip40)
-      dimension temp(ip11)
+    dimension mu(ip12),mut(ip12), &
+         toxx(ip12),toxy(ip12),toxz(ip12), &
+         toyy(ip12),toyz(ip12),tozz(ip12), &
+         qcx(ip12),qcy(ip12),qcz(ip12)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension ncin(ip41),ncbd(ip41)
+    dimension v(ip11,ip60),dist(ip12)
+    dimension mnpar(ip12),fgam(ip42)
+    dimension tp(ip40)
+    dimension temp(ip11)
 !
-      sv=110.4/tnz !air
-      mt=mmb(mfbm)
-      m0ns=mpn(mfbm)
-      n0c=npc(lm)
+    sv=110.4/tnz !air
+    mt=mmb(mfbm)
+    m0ns=mpn(mfbm)
+    n0c=npc(lm)
 !
 !     boucle sur les facettes d'une frontiere paroi
-      do m=1,mt
-        mb=mpb(mfbm)+m
-        ni=ncin(mb)
-        nc=ncbd(mb)
-        nfacns=m0ns+m
-        mpar=mnpar(ni)
-        nii=ni-n0c
+    do m=1,mt
+       mb=mpb(mfbm)+m
+       ni=ncin(mb)
+       nc=ncbd(mb)
+       nfacns=m0ns+m
+       mpar=mnpar(ni)
+       nii=ni-n0c
 !       test sur transition et regime d'ecoulement
-        if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
 !         laminaire
           lamin=.true.
-        else
+       else
 !         turbulent
           lamin=.false.
-        endif
+       endif
 !       vitesse cellule adjacente a la paroi (cellule 1)
-        v1x=v(ni,2)/v(ni,1)
-        v1y=v(ni,3)/v(ni,1)
-        v1z=v(ni,4)/v(ni,1)
+       v1x=v(ni,2)/v(ni,1)
+       v1y=v(ni,3)/v(ni,1)
+       v1z=v(ni,4)/v(ni,1)
 !       normale a la paroi
-        n1=nxn(nfacns)
-        n2=nyn(nfacns)
-        n3=nzn(nfacns)
+       n1=nxn(nfacns)
+       n2=nyn(nfacns)
+       n3=nzn(nfacns)
 !       tangente normee a la paroi
-        tn=v1x*n1+v1y*n2+v1z*n3
-        t1=v1x-tn*n1
-        t2=v1y-tn*n2
-        t3=v1z-tn*n3
-        tt=sqrt(t1**2+t2**2+t3**2)
-        t1=t1/tt
-        t2=t2/tt
-        t3=t3/tt
+       tn=v1x*n1+v1y*n2+v1z*n3
+       t1=v1x-tn*n1
+       t2=v1y-tn*n2
+       t3=v1z-tn*n3
+       tt=sqrt(t1**2+t2**2+t3**2)
+       t1=t1/tt
+       t2=t2/tt
+       t3=t3/tt
 !       composante tangentielle de la vitesse dans repere paroi : v1t
-        v1t=v1x*t1+v1y*t2+v1z*t3
+       v1t=v1x*t1+v1y*t2+v1z*t3
 !       temperature cellule 1 : temp1
-        temp1=temp(ni)
+       temp1=temp(ni)
 !       masse volumique a la paroi
-        rop=v(ni,1)*temp1/tp(m)
+       rop=v(ni,1)*temp1/tp(m)
 !       viscosite moleculaire a la paroi
-        mup=mu(ni)*sqrt(tp(m)/temp1)*(1.+sv/temp1)/(1.+sv/tp(m))
+       mup=mu(ni)*sqrt(tp(m)/temp1)*(1.+sv/temp1)/(1.+sv/tp(m))
 !       correction de compressibilite (loi de Van Driest)
-        cta=(mu(ni)+mut(ni))/(cp*(mu(ni)/pr+mut(ni)/prt))
-        ctb=cta/(2.*tp(m))
-        denom=(tp(m)-temp1-cta*0.5*v1t**2)*sqrt(temp1/tp(m)) + &
-               tp(m)-temp1+cta*0.5*v1t**2
-        v1t=(1./sqrt(ctb))*asin(2.*sqrt(ctb)*(tp(m)-temp1)*v1t/denom)
+       cta=(mu(ni)+mut(ni))/(cp*(mu(ni)/pr+mut(ni)/prt))
+       ctb=cta/(2.*tp(m))
+       denom=(tp(m)-temp1-cta*0.5*v1t**2)*sqrt(temp1/tp(m)) + &
+            tp(m)-temp1+cta*0.5*v1t**2
+       v1t=(1./sqrt(ctb))*asin(2.*sqrt(ctb)*(tp(m)-temp1)*v1t/denom)
 !       contrainte de frottement a la paroi : top
-        upyp1=rop*v1t*dist(ni)/mup
-        yp02=yp0**2
-        if(upyp1.le.yp02 .or. lamin) then
+       upyp1=rop*v1t*dist(ni)/mup
+       yp02=yp0**2
+       if(upyp1.le.yp02 .or. lamin) then
 !         loi lineaire
           top=mup*v1t/dist(ni)
-        else
+       else
 !         loi logarithmique
           top=mup*v1t/dist(ni)
           do iter=1,10
-            top=rop*v1t**2/(log(dist(ni)*sqrt(rop*top)/mup)/vkar+cllog)**2
+             top=rop*v1t**2/(log(dist(ni)*sqrt(rop*top)/mup)/vkar+cllog)**2
           enddo
-        endif
+       endif
 !
 !         if(lamin) then
 !         loi lineaire
@@ -266,36 +227,36 @@ double precision :: yp02
 !      end if
 !
 !       flux de chaleur a la paroi
-        phip=top*(tp(m)-temp1-0.5*cta*v1t**2)/(cta*v1t)
+       phip=top*(tp(m)-temp1-0.5*cta*v1t**2)/(cta*v1t)
 !       tenseur des contraintes a la paroi dans repere general
-        toxx(nc)=2*t1*n1*top
-        toyy(nc)=2*t2*n2*top
-        tozz(nc)=2*t3*n3*top
-        toxy(nc)=(t2*n1+t1*n2)*top
-        toxz(nc)=(t1*n3+t3*n1)*top
-        toyz(nc)=(t2*n3+t3*n2)*top
+       toxx(nc)=2*t1*n1*top
+       toyy(nc)=2*t2*n2*top
+       tozz(nc)=2*t3*n3*top
+       toxy(nc)=(t2*n1+t1*n2)*top
+       toxz(nc)=(t1*n3+t3*n1)*top
+       toyz(nc)=(t2*n3+t3*n2)*top
 !       tenseur des contraintes en 1 dans repere general
-        toxx(ni)=toxx(nc)
-        toyy(ni)=toyy(nc)
-        tozz(ni)=tozz(nc)
-        toxy(ni)=toxy(nc)
-        toxz(ni)=toxz(nc)
-        toyz(ni)=toyz(nc)
+       toxx(ni)=toxx(nc)
+       toyy(ni)=toyy(nc)
+       tozz(ni)=tozz(nc)
+       toxy(ni)=toxy(nc)
+       toxz(ni)=toxz(nc)
+       toyz(ni)=toyz(nc)
 !       flux de chaleur a la paroi dans repere general
 !       ATTENTION! le signe moins provient de la convention utilisee dans le code
-        qcx(nc)=-n1*phip
-        qcy(nc)=-n2*phip
-        qcz(nc)=-n3*phip
+       qcx(nc)=-n1*phip
+       qcy(nc)=-n2*phip
+       qcz(nc)=-n3*phip
 !       flux de chaleur dans cellule 1 dans repere general
 !       ATTENTION! le signe moins provient de la convention utilisee dans le code
-        qc1=v1t*top+phip
-        qcx(ni)=-n1*qc1
-        qcy(ni)=-n2*qc1
-        qcz(ni)=-n3*qc1
+       qc1=v1t*top+phip
+       qcx(ni)=-n1*qc1
+       qcy(ni)=-n2*qc1
+       qcz(ni)=-n3*qc1
 !
 !     fin boucle sur facettes d'une frontiere paroi
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine lparoi2
+end module mod_lparoi2

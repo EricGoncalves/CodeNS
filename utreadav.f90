@@ -1,9 +1,9 @@
 module mod_utreadav
-implicit none
+  implicit none
 contains
-      subroutine utreadav( &
-                 l,inia1,equat, &
-                 u,v,mut,keinit)
+  subroutine utreadav( &
+       l,inia1,equat, &
+       u,v,mut,keinit)
 !
 !***********************************************************************
 !
@@ -36,157 +36,134 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-implicit none
-integer :: ind
-integer :: i
-integer :: j
-integer :: k
-integer :: l
-integer :: inia1
-double precision :: u
-double precision :: v
-integer :: keinit
-integer :: i1
-integer :: i1m1
-integer :: i2
-integer :: i2m1
-integer :: j1
-integer :: j1m1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k1m1
-integer :: k2
-integer :: k2m1
-integer :: n
-integer :: n0
-integer :: nci
-integer :: ncj
-integer :: nck
-integer :: nid
-integer :: nijd
-integer :: njd
+    use para_var
+    use para_fige
+    use maillage
+    implicit none
+    integer          ::      i,    i1,  i1m1,    i2,  i2m1
+    integer          ::    ind, inia1,     j,    j1,  j1m1
+    integer          ::     j2,  j2m1,     k,    k1,  k1m1
+    integer          ::     k2,  k2m1,keinit,     l,     n
+    integer          ::     n0,   nci,   ncj,   nck,   nid
+    integer          ::   nijd,   njd
+    double precision :: mut,  u,  v
 !
 !-----------------------------------------------------------------------
 !
-      character(len=7 ) :: equat
-      double precision mut
-      dimension u(ip11,ip60),v(ip11,ip60),mut(ip12)
+    character(len=7 ) :: equat
+    dimension u(ip11,ip60),v(ip11,ip60),mut(ip12)
 !
-      ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
-      n0=npc(l)
-      i1=ii1(l)
-      i2=ii2(l)
-      j1=jj1(l)
-      j2=jj2(l)
-      k1=kk1(l)
-      k2=kk2(l)
+    n0=npc(l)
+    i1=ii1(l)
+    i2=ii2(l)
+    j1=jj1(l)
+    j2=jj2(l)
+    k1=kk1(l)
+    k2=kk2(l)
 !
-      i1m1=i1-1
-      j1m1=j1-1
-      k1m1=k1-1
-      i2m1=i2-1
-      j2m1=j2-1
-      k2m1=k2-1
+    i1m1=i1-1
+    j1m1=j1-1
+    k1m1=k1-1
+    i2m1=i2-1
+    j2m1=j2-1
+    k2m1=k2-1
 !
-      nid = id2(l)-id1(l)+1
-      njd = jd2(l)-jd1(l)+1
-      nijd = nid*njd
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 !
-      nci=1
-      ncj=nid
-      nck=nijd
+    nci=1
+    ncj=nid
+    nck=nijd
 !
-      if(l.eq.1) then
-      print*,'INITIALISATION A PARTIR CHAMP C.V'
-      endif
+    if(l.eq.1) then
+       print*,'INITIALISATION A PARTIR CHAMP C.V'
+    endif
 !
-      read(inia1)((( u(ind(i,j,k),1),i=i1,i2),j=j1,j2),k=k1,k2)
-      read(inia1)((( u(ind(i,j,k),2),i=i1,i2),j=j1,j2),k=k1,k2)
-      read(inia1)((( u(ind(i,j,k),3),i=i1,i2),j=j1,j2),k=k1,k2)
-      read(inia1)((( u(ind(i,j,k),4),i=i1,i2),j=j1,j2),k=k1,k2)
-      read(inia1)((( u(ind(i,j,k),5),i=i1,i2),j=j1,j2),k=k1,k2)
+    read(inia1)((( u(ind(i,j,k),1),i=i1,i2),j=j1,j2),k=k1,k2)
+    read(inia1)((( u(ind(i,j,k),2),i=i1,i2),j=j1,j2),k=k1,k2)
+    read(inia1)((( u(ind(i,j,k),3),i=i1,i2),j=j1,j2),k=k1,k2)
+    read(inia1)((( u(ind(i,j,k),4),i=i1,i2),j=j1,j2),k=k1,k2)
+    read(inia1)((( u(ind(i,j,k),5),i=i1,i2),j=j1,j2),k=k1,k2)
 !
 !    Centre des cellules
 !
-      do k=k1,k2m1
-      do j=j1,j2m1
-      do i=i1,i2m1
-      n=ind(i,j,k)
-      v(n,1)=.125*(u(n        ,1)+u(n+        nck,1) &
+    do k=k1,k2m1
+       do j=j1,j2m1
+          do i=i1,i2m1
+             n=ind(i,j,k)
+             v(n,1)=.125*(u(n        ,1)+u(n+        nck,1) &
                   +u(n+nci    ,1)+u(n+nci    +nck,1) &
                   +u(n    +ncj,1)+u(n    +ncj+nck,1) &
                   +u(n+nci+ncj,1)+u(n+nci+ncj+nck,1))
-      v(n,2)=.125*(u(n        ,2)+u(n+        nck,2) &
+             v(n,2)=.125*(u(n        ,2)+u(n+        nck,2) &
                   +u(n+nci    ,2)+u(n+nci    +nck,2) &
                   +u(n    +ncj,2)+u(n    +ncj+nck,2) &
                   +u(n+nci+ncj,2)+u(n+nci+ncj+nck,2))
-      v(n,3)=.125*(u(n        ,3)+u(n+        nck,3) &
+             v(n,3)=.125*(u(n        ,3)+u(n+        nck,3) &
                   +u(n+nci    ,3)+u(n+nci    +nck,3) &
                   +u(n    +ncj,3)+u(n    +ncj+nck,3) &
                   +u(n+nci+ncj,3)+u(n+nci+ncj+nck,3))
-      v(n,4)=.125*(u(n        ,4)+u(n+        nck,4) &
+             v(n,4)=.125*(u(n        ,4)+u(n+        nck,4) &
                   +u(n+nci    ,4)+u(n+nci    +nck,4) &
                   +u(n    +ncj,4)+u(n    +ncj+nck,4) &
                   +u(n+nci+ncj,4)+u(n+nci+ncj+nck,4))
-      v(n,5)=.125*(u(n        ,5)+u(n+        nck,5) &
+             v(n,5)=.125*(u(n        ,5)+u(n+        nck,5) &
                   +u(n+nci    ,5)+u(n+nci    +nck,5) &
                   +u(n    +ncj,5)+u(n    +ncj+nck,5) &
                   +u(n+nci+ncj,5)+u(n+nci+ncj+nck,5))
-      enddo
-      enddo
-      enddo
+          enddo
+       enddo
+    enddo
 !
-      if(equat(1:2).eq.'ns') then
-      read(inia1)((( u(ind(i,j,k),1),i=i1,i2),j=j1,j2),k=k1,k2)
-      do k=k1,k2m1
-      do j=j1,j2m1
-      do i=i1,i2m1
-      n=ind(i,j,k)
-      mut(n)=.125*(u(n        ,1)+u(n+        nck,1) &
-                  +u(n+nci    ,1)+u(n+nci    +nck,1) &
-                  +u(n    +ncj,1)+u(n    +ncj+nck,1) &
-                  +u(n+nci+ncj,1)+u(n+nci+ncj+nck,1))
-      enddo
-      enddo
-      enddo
-      end if
+    if(equat(1:2).eq.'ns') then
+       read(inia1)((( u(ind(i,j,k),1),i=i1,i2),j=j1,j2),k=k1,k2)
+       do k=k1,k2m1
+          do j=j1,j2m1
+             do i=i1,i2m1
+                n=ind(i,j,k)
+                mut(n)=.125*(u(n        ,1)+u(n+        nck,1) &
+                     +u(n+nci    ,1)+u(n+nci    +nck,1) &
+                     +u(n    +ncj,1)+u(n    +ncj+nck,1) &
+                     +u(n+nci+ncj,1)+u(n+nci+ncj+nck,1))
+             enddo
+          enddo
+       enddo
+    end if
 !
-      if(equat(6:7).eq.'ke'.and.keinit.eq.0) then
-      read(inia1)((( u(ind(i,j,k),6),i=i1,i2),j=j1,j2),k=k1,k2)
-      read(inia1)((( u(ind(i,j,k),7),i=i1,i2),j=j1,j2),k=k1,k2)
-      do k=k1,k2m1
-      do j=j1,j2m1
-      do i=i1,i2m1
-      n=ind(i,j,k)
-      v(n,6)=.125*(u(n        ,6)+u(n+        nck,6) &
-                  +u(n+nci    ,6)+u(n+nci    +nck,6) &
-                  +u(n    +ncj,6)+u(n    +ncj+nck,6) &
-                  +u(n+nci+ncj,6)+u(n+nci+ncj+nck,6))
-      v(n,7)=.125*(u(n        ,7)+u(n+        nck,7) &
-                  +u(n+nci    ,7)+u(n+nci    +nck,7) &
-                  +u(n    +ncj,7)+u(n    +ncj+nck,7) &
-                  +u(n+nci+ncj,7)+u(n+nci+ncj+nck,7))
-      enddo
-      enddo
-      enddo
+    if(equat(6:7).eq.'ke'.and.keinit.eq.0) then
+       read(inia1)((( u(ind(i,j,k),6),i=i1,i2),j=j1,j2),k=k1,k2)
+       read(inia1)((( u(ind(i,j,k),7),i=i1,i2),j=j1,j2),k=k1,k2)
+       do k=k1,k2m1
+          do j=j1,j2m1
+             do i=i1,i2m1
+                n=ind(i,j,k)
+                v(n,6)=.125*(u(n        ,6)+u(n+        nck,6) &
+                     +u(n+nci    ,6)+u(n+nci    +nck,6) &
+                     +u(n    +ncj,6)+u(n    +ncj+nck,6) &
+                     +u(n+nci+ncj,6)+u(n+nci+ncj+nck,6))
+                v(n,7)=.125*(u(n        ,7)+u(n+        nck,7) &
+                     +u(n+nci    ,7)+u(n+nci    +nck,7) &
+                     +u(n    +ncj,7)+u(n    +ncj+nck,7) &
+                     +u(n+nci+ncj,7)+u(n+nci+ncj+nck,7))
+             enddo
+          enddo
+       enddo
 !
-      elseif(equat(6:7).eq.'ke') then
-      do k=k1,k2m1
-      do j=j1,j2m1
-      do i=i1,i2m1
-      n=ind(i,j,k)
-      v(n,6)=0.
-      v(n,7)=0.
-      enddo
-      enddo
-      enddo
-      endif
+    elseif(equat(6:7).eq.'ke') then
+       do k=k1,k2m1
+          do j=j1,j2m1
+             do i=i1,i2m1
+                n=ind(i,j,k)
+                v(n,6)=0.
+                v(n,7)=0.
+             enddo
+          enddo
+       enddo
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine utreadav
+end module mod_utreadav

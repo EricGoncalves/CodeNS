@@ -1,11 +1,11 @@
 module mod_clpari
-implicit none
+  implicit none
 contains
-      subroutine clpari( &
-                 mfb,tp, &
-                 ncbd,v, &
-                 mmb,mpb,ncin, &
-                 pression,temp,cson)
+  subroutine clpari( &
+       mfb,tp, &
+       ncbd,v, &
+       mmb,mpb,ncin, &
+       pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -29,40 +29,28 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use proprieteflu
-implicit none
-integer :: mfb
-double precision :: tp
-integer :: ncbd
-double precision :: v
-integer :: mmb
-integer :: mpb
-integer :: ncin
-double precision :: pression
-double precision :: temp
-double precision :: cson
-integer :: m
-integer :: mb
-integer :: mt
-integer :: ni
-integer :: nl
+    use para_var
+    use para_fige
+    use maillage
+    use proprieteflu
+    implicit none
+    integer          ::    m,  mb, mfb, mmb, mpb
+    integer          ::   mt,ncbd,ncin,  ni,  nl
+    double precision ::     cson,    epar,pression,   rhoe1,    temp
+    double precision ::       tp,       v
 !
 !-----------------------------------------------------------------------
 !
-      double precision rhoe1,epar
-      dimension v(ip11,ip60)
-      dimension ncbd(ip41),ncin(ip41)
-      dimension mmb(mtt),mpb(mtt)
-      dimension tp(ip40)
-      dimension pression(ip11),temp(ip11),cson(ip11)
+    dimension v(ip11,ip60)
+    dimension ncbd(ip41),ncin(ip41)
+    dimension mmb(mtt),mpb(mtt)
+    dimension tp(ip40)
+    dimension pression(ip11),temp(ip11),cson(ip11)
 !
-      mt=mmb(mfb)
+    mt=mmb(mfb)
 !
 !!$OMP SIMD
-      do m=1,mt
+    do m=1,mt
        mb=mpb(mfb)+m
        nl=ncbd(mb)
        ni=ncin(mb)
@@ -78,9 +66,9 @@ integer :: nl
 !
        pression(nl)=pression(ni)      !hypothese dPdn=0
        temp(nl)=tp(m)          
-    cson(nl)=sqrt(temp(nl))
-      enddo
+       cson(nl)=sqrt(temp(nl))
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine clpari
+end module mod_clpari

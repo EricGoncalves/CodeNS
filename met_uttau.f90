@@ -1,11 +1,11 @@
 module mod_met_uttau
-implicit none
+  implicit none
 contains
-      subroutine met_uttau( &
-                 ncbd, &
-                 nxn,nyn,nzn, &
-                 toxx,toxy,toxz,toyy,toyz,tozz, &
-                 s,utau)
+  subroutine met_uttau( &
+       ncbd, &
+       nxn,nyn,nzn, &
+       toxx,toxy,toxz,toyy,toyz,tozz, &
+       s,utau)
 !
 !***********************************************************************
 !
@@ -15,96 +15,62 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-      use sortiefichier
-implicit none
-integer :: ncbd
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: s
-double precision :: utau
-integer :: i1
-integer :: i2
-integer :: i2m1
-integer :: j1
-integer :: j2
-integer :: j2m1
-integer :: k1
-integer :: k2
-integer :: k2m1
-integer :: l
-integer :: m0
-integer :: m0n
-integer :: m1
-integer :: mf
-integer :: mfac
-integer :: mfacn
-integer :: mfl
-integer :: mt
-integer :: n0
-integer :: n0c
-integer :: nci
-integer :: ncj
-integer :: nck
-integer :: nfacf
-integer :: nid
-integer :: nijd
-integer :: njd
-double precision :: taunorm
-double precision :: utx
-double precision :: utxt
-double precision :: uty
-double precision :: utyt
-double precision :: utz
-double precision :: utzt
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use sortiefichier
+    implicit none
+    integer          ::    i1,   i2, i2m1,   j1,   j2
+    integer          ::  j2m1,   k1,   k2, k2m1,    l
+    integer          ::    m0,  m0n,   m1,   mf, mfac
+    integer          :: mfacn,  mfl,   mt,   n0,  n0c
+    integer          ::  ncbd,  nci,  ncj,  nck,nfacf
+    integer          ::   nid, nijd,  njd
+    double precision ::     nxn,    nyn,    nzn,      s,taunorm
+    double precision ::   taupe,   toxx,   toxy,   toxz,   toyy
+    double precision ::    toyz,   tozz,   utau,    utx,   utxt
+    double precision ::     uty,   utyt,    utz,   utzt
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn,taupe
-      dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
-      dimension s(ip11,ip60)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41),utau(ip42)
+    dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
+    dimension s(ip11,ip60)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41),utau(ip42)
 !
-      do mf=1,nbdko
+    do mf=1,nbdko
 !       Boucles sur les parois
 !
-        mfl=lbdko(mf)
-        l=ndlb(mfl)
+       mfl=lbdko(mf)
+       l=ndlb(mfl)
 !       mfl  : numero interne frontiere (paroi)
 !       l    : numero domaine
-        n0=npn(l)
-        n0c=npc(l)
-        i1=ii1(l)
-        i2=ii2(l)
-        j1=jj1(l)
-        j2=jj2(l)
-        k1=kk1(l)
-        k2=kk2(l)
-        j2m1=j2-1
-        k2m1=k2-1
-        i2m1=i2-1
-        nid = id2(l)-id1(l)+1
-        njd = jd2(l)-jd1(l)+1
-        nijd = nid*njd
-        nci=1
-        ncj=nid
-        nck=nijd
+       n0=npn(l)
+       n0c=npc(l)
+       i1=ii1(l)
+       i2=ii2(l)
+       j1=jj1(l)
+       j2=jj2(l)
+       k1=kk1(l)
+       k2=kk2(l)
+       j2m1=j2-1
+       k2m1=k2-1
+       i2m1=i2-1
+       nid = id2(l)-id1(l)+1
+       njd = jd2(l)-jd1(l)+1
+       nijd = nid*njd
+       nci=1
+       ncj=nid
+       nck=nijd
 !
-        m0 =mpb(mfl)
-        m0n=mpn(mfl)
-        mt =mmb(mfl)
+       m0 =mpb(mfl)
+       m0n=mpn(mfl)
+       mt =mmb(mfl)
 !       m0  : pointeur deniere facette frt. precedente
 !       m0n : idem pour frontieres a normale stockee
 !       mt  : nombre de facettes dans frontiere
 !
-        do m1=1,mt
+       do m1=1,mt
 !         boucle sur les facettes de la paroi
 !
           mfac=mpb(mfl)+m1
@@ -117,11 +83,11 @@ double precision :: utzt
 !         calcul des composantes du vecteur contrainte T=sigma^n aux parois
 !
           utx=toxx(nfacf)*nxn(mfacn)+toxy(nfacf)*nyn(mfacn)+ &
-              toxz(nfacf)*nzn(mfacn)
+               toxz(nfacf)*nzn(mfacn)
           uty=toxy(nfacf)*nxn(mfacn)+toyy(nfacf)*nyn(mfacn)+ &
-              toyz(nfacf)*nzn(mfacn)
+               toyz(nfacf)*nzn(mfacn)
           utz=toxz(nfacf)*nxn(mfacn)+toyz(nfacf)*nyn(mfacn)+ &
-              tozz(nfacf)*nzn(mfacn)
+               tozz(nfacf)*nzn(mfacn)
 !
 !         projection du frottement sur la surface
 !
@@ -134,10 +100,10 @@ double precision :: utzt
           utau(mfacn)=sqrt(taupe/s(nfacf,1))
 !
 !         fin boucle sur les facetttes
-         enddo
+       enddo
 !       fin boucle sur les parois
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine met_uttau
+end module mod_met_uttau

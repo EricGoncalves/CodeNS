@@ -1,7 +1,7 @@
 module mod_defintn
-implicit none
+  implicit none
 contains
-      subroutine defintn
+  subroutine defintn
 !
 !***********************************************************************
 !
@@ -14,16 +14,16 @@ contains
 !
 !***********************************************************************
 !
-      use para_fige
-      use kcle
-      use schemanum
-implicit none
+    use para_fige
+    use kcle
+    use schemanum
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      numt   =0
-      knumt  =1
+    numt   =0
+    knumt  =1
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defintn
+end module mod_defintn

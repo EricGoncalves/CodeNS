@@ -1,7 +1,7 @@
 module mod_b1_dfst0
-implicit none
+  implicit none
 contains
-      subroutine b1_dfst0(roam,aam,tam)
+  subroutine b1_dfst0(roam,aam,tam)
 !
 !***********************************************************************
 !
@@ -19,23 +19,21 @@ contains
 !
 !***********************************************************************
 !
-      use sortiefichier
-implicit none
-double precision :: roam
-double precision :: aam
-double precision :: tam
+    use sortiefichier
+    implicit none
+    double precision ::  aam,roam, tam
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
+    character(len=1316) :: form
 !
-           form='(/4x ,''grandeurs d''''arret amont :''/' &
-             //'4x ,''~~~~~~~~~~~~~~~~~~~~~~~  ''/,' &
-             //'4x ,''roam   ='',e12.5,'' kg/m3'',/,' &
-             //'4x ,''aam    ='',e12.5,'' m/s  '',/,' &
-             //'4x ,''tam    ='',e12.5,'' K    '')'
-      write(imp,form) roam,aam,tam
+    form='(/4x ,''grandeurs d''''arret amont :''/' &
+         //'4x ,''~~~~~~~~~~~~~~~~~~~~~~~  ''/,' &
+         //'4x ,''roam   ='',e12.5,'' kg/m3'',/,' &
+         //'4x ,''aam    ='',e12.5,'' m/s  '',/,' &
+         //'4x ,''tam    ='',e12.5,'' K    '')'
+    write(imp,form) roam,aam,tam
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_dfst0
+end module mod_b1_dfst0

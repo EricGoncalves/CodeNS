@@ -1,11 +1,11 @@
 module mod_cldebit_prcd
-implicit none
+  implicit none
 contains
-      subroutine cldebit_prcd( &
-                 mfb,pres, &
-                 nxn,nyn,nzn,ncbd,v, &
-                 mmb,mpb,mpn,l, &
-                 pression,temp,cson)
+  subroutine cldebit_prcd( &
+       mfb,pres, &
+       nxn,nyn,nzn,ncbd,v, &
+       mmb,mpb,mpn,l, &
+       pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -48,63 +48,35 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use proprieteflu
-      use schemanum 
-      use definition
-implicit none
-integer :: mfb
-double precision :: pres
-integer :: ncbd
-double precision :: v
-integer :: mmb
-integer :: mpb
-integer :: mpn
-integer :: l
-double precision :: pression
-double precision :: temp
-double precision :: cson
-double precision :: a2
-double precision :: alp
-double precision :: beta2
-double precision :: ca
-double precision :: cb
-double precision :: cc
-double precision :: dp
-double precision :: dqn
-double precision :: drho
-integer :: m
-integer :: mb
-integer :: mn
-integer :: mt
-integer :: nl
-double precision :: ps
-double precision :: q2
-double precision :: qinf
-double precision :: qns
-double precision :: qx
-double precision :: qxs
-double precision :: qy
-double precision :: qys
-double precision :: qz
-double precision :: qzs
-double precision :: rhos
+    use para_var
+    use para_fige
+    use maillage
+    use proprieteflu
+    use schemanum 
+    use definition
+    implicit none
+    integer          ::    l,   m,  mb, mfb, mmb
+    integer          ::   mn, mpb, mpn,  mt,ncbd
+    integer          ::   nl
+    double precision ::       a2,     alp,   beta2,      ca,      cb
+    double precision ::       cc,    cson,      dp,     dqn,    drho
+    double precision ::      nxn,     nyn,     nzn,    pres,pression
+    double precision ::       ps,      q2,    qinf,     qns,      qx
+    double precision ::      qxs,      qy,     qys,      qz,     qzs
+    double precision ::     rhos,    temp,       v
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
-      dimension pres(ip40)
-      dimension v(ip11,ip60)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension mmb(mtt),mpb(mtt),mpn(mtt)
-      dimension pression(ip11),temp(ip11),cson(ip11)
+    dimension pres(ip40)
+    dimension v(ip11,ip60)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension mmb(mtt),mpb(mtt),mpn(mtt)
+    dimension pression(ip11),temp(ip11),cson(ip11)
 !
-      qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
+    qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
 !
-      mt=mmb(mfb)
-      do m=1,mt
+    mt=mmb(mfb)
+    do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m
        nl=ncbd(mb)
@@ -138,8 +110,8 @@ double precision :: rhos
        v(nl,5)=pression(nl)/gam1+pinfl+0.5*v(nl,1)*(qx**2+qy**2+qz**2)
        temp(nl)=gam*pression(nl)/v(nl,1)
        cson(nl)=sqrt(temp(nl))
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine cldebit_prcd
+end module mod_cldebit_prcd

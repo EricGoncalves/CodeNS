@@ -1,11 +1,11 @@
 module mod_atccfp
-implicit none
+  implicit none
 contains
-        subroutine atccfp( &
-                 x,y,z, &
-                 xpar,ypar,zpar, &
-                 ncin, &
-                 nfbi,dm1,dm2,dm3,isens3)
+  subroutine atccfp( &
+       x,y,z, &
+       xpar,ypar,zpar, &
+       ncin, &
+       nfbi,dm1,dm2,dm3,isens3)
 !
 !***********************************************************************
 !
@@ -30,56 +30,43 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-   use boundary
-implicit none
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: xpar
-double precision :: ypar
-double precision :: zpar
-integer :: ncin
-integer :: nfbi
-integer :: isens3
-integer :: m
-integer :: m0
-integer :: m0n
-integer :: mb
-integer :: mbn
-integer :: mt
-integer :: nci
-integer :: ndm3
+    use para_var
+    use para_fige
+    use boundary
+    implicit none
+    integer          ::    dm1,   dm2,   dm3,isens3,     m
+    integer          ::     m0,   m0n,    mb,   mbn,    mt
+    integer          ::    nci,  ncin,  ndm3,  nfbi
+    double precision ::    x,xpar,   y,ypar,   z
+    double precision :: zpar
 !
 !-----------------------------------------------------------------------
 !
-      integer dm1,dm2,dm3
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension xpar(ip00),ypar(ip00),zpar(ip00)
-      dimension ncin(ip41)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension xpar(ip00),ypar(ip00),zpar(ip00)
+    dimension ncin(ip41)
 !
-      m0 =mpb(nfbi)
-      m0n=mpn(nfbi)
-      mt=mmb(nfbi)
-      if(isens3.eq.-1) then
+    m0 =mpb(nfbi)
+    m0n=mpn(nfbi)
+    mt=mmb(nfbi)
+    if(isens3.eq.-1) then
 !       paroi en m3max
-        ndm3=dm3
-      else
+       ndm3=dm3
+    else
 !       paroi en m3min
-        ndm3=0
-      end if
+       ndm3=0
+    end if
 !
 !     boucle sur tous les points de la paroi
-      do m=1,mt
-        mb =m0 +m
-        mbn=m0n+m
-        nci=ncin(mb)+ndm3
-        xpar(mbn)=(x(nci)+x(nci+dm1)+x(nci+dm2)+x(nci+dm1+dm2))*.25
-        ypar(mbn)=(y(nci)+y(nci+dm1)+y(nci+dm2)+y(nci+dm1+dm2))*.25
-        zpar(mbn)=(z(nci)+z(nci+dm1)+z(nci+dm2)+z(nci+dm1+dm2))*.25
-       enddo
+    do m=1,mt
+       mb =m0 +m
+       mbn=m0n+m
+       nci=ncin(mb)+ndm3
+       xpar(mbn)=(x(nci)+x(nci+dm1)+x(nci+dm2)+x(nci+dm1+dm2))*.25
+       ypar(mbn)=(y(nci)+y(nci+dm1)+y(nci+dm2)+y(nci+dm1+dm2))*.25
+       zpar(mbn)=(z(nci)+z(nci+dm1)+z(nci+dm2)+z(nci+dm1+dm2))*.25
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine atccfp
+end module mod_atccfp

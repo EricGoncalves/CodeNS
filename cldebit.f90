@@ -1,11 +1,11 @@
 module mod_cldebit
-implicit none
+  implicit none
 contains
-      subroutine cldebit( &
-                 mfb,pres, &
-                 nxn,nyn,nzn,ncbd,v, &
-                 mmb,mpb,mpn,l, &
-                 pression,temp,cson)
+  subroutine cldebit( &
+       mfb,pres, &
+       nxn,nyn,nzn,ncbd,v, &
+       mmb,mpb,mpn,l, &
+       pression,temp,cson)
 !
 !***********************************************************************
 !
@@ -56,57 +56,31 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use proprieteflu
-implicit none
-integer :: mfb
-double precision :: pres
-integer :: ncbd
-double precision :: v
-integer :: mmb
-integer :: mpb
-integer :: mpn
-integer :: l
-double precision :: pression
-double precision :: temp
-double precision :: cson
-double precision :: a2
-double precision :: ca
-double precision :: cb
-double precision :: cc
-double precision :: dp
-double precision :: dqn
-double precision :: drho
-integer :: m
-integer :: mb
-integer :: mn
-integer :: mt
-integer :: nl
-double precision :: ps
-double precision :: qns
-double precision :: qx
-double precision :: qxs
-double precision :: qy
-double precision :: qys
-double precision :: qz
-double precision :: qzs
-double precision :: rhos
-double precision :: roc0
+    use para_var
+    use para_fige
+    use maillage
+    use proprieteflu
+    implicit none
+    integer          ::    l,   m,  mb, mfb, mmb
+    integer          ::   mn, mpb, mpn,  mt,ncbd
+    integer          ::   nl
+    double precision ::       a2,      ca,      cb,      cc,    cson
+    double precision ::       dp,     dqn,    drho,     nxn,     nyn
+    double precision ::      nzn,    pres,pression,      ps,     qns
+    double precision ::       qx,     qxs,      qy,     qys,      qz
+    double precision ::      qzs,    rhos,    roc0,    temp,       v
 !
 !-----------------------------------------------------------------------
 !
-      double precision nxn,nyn,nzn
 !
-      dimension pres(ip40)
-      dimension v(ip11,ip60)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension mmb(mtt),mpb(mtt),mpn(mtt)
-      dimension pression(ip11),temp(ip11),cson(ip11)
+    dimension pres(ip40)
+    dimension v(ip11,ip60)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension mmb(mtt),mpb(mtt),mpn(mtt)
+    dimension pression(ip11),temp(ip11),cson(ip11)
 !
-      mt=mmb(mfb)
-      do m=1,mt
+    mt=mmb(mfb)
+    do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m
        nl=ncbd(mb)
@@ -138,8 +112,8 @@ double precision :: roc0
        v(nl,5)=pression(nl)/gam1+pinfl+0.5*v(nl,1)*(qx**2+qy**2+qz**2)
        temp(nl)=gam*pression(nl)/v(nl,1)
        cson(nl)=sqrt(temp(nl))
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine cldebit
+end module mod_cldebit

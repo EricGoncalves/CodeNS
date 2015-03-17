@@ -1,7 +1,7 @@
 module mod_gtcmd
-implicit none
+  implicit none
 contains
-      subroutine gtcmd(command,lgcmd)
+  subroutine gtcmd(command,lgcmd)
 !
 !***********************************************************************
 !
@@ -13,60 +13,55 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier
-      use constantes 
-implicit none
-integer :: lgcmd
-integer :: icmd
-integer :: ilin
-integer :: ipos
-integer :: ksuite
-integer :: lglin
-integer :: lgt
+    use para_fige
+    use sortiefichier
+    use constantes 
+    implicit none
+    integer          ::   icmd,  ilin,  ipos,ksuite, lgcmd
+    integer          ::  lglin,   lgt
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: command
-      character(len=132)  :: line
+    character(len=1316) :: command
+    character(len=132)  :: line
 !
-      do icmd=1,lgcmdx
+    do icmd=1,lgcmdx
        command(icmd:icmd)=' '
-      enddo
-      lgcmd=0
+    enddo
+    lgcmd=0
 !
-      lglin=0
-      ksuite=0
-      do while(ksuite.lt.2)
-      read(lec,'(a)') line
-      if(line(1:1).eq.'#') then
-        lgcmd=1
-        command(lgcmd:lgcmd)='#'
-        return
-      endif
+    lglin=0
+    ksuite=0
+    do while(ksuite.lt.2)
+       read(lec,'(a)') line
+       if(line(1:1).eq.'#') then
+          lgcmd=1
+          command(lgcmd:lgcmd)='#'
+          return
+       endif
 !
-      ksuite=0
-      do ipos=1,linx
-      if(line(ipos:ipos).ne.' ') lglin=ipos
-      if(line(ipos:ipos).eq.'&') then
-        ksuite=1
-        exit
-      endif
-      enddo
+       ksuite=0
+       do ipos=1,linx
+          if(line(ipos:ipos).ne.' ') lglin=ipos
+          if(line(ipos:ipos).eq.'&') then
+             ksuite=1
+             exit
+          endif
+       enddo
 !
-      if(lglin.eq.0) return
-      lgt=lgcmd+lglin
-      if(lgt.gt.lgcmdx) stop ' commande trop longue '
-      do ilin=1,lglin
-       icmd=lgcmd+ilin
-       command(icmd:icmd)=line(ilin:ilin)
-      enddo
-      lgcmd=lgcmd+lglin
-      if(ksuite.eq.0) return
-      if(ksuite.eq.1) command(lgcmd:lgcmd)=' '
+       if(lglin.eq.0) return
+       lgt=lgcmd+lglin
+       if(lgt.gt.lgcmdx) stop ' commande trop longue '
+       do ilin=1,lglin
+          icmd=lgcmd+ilin
+          command(icmd:icmd)=line(ilin:ilin)
+       enddo
+       lgcmd=lgcmd+lglin
+       if(ksuite.eq.0) return
+       if(ksuite.eq.1) command(lgcmd:lgcmd)=' '
 !
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine gtcmd
+end module mod_gtcmd

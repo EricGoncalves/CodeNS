@@ -1,7 +1,7 @@
 module mod_b1_svgr
-implicit none
+  implicit none
 contains
-      subroutine b1_svgr(disc)
+  subroutine b1_svgr(disc)
 !
 !***********************************************************************
 !
@@ -15,20 +15,20 @@ contains
 !
 !***********************************************************************
 !
-      use sortiefichier
-implicit none
+    use sortiefichier
+    implicit none
 
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
-      character(len=4 ) :: disc
+    character(len=1316) :: form
+    character(len=4 ) :: disc
 !
-       form='(/,2x,''sauvegarde du maillage'',/' &
-             //'2x,''----------------------'',/' &
-             //'2x,''discretisation           : '',12x,a)'
+    form='(/,2x,''sauvegarde du maillage'',/' &
+         //'2x,''----------------------'',/' &
+         //'2x,''discretisation           : '',12x,a)'
 !
-      write(imp,form) disc
+    write(imp,form) disc
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine b1_svgr
+end module mod_b1_svgr

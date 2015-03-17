@@ -1,7 +1,7 @@
 module mod_defdfph
-implicit none
+  implicit none
 contains
-      subroutine defdfph
+  subroutine defdfph
 !
 !***********************************************************************
 !
@@ -21,28 +21,28 @@ contains
 !
 !***********************************************************************
 !
-      use kcle
-      use constantes
-      use proprieteflu
-implicit none
+    use kcle
+    use constantes
+    use proprieteflu
+    implicit none
 !
 !-----------------------------------------------------------------------
 !
-      gam=1.01
-      kgam=1
+    gam=1.01
+    kgam=1
 !
-      rd=41.4158
-      krd=1
+    rd=41.4158
+    krd=1
 !
-      pr=7.
-      kpr=1
+    pr=7.
+    kpr=1
 !
-      prt=1.
-      kprt=1
+    prt=1.
+    kprt=1
 !
-      reynz=reelmx
-      kreynz=0
+    reynz=reelmx
+    kreynz=0
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine defdfph
+end module mod_defdfph

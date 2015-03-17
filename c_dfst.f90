@@ -1,7 +1,7 @@
 module mod_c_dfst
-implicit none
+  implicit none
 contains
-      subroutine c_dfst(mot,imot,nmot)
+  subroutine c_dfst(mot,imot,nmot)
 !
 !***********************************************************************
 !
@@ -20,28 +20,26 @@ contains
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
-      use para_fige
-      use sortiefichier
-use mod_b1_dfst
-use mod_tcmd_dfst
-implicit none
-integer :: imot
-integer :: nmot
-integer :: nst
+    use para_fige
+    use sortiefichier
+    use mod_b1_dfst
+    use mod_tcmd_dfst
+    implicit none
+    integer          :: imot,nmot, nst
 !
 !-----------------------------------------------------------------------
 !
-      character(len=32) ::  mot(nmx)
-      dimension imot(nmx)
+    character(len=32) ::  mot(nmx)
+    dimension imot(nmx)
 !
-      call tcmd_dfst( &
-                 mot,imot,nmot, &
-                 nst)
+    call tcmd_dfst( &
+         mot,imot,nmot, &
+         nst)
 !
-      if (kimp.ge.1) then
-            call b1_dfst(nst)
-      endif
+    if (kimp.ge.1) then
+       call b1_dfst(nst)
+    endif
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine c_dfst
+end module mod_c_dfst

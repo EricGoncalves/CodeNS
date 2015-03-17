@@ -1,16 +1,16 @@
 module mod_cllparoi1
-implicit none
+  implicit none
 contains
-      subroutine cllparoi1( &
-                 img,ncyc, &
-                 v,dist, &
-                 mu,mut, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd, &
-                 toxx,toxy,toxz,toyy,toyz,tozz, &
-                 qcx,qcy,qcz, &
-                 mnpar,fgam,tp, &
-                 ztemp)
+  subroutine cllparoi1( &
+       img,ncyc, &
+       v,dist, &
+       mu,mut, &
+       nxn,nyn,nzn, &
+       ncin,ncbd, &
+       toxx,toxy,toxz,toyy,toyz,tozz, &
+       qcx,qcy,qcz, &
+       mnpar,fgam,tp, &
+       ztemp)
 !
 !***********************************************************************
 !
@@ -68,91 +68,72 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use maillage
-      use boundary
-use mod_lparoi1
-use mod_lparoi2
-implicit none
-integer :: img
-integer :: ncyc
-double precision :: v
-double precision :: dist
-integer :: ncin
-integer :: ncbd
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-integer :: mnpar
-double precision :: fgam
-double precision :: tp
-double precision :: ztemp
-integer :: l
-integer :: lm
-integer :: mfb
-integer :: mfbm
-integer :: no
+    use para_var
+    use para_fige
+    use maillage
+    use boundary
+    use mod_lparoi1
+    use mod_lparoi2
+    implicit none
+    integer          ::   img,    l,   lm,  mfb, mfbm
+    integer          :: mnpar, ncbd, ncin, ncyc,   no
+    double precision ::  dist, fgam,   mu,  mut,  nxn
+    double precision ::   nyn,  nzn,  qcx,  qcy,  qcz
+    double precision ::  toxx, toxy, toxz, toyy, toyz
+    double precision ::  tozz,   tp,    v,ztemp
 !
 !-----------------------------------------------------------------------
 !
-      double precision mu,mut,nxn,nyn,nzn
 !
-      dimension mu(ip12),mut(ip12), &
-                toxx(ip12),toxy(ip12),toxz(ip12), &
-                toyy(ip12),toyz(ip12),tozz(ip12), &
-                qcx(ip12),qcy(ip12),qcz(ip12)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42)
-      dimension ncbd(ip41),ncin(ip41),dist(ip12)
-      dimension v(ip11,ip60)
-      dimension mnpar(ip12),fgam(ip42)
-      dimension tp(ip40)
-      dimension ztemp(ip11)
+    dimension mu(ip12),mut(ip12), &
+         toxx(ip12),toxy(ip12),toxz(ip12), &
+         toyy(ip12),toyz(ip12),tozz(ip12), &
+         qcx(ip12),qcy(ip12),qcz(ip12)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42)
+    dimension ncbd(ip41),ncin(ip41),dist(ip12)
+    dimension v(ip11,ip60)
+    dimension mnpar(ip12),fgam(ip42)
+    dimension tp(ip40)
+    dimension ztemp(ip11)
 !
 !    boucle sur toutes les frontieres
-      do no=1,mtbx
+    do no=1,mtbx
 !
-      mfb=nba(no)
-      mfbm=mfb+(img-1)*mtb
-      l=ndlb(mfb)
-      lm=l+(img-1)*lz
+       mfb=nba(no)
+       mfbm=mfb+(img-1)*mtb
+       l=ndlb(mfb)
+       lm=l+(img-1)*lz
 !
 !      lois de paroi en parois adiabatiques
 !
-        if (cl(mfb)(1:3).eq.'lp2') then
+       if (cl(mfb)(1:3).eq.'lp2') then
           call lparoi1( &
-                 lm,ncyc, &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,mfbm, &
-                 toxx,toxy,toxz,toyy,toyz,tozz, &
-                 qcx,qcy,qcz, &
-                 mnpar,fgam, &
-                 ztemp)
+               lm,ncyc, &
+               v,mu,mut,dist, &
+               nxn,nyn,nzn, &
+               ncin,ncbd,mfbm, &
+               toxx,toxy,toxz,toyy,toyz,tozz, &
+               qcx,qcy,qcz, &
+               mnpar,fgam, &
+               ztemp)
 !
 !      lois de paroi en parois isothermes
 !
-        else if (cl(mfb)(1:3).eq.'lp3') then
+       else if (cl(mfb)(1:3).eq.'lp3') then
           call lparoi2( &
-                 lm,ncyc, &
-                 v,mu,mut,dist, &
-                 nxn,nyn,nzn, &
-                 ncin,ncbd,mfbm, &
-                 toxx,toxy,toxz,toyy,toyz,tozz, &
-                 qcx,qcy,qcz, &
-                 mnpar,fgam,tp, &
-                 ztemp)
+               lm,ncyc, &
+               v,mu,mut,dist, &
+               nxn,nyn,nzn, &
+               ncin,ncbd,mfbm, &
+               toxx,toxy,toxz,toyy,toyz,tozz, &
+               qcx,qcy,qcz, &
+               mnpar,fgam,tp, &
+               ztemp)
 !
-        endif
+       endif
 !
-      enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine cllparoi1
+end module mod_cllparoi1

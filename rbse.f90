@@ -1,7 +1,7 @@
 module mod_rbse
-implicit none
+  implicit none
 contains
-      subroutine rbse(t,ncin,ncbd)
+  subroutine rbse(t,ncin,ncbd)
 !
 !***********************************************************************
 !
@@ -24,42 +24,35 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use boundary
-implicit none
-double precision :: t
-integer :: ncin
-integer :: ncbd
-integer :: m
-integer :: mf
-integer :: mfb
-integer :: ml
-integer :: mt
-integer :: n
-integer :: ni
+    use para_var
+    use para_fige
+    use boundary
+    implicit none
+    integer          ::    m,  mf, mfb,  ml,  mt
+    integer          ::    n,ncbd,ncin,  ni
+    double precision :: t
 !
 !-----------------------------------------------------------------------
 !
-      dimension t(ip12)
-      dimension ncbd(ip41),ncin(ip41)
+    dimension t(ip12)
+    dimension ncbd(ip41),ncin(ip41)
 !
 !     definition de la variable aux bords (centre des facettes frontieres)
 !
-      do mf=1,nbd
+    do mf=1,nbd
 !
-      mfb=lbd(mf)
-      mt=mmb(mfb)
+       mfb=lbd(mf)
+       mt=mmb(mfb)
 !
 !!$OMP SIMD
-      do m=1,mt
-      ml=mpb(mfb)+m
-      n=ncbd(ml)
-      ni=ncin(ml)
-      t(n) = t(ni)
-      enddo
-      enddo
+       do m=1,mt
+          ml=mpb(mfb)+m
+          n=ncbd(ml)
+          ni=ncin(ml)
+          t(n) = t(ni)
+       enddo
+    enddo
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine rbse
+end module mod_rbse

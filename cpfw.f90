@@ -1,29 +1,29 @@
 module mod_cpfw
-implicit none
+  implicit none
 contains
-      subroutine cpfw( &
-                 ncyc, &
-                 x,y,z,r,exs1,exs2,nxn,nyn,nzn, &
-                 sn, &
-                 vol, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 mu,mut,dist,cfke, &
-                 mnpar,fgam,utau, &
-                 v,dt, &
-                 ptdual,vdual,vdual1,vdual2, &
-                 tnte1,tnte2,tnte3,tnte4vv, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10, &
-                 tm11,tm12,tm13, &
-                 ncin, &
-                 mnc, &
-                 ncbd,mnr,xnr,ynr,znr, &
-                 bceqt, &
-                 rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,pres,tp, &
-                 rod,roud,rovd,rowd,roed, &
-                 pression,ztemp,cson, &
-                 cvi,cvj,cvk, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+  subroutine cpfw( &
+       ncyc, &
+       x,y,z,r,exs1,exs2,nxn,nyn,nzn, &
+       sn, &
+       vol, &
+       tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+       mu,mut,dist,cfke, &
+       mnpar,fgam,utau, &
+       v,dt, &
+       ptdual,vdual,vdual1,vdual2, &
+       tnte1,tnte2,tnte3,tnte4vv, &
+       toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+       tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10, &
+       tm11,tm12,tm13, &
+       ncin, &
+       mnc, &
+       ncbd,mnr,xnr,ynr,znr, &
+       bceqt, &
+       rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,pres,tp, &
+       rod,roud,rovd,rowd,roed, &
+       pression,ztemp,cson, &
+       cvi,cvj,cvk, &
+       cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !***********************************************************************
 !
@@ -182,175 +182,95 @@ contains
 !
 !-----parameters figes--------------------------------------------------
 !
-      use para_var
-      use para_fige
-      use sortiefichier
-      use boundary
-      use chainecarac
-      use schemanum
-      use maillage
-      use definition
-      use modeleturb
-use mod_smg_num
-use mod_metric
-use mod_metric3
-implicit none
-double precision :: x
-double precision :: y
-double precision :: z
-double precision :: r
-double precision :: exs1
-double precision :: exs2
-double precision :: sn
-double precision :: vol
-double precision :: tn1
-double precision :: tn2
-double precision :: tn3
-double precision :: tn4
-double precision :: tn5
-double precision :: tn6
-double precision :: tn7
-double precision :: tn8
-double precision :: tn9
-double precision :: tn10
-double precision :: dist
-double precision :: cfke
-integer :: mnpar
-double precision :: fgam
-double precision :: utau
-double precision :: v
-double precision :: dt
-double precision :: ptdual
-double precision :: vdual
-double precision :: vdual1
-double precision :: vdual2
-double precision :: tnte1
-double precision :: tnte2
-double precision :: tnte3
-double precision :: tnte4vv
-double precision :: toxx
-double precision :: toxy
-double precision :: toxz
-double precision :: toyy
-double precision :: toyz
-double precision :: tozz
-double precision :: qcx
-double precision :: qcy
-double precision :: qcz
-double precision :: tm1
-double precision :: tm2
-double precision :: tm3
-double precision :: tm4
-double precision :: tm5
-double precision :: tm6
-double precision :: tm7
-double precision :: tm8
-double precision :: tm9
-double precision :: tm10
-double precision :: tm11
-double precision :: tm12
-double precision :: tm13
-integer :: ncin
-integer :: mnc
-integer :: ncbd
-integer :: mnr
-double precision :: xnr
-double precision :: ynr
-double precision :: znr
-double precision :: bceqt
-double precision :: rpi
-double precision :: rti
-double precision :: d0x
-double precision :: d0y
-double precision :: d0z
-double precision :: qtx
-double precision :: qty
-double precision :: qtz
-double precision :: pres
-double precision :: tp
-double precision :: rod
-double precision :: roud
-double precision :: rovd
-double precision :: rowd
-double precision :: roed
-double precision :: pression
-double precision :: ztemp
-double precision :: cson
-double precision :: cvi
-double precision :: cvj
-double precision :: cvk
-double precision :: cmui1
-double precision :: cmui2
-double precision :: cmuj1
-double precision :: cmuj2
-double precision :: cmuk1
-double precision :: cmuk2
-integer :: img
-integer :: l
-integer :: lev
-integer :: lm
-integer :: mfb
-integer :: mfc
-integer :: mfn
-integer :: mfr
-integer :: ngx
+    use para_var
+    use para_fige
+    use sortiefichier
+    use boundary
+    use chainecarac
+    use schemanum
+    use maillage
+    use definition
+    use modeleturb
+    use mod_smg_num
+    use mod_metric
+    use mod_metric3
+    implicit none
+    integer          ::   img,    l,  lev,   lm,  mfb
+    integer          ::   mfc,  mfn,  mfr,  mnc,mnpar
+    integer          ::   mnr, ncbd, ncin, ncyc,  ngx
+    double precision ::    bceqt,    cfke,   cmui1,   cmui2,   cmuj1
+    double precision ::    cmuj2,   cmuk1,   cmuk2,    cson,     cvi
+    double precision ::      cvj,     cvk,     d0x,     d0y,     d0z
+    double precision ::     dist,      dt,    exs1,    exs2,    fgam
+    double precision ::       mu,     mut,     nxn,     nyn,     nzn
+    double precision ::     pres,pression,  ptdual,     qcx,     qcy
+    double precision ::      qcz,     qtx,     qty,     qtz,       r
+    double precision ::      rod,    roed,    roud,    rovd,    rowd
+    double precision ::      rpi,     rti,      sn,     tm1,    tm10
+    double precision ::     tm11,    tm12,    tm13,     tm2,     tm3
+    double precision ::      tm4,     tm5,     tm6,     tm7,     tm8
+    double precision ::      tm9,     tn1,    tn10,     tn2,     tn3
+    double precision ::      tn4,     tn5,     tn6,     tn7,     tn8
+    double precision ::      tn9,   tnte1,   tnte2,   tnte3, tnte4vv
+    double precision ::     toxx,    toxy,    toxz,    toyy,    toyz
+    double precision ::     tozz,      tp,    utau,       v,   vdual
+    double precision ::   vdual1,  vdual2,     vol,       x,     xnr
+    double precision ::        y,     ynr,       z,     znr,   ztemp
 !
 !-----------------------------------------------------------------------
 !
-      character(len=1316) :: form
-      integer ncyc
-      double precision nxn,nyn,nzn,mu,mut
+    character(len=1316) :: form
 !
-      dimension x(ip21),y(ip21),z(ip21)
-      dimension v(ip11,ip60),vdual(ip11,ip60),vdual1(ip11,ip60), &
-                vdual2(ip11,ip60),ptdual(ip11,ip60)
-      dimension tnte1(ip11,ip60),tnte2(ip11,ip60), &
-                tnte3(ip11,ip60),tnte4vv(ip11,ip60)
-      dimension sn(ip31*ndir)
-      dimension vol(ip11),dt(ip11),r(ip11),pression(ip11),ztemp(ip11),cson(ip11)
-      dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-      dimension bceqt(ip41,neqt)
-      dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40), &
-                d0x(ip40),d0y(ip40),d0z(ip40), &
-                qtx(ip40),qty(ip40),qtz(ip40),roed(ip40), &
-                rod(ip40),roud(ip40),rovd(ip40),rowd(ip40)
-      dimension mu(ip12),mut(ip12),toxx(ip12),toxy(ip12),toxz(ip12), &
-                toyy(ip12),toyz(ip12),tozz(ip12),qcx(ip12),qcy(ip12), &
-                qcz(ip12),dist(ip12)
-      dimension mnpar(ip12),fgam(ip42),utau(ip42)
-      dimension cfke(ip13),ncin(ip41),mnc(ip43)
-      dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
-                tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
-      dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
-                tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
-                tm11(ip40),tm12(ip40),tm13(ip40)
-      dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
-      dimension cvi(ip21),cvj(ip21),cvk(ip21), &
-                cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-                cmuk1(ip21),cmuk2(ip21)
+    dimension x(ip21),y(ip21),z(ip21)
+    dimension v(ip11,ip60),vdual(ip11,ip60),vdual1(ip11,ip60), &
+         vdual2(ip11,ip60),ptdual(ip11,ip60)
+    dimension tnte1(ip11,ip60),tnte2(ip11,ip60), &
+         tnte3(ip11,ip60),tnte4vv(ip11,ip60)
+    dimension sn(ip31*ndir)
+    dimension vol(ip11),dt(ip11),r(ip11),pression(ip11),ztemp(ip11),cson(ip11)
+    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
+    dimension bceqt(ip41,neqt)
+    dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40), &
+         d0x(ip40),d0y(ip40),d0z(ip40), &
+         qtx(ip40),qty(ip40),qtz(ip40),roed(ip40), &
+         rod(ip40),roud(ip40),rovd(ip40),rowd(ip40)
+    dimension mu(ip12),mut(ip12),toxx(ip12),toxy(ip12),toxz(ip12), &
+         toyy(ip12),toyz(ip12),tozz(ip12),qcx(ip12),qcy(ip12), &
+         qcz(ip12),dist(ip12)
+    dimension mnpar(ip12),fgam(ip42),utau(ip42)
+    dimension cfke(ip13),ncin(ip41),mnc(ip43)
+    dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
+         tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
+    dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
+         tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
+         tm11(ip40),tm12(ip40),tm13(ip40)
+    dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
+    dimension cvi(ip21),cvj(ip21),cvk(ip21), &
+         cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
+         cmuk1(ip21),cmuk2(ip21)
 !
 !-----calcul de la metrique-------------------------------------------
 !
-      if(ncyc.eq.0) then
+    if(ncyc.eq.0) then
 !
-        call metric( &
-                 x,y,z,r,exs1,exs2, &
-                 sn,vol, &
-                 ncbd,mnc, &
-                 mnr,xnr,ynr,znr, &
-                 tn1,tn2,tn3)
+       call metric( &
+            x,y,z,r,exs1,exs2, &
+            sn,vol, &
+            ncbd,mnc, &
+            mnr,xnr,ynr,znr, &
+            tn1,tn2,tn3)
 
-      if((ischema.eq.2).or.(ischema.eq.3).or.(ischema.eq.4).or.(ischema.eq.6).or. &
-         (ischema.eq.8).or.(ischema.eq.11).or.(ischema.eq.13).or.(ischema.eq.15)) then
-       do l=1,lzx
-        do  img=1,lgx
-         lm=l+(img-1)*lz
-         call metric3( &
-                 lm,x,y,z, &
-                 cvi,cvj,cvk, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-         enddo
-        enddo
+       if((ischema.eq.2).or.(ischema.eq.3).or.(ischema.eq.4).or.(ischema.eq.6).or. &
+            (ischema.eq.8).or.(ischema.eq.11).or.(ischema.eq.13).or.(ischema.eq.15)) then
+          do l=1,lzx
+             do  img=1,lgx
+                lm=l+(img-1)*lz
+                call metric3( &
+                     lm,x,y,z, &
+                     cvi,cvj,cvk, &
+                     cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+             enddo
+          enddo
        endif
 !        do l=1,lzx
 !         do  img=1,lgx
@@ -363,114 +283,114 @@ integer :: ngx
 !
 !-----reperage des frontieres autres------------------------------------
 !
-      do mfb=1,mtbx
-       lbd(mfb)=1
-      enddo
+       do mfb=1,mtbx
+          lbd(mfb)=1
+       enddo
 !
-      do mfn=1,mtnx
-       mfb=nfbn(mfn)
-       lbd(mfb)=0
-      enddo
+       do mfn=1,mtnx
+          mfb=nfbn(mfn)
+          lbd(mfb)=0
+       enddo
 !
-      do mfc=1,mtcx
-       mfb=nfbc(mfc)
-       lbd(mfb)=0
-      enddo
+       do mfc=1,mtcx
+          mfb=nfbc(mfc)
+          lbd(mfb)=0
+       enddo
 !
-      do mfr=1,mtrx
-       mfb=nfbr(mfr)
-       lbd(mfb)=0
-      enddo
+       do mfr=1,mtrx
+          mfb=nfbr(mfr)
+          lbd(mfb)=0
+       enddo
 !
-      do mfb=1,mtbx
-       if(lbd(mfb).eq.1) then
-        mtax=mtax+1
-        nfba(mtax)=mfb
-       endif
-      enddo
+       do mfb=1,mtbx
+          if(lbd(mfb).eq.1) then
+             mtax=mtax+1
+             nfba(mtax)=mfb
+          endif
+       enddo
 !
-      endif  !fin test sur ncyc
+    endif  !fin test sur ncyc
 !
-      ngx=1
-      if(kfmg.ne.0.and.kfmg.ne.3) ngx=lgx
+    ngx=1
+    if(kfmg.ne.0.and.kfmg.ne.3) ngx=lgx
 !
 !-----boucle iterative sur les niveaux de grille-----------------
 !
-      do lev=1,ngx
+    do lev=1,ngx
        img = ngx - lev + 1
        mgl = img
        write(imp,*)' '
        write(imp,*)' ITERATION POUR LA GRILLE =',img
        write(imp,*)' Nombre de cycles requis =',ncycle(img)
 !
-      if(ncycle(img).ne.0)then
+       if(ncycle(img).ne.0)then
 !
-            call smg_num( &
-                 img,ncycle(img), &
-                 numt, &
-                 x,y,z,r,nxn,nyn,nzn, &
-                 sn, &
-                 vol, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-                 mu,mut,dist,cfke, &
-                 mnpar,fgam,utau, &
-                 v,dt, &
-                 ptdual,vdual,vdual1,vdual2, &
-                 tnte1,tnte2,tnte3,tnte4vv, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10, &
-                 tm11,tm12,tm13, &
-                 ncin, &
-                 mnc, &
-                 ncbd,mnr,xnr,ynr,znr, &
-                 bceqt, &
-                 rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,pres,tp, &
-                 rod,roud,rovd,rowd,roed, &
-                 pression,ztemp,cson, &
-                 cvi,cvj,cvk, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+          call smg_num( &
+               img,ncycle(img), &
+               numt, &
+               x,y,z,r,nxn,nyn,nzn, &
+               sn, &
+               vol, &
+               tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+               mu,mut,dist,cfke, &
+               mnpar,fgam,utau, &
+               v,dt, &
+               ptdual,vdual,vdual1,vdual2, &
+               tnte1,tnte2,tnte3,tnte4vv, &
+               toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+               tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10, &
+               tm11,tm12,tm13, &
+               ncin, &
+               mnc, &
+               ncbd,mnr,xnr,ynr,znr, &
+               bceqt, &
+               rpi,rti,d0x,d0y,d0z,qtx,qty,qtz,pres,tp, &
+               rod,roud,rovd,rowd,roed, &
+               pression,ztemp,cson, &
+               cvi,cvj,cvk, &
+               cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-      endif
+       endif
 !
 !     mise a jour de variables a l'interface du raccord
 !     -------------------------------------------------
 !
-      do mfc=1,mtcx
-       lbd(mfc)=nfbc(mfc)+(img-1)*mtb
-      enddo
-      nbd=mtcx
-        call rfvc( & 
-              v,ncbd,mnc, &
-              pression,ztemp,cson)
+       do mfc=1,mtcx
+          lbd(mfc)=nfbc(mfc)+(img-1)*mtb
+       enddo
+       nbd=mtcx
+       call rfvc( & 
+            v,ncbd,mnc, &
+            pression,ztemp,cson)
 !            call rfvc(v,ncbd,mnc)
 !
-      do mfr=1,mtrx
-       lbd(mfr)=nfbr(mfr)+(img-1)*mtb
-      enddo
-      nbd=mtrx
-          call rfvr( &
-                 v, &
-                 ncbd,mnr,xnr,ynr,znr)
+       do mfr=1,mtrx
+          lbd(mfr)=nfbr(mfr)+(img-1)*mtb
+       enddo
+       nbd=mtrx
+       call rfvr( &
+            v, &
+            ncbd,mnr,xnr,ynr,znr)
 !
 !     cell-to-node projection of the variables at level "img"
 !
-            call smg_cn( &
-                 img, &
-                 vol,tnte2(1,1), &
-                 v,tnte4vv)
+       call smg_cn( &
+            img, &
+            vol,tnte2(1,1), &
+            v,tnte4vv)
 !
 !     node-to-cell transfer of the variables from level "img" -->"img-1"
 !
-      if(lev.lt.ngx) then
+       if(lev.lt.ngx) then
 !
-            call smg_cf( &
-                 img,img-1, &
-                 vol, &
-                 tnte4vv,v)
+          call smg_cf( &
+               img,img-1, &
+               vol, &
+               tnte4vv,v)
 !
-      endif
-      enddo !fin des iterations
+       endif
+    enddo !fin des iterations
 !
-      return
-      end subroutine
-end module
+    return
+  end subroutine cpfw
+end module mod_cpfw
