@@ -187,8 +187,8 @@ double precision :: ww
 !
       ind1 = indc(i1m1,j1m1,k1m1)
       ind2 = indc(i2+1,j2+1,k2+1)
-!$OMP PARALLEL 
-!$OMP DO 
+!!!$OMP PARALLEL 
+!!!$OMP DO 
       do n=ind1,ind2
        m=n-n0c
        d(n,1)=0.
@@ -213,12 +213,12 @@ double precision :: ww
        coefv(3,m)=0.
        rv(m)=0.
       enddo
-!$OMP END DO 
+!!!$OMP END DO 
 !
 !------rayon spectral visqueux et coef diagonal------------------------------
 !
       do k=k1,k2m1
-!$OMP DO PRIVATE(j,n,m,ind1,ind2)
+!!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
        do j=j1,j2m1
         ind1 = indc(i1  ,j,k)
         ind2 = indc(i2m1,j,k)
@@ -231,18 +231,18 @@ double precision :: ww
          coefb(m)=0.
         enddo
        enddo
-!$OMP END DO
+!!!$OMP END DO
       enddo
 !
 !-----remplissage du coefficient diagonal par direction------------------
 !
-!$OMP SINGLE
+!!!$OMP SINGLE
        kdir=1
        ninc=nci
-!$OMP END SINGLE
+!!!$OMP END SINGLE
 !
        do k=k1,k2m1
-!$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,a2,beta2e,beta2)
+!!!$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,a2,beta2)
         do j=j1,j2m1
          ind1 = indc(i1,j,k)
          ind2 = indc(i2,j,k)
@@ -262,16 +262,16 @@ double precision :: ww
           coefv(kdir,m)=(rv(m)+rv(m-ninc))*cnds/(vol(n)+vol(n-ninc))
          enddo
         enddo
-!$OMP END DO
+!!!$OMP END DO
        enddo
 !
-!$OMP SINGLE
+!!!$OMP SINGLE
        kdir=2
        ninc=ncj
-!$OMP END SINGLE
+!!!$OMP END SINGLE
 !
        do k=k1,k2m1
-!$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,a2,beta2e,beta2)
+!!!$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,a2,beta2)
         do j=j1,j2
          ind1 = indc(i1  ,j,k)
          ind2 = indc(i2m1,j,k)
@@ -291,11 +291,11 @@ double precision :: ww
           coefv(kdir,m)=(rv(m)+rv(m-ninc))*cnds/(vol(n)+vol(n-ninc))
          enddo
         enddo
-!$OMP END DO
+!!!$OMP END DO
        enddo
 !
        do k=k1,k2m1
-!$OMP DO PRIVATE(j,n,m,ind1,ind2)
+!!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
         do j=j1,j2m1
          ind1 = indc(i1  ,j,k)
          ind2 = indc(i2m1,j,k)
@@ -308,7 +308,7 @@ double precision :: ww
                      +coefe(2,m) + coefe(2,m+ncj)
          enddo
         enddo
-!$OMP END DO
+!!!$OMP END DO
        enddo
 !
 !-----calcul instationnaire avec dts-------------------------------------
@@ -316,7 +316,7 @@ double precision :: ww
        if(kfmg.eq.3) then
         fact=1.5
         do k=k1,k2m1
-!$OMP DO PRIVATE(j,n,m,ind1,ind2)
+!!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
          do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
@@ -326,7 +326,7 @@ double precision :: ww
            coefb(m)   =coefb(m)    + fact*vol(n)/dt1min
           enddo
          enddo
-!$OMP END DO
+!!!$OMP END DO
         enddo
        endif
 !
@@ -339,7 +339,7 @@ double precision :: ww
 !-----residu explicite------------------------------------------
 !
         do k=k1,k2m1
-!$OMP DO PRIVATE(j,n,m,ind1,ind2)
+!!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
          do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
@@ -352,11 +352,12 @@ double precision :: ww
            d2w5(m)=-u(n,5)
           enddo
          enddo
-!$OMP END DO
+!!!$OMP END DO
         enddo
 !
        do k=k1,k2m1
-!$OMP DO PRIVATE(j,n,m,ind1,ind2,ti1,ti2,ti3,ti5,tj1,tj2,tj3,tj5,cndsi,cndsj,uu,vv,q2,a2,beta2,get,ge,coefa,gd,dw11,dw12,dw13,dw15,dw21,dw22,dw23,dw25,precon)
+!!!$OMP DO PRIVATE(j,n,m,ind1,ind2,ti1,ti2,ti3,ti5,tj1,tj2,tj3,tj5,cndsi,cndsj,uu, &
+!!!$OMP vv,q2,a2,beta2,get,ge,coefa,gd,dw11,dw12,dw13,dw15,dw21,dw22,dw23,dw25,precon)
         do j=j1,j2m1
          ind1 = indc(i1  ,j,k)
          ind2 = indc(i2m1,j,k)
@@ -457,7 +458,7 @@ double precision :: ww
           d2w5(m)=dw15 + dw25 +get*precon
          enddo
         enddo
-!$OMP END DO
+!!!$OMP END DO
        enddo
 !
 !*************************************************************************
@@ -466,7 +467,7 @@ double precision :: ww
 !    Calcul des increments de flux
 !
        do k=k1,k2m1
-!$OMP DO PRIVATE(j,n,m,ind1,ind2,wi1,wi2,wi3,wi4,wi5,ui,vi,wi,pres,fxx,fxy,fxz,fyy,fyz,fzz,fex,fey,fez)
+!!!$OMP DO PRIVATE(j,n,m,ind1,ind2,wi1,wi2,wi3,wi4,wi5,ui,vi,wi,pres,fxx,fxy,fxz,fyy,fyz,fzz,fex,fey,fez)
         do j=j1,j2m1
          ind1 = indc(i1  ,j,k)
          ind2 = indc(i2m1,j,k)
@@ -509,7 +510,7 @@ double precision :: ww
           dfez(m)=wi*(wi5+pres-pinfl) -fez
          enddo
         enddo
-!$OMP END DO
+!!!$OMP END DO
        enddo
 !
       enddo  !fin boucle sous-iterations
@@ -519,7 +520,7 @@ double precision :: ww
 !*************************************************************************
 !
        do k=k1,k2m1
-!$OMP DO PRIVATE(j,n,ind1,ind2)
+!!!$OMP DO PRIVATE(j,n,ind1,ind2)
         do j=j1,j2m1
          ind1 = indc(i1  ,j,k)
          ind2 = indc(i2m1,j,k)
@@ -531,9 +532,9 @@ double precision :: ww
           v(n,5)=v(n,5)+d(n,5)
         enddo
        enddo
-!$OMP END DO
+!!!$OMP END DO
       enddo
-!$OMP END PARALLEL
+!!!$OMP END PARALLEL
 
 DEALLOCATE(coefe,coefv,coefdiag,coefb,d2w1,d2w2,d2w3,d2w4,d2w5)
 

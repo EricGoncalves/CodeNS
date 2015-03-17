@@ -57,7 +57,7 @@ integer :: ni
 !
       mt=mmb(mfb)
 !
-!DEC$ IVDEP
+!!$OMP SIMD
       do m=1,mt
        mb=mpb(mfb)+m
        nc=ncbd(mb)

@@ -168,7 +168,7 @@ double precision :: smoy
 !
       do k=k1,k2m1
        do j=j1,j2m1
-!DEC$ IVDEP
+!!$OMP SIMD
         do i=i1,i2
          n=indn(i,j,k)
          m=n-n0n
@@ -181,7 +181,7 @@ double precision :: smoy
 !
       do k=k1,k2m1
        do j=j1,j2
-!DEC$ IVDEP
+!!$OMP SIMD
         do i=i1,i2m1
          n=indn(i,j,k)
          m=n-n0n
@@ -194,7 +194,7 @@ double precision :: smoy
 !
       do k=k1,k2
        do j=j1,j2m1
-!DEC$ IVDEP
+!!$OMP SIMD
         do i=i1,i2m1
          n=indn(i,j,k)
          m=n-n0n
@@ -209,7 +209,7 @@ double precision :: smoy
        do j=j1,j2m1
         mn=indn(i1-1,j,k)-n0n
         mc=indc(i1-1,j,k)-n0c
-!DEC$ IVDEP
+!!$OMP SIMD
         do i=i1,i2m1
          mn=mn+nci
          mc=mc+nci

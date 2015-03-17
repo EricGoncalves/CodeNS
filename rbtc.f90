@@ -100,7 +100,7 @@ double precision :: tzzr
       sr=-sin(real(mper(mfb))*protat)
       cr= cos(real(mper(mfb))*protat)
 !
-!DEC$ IVDEP
+!!$OMP SIMD
       do m=1,mt
       mc =mpc(mfb)+m
       nc =mnc(mc)

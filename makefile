@@ -168,8 +168,8 @@ CMD =	 solver_air
 #FFLAGS =  -O2   -fdefault-double-8 -fdefault-real-8  -p -fno-inline-functions
 #FFLAGS = -r8 -fast #-openmp -parallel -threads 
 #FFLAGS = -r8 -O2 -g#-openmp -parallel -threads 
-#FFLAGS = -r8 -fast #-openmp -parallel -threads 
-FFLAGS = -r8 -O0 -g -traceback  -C -debug all -warn all,nounused -fpe0 -ftrapuv -nozero -fstack-protector-all  -init=snan -WB -fp-stack-check -u -gen-interfaces # -stand f08 -openmp -parallel -threads -warn nodeclarations
+FFLAGS = -r8 -fast -openmp -parallel -threads 
+#FFLAGS = -r8 -O0 -g -traceback  -C -debug all -warn all,nounused -fpe0 -ftrapuv -nozero -fstack-protector-all  -init=snan -WB -fp-stack-check -u -gen-interfaces # -stand f08 -openmp -parallel -threads -warn nodeclarations
 
 # Lines from here on down should not need to be changed.
 #

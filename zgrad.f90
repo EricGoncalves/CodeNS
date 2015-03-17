@@ -231,7 +231,7 @@ double precision :: vols
        do j=j1,j2m1
         ind1 = ind(i1  ,j,k)
         ind2 = ind(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do n=ind1,ind2
          m=n-n0
          dvxx(m)=dvxx(m)-sn(m,3,1)*(vx(m)+vx(m-nck))
@@ -247,7 +247,7 @@ double precision :: vols
          dty(m)=dty(m)-sn(m,3,2)*(temp(n)+temp(n-nck))
          dtz(m)=dtz(m)-sn(m,3,3)*(temp(n)+temp(n-nck))
         enddo
-!DEC$ IVDEP
+!!$OMP SIMD
         do n=ind1,ind2
          m=n-n0
          dvxx(m-nck)=dvxx(m-nck)+sn(m,3,1)*(vx(m)+vx(m-nck))

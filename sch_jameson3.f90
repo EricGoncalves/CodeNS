@@ -217,7 +217,7 @@ double precision :: sk4
        do j=j1,j2m1
         ind1 = indc(i1+2,j,k)
         ind2 = indc(i2-2,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do n=ind1,ind2
          m=n-n0c
          n2=n-2*ninc
@@ -254,7 +254,7 @@ double precision :: sk4
       do k=k1,k2m1
        ind1 = indc(i1p1,j1  ,k)
        ind2 = indc(i1p1,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2,ncj
          m=n-n0c
          si0= (v(n,2)+v(n-ninc,2))*sn(m,kdir,1) &
@@ -288,7 +288,7 @@ double precision :: sk4
       do k=k1,k2m1
        ind1 = indc(i2m1,j1  ,k)
        ind2 = indc(i2m1,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2,ncj
          m=n-n0c
          si0= (v(n,2)+v(n-ninc,2))*sn(m,kdir,1) &
@@ -322,7 +322,7 @@ double precision :: sk4
       do k=k1,k2m1
        ind1 = indc(i1,j1  ,k)
        ind2 = indc(i1,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2,ncj
         m=n-n0c
         si0= 2*v(n-ninc,2)*sn(m,kdir,1) &
@@ -351,7 +351,7 @@ double precision :: sk4
       do k=k1,k2m1
        ind1 = indc(i2,j1  ,k)
        ind2 = indc(i2,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2,ncj
         m=n-n0c
         si0= 2*v(n,2)*sn(m,kdir,1) &
@@ -386,7 +386,7 @@ double precision :: sk4
        do j=j1+2,j2-2
         ind1 = indc(i1  ,j,k)
         ind2 = indc(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do n=ind1,ind2
          m=n-n0c
          n2=n-2*ninc
@@ -423,7 +423,7 @@ double precision :: sk4
       do k=k1,k2m1
        ind1 = indc(i1  ,j1p1,k)
        ind2 = indc(i2m1,j1p1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
          m=n-n0c
          sj0= (v(n,2)+v(n-ninc,2))*sn(m,kdir,1) &
@@ -457,7 +457,7 @@ double precision :: sk4
       do k=k1,k2m1
        ind1 = indc(i1  ,j2m1,k)
        ind2 = indc(i2m1,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
          m=n-n0c
          sj0= (v(n,2)+v(n-ninc,2))*sn(m,kdir,1) &
@@ -491,7 +491,7 @@ double precision :: sk4
       do k=k1,k2m1
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
         m=n-n0c
         sj0= 2*v(n-ninc,2)*sn(m,kdir,1) &
@@ -520,7 +520,7 @@ double precision :: sk4
       do k=k1,k2m1
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
         m=n-n0c
         sj0= 2*v(n,2)*sn(m,kdir,1) &
@@ -556,7 +556,7 @@ double precision :: sk4
        do j=j1,j2m1
         ind1 = indc(i1  ,j,k)
         ind2 = indc(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do n=ind1,ind2
          m=n-n0c
          n2=n-2*ninc
@@ -593,7 +593,7 @@ double precision :: sk4
       do j=j1,j2m1
        ind1 = indc(i1  ,j,k1p1)
        ind2 = indc(i2m1,j,k1p1)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
         m=n-n0c
         sk0= (v(n,2)+v(n-ninc,2))*sn(m,kdir,1) &
@@ -627,7 +627,7 @@ double precision :: sk4
       do j=j1,j2m1
        ind1 = indc(i1  ,j,k2m1)
        ind2 = indc(i2m1,j,k2m1)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
         m=n-n0c
         sk0= (v(n,2)+v(n-ninc,2))*sn(m,kdir,1) &
@@ -661,7 +661,7 @@ double precision :: sk4
       do j=j1,j2m1
        ind1 = indc(i1  ,j,k1)
        ind2 = indc(i2m1,j,k1)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
         m=n-n0c
         sk0= 2*v(n-ninc,2)*sn(m,kdir,1) &
@@ -690,7 +690,7 @@ double precision :: sk4
       do j=j1,j2m1
        ind1 = indc(i1  ,j,k2)
        ind2 = indc(i2m1,j,k2)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
         m=n-n0c
         sk0= 2*v(n,2)*sn(m,kdir,1) &

@@ -168,7 +168,7 @@ double precision :: w
        do j = j1,j2m1
         ind1 = ind(i1  ,j,k)
         ind2 = ind(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do m = ind1,ind2
          n = m+n0
          n1 = n-ninc
@@ -182,7 +182,7 @@ double precision :: w
        do j = j1,j2m1
         ind1 = ind(i1,j,k)
         ind2 = ind(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do m = ind1,ind2
          n=m+n0
          m1=m-ninc
@@ -217,7 +217,7 @@ double precision :: w
        do j = j1,j2
         ind1 = ind(i1  ,j,k)
         ind2 = ind(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do m = ind1,ind2
          n       = m+n0
          n1      = n-ninc
@@ -233,7 +233,7 @@ double precision :: w
         is=-is
         ind1 = ind(i1,  j,k)
         ind2 = ind(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do m = ind1,ind2
          del6(m)=del6(m+is*ninc)
          del7(m)=del7(m+is*ninc)
@@ -245,7 +245,7 @@ double precision :: w
        do j = j1,j2
         ind1 = ind(i1  ,j,k)
         ind2 = ind(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do m = ind1,ind2
          n       = m+n0
          m1      = m-ninc
@@ -280,7 +280,7 @@ double precision :: w
        do j = j1,j2
         ind1 = ind(i1,j,k)
         ind2 = ind(i2,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do m = ind1,ind2
          n       = m+n0
          n1      = n-ninc
@@ -296,7 +296,7 @@ double precision :: w
        do k = k1,k2m1
         ind1 = ind(i,j1  ,k)
         ind2 = ind(i,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do m = ind1,ind2,ncj
          del6(m)=del6(m+is*ninc)
          del7(m)=del7(m+is*ninc)
@@ -308,7 +308,7 @@ double precision :: w
        do j = j1,j2m1
         ind1 = ind(i1,j,k)
         ind2 = ind(i2,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do m = ind1,ind2
          n       = m+n0
          m1      = m-ninc

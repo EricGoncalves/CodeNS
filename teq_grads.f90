@@ -275,7 +275,7 @@ double precision :: vols
          do k=k1,k2m1
            ind1 = indc(i1,j1  ,k)
            ind2 = indc(i1,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
            do n=ind1,ind2,ncj
              m=n-n0c
              dsdx(m)=dsdx(m)-sn(m,kdir,1)*2*s(m-ninc)
@@ -287,7 +287,7 @@ double precision :: vols
          do k=k1,k2m1
            ind1 = indc(i2,j1  ,k)
            ind2 = indc(i2,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
            do n=ind1,ind2,ncj
              m=n-n0c
              dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*2*s(m)
@@ -449,7 +449,7 @@ double precision :: vols
          do k=k1,k2m1
             ind1 = indc(i1,j1  ,k)
             ind2 = indc(i1,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
             do n=ind1,ind2,ncj
                m=n-n0c
                dsdx(m)=dsdx(m)-sn(m,kdir,1)*2*s(m-ninc)
@@ -461,7 +461,7 @@ double precision :: vols
          do k=k1,k2m1
             ind1 = indc(i2,j1  ,k)
             ind2 = indc(i2,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
             do n=ind1,ind2,ncj
                m=n-n0c
                dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*2*s(m)

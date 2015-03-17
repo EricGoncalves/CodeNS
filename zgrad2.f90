@@ -273,7 +273,7 @@ double precision :: vols
        do j=j1,j2m1
         ind1 = ind(i1  ,j,k)
         ind2 = ind(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do n=ind1,ind2
          m=n-n0
          skxx=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,1)
@@ -321,7 +321,7 @@ double precision :: vols
       do j=j1,j2m1
        ind1 = ind(i1  ,j,k1)
        ind2 = ind(i2m1,j,k1)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
         m=n-n0
         dvxx(m)=dvxx(m)-sn(m,3,1)*2*vx(m-nck)
@@ -342,7 +342,7 @@ double precision :: vols
       do j=j1,j2m1
        ind1 = ind(i1  ,j,k2)
        ind2 = ind(i2m1,j,k2)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
         m=n-n0
         dvxx(m-nck)=dvxx(m-nck)+sn(m,3,1)*2*vx(m)
@@ -370,7 +370,7 @@ double precision :: vols
        do k=k1,k2m1
         ind1 = ind(i1  ,j,k)
         ind2 = ind(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do n=ind1,ind2
          m=n-n0
          sjxx=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,1)
@@ -418,7 +418,7 @@ double precision :: vols
       do k=k1,k2m1
        ind1 = ind(i1  ,j1,k)
        ind2 = ind(i2m1,j1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
         m=n-n0
         dvxx(m)=dvxx(m)-sn(m,2,1)*2*vx(m-ncj)
@@ -439,7 +439,7 @@ double precision :: vols
       do k=k1,k2m1
        ind1 = ind(i1  ,j2,k)
        ind2 = ind(i2m1,j2,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2
         m=n-n0
         dvxx(m-ncj)=dvxx(m-ncj)+sn(m,2,1)*2*vx(m)
@@ -467,7 +467,7 @@ double precision :: vols
        do j=j1,j2m1
         ind1 = ind(i1p1,j,k)
         ind2 = ind(i2m1,j,k)
-!DEC$ IVDEP
+!!$OMP SIMD
         do n=ind1,ind2
          m=n-n0
          sixx=(cmui1(m)*vx(m)+cmui2(m)*vx(m-nci))*sn(m,1,1)
@@ -515,7 +515,7 @@ double precision :: vols
       do k=k1,k2m1
        ind1 = ind(i1,j1  ,k)
        ind2 = ind(i1,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2,ncj
         m=n-n0
         dvxx(m)=dvxx(m)-sn(m,1,1)*2*vx(m-nci)
@@ -536,7 +536,7 @@ double precision :: vols
       do k=k1,k2m1
        ind1 = ind(i2,j1  ,k)
        ind2 = ind(i2,j2m1,k)
-!DEC$ IVDEP
+!!$OMP SIMD
        do n=ind1,ind2,ncj
         m=n-n0
         dvxx(m-nci)=dvxx(m-nci)+sn(m,1,1)*2*vx(m)

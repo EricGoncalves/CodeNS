@@ -33,7 +33,7 @@ integer :: nd
          mfb=lbd(mf)
          mt=mmb(mfb)
 !
-!DEC$ IVDEP
+!!$OMP SIMD
          do m=1,mt
             mc=mpc(mfb)+m
             nc=mnc(mc)

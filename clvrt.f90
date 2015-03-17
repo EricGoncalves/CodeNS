@@ -168,7 +168,7 @@ double precision :: vrtz
         vrtbet=sqrt(1.-vrtmac*vrtmac)
       endif
 !
-!DEC$ IVDEP
+!!$OMP SIMD
       do m=1,mt
 !
       qxd0=roud(m)/rod(m)
