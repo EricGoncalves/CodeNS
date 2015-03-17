@@ -25,13 +25,13 @@ contains
     use mod_met_laplaciens
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,  i2p1,    id,   inc,  indc
-    integer          ::      j,    j1,  j1m1,  j1p1,    j2
-    integer          ::   j2m1,  j2p1,    jd,     k,    k1
-    integer          ::   k1m1,  k1p1,    k2,  k2m1,  k2p1
-    integer          ::     kd,     l,lgsnlt,     m,     n
-    integer          ::    n0c,   nci,   ncj,   nck,   nid
-    integer          ::   nijd,   njd,  npsn
+    integer          ::   i2m1,  i2p1,    id,     j,    j1
+    integer          ::   j1m1,  j1p1,    j2,  j2m1,  j2p1
+    integer          ::     jd,     k,    k1,  k1m1,  k1p1
+    integer          ::     k2,  k2m1,  k2p1,    kd,     l
+    integer          :: lgsnlt,     m,     n,   n0c,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,   njd
+    integer          ::   npsn
     double precision ::    arg,     b,  bare,  bark,  c1f1
     double precision ::   c2f2,  cc43,  cfke, cmui1, cmui2
     double precision ::  cmuj1, cmuj2, cmuk1, cmuk2,     d
@@ -58,8 +58,8 @@ contains
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
          cmuk1(ip21),cmuk2(ip21)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -182,5 +182,16 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine met_smkesas
 end module mod_met_smkesas

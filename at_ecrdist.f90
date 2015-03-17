@@ -17,11 +17,10 @@ contains
     use sortiefichier
     use maillage
     implicit none
-    integer          ::     i,   i1,   i2, i2m1,  ind
-    integer          ::   iwd,    j,   j1,   j2, j2m1
-    integer          ::     k,   k1,   k2, k2m1,    l
-    integer          ::    l0,mnpar,   n0,  nid, nijd
-    integer          ::   njd
+    integer          ::     i,   i1,   i2, i2m1,  iwd
+    integer          ::     j,   j1,   j2, j2m1,    k
+    integer          ::    k1,   k2, k2m1,    l,   l0
+    integer          :: mnpar,   n0,  nid, nijd,  njd
     double precision :: dist
 !
 !-----------------------------------------------------------------------
@@ -29,7 +28,7 @@ contains
     character(len=8) :: nomfich
     dimension dist(ip12),mnpar(ip12)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     iwd=98
     if(l0.eq.0) then
@@ -121,6 +120,12 @@ contains
     write(imp,'("!!!at_ecrdist: erreur ouverture fichier=fdist-aux")')
     stop
 !
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine at_ecrdist
 
 

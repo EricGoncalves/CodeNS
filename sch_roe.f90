@@ -29,13 +29,13 @@ contains
     use schemanum
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,   inc,  ind1,  ind2
-    integer          ::   indc,ityprk,     j,    j1,  j1m1
-    integer          ::   j1p1,    j2,  j2m1,    jd,     k
-    integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
-    integer          ::     kd,  kdir,lgsnlt,    lm,     m
-    integer          ::      n,   n0c,    n1,   nci,   ncj
-    integer          ::    nck,   nid,  nijd,  ninc,   njd
+    integer          ::   i2m1,    id,  ind1,  ind2,ityprk
+    integer          ::      j,    j1,  j1m1,  j1p1,    j2
+    integer          ::   j2m1,    jd,     k,    k1,  k1m1
+    integer          ::   k1p1,    k2,  k2m1,    kd,  kdir
+    integer          :: lgsnlt,    lm,     m,     n,   n0c
+    integer          ::     n1,   nci,   ncj,   nck,   nid
+    integer          ::   nijd,  ninc,   njd
     double precision ::      a,    al,    am,  am2i,    ar
     double precision ::   cnds,  dfex,  dfey,  dfez,  dfxx
     double precision ::   dfxy,  dfxz,  dfyy,  dfyz,  dfzz
@@ -55,22 +55,22 @@ contains
     double precision ::    p25,   p31,   p32,   p33,   p34
     double precision ::    p35,   p41,   p42,   p43,   p44
     double precision ::    p45,   p51,   p52,   p53,   p54
-    double precision ::    p55,   phi,    pl,   prr,    ps
-    double precision ::    q11,   q12,   q13,   q14,   q15
-    double precision ::    q21,   q22,   q23,   q24,   q25
-    double precision ::    q2l,   q2r,   q31,   q32,   q33
-    double precision ::    q34,   q35,   q41,   q42,   q43
-    double precision ::    q44,   q45,   q51,   q52,   q53
-    double precision ::    q54,   q55,   qcx,   qcy,   qcz
-    double precision :: rhoami,rhoiam,  rhol,  rhom, rhomi
-    double precision ::   rhor,   si1,   si2,   si3,   si4
-    double precision ::    si5,   sj1,   sj2,   sj3,   sj4
-    double precision ::    sj5,   sk1,   sk2,   sk3,   sk4
-    double precision ::    sk5,    sn,  toxx,  toxy,  toxz
-    double precision ::   toyy,  toyz,  tozz,     u,    ul
-    double precision ::     um,    ur,     v,    v1,    v4
-    double precision ::     v5, vitm2,    vl,    vm,    vn
-    double precision ::     vr,    wl,    wm,    wr
+    double precision ::    p55,    pl,   prr,    ps,   q11
+    double precision ::    q12,   q13,   q14,   q15,   q21
+    double precision ::    q22,   q23,   q24,   q25,   q2l
+    double precision ::    q2r,   q31,   q32,   q33,   q34
+    double precision ::    q35,   q41,   q42,   q43,   q44
+    double precision ::    q45,   q51,   q52,   q53,   q54
+    double precision ::    q55,   qcx,   qcy,   qcz,rhoami
+    double precision :: rhoiam,  rhol,  rhom, rhomi,  rhor
+    double precision ::    si1,   si2,   si3,   si4,   si5
+    double precision ::    sj1,   sj2,   sj3,   sj4,   sj5
+    double precision ::    sk1,   sk2,   sk3,   sk4,   sk5
+    double precision ::     sn,  toxx,  toxy,  toxz,  toyy
+    double precision ::   toyz,  tozz,     u,    ul,    um
+    double precision ::     ur,     v,    v1,    v4,    v5
+    double precision ::  vitm2,    vl,    vm,    vn,    vr
+    double precision ::     wl,    wm,    wr
 !
 !-----------------------------------------------------------------------
 !
@@ -84,13 +84,6 @@ contains
     dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
          rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
-
-!      phi(a)=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
-    phi(a)=max(0.,min(1.,a))  !minmod
-!     phi(a)=max(0.,(a+a**2)/(1.+a**2))  !van albada
-!      phi(a)=max(0.,min(1.,2.*a),min(2.,a)) !superbee
 
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE   :: r1,r2,r3,r4,r5
     ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))
@@ -1499,5 +1492,25 @@ contains
     DEALLOCATE(r1,r2,r3,r4,r5)
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
+!      phi(a)=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
+
+!     phi(a)=max(0.,(a+a**2)/(1.+a**2))  !van albada
+!      phi(a)=max(0.,min(1.,2.*a),min(2.,a)) !superbee
+    function    phi(a)
+      implicit none
+      double precision ::   a,phi
+      phi=max(0.,min(1.,a))  !minmod
+    end function phi
   end subroutine sch_roe
 end module mod_sch_roe

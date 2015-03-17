@@ -18,17 +18,17 @@ contains
     use maillage
     implicit none
     integer          ::      i,    i1,    i2,  i2m1,  ind1
-    integer          ::   ind2,  indc,itypdf,     j,    j1
-    integer          ::     j2,  j2m1,     k,    k1,    k2
-    integer          ::   k2m1,    lm,     m,     n,   n0c
-    integer          ::    nid,  nijd,   njd
+    integer          ::   ind2,itypdf,     j,    j1,    j2
+    integer          ::   j2m1,     k,    k1,    k2,  k2m1
+    integer          ::     lm,     m,     n,   n0c,   nid
+    integer          ::   nijd,   njd
     double precision ::  df,dfi
 !
 !-----------------------------------------------------------------------
 !
     dimension df(ip11,ip60),dfi(ip11,ip60)
 !
-    indc(i,j,k)=1+(i-id1(lm))+(j-jd1(lm))*nid +(k-kd1(lm))*nijd
+
 !
     n0c=npc(lm)
     i1 =ii1(lm)
@@ -73,5 +73,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=1+(i-id1(lm))+(j-jd1(lm))*nid +(k-kd1(lm))*nijd
+    end function indc
   end subroutine smg_res
 end module mod_smg_res

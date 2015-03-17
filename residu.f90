@@ -72,11 +72,11 @@ contains
     use constantes
     implicit none
     integer          ::     i,   i1,   i2, i2m1, icyc
-    integer          :: idumx,  img,  ind,    j,   j1
-    integer          ::    j2, j2m1,jdumx,    k,   k1
-    integer          ::    k2, k2m1,kdumx,    l,    m
-    integer          ::     n,   n0,   ni,  nid, nijd
-    integer          ::    nj,  njd,   nk, nmax
+    integer          :: idumx,  img,    j,   j1,   j2
+    integer          ::  j2m1,jdumx,    k,   k1,   k2
+    integer          ::  k2m1,kdumx,    l,    m,    n
+    integer          ::    n0,   ni,  nid, nijd,   nj
+    integer          ::   njd,   nk, nmax
     double precision ::  coef,   dt,dumax,dumy1,dumy2
     double precision ::  res1, res2, res3, res4, res5
     double precision ::  res6, res7,    s,    u,    v
@@ -92,7 +92,7 @@ contains
     dimension res1(ip00),res2(ip00),res3(ip00),res4(ip00), &
          res5(ip00),res6(ip00),res7(ip00)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0=npc(l)
     i1=ii1(l)
@@ -259,5 +259,11 @@ contains
     endif
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine residu
 end module mod_residu

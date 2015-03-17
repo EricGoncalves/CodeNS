@@ -65,14 +65,14 @@ contains
     use boundary
     use mod_idirch
     implicit none
-    integer          ::     id,   inc,  incf,  incm, isens
-    integer          ::     jd,    kd,     l,lgsnlt,     m
-    integer          ::     mb,   mfb,    mn, mnode,    mt
-    integer          ::    n0c,   n0n,    nc, nc12f,  nc1f
-    integer          ::   nc2f,  ncbd,   nci,  ncij, ncijk
-    integer          ::   ncin,   ncj,  ncjk,   nck,  ncki
-    integer          ::     nd,   nid,  nijd, nindf,nindfa
-    integer          ::    njd,   nlc,   nln,  nlnf,    nn
+    integer          ::     id,  incf,  incm, isens,    jd
+    integer          ::     kd,     l,lgsnlt,     m,    mb
+    integer          ::    mfb,    mn, mnode,    mt,   n0c
+    integer          ::    n0n,    nc, nc12f,  nc1f,  nc2f
+    integer          ::   ncbd,   nci,  ncij, ncijk,  ncin
+    integer          ::    ncj,  ncjk,   nck,  ncki,    nd
+    integer          ::    nid,  nijd, nindf,nindfa,   njd
+    integer          ::    nlc,   nln,  nlnf,    nn
     double precision ::      a2s,    coef,    cson,      dp,      ds
     double precision ::      dsn,      dx,      dy,      dz,      ec
     double precision ::      ecs,     ent,    ents,      gm,     gm1
@@ -100,7 +100,7 @@ contains
 !
 !.....calcul des indices
 !
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
 !
 !.....info frontiere: nb. pts., n0 dom.
 !
@@ -370,5 +370,11 @@ contains
     enddo
 !
     return
+  contains
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine clglis
 end module mod_clglis

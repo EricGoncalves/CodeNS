@@ -27,13 +27,13 @@ contains
     use schemanum
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          ::     id,   inc,  ind1,  ind2,  indc
-    integer          :: ityprk,     j,    j1,  j1m1,    j2
-    integer          ::   j2m1,    jd,     k,    k1,  k1m1
-    integer          ::     k2,  k2m1,    kd,  kdir,lgsnlt
-    integer          ::     lm,   lmx,    ls,     m,     n
-    integer          ::    n0c,   nci,   ncj,   nck,   nid
-    integer          ::   nijd,  ninc,   njd
+    integer          ::     id,  ind1,  ind2,ityprk,     j
+    integer          ::     j1,  j1m1,    j2,  j2m1,    jd
+    integer          ::      k,    k1,  k1m1,    k2,  k2m1
+    integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
+    integer          ::     ls,     m,     n,   n0c,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,  ninc
+    integer          ::    njd
     double precision ::       cc,    cnds,coefdiag,    cson,       d
     double precision ::     dfex,    dfey,    dfez,    dfxx,    dfxy
     double precision ::     dfxz,    dfyy,    dfyz,    dfzz,      dt
@@ -56,8 +56,8 @@ contains
     dimension dfxx(ip00),dfxy(ip00),dfxz(ip00),dfex(ip00),coefdiag(ip00), &
          dfyy(ip00),dfyz(ip00),dfey(ip00),dfzz(ip00),dfez(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 
     DOUBLE PRECISION,DIMENSION(:,:),ALLOCATABLE :: coefe
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE   :: d2w1,d2w2,d2w3,d2w4,d2w5
@@ -540,5 +540,16 @@ contains
     DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine implimf_eu
 end module mod_implimf_eu

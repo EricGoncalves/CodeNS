@@ -23,12 +23,12 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-    integer          ::    id,  inc,   jd,   kd,    l
-    integer          ::     m,   mb,  mfb,  mmb,   mn
-    integer          ::   mpb,  mpn,   mt,  n0c,  n0n
-    integer          ::  ncbd,  nci, ncij,ncijk, ncik
-    integer          ::   ncj, ncjk,  nck,  nid, nijd
-    integer          ::   njd,   nl,   nn
+    integer          ::    id,   jd,   kd,    l,    m
+    integer          ::    mb,  mfb,  mmb,   mn,  mpb
+    integer          ::   mpn,   mt,  n0c,  n0n, ncbd
+    integer          ::   nci, ncij,ncijk, ncik,  ncj
+    integer          ::  ncjk,  nck,  nid, nijd,  njd
+    integer          ::    nl,   nn
     double precision ::       am,      ap,      b0,      bs,    cson
     double precision ::      dvx,     dvz,      dx,      dz,    eps0
     double precision ::     epsm,    epsp,    gami,   gm1sg,   gsgm1
@@ -56,7 +56,7 @@ contains
     dimension mmb(mtt),mpb(mtt)
     dimension mpn(mtt)
 !
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
 !
     n0n=npn(l)
     n0c=npc(l)
@@ -178,6 +178,12 @@ contains
        cson(nl)=sqrt(temp(nl))
     enddo
 !
+  contains
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine clvrt
 
 end module mod_clvrt

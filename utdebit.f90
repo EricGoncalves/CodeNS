@@ -42,14 +42,14 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::      i,    i1,    i2,    id,   inc
-    integer          ::   ind1,  ind2,  indc,     j,    j1
-    integer          ::     j2,    jd,     k,    k1,    k2
-    integer          ::     kd,  kdir,lgsnlt,    lm,     m
-    integer          ::     mb,   mfb,   mmb,    mn,   mpb
-    integer          ::    mpn,    mt,     n,   n0c,  ncbd
-    integer          ::    nci,   ncj,   nck,   nid,  nijd
-    integer          ::   ninc,   njd,    nl
+    integer          ::      i,    i1,    i2,    id,  ind1
+    integer          ::   ind2,     j,    j1,    j2,    jd
+    integer          ::      k,    k1,    k2,    kd,  kdir
+    integer          :: lgsnlt,    lm,     m,    mb,   mfb
+    integer          ::    mmb,    mn,   mpb,   mpn,    mt
+    integer          ::      n,   n0c,  ncbd,   nci,   ncj
+    integer          ::    nck,   nid,  nijd,  ninc,   njd
+    integer          ::     nl
     double precision :: bceqt,  dqm,  nxn,  nyn,  nzn
     double precision ::  pres,  qms, rqns,   sn,    v
 !
@@ -62,8 +62,8 @@ contains
     dimension mmb(mtt),mpb(mtt),mpn(mtt)
     dimension sn(lgsnlt,nind,ndir)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     n0c=npc(lm)
     i1=ii1(lm)
@@ -108,5 +108,16 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine utdebit
 end module mod_utdebit

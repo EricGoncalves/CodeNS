@@ -14,17 +14,16 @@ contains
     use maillage
     implicit none
     integer          ::    i,  i1,  i2,i2m1,ind1
-    integer          :: ind2,indc,   j,  j1,  j2
-    integer          :: j2m1,   k,  k1,  k2,k2m1
-    integer          ::    l,   n, n0c, nid,nijd
-    integer          ::  njd
+    integer          :: ind2,   j,  j1,  j2,j2m1
+    integer          ::    k,  k1,  k2,k2m1,   l
+    integer          ::    n, n0c, nid,nijd, njd
     double precision ::  mu,mut
 !
 !-----------------------------------------------------------------------
 !
     dimension mu(ip12),mut(ip12)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -53,5 +52,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine met_inmut
 end module mod_met_inmut

@@ -32,10 +32,10 @@ contains
     use proprieteflu
     implicit none
     integer          ::    i,  i1,  i2,i2m1,  id
-    integer          ::  inc, ind,   j,  j1,  j2
-    integer          :: j2m1,  jd,   k,  k1,  k2
-    integer          :: k2m1,  kd,   l,   m,   n
-    integer          ::   n0, nci, nid,nijd, njd
+    integer          ::    j,  j1,  j2,j2m1,  jd
+    integer          ::    k,  k1,  k2,k2m1,  kd
+    integer          ::    l,   m,   n,  n0, nci
+    integer          ::  nid,nijd, njd
     double precision ::     a1,betae2, cmui1, cmui2, cmuj1
     double precision ::  cmuj2, cmuk1, cmuk2, coef1, coef2
     double precision ::   dist,  dvxx,  dvxy,  dvxz,  dvyx
@@ -55,8 +55,8 @@ contains
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
          cmuk1(ip21),cmuk2(ip21)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     n0=npc(l)
     i1=ii1(l)
@@ -130,5 +130,16 @@ contains
     endif
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine met_komut
 end module mod_met_komut

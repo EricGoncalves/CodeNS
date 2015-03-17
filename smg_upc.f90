@@ -19,17 +19,17 @@ contains
     use maillage
     implicit none
     integer          ::    i,  i1,  i2,i2m1, img
-    integer          :: ind1,ind2,indc,   j,  j1
-    integer          ::   j2,j2m1,   k,  k1,  k2
-    integer          :: k2m1,   l,  lm,   m, n0c
-    integer          ::   nc, nid,nijd, njd
+    integer          :: ind1,ind2,   j,  j1,  j2
+    integer          :: j2m1,   k,  k1,  k2,k2m1
+    integer          ::    l,  lm,   m, n0c,  nc
+    integer          ::  nid,nijd, njd
     double precision :: dc, v
 !
 !-----------------------------------------------------------------------
 !
     dimension dc(ip11,ip60),v(ip11,ip60)
 !
-    indc(i,j,k)=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+
 !
     do l = 1,lzx
        lm = l+(img-1)*lz
@@ -68,5 +68,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
   end subroutine smg_upc
 end module mod_smg_upc

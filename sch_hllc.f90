@@ -28,14 +28,13 @@ contains
     use schemanum
     implicit none
     integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,     id,    inc,   ind1,   ind2
-    integer          ::    indc,isortie, ityprk,      j,     j1
-    integer          ::    j1m1,   j1p1,     j2,   j2m1,     jd
-    integer          ::       k,     k1,   k1m1,   k1p1,     k2
-    integer          ::    k2m1,     kd,   kdir, lgsnlt,     lm
-    integer          ::       m,      n,    n0c,     n1,    nci
-    integer          ::     ncj,    nck,    nid,   nijd,   ninc
-    integer          ::     njd
+    integer          ::    i2m1,     id,   ind1,   ind2,isortie
+    integer          ::  ityprk,      j,     j1,   j1m1,   j1p1
+    integer          ::      j2,   j2m1,     jd,      k,     k1
+    integer          ::    k1m1,   k1p1,     k2,   k2m1,     kd
+    integer          ::    kdir, lgsnlt,     lm,      m,      n
+    integer          ::     n0c,     n1,    nci,    ncj,    nck
+    integer          ::     nid,   nijd,   ninc,    njd
     double precision ::      a,    al,    am,    ar,  cnds
     double precision ::     el,    er,   fc1,   fc2,   fc3
     double precision ::    fc4,   fc5,   fex,   fey,   fez
@@ -46,19 +45,19 @@ contains
     double precision ::    gv3,   gv4,   gv5,   hc1,   hc2
     double precision ::    hc3,   hc4,   hc5,    hl,    hm
     double precision ::     hr,   hv2,   hv3,   hv4,   hv5
-    double precision ::    ids,    nx,    ny,    nz,   phi
-    double precision ::     pl,   prr,    ps,   pst,   q2l
-    double precision ::    q2r,   qcx,   qcy,   qcz,rhoest
-    double precision ::   rhol,  rhom,  rhor, rhost,rhoust
-    double precision :: rhovst,rhowst,   si1,   si2,   si3
-    double precision ::    si4,   si5,   sj1,   sj2,   sj3
-    double precision ::    sj4,   sj5,   sk1,   sk2,   sk3
-    double precision ::    sk4,   sk5,    sl,    sn,    sr
-    double precision ::    sst,  toxx,  toxy,  toxz,  toyy
-    double precision ::   toyz,  tozz,     u,    ul,    um
-    double precision ::     ur,     v, vitm2,    vl,    vm
-    double precision ::    vnl,   vnm,   vnr,    vr,    wl
-    double precision ::     wm,    wr
+    double precision ::    ids,    nx,    ny,    nz,    pl
+    double precision ::    prr,    ps,   pst,   q2l,   q2r
+    double precision ::    qcx,   qcy,   qcz,rhoest,  rhol
+    double precision ::   rhom,  rhor, rhost,rhoust,rhovst
+    double precision :: rhowst,   si1,   si2,   si3,   si4
+    double precision ::    si5,   sj1,   sj2,   sj3,   sj4
+    double precision ::    sj5,   sk1,   sk2,   sk3,   sk4
+    double precision ::    sk5,    sl,    sn,    sr,   sst
+    double precision ::   toxx,  toxy,  toxz,  toyy,  toyz
+    double precision ::   tozz,     u,    ul,    um,    ur
+    double precision ::      v, vitm2,    vl,    vm,   vnl
+    double precision ::    vnm,   vnr,    vr,    wl,    wm
+    double precision ::     wr
 !
 !-----------------------------------------------------------------------
 !
@@ -71,13 +70,7 @@ contains
     dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
          rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
-!
-!      phi(a)=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
-!      phi(a)=max(0.,min(1.,a))  !minmod
-    phi(a)=max(0.,(a+a**2)/(1.+a**2))  !van albada
-!      phi(a)=max(0.,min(1.,2.*a),min(2.,a)) !superbee
+
 
     REAL,DIMENSION(:),ALLOCATABLE   :: r1,r2,r3,r4,r5
     ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))
@@ -1404,5 +1397,28 @@ contains
     DEALLOCATE(r1,r2,r3,r4,r5)
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
+
+!
+!      phi(a)=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
+!      phi(a)=max(0.,min(1.,a))  !minmod
+
+!      phi(a)=max(0.,min(1.,2.*a),min(2.,a)) !superbee
+
+    function    phi(a)
+      implicit none
+      double precision ::   a,phi
+      phi=max(0.,(a+a**2)/(1.+a**2))  !van albada
+    end function phi
   end subroutine sch_hllc
 end module mod_sch_hllc

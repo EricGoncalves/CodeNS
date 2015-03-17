@@ -45,12 +45,12 @@ contains
     use mod_teq_grads
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          ::   imax,  imin,  ind1,  ind2,  indc
-    integer          ::      j,    j1,  j1m1,    j2,  j2m1
-    integer          ::   jmax,  jmin,     k,    k1,  k1m1
-    integer          ::     k2,  k2m1,  kmax,  kmin,     l
-    integer          :: lgsnlt,     m,     n,    n0,   nid
-    integer          ::   nijd,   njd,  npsn
+    integer          ::   imax,  imin,  ind1,  ind2,     j
+    integer          ::     j1,  j1m1,    j2,  j2m1,  jmax
+    integer          ::   jmin,     k,    k1,  k1m1,    k2
+    integer          ::   k2m1,  kmax,  kmin,     l,lgsnlt
+    integer          ::      m,     n,    n0,   nid,  nijd
+    integer          ::    njd,  npsn
     double precision :: cmui1,cmui2,cmuj1,cmuj2,cmuk1
     double precision :: cmuk2, dtdx, dtdy, dtdz, fd5x
     double precision ::  fd5y, fd5z, fd6x, fd6y, fd6z
@@ -69,7 +69,7 @@ contains
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
          cmuk1(ip21),cmuk2(ip21)
 !
-    indc(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 
     n0=npc(l)
     i1=ii1(l)
@@ -180,5 +180,11 @@ contains
     enddo
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine met_gradtr
 end module mod_met_gradtr

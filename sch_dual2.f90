@@ -20,10 +20,9 @@ contains
     use schemanum
     implicit none
     integer          ::      i,    i1,    i2,  i2m1,icycle
-    integer          ::   ind1,  ind2,  indc,     j,    j1
-    integer          ::     j2,  j2m1,     k,    k1,    k2
-    integer          ::   k2m1,    lm,     n,   nid,  nijd
-    integer          ::    njd
+    integer          ::   ind1,  ind2,     j,    j1,    j2
+    integer          ::   j2m1,     k,    k1,    k2,  k2m1
+    integer          ::     lm,     n,   nid,  nijd,   njd
     double precision ::     c0,   dti,  fact,ptdual,     u
     double precision ::      v,   vol
 !
@@ -33,7 +32,7 @@ contains
     dimension vol(ip11)
     dimension ptdual(ip11,ip60)
 !
-    indc(i,j,k)=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+
 !
     fact = 11./6.
     if(icycle.le.1) fact = 1.
@@ -68,5 +67,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
   end subroutine sch_dual2
 end module mod_sch_dual2

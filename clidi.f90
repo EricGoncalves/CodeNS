@@ -70,12 +70,12 @@ contains
     use schemanum
     use definition
     implicit none
-    integer          ::    id,  inc,   jd,   kd,    l
-    integer          ::     m,   mb,  mfb,  mmb,   mn
-    integer          ::   mpb,  mpn,   mt,  n0c,  n0n
-    integer          ::    nc, ncbd,  nci, ncij,ncijk
-    integer          ::  ncik,  ncj, ncjk,  nck,  nid
-    integer          ::  nijd,  njd
+    integer          ::    id,   jd,   kd,    l,    m
+    integer          ::    mb,  mfb,  mmb,   mn,  mpb
+    integer          ::   mpn,   mt,  n0c,  n0n,   nc
+    integer          ::  ncbd,  nci, ncij,ncijk, ncik
+    integer          ::   ncj, ncjk,  nck,  nid, nijd
+    integer          ::   njd
     double precision ::        b,    cson,   gam2t,    gam6,    gamt
     double precision ::      nxn,     nyn,     nzn,    pres,pression
     double precision ::     qinf,      qn,     qxs,     qys,     qzs
@@ -89,7 +89,7 @@ contains
     dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
     dimension mmb(mtt),mpb(mtt),mpn(mtt)
 !
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
 !
     n0n=npn(l)
     n0c=npc(l)
@@ -140,5 +140,11 @@ contains
     enddo
 !
     return
+  contains
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine clidi
 end module mod_clidi

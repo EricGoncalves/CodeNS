@@ -27,10 +27,10 @@ contains
     use proprieteflu
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          :: indc,   j,  j1,j1m1,  j2
-    integer          :: j2m1,   k,  k1,k1m1,  k2
-    integer          :: k2m1,   l,   m,   n, n0c
-    integer          ::  nid,nijd, njd
+    integer          ::    j,  j1,j1m1,  j2,j2m1
+    integer          ::    k,  k1,k1m1,  k2,k2m1
+    integer          ::    l,   m,   n, n0c, nid
+    integer          :: nijd, njd
     double precision :: cson,dist,   e,  mu, mut
     double precision ::   ps,  qq,   t,temp,toxy
     double precision ::    u,   v,   w,   x, xcc
@@ -45,7 +45,7 @@ contains
     dimension dist(ip12),mu(ip12),mut(ip12),toxy(ip12)
     dimension ps(ip11),cson(ip11),temp(ip11)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -106,5 +106,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine sortieplot2
 end module mod_sortieplot2

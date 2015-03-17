@@ -29,14 +29,13 @@ contains
     use schemanum
     implicit none
     integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,     id,    inc,   ind1,   ind2
-    integer          ::    indc,isortie, ityprk,      j,     j1
-    integer          ::    j1m1,   j1p1,     j2,   j2m1,     jd
-    integer          ::       k,     k1,   k1m1,   k1p1,     k2
-    integer          ::    k2m1,     kd,   kdir, lgsnlt,     lm
-    integer          ::       m,      n,    n0c,     n1,    nci
-    integer          ::     ncj,    nck,    nid,   nijd,   ninc
-    integer          ::     njd
+    integer          ::    i2m1,     id,   ind1,   ind2,isortie
+    integer          ::  ityprk,      j,     j1,   j1m1,   j1p1
+    integer          ::      j2,   j2m1,     jd,      k,     k1
+    integer          ::    k1m1,   k1p1,     k2,   k2m1,     kd
+    integer          ::    kdir, lgsnlt,     lm,      m,      n
+    integer          ::     n0c,     n1,    nci,    ncj,    nck
+    integer          ::     nid,   nijd,   ninc,    njd
     double precision ::   al,  ar,cnds,dfex,dfey
     double precision :: dfez,dfxx,dfxy,dfxz,dfyy
     double precision :: dfyz,dfzz, di1, di2, di3
@@ -70,8 +69,8 @@ contains
     dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
          rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 
     isortie=0
 !
@@ -796,5 +795,16 @@ contains
     endif
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine sch_rusanov
 end module mod_sch_rusanov

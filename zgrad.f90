@@ -65,14 +65,13 @@ contains
     use maillage
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  imax,  imin,   inc
-    integer          ::    ind,  ind1,  ind2,     j,    j1
-    integer          ::   j1m1,  j1p1,    j2,  j2m1,    jd
-    integer          ::   jmax,  jmin,     k,    k1,  k1m1
-    integer          ::   k1p1,    k2,  k2m1,    kd,  kmax
-    integer          ::   kmin,     l,lgsnlt,     m,     n
-    integer          ::     n0,   nci,   ncj,   nck,   nid
-    integer          ::   nijd,   njd
+    integer          ::   i2m1,    id,  imax,  imin,  ind1
+    integer          ::   ind2,     j,    j1,  j1m1,  j1p1
+    integer          ::     j2,  j2m1,    jd,  jmax,  jmin
+    integer          ::      k,    k1,  k1m1,  k1p1,    k2
+    integer          ::   k2m1,    kd,  kmax,  kmin,     l
+    integer          :: lgsnlt,     m,     n,    n0,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,   njd
     double precision ::   c0, dtx, dty, dtz,dvxx
     double precision :: dvxy,dvxz,dvyx,dvyy,dvyz
     double precision :: dvzx,dvzy,dvzz, eps,   s
@@ -89,8 +88,8 @@ contains
     dimension vol(ip11),temp(ip11),s(ip11,ip60)
 
 
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 
     REAL,DIMENSION(:),ALLOCATABLE :: vx,vy,vz
     eps=0.001
@@ -453,5 +452,16 @@ contains
     DEALLOCATE(vx,vy,vz)
 
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine zgrad
 end module mod_zgrad

@@ -24,10 +24,10 @@ contains
     use schemanum
     implicit none
     integer          ::      i,    i1,    i2,  i2m1, idcyc
-    integer          ::   ind1,  ind2,  indc,ityprk,     j
-    integer          ::     j1,    j2,  j2m1,     k,    k1
-    integer          ::     k2,  k2m1,    lm,     m,   n0c
-    integer          ::     nc,   nid,  nijd,   njd
+    integer          ::   ind1,  ind2,ityprk,     j,    j1
+    integer          ::     j2,  j2m1,     k,    k1,    k2
+    integer          ::   k2m1,    lm,     m,   n0c,    nc
+    integer          ::    nid,  nijd,   njd
     double precision :: dtpas,   ff, omeg,temps,  ts1
     double precision ::     u,  vol,    x,  xcc,    y
     double precision ::   ycc,    z,  zcc
@@ -38,7 +38,7 @@ contains
     dimension vol(ip11)
     dimension x(ip21),y(ip21),z(ip21)
 !
-    indc(i,j,k)=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+
 !
     n0c=npc(lm)
     i1=ii1(lm)
@@ -112,5 +112,11 @@ contains
     endif
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
   end subroutine sch_acou
 end module mod_sch_acou

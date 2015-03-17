@@ -26,13 +26,13 @@ contains
     use definition
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,   inc,  ind1,  ind2
-    integer          ::   indc,     j,    j1,  j1m1,  j1p1
-    integer          ::     j2,  j2m1,    jd,     k,    k1
-    integer          ::   k1m1,  k1p1,    k2,  k2m1,    kd
-    integer          ::   kdir,lgsnlt,    lm,     m,     n
-    integer          ::    n0c,   nci,   ncj,   nck,   nid
-    integer          ::   nijd,  ninc,   njd
+    integer          ::   i2m1,    id,  ind1,  ind2,     j
+    integer          ::     j1,  j1m1,  j1p1,    j2,  j2m1
+    integer          ::     jd,     k,    k1,  k1m1,  k1p1
+    integer          ::     k2,  k2m1,    kd,  kdir,lgsnlt
+    integer          ::     lm,     m,     n,   n0c,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,  ninc
+    integer          ::    njd
     double precision ::    a2,beta2,  ck2,  ck4, cnds
     double precision ::  cson,    d,   d1,   d2,   d3
     double precision ::  d3w1, d3w2, d3w3, d3w4, d3w5
@@ -52,8 +52,8 @@ contains
     dimension sn(lgsnlt,nind,ndir)
     dimension ps(ip11),cson(ip11),temp(ip11),snup(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 
     n0c=npc(lm)
     i1=ii1(lm)
@@ -679,5 +679,16 @@ contains
     endif
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine dissip_jameson_prcd2
 end module mod_dissip_jameson_prcd2

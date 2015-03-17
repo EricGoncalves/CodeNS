@@ -42,20 +42,15 @@ contains
     use boundary
     use sortiefichier
     implicit none
-    integer          ::     i,  iin,  img,    j,  jjn
-    integer          ::     k,  kkn,    l,   lm,    m
-    integer          ::    m0, mfbe, mfbi,mfbim,   mm
-    integer          ::    mt,    n,  n0c, ncbd,  nid
-    integer          ::  nijd,  njd
+    integer          ::     i,  img,    j,    k,    l
+    integer          ::    lm,    m,   m0, mfbe, mfbi
+    integer          :: mfbim,   mm,   mt,    n,  n0c
+    integer          ::  ncbd,  nid, nijd,  njd
 !
 !-----------------------------------------------------------------------
 !
     dimension ncbd(ip41)
 !
-    iin(n)=id1(lm)+mod(n-n0c-1,nid)
-    jjn(n)=jd1(lm)+mod((n-n0c-1-(iin(n)-id1(lm)))/nid,njd)
-    kkn(n)=kd1(lm)+ &
-         (n-n0c-1-(iin(n)-id1(lm))-(jjn(n)-jd1(lm))*nid)/nijd
 !
     mfbi=nfei(mfbe)
 !
@@ -87,5 +82,22 @@ contains
 1910 format(1x,i5,2x,i10,5(2x,i3))
 !
     return
+  contains
+    function    iin(n)
+      implicit none
+      integer          :: iin,  n
+      iin=id1(lm)+mod(n-n0c-1,nid)
+    end function iin
+    function    jjn(n)
+      implicit none
+      integer          :: jjn,  n
+      jjn=jd1(lm)+mod((n-n0c-1-(iin(n)-id1(lm)))/nid,njd)
+    end function jjn
+    function    kkn(n)
+      implicit none
+      integer          :: kkn,  n
+      kkn=kd1(lm)+ &
+           (n-n0c-1-(iin(n)-id1(lm))-(jjn(n)-jd1(lm))*nid)/nijd
+    end function kkn
   end subroutine dpbdi
 end module mod_dpbdi

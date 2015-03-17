@@ -41,10 +41,10 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::    i,  i1,  i2, ind,   j
-    integer          ::   j1,  j2,   k,  k1,  k2
-    integer          ::    l,   m,   n,  n0, nid
-    integer          :: nijd, njd
+    integer          ::    i,  i1,  i2,   j,  j1
+    integer          ::   j2,   k,  k1,  k2,   l
+    integer          ::    m,   n,  n0, nid,nijd
+    integer          ::  njd
     double precision ::  x,xx, y,yy, z
     double precision :: zz
 !
@@ -53,7 +53,7 @@ contains
     dimension x(ip21),y(ip21),z(ip21)
     dimension xx(ip00),yy(ip00),zz(ip00)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0=npn(l)
     i1=ii1(l)
@@ -82,5 +82,11 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine cvcvg
 end module mod_cvcvg

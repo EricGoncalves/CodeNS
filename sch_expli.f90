@@ -18,11 +18,11 @@ contains
     use maillage
     implicit none
     integer          ::    i,  i1,i1m1,i1p1,  i2
-    integer          :: i2m1,ind1,ind2,indc,   j
-    integer          ::   j1,j1m1,j1p1,  j2,j2m1
-    integer          ::    k,  k1,k1m1,k1p1,  k2
-    integer          :: k2m1,  lm,   n, n0c, nid
-    integer          :: nijd, njd
+    integer          :: i2m1,ind1,ind2,   j,  j1
+    integer          :: j1m1,j1p1,  j2,j2m1,   k
+    integer          ::   k1,k1m1,k1p1,  k2,k2m1
+    integer          ::   lm,   n, n0c, nid,nijd
+    integer          ::  njd
     double precision ::  dt,dtv,  u,  v,vol
 !
 !-----------------------------------------------------------------------
@@ -30,7 +30,7 @@ contains
     dimension u(ip11,ip60),v(ip11,ip60)
     dimension vol(ip11),dt(ip11)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+
 !
     n0c=npc(lm)
     i1=ii1(lm)
@@ -70,5 +70,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
   end subroutine sch_expli
 end module mod_sch_expli

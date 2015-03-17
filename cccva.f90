@@ -44,14 +44,14 @@ contains
     use maillage
     implicit none
     integer          ::     i,   i1, i1m1,   i2, i2m1
-    integer          ::  i2p1,   id, imax, imin,  inc
-    integer          ::   ind,    j,   j1, j1m1,   j2
-    integer          ::  j2m1, j2p1,   jd, jmax, jmin
-    integer          ::     k,   k1, k1m1,   k2, k2m1
-    integer          ::  k2p1,   kd, kmax, kmin,    l
-    integer          ::     m,    n,   n0,   n1,   n2
-    integer          ::   nci, ncij,ncijk, ncik,  ncj
-    integer          ::  ncjk,  nck,  nid, nijd,  njd
+    integer          ::  i2p1,   id, imax, imin,    j
+    integer          ::    j1, j1m1,   j2, j2m1, j2p1
+    integer          ::    jd, jmax, jmin,    k,   k1
+    integer          ::  k1m1,   k2, k2m1, k2p1,   kd
+    integer          ::  kmax, kmin,    l,    m,    n
+    integer          ::    n0,   n1,   n2,  nci, ncij
+    integer          :: ncijk, ncik,  ncj, ncjk,  nck
+    integer          ::   nid, nijd,  njd
     double precision :: mmut, mut,   v, vv1, vv2
     double precision ::  vv3, vv4, vv5, vv6, vv7
 !
@@ -62,8 +62,8 @@ contains
     dimension vv1(ip00),vv2(ip00),vv3(ip00),vv4(ip00),vv5(ip00), &
          vv6(ip00),vv7(ip00),mmut(ip00)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     n0=npc(l)
     i1=ii1(l)
@@ -282,5 +282,16 @@ contains
     end if
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine cccva
 end module mod_cccva

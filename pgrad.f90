@@ -27,13 +27,13 @@ contains
     use chainecarac
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,  i2p1,    id,   inc,   ind
-    integer          ::   ind1,  ind2,     j,    j1,  j1m1
-    integer          ::   j1p1,    j2,  j2m1,  j2p1,    jd
-    integer          ::      k,    k1,  k1m1,  k1p1,    k2
-    integer          ::   k2m1,  k2p1,    kd,     l,lgsnlt
-    integer          ::      m,     n,    n0,   nci,   ncj
-    integer          ::    nck,   nid,  nijd,   njd
+    integer          ::   i2m1,  i2p1,    id,  ind1,  ind2
+    integer          ::      j,    j1,  j1m1,  j1p1,    j2
+    integer          ::   j2m1,  j2p1,    jd,     k,    k1
+    integer          ::   k1m1,  k1p1,    k2,  k2m1,  k2p1
+    integer          ::     kd,     l,lgsnlt,     m,     n
+    integer          ::     n0,   nci,   ncj,   nck,   nid
+    integer          ::   nijd,   njd
     double precision ::  cc0,dpdx,dpdy,dpdz, eps
     double precision ::   ps,  sn,  ts, vol,vols
 !
@@ -45,8 +45,8 @@ contains
 !
 
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     eps=0.001
     n0=npc(l)
@@ -235,5 +235,16 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine pgrad
 end module mod_pgrad

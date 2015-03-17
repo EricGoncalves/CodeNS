@@ -18,19 +18,18 @@ contains
     use modeleturb
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          ::   id, inc,indc,   j,  j1
-    integer          :: j1m1,  j2,j2m1,  jd,   k
-    integer          ::   k1,k1m1,  k2,k2m1,  kd
-    integer          ::    l,   n, n0c, nci, nid
-    integer          :: nijd, njd
+    integer          ::   id,   j,  j1,j1m1,  j2
+    integer          :: j2m1,  jd,   k,  k1,k1m1
+    integer          ::   k2,k2m1,  kd,   l,   n
+    integer          ::  n0c, nci, nid,nijd, njd
     double precision :: s
 !
 !-----------------------------------------------------------------------
 !
     dimension s(ip11,ip60)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -70,5 +69,16 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine met_cutked
 end module mod_met_cutked

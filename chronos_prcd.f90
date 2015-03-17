@@ -72,13 +72,12 @@ contains
     use proprieteflu
     implicit none
     integer          ::       i,     i1,     i2,   i2m1,     id
-    integer          ::     inc,   indc,   indn,isortie,  ivisq
-    integer          ::       j,     j1,     j2,   j2m1,     jd
-    integer          ::       k,     k1,     k2,   k2m1,     kd
-    integer          ::       l, lgsnlt,      m,     mc,     mn
-    integer          ::       n,    n0c,    n0n,     n1,     n2
-    integer          ::      nc,    nci,    ncj,    nck,    nid
-    integer          ::    nijd,    njd
+    integer          :: isortie,  ivisq,      j,     j1,     j2
+    integer          ::    j2m1,     jd,      k,     k1,     k2
+    integer          ::    k2m1,     kd,      l, lgsnlt,      m
+    integer          ::      mc,     mn,      n,    n0c,    n0n
+    integer          ::      n1,     n2,     nc,    nci,    ncj
+    integer          ::     nck,    nid,   nijd,    njd
     double precision ::   Lref,    a2, beta2,beta2e, betau
     double precision ::   betv,  cflc,   cpi,  cson,  dism
     double precision ::    dpi,   dpj,   dpm,    dt,   dte
@@ -98,9 +97,9 @@ contains
     dimension sn(lgsnlt,nind,ndir)
     dimension sfsi(ip00),sfsj(ip00),sfsk(ip00),dism(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    indn(i,j,k)=n0n+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
+
 !
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE     :: beta2v
     ALLOCATE(beta2v(ip21))
@@ -312,5 +311,21 @@ contains
     DEALLOCATE(beta2v)
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
+    function    indn(i,j,k)
+      implicit none
+      integer          ::    i,indn,   j,   k
+      indn=n0n+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indn
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine chronos_prcd
 end module mod_chronos_prcd

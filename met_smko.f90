@@ -52,15 +52,15 @@ contains
     use modeleturb
     implicit none
     integer          ::    i,  i1,  i2,i2m1,ind1
-    integer          :: ind2,indc,   j,  j1,  j2
-    integer          :: j2m1,   k,  k1,  k2,k2m1
-    integer          ::    l,   m,   n, n0c, nid
-    integer          :: nijd, njd
+    integer          :: ind2,   j,  j1,  j2,j2m1
+    integer          ::    k,  k1,  k2,k2m1,   l
+    integer          ::    m,   n, n0c, nid,nijd
+    integer          ::  njd
     double precision ::     aa, betac,betasc,    cd,  cfke
-    double precision ::   cson,   fmt,  gkgo,  omeg,qcxts5
-    double precision :: qcyts6, tprod,txxf5x,txyf5y,txzf5z
-    double precision :: tyyf6x,tyzf6y,tzzf6z,     v,   xmt
-    double precision ::   xmt0,    xw
+    double precision ::   cson,  gkgo,  omeg,qcxts5,qcyts6
+    double precision ::  tprod,txxf5x,txyf5y,txzf5z,tyyf6x
+    double precision :: tyzf6y,tzzf6z,     v,   xmt,  xmt0
+    double precision ::     xw
 !
 !-----------------------------------------------------------------------
 !
@@ -72,9 +72,9 @@ contains
     dimension tprod(ip00)
     dimension cfke(ip13)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
-    fmt(aa)=0.5*(1.+sign(1.,aa-xmt0))*(aa**2-xmt0**2)
+
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -121,5 +121,16 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
+    function    fmt(aa)
+      implicit none
+      double precision ::  aa,fmt
+      fmt=0.5*(1.+sign(1.,aa-xmt0))*(aa**2-xmt0**2)
+    end function fmt
   end subroutine met_smko
 end module mod_met_smko

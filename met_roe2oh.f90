@@ -24,20 +24,20 @@ contains
     use schemanum
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,  i2p1,    id,   inc,   ind
-    integer          ::   ind1,  ind2,    is,     j,    j1
-    integer          ::   j1m1,  j1p1,    j2,  j2m1,  j2p1
-    integer          ::     jd,     k,    k1,  k1m1,  k1p1
-    integer          ::     k2,  k2m1,  k2p1,    kd,     l
-    integer          :: lgsnlt,     m,    m1,    m2,     n
-    integer          ::     n0,    n1,   nci,   ncj,   nck
-    integer          ::    nid,  nijd,  ninc,   njd
-    double precision ::     a,   aa,amimd,    b,    c
-    double precision :: cndsi,cndsj,cndsk, coef,    d
-    double precision ::    dd, del6, del7,  eps, etot
-    double precision ::   fi1,  psi,   q2, rlam,  rro
-    double precision ::  rro1,   sn,    t,    u,    v
-    double precision ::   vol,    w,    x,    y,    z
+    integer          ::   i2m1,  i2p1,    id,  ind1,  ind2
+    integer          ::     is,     j,    j1,  j1m1,  j1p1
+    integer          ::     j2,  j2m1,  j2p1,    jd,     k
+    integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
+    integer          ::   k2p1,    kd,     l,lgsnlt,     m
+    integer          ::     m1,    m2,     n,    n0,    n1
+    integer          ::    nci,   ncj,   nck,   nid,  nijd
+    integer          ::   ninc,   njd
+    double precision ::     a,   aa,    b,    c,cndsi
+    double precision :: cndsj,cndsk, coef,    d,   dd
+    double precision ::  del6, del7,  eps, etot,   q2
+    double precision ::  rlam,  rro, rro1,   sn,    t
+    double precision ::     u,    v,  vol,    w,    x
+    double precision ::     y,    z
 !
 !-----------------------------------------------------------------------
 !
@@ -46,13 +46,13 @@ contains
     dimension del6(ip00),del7(ip00)
     dimension sn(lgsnlt,nind,ndir)
 !
-    ind(i,j,k)= 1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)= id+jd*nid+kd*nijd
+
+
 !
-    amimd(a,b)=sign(1.,a)*max(0.,min(abs(a),b*sign(1.,a)))
-    fi1(x,y,z)=amimd(x,amimd(y,z))
-    psi(aa,eps)=0.5*(1.+sign(1.,abs(aa)-eps))*abs(aa)+ &
-         0.25*(1.-sign(1.,abs(aa)-eps))*(aa*aa+eps*eps)/eps
+
+
+
+
 
     n0 = npc(l)
     i1 = ii1(l)
@@ -306,5 +306,32 @@ contains
     endif
 
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind= 1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc= id+jd*nid+kd*nijd
+    end function inc
+    function    amimd(a,b)
+      implicit none
+      double precision ::     a,amimd,    b
+      amimd=sign(1.,a)*max(0.,min(abs(a),b*sign(1.,a)))
+    end function amimd
+    function    fi1(x,y,z)
+      implicit none
+      double precision :: fi1,  x,  y,  z
+      fi1=amimd(x,amimd(y,z))
+    end function fi1
+    function    psi(aa,eps)
+      implicit none
+      double precision ::  aa,eps,psi
+      psi=0.5*(1.+sign(1.,abs(aa)-eps))*abs(aa)+ &
+           0.25*(1.-sign(1.,abs(aa)-eps))*(aa*aa+eps*eps)/eps
+    end function psi
   end subroutine met_roe2oh
 end module mod_met_roe2oh

@@ -26,13 +26,13 @@ contains
     use mod_met_pardis
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,   inc,  ind1,  ind2
-    integer          ::   indc,     j,    j1,  j1m1,  j1p1
-    integer          ::     j2,  j2m1,    jd,     k,    k1
-    integer          ::   k1m1,  k1p1,    k2,  k2m1,    kd
-    integer          ::   kdir,     l,lgsnlt,     m,     n
-    integer          ::    n0c,   nci,  ncin,   ncj,   nck
-    integer          ::    nid,  nijd,  ninc,   njd
+    integer          ::   i2m1,    id,  ind1,  ind2,     j
+    integer          ::     j1,  j1m1,  j1p1,    j2,  j2m1
+    integer          ::     jd,     k,    k1,  k1m1,  k1p1
+    integer          ::     k2,  k2m1,    kd,  kdir,     l
+    integer          :: lgsnlt,     m,     n,   n0c,   nci
+    integer          ::   ncin,   ncj,   nck,   nid,  nijd
+    integer          ::   ninc,   njd
     double precision ::    d, f6x, f6y, f6z, f7x
     double precision ::  f7y, f7z,fd5x,fd5y,fd5z
     double precision :: fd6x,fd6y,fd6z, si6, si7
@@ -51,8 +51,8 @@ contains
     dimension f6x(ip00),f6y(ip00),f6z(ip00), &
          f7x(ip00),f7y(ip00),f7z(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 
     n0c=npc(l)
     i1=ii1(l)
@@ -321,5 +321,16 @@ contains
     enddo
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine sch_turb
 end module mod_sch_turb

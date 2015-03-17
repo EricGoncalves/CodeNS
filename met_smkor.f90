@@ -53,10 +53,10 @@ contains
     use modeleturb
     implicit none
     integer          ::    i,  i1,  i2,i2m1,ind1
-    integer          :: ind2,indc,   j,  j1,  j2
-    integer          :: j2m1,   k,  k1,  k2,k2m1
-    integer          ::    l,   m,   n, n0c, nid
-    integer          :: nijd, njd
+    integer          :: ind2,   j,  j1,  j2,j2m1
+    integer          ::    k,  k1,  k2,k2m1,   l
+    integer          ::    m,   n, n0c, nid,nijd
+    integer          ::  njd
     double precision ::  alpha,    cd,  cfke,  dvxx,  dvxy
     double precision ::   dvxz,  dvyx,  dvyy,  dvyz,  dvzx
     double precision ::   dvzy,  dvzz,  gkgo,  omeg,qcxts5
@@ -76,7 +76,7 @@ contains
          dvzx(ip00),dvzy(ip00),dvzz(ip00)
     dimension cfke(ip13)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -119,5 +119,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine met_smkor
 end module mod_met_smkor

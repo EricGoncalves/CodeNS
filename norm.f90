@@ -81,13 +81,12 @@ contains
     use maillage
     implicit none
     integer          ::      i,    i1,  i1p1,    id,  imax
-    integer          :: imaxm1,  imin,   inc,   ind,   ior
-    integer          ::      j,    j1,  j1p1,    jd,  jmax
-    integer          :: jmaxm1,  jmin,   jor,     k,    k1
-    integer          ::   k1p1,    kd,  kmax,kmaxm1,  kmin
-    integer          ::    kor,     l,     m,   mor,     n
-    integer          ::     n0,   ndt,   nid,  nijd,   njd
-    integer          ::    nor
+    integer          :: imaxm1,  imin,   ior,     j,    j1
+    integer          ::   j1p1,    jd,  jmax,jmaxm1,  jmin
+    integer          ::    jor,     k,    k1,  k1p1,    kd
+    integer          ::   kmax,kmaxm1,  kmin,   kor,     l
+    integer          ::      m,   mor,     n,    n0,   ndt
+    integer          ::    nid,  nijd,   njd,   nor
     double precision ::  dx1, dx2, dy1, dy2, dz1
     double precision ::  dz2, psi, psj, psk,tnix
     double precision :: tniy,tniz,tnjx,tnjy,tnjz
@@ -102,8 +101,8 @@ contains
          tnjx(ndt),tnjy(ndt),tnjz(ndt), &
          tnkx(ndt),tnky(ndt),tnkz(ndt)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     n0=npn(l)
     i1=ii1(l)
@@ -276,5 +275,16 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine norm
 end module mod_norm

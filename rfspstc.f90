@@ -32,19 +32,19 @@ contains
     use maillage
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          :: iinc, ind,  is,   j,  j1
-    integer          :: j1m1,  j2,j2m1,jinc,  js
-    integer          ::    k,  k1,k1m1,  k2,k2m1
-    integer          :: kinc,  ks,   l,   n,  n0
-    integer          ::   n1,  n2,  n3,  n4, nid
-    integer          :: nijd, njd
+    integer          :: iinc,  is,   j,  j1,j1m1
+    integer          ::   j2,j2m1,jinc,  js,   k
+    integer          ::   k1,k1m1,  k2,k2m1,kinc
+    integer          ::   ks,   l,   n,  n0,  n1
+    integer          ::   n2,  n3,  n4, nid,nijd
+    integer          ::  njd
     double precision :: t
 !
 !-----------------------------------------------------------------------
 !
     dimension t(ip11)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0=npc(l)
     i1=ii1(l)
@@ -143,5 +143,11 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine rfspstc
 end module mod_rfspstc

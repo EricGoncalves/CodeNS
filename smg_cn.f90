@@ -22,14 +22,13 @@ contains
     use chainecarac
     implicit none
     integer          ::       i,     i1,     i2,     id,   iinf
-    integer          ::     img,    inc,  inc_i, inc_ij,inc_ijk
-    integer          ::  inc_ik,  inc_j, inc_jk,  inc_k,   indc
-    integer          ::    indn,   isup,      j,     j1,     j2
-    integer          ::      jd,   jinf,   jsup,      k,     k1
-    integer          ::      k2,     kd,   kinf,   ksup,      l
-    integer          ::      lm,      n,    n0c,    n0n,     nc
-    integer          ::    ndeb,   nfin,     ni,    nij,     nj
-    integer          ::      nn
+    integer          ::     img,  inc_i, inc_ij,inc_ijk, inc_ik
+    integer          ::   inc_j, inc_jk,  inc_k,   isup,      j
+    integer          ::      j1,     j2,     jd,   jinf,   jsup
+    integer          ::       k,     k1,     k2,     kd,   kinf
+    integer          ::    ksup,      l,     lm,      n,    n0c
+    integer          ::     n0n,     nc,   ndeb,   nfin,     ni
+    integer          ::     nij,     nj,     nn
     double precision ::  eps,  ts,  vc, vol,vols
     double precision :: volt,  vv
 !
@@ -40,9 +39,9 @@ contains
 !
 
 !
-    indn(i,j,k)=n0n+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
-    inc(id,jd,kd)=id+jd*ni+kd*nij
+
+
+
     eps=0.001
 !
     do l = 1,lzx
@@ -206,5 +205,21 @@ contains
     enddo
 !
     return
+  contains
+    function    indn(i,j,k)
+      implicit none
+      integer          ::    i,indn,   j,   k
+      indn=n0n+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
+    end function indn
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*ni+kd*nij
+    end function inc
   end subroutine smg_cn
 end module mod_smg_cn

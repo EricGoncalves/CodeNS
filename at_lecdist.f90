@@ -17,18 +17,17 @@ contains
     use sortiefichier
     use maillage
     implicit none
-    integer          ::      i,    i1,    i2,  i2m1,   ind
-    integer          ::    ird,     j,    j1,    j2,  j2m1
-    integer          ::      k,    k1,    k2,  k2m1,     l
-    integer          :: ldismx, mnpar,    n0,   nid,  nijd
-    integer          ::    njd
+    integer          ::      i,    i1,    i2,  i2m1,   ird
+    integer          ::      j,    j1,    j2,  j2m1,     k
+    integer          ::     k1,    k2,  k2m1,     l,ldismx
+    integer          ::  mnpar,    n0,   nid,  nijd,   njd
     double precision :: dist
 !
 !-----------------------------------------------------------------------
 !
     dimension dist(ip12),mnpar(ip12)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     ird=98
     open(ird,file='fdist',form='unformatted',status='old',err=50)
@@ -74,6 +73,12 @@ contains
     stop
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine at_lecdist
 
 

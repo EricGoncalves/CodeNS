@@ -21,24 +21,23 @@ contains
     use chainecarac
     implicit none
     integer          ::      i,   i1c,   i2c,    ic,    id
-    integer          ::     if,  imgc,  imgf,  incf,incf_i
-    integer          :: incf_j,incf_k,  indc,  indf,     j
-    integer          ::    j1c,   j2c,    jc,    jd,    jf
-    integer          ::      k,   k1c,   k2c,    kc,    kd
-    integer          ::     kf,     l,   lmc,   lmf,   n0c
-    integer          ::    n0f,    nc,   nf1,   nf2,   nf3
-    integer          ::    nf4,   nf5,   nf6,   nf7,   nf8
-    integer          ::    nic,   nif,  nijc,  nijf,   njc
-    integer          ::    njf
+    integer          ::     if,  imgc,  imgf,incf_i,incf_j
+    integer          :: incf_k,     j,   j1c,   j2c,    jc
+    integer          ::     jd,    jf,     k,   k1c,   k2c
+    integer          ::     kc,    kd,    kf,     l,   lmc
+    integer          ::    lmf,   n0c,   n0f,    nc,   nf1
+    integer          ::    nf2,   nf3,   nf4,   nf5,   nf6
+    integer          ::    nf7,   nf8,   nic,   nif,  nijc
+    integer          ::   nijf,   njc,   njf
     double precision ::   v,vol
 !
 !-----------------------------------------------------------------------
 !
     dimension vol(ip11),v(ip11)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lmc))+(j-jd1(lmc))*nic+(k-kd1(lmc))*nijc
-    indf(i,j,k)=n0f+1+(i-id1(lmf))+(j-jd1(lmf))*nif+(k-kd1(lmf))*nijf
-    incf(id,jd,kd)=id+jd*nif+kd*nijf
+
+
+
 !
     do l = 1,lzx
 !
@@ -131,5 +130,21 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lmc))+(j-jd1(lmc))*nic+(k-kd1(lmc))*nijc
+    end function indc
+    function    indf(i,j,k)
+      implicit none
+      integer          ::    i,indf,   j,   k
+      indf=n0f+1+(i-id1(lmf))+(j-jd1(lmf))*nif+(k-kd1(lmf))*nijf
+    end function indf
+    function    incf(id,jd,kd)
+      implicit none
+      integer          ::   id,incf,  jd,  kd
+      incf=id+jd*nif+kd*nijf
+    end function incf
   end subroutine smg_fcs
 end module mod_smg_fcs

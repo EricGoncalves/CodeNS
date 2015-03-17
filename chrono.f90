@@ -67,9 +67,9 @@ contains
     use mod_chronos_prcd
     use mod_chronos
     implicit none
-    integer          ::      i,   img,  indc,     j,     k
-    integer          ::      l,lgsnlt,    lm,     n,  ndeb
-    integer          ::   nfin,   nid,  nijd,   njd,  npsn
+    integer          ::      i,   img,     j,     k,     l
+    integer          :: lgsnlt,    lm,     n,  ndeb,  nfin
+    integer          ::    nid,  nijd,   njd,  npsn
     double precision ::     cson,      dt,   dtmin,      mu,     mut
     double precision :: pression,      sn,     tn1,     tn2,     tn3
     double precision ::      tn4,       u,     vol
@@ -82,7 +82,7 @@ contains
     dimension sn(ip31*ndir)
     dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00)
 
-    indc(i,j,k)=npc(lm)+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+
 
 !-----calcul du pas de temps local en stationnaire--------------------
 !
@@ -155,5 +155,11 @@ contains
     endif
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=npc(lm)+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
   end subroutine chrono
 end module mod_chrono

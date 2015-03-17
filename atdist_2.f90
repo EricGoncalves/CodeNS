@@ -40,11 +40,11 @@ contains
     use maillage
     use boundary
     implicit none
-    integer          ::     i,   i1,   i2,imini,  ind
-    integer          ::     j,   j1,   j2,    k,   k1
-    integer          ::    k2,    l,  m0b,   mb,  mbb
-    integer          ::  mbmx,   mc,mnpar,   n0,   nc
-    integer          ::  nfbi,  nid, nijd,  njd,   no
+    integer          ::     i,   i1,   i2,imini,    j
+    integer          ::    j1,   j2,    k,   k1,   k2
+    integer          ::     l,  m0b,   mb,  mbb, mbmx
+    integer          ::    mc,mnpar,   n0,   nc, nfbi
+    integer          ::   nid, nijd,  njd,   no
     double precision ::  dist,dist2,dmini,    x,  xcc
     double precision ::  xpar,    y,  ycc, ypar,    z
     double precision ::   zcc, zpar
@@ -56,7 +56,7 @@ contains
     dimension xcc (ip00),ycc (ip00),zcc (ip00),dist2(ip00)
     dimension dist(ip12),mnpar(ip12)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0=npn(l)
     i1=ii1(l)
@@ -114,5 +114,11 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine atdist_2
 end module mod_atdist_2

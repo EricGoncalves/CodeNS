@@ -28,14 +28,14 @@ contains
     use proprieteflu
     implicit none
     integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,   i2m2,     id,   iexp,    inc
-    integer          ::    ind1,   ind2,   indc,isortie, ityprk
-    integer          ::       j,     j1,   j1m1,   j1p1,     j2
-    integer          ::    j2m1,   j2m2,     jd,      k,     k1
-    integer          ::    k1m1,   k1p1,     k2,   k2m1,   k2m2
-    integer          ::      kd,   kdir, lgsnlt,     lm,      m
-    integer          ::      m1,      n,    n0c,     n1,    nci
-    integer          ::     ncj,    nid,   nijd,   ninc,    njd
+    integer          ::    i2m1,   i2m2,     id,   iexp,   ind1
+    integer          ::    ind2,isortie, ityprk,      j,     j1
+    integer          ::    j1m1,   j1p1,     j2,   j2m1,   j2m2
+    integer          ::      jd,      k,     k1,   k1m1,   k1p1
+    integer          ::      k2,   k2m1,   k2m2,     kd,   kdir
+    integer          ::  lgsnlt,     lm,      m,     m1,      n
+    integer          ::     n0c,     n1,    nci,    ncj,    nid
+    integer          ::    nijd,   ninc,    njd
     double precision ::    afc,   afd,   afe,   afg,   afh
     double precision ::    afi,    al,    am,  am2i,    ar
     double precision :: beta11,beta12,beta13,beta21,beta22
@@ -117,8 +117,8 @@ contains
     dimension fxx(ip00),fyy(ip00),fzz(ip00),fxy(ip00),fxz(ip00), &
          fyz(ip00),fex(ip00),fey(ip00),fez(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 
     n0c=npc(lm) 
     i1=ii1(lm) 
@@ -1933,5 +1933,16 @@ contains
     endif
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine sch_weno5pond
 end module mod_sch_weno5pond

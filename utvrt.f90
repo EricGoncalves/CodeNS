@@ -22,12 +22,11 @@ contains
     use definition
     use proprieteflu       
     implicit none
-    integer          ::    id,  inc,   jd,   kd,    l
-    integer          ::     m,  mfl,   ml,  mmb,  mpb
-    integer          ::    mt,  n0c,  n0n,   nc, ncbd
-    integer          ::   nci, ncij,ncijk, ncik,  ncj
-    integer          ::  ncjk,  nck,  nid, nijd,  njd
-    integer          ::    nn
+    integer          ::    id,   jd,   kd,    l,    m
+    integer          ::   mfl,   ml,  mmb,  mpb,   mt
+    integer          ::   n0c,  n0n,   nc, ncbd,  nci
+    integer          ::  ncij,ncijk, ncik,  ncj, ncjk
+    integer          ::   nck,  nid, nijd,  njd,   nn
     double precision ::      a,alpha0,alphar, bceqt, beta0
     double precision ::  betar,degrad,     p,  pis2,     q
     double precision ::  rmach,    ro,   rod,   roe,  roed
@@ -42,7 +41,7 @@ contains
     dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
     dimension mmb(mtt),mpb(mtt)
 !
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
 !
     n0n=npn(l)
     n0c=npc(l)
@@ -102,6 +101,12 @@ contains
     enddo
 !
     return
+  contains
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine utvrt
 
 end module mod_utvrt

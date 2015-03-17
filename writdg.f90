@@ -36,16 +36,16 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::    i,imax,imin, ind,   j
-    integer          :: jmax,jmin,   k, kdg,kmax
-    integer          :: kmin,   l, nid,nijd, njd
+    integer          ::    i,imax,imin,   j,jmax
+    integer          :: jmin,   k, kdg,kmax,kmin
+    integer          ::    l, nid,nijd, njd
     double precision :: x,y,z
 !
 !-----------------------------------------------------------------------
 !
     dimension x(ip00),y(ip00),z(ip00)
 !
-    ind(i,j,k)=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     if (l.eq.1) rewind kdg
 !
@@ -58,5 +58,11 @@ contains
     write(kdg)(((z(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine writdg
 end module mod_writdg

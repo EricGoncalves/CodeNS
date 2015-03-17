@@ -30,14 +30,13 @@ contains
     use proprieteflu
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,   inc,  ind1,  ind2
-    integer          ::   indc,ityprk,     j,    j1,  j1m1
-    integer          ::   j1p1,    j2,  j2m1,    jd,     k
-    integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
-    integer          ::     kd,  kdir,lgsnlt,    lm,     m
-    integer          ::     m2,     n,   n0c,    n2,   nci
-    integer          ::    ncj,   nck,   nid,  nijd,  ninc
-    integer          ::    njd
+    integer          ::   i2m1,    id,  ind1,  ind2,ityprk
+    integer          ::      j,    j1,  j1m1,  j1p1,    j2
+    integer          ::   j2m1,    jd,     k,    k1,  k1m1
+    integer          ::   k1p1,    k2,  k2m1,    kd,  kdir
+    integer          :: lgsnlt,    lm,     m,    m2,     n
+    integer          ::    n0c,    n2,   nci,   ncj,   nck
+    integer          ::    nid,  nijd,  ninc,   njd
     double precision ::    a1,   a2,   a3,   a4,cmui1
     double precision :: cmui2,cmuj1,cmuj2,cmuk1,cmuk2
     double precision ::   cvi,  cvj,  cvk,    d,  fex
@@ -65,8 +64,8 @@ contains
     dimension fxx(ip00),fyy(ip00),fzz(ip00),fxy(ip00),fxz(ip00), &
          fyz(ip00),fex(ip00),fey(ip00),fez(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 
     n0c=npc(lm)
     i1=ii1(lm)
@@ -712,5 +711,16 @@ contains
     endif
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine sch_jameson3pond
 end module mod_sch_jameson3pond

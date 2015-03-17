@@ -21,11 +21,12 @@ end module para_fige
 !
 module para_var
 implicit none
-  integer          ::    ip00,   ip11,   ip12,   ip13,   ip21
-  integer          ::    ip31,   ip40,   ip41,   ip42,   ip43
-  integer          ::    ip44,   ip60,  kdimg,  kdimk,  kdimv
-  integer          :: mdimtbf,mdimtcf,mdimtnf,mdimtrf, mdimub
-  integer          :: ndimctf,ndimnts,ndimntu, ndimub,   nvar
+  integer          ::    ccg2,   cfg2,   cng2,   ip00,   ip11
+  integer          ::    ip12,   ip13,   ip21,   ip31,   ip40
+  integer          ::    ip41,   ip42,   ip43,   ip44,   ip60
+  integer          ::   kdimg,  kdimk,  kdimv,mdimtbf,mdimtcf
+  integer          :: mdimtnf,mdimtrf, mdimub,ndimctf,ndimnts
+  integer          :: ndimntu, ndimub,   nvar
   double precision :: ccg,cfg,cng
   parameter(ndimub =120000)
   parameter(ndimctf=100000)
@@ -40,22 +41,27 @@ implicit none
   parameter(mdimtcf=160)
   parameter(mdimtrf=1)
   parameter(nvar   =7)
-!parameter(    ccg=1./3.) !3D
-!parameter(    cng=1./3.) !3D
+!  parameter(    ccg=1./3.) !3D
+!  parameter(    cng=1./3.) !3D
   parameter(    ccg=1./2.) 
   parameter(    cng=1./2.)
   parameter(    cfg=1.)
+!parameter(     ccg2=3) !3D
+!parameter(     cng2=3) !3D
+  parameter(   ccg2=2) 
+  parameter(   cng2=2)
+  parameter(   cfg2=1)
   parameter(ip00=ndimub)
-  parameter(ip11=nint((1.+kdimg*ccg)*ndimctf))
+  parameter(ip11=ndimctf+kdimg*ndimctf/ccg2)
   parameter(ip12=kdimv*(ip11-1)+1)
   parameter(ip13=kdimk*(ip11-1)+1)
-  parameter(ip21=nint((1.+kdimg*cng)*ndimnts+ndimntu))
-  parameter(ip31=nint(1.+3.*(1.+kdimg*cng)*ndimnts))
+  parameter(ip21=ndimnts+kdimg*ndimnts/cng2+ndimntu)
+  parameter(ip31=1+3*(ndimnts+kdimg*ndimnts/cng2))
   parameter(ip40=mdimub)
-  parameter(ip41=nint((1.+kdimg*cfg)*mdimtbf))
-  parameter(ip42=nint((1.+kdimg*cfg)*mdimtnf))
-  parameter(ip43=nint((1.+kdimg*cfg)*mdimtcf))
-  parameter(ip44=nint((1.+kdimg*cfg)*mdimtrf))
+  parameter(ip41=mdimtbf+kdimg*mdimtbf/cfg2)
+  parameter(ip42=mdimtbf+kdimg*mdimtbf/cfg2)
+  parameter(ip43=mdimtbf+kdimg*mdimtbf/cfg2)
+  parameter(ip44=mdimtbf+kdimg*mdimtbf/cfg2)
   parameter(ip60=nvar)
 end module para_var
 !

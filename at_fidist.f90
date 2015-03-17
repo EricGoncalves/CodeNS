@@ -65,20 +65,19 @@ contains
     integer          ::        i,      i1,      i2,    i2m1,    i2m2
     integer          ::     idif,   idind,     idm,iespacem,      ig
     integer          ::     igmx,     igr,    igrp,   imaxf,   iminf
-    integer          ::    imini,     ind,       j,      j1,      j2
-    integer          ::     j2m1,    j2m2,   jdind,jespacem,      jg
-    integer          ::     jgmx,     jgr,    jgrp,   jmaxf,   jminf
-    integer          ::        k,      k1,      k2,    k2m1,    k2m2
-    integer          ::    kdind,      kg,    kgmx,     kgr,    kgrp
-    integer          ::    kmaxf,   kminf,       l,     m0b,     m0n
-    integer          ::       m1,   m1max,    m1mi,    m1mx,    m1tb
-    integer          ::       m2,   m2max,    m2mi,    m2mx,    m2tb
-    integer          ::       mb,     mbb,    mbmx,      mc,   mfac0
-    integer          ::    mfacn,   mfacp,   mnpar,      mp,   mpar0
-    integer          ::    mpar1,       n,      n0,      nc,  ncelat
-    integer          ::   ncelgr,    ndeb,    nfbi,   nfpar,  nfpar0
-    integer          ::    nfrtb,     nid,    nijd,     njd,      ns
-    integer          ::     nsom
+    integer          ::    imini,       j,      j1,      j2,    j2m1
+    integer          ::     j2m2,   jdind,jespacem,      jg,    jgmx
+    integer          ::      jgr,    jgrp,   jmaxf,   jminf,       k
+    integer          ::       k1,      k2,    k2m1,    k2m2,   kdind
+    integer          ::       kg,    kgmx,     kgr,    kgrp,   kmaxf
+    integer          ::    kminf,       l,     m0b,     m0n,      m1
+    integer          ::    m1max,    m1mi,    m1mx,    m1tb,      m2
+    integer          ::    m2max,    m2mi,    m2mx,    m2tb,      mb
+    integer          ::      mbb,    mbmx,      mc,   mfac0,   mfacn
+    integer          ::    mfacp,   mnpar,      mp,   mpar0,   mpar1
+    integer          ::        n,      n0,      nc,  ncelat,  ncelgr
+    integer          ::     ndeb,    nfbi,   nfpar,  nfpar0,   nfrtb
+    integer          ::      nid,    nijd,     njd,      ns,    nsom
     double precision ::   dist, dist2, dmini,raptat,     x
     double precision ::    xcc,  xpar,     y,   ycc,  ypar
     double precision ::      z,   zcc,  zpar
@@ -94,7 +93,7 @@ contains
     dimension m1tb(ip00),m2tb(ip00),nfrtb(ip00)
     dimension nc(8)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0=npn(l)
     i1=ii1(l)
@@ -377,5 +376,11 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine at_fidist
 end module mod_at_fidist

@@ -32,12 +32,11 @@ contains
     use schemanum
     implicit none
     integer          ::     i,   i1,   i2, i2m1,   id
-    integer          ::   inc,  ind,    j,   j1,   j2
-    integer          ::  j2m1,   jd,    k,   k1,   k2
-    integer          ::  k2m1,   kd, kina,    l,    n
-    integer          ::    n0,  nci, ncij,ncijk, ncik
-    integer          ::   ncj, ncjk,  nck,  nid, nijd
-    integer          ::   njd
+    integer          ::     j,   j1,   j2, j2m1,   jd
+    integer          ::     k,   k1,   k2, k2m1,   kd
+    integer          ::  kina,    l,    n,   n0,  nci
+    integer          ::  ncij,ncijk, ncik,  ncj, ncjk
+    integer          ::   nck,  nid, nijd,  njd
     double precision ::      a, alpha,alphar,  beta, betar
     double precision :: degrad,   mut,     p,  pis2,     q
     double precision ::  rmach,    ro,   rou,   rov,   row
@@ -51,8 +50,8 @@ contains
     dimension mut(*)
     dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
 !
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
+
 !
     n0=npc(l)
     i1=ii1(l)
@@ -173,5 +172,16 @@ contains
     endif
 !
     return
+  contains
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine utinia
 end module mod_utinia

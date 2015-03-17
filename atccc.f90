@@ -33,10 +33,10 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::     i,   i1,   i2,  ind,indjk
-    integer          ::     j,   j1,   j2,    k,   k1
-    integer          ::    k2,    l,    m,    n,   n0
-    integer          ::   nid, nijd,  njd
+    integer          ::     i,   i1,   i2,indjk,    j
+    integer          ::    j1,   j2,    k,   k1,   k2
+    integer          ::     l,    m,    n,   n0,  nid
+    integer          ::  nijd,  njd
     double precision ::   x,xcc,  y,ycc,  z
     double precision :: zcc
 !
@@ -45,7 +45,7 @@ contains
     dimension x(ip21),y(ip21),z(ip21)
     dimension xcc(ip00),ycc(ip00),zcc(ip00)
 !
-    ind(  j,k)=n0+1+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0=npc(l)
     i1=ii1(l)
@@ -89,5 +89,11 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(  j,k)
+      implicit none
+      integer          :: ind,  j,  k
+      ind=n0+1+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine atccc
 end module mod_atccc

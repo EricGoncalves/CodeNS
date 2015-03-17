@@ -47,11 +47,10 @@ contains
     use maillage
     implicit none
     integer          ::    i,  i1,i1m1,  i2,  id
-    integer          ::  inc,inc1,inc2,inc3, ind
-    integer          ::    j,  j1,j1m1,  j2,  jd
-    integer          ::    k,  k1,k1m1,  k2,  kd
-    integer          ::    l,   m,   n,  n0, nid
-    integer          :: nijd, njd
+    integer          :: inc1,inc2,inc3,   j,  j1
+    integer          :: j1m1,  j2,  jd,   k,  k1
+    integer          :: k1m1,  k2,  kd,   l,   m
+    integer          ::    n,  n0, nid,nijd, njd
     double precision ::  x,xx, y,yy, z
     double precision :: zz
 !
@@ -60,8 +59,8 @@ contains
     dimension x(ip21),y(ip21),z(ip21)
     dimension xx(ip00),yy(ip00),zz(ip00)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     n0=npn(l)
     i1=ii1(l)
@@ -106,5 +105,16 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine cvccg
 end module mod_cvccg

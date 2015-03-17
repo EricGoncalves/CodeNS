@@ -53,11 +53,11 @@ contains
     use proprieteflu
     use boundary
     implicit none
-    integer          ::    id,  inc,   jd,   kd,    l
-    integer          ::     m,  mfl,   ml,   mt,  n0c
-    integer          ::   n0n,   nc, ncbd,  nci, ncij
-    integer          :: ncijk, ncik,  ncj, ncjk,  nck
-    integer          ::   nid, nijd,  njd,   nn
+    integer          ::    id,   jd,   kd,    l,    m
+    integer          ::   mfl,   ml,   mt,  n0c,  n0n
+    integer          ::    nc, ncbd,  nci, ncij,ncijk
+    integer          ::  ncik,  ncj, ncjk,  nck,  nid
+    integer          ::  nijd,  njd,   nn
     double precision ::      a,alpha0,alphar, bceqt, beta0
     double precision ::  betar,degrad,     p,  pis2,     q
     double precision ::  rmach,    ro,   rod,   roe,  roed
@@ -71,7 +71,7 @@ contains
     dimension y(ip21),z(ip21)
     dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
 !
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
 !
     n0n=npn(l)
     n0c=npc(l)
@@ -130,5 +130,11 @@ contains
     enddo
 !
     return
+  contains
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine utnrd
 end module mod_utnrd

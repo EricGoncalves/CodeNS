@@ -38,11 +38,11 @@ contains
     use chainecarac
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          :: imax,imin,ind1,ind2,indc
-    integer          ::    j,  j1,j1m1,  j2,j2m1
-    integer          :: jmax,jmin,   k,  k1,k1m1
-    integer          ::   k2,k2m1,kmax,kmin,   l
-    integer          ::    n,  n0, nid,nijd, njd
+    integer          :: imax,imin,ind1,ind2,   j
+    integer          ::   j1,j1m1,  j2,j2m1,jmax
+    integer          :: jmin,   k,  k1,k1m1,  k2
+    integer          :: k2m1,kmax,kmin,   l,   n
+    integer          ::   n0, nid,nijd, njd
     double precision ::   fd5x,  fd5y,  fd5z,  fd6x,  fd6y
     double precision ::   fd6z,    mu,     s,smutot
 !
@@ -54,7 +54,7 @@ contains
          fd5x(ip12),fd5y(ip12),fd5z(ip12), &
          fd6x(ip12),fd6y(ip12),fd6z(ip12)
 !
-    indc(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0=npc(l)
     i1=ii1(l)
@@ -114,5 +114,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine met_fludcsa
 end module mod_met_fludcsa

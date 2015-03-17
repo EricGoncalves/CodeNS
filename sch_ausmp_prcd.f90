@@ -29,33 +29,32 @@ contains
     use definition
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,   inc,  ind1,  ind2
-    integer          ::   indc,ityprk,     j,    j1,  j1m1
-    integer          ::   j1p1,    j2,  j2m1,    jd,     k
-    integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
-    integer          ::     kd,  kdir,lgsnlt,    lm,     m
-    integer          ::      n,   n0c,    n1,   nci,   ncj
-    integer          ::    nck,   nid,  nijd,  ninc,   njd
+    integer          ::   i2m1,    id,  ind1,  ind2,ityprk
+    integer          ::      j,    j1,  j1m1,  j1p1,    j2
+    integer          ::   j2m1,    jd,     k,    k1,  k1m1
+    integer          ::   k1p1,    k2,  k2m1,    kd,  kdir
+    integer          :: lgsnlt,    lm,     m,     n,   n0c
+    integer          ::     n1,   nci,   ncj,   nck,   nid
+    integer          ::   nijd,  ninc,   njd
     double precision ::     aa,    ai,    al,   ani,    ar
     double precision :: beta2l,beta2r, betai,    ca,    cb
     double precision ::    cmi,   cml,   cmm,   cmr,  cnds
     double precision ::      d,    dm,   fex,   fey,   fez
-    double precision ::     ff,   fmm,   fmp,   fpm,   fpp
-    double precision ::    fpr,   fxx,   fxy,   fxz,   fyy
-    double precision ::    fyz,   fzz,   hi1,   hi2,   hi3
-    double precision ::    hi4,   hi5,   hj1,   hj2,   hj3
-    double precision ::    hj4,   hj5,   hk1,   hk2,   hk3
-    double precision ::    hk4,   hk5,    hl,    hr,    nx
-    double precision ::     ny,    nz,    pl,   prr,    ps
-    double precision ::    psi,   q2l,   q2r,   qcx,   qcy
-    double precision ::    qcz,  qinf,    ra,  rhol,  rhor
-    double precision ::    si1,   si2,   si3,   si4,   si5
-    double precision ::    sj1,   sj2,   sj3,   sj4,   sj5
-    double precision ::    sk1,   sk2,   sk3,   sk4,   sk5
-    double precision ::     sn,    ta,  toxx,  toxy,  toxz
-    double precision ::   toyy,  toyz,  tozz,     u,    ul
-    double precision ::     ur,     v,    vl,   vnl,   vnr
-    double precision ::     vr,    wl,    wr,    xa
+    double precision ::     ff,   fpr,   fxx,   fxy,   fxz
+    double precision ::    fyy,   fyz,   fzz,   hi1,   hi2
+    double precision ::    hi3,   hi4,   hi5,   hj1,   hj2
+    double precision ::    hj3,   hj4,   hj5,   hk1,   hk2
+    double precision ::    hk3,   hk4,   hk5,    hl,    hr
+    double precision ::     nx,    ny,    nz,    pl,   prr
+    double precision ::     ps,   psi,   q2l,   q2r,   qcx
+    double precision ::    qcy,   qcz,  qinf,    ra,  rhol
+    double precision ::   rhor,   si1,   si2,   si3,   si4
+    double precision ::    si5,   sj1,   sj2,   sj3,   sj4
+    double precision ::    sj5,   sk1,   sk2,   sk3,   sk4
+    double precision ::    sk5,    sn,    ta,  toxx,  toxy
+    double precision ::   toxz,  toyy,  toyz,  tozz,     u
+    double precision ::     ul,    ur,     v,    vl,   vnl
+    double precision ::    vnr,    vr,    wl,    wr,    xa
 !          
 !-----------------------------------------------------------------------
 !
@@ -68,21 +67,7 @@ contains
     dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
          rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
-!     fonction du schema ausm+
-    fmp(aa)=0.25*(1.+sign(1.,abs(aa)-1.))*(aa+abs(aa)) &
-         +0.5*(1.-sign(1.,abs(aa)-1.))* &
-         (0.25*(aa+1.)**2+cb*(aa**2-1.)**2)
-    fmm(xa)=0.25*(1.+sign(1.,abs(xa)-1.))*(xa-abs(xa)) &
-         -0.5*(1.-sign(1.,abs(xa)-1.))* &
-         (0.25*(xa-1.)**2-cb**(xa**2-1.)**2)
-    fpp(ta)=0.25*(1.+sign(1.,abs(ta)-1.))*(1.+sign(1.,abs(ta))) &
-         +0.5*(1.-sign(1.,abs(ta)-1.))* &
-         (0.25*(ta+1.)**2*(2.-ta)+ca*ta*(ta**2-1.)**2)
-    fpm(ra)=0.25*(1.+sign(1.,abs(ra)-1.))*(1.-sign(1.,abs(ra))) &
-         +0.5*(1.-sign(1.,abs(ra)-1.))* &
-         (0.25*(ra-1.)**2*(2.+ra)-ca*ra*(ra**2-1.)**2)
+
 
     n0c=npc(lm)
     i1=ii1(lm)
@@ -770,5 +755,47 @@ contains
     endif
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
+
+!     fonction du schema ausm+
+
+    function    fmp(aa)
+      implicit none
+      double precision ::  aa,fmp
+      fmp=0.25*(1.+sign(1.,abs(aa)-1.))*(aa+abs(aa)) &
+           +0.5*(1.-sign(1.,abs(aa)-1.))* &
+           (0.25*(aa+1.)**2+cb*(aa**2-1.)**2)
+    end function fmp
+    function    fmm(xa)
+      implicit none
+      double precision :: fmm, xa
+      fmm=0.25*(1.+sign(1.,abs(xa)-1.))*(xa-abs(xa)) &
+           -0.5*(1.-sign(1.,abs(xa)-1.))* &
+           (0.25*(xa-1.)**2-cb**(xa**2-1.)**2)
+    end function fmm
+    function    fpp(ta)
+      implicit none
+      double precision :: fpp, ta
+      fpp=0.25*(1.+sign(1.,abs(ta)-1.))*(1.+sign(1.,abs(ta))) &
+           +0.5*(1.-sign(1.,abs(ta)-1.))* &
+           (0.25*(ta+1.)**2*(2.-ta)+ca*ta*(ta**2-1.)**2)
+    end function fpp
+    function    fpm(ra)
+      implicit none
+      double precision :: fpm, ra
+      fpm=0.25*(1.+sign(1.,abs(ra)-1.))*(1.-sign(1.,abs(ra))) &
+           +0.5*(1.-sign(1.,abs(ra)-1.))* &
+           (0.25*(ra-1.)**2*(2.+ra)-ca*ra*(ra**2-1.)**2)
+    end function fpm
   end subroutine sch_ausmp_prcd
 end module mod_sch_ausmp_prcd

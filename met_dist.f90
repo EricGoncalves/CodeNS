@@ -25,11 +25,11 @@ contains
     use chainecarac
     implicit none
     integer          ::     i,   i1,   i2, i2m1,   id
-    integer          ::   inc, indn,    j,   j1,   j2
-    integer          ::  j2m1,   jd,    k,   k1,   k2
-    integer          ::  k2m1,   kd,    l,    m,    n
-    integer          ::   n0c,  nci, ncij,ncijk, ncik
-    integer          ::   ncj, ncjk,  nck,  nid,  njd
+    integer          ::     j,   j1,   j2, j2m1,   jd
+    integer          ::     k,   k1,   k2, k2m1,   kd
+    integer          ::     l,    m,    n,  n0c,  nci
+    integer          ::  ncij,ncijk, ncik,  ncj, ncjk
+    integer          ::   nck,  nid,  njd
     double precision :: delta,  dx1,  dx2,  dx3,  dx4
     double precision ::   dy1,  dy2,  dy3,  dy4,  dz1
     double precision ::   dz2,  dz3,  dz4,    x,    y
@@ -40,8 +40,8 @@ contains
     dimension x(ip21),y(ip21),z(ip21)
     dimension Delta(ip00)
 !
-    indn(i,j,k)=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
-    inc(id,jd,kd)=id+jd*nid+kd*nid*njd
+
+
 !
     nid=id2(l)-id1(l)+1
     njd=jd2(l)-jd1(l)+1
@@ -131,5 +131,16 @@ contains
     endif
 !
     return
+  contains
+    function    indn(i,j,k)
+      implicit none
+      integer          ::    i,indn,   j,   k
+      indn=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
+    end function indn
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nid*njd
+    end function inc
   end subroutine met_dist
 end module mod_met_dist

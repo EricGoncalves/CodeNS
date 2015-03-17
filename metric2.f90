@@ -37,12 +37,12 @@ contains
     use chainecarac
     implicit none
     integer          ::     i,   i1, i1p1,   i2, i2m1
-    integer          ::    id,  inc, indn,    j,   j1
-    integer          ::  j1p1,   j2, j2m1,   jd,    k
-    integer          ::    k1, k1p1,   k2, k2m1,   kd
-    integer          ::     l,    m,    n,  n0c,  nci
-    integer          ::  ncij,ncijk, ncik,  ncj, ncjk
-    integer          ::   nck,  nid,  njd
+    integer          ::    id,    j,   j1, j1p1,   j2
+    integer          ::  j2m1,   jd,    k,   k1, k1p1
+    integer          ::    k2, k2m1,   kd,    l,    m
+    integer          ::     n,  n0c,  nci, ncij,ncijk
+    integer          ::  ncik,  ncj, ncjk,  nck,  nid
+    integer          ::   njd
     double precision :: cmui1,cmui2,cmuj1,cmuj2,cmuk1
     double precision :: cmuk2,  dmi,  dmj,  dmk,  dpi
     double precision ::   dpj,  dpk,   tk,    x,   xe
@@ -56,8 +56,8 @@ contains
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
          cmuk1(ip21),cmuk2(ip21)
 !
-    indn(i,j,k)=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
-    inc(id,jd,kd)=id+jd*nid+kd*nid*njd
+
+
 !
     nid=id2(l)-id1(l)+1
     njd=jd2(l)-jd1(l)+1
@@ -510,5 +510,16 @@ contains
     endif
 !
     return
+  contains
+    function    indn(i,j,k)
+      implicit none
+      integer          ::    i,indn,   j,   k
+      indn=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
+    end function indn
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nid*njd
+    end function inc
   end subroutine metric2
 end module mod_metric2

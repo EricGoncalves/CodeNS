@@ -22,17 +22,17 @@ contains
     use sortiefichier         
     implicit none
     integer          ::    i,  i1,  i2,i2m1,icyc
-    integer          ::  img, ind,   j,  j1,  j2
-    integer          :: j2m1,   k,  k1,  k2,k2m1
-    integer          ::    l,  lm,   n,  n0,ncyc
-    integer          ::  nid,nijd, njd
+    integer          ::  img,   j,  j1,  j2,j2m1
+    integer          ::    k,  k1,  k2,k2m1,   l
+    integer          ::   lm,   n,  n0,ncyc, nid
+    integer          :: nijd, njd
     double precision ::     dt,durmy2,  resr,    u0,     v
 !
 !--------------------------------------------------------------------
 !
     dimension u0(ip11,ip60),v(ip11,ip60),dt(ip11)
 !
-    ind(i,j,k)=n0+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+
 !
     durmy2 = 0.
     do l=1,lzx
@@ -72,5 +72,11 @@ contains
     write(sor3,'(1x,i6,1x,i6,1x,e13.6)') ncyc,icyc,resite
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function ind
   end subroutine dua_resro
 end module mod_dua_resro

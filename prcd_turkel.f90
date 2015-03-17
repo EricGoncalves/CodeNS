@@ -25,11 +25,11 @@ contains
     use definition
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,  ind1,  ind2,  indc,     j
-    integer          ::     j1,  j1m1,  j1p1,    j2,  j2m1
-    integer          ::      k,    k1,  k1m1,  k1p1,    k2
-    integer          ::   k2m1,lgsnlt,    lm,     m,     n
-    integer          ::    n0c,   nid,  nijd,   njd
+    integer          ::   i2m1,  ind1,  ind2,     j,    j1
+    integer          ::   j1m1,  j1p1,    j2,  j2m1,     k
+    integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
+    integer          :: lgsnlt,    lm,     m,     n,   n0c
+    integer          ::    nid,  nijd,   njd
     double precision ::    a2,beta2,cndsi,cndsj,cndsk
     double precision ::  cson,   gd,   ge,  get,  p11
     double precision ::   p12,  p13,  p14,  p15,  p21
@@ -46,7 +46,7 @@ contains
     dimension sn(lgsnlt,nind,ndir)
     dimension temp(ip11),cson(ip11)
 !
-    indc(i,j,k)=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+
 !
     n0c=npc(lm)
     i1=ii1(lm)
@@ -129,5 +129,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
   end subroutine prcd_turkel
 end module mod_prcd_turkel

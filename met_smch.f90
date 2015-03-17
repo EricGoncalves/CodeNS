@@ -67,12 +67,12 @@ contains
     use chainecarac
     implicit none
     integer          ::     i,   i1, i1m1, i1p1,   i2
-    integer          ::  i2m1,   id,  inc, indc,    j
-    integer          ::    j1, j1p1,   j2, j2m1,   jd
-    integer          ::     k,   k1, k1p1,   k2, k2m1
-    integer          ::    kd,    l,    m,mnpar,   mp
-    integer          ::     n,  n0c,  nci,  ncj,  nck
-    integer          ::   nid, nijd,  njd
+    integer          ::  i2m1,   id,    j,   j1, j1p1
+    integer          ::    j2, j2m1,   jd,    k,   k1
+    integer          ::  k1p1,   k2, k2m1,   kd,    l
+    integer          ::     m,mnpar,   mp,    n,  n0c
+    integer          ::   nci,  ncj,  nck,  nid, nijd
+    integer          ::   njd
     double precision ::   dist, dist2, epssk,    f2,    mu
     double precision :: qcxts5,qcyts6, rodst,  rtur,  sch1
     double precision ::   sch2,  sch3, tprod,  utau,     v
@@ -85,8 +85,8 @@ contains
          qcxts5(ip12),qcyts6 (ip12)
     dimension tprod(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
 !     ----------------------------------------------------------
 !
@@ -147,5 +147,16 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine met_smch
 end module mod_met_smch

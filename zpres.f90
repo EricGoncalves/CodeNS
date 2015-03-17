@@ -31,11 +31,11 @@ contains
     use proprieteflu 
     implicit none
     integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,   ind1,   ind2,   indc,isortie
-    integer          ::       j,     j1,   j1m1,   j1p1,     j2
-    integer          ::    j2m1,      k,     k1,   k1m1,   k1p1
-    integer          ::      k2,   k2m1,      l,      m,      n
-    integer          ::     n0c,    nid,   nijd,    njd
+    integer          ::    i2m1,   ind1,   ind2,isortie,      j
+    integer          ::      j1,   j1m1,   j1p1,     j2,   j2m1
+    integer          ::       k,     k1,   k1m1,   k1p1,     k2
+    integer          ::    k2m1,      l,      m,      n,    n0c
+    integer          ::     nid,   nijd,    njd
     double precision ::     cson,pression,    rhoe,       v,   ztemp
 !
 !-----------------------------------------------------------------------
@@ -43,7 +43,7 @@ contains
     dimension v(ip11,ip60)
     dimension pression(ip11),ztemp(ip11),cson(ip11)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -96,5 +96,11 @@ contains
     endif
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine zpres
 end module mod_zpres

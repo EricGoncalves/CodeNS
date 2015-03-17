@@ -46,10 +46,10 @@ contains
     use maillage
     use modeleturb
     implicit none
-    integer          ::     i, imax, imin,  ind,    j
-    integer          ::  jmax, jmin,    k,  kda, kmax
-    integer          ::  kmin,    l,    m,ndmut,  nid
-    integer          ::  nijd,  njd
+    integer          ::     i, imax, imin,    j, jmax
+    integer          ::  jmin,    k,  kda, kmax, kmin
+    integer          ::     l,    m,ndmut,  nid, nijd
+    integer          ::   njd
     double precision ::  mut,utau,  v1,  v2,  v3
     double precision ::   v4,  v5,  v6,  v7
 !
@@ -61,7 +61,7 @@ contains
     dimension mut(ndmut)
     dimension utau(ip42)
 !
-    ind(i,j,k)=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     if(l.eq.1) rewind kda
 !
@@ -112,5 +112,11 @@ contains
 !      close(100)
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine writda
 end module mod_writda

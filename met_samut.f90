@@ -25,11 +25,10 @@ contains
     use proprieteflu
     implicit none
     integer          ::    i,  i1,  i2,i2m1,  id
-    integer          ::  inc, ind,   j,  j1,  j2
-    integer          :: j2m1,  jd,   k,  k1,  k2
-    integer          :: k2m1,  kd,   l,   n,  n0
-    integer          ::  nci, ncj, nck, nid,nijd
-    integer          ::  njd
+    integer          ::    j,  j1,  j2,j2m1,  jd
+    integer          ::    k,  k1,  k2,k2m1,  kd
+    integer          ::    l,   n,  n0, nci, ncj
+    integer          ::  nck, nid,nijd, njd
     double precision ::  cv13,  fv1,   mu,  mut,    v
     double precision ::  xkhi,xkhi3
 !
@@ -38,8 +37,8 @@ contains
     dimension mu(ip12),mut(ip12)
     dimension v(ip11,ip60)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     n0=npc(l)
     i1=ii1(l)
@@ -76,5 +75,16 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine met_samut
 end module mod_met_samut

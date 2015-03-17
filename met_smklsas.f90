@@ -73,13 +73,13 @@ contains
     use mod_met_bark
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          ::     id,  imax,  imin,   inc,  ind1
-    integer          ::   ind2,  indc,     j,    j1,  j1m1
-    integer          ::     j2,  j2m1,    jd,  jmax,  jmin
-    integer          ::      k,    k1,  k1m1,    k2,  k2m1
-    integer          ::     kd,  kmax,  kmin,     l,lgsnlt
-    integer          ::      m, mnpar,     n,   n0c,   nci
-    integer          ::    nid,  nijd,   njd,  npsn
+    integer          ::     id,  imax,  imin,  ind1,  ind2
+    integer          ::      j,    j1,  j1m1,    j2,  j2m1
+    integer          ::     jd,  jmax,  jmin,     k,    k1
+    integer          ::   k1m1,    k2,  k2m1,    kd,  kmax
+    integer          ::   kmin,     l,lgsnlt,     m, mnpar
+    integer          ::      n,   n0c,   nci,   nid,  nijd
+    integer          ::    njd,  npsn
     double precision ::    bark,   c132,   cc43,   cfke,  cmui1
     double precision ::   cmui2,  cmuj1,  cmuj2,  cmuk1,  cmuk2
     double precision ::    csk2,   csl1,  csl12,   dist,   divv
@@ -114,8 +114,8 @@ contains
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
          cmuk1(ip21),cmuk2(ip21)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     impli=.true.
 !      impli=.false.
@@ -334,5 +334,16 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine met_smklsas
 end module mod_met_smklsas

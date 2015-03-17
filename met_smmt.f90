@@ -56,12 +56,12 @@ contains
     use mod_met_mtcorf1
     implicit none
     integer          ::     i,   i1, i1m1,   i2, i2m1
-    integer          ::    id,  inc, indc,    j,   j1
-    integer          ::  j1m1,   j2, j2m1,   jd,    k
-    integer          ::    k1, k1m1,   k2, k2m1,   kd
-    integer          ::     l,    m,mnpar,    n,  n0c
-    integer          ::   nci, ncin,  ncj,  nck, ncyc
-    integer          ::   nid, nijd,  njd
+    integer          ::    id,    j,   j1, j1m1,   j2
+    integer          ::  j2m1,   jd,    k,   k1, k1m1
+    integer          ::    k2, k2m1,   kd,    l,    m
+    integer          :: mnpar,    n,  n0c,  nci, ncin
+    integer          ::   ncj,  nck, ncyc,  nid, nijd
+    integer          ::   njd
     double precision ::   cfke, coef1, coef2, coef3, coef4
     double precision ::   dist, dist2, dkomg, exp2x,   fm1
     double precision ::    fm2,  frac,  gkgo,    mu,   mut
@@ -80,8 +80,8 @@ contains
     dimension tprod(ip00),gkgo(ip00)
     dimension ncin(ip41),cfke(ip13)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     xgam1=beta1/betae-sigma1*okappa**2/sqrt(betae)
     xgam2=beta2/betae-sigma2*okappa**2/sqrt(betae)
@@ -193,5 +193,16 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine met_smmt
 end module mod_met_smmt

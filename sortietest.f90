@@ -30,11 +30,11 @@ contains
     use schemanum
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          :: icycle, idcyc,  indc,     j,    j1
-    integer          ::   j1m1,    j2,  j2m1,  jmid,     k
-    integer          ::     k1,  k1m1,    k2,  k2m1,     l
-    integer          ::      m,     n,   n0c, ncycl,   nid
-    integer          ::   nijd,   njd,  nmid
+    integer          :: icycle, idcyc,     j,    j1,  j1m1
+    integer          ::     j2,  j2m1,  jmid,     k,    k1
+    integer          ::   k1m1,    k2,  k2m1,     l,     m
+    integer          ::      n,   n0c, ncycl,   nid,  nijd
+    integer          ::    njd,  nmid
     double precision ::   dist,    mu,   mut,    ps,  qinf
     double precision ::      t,  temp,vdual2,   vol,     x
     double precision ::    xcc,     y,   ycc,     z,   zcc
@@ -48,7 +48,7 @@ contains
     dimension ps(ip11),vol(ip11),temp(ip11)
     dimension mu(ip12),mut(ip12),dist(ip12)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -172,5 +172,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine sortietest
 end module mod_sortietest

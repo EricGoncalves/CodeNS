@@ -40,13 +40,13 @@ contains
     use maillage
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2p1
-    integer          ::   id,iinc, inc, ind,  is
-    integer          ::    j,  j1,j1m1,  j2,j2p1
-    integer          ::   jd,jinc,  js,   k,  k1
-    integer          :: k1m1,  k2,k2p1,  kd,kinc
-    integer          ::   ks,   l,   n,  n0, nci
-    integer          :: nci2, ncj,ncj2, nck,nck2
-    integer          ::  nid,nijd, njd
+    integer          ::   id,iinc,  is,   j,  j1
+    integer          :: j1m1,  j2,j2p1,  jd,jinc
+    integer          ::   js,   k,  k1,k1m1,  k2
+    integer          :: k2p1,  kd,kinc,  ks,   l
+    integer          ::    n,  n0, nci,nci2, ncj
+    integer          :: ncj2, nck,nck2, nid,nijd
+    integer          ::  njd
     double precision :: ex1,ex2,  x,  y,  z
 !
 !-----------------------------------------------------------------------
@@ -55,8 +55,8 @@ contains
 !
 !----- extrapolation d' ordre 0 ou 1
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     n0=npn(l)
     i1=ii1(l)
@@ -130,5 +130,16 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine extmhg
 end module mod_extmhg

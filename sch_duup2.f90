@@ -44,10 +44,10 @@ contains
     use mod_met_klnmut
     implicit none
     integer          ::    i,  i1,  i2,i2m1, img
-    integer          :: ind1,ind2,indc,   j,  j1
-    integer          ::   j2,j2m1,   k,  k1,  k2
-    integer          :: k2m1,   l,  lm,   m, n0c
-    integer          ::   nc,ncyc, nid,nijd, njd
+    integer          :: ind1,ind2,   j,  j1,  j2
+    integer          :: j2m1,   k,  k1,  k2,k2m1
+    integer          ::    l,  lm,   m, n0c,  nc
+    integer          :: ncyc, nid,nijd, njd
     double precision ::    c13, cmui1, cmui2, cmuj1, cmuj2
     double precision ::  cmuk1, cmuk2,  dist,    mu,   mut
     double precision :: ptdual,    sn,     t, tprod,     v
@@ -66,7 +66,7 @@ contains
 
 
 !
-    indc(i,j,k)=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+
 
     REAL,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz
     ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
@@ -261,5 +261,11 @@ contains
     DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz)
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function indc
   end subroutine sch_duup2
 end module mod_sch_duup2

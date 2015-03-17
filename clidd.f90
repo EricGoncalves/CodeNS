@@ -105,12 +105,12 @@ contains
     use proprieteflu
     use definition
     implicit none
-    integer          ::    id,  inc,   jd,   kd,    l
-    integer          ::     m,   mb,  mfb,  mmb,   mn
-    integer          ::   mpb,  mpn,   mt,  n0c,  n0n
-    integer          ::    nc, ncbd,  nci, ncij,ncijk
-    integer          ::  ncik,  ncj, ncjk,  nck,  nid
-    integer          ::  nijd, nitn,  njd,   nn
+    integer          ::    id,   jd,   kd,    l,    m
+    integer          ::    mb,  mfb,  mmb,   mn,  mpb
+    integer          ::   mpn,   mt,  n0c,  n0n,   nc
+    integer          ::  ncbd,  nci, ncij,ncijk, ncik
+    integer          ::   ncj, ncjk,  nck,  nid, nijd
+    integer          ::  nitn,  njd,   nn
     double precision ::      am0,       b,    cson,     d0x,     d0y
     double precision ::      d0z,      df,     dqn,     eps,       f
     double precision ::    gam2t,    gam6,    gamt,     nxn,     nyn
@@ -134,7 +134,7 @@ contains
          un(ip40),usdn(ip40),ym(ip40),zm(ip40)
     dimension y(ip21),z(ip21)
 !
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
 !
     eps=0.0000001
     n0n=npn(l)
@@ -233,5 +233,11 @@ contains
     enddo
 !
     return
+  contains
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine clidd
 end module mod_clidd

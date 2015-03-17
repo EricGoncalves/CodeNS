@@ -28,15 +28,14 @@ contains
     use modeleturb
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          :: ibalai,    id,   inc,  ind1,  ind2
-    integer          ::   indc,     j,    j1,  j1m1,    j2
-    integer          ::   j2m1,    jd,     k,    k1,  k1m1
-    integer          ::     k2,  k2m1,    kd,  kdir,     l
-    integer          ::   ldom,lgsnlt,    li,    lj,     m
-    integer          ::     mb,    mf,   mfb,    mt,     n
-    integer          ::    n0c,   nci,  ncin,   ncj,   nck
-    integer          ::   ncyc,    ni,   nid,  nijd,  ninc
-    integer          ::    njd,    no
+    integer          :: ibalai,    id,  ind1,  ind2,     j
+    integer          ::     j1,  j1m1,    j2,  j2m1,    jd
+    integer          ::      k,    k1,  k1m1,    k2,  k2m1
+    integer          ::     kd,  kdir,     l,  ldom,lgsnlt
+    integer          ::     li,    lj,     m,    mb,    mf
+    integer          ::    mfb,    mt,     n,   n0c,   nci
+    integer          ::   ncin,   ncj,   nck,  ncyc,    ni
+    integer          ::    nid,  nijd,  ninc,   njd,    no
     double precision ::       ai,   alpha,   beta6,   beta7,      bi
     double precision ::      cci,    cfke,     cmt,    cnds,coefdiag
     double precision ::      di6,     di7,     dj6,     dj7,      dt
@@ -57,8 +56,8 @@ contains
          coefdiag(ip00),alpha(ip00),beta6(ip00),beta7(ip00)
     dimension sn(lgsnlt,nind,ndir)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
-    inc(id,jd,kd)=id+jd*nid+kd*nijd
+
+
 !
     DOUBLE PRECISION,DIMENSION(:,:),ALLOCATABLE :: coefe
     ALLOCATE(coefe(ndir,ip00))
@@ -381,5 +380,16 @@ contains
     DEALLOCATE(coefe)
 
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nijd
+    end function inc
   end subroutine impli2_eqt
 end module mod_impli2_eqt

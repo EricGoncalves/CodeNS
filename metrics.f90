@@ -64,11 +64,10 @@ contains
     use mod_svol
     use mod_extmhg
     implicit none
-    integer          ::      i,    id,   inc,  indc,  indn
-    integer          ::      j,    jd,     k,    kd,     l
-    integer          :: lgsnlt,    nc,   nci,  ncij, ncijk
-    integer          ::   ncik,   ncj,  ncjk,   nck,   nid
-    integer          ::    njd,    nn,  npsn
+    integer          ::      i,    id,     j,    jd,     k
+    integer          ::     kd,     l,lgsnlt,    nc,   nci
+    integer          ::   ncij, ncijk,  ncik,   ncj,  ncjk
+    integer          ::    nck,   nid,   njd,    nn,  npsn
     double precision :: exs1,exs2,   r,  sn, tn1
     double precision ::  tn2, tn3, vol,   x,   y
     double precision ::   yc,   z,  zc
@@ -79,9 +78,9 @@ contains
     dimension sn(ip31*ndir)
     dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
-    indn(i,j,k)=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
-    indc(i,j,k)=npc(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
-    inc(id,jd,kd)=id+jd*nid+kd*nid*njd
+
+
+
 !
     nid=id2(l)-id1(l)+1
     njd=jd2(l)-jd1(l)+1
@@ -129,5 +128,21 @@ contains
     endif
 !
     return
+  contains
+    function    indn(i,j,k)
+      implicit none
+      integer          ::    i,indn,   j,   k
+      indn=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
+    end function indn
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=npc(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
+    end function indc
+    function    inc(id,jd,kd)
+      implicit none
+      integer          ::  id,inc, jd, kd
+      inc=id+jd*nid+kd*nid*njd
+    end function inc
   end subroutine metrics
 end module mod_metrics

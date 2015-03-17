@@ -36,17 +36,17 @@ contains
     use sortiefichier 
     implicit none
     integer          ::    i,  i1,i1m1,  i2, img
-    integer          ::  ind,   j,  j1,j1m1,  j2
-    integer          ::    k,  k1,k1m1,  k2,kneg
-    integer          ::    l,  lm,   n,  n0, nid
-    integer          :: nijd, njd
+    integer          ::    j,  j1,j1m1,  j2,   k
+    integer          ::   k1,k1m1,  k2,kneg,   l
+    integer          ::   lm,   n,  n0, nid,nijd
+    integer          ::  njd
     double precision :: vol
 !
 !-----------------------------------------------------------------------
 !
     dimension vol(ip11)
 !
-    ind(i,j,k)=n0+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+
 !
     n0=npc(lm)
     i1=ii1(lm)
@@ -95,5 +95,11 @@ contains
 1003 format(///,5x,'arret du programme car mailles negatives')
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
+    end function ind
   end subroutine vervol
 end module mod_vervol

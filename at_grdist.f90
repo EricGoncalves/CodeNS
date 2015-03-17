@@ -55,13 +55,13 @@ contains
     use boundary
     implicit none
     integer          ::     i,   i1,   i2,   ib,  igr
-    integer          ::  igr0,imini,  ind,    j,   j1
-    integer          ::    j2,   jb,  jgr, jgr0,    k
-    integer          ::    k1,   k2,   kb,  kgr, kgr0
-    integer          ::     l,  m0b, m1tb, m2tb,   mb
-    integer          ::   mbb, mbmx,   mc,mnpar,   mp
-    integer          :: mpar0,mpar1,   n0,   nc, nfbi
-    integer          :: nfrtb,  nid, nijd,  njd
+    integer          ::  igr0,imini,    j,   j1,   j2
+    integer          ::    jb,  jgr, jgr0,    k,   k1
+    integer          ::    k2,   kb,  kgr, kgr0,    l
+    integer          ::   m0b, m1tb, m2tb,   mb,  mbb
+    integer          ::  mbmx,   mc,mnpar,   mp,mpar0
+    integer          :: mpar1,   n0,   nc, nfbi,nfrtb
+    integer          ::   nid, nijd,  njd
     double precision ::  dist,dist2,dmini,    x,  xcc
     double precision ::  xpar,    y,  ycc, ypar,    z
     double precision ::   zcc, zpar
@@ -74,7 +74,7 @@ contains
     dimension dist(ip12),mnpar(ip12)
     dimension m1tb(ip00),m2tb(ip00),nfrtb(ip00)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0=npn(l)
     i1=ii1(l)
@@ -154,5 +154,11 @@ contains
     enddo
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine at_grdist
 end module mod_at_grdist

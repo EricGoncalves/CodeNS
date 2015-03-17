@@ -18,11 +18,10 @@ contains
     use maillage
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          :: ind1,ind2,indc,   j,  j1
-    integer          :: j1m1,  j2,j2m1,   k,  k1
-    integer          :: k1m1,  k2,k2m1,   l,   m
-    integer          ::    n, n0c,ncyc, nid,nijd
-    integer          ::  njd
+    integer          :: ind1,ind2,   j,  j1,j1m1
+    integer          ::   j2,j2m1,   k,  k1,k1m1
+    integer          ::   k2,k2m1,   l,   m,   n
+    integer          ::  n0c,ncyc, nid,nijd, njd
     double precision ::   ds3, dvxx, dvxy, dvxz, dvyx
     double precision ::  dvyy, dvyz, dvzx, dvzy, dvzz
     double precision ::   mut,    s,torxx,torxy,torxz
@@ -37,7 +36,7 @@ contains
          dvyx(ip00),dvyy(ip00),dvyz(ip00), &
          dvzx(ip00),dvzy(ip00),dvzz(ip00)
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -81,5 +80,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine met_prod
 end module mod_met_prod

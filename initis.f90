@@ -44,18 +44,18 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::    i,  ii,imax,imin, ind
-    integer          ::    j,  jj,jmax,jmin,   k
-    integer          ::   kk,kmax,kmin,   l,   m
-    integer          ::   m0,  mt,  n0,ncbd, nid
-    integer          :: nijd, njd
+    integer          ::    i,  ii,imax,imin,   j
+    integer          ::   jj,jmax,jmin,   k,  kk
+    integer          :: kmax,kmin,   l,   m,  m0
+    integer          ::   mt,  n0,ncbd, nid,nijd
+    integer          ::  njd
 !
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indfl
     dimension ncbd(ip41)
 !
-    ind(i,j,k)=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+
 !
     n0=npc(l)
 !
@@ -128,5 +128,11 @@ contains
     end if
 !
     return
+  contains
+    function    ind(i,j,k)
+      implicit none
+      integer          ::   i,ind,  j,  k
+      ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function ind
   end subroutine initis
 end module mod_initis
