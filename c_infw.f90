@@ -22,23 +22,15 @@ contains
     use mod_tcmd_infw
     use mod_b1_infw
     implicit none
-    integer          ::  imot, kina,    l, ldom,ldomd
-    integer          ::  nmot
-    double precision ::    mut, tnte1,  utau,     v, vdual
-    double precision :: vdual1,vdual2,     x,     y,     z
+  integer          ::  imot(nmx),      kina,         l,ldom(nobj),     ldomd
+  integer          ::       nmot
+  double precision ::         mut(ip12), tnte1(ip11,ip60),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60)
+  double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),          x(ip21),          y(ip21),          z(ip21)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
 !
-    dimension imot(nmx)
-    dimension ldom(nobj)
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension v(ip11,ip60)
-    dimension mut  (ip12)
-    dimension tnte1(ip11,ip60)
-    dimension utau(ip42)
-    dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
 !
     call tcmd_infw( &
          mot,imot,nmot, &

@@ -16,13 +16,12 @@ contains
     use kcle
     use mod_cctcmd
     implicit none
-    integer          ::  imot, itit,lgcmd, nmot
+  integer          :: imot(nmx),     itit,    lgcmd,     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: command
     character(len=32)   :: mot(nmx)
-    dimension imot(nmx)
 !
     if(ktitrt1.eq.2) ktitrt1=3
 !

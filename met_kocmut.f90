@@ -32,28 +32,20 @@ contains
     use modeleturb
     use mod_teq_gradv
     implicit none
-    integer          ::    i,  i1,  i2,i2m1,ind1
-    integer          :: ind2,   j,  j1,  j2,j2m1
-    integer          ::    k,  k1,  k2,k2m1,   l
-    integer          ::    m,   n,  n0, nid,nijd
-    integer          ::  njd
-    double precision ::    a1,cmui1,cmui2,cmuj1,cmuj2
-    double precision :: cmuk1,cmuk2,coef1,coef2, dist
-    double precision ::  dvxx, dvxy, dvxz, dvyx, dvyy
-    double precision ::  dvyz, dvzx, dvzy, dvzz,exp2x
-    double precision ::    f2,   mu,  mut, omeg, rota
-    double precision ::    sn,    t,    v,  vol, zeta
+  integer          ::    i,  i1,  i2,i2m1,ind1
+  integer          :: ind2,   j,  j1,  j2,j2m1
+  integer          ::    k,  k1,  k2,k2m1,   l
+  integer          ::    m,   n,  n0, nid,nijd
+  integer          ::  njd
+  double precision ::            a1,  cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21)
+  double precision ::   cmuk1(ip21),  cmuk2(ip21),        coef1,        coef2,   dist(ip12)
+  double precision ::    dvxx(ip00),   dvxy(ip00),   dvxz(ip00),   dvyx(ip00),   dvyy(ip00)
+  double precision ::    dvyz(ip00),   dvzx(ip00),   dvzy(ip00),   dvzz(ip00),        exp2x
+  double precision ::            f2,     mu(ip12),    mut(ip12),         omeg,         rota
+  double precision :: sn(ip31*ndir),      t(ip00), v(ip11,ip60),    vol(ip11),         zeta
 !
 !-----------------------------------------------------------------------
 !
-    dimension mu(ip12),mut(ip12),dist(ip12),vol(ip11)
-    dimension v(ip11,ip60)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-         dvzx(ip00),dvzy(ip00),dvzz(ip00),t(ip00)
-    dimension sn(ip31*ndir)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 !
 
 !
@@ -123,7 +115,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine met_kocmut

@@ -14,13 +14,12 @@ contains
     use definition
     use sortiefichier
     implicit none
-    integer          :: ibddim,  nvbc
-    double precision :: alf0,bet0,pdim,tdim, vbc
+  integer          :: ibddim,  nvbc
+  double precision ::           alf0,          bet0,          pdim,          tdim,vbc(ista*lsta)
 !
 !-----------------------------------------------------------------------
 !
     character(len=4 ) :: clmf
-    dimension vbc(ista*lsta)
 !
     if(ibddim.eq.0) then
        pdim=1.

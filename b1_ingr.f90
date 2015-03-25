@@ -18,14 +18,13 @@ contains
 !
     use sortiefichier
     implicit none
-    integer          ::   king,  ldom, ldomd,  long,longm1
-    integer          ::     nm, nmult,    nr, nrest
+  integer          ::        king,ldom(ldomd),      ldomd,       long,     longm1
+  integer          ::          nm,      nmult,         nr,      nrest
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
     character(len=2 ) :: nlg,nlm,nrr,nrm
-    dimension ldom(ldomd)
 !
     long=6
     longm1=long-1

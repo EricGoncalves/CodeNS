@@ -47,12 +47,11 @@ contains
     use mod_b1_dfnzst
     use mod_dfnzst
     implicit none
-    integer          ::   imot,  nmot,nonzst
+  integer          :: imot(nmx),     nmot,   nonzst
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     call tcmd_dfnzst( &
          mot,imot,nmot, &

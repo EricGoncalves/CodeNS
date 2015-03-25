@@ -44,23 +44,18 @@ contains
     use modeleturb
     use chainecarac
     implicit none
-    integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          :: imax,imin,ind1,ind2,   j
-    integer          ::   j1,j1m1,  j2,j2m1,jmax
-    integer          :: jmin,   k,  k1,k1m1,  k2
-    integer          :: k2m1,kmax,kmin,   l,   n
-    integer          ::   n0, nid,nijd, njd
-    double precision :: dtdx,dtdy,dtdz,fd5x,fd5y
-    double precision :: fd5z,fd6x,fd6y,fd6z,  mu
-    double precision ::  mut,   s,   t
+  integer          ::    i,  i1,i1m1,  i2,i2m1
+  integer          :: imax,imin,ind1,ind2,   j
+  integer          ::   j1,j1m1,  j2,j2m1,jmax
+  integer          :: jmin,   k,  k1,k1m1,  k2
+  integer          :: k2m1,kmax,kmin,   l,   n
+  integer          ::   n0, nid,nijd, njd
+  double precision ::   dtdx(ip00),  dtdy(ip00),  dtdz(ip00),  fd5x(ip12),  fd5y(ip12)
+  double precision ::   fd5z(ip12),  fd6x(ip12),  fd6y(ip12),  fd6z(ip12),    mu(ip12)
+  double precision ::    mut(ip12),s(ip11,ip60),     t(ip00)
 !
 !-----------------------------------------------------------------------
 !
-    dimension s(ip11,ip60)
-    dimension mut(ip12),mu(ip12), &
-         fd5x(ip12),fd5y(ip12),fd5z(ip12), &
-         fd6x(ip12),fd6y(ip12),fd6z(ip12)
-    dimension t(ip00),dtdx(ip00),dtdy(ip00),dtdz(ip00)
 !
 
 !
@@ -124,7 +119,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
   end subroutine met_fludc

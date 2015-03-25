@@ -11,14 +11,12 @@ contains
     use para_fige
     use boundary
     implicit none
-    integer          ::    m,  mb,  mc,  mf, mfb
-    integer          ::  mnc,  mt,  nc,ncbd,  nd
-    double precision :: t
+  integer          ::          m,        mb,        mc,        mf,       mfb
+  integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd
+  double precision :: t(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension t(ip11,ip60)
-    dimension mnc(ip43),ncbd(ip41)
 !
     do mf=1,nbd
 !

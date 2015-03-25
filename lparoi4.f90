@@ -75,26 +75,19 @@ contains
     use modeleturb
     use definition
     implicit none
-    integer          ::      m,  m0ns,    mb,   mfb,    mt
-    integer          ::     nc,  ncbd,  ncin,  ncyc,nfacns
-    integer          ::     ni
-    double precision ::   n1,  n2,  n3, nxn, nyn
-    double precision ::  nzn, qc1, qcx, qcy, qcz
-    double precision ::  rop,  t1,  t2,  t3,temp
-    double precision ::   tn, top,toxx,toxy,toxz
-    double precision :: toyy,toyz,tozz,  tt,utau
-    double precision ::    v, v1x, v1y, v1z
+  integer          ::          m,      m0ns,        mb,       mfb,        mt
+  integer          ::         nc,ncbd(ip41),ncin(ip41),      ncyc,    nfacns
+  integer          ::         ni
+  double precision ::           n1,          n2,          n3,   nxn(ip42),   nyn(ip42)
+  double precision ::    nzn(ip42),         qc1,   qcx(ip12),   qcy(ip12),   qcz(ip12)
+  double precision ::          rop,          t1,          t2,          t3,  temp(ip11)
+  double precision ::           tn,         top,  toxx(ip12),  toxy(ip12),  toxz(ip12)
+  double precision ::   toyy(ip12),  toyz(ip12),  tozz(ip12),          tt,  utau(ip42)
+  double precision :: v(ip11,ip60),         v1x,         v1y,         v1z
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension v(ip11,ip60)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12), &
-         toyz(ip12),tozz(ip12), &
-         qcx (ip12),qcy(ip12),qcz(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),utau(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension temp(ip11)
 !
     mt=mmb(mfb)
     m0ns=mpn(mfb)

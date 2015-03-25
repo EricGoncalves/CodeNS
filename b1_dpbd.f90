@@ -17,8 +17,8 @@ contains
     use para_fige
     use sortiefichier
     implicit none
-    integer          ::    lgr,  lgrd,  lmfb, lmfbd,  long
-    integer          :: longm1,    nm, nmult,    nr, nrest
+  integer          ::   lgr(lgrd),       lgrd,lmfb(lmfbd),      lmfbd,       long
+  integer          ::      longm1,         nm,      nmult,         nr,      nrest
 !
 !-----------------------------------------------------------------------
 !
@@ -26,8 +26,6 @@ contains
     character(len=32) ::  typdat
     character(len=2 ) :: nlg,nlm,nrr,nrm
 !
-    dimension lmfb(lmfbd)
-    dimension lgr(lgrd)
 !
     long=6
     longm1=long-1

@@ -57,23 +57,16 @@ contains
     use boundary
     use mod_lp2sa1
     implicit none
-    integer          ::     l, ldom,   mf,  mfb,mnpar
-    integer          ::  ncbd, ncin, ncyc,   no
-    double precision ::     dist,    fgam,      mu,     mut,     nxn
-    double precision ::      nyn,     nzn,pression,      sn,     tn1
-    double precision ::      tn2,     tn3,      tp,    utau,       v
-    double precision ::      vol,   ztemp
+  integer          ::           l,       ldom,         mf,        mfb,mnpar(ip12)
+  integer          ::  ncbd(ip41), ncin(ip41),       ncyc,         no
+  double precision ::     dist(ip12),    fgam(ip42),      mu(ip12),     mut(ip12),     nxn(ip42)
+  double precision ::      nyn(ip42),     nzn(ip42),pression(ip11), sn(ip31*ndir),     tn1(ip00)
+  double precision ::      tn2(ip00),     tn3(ip00),      tp(ip40),    utau(ip42),  v(ip11,ip60)
+  double precision ::      vol(ip11),   ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension v(ip11,ip60)
-    dimension mu(ip12),mut(ip12),mnpar(ip12),dist(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),fgam(ip42),utau(ip42)
-    dimension ncin(ip41),ncbd(ip41),tp(ip40)
-    dimension pression(ip11),ztemp(ip11),vol(ip11)     
-    dimension sn(ip31*ndir)
-    dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
     nbd=0
     do no=1,mtbx

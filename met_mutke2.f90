@@ -42,29 +42,24 @@ contains
     use modeleturb
     use chainecarac
     implicit none
-    integer          ::     i,   i1, i1m1,   i2, i2m1
-    integer          ::    id,    j,   j1, j1m1,   j2
-    integer          ::  j2m1,   jd,    k,   k1, k1m1
-    integer          ::    k2, k2m1,   kd,    l,    m
-    integer          :: mnpar,    n,  n0c,  nci, ncin
-    integer          ::   ncj,  nck, ncyc,  nid, nijd
-    integer          ::   njd
-    double precision ::    c14,   c22,   c50,   chi,  chi2
-    double precision ::   chi4,  cmb1,cmu500, coef1, coef2
-    double precision ::  coef3, coef4,  dist, dist2,   eps
-    double precision ::  exp2x,    f1,   fmu, fmujl, fmusm
-    double precision ::   frac,    mu,   mut,  mut0, retur
-    double precision ::    s24,txxf5x,txyf5y,txzf5z,tyyf6x
-    double precision :: tyzf6y,tzzf6z,     v,    x1,    xk
-    double precision ::     xl,  zeta
+  integer          ::           i,         i1,       i1m1,         i2,       i2m1
+  integer          ::          id,          j,         j1,       j1m1,         j2
+  integer          ::        j2m1,         jd,          k,         k1,       k1m1
+  integer          ::          k2,       k2m1,         kd,          l,          m
+  integer          :: mnpar(ip12),          n,        n0c,        nci, ncin(ip41)
+  integer          ::         ncj,        nck,       ncyc,        nid,       nijd
+  integer          ::         njd
+  double precision ::          c14,         c22,         c50,         chi,        chi2
+  double precision ::         chi4,        cmb1,      cmu500,       coef1,       coef2
+  double precision ::        coef3,       coef4,  dist(ip12),       dist2,         eps
+  double precision ::        exp2x,          f1,         fmu,       fmujl,       fmusm
+  double precision ::   frac(ip12),    mu(ip12),   mut(ip12),        mut0,       retur
+  double precision ::          s24,txxf5x(ip12),txyf5y(ip12),txzf5z(ip12),tyyf6x(ip12)
+  double precision :: tyzf6y(ip12),tzzf6z(ip12),v(ip11,ip60),          x1,          xk
+  double precision ::           xl,        zeta
 !
 !-----------------------------------------------------------------------
 !
-    dimension v(ip11,ip60)
-    dimension mut(ip12),mu(ip12),dist(ip12),mnpar(ip12), &
-         txxf5x(ip12),txyf5y (ip12),txzf5z(ip12), &
-         tyyf6x(ip12),tyzf6y (ip12),tzzf6z(ip12),frac(ip12)
-    dimension ncin(ip41)
 !
 
 
@@ -183,12 +178,12 @@ contains
   contains
     function    indc(i,j,k)  
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_mutke2

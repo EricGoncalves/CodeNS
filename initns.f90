@@ -124,29 +124,24 @@ contains
     use boundary
     use mod_norm
     implicit none
-    integer          ::    dm,    i,   i1,   i2,   id
-    integer          ::  imax, imin,   is,    j,   j1
-    integer          ::    j2,   jd, jmax, jmin,   js
-    integer          ::     k,   k1,   k2,   kd, kmax
-    integer          ::  kmin,   ks,    l,  m0b,  m0n
-    integer          ::    m1,m1max,m1min,   m2,m2max
-    integer          :: m2min,   mb,  mfb,   mn,   n0
-    integer          ::  ncbd,  nci,  ncj,  nck,  nid
-    integer          ::  nijd, nip0,  njd
-    double precision ::  eps,  nn, nxn, nyn, nzn
-    double precision :: tnix,tniy,tniz,tnjx,tnjy
-    double precision :: tnjz,tnkx,tnky,tnkz,   x
-    double precision ::    y,   z
+  integer          ::         dm,         i,        i1,        i2,        id
+  integer          ::       imax,      imin,        is,         j,        j1
+  integer          ::         j2,        jd,      jmax,      jmin,        js
+  integer          ::          k,        k1,        k2,        kd,      kmax
+  integer          ::       kmin,        ks,         l,       m0b,       m0n
+  integer          ::         m1,     m1max,     m1min,        m2,     m2max
+  integer          ::      m2min,        mb,       mfb,        mn,        n0
+  integer          :: ncbd(ip41),       nci,       ncj,       nck,       nid
+  integer          ::       nijd,      nip0,       njd
+  double precision ::        eps,        nn, nxn(ip42), nyn(ip42), nzn(ip42)
+  double precision :: tnix(ip00),tniy(ip00),tniz(ip00),tnjx(ip00),tnjy(ip00)
+  double precision :: tnjz(ip00),tnkx(ip00),tnky(ip00),tnkz(ip00),   x(ip21)
+  double precision ::    y(ip21),   z(ip21)
 !
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indfb
     character(len=7 ) :: eqt
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension tnix(ip00),tniy(ip00),tniz(ip00), &
-         tnjx(ip00),tnjy(ip00),tnjz(ip00), &
-         tnkx(ip00),tnky(ip00),tnkz(ip00)
 !
     eps=1.e-10
 !

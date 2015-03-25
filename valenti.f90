@@ -16,14 +16,13 @@ contains
     use chainecarac
     use mod_entier
     implicit none
-    integer          ::  icmt, ient, imot, kerr,kient
-    integer          ::    nm
+  integer          ::      icmt,     ient,imot(nmx),     kerr,    kient
+  integer          ::        nm
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

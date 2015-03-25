@@ -128,30 +128,21 @@ contains
     use mod_atdist_3
     use mod_at_fidist
     implicit none
-    integer          ::     dm1,    dm2,    dm3,idefaut,   ierr
-    integer          ::     if0,    if1,    igr, isens3,    jgr
-    integer          ::     kgr,      l, ldismx,      m,    m10
-    integer          ::   m1max,  m1min,   m1tb,    m20,  m2max
-    integer          ::   m2min,   m2tb,    m30,  m3max,  m3min
-    integer          ::      mf,    mnc,  mnpar,      n,   ncbd
-    integer          ::    ncin,     nf,   nfbe,   nfbi,  nfrtb
-    integer          ::      no
-    double precision ::   dist, dist2,  fgam,   nxn,   nyn
-    double precision ::    nzn,raptat,     x,   xcc,  xpar
-    double precision ::      y,   ycc,  ypar,     z,   zcc
-    double precision ::   zpar
+  integer          ::         dm1,        dm2,        dm3,    idefaut,       ierr
+  integer          ::         if0,        if1,    igr(lz),     isens3,    jgr(lz)
+  integer          ::     kgr(lz),          l,     ldismx,          m,        m10
+  integer          ::       m1max,      m1min, m1tb(ip00),        m20,      m2max
+  integer          ::       m2min, m2tb(ip00),        m30,      m3max,      m3min
+  integer          ::          mf,  mnc(ip43),mnpar(ip12),          n, ncbd(ip41)
+  integer          ::  ncin(ip41),         nf,       nfbe,       nfbi,nfrtb(ip00)
+  integer          ::          no
+  double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
+  double precision ::   nzn(ip42),raptat(mtb),    x(ip21),  xcc(ip00), xpar(ip00)
+  double precision ::     y(ip21),  ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00)
+  double precision ::  zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !
-    dimension dist(ip12),mnpar(ip12),fgam(ip42)
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension xpar(ip00),ypar(ip00),zpar(ip00)
-    dimension xcc (ip00),ycc (ip00),zcc (ip00),dist2(ip00)
-    dimension ncin(ip41)
-    dimension mnc(ip43)
-    dimension m1tb(ip00),m2tb(ip00),nfrtb(ip00)
-    dimension igr(lz),jgr(lz),kgr(lz),raptat(mtb)
 !
 !     verification compatibilite du dimensionnement
 !     Les centres des facettes parois a normales stockees sont mis

@@ -114,33 +114,20 @@ contains
     use mod_zgrad2
     use mod_rbtc
     implicit none
-    integer          ::    icyc,    img,      l, lgsnlt,     lm
-    integer          :: mcyturb,     mf,    mfc,    mnc,  mnpar
-    integer          ::    ncbd,   ncin,   npsn
-    double precision :: cmui1,cmui2,cmuj1,cmuj2,cmuk1
-    double precision :: cmuk2, dist, dvxx, dvxy, dvxz
-    double precision ::  dvyx, dvyy, dvyz, dvzx, dvzy
-    double precision ::  dvzz, fgam,   mu,  mut,  qcx
-    double precision ::   qcy,  qcz,   ro,    s,   sn
-    double precision ::  toxx, toxy, toxz, toyy, toyz
-    double precision ::  tozz,  vol,    x,    y,    z
-    double precision :: ztemp
+  integer          ::        icyc,        img,          l,     lgsnlt,         lm
+  integer          ::     mcyturb,         mf,        mfc,  mnc(ip43),mnpar(ip12)
+  integer          ::  ncbd(ip41), ncin(ip41),       npsn
+  double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
+  double precision ::   cmuk2(ip21),   dist(ip12),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00)
+  double precision ::    dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00)
+  double precision ::    dvzz(ip00),   fgam(ip42),     mu(ip12),    mut(ip12),    qcx(ip12)
+  double precision ::     qcy(ip12),    qcz(ip12),     ro(ip11), s(ip11,ip60),sn(ip31*ndir)
+  double precision ::    toxx(ip12),   toxy(ip12),   toxz(ip12),   toyy(ip12),   toyz(ip12)
+  double precision ::    tozz(ip12),    vol(ip11),      x(ip21),      y(ip21),      z(ip21)
+  double precision ::   ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension s(ip11,ip60)
-    dimension ro(ip11),vol(ip11),ztemp(ip11)
-    dimension mu(ip12),mut(ip12),mnpar(ip12), &
-         toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12), &
-         qcx(ip12),qcy(ip12),qcz(ip12),dist(ip12)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00), &
-         dvyz(ip00),dvzx(ip00),dvzy(ip00),dvzz(ip00)
-    dimension ncbd(ip41),ncin(ip41),fgam(ip42),mnc(ip43)
-    dimension sn(ip31*ndir)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
     REAL,DIMENSION(:),ALLOCATABLE :: dtx,dty,dtz
     ALLOCATE(dtx(ip00),dty(ip00),dtz(ip00))
 !

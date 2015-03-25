@@ -38,16 +38,14 @@ contains
     use chainecarac
     use mod_norm
     implicit none
-    integer          ::     i1,    i2,  imax,  imin,    j1
-    integer          ::     j2,  jmax,  jmin,    k1,    k2
-    integer          ::   kmax,  kmin,     l,lgsnlt
-    double precision :: sn, x, y, z
+  integer          ::     i1,    i2,  imax,  imin,    j1
+  integer          ::     j2,  jmax,  jmin,    k1,    k2
+  integer          ::   kmax,  kmin,     l,lgsnlt
+  double precision :: sn(lgsnlt,nind,ndir),             x(ip21),             y(ip21),             z(ip21)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: eqt
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension sn(lgsnlt,nind,ndir)
 !
     i1=ii1(l)
     i2=ii2(l)

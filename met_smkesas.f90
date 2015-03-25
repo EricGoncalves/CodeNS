@@ -24,39 +24,28 @@ contains
     use chainecarac
     use mod_met_laplaciens
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,  i2p1,    id,     j,    j1
-    integer          ::   j1m1,  j1p1,    j2,  j2m1,  j2p1
-    integer          ::     jd,     k,    k1,  k1m1,  k1p1
-    integer          ::     k2,  k2m1,  k2p1,    kd,     l
-    integer          :: lgsnlt,     m,     n,   n0c,   nci
-    integer          ::    ncj,   nck,   nid,  nijd,   njd
-    integer          ::   npsn
-    double precision ::    arg,     b,  bare,  bark,  c1f1
-    double precision ::   c2f2,  cc43,  cfke, cmui1, cmui2
-    double precision ::  cmuj1, cmuj2, cmuk1, cmuk2,     d
-    double precision ::   dtdx,  dvxx,  dvxy,  dvxz,  dvyx
-    double precision ::   dvyy,  dvyz,  dvzx,  dvzy,  dvzz
-    double precision ::    esk,    f1,    f2,     g,    mu
-    double precision :: nlaplu,  psas,  qsi2,rdelta, retur
-    double precision :: roe2sk,     s,    sn,    ss,     t
-    double precision ::    tn1,   tn2,   tn3, tprod,  tsv6
-    double precision ::   tsv7,   vol,     x,    xl,   xl1
-    double precision ::    xl2,  xlvk, xlvk2
+  integer          ::      i,    i1,  i1m1,  i1p1,    i2
+  integer          ::   i2m1,  i2p1,    id,     j,    j1
+  integer          ::   j1m1,  j1p1,    j2,  j2m1,  j2p1
+  integer          ::     jd,     k,    k1,  k1m1,  k1p1
+  integer          ::     k2,  k2m1,  k2p1,    kd,     l
+  integer          :: lgsnlt,     m,     n,   n0c,   nci
+  integer          ::    ncj,   nck,   nid,  nijd,   njd
+  integer          ::   npsn
+  double precision ::           arg,            b,   bare(ip00),   bark(ip00),         c1f1
+  double precision ::          c2f2,         cc43,   cfke(ip13),  cmui1(ip21),  cmui2(ip21)
+  double precision ::   cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),            d
+  double precision ::    dtdx(ip00),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00),   dvyx(ip00)
+  double precision ::    dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00),   dvzz(ip00)
+  double precision ::           esk,           f1,           f2,            g,     mu(ip12)
+  double precision ::        nlaplu,         psas,         qsi2,       rdelta,        retur
+  double precision ::        roe2sk, s(ip11,ip60),sn(ip31*ndir),           ss,      t(ip00)
+  double precision ::     tn1(ip00),    tn2(ip00),    tn3(ip00),  tprod(ip00),   tsv6(ip12)
+  double precision ::    tsv7(ip12),    vol(ip11),            x,           xl,          xl1
+  double precision ::           xl2,         xlvk,        xlvk2
 !
 !-----------------------------------------------------------------------
 !
-    dimension s(ip11,ip60)
-    dimension mu(ip12),tsv6(ip12),tsv7(ip12)
-    dimension vol(ip11)
-    dimension tprod(ip00),bark(ip00),bare(ip00)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00), &
-         dvyz(ip00),dvzx(ip00),dvzy(ip00),dvzz(ip00), &
-         tn1(ip00),tn2(ip00),tn3(ip00),t(ip00),dtdx(ip00)
-    dimension cfke(ip13)
-    dimension sn(ip31*ndir)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 !
 
 
@@ -185,12 +174,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_smkesas

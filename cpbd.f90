@@ -88,39 +88,23 @@ contains
     use sortiefichier
     use mod_rbc
     implicit none
-    integer          ::  mfb, mnc, mnr,ncbd,ncin
-    integer          ::   no
-    double precision ::    bceqt,    cson,     d0x,     d0y,     d0z
-    double precision ::      mut,     nxn,     nyn,     nzn,     omg
-    double precision ::     pres,pression,     qtx,     qty,     qtz
-    double precision ::      rod,    roed,    roud,    rovd,    rowd
-    double precision ::      rpi,     rti,      sn,     tm1,    tm10
-    double precision ::     tm11,    tm12,    tm13,     tm2,     tm3
-    double precision ::      tm4,     tm5,     tm6,     tm7,     tm8
-    double precision ::      tm9,      tp,       v,     vol,       x
-    double precision ::      xnr,       y,     ynr,       z,     znr
-    double precision ::    ztemp
+  integer          ::        mfb, mnc(ip43), mnr(ip44),ncbd(ip41),ncin(ip41)
+  integer          ::         no
+  double precision :: bceqt(ip41,neqt),      cson(ip11),       d0x(ip40),       d0y(ip40),       d0z(ip40)
+  double precision ::        mut(ip12),       nxn(ip42),       nyn(ip42),       nzn(ip42),             omg
+  double precision ::       pres(ip40),  pression(ip11),       qtx(ip40),       qty(ip40),       qtz(ip40)
+  double precision ::        rod(ip40),      roed(ip40),      roud(ip40),      rovd(ip40),      rowd(ip40)
+  double precision ::        rpi(ip40),       rti(ip40),   sn(ip31*ndir),       tm1(ip40),      tm10(ip40)
+  double precision ::       tm11(ip40),      tm12(ip40),      tm13(ip40),       tm2(ip40),       tm3(ip40)
+  double precision ::        tm4(ip40),       tm5(ip40),       tm6(ip40),       tm7(ip40),       tm8(ip40)
+  double precision ::        tm9(ip40),        tp(ip40),    v(ip11,ip60),       vol(ip11),         x(ip21)
+  double precision ::        xnr(ip44),         y(ip21),       ynr(ip44),         z(ip21),       znr(ip44)
+  double precision ::      ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
-    character(len=4) clsave
+    character(len=4) :: clsave(mtb)
 !
-    dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
-         tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
-         tm11(ip40),tm12(ip40),tm13(ip40)
-    dimension bceqt(ip41,neqt)
-    dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40)
-    dimension d0x(ip40),d0y(ip40),d0z(ip40)
-    dimension qtx(ip40),qty(ip40),qtz(ip40)
-    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-    dimension x(ip21),y(ip21),z(ip21), &
-         v(ip11,ip60)
-    dimension sn(ip31*ndir)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
-    dimension ncin(ip41),mnc(ip43),mut(ip12)
-    dimension pression(ip11),ztemp(ip11),cson(ip11),vol(ip11)
-    dimension clsave(mtb)
 !
     if (kexl.eq.0) then
 !

@@ -76,23 +76,16 @@ contains
     use mod_lparoi4
     use mod_lparoi3d
     implicit none
-    integer          ::  img, mfb,ncbd,ncin,ncyc
-    integer          ::   no
-    double precision ::   nxn,  nyn,  nzn,  qcx,  qcy
-    double precision ::   qcz, topz, toxx, toxy, toxz
-    double precision ::  toyy, toyz, tozz, utau,    v
-    double precision :: ztemp
+  integer          ::        img,       mfb,ncbd(ip41),ncin(ip41),      ncyc
+  integer          ::         no
+  double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),   qcx(ip12),   qcy(ip12)
+  double precision ::    qcz(ip12),  topz(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12)
+  double precision ::   toyy(ip12),  toyz(ip12),  tozz(ip12),  utau(ip42),v(ip11,ip60)
+  double precision ::  ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension v(ip11,ip60)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12), &
-         qcx(ip12),qcy(ip12),qcz(ip12) 
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),utau(ip42)
-    dimension ncbd(ip41),ncin(ip41)
-    dimension topz(ip11),ztemp(ip11)
 
 !    boucle sur toutes les frontieres
     do no=1,mtbx

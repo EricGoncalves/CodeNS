@@ -94,43 +94,24 @@ contains
     use mod_met_smkl
     use mod_met_smko
     implicit none
-    integer          :: icycle,     l,lgsnlt,    mf,   mfc
-    integer          ::    mfr,   mnc, mnpar,   mnr,  ncbd
-    integer          ::   ncin,  ncyc,  npsn
-    double precision ::    bceqt,    cfke,   cmui1,   cmui2,   cmuj1
-    double precision ::    cmuj2,   cmuk1,   cmuk2,   coefe,    cson
-    double precision ::        d,    dist,      dt,    dtdx,    dtdy
-    double precision ::     dtdz,    fgam,      mu,     mut,     nxn
-    double precision ::      nyn,     nzn,pression,  ptdual,  qcxts5
-    double precision ::   qcyts6,  qcz000,      sn,       t,     tn1
-    double precision ::     tn10,     tn2,     tn3,     tn9,    topz
-    double precision ::       tp,   tprod,  txxf5x,  txyf5y,  txzf5z
-    double precision ::   tyyf6x,  tyzf6y,  tzzf6z,       u,    utau
-    double precision ::        v,     vol,       x,     xnr,       y
-    double precision ::      ynr,       z,     znr,   ztemp
+  integer          ::      icycle,          l,     lgsnlt,         mf,        mfc
+  integer          ::         mfr,  mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41)
+  integer          ::  ncin(ip41),       ncyc,       npsn
+  double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
+  double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21), coefe(ndir,ip00),       cson(ip11)
+  double precision ::      d(ip11,ip60),       dist(ip12),         dt(ip11),       dtdx(ip00),       dtdy(ip00)
+  double precision ::        dtdz(ip00),       fgam(ip42),         mu(ip12),        mut(ip12),        nxn(ip42)
+  double precision ::         nyn(ip42),        nzn(ip42),   pression(ip11),ptdual(ip11,ip60),     qcxts5(ip12)
+  double precision ::      qcyts6(ip12),     qcz000(ip12),    sn(ip31*ndir),          t(ip00),        tn1(ip00)
+  double precision ::        tn10(ip00),        tn2(ip00),        tn3(ip00),        tn9(ip00),       topz(ip11)
+  double precision ::          tp(ip40),      tprod(ip00),     txxf5x(ip12),     txyf5y(ip12),     txzf5z(ip12)
+  double precision ::      tyyf6x(ip12),     tyzf6y(ip12),     tzzf6z(ip12),     u(ip11,ip60),       utau(ip42)
+  double precision ::      v(ip11,ip60),        vol(ip11),          x(ip21),        xnr(ip44),          y(ip21)
+  double precision ::         ynr(ip44),          z(ip21),        znr(ip44),      ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60),ptdual(ip11,ip60)
-    dimension dt(ip11),vol(ip11),ztemp(ip11),cson(ip11),pression(ip11),topz(ip11)
-    dimension mut(ip12),mu(ip12), &
-         txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &
-         tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12), &
-         qcxts5(ip12),qcyts6(ip12),qcz000(ip12)
-    dimension cfke(ip13)
-    dimension bceqt(ip41,neqt)
-    dimension sn(ip31*ndir)
-    dimension tn1(ip00),tn2(ip00),tn3(ip00),t(ip00),tprod(ip00), &
-         dtdx(ip00),dtdy(ip00),dtdz(ip00),tn9(ip00),tn10(ip00)
-    dimension tp(ip40),ncbd(ip41),ncin(ip41),mnc(ip43)
-    dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension mnpar(ip12),dist(ip12),fgam(ip42),utau(ip42)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
-    dimension coefe(ndir,ip00)
-    dimension x(ip21),y(ip21),z(ip21)
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz, &
          dvzx,dvzy,dvzz,fracmod
     ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &

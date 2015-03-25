@@ -52,21 +52,16 @@ contains
     use boundary
     use definition
     implicit none
-    integer          ::    m,  mb,  mc,  mf, mfb
-    integer          ::  mnc,  mt,  nc,ncbd,ncin
-    integer          ::   nd, ndm
-    double precision ::   cr, qcx,qcxr, qcy,qcyr
-    double precision ::  qcz,qczr,  sr,toxx,toxy
-    double precision :: toxz,toyy,toyz,tozz,txxr
-    double precision :: txyr,txzr,tyyr,tyzr,tzzr
+  integer          ::          m,        mb,        mc,        mf,       mfb
+  integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),ncin(ip41)
+  integer          ::         nd,       ndm
+  double precision ::         cr, qcx(ip12),      qcxr, qcy(ip12),      qcyr
+  double precision ::  qcz(ip12),      qczr,        sr,toxx(ip12),toxy(ip12)
+  double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12),      txxr
+  double precision ::       txyr,      txzr,      tyyr,      tyzr,      tzzr
 !
 !-----------------------------------------------------------------------
 !
-    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12), &
-         qcx(ip12),qcy(ip12),qcz(ip12)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension mnc(ip43)
 !
     do mf=1,nbd
 !

@@ -21,14 +21,13 @@ contains
     use mod_valenti
     use mod_valreel
     implicit none
-    integer          :: icmt,imot,kval, lst,  nm
-    integer          :: nmot, nst
+  integer          ::      icmt,imot(nmx),     kval,      lst,       nm
+  integer          ::      nmot,      nst
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

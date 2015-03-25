@@ -15,12 +15,11 @@ contains
     use sortiefichier
     use mod_tcmd_dftl1
     implicit none
-    integer          :: imot,nmot
+  integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     call tcmd_dftl1(mot,imot,nmot)
 !

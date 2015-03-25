@@ -23,20 +23,17 @@ contains
     use constantes
     use schemanum
     implicit none
-    integer          ::      i,    i1,    i2,  i2m1, idcyc
-    integer          ::   ind1,  ind2,ityprk,     j,    j1
-    integer          ::     j2,  j2m1,     k,    k1,    k2
-    integer          ::   k2m1,    lm,     m,   n0c,    nc
-    integer          ::    nid,  nijd,   njd
-    double precision :: dtpas,   ff, omeg,temps,  ts1
-    double precision ::     u,  vol,    x,  xcc,    y
-    double precision ::   ycc,    z,  zcc
+  integer          ::      i,    i1,    i2,  i2m1, idcyc
+  integer          ::   ind1,  ind2,ityprk,     j,    j1
+  integer          ::     j2,  j2m1,     k,    k1,    k2
+  integer          ::   k2m1,    lm,     m,   n0c,    nc
+  integer          ::    nid,  nijd,   njd
+  double precision ::         dtpas,ff(ip11,ip60),         omeg,        temps,          ts1
+  double precision ::  u(ip11,ip60),    vol(ip11),      x(ip21),          xcc,      y(ip21)
+  double precision ::           ycc,      z(ip21),          zcc
 !
 !-----------------------------------------------------------------------
 !
-    dimension u(ip11,ip60),ff(ip11,ip60)
-    dimension vol(ip11)
-    dimension x(ip21),y(ip21),z(ip21)
 !
 
 !
@@ -115,7 +112,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
   end subroutine sch_acou

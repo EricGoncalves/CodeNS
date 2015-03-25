@@ -113,17 +113,17 @@ contains
     use mod_initcs
     use mod_extmhg
     implicit none
-    integer          ::    ia1,   ia2,   ib1,   ib2,   iba
-    integer          ::   ibam,   img,  imgi,  imgj,  imgk
-    integer          ::    ja1,   ja2,   jb1,   jb2,   jba
-    integer          ::   jbam,   ka1,   ka2,   kb1,   kb2
-    integer          ::    kba,  kbam, kibdc,kinitc,   krr
-    integer          ::     la,   lam,    lb,   lbm,   m0c
-    integer          ::  mdncb, mfbea, mfbeb, mfbia,mfbiam
-    integer          ::  mfbib,mfbibm,   mfc,   mlb,   mnc
-    integer          ::     mt,  ncbd,  ncin
-    double precision :: epsmsh,  exs1,  exs2,     x,     y
-    double precision ::      z
+  integer          ::        ia1,       ia2,       ib1,       ib2,       iba
+  integer          ::       ibam,       img,      imgi,      imgj,      imgk
+  integer          ::        ja1,       ja2,       jb1,       jb2,       jba
+  integer          ::       jbam,       ka1,       ka2,       kb1,       kb2
+  integer          ::        kba,      kbam,     kibdc,    kinitc,       krr
+  integer          ::         la,       lam,        lb,       lbm,       m0c
+  integer          ::      mdncb,     mfbea,     mfbeb,     mfbia,    mfbiam
+  integer          ::      mfbib,    mfbibm,       mfc,       mlb, mnc(ip43)
+  integer          ::         mt,ncbd(ip41),ncin(ip41)
+  double precision ::  epsmsh,   exs1,   exs2,x(ip21),y(ip21)
+  double precision :: z(ip21)
 !
 !-----------------------------------------------------------------------
 !
@@ -131,9 +131,6 @@ contains
     character(len=7 ) :: eqt
     character(len=6 ) :: typa,typb
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension ncbd(ip41),ncin(ip41)
-    dimension mnc(ip43)
 !
     mfbia=nfei(mfbea)
     mfbib=nfei(mfbeb)

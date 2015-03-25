@@ -66,29 +66,17 @@ contains
     use mod_met_smkes
     use mod_met_exgr
     implicit none
-    integer          :: l
-    double precision ::   bare,  bark,  cfke, cmui1, cmui2
-    double precision ::  cmuj1, cmuj2, cmuk1, cmuk2,  cson
-    double precision ::   dtdx,  dtdy,  dtdz,  dvxx,  dvxy
-    double precision ::   dvxz,  dvyx,  dvyy,  dvyz,  dvzx
-    double precision ::   dvzy,  dvzz,    mu,   mut,qcxts5
-    double precision :: qcyts6,    sn,     t,   tn1,   tn2
-    double precision ::    tn3, tprod,     v,   vol
+  integer          :: l
+  double precision ::    bare(ip00),   bark(ip00),   cfke(ip13),  cmui1(ip21),  cmui2(ip21)
+  double precision ::   cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),   cson(ip11)
+  double precision ::    dtdx(ip00),   dtdy(ip00),   dtdz(ip00),   dvxx(ip00),   dvxy(ip00)
+  double precision ::    dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00)
+  double precision ::    dvzy(ip00),   dvzz(ip00),     mu(ip12),    mut(ip12), qcxts5(ip12)
+  double precision ::  qcyts6(ip12),sn(ip31*ndir),      t(ip00),    tn1(ip00),    tn2(ip00)
+  double precision ::     tn3(ip00),  tprod(ip00), v(ip11,ip60),    vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
-    dimension v(ip11,ip60)
-    dimension mut(ip12),mu(ip12),qcxts5(ip12),qcyts6(ip12)
-    dimension cfke(ip13),vol(ip11),cson(ip11)
-    dimension sn(ip31*ndir)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-         dvzx(ip00),dvzy(ip00),dvzz(ip00), &
-         dtdx(ip00),dtdy(ip00),dtdz(ip00), &
-         t(ip00),tprod(ip00),bark(ip00),bare(ip00), &
-         tn1(ip00),tn2(ip00),tn3(ip00)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 !
 !        ----------------------------------------------------------
 !com     teq_exgr(grad(v)) --> grad(v) sur les points fictifs

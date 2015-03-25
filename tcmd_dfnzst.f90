@@ -17,14 +17,13 @@ contains
     use chainecarac
     use mod_valenti
     implicit none
-    integer          ::   icmt,  imot,  kval,    nm,  nmot
-    integer          :: nonzst
+  integer          ::      icmt,imot(nmx),     kval,       nm,     nmot
+  integer          ::    nonzst
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
 !
     do icmt=1,32

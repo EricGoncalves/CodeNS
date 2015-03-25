@@ -29,19 +29,17 @@ contains
     use maillage
     use modeleturb
     implicit none
-    integer          ::      i,    i1,    i2,  i2m1,    id
-    integer          :: idebug,     j,    j1,    j2,  j2m1
-    integer          ::     jd,     k,    k1,    k2,  k2m1
-    integer          ::     kd,     l,     n,    n0,   nci
-    integer          ::    ncj,   nck,  ncyc,   nid,  nijd
-    integer          ::    njd
-    double precision :: allfae,    mu,   mut,omegha,  rapk
-    double precision :: reytur,     v
+  integer          ::      i,    i1,    i2,  i2m1,    id
+  integer          :: idebug,     j,    j1,    j2,  j2m1
+  integer          ::     jd,     k,    k1,    k2,  k2m1
+  integer          ::     kd,     l,     n,    n0,   nci
+  integer          ::    ncj,   nck,  ncyc,   nid,  nijd
+  integer          ::    njd
+  double precision ::       allfae,    mu(ip12),   mut(ip12),      omegha,        rapk
+  double precision ::       reytur,v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension mu(ip12),mut(ip12)
-    dimension v(ip11,ip60)
 !
 
 
@@ -89,12 +87,12 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_kobmut

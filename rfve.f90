@@ -34,15 +34,12 @@ contains
     use para_fige
     use boundary
     implicit none
-    integer          ::    m,  mb,  mf, mfb,  mt
-    integer          :: ncbd,ncin,  nd,  ni
-    double precision :: cson,  ps,   t,temp
+  integer          ::          m,        mb,        mf,       mfb,        mt
+  integer          :: ncbd(ip41),ncin(ip41),        nd,        ni
+  double precision ::   cson(ip11),    ps(ip11),t(ip11,ip60),  temp(ip11)
 !
 !-----------------------------------------------------------------------
 !
-    dimension t(ip11,ip60)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension ps(ip11),temp(ip11),cson(ip11)
 !
     do mf=1,nbd
        mfb=lbd(mf)

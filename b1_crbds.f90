@@ -30,8 +30,8 @@ contains
     use para_fige
     use sortiefichier
     implicit none
-    integer          :: imax,imin,jmax,jmin,kini
-    integer          :: kmax,kmin,   l, mfb
+  integer          :: imax,imin,jmax,jmin,kini
+  integer          :: kmax,kmin,   l, mfb
 !
 !-----------------------------------------------------------------------
 !

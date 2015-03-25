@@ -22,10 +22,10 @@ contains
     use para_fige
     use sortiefichier
     implicit none
-    integer          :: ibdcfl,ibdcst,ibddim, kibdb,  lmfb
-    integer          ::  lmfbd,  long,longm1,    nm, nmult
-    integer          ::    npd,    nr, nrest,  nvbc
-    double precision :: vbc
+  integer          ::      ibdcfl,     ibdcst,     ibddim,      kibdb,lmfb(lmfbd)
+  integer          ::       lmfbd,       long,     longm1,         nm,      nmult
+  integer          ::         npd,         nr,      nrest,       nvbc
+  double precision :: vbc(ista*lsta)
 !
 !-----------------------------------------------------------------------
 !
@@ -35,8 +35,6 @@ contains
     character(len=2 ) :: nlg,nlm,nrr,nrm
 !
 !
-    dimension vbc(ista*lsta)
-    dimension lmfb(lmfbd)
 !
     long=6
     longm1=long-1

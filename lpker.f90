@@ -39,27 +39,17 @@ contains
     use boundary
     use mod_lpker1
     implicit none
-    integer          ::     l, ldom,   mf,  mfb,mnpar
-    integer          ::  ncbd, ncin,   no
-    double precision ::  dist, dvxx, dvxy, dvxz, dvyx
-    double precision ::  dvyy, dvyz, dvzx, dvzy, dvzz
-    double precision ::  fgam,   mu,  mut,  nxn,  nyn
-    double precision ::   nzn,tprod,    v,ztemp
+  integer          ::           l,       ldom,         mf,        mfb,mnpar(ip12)
+  integer          ::  ncbd(ip41), ncin(ip41),         no
+  double precision ::   dist(ip12),  dvxx(ip00),  dvxy(ip00),  dvxz(ip00),  dvyx(ip00)
+  double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)
+  double precision ::   fgam(ip42),    mu(ip12),   mut(ip12),   nxn(ip42),   nyn(ip42)
+  double precision ::    nzn(ip42), tprod(ip00),v(ip11,ip60), ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension mu(ip12),mut(ip12),dist(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension v(ip11,ip60)
-    dimension mnpar(ip12),fgam(ip42)
 !      dimension tp(ip40)
-    dimension tprod(ip00)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-         dvzx(ip00),dvzy(ip00),dvzz(ip00)
-    dimension ztemp(ip11)
 !
     nbd=0
     do no=1,mtbx

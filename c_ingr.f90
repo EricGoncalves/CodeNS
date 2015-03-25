@@ -20,17 +20,14 @@ contains
     use mod_ingr
     use mod_b1_ingr
     implicit none
-    integer          ::  imot, king,    l, ldom,ldomd
-    integer          ::  nmot
-    double precision :: x,y,z
+  integer          ::  imot(nmx),      king,         l,ldom(nobj),     ldomd
+  integer          ::       nmot
+  double precision :: x(ip21),y(ip21),z(ip21)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
 !
-    dimension imot(nmx)
-    dimension ldom(nobj)
-    dimension x(ip21),y(ip21),z(ip21)
 !
     call tcmd_ingr( &
          mot,imot,nmot, &

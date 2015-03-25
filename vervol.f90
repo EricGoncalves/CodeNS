@@ -35,16 +35,15 @@ contains
     use maillage
     use sortiefichier 
     implicit none
-    integer          ::    i,  i1,i1m1,  i2, img
-    integer          ::    j,  j1,j1m1,  j2,   k
-    integer          ::   k1,k1m1,  k2,kneg,   l
-    integer          ::   lm,   n,  n0, nid,nijd
-    integer          ::  njd
-    double precision :: vol
+  integer          ::    i,  i1,i1m1,  i2, img
+  integer          ::    j,  j1,j1m1,  j2,   k
+  integer          ::   k1,k1m1,  k2,kneg,   l
+  integer          ::   lm,   n,  n0, nid,nijd
+  integer          ::  njd
+  double precision :: vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
-    dimension vol(ip11)
 !
 
 !
@@ -98,7 +97,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function ind
   end subroutine vervol

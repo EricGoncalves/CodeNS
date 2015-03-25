@@ -20,15 +20,13 @@ contains
     use mod_valenti
     use mod_vallent
     implicit none
-    integer          ::  icmt, imot, king, kval, ldom
-    integer          :: ldomd,   nm, nmot
+  integer          ::       icmt, imot(nmx),      king,      kval,ldom(nobj)
+  integer          ::      ldomd,        nm,      nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
-    dimension ldom(nobj)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

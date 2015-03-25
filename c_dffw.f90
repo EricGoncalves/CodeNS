@@ -26,12 +26,11 @@ contains
     use mod_b1_dffw
 
     implicit none
-    integer          :: imot,nmot
+  integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     call tcmd_dffw(mot,imot,nmot)
 !

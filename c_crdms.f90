@@ -18,13 +18,12 @@ contains
     use mod_b2_crdms
     use mod_tcmd_crdms
     implicit none
-    integer          :: imot,   l,  ni,  nj,  nk
-    integer          :: nmot
+  integer          :: imot(nmx),        l,       ni,       nj,       nk
+  integer          ::      nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     call tcmd_crdms( &
          mot,imot,nmot, &

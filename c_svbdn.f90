@@ -38,14 +38,12 @@ contains
     use sortiefichier
     use boundary
     implicit none
-    integer          :: imot, m0n,mfbi,  mt,nmot
-    double precision :: nxn,nyn,nzn
+  integer          :: imot(nmx),      m0n,     mfbi,       mt,     nmot
+  double precision :: nxn(ip42),nyn(ip42),nzn(ip42)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension imot(nmx)
 !
     m0n =mpn(mfbi)
     mt  =mmb(mfbi)

@@ -16,7 +16,7 @@ contains
     use kcle
     use definition
     implicit none
-    integer          :: lst,nst
+  integer          :: lst,nst
 !
 !-----------------------------------------------------------------------
 !

@@ -22,24 +22,14 @@ contains
     use mod_met_brkl
     use mod_met_klmut
     implicit none
-    integer          :: l
-    double precision :: cmui1,cmui2,cmuj1,cmuj2,cmuk1
-    double precision :: cmuk2, dist, dvxx, dvxy, dvxz
-    double precision ::  dvyx, dvyy, dvyz, dvzx, dvzy
-    double precision ::  dvzz,   mu,  mut,    s,   sn
-    double precision ::     v,  vol
+  integer          :: l
+  double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
+  double precision ::   cmuk2(ip21),   dist(ip12),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00)
+  double precision ::    dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00)
+  double precision ::    dvzz(ip00),     mu(ip12),    mut(ip12),      s(ip00),sn(ip31*ndir)
+  double precision ::  v(ip11,ip60),    vol(ip11)
 !
 !-----------------------------------------------------------------------
-    dimension v(ip11,ip60)
-    dimension mut(ip12),mu(ip12),dist(ip12)
-    dimension sn(ip31*ndir), &
-         vol(ip11)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-         dvzx(ip00),dvzy(ip00),dvzz(ip00), &
-         s(ip00)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 !
     call teq_gradv( &
          l, &

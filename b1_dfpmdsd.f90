@@ -25,9 +25,9 @@ contains
     use kcle
     use mod_convich
     implicit none
-    integer          ::   ldom, ldomd,   lgr,  lgrd,    lm
-    integer          ::   long,longm1,    nm, nmult,    nr
-    integer          ::  nrest
+  integer          :: ldom(ldomd),      ldomd,  lgr(lgrd),       lgrd,         lm
+  integer          ::        long,     longm1,         nm,      nmult,         nr
+  integer          ::       nrest
 !
 !-----------------------------------------------------------------------
 !
@@ -35,8 +35,6 @@ contains
     character(len=24) ::  cki2,cki4
     character(len=2 ) :: nlg,nlm,nrr,nrm
 !
-    dimension ldom(ldomd)
-    dimension lgr(lgrd)
 !
     lm=ldom(1)+(lgr(1)-1)*lz
 !

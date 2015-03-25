@@ -22,26 +22,20 @@ contains
     use maillage
 
     implicit none
-    integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          ::   imax,  imin,  ind1,  ind2,     j
-    integer          ::     j1,  j1m1,    j2,  j2m1,  jmax
-    integer          ::   jmin,     k,    k1,  k1m1,    k2
-    integer          ::   k2m1,  kmax,  kmin,     l,lgsnlt
-    integer          ::      m,     n,   n0c,   nid,  nijd
-    integer          ::    njd,  npsn
-    double precision ::  bark,cmui1,cmui2,cmuj1,cmuj2
-    double precision :: cmuk1,cmuk2, dtdx, dtdy, dtdz
-    double precision ::    mu,    s,   sn,    t,  vol
+  integer          ::      i,    i1,  i1m1,    i2,  i2m1
+  integer          ::   imax,  imin,  ind1,  ind2,     j
+  integer          ::     j1,  j1m1,    j2,  j2m1,  jmax
+  integer          ::   jmin,     k,    k1,  k1m1,    k2
+  integer          ::   k2m1,  kmax,  kmin,     l,lgsnlt
+  integer          ::      m,     n,   n0c,   nid,  nijd
+  integer          ::    njd,  npsn
+  double precision ::    bark(ip00),  cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21)
+  double precision ::   cmuk1(ip21),  cmuk2(ip21),   dtdx(ip00),   dtdy(ip00),   dtdz(ip00)
+  double precision ::      mu(ip12), s(ip11,ip60),sn(ip31*ndir),      t(ip00),    vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension s(ip11,ip60)
-    dimension sn(ip31*ndir)
-    dimension t(ip00),dtdx(ip00),dtdy(ip00),dtdz(ip00),bark(ip00)
-    dimension mu(ip12),vol(ip11)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 !
 
 !
@@ -122,7 +116,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
   end subroutine met_bark

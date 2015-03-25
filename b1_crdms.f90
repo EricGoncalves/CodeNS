@@ -22,7 +22,7 @@ contains
     use para_fige
     use sortiefichier
     implicit none
-    integer          ::  l,ni,nj,nk
+  integer          ::  l,ni,nj,nk
 !
 !-----------------------------------------------------------------------
 !

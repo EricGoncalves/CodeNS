@@ -36,9 +36,9 @@ contains
     use para_fige
     use sortiefichier
     implicit none
-    integer          ::   iba,  jba,  kba,kibdc,  krr
-    integer          :: mfbea,mfbeb
-    double precision :: epsmsh
+  integer          ::   iba,  jba,  kba,kibdc,  krr
+  integer          :: mfbea,mfbeb
+  double precision :: epsmsh
 !
 !-----------------------------------------------------------------------
 !

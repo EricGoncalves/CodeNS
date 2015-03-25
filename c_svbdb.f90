@@ -34,14 +34,12 @@ contains
     use sortiefichier
     use boundary
     implicit none
-    integer          :: imot,  m0,mfbi,  mt,ncin
-    integer          :: nmot
+  integer          ::  imot(nmx),        m0,      mfbi,        mt,ncin(ip41)
+  integer          ::       nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
-    dimension ncin(ip41)
 !
 !     mfbi=nfei(mfbe)
     m0  =mpb(mfbi)

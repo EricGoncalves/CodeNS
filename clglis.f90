@@ -65,38 +65,33 @@ contains
     use boundary
     use mod_idirch
     implicit none
-    integer          ::     id,  incf,  incm, isens,    jd
-    integer          ::     kd,     l,lgsnlt,     m,    mb
-    integer          ::    mfb,    mn, mnode,    mt,   n0c
-    integer          ::    n0n,    nc, nc12f,  nc1f,  nc2f
-    integer          ::   ncbd,   nci,  ncij, ncijk,  ncin
-    integer          ::    ncj,  ncjk,   nck,  ncki,    nd
-    integer          ::    nid,  nijd, nindf,nindfa,   njd
-    integer          ::    nlc,   nln,  nlnf,    nn
-    double precision ::      a2s,    coef,    cson,      dp,      ds
-    double precision ::      dsn,      dx,      dy,      dz,      ec
-    double precision ::      ecs,     ent,    ents,      gm,     gm1
-    double precision ::    gm1rg,   grgm1,       h,      hs,       p
-    double precision ::     pext,pression,      ps,     pts,      q2
-    double precision ::      q2s,     qns,    qt2s,     qtx,    qtxs
-    double precision ::      qty,    qtys,     qtz,    qtzs,   r2vol
-    double precision ::      rgm,    rgm1,      ro,     roe,    roec
-    double precision ::     roes,     ros,     rou,    rous,     rov
-    double precision ::     rovs,     row,    rows,    rros,    rvol
-    double precision ::       sn,      sx,     sxn,      sy,     syn
-    double precision ::       sz,     szn, tworgm1,      us,       v
-    double precision ::      vol,      vs,      ws,       x,     xcp
-    double precision ::      xcs,       y,     ycp,     ycs,       z
-    double precision ::      zcp,     zcs,   ztemp
+  integer          ::         id,      incf,      incm,     isens,        jd
+  integer          ::         kd,         l,    lgsnlt,         m,        mb
+  integer          ::        mfb,        mn,     mnode,        mt,       n0c
+  integer          ::        n0n,        nc,     nc12f,      nc1f,      nc2f
+  integer          :: ncbd(ip41),       nci,      ncij,     ncijk,ncin(ip41)
+  integer          ::        ncj,      ncjk,       nck,      ncki,        nd
+  integer          ::        nid,      nijd,     nindf,    nindfa,       njd
+  integer          ::        nlc,       nln,      nlnf,        nn
+  double precision ::                  a2s,                coef,          cson(ip11),                  dp,                  ds
+  double precision ::                  dsn,                  dx,                  dy,                  dz,                  ec
+  double precision ::                  ecs,                 ent,                ents,                  gm,                 gm1
+  double precision ::                gm1rg,               grgm1,                   h,                  hs,                   p
+  double precision ::                 pext,      pression(ip11),                  ps,                 pts,                  q2
+  double precision ::                  q2s,                 qns,                qt2s,                 qtx,                qtxs
+  double precision ::                  qty,                qtys,                 qtz,                qtzs,               r2vol
+  double precision ::                  rgm,                rgm1,                  ro,                 roe,                roec
+  double precision ::                 roes,                 ros,                 rou,                rous,                 rov
+  double precision ::                 rovs,                 row,                rows,                rros,                rvol
+  double precision :: sn(lgsnlt,nind,ndir),                  sx,                 sxn,                  sy,                 syn
+  double precision ::                   sz,                 szn,             tworgm1,                  us,        v(ip11,ip60)
+  double precision ::            vol(ip11),                  vs,                  ws,             x(ip21),                 xcp
+  double precision ::                  xcs,             y(ip21),                 ycp,                 ycs,             z(ip21)
+  double precision ::                  zcp,                 zcs,         ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indf
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension vol(ip11),pression(ip11),ztemp(ip11),cson(ip11)
-    dimension v(ip11,ip60)
-    dimension sn(lgsnlt,nind,ndir)
-    dimension ncbd(ip41),ncin(ip41)
 !
 !.....calcul des indices
 !
@@ -373,7 +368,7 @@ contains
   contains
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine clglis

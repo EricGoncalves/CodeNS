@@ -156,62 +156,54 @@ contains
     use sortiefichier
     use schemanum
     implicit none
-    integer          ::      i1,     i2,   idf1,   idf2,  idfac
-    integer          ::     idm,  imaxf,  iminf,     j1,     j2
-    integer          ::   jmaxf,  jminf,     k1,     k2,  kimpl
-    integer          ::   kmaxf,  kminf,      l,    m0b,    m0n
-    integer          ::      m1,  m1max,m1maxm1,  m1min,     m2
-    integer          ::   m2max,m2maxm1,  m2min,     mf,   mfac
-    integer          ::   mfacn,    mfl,    n0c,    n0n,   ncbd
-    integer          ::     nci,   ncin,    ncj,    nck,  nfac1
-    integer          ::   nfac2,  nfac3,  nfac4,  nfacf,  nfaci
-    integer          ::   nfacm,    nid,   nijd,    njd,     nn
-    double precision ::     akp,  alfar,  betar, cfinf0, claefr
-    double precision :: claerfr, claero,claerob,claetfr,   clav
-    double precision ::   clavb,clavbfr, clavfr,clavtfr,clavtot
-    double precision ::  cmaefr,cmaerfr, cmaero,cmaerob,cmaetfr
-    double precision ::    cmav,  cmavb,cmavbfr, cmavfr,cmavtfr
-    double precision :: cmavtot, cnaefr,cnaerfr, cnaero,cnaerob
-    double precision :: cnaetfr,   cnav,  cnavb,cnavbfr, cnavfr
-    double precision :: cnavtfr,cnavtot,   csal,   csbe,   cson
-    double precision ::  cxaefr,cxaerfr, cxaero,cxaerob,cxaetfr
-    double precision ::    cxav,  cxavb,cxavbfr, cxavfr,cxavtfr
-    double precision :: cxavtot, cyaefr,cyaerfr, cyaero,cyaerob
-    double precision :: cyaetfr,   cyav,  cyavb,cyavbfr, cyavfr
-    double precision :: cyavtfr,cyavtot, czaefr,czaerfr, czaero
-    double precision :: czaerob,czaetfr,   czav,  czavb,czavbfr
-    double precision ::  czavfr,czavtfr,czavtot,    dcl,  dclfr
-    double precision ::     dcm,  dcmfr,    dcn,  dcnfr,    dcx
-    double precision ::   dcxfr,    dcy,  dcyfr,    dcz,  dczfr
-    double precision ::    dsml,   dsxy,   dsxz,   dsyz,    dx1
-    double precision ::     dx2,    dy1,    dy2,    dz1,    dz2
-    double precision ::      mu,    mut,    nxn,    nyn,    nzn
-    double precision ::    phip,phipadi,phiref0,   phit,   pis2
-    double precision ::      ps,  pspi0,    qcx,    qcy,    qcz
-    double precision ::      qq,     qt,    qtx,    qty,    qtz
-    double precision ::  raddeg,     rm,      s,    sml,  smlfr
-    double precision ::    snal,   snbe,    sxy,   sxyb,  sxyfr
-    double precision ::     sxz,  sxzfr,    syz,  syzfr,     t1
-    double precision ::      t2,     t3, taumod,taunorm,tauref0
-    double precision ::    temp,   toxx,   toxy,   toxz,   toyy
-    double precision ::    toyz,   tozz,      u,  utaur,  utsnu
-    double precision ::     utx,   utxt,    uty,   utyt,    utz
-    double precision ::    utzt,      v,      w,      x,  xcfac
-    double precision ::       y,  ycfac,      z,  zcfac
-    logical          :: ecrcom
+  integer          ::         i1,        i2,      idf1,      idf2,     idfac
+  integer          ::        idm,     imaxf,     iminf,        j1,        j2
+  integer          ::      jmaxf,     jminf,        k1,        k2,     kimpl
+  integer          ::      kmaxf,     kminf,         l,       m0b,       m0n
+  integer          ::         m1,     m1max,   m1maxm1,     m1min,        m2
+  integer          ::      m2max,   m2maxm1,     m2min,        mf,      mfac
+  integer          ::      mfacn,       mfl,       n0c,       n0n,ncbd(ip41)
+  integer          ::        nci,ncin(ip41),       ncj,       nck,     nfac1
+  integer          ::      nfac2,     nfac3,     nfac4,     nfacf,     nfaci
+  integer          ::      nfacm,       nid,      nijd,       njd,        nn
+  double precision ::          akp,       alfar,       betar,      cfinf0,      claefr
+  double precision ::      claerfr,      claero,     claerob,     claetfr,        clav
+  double precision ::        clavb,     clavbfr,      clavfr,     clavtfr,     clavtot
+  double precision ::       cmaefr,     cmaerfr,      cmaero,     cmaerob,     cmaetfr
+  double precision ::         cmav,       cmavb,     cmavbfr,      cmavfr,     cmavtfr
+  double precision ::      cmavtot,      cnaefr,     cnaerfr,      cnaero,     cnaerob
+  double precision ::      cnaetfr,        cnav,       cnavb,     cnavbfr,      cnavfr
+  double precision ::      cnavtfr,     cnavtot,        csal,        csbe,  cson(ip11)
+  double precision ::       cxaefr,     cxaerfr,      cxaero,     cxaerob,     cxaetfr
+  double precision ::         cxav,       cxavb,     cxavbfr,      cxavfr,     cxavtfr
+  double precision ::      cxavtot,      cyaefr,     cyaerfr,      cyaero,     cyaerob
+  double precision ::      cyaetfr,        cyav,       cyavb,     cyavbfr,      cyavfr
+  double precision ::      cyavtfr,     cyavtot,      czaefr,     czaerfr,      czaero
+  double precision ::      czaerob,     czaetfr,        czav,       czavb,     czavbfr
+  double precision ::       czavfr,     czavtfr,     czavtot,         dcl,       dclfr
+  double precision ::          dcm,       dcmfr,         dcn,       dcnfr,         dcx
+  double precision ::        dcxfr,         dcy,       dcyfr,         dcz,       dczfr
+  double precision ::         dsml,        dsxy,        dsxz,        dsyz,         dx1
+  double precision ::          dx2,         dy1,         dy2,         dz1,         dz2
+  double precision ::     mu(ip12),   mut(ip12),   nxn(ip42),   nyn(ip42),   nzn(ip42)
+  double precision ::         phip,     phipadi,     phiref0,        phit,        pis2
+  double precision ::     ps(ip11),       pspi0,   qcx(ip12),   qcy(ip12),   qcz(ip12)
+  double precision ::           qq,          qt,         qtx,         qty,         qtz
+  double precision ::       raddeg,          rm,s(ip11,ip60),         sml,       smlfr
+  double precision ::         snal,        snbe,         sxy,        sxyb,       sxyfr
+  double precision ::          sxz,       sxzfr,         syz,       syzfr,          t1
+  double precision ::           t2,          t3,      taumod,     taunorm,     tauref0
+  double precision ::   temp(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12)
+  double precision ::   toyz(ip12),  tozz(ip12),           u,       utaur,       utsnu
+  double precision ::          utx,        utxt,         uty,        utyt,         utz
+  double precision ::         utzt,           v,           w,     x(ip21),       xcfac
+  double precision ::      y(ip21),       ycfac,     z(ip21),       zcfac
+  logical          :: ecrcom
 !
 !-----------------------------------------------------------------------
 !
     character(len=1 ) :: c
 !
-    dimension s(ip11,ip60),ps(ip11),temp(ip11),cson(ip11)
-    dimension mu(ip12),mut(ip12)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12), &
-         qcx(ip12),qcy(ip12),qcz(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension x(ip21),y(ip21),z(ip21)
 !
 !     double cote
     c=char(34)

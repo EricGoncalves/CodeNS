@@ -22,19 +22,16 @@ contains
     use mod_valreel
     use mod_vallent
     implicit none
-    integer          :: ibdcfl,ibdcst,ibddim,  icmt,    im
-    integer          ::   imot, kibdb,  kval,  lmfb, lmfbd
-    integer          ::     nm,  nmot,   nmr,  nvbc
-    double precision :: vbc
+  integer          ::    ibdcfl,   ibdcst,   ibddim,     icmt,       im
+  integer          :: imot(nmx),    kibdb,     kval,lmfb(mtb),    lmfbd
+  integer          ::        nm,     nmot,      nmr,     nvbc
+  double precision :: vbc(ista*lsta)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: clmf
-    dimension imot(nmx)
-    dimension lmfb(mtb)
-    dimension vbc(ista*lsta)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

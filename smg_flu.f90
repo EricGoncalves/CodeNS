@@ -79,53 +79,29 @@ contains
     use mod_zvismo
     use mod_sch_rusanov_prcd
     implicit none
-    integer          ::    icyc, icycle,    img, itypdf,      l
-    integer          ::  lgsnlt,     lm,mcyturb,    mfc,    mfn
-    integer          ::     mnc,  mnpar,    mnr,   ncbd,   ncin
-    integer          ::    ncyc,   npsn
-    double precision ::    bceqt,   cmui1,   cmui2,   cmuj1,   cmuj2
-    double precision ::    cmuk1,   cmuk2,    cson,     cvi,     cvj
-    double precision ::      cvk,       d,     d0x,     d0y,     d0z
-    double precision ::     dist,      dt,      ff,    fgam,      mu
-    double precision ::      mut,     nxn,     nyn,     nzn,    pres
-    double precision :: pression,  ptdual,     qcx,     qcy,     qcz
-    double precision ::        r,     rod,    roed,    roud,    rovd
-    double precision ::     rowd,     rpi,     rti,      sn,     tm1
-    double precision ::     tm10,    tm11,    tm12,    tm13,     tm2
-    double precision ::      tm3,     tm4,     tm5,     tm6,     tm7
-    double precision ::      tm8,     tm9,     tn1,    tn10,     tn2
-    double precision ::      tn3,     tn4,     tn5,     tn6,     tn7
-    double precision ::      tn8,     tn9,    toxx,    toxy,    toxz
-    double precision ::     toyy,    toyz,    tozz,      tp,       u
-    double precision ::        v,     vol,       x,     xnr,       y
-    double precision ::      ynr,       z,     znr,   ztemp
+  integer          ::        icyc,     icycle,        img,     itypdf,          l
+  integer          ::      lgsnlt,         lm,    mcyturb,        mfc,        mfn
+  integer          ::   mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41), ncin(ip41)
+  integer          ::        ncyc,       npsn
+  double precision ::  bceqt(ip41,neqt),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21)
+  double precision ::       cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21),        cvj(ip21)
+  double precision ::         cvk(ip21),     d(ip11,ip60),        d0x(ip40),        d0y(ip40),        d0z(ip40)
+  double precision ::        dist(ip12),         dt(ip11),    ff(ip11,ip60),       fgam(ip42),         mu(ip12)
+  double precision ::         mut(ip12),        nxn(ip42),        nyn(ip42),        nzn(ip42),       pres(ip40)
+  double precision ::    pression(ip11),ptdual(ip11,ip60),        qcx(ip12),        qcy(ip12),        qcz(ip12)
+  double precision ::           r(ip11),        rod(ip40),       roed(ip40),       roud(ip40),       rovd(ip40)
+  double precision ::        rowd(ip40),        rpi(ip40),        rti(ip40),    sn(ip31*ndir),        tm1(ip40)
+  double precision ::        tm10(ip40),       tm11(ip40),       tm12(ip40),       tm13(ip40),        tm2(ip40)
+  double precision ::         tm3(ip40),        tm4(ip40),        tm5(ip40),        tm6(ip40),        tm7(ip40)
+  double precision ::         tm8(ip40),        tm9(ip40),        tn1(ip00),       tn10(ip00),        tn2(ip00)
+  double precision ::         tn3(ip00),        tn4(ip00),        tn5(ip00),        tn6(ip00),        tn7(ip00)
+  double precision ::         tn8(ip00),        tn9(ip00),       toxx(ip12),       toxy(ip12),       toxz(ip12)
+  double precision ::        toyy(ip12),       toyz(ip12),       tozz(ip12),         tp(ip40),     u(ip11,ip60)
+  double precision ::      v(ip11,ip60),        vol(ip11),          x(ip21),        xnr(ip44),          y(ip21)
+  double precision ::         ynr(ip44),          z(ip21),        znr(ip44),      ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60),ff(ip11,ip60)
-    dimension ptdual(ip11,ip60)
-    dimension sn(ip31*ndir)
-    dimension vol(ip11),r(ip11),pression(ip11),ztemp(ip11),cson(ip11)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension bceqt(ip41,neqt)
-    dimension rpi(ip40),rti(ip40)
-    dimension d0x(ip40),d0y(ip40),d0z(ip40)
-    dimension pres(ip40),tp(ip40)
-    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-    dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
-    dimension mu(ip12),mut(ip12),toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12),qcx(ip12),qcy(ip12), &
-         qcz(ip12),dist(ip12)
-    dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
-         tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
-    dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
-         tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40), &
-         tm10(ip40),tm11(ip40),tm12(ip40),tm13(ip40)
-    dimension ncin(ip41),mnpar(ip12),fgam(ip42),mnc(ip43)
-    dimension cvi(ip21),cvj(ip21),cvk(ip21),cmui1(ip21),cmui2(ip21), &
-         cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
-    dimension dt(ip11)
 
 !
     if (equat(1:2).eq.'ns') then

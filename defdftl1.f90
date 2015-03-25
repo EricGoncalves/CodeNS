@@ -14,7 +14,7 @@ contains
     use kcle
     use chainecarac
     implicit none
-    integer          :: itit
+  integer          :: itit
 !
 !-----------------------------------------------------------------------
 !

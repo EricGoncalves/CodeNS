@@ -61,21 +61,17 @@ contains
     use schemanum
     use definition
     implicit none
-    integer          :: idefconf,idefxref,    ierr,   ligne,    mflu
-    integer          ::       nb,    ncbd
-    double precision ::  nxn, nyn, nzn,omg1,  p2
-    double precision ::  rpi, rti,tpar,   v,   x
-    double precision ::    y,   z
+  integer          ::   idefconf,  idefxref,      ierr,     ligne,      mflu
+  integer          ::         nb,ncbd(ip41)
+  double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),        omg1,          p2
+  double precision ::          rpi,         rti,        tpar,v(ip11,ip60),     x(ip21)
+  double precision ::      y(ip21),     z(ip21)
 !
 !**********************************************************************
 !
     character(len=4 ) :: config,cl(mtb)
     character(len=80) ::  cmtlec
 !
-    dimension ncbd(ip41)
-    dimension x(ip21), y(ip21), z(ip21)
-    dimension v(ip11,ip60)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
 !
     open(don1,file='fdon1',err=101)
 !

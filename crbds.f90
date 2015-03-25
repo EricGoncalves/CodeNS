@@ -60,15 +60,14 @@ contains
     use boundary
     use mod_initis
     implicit none
-    integer          ::  imax,  img, imgi, imgj, imgk
-    integer          ::  imin, jmax, jmin, kini, kmax
-    integer          ::  kmin,    l,   lm,   m0, mfbe
-    integer          ::  mfbi,mfbim,   mt, ncbd
+  integer          ::       imax,       img,      imgi,      imgj,      imgk
+  integer          ::       imin,      jmax,      jmin,      kini,      kmax
+  integer          ::       kmin,         l,        lm,        m0,      mfbe
+  integer          ::       mfbi,     mfbim,        mt,ncbd(ip41)
 !
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indmf
-    dimension ncbd(ip41)
 !
     mtbx=mtbx+1
     kmtbx=2

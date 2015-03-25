@@ -54,25 +54,20 @@ contains
     use maillage
     use boundary
     implicit none
-    integer          ::     i,   i1,   i2,   ib,  igr
-    integer          ::  igr0,imini,    j,   j1,   j2
-    integer          ::    jb,  jgr, jgr0,    k,   k1
-    integer          ::    k2,   kb,  kgr, kgr0,    l
-    integer          ::   m0b, m1tb, m2tb,   mb,  mbb
-    integer          ::  mbmx,   mc,mnpar,   mp,mpar0
-    integer          :: mpar1,   n0,   nc, nfbi,nfrtb
-    integer          ::   nid, nijd,  njd
-    double precision ::  dist,dist2,dmini,    x,  xcc
-    double precision ::  xpar,    y,  ycc, ypar,    z
-    double precision ::   zcc, zpar
+  integer          ::           i,         i1,         i2,         ib,        igr
+  integer          ::        igr0,      imini,          j,         j1,         j2
+  integer          ::          jb,        jgr,       jgr0,          k,         k1
+  integer          ::          k2,         kb,        kgr,       kgr0,          l
+  integer          ::         m0b, m1tb(ip00), m2tb(ip00),         mb,        mbb
+  integer          ::        mbmx,         mc,mnpar(ip12),         mp,      mpar0
+  integer          ::       mpar1,         n0,         nc,       nfbi,nfrtb(ip00)
+  integer          ::         nid,       nijd,        njd
+  double precision ::  dist(ip12),dist2(ip00),      dmini,    x(ip21),  xcc(ip00)
+  double precision ::  xpar(ip00),    y(ip21),  ycc(ip00), ypar(ip00),    z(ip21)
+  double precision ::   zcc(ip00), zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension xpar(ip00),ypar(ip00),zpar(ip00)
-    dimension xcc (ip00),ycc (ip00),zcc (ip00),dist2(ip00)
-    dimension dist(ip12),mnpar(ip12)
-    dimension m1tb(ip00),m2tb(ip00),nfrtb(ip00)
 !
 
 !
@@ -157,7 +152,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine at_grdist

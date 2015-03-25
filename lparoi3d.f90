@@ -79,27 +79,20 @@ contains
     use modeleturb
     use definition
     implicit none
-    integer          ::      m,  m0ns,    mb,   mfb,    mt
-    integer          ::     nc,  ncbd,  ncin,  ncyc,nfacns
-    integer          ::     ni
-    double precision ::   e1,  e2,  e3,  n1,  n2
-    double precision ::   n3, nxn, nyn, nzn, qc1
-    double precision ::  qcx, qcy, qcz, rop,  t1
-    double precision ::   t2,  t3,temp,  tn,topx
-    double precision :: topz,toxx,toxy,toxz,toyy
-    double precision :: toyz,tozz,  tt,utau,   v
-    double precision ::  v1x, v1y, v1z
+  integer          ::          m,      m0ns,        mb,       mfb,        mt
+  integer          ::         nc,ncbd(ip41),ncin(ip41),      ncyc,    nfacns
+  integer          ::         ni
+  double precision ::           e1,          e2,          e3,          n1,          n2
+  double precision ::           n3,   nxn(ip42),   nyn(ip42),   nzn(ip42),         qc1
+  double precision ::    qcx(ip12),   qcy(ip12),   qcz(ip12),         rop,          t1
+  double precision ::           t2,          t3,  temp(ip11),          tn,        topx
+  double precision ::   topz(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12)
+  double precision ::   toyz(ip12),  tozz(ip12),          tt,  utau(ip42),v(ip11,ip60)
+  double precision ::          v1x,         v1y,         v1z
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension v(ip11,ip60)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12), &
-         qcx(ip12),qcy(ip12),qcz(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension utau(ip42),temp(ip11),topz(ip11)
 !
     mt=mmb(mfb)
     m0ns=mpn(mfb)

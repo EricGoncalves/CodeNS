@@ -43,20 +43,17 @@ contains
     use chainecarac
     use modeleturb
     implicit none
-    integer          ::        i,      i1,      i2,    i2m1,       j
-    integer          ::       j1,      j2,    j2m1,       k,      k1
-    integer          ::       k2,    k2m1,     kda,       l,       m
-    integer          :: mdimtnxl,       n,      n0,     nid,    nijd
-    integer          ::      njd,    resu
-    double precision ::    mut,  utau,     v, vdual,vdual1
-    double precision :: vdual2
+  integer          ::        i,      i1,      i2,    i2m1,       j
+  integer          ::       j1,      j2,    j2m1,       k,      k1
+  integer          ::       k2,    k2m1,     kda,       l,       m
+  integer          :: mdimtnxl,       n,      n0,     nid,    nijd
+  integer          ::      njd,    resu
+  double precision ::         mut(ip12),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
+  double precision :: vdual2(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension v(ip11,ip60),mut(ip12)
-    dimension utau(ip42)
-    dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
 !
 
 !
@@ -223,7 +220,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine readda

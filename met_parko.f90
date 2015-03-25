@@ -77,22 +77,18 @@ contains
     use sortiefichier
     use mod_atindnor
     implicit none
-    integer          ::     dm1,    dm2,    dm3, isens3,      l
-    integer          ::    lpar,      m,    m10,  m1max,  m1min
-    integer          ::     m20,  m2max,  m2min,     m3,    m30
-    integer          :: m3clpar,  m3max,  m3min,  m3mxf,  m3tot
-    integer          ::    mfbi,  mnpar,   mpar,   mpb0,   mpn0
-    integer          ::    mpn1,      n,   ncbd,  ncfic,   ncin
-    integer          ::    nfac,  nmaxp,   nmin,  nminp,   npar
-    double precision ::    dist,     mu,    mut,   pond,romegal
-    double precision ::       v
+  integer          ::         dm1,        dm2,        dm3,     isens3,          l
+  integer          ::        lpar,          m,        m10,      m1max,      m1min
+  integer          ::         m20,      m2max,      m2min,         m3,        m30
+  integer          ::     m3clpar,      m3max,      m3min,      m3mxf,      m3tot
+  integer          ::        mfbi,mnpar(ip12),       mpar,       mpb0,       mpn0
+  integer          ::        mpn1,          n, ncbd(ip41),      ncfic, ncin(ip41)
+  integer          ::        nfac,      nmaxp,       nmin,      nminp,       npar
+  double precision ::   dist(ip12),    mu(ip12),   mut(ip12),        pond,     romegal
+  double precision :: v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension v(ip11,ip60)
-    dimension mut(ip12),mu(ip12)
-    dimension dist(ip12),mnpar(ip12)
-    dimension ncin(ip41),ncbd(ip41)
 !
     if(equatt(1:3).eq.'2KO') then
        imxclko=3

@@ -24,23 +24,20 @@ contains
     use chainecarac
     use proprieteflu
     implicit none
-    integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          :: indc,   j,  j1,j1m1,  j2
-    integer          :: j2m1,   k,  k1,k1m1,  k2
-    integer          :: k2m1,   l,   m,   n, n0c
-    integer          ::  nid,nijd, njd
-    double precision :: dist,   e,  mu, mut,  ps
-    double precision ::    t,   u,   v,   w,   x
-    double precision ::  xcc,   y, ycc,   z, zcc
-    logical          :: ouvert
+  integer          ::    i,  i1,i1m1,  i2,i2m1
+  integer          :: indc,   j,  j1,j1m1,  j2
+  integer          :: j2m1,   k,  k1,k1m1,  k2
+  integer          :: k2m1,   l,   m,   n, n0c
+  integer          ::  nid,nijd, njd
+  double precision ::   dist(ip12),           e,    mu(ip12),   mut(ip12),    ps(ip11)
+  double precision :: t(ip11,ip60),           u,           v,           w,     x(ip21)
+  double precision ::          xcc,     y(ip21),         ycc,     z(ip21),         zcc
+  logical          :: ouvert
 !
 !-----------------------------------------------------------------------
 !
     character(len=1 ) :: c
 !
-    dimension t(ip11,ip60)
-    dimension x(ip21),y(ip21),z(ip21),ps(ip11)
-    dimension dist(ip12),mu(ip12),mut(ip12)
 !
     indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !

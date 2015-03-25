@@ -57,30 +57,24 @@ contains
     use definition
     use modeleturb
     implicit none
-    integer          ::   iter,     l,     m,  m0ns,    mb
-    integer          ::    mfb, mnpar,  mpar,    mt,   n0c
-    integer          ::     nc,  ncbd,  ncin,  ncyc,nfacns
-    integer          ::     ni,   nii
-    double precision ::       c1,     c13,     c18,      c2,      c3
-    double precision ::       c4,      ca,      cb,      co,    dist
-    double precision ::     dudy,    fgam,      mu,     mup,     mut
-    double precision ::       n1,      n2,      n3,     nxn,     nyn
-    double precision ::      nzn,     pka,     pkb,     rc4,rnutilde
-    double precision ::      rop,      sv,      t1,      t2,      t3
-    double precision ::     temp,   temp1,      tn,     top,  tparoi
-    double precision ::       tt,   upyp1,       v,     v1t,     v1x
-    double precision ::      v1y,     v1z,    yp02,  yplus1
-    logical          :: lamin
+  integer          ::        iter,          l,          m,       m0ns,         mb
+  integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
+  integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
+  integer          ::          ni,        nii
+  double precision ::           c1,         c13,         c18,          c2,          c3
+  double precision ::           c4,          ca,          cb,          co,  dist(ip12)
+  double precision ::         dudy,  fgam(ip42),    mu(ip12),         mup,   mut(ip12)
+  double precision ::           n1,          n2,          n3,   nxn(ip42),   nyn(ip42)
+  double precision ::    nzn(ip42),         pka,         pkb,         rc4,    rnutilde
+  double precision ::          rop,          sv,          t1,          t2,          t3
+  double precision ::   temp(ip11),       temp1,          tn,         top,      tparoi
+  double precision ::           tt,       upyp1,v(ip11,ip60),         v1t,         v1x
+  double precision ::          v1y,         v1z,        yp02,      yplus1
+  logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension mu(ip12),mut(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension v(ip11,ip60),dist(ip12)
-    dimension mnpar(ip12),fgam(ip42)
-    dimension temp(ip11)
 !
 !     lois viscosite : sutherland pour gaz et loi exponentielle pour liquide
 !     loi sutherland mu=mu0*sqrt(T/T0)*(1+S/T0)/(1+S/T)

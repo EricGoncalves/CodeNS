@@ -153,38 +153,35 @@ contains
     use definition
     use chainecarac
     implicit none
-    integer          ::      i1,     i2,   idf1,   idf2,  idfac
-    integer          ::     idm,  imaxf,  iminf,     j1,     j2
-    integer          ::   jmaxf,  jminf,     k1,     k2,  kmaxf
-    integer          ::   kminf,      l,    m0b,    m0n,     m1
-    integer          ::   m1max,m1maxm1,  m1min,     m2,  m2max
-    integer          :: m2maxm1,  m2min,     mf,   mfac,  mfacn
-    integer          ::     mfl,    n0c,    n0n,   ncbd,    nci
-    integer          ::     ncj,    nck,  nfac1,  nfac2,  nfac3
-    integer          ::   nfac4,  nfacf,    nid,   nijd,    njd
-    double precision ::     akp,  alfar,  betar, claero,claerob
-    double precision ::    clav,  clavb,clavtot, cmaero,cmaerob
-    double precision ::    cmav,  cmavb,cmavtot, cnaero,cnaerob
-    double precision ::    cnav,  cnavb,cnavtot,   csal,   csbe
-    double precision ::  cxaero,cxaerob,   cxav,  cxavb,cxavtot
-    double precision ::  cyaero,cyaerob,   cyav,  cyavb,cyavtot
-    double precision ::  czaero,czaerob,   czav,  czavb,czavtot
-    double precision ::     dcl,    dcm,    dcn,    dcx,    dcy
-    double precision ::     dcz,   dsml,   dsxy,   dsxz,   dsyz
-    double precision ::     dx1,    dx2,    dy1,    dy2,    dz1
-    double precision ::     dz2,    mut,    nxn,    nyn,    nzn
-    double precision ::      pa, paspa1,   pis2,     ps,  pspi0
-    double precision ::      qq, raddeg,    rm2,      s,    sml
-    double precision ::    snal,   snbe,    sxy,   sxyb,    sxz
-    double precision ::     syz,      u,      v,      w,      x
-    double precision ::   xcfac,      y,  ycfac,      z,  zcfac
+  integer          ::         i1,        i2,      idf1,      idf2,     idfac
+  integer          ::        idm,     imaxf,     iminf,        j1,        j2
+  integer          ::      jmaxf,     jminf,        k1,        k2,     kmaxf
+  integer          ::      kminf,         l,       m0b,       m0n,        m1
+  integer          ::      m1max,   m1maxm1,     m1min,        m2,     m2max
+  integer          ::    m2maxm1,     m2min,        mf,      mfac,     mfacn
+  integer          ::        mfl,       n0c,       n0n,ncbd(ip41),       nci
+  integer          ::        ncj,       nck,     nfac1,     nfac2,     nfac3
+  integer          ::      nfac4,     nfacf,       nid,      nijd,       njd
+  double precision ::          akp,       alfar,       betar,      claero,     claerob
+  double precision ::         clav,       clavb,     clavtot,      cmaero,     cmaerob
+  double precision ::         cmav,       cmavb,     cmavtot,      cnaero,     cnaerob
+  double precision ::         cnav,       cnavb,     cnavtot,        csal,        csbe
+  double precision ::       cxaero,     cxaerob,        cxav,       cxavb,     cxavtot
+  double precision ::       cyaero,     cyaerob,        cyav,       cyavb,     cyavtot
+  double precision ::       czaero,     czaerob,        czav,       czavb,     czavtot
+  double precision ::          dcl,         dcm,         dcn,         dcx,         dcy
+  double precision ::          dcz,        dsml,        dsxy,        dsxz,        dsyz
+  double precision ::          dx1,         dx2,         dy1,         dy2,         dz1
+  double precision ::          dz2,   mut(ip12),   nxn(ip42),   nyn(ip42),   nzn(ip42)
+  double precision ::           pa,      paspa1,        pis2,          ps,       pspi0
+  double precision ::           qq,      raddeg,         rm2,s(ip11,ip60),         sml
+  double precision ::         snal,        snbe,         sxy,        sxyb,         sxz
+  double precision ::          syz,           u,           v,           w,     x(ip21)
+  double precision ::        xcfac,     y(ip21),       ycfac,     z(ip21),       zcfac
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension s(ip11,ip60)
-    dimension mut(ip12),nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
 !
 !     SORTIES POUR EXPLOITATION
 !

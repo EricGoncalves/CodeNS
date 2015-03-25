@@ -70,46 +70,32 @@ contains
     use chainecarac
     use mod_met_bark
     implicit none
-    integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          ::     id,  imax,  imin,  ind1,  ind2
-    integer          ::      j,    j1,  j1m1,    j2,  j2m1
-    integer          ::     jd,  jmax,  jmin,     k,    k1
-    integer          ::   k1m1,    k2,  k2m1,    kd,  kmax
-    integer          ::   kmin,     l,lgsnlt,     m, mnpar
-    integer          ::      n,   n0c,   nci,   nid,  nijd
-    integer          ::    njd,  npsn
-    double precision ::    bark,   c132,   cfke,  cmui1,  cmui2
-    double precision ::   cmuj1,  cmuj2,  cmuk1,  cmuk2,   csk2
-    double precision ::    csl1,  csl12,   dist,   divv,  dqkdk
-    double precision ::   dqkdl,  dqldk,  dqldl, dssigl,   dtdx
-    double precision ::    dtdy,   dtdz,   dvxx,   dvxy,   dvxz
-    double precision ::    dvyx,   dvyy,   dvyz,   dvzx,   dvzy
-    double precision ::    dvzz,  gkgro,   glgk,   glgl,  glgro
-    double precision ::      mu,    mut, qcxts5, qcyts6,   rack
-    double precision ::   racrk,  racro, rdelta,    sk2,    sl1
-    double precision ::     sl2,    sl3,    sl4,     sn,      t
-    double precision ::   tprod, txxf5x, txyf5y, txzf5z, tyyf6x
-    double precision ::  tyzf6y, tzzf6z,      v,    vol, xdelta
-    double precision ::      xk,xkapad2,     xl,    xl1,    xl2
-    double precision :: xlskap2
-    logical          :: impli
+  integer          ::           i,         i1,       i1m1,         i2,       i2m1
+  integer          ::          id,       imax,       imin,       ind1,       ind2
+  integer          ::           j,         j1,       j1m1,         j2,       j2m1
+  integer          ::          jd,       jmax,       jmin,          k,         k1
+  integer          ::        k1m1,         k2,       k2m1,         kd,       kmax
+  integer          ::        kmin,          l,     lgsnlt,          m,mnpar(ip12)
+  integer          ::           n,        n0c,        nci,        nid,       nijd
+  integer          ::         njd,       npsn
+  double precision ::    bark(ip00),         c132,   cfke(ip13),  cmui1(ip21),  cmui2(ip21)
+  double precision ::   cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),         csk2
+  double precision ::          csl1,        csl12,   dist(ip12),         divv,        dqkdk
+  double precision ::         dqkdl,        dqldk,        dqldl,       dssigl,   dtdx(ip00)
+  double precision ::    dtdy(ip00),   dtdz(ip00),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00)
+  double precision ::    dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00)
+  double precision ::    dvzz(ip00),        gkgro,         glgk,         glgl,        glgro
+  double precision ::      mu(ip12),    mut(ip12), qcxts5(ip12), qcyts6(ip12),         rack
+  double precision ::         racrk,        racro,       rdelta,          sk2,          sl1
+  double precision ::           sl2,          sl3,          sl4,sn(ip31*ndir),      t(ip00)
+  double precision ::   tprod(ip00), txxf5x(ip12), txyf5y(ip12), txzf5z(ip12), tyyf6x(ip12)
+  double precision ::  tyzf6y(ip12), tzzf6z(ip12), v(ip11,ip60),    vol(ip11),       xdelta
+  double precision ::            xk,      xkapad2,           xl,          xl1,          xl2
+  double precision ::       xlskap2
+  logical          :: impli
 !
 !-----------------------------------------------------------------------
 !
-    dimension v(ip11,ip60)
-    dimension mut(ip12),mu(ip12),dist(ip12),mnpar(ip12), &
-         txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &
-         tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12), &
-         qcxts5(ip12),qcyts6(ip12)
-    dimension cfke(ip13),vol(ip11)
-    dimension sn(ip31*ndir)              
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-         dvzx(ip00),dvzy(ip00),dvzz(ip00), &
-         dtdx(ip00),dtdy(ip00),dtdz(ip00), &
-         t(ip00),tprod(ip00),bark(ip00)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 !
 
 
@@ -268,12 +254,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_smkl

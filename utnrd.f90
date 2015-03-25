@@ -53,23 +53,19 @@ contains
     use proprieteflu
     use boundary
     implicit none
-    integer          ::    id,   jd,   kd,    l,    m
-    integer          ::   mfl,   ml,   mt,  n0c,  n0n
-    integer          ::    nc, ncbd,  nci, ncij,ncijk
-    integer          ::  ncik,  ncj, ncjk,  nck,  nid
-    integer          ::  nijd,  njd,   nn
-    double precision ::      a,alpha0,alphar, bceqt, beta0
-    double precision ::  betar,degrad,     p,  pis2,     q
-    double precision ::  rmach,    ro,   rod,   roe,  roed
-    double precision ::    rou,  roud,   rov,  rovd,   row
-    double precision ::   rowd,     y,    ym,     z,    zm
+  integer          ::         id,        jd,        kd,         l,         m
+  integer          ::        mfl,        ml,        mt,       n0c,       n0n
+  integer          ::         nc,ncbd(ip41),       nci,      ncij,     ncijk
+  integer          ::       ncik,       ncj,      ncjk,       nck,       nid
+  integer          ::       nijd,       njd,        nn
+  double precision ::                a,          alpha0,          alphar,bceqt(ip41,neqt),           beta0
+  double precision ::            betar,          degrad,               p,            pis2,               q
+  double precision ::            rmach,              ro,       rod(ip40),             roe,      roed(ip40)
+  double precision ::              rou,      roud(ip40),             rov,      rovd(ip40),             row
+  double precision ::       rowd(ip40),         y(ip21),              ym,         z(ip21),              zm
 !
 !-----------------------------------------------------------------------
 !
-    dimension bceqt(ip41,neqt)
-    dimension ncbd(ip41)
-    dimension y(ip21),z(ip21)
-    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
 !
 
 !
@@ -133,7 +129,7 @@ contains
   contains
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine utnrd

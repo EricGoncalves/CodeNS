@@ -30,47 +30,37 @@ contains
     use schemanum
     use proprieteflu
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  ind1,  ind2,ityprk
-    integer          ::      j,    j1,  j1m1,  j1p1,    j2
-    integer          ::   j2m1,    jd,     k,    k1,  k1m1
-    integer          ::   k1p1,    k2,  k2m1,    kd,  kdir
-    integer          :: lgsnlt,    lm,     m,     n,   n0c
-    integer          ::     n1,   nci,   ncj,   nck,   nid
-    integer          ::   nijd,  ninc,   njd
-    double precision ::     a,   aa,   ai,   al,   ar
-    double precision ::   cal,  car,  cbl,  cbr,  cmi
-    double precision ::   cml,  cmr,cmui1,cmui2,cmuj1
-    double precision :: cmuj2,cmuk1,cmuk2, cnds,  cvi
-    double precision ::   cvj,  cvk,    d,   dm,  fex
-    double precision ::   fey,  fez,   ff,  fxx,  fxy
-    double precision ::   fxz,  fyy,  fyz,  fzz,  hi1
-    double precision ::   hi2,  hi3,  hi4,  hi5,  hj1
-    double precision ::   hj2,  hj3,  hj4,  hj5,  hk1
-    double precision ::   hk2,  hk3,  hk4,  hk5,   hl
-    double precision ::    hr,   pl,  prr,   ps,  psi
-    double precision ::   qcx,  qcy,  qcz,   ra, rhol
-    double precision ::  rhor,  si0,  si1,  si2,  si3
-    double precision ::   si4,  sj0,  sj1,  sj2,  sj3
-    double precision ::   sj4,  sk0,  sk1,  sk2,  sk3
-    double precision ::   sk4,   sn,   ta, toxx, toxy
-    double precision ::  toxz, toyy, toyz, tozz,    u
-    double precision ::    ul,   ur,    v,   vl,   vr
-    double precision ::    wl,   wr,   xa
+  integer          ::      i,    i1,  i1m1,  i1p1,    i2
+  integer          ::   i2m1,    id,  ind1,  ind2,ityprk
+  integer          ::      j,    j1,  j1m1,  j1p1,    j2
+  integer          ::   j2m1,    jd,     k,    k1,  k1m1
+  integer          ::   k1p1,    k2,  k2m1,    kd,  kdir
+  integer          :: lgsnlt,    lm,     m,     n,   n0c
+  integer          ::     n1,   nci,   ncj,   nck,   nid
+  integer          ::   nijd,  ninc,   njd
+  double precision ::                    a,                  aa,                  ai,                  al,                  ar
+  double precision ::                  cal,                 car,                 cbl,                 cbr,                 cmi
+  double precision ::                  cml,                 cmr,         cmui1(ip21),         cmui2(ip21),         cmuj1(ip21)
+  double precision ::          cmuj2(ip21),         cmuk1(ip21),         cmuk2(ip21),                cnds,           cvi(ip21)
+  double precision ::            cvj(ip21),           cvk(ip21),        d(ip11,ip60),                  dm,                 fex
+  double precision ::                  fey,                 fez,       ff(ip11,ip60),                 fxx,                 fxy
+  double precision ::                  fxz,                 fyy,                 fyz,                 fzz,                 hi1
+  double precision ::                  hi2,                 hi3,                 hi4,                 hi5,                 hj1
+  double precision ::                  hj2,                 hj3,                 hj4,                 hj5,                 hk1
+  double precision ::                  hk2,                 hk3,                 hk4,                 hk5,                  hl
+  double precision ::                   hr,            pl(ip00),           prr(ip00),            ps(ip11),                 psi
+  double precision ::            qcx(ip12),           qcy(ip12),           qcz(ip12),                  ra,          rhol(ip00)
+  double precision ::           rhor(ip00),                 si0,                 si1,                 si2,                 si3
+  double precision ::                  si4,                 sj0,                 sj1,                 sj2,                 sj3
+  double precision ::                  sj4,                 sk0,                 sk1,                 sk2,                 sk3
+  double precision ::                  sk4,sn(lgsnlt,nind,ndir),                  ta,          toxx(ip12),          toxy(ip12)
+  double precision ::           toxz(ip12),          toyy(ip12),          toyz(ip12),          tozz(ip12),        u(ip11,ip60)
+  double precision ::             ul(ip00),            ur(ip00),        v(ip11,ip60),            vl(ip00),            vr(ip00)
+  double precision ::             wl(ip00),            wr(ip00),                  xa
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension v(ip11,ip60),d(ip11,ip60),u(ip11,ip60),ff(ip11,ip60)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12), &
-         qcx (ip12),qcy (ip12),qcz (ip12)
-    dimension sn(lgsnlt,nind,ndir)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21),cvi(ip21),cvj(ip21),cvk(ip21)
-    dimension ps(ip11)
-    dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
-         rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
 
 
@@ -1143,41 +1133,41 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
     function    fmp(aa)
       implicit none
-      double precision ::  aa,fmp
+  double precision ::  aa,fmp
       fmp=0.25*(1.+sign(1.,abs(aa)-1.))*(aa+abs(aa)) &
            +0.125*(1.-sign(1.,abs(aa)-1.))*(aa+1.)**2 !*(1.+0.5*(aa-1.)**2)
     end function fmp
     function    fmm(xa)
       implicit none
-      double precision :: fmm, xa
+  double precision :: fmm, xa
       fmm=0.25*(1.+sign(1.,abs(xa)-1.))*(xa-abs(xa)) &
            -0.125*(1.-sign(1.,abs(xa)-1.))*(xa-1.)**2 !*(1.+0.5*(xa+1.)**2)
     end function fmm
     function    fpp(ta)
       implicit none
-      double precision :: fpp, ta
+  double precision :: fpp, ta
       fpp=0.25*(1.+sign(1.,abs(ta)-1.))*(1.+sign(1.,abs(ta))) &
            +0.125*(1.-sign(1.,abs(ta)-1.))*(ta+1.)**2*(2.-ta+0.75*ta*(ta-1.)**2)
     end function fpp
     function    fpm(ra)
       implicit none
-      double precision :: fpm, ra
+  double precision :: fpm, ra
       fpm=0.25*(1.+sign(1.,abs(ra)-1.))*(1.-sign(1.,abs(ra))) &
            +0.125*(1.-sign(1.,abs(ra)-1.))*(ra-1.)**2*(2.+ra-0.75*ra*(ra+1.)**2)
     end function fpm
     function    phi(a)
       implicit none
-      double precision ::   a,phi
+  double precision ::   a,phi
       phi=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
     end function phi
 

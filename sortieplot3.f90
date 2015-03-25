@@ -26,24 +26,20 @@ contains
     use chainecarac
     use proprieteflu
     implicit none
-    integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          ::    j,  j1,j1m1,  j2,j2m1
-    integer          ::    k,  k1,k1m1,  k2,k2m1
-    integer          ::    l,   m,   n, n0c, nid
-    integer          :: nijd, njd
-    double precision :: coef,cson,   e,  mu, mut
-    double precision ::   ps,  qq,   t,temp,   u
-    double precision ::    v,   w,   x, xcc, xme
-    double precision ::    y, ycc,   z, zcc
+  integer          ::    i,  i1,i1m1,  i2,i2m1
+  integer          ::    j,  j1,j1m1,  j2,j2m1
+  integer          ::    k,  k1,k1m1,  k2,k2m1
+  integer          ::    l,   m,   n, n0c, nid
+  integer          :: nijd, njd
+  double precision ::         coef,  cson(ip11),           e,    mu(ip12),   mut(ip12)
+  double precision ::     ps(ip11),          qq,t(ip11,ip60),  temp(ip11),           u
+  double precision ::            v,           w,     x(ip21),         xcc,         xme
+  double precision ::      y(ip21),         ycc,     z(ip21),         zcc
 !
 !-----------------------------------------------------------------------
 !
     character(len=1 ) :: c
 !
-    dimension t(ip11,ip60)
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension mu(ip12),mut(ip12)
-    dimension ps(ip11),cson(ip11),temp(ip11)
 !
 
 !
@@ -107,7 +103,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
   end subroutine sortieplot3

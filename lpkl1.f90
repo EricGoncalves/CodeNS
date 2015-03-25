@@ -39,30 +39,23 @@ contains
     use definition
     use modeleturb
     implicit none
-    integer          ::   iter,     l,     m,  m0ns,    mb
-    integer          ::    mfb, mnpar,  mpar,    mt,   n0c
-    integer          ::     nc,  ncbd,  ncin,  ncyc,nfacns
-    integer          ::     ni,   nii
-    double precision ::   cmu1,    co,  dist,  fgam,    mu
-    double precision ::    mup,   mut,    n1,    n2,    n3
-    double precision ::    nxn,   nyn,   nzn,   pka,   pkb
-    double precision ::   rhol,   rop,    sv,    t1,    t2
-    double precision ::     t3,  temp, temp1,    tn,   top
-    double precision :: tparoi, tprod,    tt, upyp1,   uto
-    double precision ::      v,   v1t,   v1x,   v1y,   v1z
-    double precision ::     ye,  yp02,    yv
-    logical          :: lamin
+  integer          ::        iter,          l,          m,       m0ns,         mb
+  integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
+  integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
+  integer          ::          ni,        nii
+  double precision ::         cmu1,          co,  dist(ip12),  fgam(ip42),    mu(ip12)
+  double precision ::          mup,   mut(ip12),          n1,          n2,          n3
+  double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),         pka,         pkb
+  double precision ::         rhol,         rop,          sv,          t1,          t2
+  double precision ::           t3,  temp(ip11),       temp1,          tn,         top
+  double precision ::       tparoi, tprod(ip00),          tt,       upyp1,         uto
+  double precision :: v(ip11,ip60),         v1t,         v1x,         v1y,         v1z
+  double precision ::           ye,        yp02,          yv
+  logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension mu(ip12),mut(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension v(ip11,ip60),dist(ip12)
-    dimension mnpar(ip12),fgam(ip42)
-    dimension tprod(ip00)
-    dimension temp(ip11)
 !
     cmu1=1./sqrt(cmu)
     sv=110.4/tnz !air

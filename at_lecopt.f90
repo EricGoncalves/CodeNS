@@ -27,15 +27,14 @@ contains
     use sortiefichier
     use maillage
     implicit none
-    integer          :: idefaut,   ierr,    igr,   igrl,    jgr
-    integer          ::    jgrl,    kgr,   kgrl,      l,    lig
-    integer          ::     llu,     nf
-    double precision ::  raptat,raptatl
+  integer          :: idefaut,   ierr,igr(lz),   igrl,jgr(lz)
+  integer          ::    jgrl,kgr(lz),   kgrl,      l,    lig
+  integer          ::     llu,     nf
+  double precision :: raptat(mtb),    raptatl
 !
 !-----------------------------------------------------------------------
 !
     character(len=80) ligne
-    dimension igr(lz),jgr(lz),kgr(lz),raptat(mtb)
 !
     write(imp,'(/,"==>at_lecopt: lecture relations domaines-paroi pour calcul optimise de la distance",/)')
 !

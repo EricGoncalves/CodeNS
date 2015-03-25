@@ -17,8 +17,8 @@ contains
     use sortiefichier
     use constantes 
     implicit none
-    integer          ::   icmd,  ilin,  ipos,ksuite, lgcmd
-    integer          ::  lglin,   lgt
+  integer          ::   icmd,  ilin,  ipos,ksuite, lgcmd
+  integer          ::  lglin,   lgt
 !
 !-----------------------------------------------------------------------
 !

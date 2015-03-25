@@ -15,13 +15,12 @@ contains
     use mod_gtcmd
     use mod_splcmd
     implicit none
-    integer          ::  imot,lgcmd, nmot
+  integer          :: imot(nmx),    lgcmd,     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: command
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     call gtcmd(command,lgcmd)
     call splcmd(command,lgcmd,mot,imot,nmot)

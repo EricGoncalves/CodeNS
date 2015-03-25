@@ -26,35 +26,30 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-    integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          ::     id,  ind1,  ind2,ityprk,     j
-    integer          ::     j1,  j1m1,    j2,  j2m1,    jd
-    integer          ::      k,    k1,  k1m1,    k2,  k2m1
-    integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
-    integer          ::     ls,     m,     n,   n0c,   nci
-    integer          ::    ncj,   nck,   nid,  nijd,  ninc
-    integer          ::    njd
-    double precision ::       cc,    cnds,coefdiag,    cson,       d
-    double precision ::     dfex,    dfey,    dfez,    dfxx,    dfxy
-    double precision ::     dfxz,    dfyy,    dfyz,    dfzz,      dt
-    double precision ::    dtpas,    fact,     fex,     fey,     fez
-    double precision ::       ff,    fiex,    fiey,    fiez,    fixx
-    double precision ::     fixy,    fixz,    fiyy,    fiyz,    fizz
-    double precision ::      fxx,     fxy,     fxz,     fyy,     fyz
-    double precision ::      fzz,    pres,      ps,      sn,     tn1
-    double precision ::      tn2,     tn3,     tn4,     tn5,       u
-    double precision ::       ui,      uu,       v,      vi,     vol
-    double precision ::       vv,      wi,     wi1,     wi2,     wi3
-    double precision ::      wi4,     wi5,      ww
+  integer          ::      i,    i1,  i1m1,    i2,  i2m1
+  integer          ::     id,  ind1,  ind2,ityprk,     j
+  integer          ::     j1,  j1m1,    j2,  j2m1,    jd
+  integer          ::      k,    k1,  k1m1,    k2,  k2m1
+  integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
+  integer          ::     ls,     m,     n,   n0c,   nci
+  integer          ::    ncj,   nck,   nid,  nijd,  ninc
+  integer          ::    njd
+  double precision ::                   cc,                cnds,      coefdiag(ip00),          cson(ip11),        d(ip11,ip60)
+  double precision ::           dfex(ip00),          dfey(ip00),          dfez(ip00),          dfxx(ip00),          dfxy(ip00)
+  double precision ::           dfxz(ip00),          dfyy(ip00),          dfyz(ip00),          dfzz(ip00),            dt(ip11)
+  double precision ::                dtpas,                fact,                 fex,                 fey,                 fez
+  double precision ::        ff(ip11,ip60),                fiex,                fiey,                fiez,                fixx
+  double precision ::                 fixy,                fixz,                fiyy,                fiyz,                fizz
+  double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
+  double precision ::                  fzz,                pres,            ps(ip11),sn(lgsnlt,nind,ndir),                 tn1
+  double precision ::                  tn2,                 tn3,                 tn4,                 tn5,        u(ip11,ip60)
+  double precision ::                   ui,                  uu,        v(ip11,ip60),                  vi,           vol(ip11)
+  double precision ::                   vv,                  wi,                 wi1,                 wi2,                 wi3
+  double precision ::                  wi4,                 wi5,                  ww
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension v(ip11,ip60),u(ip11,ip60),d(ip11,ip60),ff(ip11,ip60)
-    dimension vol(ip11),dt(ip11),ps(ip11),cson(ip11)
-    dimension sn(lgsnlt,nind,ndir)
-    dimension dfxx(ip00),dfxy(ip00),dfxz(ip00),dfex(ip00),coefdiag(ip00), &
-         dfyy(ip00),dfyz(ip00),dfey(ip00),dfzz(ip00),dfez(ip00)
 !
 
 
@@ -543,12 +538,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine implimf_eu

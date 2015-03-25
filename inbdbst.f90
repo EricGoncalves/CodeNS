@@ -16,14 +16,13 @@ contains
     use proprieteflu
     use definition
     implicit none
-    integer          :: ibdcst,  nvbc
-    double precision ::  aist, alst, btst, mast, pist
-    double precision ::  pspi,roist, tist, tsti,  vbc
+  integer          :: ibdcst,  nvbc
+  double precision ::           aist,          alst,          btst,          mast,          pist
+  double precision ::           pspi,         roist,          tist,          tsti,vbc(ista*lsta)
 !
 !-----------------------------------------------------------------------
 !
     character(len=4 ) :: clmf
-    dimension vbc(ista*lsta)
 !
     roist =varst(ibdcst,1)
     aist  =varst(ibdcst,2)

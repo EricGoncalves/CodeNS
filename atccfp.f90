@@ -34,17 +34,14 @@ contains
     use para_fige
     use boundary
     implicit none
-    integer          ::    dm1,   dm2,   dm3,isens3,     m
-    integer          ::     m0,   m0n,    mb,   mbn,    mt
-    integer          ::    nci,  ncin,  ndm3,  nfbi
-    double precision ::    x,xpar,   y,ypar,   z
-    double precision :: zpar
+  integer          ::        dm1,       dm2,       dm3,    isens3,         m
+  integer          ::         m0,       m0n,        mb,       mbn,        mt
+  integer          ::        nci,ncin(ip41),      ndm3,      nfbi
+  double precision ::    x(ip21),xpar(ip00),   y(ip21),ypar(ip00),   z(ip21)
+  double precision :: zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension xpar(ip00),ypar(ip00),zpar(ip00)
-    dimension ncin(ip41)
 !
     m0 =mpb(nfbi)
     m0n=mpn(nfbi)

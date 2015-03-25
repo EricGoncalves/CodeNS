@@ -20,23 +20,17 @@ contains
     use mod_b1_inbdb
     use mod_inbdb
     implicit none
-    integer          :: ibdcfl,ibdcst,ibddim,  imot, kibdb
-    integer          ::      l,  lmfb, lmfbd,  ncbd,  ncin
-    integer          ::   nmot,  nvbc
-    double precision :: bceqt,  vbc
+  integer          ::     ibdcfl,    ibdcst,    ibddim, imot(nmx),     kibdb
+  integer          ::          l, lmfb(mtb),     lmfbd,ncbd(ip41),ncin(ip41)
+  integer          ::       nmot,      nvbc
+  double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: clmf
 !
-    dimension imot(nmx)
-    dimension lmfb(mtb)
-    dimension vbc(ista*lsta)
 !
-    dimension ncbd(ip41)
-    dimension ncin(ip41)
-    dimension bceqt(ip41,neqt)
 !
     call tcmd_inbdb( &
          mot,imot,nmot, &

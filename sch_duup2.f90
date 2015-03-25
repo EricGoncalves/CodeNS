@@ -43,26 +43,19 @@ contains
     use mod_met_komutr
     use mod_met_klnmut
     implicit none
-    integer          ::    i,  i1,  i2,i2m1, img
-    integer          :: ind1,ind2,   j,  j1,  j2
-    integer          :: j2m1,   k,  k1,  k2,k2m1
-    integer          ::    l,  lm,   m, n0c,  nc
-    integer          :: ncyc, nid,nijd, njd
-    double precision ::    c13, cmui1, cmui2, cmuj1, cmuj2
-    double precision ::  cmuk1, cmuk2,  dist,    mu,   mut
-    double precision :: ptdual,    sn,     t, tprod,     v
-    double precision ::  vdual,vdual1,vdual2,   vol
+  integer          ::    i,  i1,  i2,i2m1, img
+  integer          :: ind1,ind2,   j,  j1,  j2
+  integer          :: j2m1,   k,  k1,  k2,k2m1
+  integer          ::    l,  lm,   m, n0c,  nc
+  integer          :: ncyc, nid,nijd, njd
+  double precision ::               c13,      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21)
+  double precision ::       cmuk1(ip21),      cmuk2(ip21),       dist(ip12),         mu(ip12),        mut(ip12)
+  double precision :: ptdual(ip11,ip60),    sn(ip31*ndir),          t(ip00),      tprod(ip00),     v(ip11,ip60)
+  double precision ::  vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),        vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension v(ip11,ip60)
-    dimension vdual1(ip11,ip60),vdual2(ip11,ip60)
-    dimension vdual(ip11,ip60),ptdual(ip11,ip60)
-    dimension vol(ip11),mut(ip12),mu(ip12),dist(ip12)
-    dimension sn(ip31*ndir)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
-    dimension t(ip00),tprod(ip00)
 
 
 !
@@ -264,7 +257,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
   end subroutine sch_duup2

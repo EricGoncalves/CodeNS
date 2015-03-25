@@ -22,22 +22,17 @@ contains
     use mod_tcmd_inbdc
     use mod_inbdc
     implicit none
-    integer          ::   iba, imot,  jba,  kba,kibdc
-    integer          ::   krr,mfbea,mfbeb,  mnc, ncbd
-    integer          ::  ncin, nmot
-    double precision :: epsmsh,  exs1,  exs2,     x,     y
-    double precision ::      z
+  integer          ::        iba, imot(nmx),       jba,       kba,     kibdc
+  integer          ::        krr,     mfbea,     mfbeb, mnc(ip43),ncbd(ip41)
+  integer          :: ncin(ip41),      nmot
+  double precision ::  epsmsh,   exs1,   exs2,x(ip21),y(ip21)
+  double precision :: z(ip21)
 !
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: tvi,tvj,tvk
     character(len=32) ::  mot(nmx)
 !
-    dimension imot(nmx)
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension mnc(ip43)
-    dimension ncbd(ip41)
-    dimension ncin(ip41)
 !
     call tcmd_inbdc( &
          mot,imot,nmot, &

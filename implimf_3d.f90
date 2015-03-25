@@ -26,35 +26,29 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-    integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          ::     id,  ind1,  ind2,ityprk,     j
-    integer          ::     j1,  j1m1,    j2,  j2m1,    jd
-    integer          ::      k,    k1,  k1m1,    k2,  k2m1
-    integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
-    integer          ::     ls,     m,     n,   n0c,   nci
-    integer          ::    ncj,   nck,   nid,  nijd,  ninc
-    integer          ::    njd
-    double precision ::    cc, cnds, cson,    d, dfex
-    double precision ::  dfey, dfez, dfxx, dfxy, dfxz
-    double precision ::  dfyy, dfyz, dfzz,   dt,dtpas
-    double precision ::  fact,  fex,  fey,  fez,   ff
-    double precision ::   fxx,  fxy,  fxz,  fyy,  fyz
-    double precision ::   fzz,   mu,  mut, pres,   ps
-    double precision ::    rv,   sn,  tn1,  tn2,  tn3
-    double precision ::   tn4,  tn5,    u,   ui,   uu
-    double precision ::     v,   vi,   vn,  vol,   vv
-    double precision ::    wi,  wi1,  wi2,  wi3,  wi4
-    double precision ::   wi5,   ww
+  integer          ::      i,    i1,  i1m1,    i2,  i2m1
+  integer          ::     id,  ind1,  ind2,ityprk,     j
+  integer          ::     j1,  j1m1,    j2,  j2m1,    jd
+  integer          ::      k,    k1,  k1m1,    k2,  k2m1
+  integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
+  integer          ::     ls,     m,     n,   n0c,   nci
+  integer          ::    ncj,   nck,   nid,  nijd,  ninc
+  integer          ::    njd
+  double precision ::                   cc,                cnds,          cson(ip11),        d(ip11,ip60),          dfex(ip00)
+  double precision ::           dfey(ip00),          dfez(ip00),          dfxx(ip00),          dfxy(ip00),          dfxz(ip00)
+  double precision ::           dfyy(ip00),          dfyz(ip00),          dfzz(ip00),            dt(ip11),               dtpas
+  double precision ::                 fact,                 fex,                 fey,                 fez,       ff(ip11,ip60)
+  double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
+  double precision ::                  fzz,            mu(ip12),           mut(ip12),                pres,            ps(ip11)
+  double precision ::             rv(ip00),sn(lgsnlt,nind,ndir),                 tn1,                 tn2,                 tn3
+  double precision ::                  tn4,                 tn5,        u(ip11,ip60),                  ui,                  uu
+  double precision ::         v(ip11,ip60),                  vi,                  vn,           vol(ip11),                  vv
+  double precision ::                   wi,                 wi1,                 wi2,                 wi3,                 wi4
+  double precision ::                  wi5,                  ww
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension v(ip11,ip60),u(ip11,ip60),d(ip11,ip60),ff(ip11,ip60)
-    dimension vol(ip11),dt(ip11),ps(ip11),cson(ip11)
-    dimension mu(ip12),mut(ip12)
-    dimension sn(lgsnlt,nind,ndir)
-    dimension dfxx(ip00),dfxy(ip00),dfxz(ip00),dfex(ip00),rv(ip00), &
-         dfyy(ip00),dfyz(ip00),dfey(ip00),dfzz(ip00),dfez(ip00)
 !
 
 
@@ -546,12 +540,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine implimf_3d

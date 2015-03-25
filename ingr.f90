@@ -34,12 +34,11 @@ contains
     use mod_readdg
     use mod_smg_fcm
     implicit none
-    integer          ::  img,king,   l
-    double precision :: x,y,z
+  integer          ::  img,king,   l
+  double precision :: x(ip21),y(ip21),z(ip21)
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(ip21),y(ip21),z(ip21)
 !
     if(king.ne.0) then
 !     remplissage des tableaux x , y , z dans un sous-programme d'initialisation

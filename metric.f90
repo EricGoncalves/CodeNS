@@ -40,19 +40,14 @@ contains
     use mod_rfsc
     use mod_rfsr
     implicit none
-    integer          ::  img,   l,  lm, mfc, mfr
-    integer          ::  mnc, mnr,ncbd
-    double precision :: exs1,exs2,   r,  sn, tn1
-    double precision ::  tn2, tn3, vol,   x, xnr
-    double precision ::    y, ynr,   z, znr
+  integer          ::        img,         l,        lm,       mfc,       mfr
+  integer          ::  mnc(ip43), mnr(ip44),ncbd(ip41)
+  double precision ::          exs1,         exs2,      r(ip11),sn(ip31*ndir),    tn1(ip00)
+  double precision ::     tn2(ip00),    tn3(ip00),    vol(ip11),      x(ip21),    xnr(ip44)
+  double precision ::       y(ip21),    ynr(ip44),      z(ip21),    znr(ip44)
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(ip21),y(ip21),z(ip21),r(ip11),vol(ip11)
-    dimension sn(ip31*ndir)
-    dimension ncbd(ip41),mnc(ip43)
-    dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
-    dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
     do l=1,lzx
 !

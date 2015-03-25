@@ -25,32 +25,29 @@ contains
     use schemanum
     use definition
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  ind1,  ind2,     j
-    integer          ::     j1,  j1m1,  j1p1,    j2,  j2m1
-    integer          ::     jd,     k,    k1,  k1m1,  k1p1
-    integer          ::     k2,  k2m1,    kd,  kdir,lgsnlt
-    integer          ::     lm,     m,     n,   n0c,   nci
-    integer          ::    ncj,   nck,   nid,  nijd,  ninc
-    integer          ::    njd
-    double precision ::    a2,beta2,  ck2,  ck4, cnds
-    double precision ::  cson,    d,   d1,   d2,   d3
-    double precision ::  d3w1, d3w2, d3w3, d3w4, d3w5
-    double precision ::    d4,   d5,  dd1,  dd2,  dd3
-    double precision ::   dd4,  dd5,  ds1,  ds2,  ds3
-    double precision ::   ds4,  ds5,  dw1,  dw2,  dw3
-    double precision ::   dw4,  dw5, eps2, eps4,   gd
-    double precision ::    ge,  get,prec1,prec3, pres
-    double precision ::    ps,   q2, qinf,   qq,  rho
-    double precision ::    rl,   sn, snup, temp,   uu
-    double precision ::     v,   vn,   vv,   ww
+  integer          ::      i,    i1,  i1m1,  i1p1,    i2
+  integer          ::   i2m1,    id,  ind1,  ind2,     j
+  integer          ::     j1,  j1m1,  j1p1,    j2,  j2m1
+  integer          ::     jd,     k,    k1,  k1m1,  k1p1
+  integer          ::     k2,  k2m1,    kd,  kdir,lgsnlt
+  integer          ::     lm,     m,     n,   n0c,   nci
+  integer          ::    ncj,   nck,   nid,  nijd,  ninc
+  integer          ::    njd
+  double precision ::                   a2,               beta2,                 ck2,                 ck4,                cnds
+  double precision ::           cson(ip11),        d(ip11,ip60),                  d1,                  d2,                  d3
+  double precision ::                 d3w1,                d3w2,                d3w3,                d3w4,                d3w5
+  double precision ::                   d4,                  d5,                 dd1,                 dd2,                 dd3
+  double precision ::                  dd4,                 dd5,                 ds1,                 ds2,                 ds3
+  double precision ::                  ds4,                 ds5,                 dw1,                 dw2,                 dw3
+  double precision ::                  dw4,                 dw5,                eps2,                eps4,                  gd
+  double precision ::                   ge,                 get,               prec1,               prec3,                pres
+  double precision ::             ps(ip11),                  q2,                qinf,                  qq,                 rho
+  double precision ::                   rl,sn(lgsnlt,nind,ndir),          snup(ip00),          temp(ip11),                  uu
+  double precision ::         v(ip11,ip60),                  vn,                  vv,                  ww
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension v(ip11,ip60),d(ip11,ip60)
-    dimension sn(lgsnlt,nind,ndir)
-    dimension ps(ip11),cson(ip11),temp(ip11),snup(ip00)
 !
 
 
@@ -682,12 +679,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine dissip_jameson_prcd2

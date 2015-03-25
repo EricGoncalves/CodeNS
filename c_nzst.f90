@@ -49,7 +49,7 @@ contains
     use proprieteflu
     use definition
     implicit none
-    double precision ::  aam,roam, tam
+  double precision ::  aam,roam, tam
 !
 !-----------------------------------------------------------------------
 !

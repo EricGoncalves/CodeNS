@@ -34,18 +34,13 @@ contains
     use maillage
     use proprieteflu
     implicit none
-    integer          ::    m,  mb, mfb, mmb, mpb
-    integer          ::   mt,ncbd,ncin,  ni,  nl
-    double precision ::     cson,    epar,pression,   rhoe1,    temp
-    double precision ::       tp,       v
+  integer          ::          m,        mb,       mfb,  mmb(mtt),  mpb(mtt)
+  integer          ::         mt,ncbd(ip41),ncin(ip41),        ni,        nl
+  double precision ::     cson(ip11),          epar,pression(ip11),         rhoe1,    temp(ip11)
+  double precision ::       tp(ip40),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension v(ip11,ip60)
-    dimension ncbd(ip41),ncin(ip41)
-    dimension mmb(mtt),mpb(mtt)
-    dimension tp(ip40)
-    dimension pression(ip11),temp(ip11),cson(ip11)
 !
     mt=mmb(mfb)
 !

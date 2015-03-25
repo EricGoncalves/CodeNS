@@ -19,16 +19,15 @@ contains
     use chainecarac
     use mod_valenti
     implicit none
-    integer          :: icmt,  im,imax,imin,imot
-    integer          :: jmax,jmin,kini,kmax,kmin
-    integer          :: kval,   l,mfbe,  nm,nmot
+  integer          ::      icmt,       im,     imax,     imin,imot(nmx)
+  integer          ::      jmax,     jmin,     kini,     kmax,     kmin
+  integer          ::      kval,        l,     mfbe,       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
     character(len=2 ) :: indmf
-    dimension imot(nmx)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

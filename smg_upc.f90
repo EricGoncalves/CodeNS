@@ -18,16 +18,15 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::    i,  i1,  i2,i2m1, img
-    integer          :: ind1,ind2,   j,  j1,  j2
-    integer          :: j2m1,   k,  k1,  k2,k2m1
-    integer          ::    l,  lm,   m, n0c,  nc
-    integer          ::  nid,nijd, njd
-    double precision :: dc, v
+  integer          ::    i,  i1,  i2,i2m1, img
+  integer          :: ind1,ind2,   j,  j1,  j2
+  integer          :: j2m1,   k,  k1,  k2,k2m1
+  integer          ::    l,  lm,   m, n0c,  nc
+  integer          ::  nid,nijd, njd
+  double precision :: dc(ip11,ip60), v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension dc(ip11,ip60),v(ip11,ip60)
 !
 
 !
@@ -71,7 +70,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
   end subroutine smg_upc

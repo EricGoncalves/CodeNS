@@ -19,19 +19,17 @@ contains
     use modeleturb
     use chainecarac
     implicit none
-    integer          ::     i,   i1,   i2, i2m1,   id
-    integer          ::     j,   j1,   j2, j2m1,   jd
-    integer          ::     k,   k1,   k2, k2m1,   kd
-    integer          ::     l,mnpar,   mp,    n,   n0
-    integer          ::   nci,  ncj,  nck,  nid, nijd
-    integer          ::   njd
-    double precision ::  dist,  fmu,   mu,  mut, utau
-    double precision ::     v,yplus
+  integer          ::           i,         i1,         i2,       i2m1,         id
+  integer          ::           j,         j1,         j2,       j2m1,         jd
+  integer          ::           k,         k1,         k2,       k2m1,         kd
+  integer          ::           l,mnpar(ip12),         mp,          n,         n0
+  integer          ::         nci,        ncj,        nck,        nid,       nijd
+  integer          ::         njd
+  double precision ::   dist(ip12),         fmu,    mu(ip12),   mut(ip12),  utau(ip42)
+  double precision :: v(ip11,ip60),       yplus
 !
 !-----------------------------------------------------------------------
 !
-    dimension mu(ip12),mut(ip12),dist(ip12),mnpar(ip12),utau(ip42)
-    dimension v(ip11,ip60)
 !
 
 
@@ -76,12 +74,12 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_chmut

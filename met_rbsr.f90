@@ -17,21 +17,16 @@ contains
     use boundary
     use maillage
     implicit none
-    integer          ::    l,   m,  mb,  mf, mfb
-    integer          ::  mnr,  mr,  mt,ncbd,ncin
-    integer          ::   nd, nid, njd,  nr
-    double precision ::   cr, s1x,s1xr, s1y,s1yr
-    double precision ::  s1z,s1zr, s2x,s2xr, s2y
-    double precision :: s2yr, s2z,s2zr,  sr, xnr
-    double precision ::  ynr, znr
+  integer          ::          l,         m,        mb,        mf,       mfb
+  integer          ::  mnr(ip44),        mr,        mt,ncbd(ip41),ncin(ip41)
+  integer          ::         nd,       nid,       njd,        nr
+  double precision ::        cr,s1x(ip12),     s1xr,s1y(ip12),     s1yr
+  double precision :: s1z(ip12),     s1zr,s2x(ip12),     s2xr,s2y(ip12)
+  double precision ::      s2yr,s2z(ip12),     s2zr,       sr,xnr(ip44)
+  double precision :: ynr(ip44),znr(ip44)
 !
 !-----------------------------------------------------------------------
 !
-    dimension s1x(ip12),s1y (ip12),s1z(ip12), &
-         s2x(ip12),s2y (ip12),s2z(ip12)
-    dimension ncbd(ip41)
-    dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
-    dimension ncin(ip41)
 !
     do mf=1,nbd
 !

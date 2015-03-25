@@ -33,16 +33,14 @@ contains
     use mod_writdg
     use mod_chdgcv
     implicit none
-    integer          :: imax,imin,jmax,jmin, kdg
-    integer          :: kmax,kmin,   l
-    double precision :: tn1,tn2,tn3,  x,  y
-    double precision ::   z
+  integer          :: imax,imin,jmax,jmin, kdg
+  integer          :: kmax,kmin,   l
+  double precision :: tn1(ip00),tn2(ip00),tn3(ip00),  x(ip21),  y(ip21)
+  double precision ::   z(ip21)
 !
 !-----------------------------------------------------------------------
 !
     character(len=4 ) :: disc
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
 !     changement eventuel de discretisation
 !

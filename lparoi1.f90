@@ -82,32 +82,24 @@ contains
     use modeleturb
     use definition
     implicit none
-    integer          ::   iter,    lm,     m,  m0ns,    mb
-    integer          ::   mfbm, mnpar,  mpar,    mt,   n0c
-    integer          ::     nc,  ncbd,  ncin,  ncyc,nfacns
-    integer          ::     ni,   nii
-    double precision ::     co,  dist,  fgam,    mu,   mup
-    double precision ::    mut,    n1,    n2,    n3,   nxn
-    double precision ::    nyn,   nzn,   pka,   pkb,   qc1
-    double precision ::    qcx,   qcy,   qcz,   rop,    sv
-    double precision ::     t1,    t2,    t3,  temp, temp1
-    double precision ::     tn,   top,  toxx,  toxy,  toxz
-    double precision ::   toyy,  toyz,  tozz,tparoi,    tt
-    double precision ::  upyp1,     v,   v1t,   v1x,   v1y
-    double precision ::    v1z,  yp02
-    logical          :: lamin
+  integer          ::        iter,         lm,          m,       m0ns,         mb
+  integer          ::        mfbm,mnpar(ip12),       mpar,         mt,        n0c
+  integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
+  integer          ::          ni,        nii
+  double precision ::           co,  dist(ip12),  fgam(ip42),    mu(ip12),         mup
+  double precision ::    mut(ip12),          n1,          n2,          n3,   nxn(ip42)
+  double precision ::    nyn(ip42),   nzn(ip42),         pka,         pkb,         qc1
+  double precision ::    qcx(ip12),   qcy(ip12),   qcz(ip12),         rop,          sv
+  double precision ::           t1,          t2,          t3,  temp(ip11),       temp1
+  double precision ::           tn,         top,  toxx(ip12),  toxy(ip12),  toxz(ip12)
+  double precision ::   toyy(ip12),  toyz(ip12),  tozz(ip12),      tparoi,          tt
+  double precision ::        upyp1,v(ip11,ip60),         v1t,         v1x,         v1y
+  double precision ::          v1z,        yp02
+  logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension mu(ip12),mut(ip12),toxx(ip12),toxy(ip12), &
-         toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12), &
-         qcx (ip12),qcy(ip12),qcz(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension v(ip11,ip60),dist(ip12)
-    dimension mnpar(ip12),fgam(ip42)
-    dimension temp(ip11)
 !
 !     lois viscosite : sutherland pour gaz et loi exponentielle pour liquide
 !     loi sutherland mu=mu0*sqrt(T/T0)*(1+S/T0)/(1+S/T)

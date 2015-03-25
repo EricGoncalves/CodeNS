@@ -14,15 +14,12 @@ contains
     use para_fige
     use boundary
     implicit none
-    integer          ::    m,  mf, mfb,  ml,  mt
-    integer          ::    n,ncbd,ncin,  ni
-    double precision :: t
+  integer          ::          m,        mf,       mfb,        ml,        mt
+  integer          ::          n,ncbd(ip41),ncin(ip41),        ni
+  double precision :: t(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension t(ip11,ip60)
-    dimension ncbd(ip41)
-    dimension ncin(ip41)
 !
 !     definition des variables aux bords (centre des facettes frontieres)
 !

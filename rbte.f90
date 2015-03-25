@@ -28,16 +28,13 @@ contains
     use para_fige
     use boundary
     implicit none
-    integer          ::    m,  mb,  mf, mfb,  mt
-    integer          :: ncbd,ncin,  nd, ndm
-    double precision ::  qcx, qcy, qcz,toxx,toxy
-    double precision :: toxz,toyy,toyz,tozz
+  integer          ::          m,        mb,        mf,       mfb,        mt
+  integer          :: ncbd(ip41),ncin(ip41),        nd,       ndm
+  double precision ::  qcx(ip12), qcy(ip12), qcz(ip12),toxx(ip12),toxy(ip12)
+  double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
 !
 !-----------------------------------------------------------------------
 !
-    dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
-         tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12)
-    dimension ncin(ip41),ncbd(ip41)
 
 !
     do mf=1,nbd

@@ -71,26 +71,20 @@ contains
     use sortiefichier
     use constantes
     implicit none
-    integer          ::     i,   i1,   i2, i2m1, icyc
-    integer          :: idumx,  img,    j,   j1,   j2
-    integer          ::  j2m1,jdumx,    k,   k1,   k2
-    integer          ::  k2m1,kdumx,    l,    m,    n
-    integer          ::    n0,   ni,  nid, nijd,   nj
-    integer          ::   njd,   nk, nmax
-    double precision ::  coef,   dt,dumax,dumy1,dumy2
-    double precision ::  res1, res2, res3, res4, res5
-    double precision ::  res6, res7,    s,    u,    v
+  integer          ::           i,         i1,         i2,       i2m1,       icyc
+  integer          :: idumx(neqt),        img,          j,         j1,         j2
+  integer          ::        j2m1,jdumx(neqt),          k,         k1,         k2
+  integer          ::        k2m1,kdumx(neqt),          l,          m,          n
+  integer          ::          n0,         ni,        nid,       nijd,         nj
+  integer          ::         njd,         nk,       nmax
+  double precision ::         coef,    dt(ip11), dumax(neqt), dumy1(neqt), dumy2(neqt)
+  double precision ::   res1(ip00),  res2(ip00),  res3(ip00),  res4(ip00),  res5(ip00)
+  double precision ::   res6(ip00),  res7(ip00),           s,u(ip11,ip60),v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
 !
-    dimension idumx(neqt),jdumx(neqt),kdumx(neqt), &
-         dumy1(neqt),dumy2(neqt),dumax(neqt)
-    dimension u(ip11,ip60),v(ip11,ip60)
-    dimension dt(ip11)
-    dimension res1(ip00),res2(ip00),res3(ip00),res4(ip00), &
-         res5(ip00),res6(ip00),res7(ip00)
 !
 
 !
@@ -262,7 +256,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine residu

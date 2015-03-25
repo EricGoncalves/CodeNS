@@ -16,16 +16,14 @@ contains
     use sortiefichier
     use mod_inbdbad
     implicit none
-    integer          :: ibdcfl,   img,     m,   mfl,  mflm
-    integer          ::     ml,   mpb,    mt,nbidon,    nd
-    integer          ::     ne,   nif,   njf,   nkf,    nr
-    integer          ::     nt,    nv,   nvp,   nvt
-    double precision ::   adim, bceqt,rbidon
+  integer          ::   ibdcfl,     img,       m,     mfl,    mflm
+  integer          ::       ml,mpb(mtt),      mt,  nbidon,      nd
+  integer          ::       ne,     nif,     njf,     nkf,      nr
+  integer          ::       nt,      nv,     nvp,     nvt
+  double precision ::             adim,bceqt(ip41,neqt),          rbidon
 !
 !-----------------------------------------------------------------------
 !
-    dimension bceqt(ip41,neqt)
-    dimension mpb(mtt)
 !
     character(len=20) ::  chvar,frmt
     character(len=80) ::  titre

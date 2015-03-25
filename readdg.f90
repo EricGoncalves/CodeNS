@@ -39,16 +39,15 @@ contains
     use sortiefichier
     use maillage
     implicit none
-    integer          ::    i,  i1,  i2,   j,  j1
-    integer          ::   j2,   k,  k1,  k2, kdg
-    integer          ::    l,   n, nid,nijd, njd
-    double precision :: x,y,z
-    logical          :: ecri
+  integer          ::    i,  i1,  i2,   j,  j1
+  integer          ::   j2,   k,  k1,  k2, kdg
+  integer          ::    l,   n, nid,nijd, njd
+  double precision :: x(ip21),y(ip21),z(ip21)
+  logical          :: ecri
 !
 !-----------------------------------------------------------------------
 !
     character(len=1) coord
-    dimension x(ip21),y(ip21),z(ip21)
 !
 
 !
@@ -107,7 +106,7 @@ contains
   contains
     function    indn(i,j,k)
       implicit none
-      integer          ::    i,indn,   j,   k
+  integer          ::    i,indn,   j,   k
       indn=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indn
   end subroutine readdg

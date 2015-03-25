@@ -54,23 +54,17 @@ contains
     use maillage
     use boundary
     implicit none
-    integer          ::    dm3,  ierr,isens3,     l,     m
-    integer          ::    m0b,   m0n,    m3, m3max, m3min
-    integer          ::     mb,   mbn, mnpar,    mt,    n0
-    integer          ::     nc,   nci,  ncil,  ncin,   ncl
-    integer          ::   ncm1, ncm1l,  nfbi
-    double precision ::  dist,distn,  nxn,  nyn,  nzn
-    double precision ::     x,  xcc, xpar,    y,  ycc
-    double precision ::  ypar,    z,  zcc, zpar
+  integer          ::         dm3,       ierr,     isens3,          l,          m
+  integer          ::         m0b,        m0n,         m3,      m3max,      m3min
+  integer          ::          mb,        mbn,mnpar(ip12),         mt,         n0
+  integer          ::          nc,        nci,       ncil, ncin(ip41),        ncl
+  integer          ::        ncm1,      ncm1l,       nfbi
+  double precision :: dist(ip12),     distn, nxn(ip42), nyn(ip42), nzn(ip42)
+  double precision ::    x(ip21), xcc(ip00),xpar(ip00),   y(ip21), ycc(ip00)
+  double precision :: ypar(ip00),   z(ip21), zcc(ip00),zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension xpar(ip00),ypar(ip00),zpar(ip00)
-    dimension xcc (ip00),ycc (ip00),zcc (ip00)
-    dimension dist(ip12),mnpar(ip12)
-    dimension ncin(ip41)
 !
     m0b=mpb(nfbi)
     m0n=mpn(nfbi)

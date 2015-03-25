@@ -27,79 +27,72 @@ contains
     use maillage
     use proprieteflu
     implicit none
-    integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,   i2m2,     id,   iexp,   ind1
-    integer          ::    ind2,isortie, ityprk,      j,     j1
-    integer          ::    j1m1,   j1p1,     j2,   j2m1,   j2m2
-    integer          ::      jd,      k,     k1,   k1m1,   k1p1
-    integer          ::      k2,   k2m1,   k2m2,     kd,   kdir
-    integer          ::  lgsnlt,     lm,      m,     m1,      n
-    integer          ::     n0c,     n1,    nci,    ncj,    nck
-    integer          ::     nid,   nijd,   ninc,    njd
-    double precision ::     al,    am,  am2i,    ar,beta11
-    double precision :: beta12,beta21,beta22,beta31,beta32
-    double precision :: beta41,beta42,beta51,beta52,   c00
-    double precision ::    c01,   c10,   c11,  cnds,   df1
-    double precision ::    df2,   df3,   df4,   df5,   dg1
-    double precision ::    dg2,   dg3,   dg4,   dg5,   dh1
-    double precision ::    dh2,   dh3,   dh4,   dh5,   eps
-    double precision ::     f1,   f11,   f12,    f2,   f21
-    double precision ::    f22,    f3,   f31,   f32,    f4
-    double precision ::    f41,   f42,    f5,   f51,   f52
-    double precision ::    fc1,   fc2,   fc3,   fc4,   fc5
-    double precision ::    fex,   fey,   fez,    ff,   fv2
-    double precision ::    fv3,   fv4,   fv5,   fxx,   fxy
-    double precision ::    fxz,   fyy,   fyz,   fzz,    g1
-    double precision ::    g11,   g12,    g2,   g21,   g22
-    double precision ::     g3,   g31,   g32,    g4,   g41
-    double precision ::    g42,    g5,   g51,   g52,   ga1
-    double precision ::    ga2,   gc1,   gc2,   gc3,   gc4
-    double precision ::    gc5,    gd,   gd1,   gd2,   gv2
-    double precision ::    gv3,   gv4,   gv5,    h1,   h11
-    double precision ::    h12,    h2,   h21,   h22,    h3
-    double precision ::    h31,   h32,    h4,   h41,   h42
-    double precision ::     h5,   h51,   h52,   hc1,   hc2
-    double precision ::    hc3,   hc4,   hc5,    hl,    hm
-    double precision ::     hr,   hv2,   hv3,   hv4,   hv5
-    double precision ::     nx,    ny,    nz,   p11,   p12
-    double precision ::    p13,   p14,   p15,   p21,   p22
-    double precision ::    p23,   p24,   p25,   p31,   p32
-    double precision ::    p33,   p34,   p35,   p41,   p42
-    double precision ::    p43,   p44,   p45,   p51,   p52
-    double precision ::    p53,   p54,   p55,    ps,   q11
-    double precision ::    q12,   q13,   q14,   q15,   q1f
-    double precision ::  q1f1m, q1f1p, q1f2p,   q21,   q22
-    double precision ::    q23,   q24,   q25,   q2f, q2f1m
-    double precision ::  q2f1p, q2f2p,   q31,   q32,   q33
-    double precision ::    q34,   q35,   q3f, q3f1m, q3f1p
-    double precision ::  q3f2p,   q41,   q42,   q43,   q44
-    double precision ::    q45,   q4f, q4f1m, q4f1p, q4f2p
-    double precision ::    q51,   q52,   q53,   q54,   q55
-    double precision ::    q5f, q5f1m, q5f1p, q5f2p,   qcx
-    double precision ::    qcy,   qcz,rhoami,rhoiam,  rhom
-    double precision ::  rhomi,    sn,    sw,   swm,  toxx
-    double precision ::   toxy,  toxz,  toyy,  toyz,  tozz
-    double precision ::      u,    ul,    um,    ur,     v
-    double precision ::     v1,    v4,    v5, vitm2,    vl
-    double precision ::     vm,    vn,    vr,   w11,   w12
-    double precision ::    w13,   w14,   w15,   w21,   w22
-    double precision ::    w23,   w24,   w25,    wl,    wm
-    double precision ::     wr,  ww11, ww11m,  ww12, ww12m
-    double precision ::   ww13, ww13m,  ww14, ww14m,  ww15
-    double precision ::  ww15m,  ww21, ww21m,  ww22, ww22m
-    double precision ::   ww23, ww23m,  ww24, ww24m,  ww25
-    double precision ::  ww25m
+  integer          ::       i,     i1,   i1m1,   i1p1,     i2
+  integer          ::    i2m1,   i2m2,     id,   iexp,   ind1
+  integer          ::    ind2,isortie, ityprk,      j,     j1
+  integer          ::    j1m1,   j1p1,     j2,   j2m1,   j2m2
+  integer          ::      jd,      k,     k1,   k1m1,   k1p1
+  integer          ::      k2,   k2m1,   k2m2,     kd,   kdir
+  integer          ::  lgsnlt,     lm,      m,     m1,      n
+  integer          ::     n0c,     n1,    nci,    ncj,    nck
+  integer          ::     nid,   nijd,   ninc,    njd
+  double precision ::                   al,                  am,                am2i,                  ar,              beta11
+  double precision ::               beta12,              beta21,              beta22,              beta31,              beta32
+  double precision ::               beta41,              beta42,              beta51,              beta52,                 c00
+  double precision ::                  c01,                 c10,                 c11,                cnds,                 df1
+  double precision ::                  df2,                 df3,                 df4,                 df5,                 dg1
+  double precision ::                  dg2,                 dg3,                 dg4,                 dg5,                 dh1
+  double precision ::                  dh2,                 dh3,                 dh4,                 dh5,                 eps
+  double precision ::                   f1,                 f11,                 f12,                  f2,                 f21
+  double precision ::                  f22,                  f3,                 f31,                 f32,                  f4
+  double precision ::                  f41,                 f42,                  f5,                 f51,                 f52
+  double precision ::                  fc1,                 fc2,                 fc3,                 fc4,                 fc5
+  double precision ::            fex(ip00),           fey(ip00),           fez(ip00),       ff(ip11,ip60),                 fv2
+  double precision ::                  fv3,                 fv4,                 fv5,           fxx(ip00),           fxy(ip00)
+  double precision ::            fxz(ip00),           fyy(ip00),           fyz(ip00),           fzz(ip00),                  g1
+  double precision ::                  g11,                 g12,                  g2,                 g21,                 g22
+  double precision ::                   g3,                 g31,                 g32,                  g4,                 g41
+  double precision ::                  g42,                  g5,                 g51,                 g52,                 ga1
+  double precision ::                  ga2,                 gc1,                 gc2,                 gc3,                 gc4
+  double precision ::                  gc5,                  gd,                 gd1,                 gd2,                 gv2
+  double precision ::                  gv3,                 gv4,                 gv5,                  h1,                 h11
+  double precision ::                  h12,                  h2,                 h21,                 h22,                  h3
+  double precision ::                  h31,                 h32,                  h4,                 h41,                 h42
+  double precision ::                   h5,                 h51,                 h52,                 hc1,                 hc2
+  double precision ::                  hc3,                 hc4,                 hc5,                  hl,                  hm
+  double precision ::                   hr,                 hv2,                 hv3,                 hv4,                 hv5
+  double precision ::                   nx,                  ny,                  nz,                 p11,                 p12
+  double precision ::                  p13,                 p14,                 p15,                 p21,                 p22
+  double precision ::                  p23,                 p24,                 p25,                 p31,                 p32
+  double precision ::                  p33,                 p34,                 p35,                 p41,                 p42
+  double precision ::                  p43,                 p44,                 p45,                 p51,                 p52
+  double precision ::                  p53,                 p54,                 p55,            ps(ip11),                 q11
+  double precision ::                  q12,                 q13,                 q14,                 q15,                 q1f
+  double precision ::                q1f1m,               q1f1p,               q1f2p,                 q21,                 q22
+  double precision ::                  q23,                 q24,                 q25,                 q2f,               q2f1m
+  double precision ::                q2f1p,               q2f2p,                 q31,                 q32,                 q33
+  double precision ::                  q34,                 q35,                 q3f,               q3f1m,               q3f1p
+  double precision ::                q3f2p,                 q41,                 q42,                 q43,                 q44
+  double precision ::                  q45,                 q4f,               q4f1m,               q4f1p,               q4f2p
+  double precision ::                  q51,                 q52,                 q53,                 q54,                 q55
+  double precision ::                  q5f,               q5f1m,               q5f1p,               q5f2p,           qcx(ip12)
+  double precision ::            qcy(ip12),           qcz(ip12),              rhoami,              rhoiam,                rhom
+  double precision ::                rhomi,sn(lgsnlt,nind,ndir),                  sw,                 swm,          toxx(ip12)
+  double precision ::           toxy(ip12),          toxz(ip12),          toyy(ip12),          toyz(ip12),          tozz(ip12)
+  double precision ::         u(ip11,ip60),                  ul,                  um,                  ur,        v(ip11,ip60)
+  double precision ::                   v1,                  v4,                  v5,               vitm2,                  vl
+  double precision ::                   vm,                  vn,                  vr,                 w11,                 w12
+  double precision ::                  w13,                 w14,                 w15,                 w21,                 w22
+  double precision ::                  w23,                 w24,                 w25,                  wl,                  wm
+  double precision ::                   wr,                ww11,               ww11m,                ww12,               ww12m
+  double precision ::                 ww13,               ww13m,                ww14,               ww14m,                ww15
+  double precision ::                ww15m,                ww21,               ww21m,                ww22,               ww22m
+  double precision ::                 ww23,               ww23m,                ww24,               ww24m,                ww25
+  double precision ::                ww25m
 !
 !-------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension u(ip11,ip60),v(ip11,ip60),ff(ip11,ip60),ps(ip11)
-    dimension sn(lgsnlt,nind,ndir)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12), &
-         qcx (ip12),qcy (ip12),qcz (ip12)
-    dimension fxx(ip00),fyy(ip00),fzz(ip00),fxy(ip00),fxz(ip00), &
-         fyz(ip00),fex(ip00),fey(ip00),fez(ip00)
 
 
 
@@ -2526,12 +2519,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine sch_weno3_3d

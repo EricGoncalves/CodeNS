@@ -23,28 +23,20 @@ contains
     use maillage
     use mod_teq_grads
     implicit none
-    integer          ::      i,    i1,    i2,  i2m1,  ind1
-    integer          ::   ind2,     j,    j1,    j2,  j2m1
-    integer          ::      k,    k1,    k2,  k2m1,     l
-    integer          :: lgsnlt,     m,     n,   n0c,   nid
-    integer          ::   nijd,   njd,  npsn
-    double precision ::  bare,cmui1,cmui2,cmuj1,cmuj2
-    double precision :: cmuk1,cmuk2, dtdx, dtdy, dtdz
-    double precision ::  dvxx, dvxy, dvxz, dvyx, dvyy
-    double precision ::  dvyz, dvzx, dvzy, dvzz,   mu
-    double precision ::   mut,    s,   sn,  vol
+  integer          ::      i,    i1,    i2,  i2m1,  ind1
+  integer          ::   ind2,     j,    j1,    j2,  j2m1
+  integer          ::      k,    k1,    k2,  k2m1,     l
+  integer          :: lgsnlt,     m,     n,   n0c,   nid
+  integer          ::   nijd,   njd,  npsn
+  double precision ::    bare(ip00),  cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21)
+  double precision ::   cmuk1(ip21),  cmuk2(ip21),   dtdx(ip00),   dtdy(ip00),   dtdz(ip00)
+  double precision ::    dvxx(ip00),   dvxy(ip00),   dvxz(ip00),   dvyx(ip00),   dvyy(ip00)
+  double precision ::    dvyz(ip00),   dvzx(ip00),   dvzy(ip00),   dvzz(ip00),     mu(ip12)
+  double precision ::     mut(ip12), s(ip11,ip60),sn(ip31*ndir),    vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension s(ip11,ip60)
-    dimension mut(ip12),mu(ip12),vol(ip11)
-    dimension sn(ip31*ndir)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00), &
-         dvyz(ip00),dvzx(ip00),dvzy(ip00),dvzz(ip00), &
-         dtdx(ip00),dtdy(ip00),dtdz(ip00),bare(ip00)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 !
 
 !
@@ -324,7 +316,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
   end subroutine met_bare

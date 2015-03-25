@@ -44,14 +44,13 @@ contains
     use maillage
     use boundary
     implicit none
-    integer          ::      l,     m,    m0,mdnmfb,  mfbi
-    integer          ::     ml,    mt,  ncbd,  ncin,   nid
-    integer          ::    njd
+  integer          ::          l,         m,        m0,    mdnmfb,      mfbi
+  integer          ::         ml,        mt,ncbd(ip41),ncin(ip41),       nid
+  integer          ::        njd
 !
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indf
-    dimension ncin(ip41),ncbd(ip41)
 !
     nid=id2(l)-id1(l)+1
     njd=jd2(l)-jd1(l)+1

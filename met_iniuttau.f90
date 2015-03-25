@@ -32,33 +32,20 @@ contains
     use mod_zvismo
     use mod_rbtc
     implicit none
-    integer          ::      l,lgsnlt,    mf,   mfc,   mfr
-    integer          ::    mnc,   mnr,  ncbd,  ncin,  npsn
-    double precision ::  cmui1, cmui2, cmuj1, cmuj2, cmuk1
-    double precision ::  cmuk2,  dvxx,  dvxy,  dvxz,  dvyx
-    double precision ::   dvyy,  dvyz,  dvzx,  dvzy,  dvzz
-    double precision ::     mu,   mut,   nxn,   nyn,   nzn
-    double precision :: qcxts5,qcyts6,qcz000,    sn,txxf5x
-    double precision :: txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z
-    double precision ::      v,   vol,   xnr,   ynr,   znr
-    double precision ::  ztemp
+  integer          ::          l,    lgsnlt,        mf,       mfc,       mfr
+  integer          ::  mnc(ip43), mnr(ip44),ncbd(ip41),ncin(ip41),      npsn
+  double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
+  double precision ::   cmuk2(ip21),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00),   dvyx(ip00)
+  double precision ::    dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00),   dvzz(ip00)
+  double precision ::      mu(ip12),    mut(ip12),    nxn(ip42),    nyn(ip42),    nzn(ip42)
+  double precision ::  qcxts5(ip12), qcyts6(ip12), qcz000(ip12),sn(ip31*ndir), txxf5x(ip12)
+  double precision ::  txyf5y(ip12), txzf5z(ip12), tyyf6x(ip12), tyzf6y(ip12), tzzf6z(ip12)
+  double precision ::  v(ip11,ip60),    vol(ip11),    xnr(ip44),    ynr(ip44),    znr(ip44)
+  double precision ::   ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &
-         tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42), &
-         ncbd(ip41),ncin(ip41)
-    dimension sn(ip31*ndir),vol(ip11),ztemp(ip11)
-    dimension mu(ip12),mut(ip12),mnc(ip43)
-    dimension v(ip11,ip60)
-    dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
-    dimension qcxts5(ip12),qcyts6(ip12),qcz000(ip12)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00), &
-         dvyz(ip00),dvzx(ip00),dvzy(ip00),dvzz(ip00)
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dtdx,dtdy,dtdz
     ALLOCATE(dtdx(ip00),dtdy(ip00),dtdz(ip00))
 !

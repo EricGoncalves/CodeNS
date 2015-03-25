@@ -40,18 +40,17 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          ::  inia1,     j,    j1,  j1m1,    j2
-    integer          ::   j2m1,     k,    k1,  k1m1,    k2
-    integer          ::   k2m1,keinit,     l,     n,    n0
-    integer          ::    nci,   ncj,   nck,   nid,  nijd
-    integer          ::    njd
-    double precision :: mut,  u,  v
+  integer          ::      i,    i1,  i1m1,    i2,  i2m1
+  integer          ::  inia1,     j,    j1,  j1m1,    j2
+  integer          ::   j2m1,     k,    k1,  k1m1,    k2
+  integer          ::   k2m1,keinit,     l,     n,    n0
+  integer          ::    nci,   ncj,   nck,   nid,  nijd
+  integer          ::    njd
+  double precision ::    mut(ip12),u(ip11,ip60),v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension u(ip11,ip60),v(ip11,ip60),mut(ip12)
 !
 
 !
@@ -168,7 +167,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine utreadav

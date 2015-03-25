@@ -43,24 +43,21 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::     i,   i1, i1m1,   i2, i2m1
-    integer          ::  i2p1,   id, imax, imin,    j
-    integer          ::    j1, j1m1,   j2, j2m1, j2p1
-    integer          ::    jd, jmax, jmin,    k,   k1
-    integer          ::  k1m1,   k2, k2m1, k2p1,   kd
-    integer          ::  kmax, kmin,    l,    m,    n
-    integer          ::    n0,   n1,   n2,  nci, ncij
-    integer          :: ncijk, ncik,  ncj, ncjk,  nck
-    integer          ::   nid, nijd,  njd
-    double precision :: mmut, mut,   v, vv1, vv2
-    double precision ::  vv3, vv4, vv5, vv6, vv7
+  integer          ::     i,   i1, i1m1,   i2, i2m1
+  integer          ::  i2p1,   id, imax, imin,    j
+  integer          ::    j1, j1m1,   j2, j2m1, j2p1
+  integer          ::    jd, jmax, jmin,    k,   k1
+  integer          ::  k1m1,   k2, k2m1, k2p1,   kd
+  integer          ::  kmax, kmin,    l,    m,    n
+  integer          ::    n0,   n1,   n2,  nci, ncij
+  integer          :: ncijk, ncik,  ncj, ncjk,  nck
+  integer          ::   nid, nijd,  njd
+  double precision ::   mmut(ip00),   mut(ip12),v(ip11,ip60),   vv1(ip00),   vv2(ip00)
+  double precision ::    vv3(ip00),   vv4(ip00),   vv5(ip00),   vv6(ip00),   vv7(ip00)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension v(ip11,ip60),mut(ip12)
-    dimension vv1(ip00),vv2(ip00),vv3(ip00),vv4(ip00),vv5(ip00), &
-         vv6(ip00),vv7(ip00),mmut(ip00)
 !
 
 
@@ -285,12 +282,12 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine cccva

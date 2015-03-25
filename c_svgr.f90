@@ -34,18 +34,15 @@ contains
     use mod_svgr
     use mod_tcmd_svgr
     implicit none
-    integer          :: imot,   l,nmot
-    double precision :: tn1,tn2,tn3,  x,  y
-    double precision ::   z
+  integer          :: imot(nmx),        l,     nmot
+  double precision :: tn1(ip00),tn2(ip00),tn3(ip00),  x(ip21),  y(ip21)
+  double precision ::   z(ip21)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: disc
 !
-    dimension imot(nmx)
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension tn1(ip00),tn2(ip00),tn3(ip00)
 !
     call tcmd_svgr( &
          mot,imot,nmot, &

@@ -3,7 +3,7 @@ module mod_idirch
 contains
   function idirch(ch)
     implicit none
-    integer          ::   idir,idirch
+  integer          ::   idir,idirch
 !
 !***********************************************************************
 !

@@ -70,24 +70,20 @@ contains
     use schemanum
     use definition
     implicit none
-    integer          ::    id,   jd,   kd,    l,    m
-    integer          ::    mb,  mfb,  mmb,   mn,  mpb
-    integer          ::   mpn,   mt,  n0c,  n0n,   nc
-    integer          ::  ncbd,  nci, ncij,ncijk, ncik
-    integer          ::   ncj, ncjk,  nck,  nid, nijd
-    integer          ::   njd
-    double precision ::        b,    cson,   gam2t,    gam6,    gamt
-    double precision ::      nxn,     nyn,     nzn,    pres,pression
-    double precision ::     qinf,      qn,     qxs,     qys,     qzs
-    double precision ::      rho,     rpi,     rti,    temp,       v
+  integer          ::         id,        jd,        kd,         l,         m
+  integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
+  integer          ::   mpn(mtt),        mt,       n0c,       n0n,        nc
+  integer          :: ncbd(ip41),       nci,      ncij,     ncijk,      ncik
+  integer          ::        ncj,      ncjk,       nck,       nid,      nijd
+  integer          ::        njd
+  double precision ::              b,    cson(ip11),         gam2t,          gam6,          gamt
+  double precision ::      nxn(ip42),     nyn(ip42),     nzn(ip42),          pres,pression(ip11)
+  double precision ::           qinf,            qn,           qxs,           qys,           qzs
+  double precision ::            rho,     rpi(ip40),     rti(ip40),    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension rpi(ip40),rti(ip40)
-    dimension v(ip11,ip60),pression(ip11),temp(ip11),cson(ip11)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension mmb(mtt),mpb(mtt),mpn(mtt)
 !
 
 !
@@ -143,7 +139,7 @@ contains
   contains
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine clidi

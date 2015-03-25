@@ -125,49 +125,49 @@ contains
     use modeleturb
     use mod_teq_gradv
     implicit none
-    integer          ::      i1,     i2,   idd1,   idd2,   idd3
-    integer          ::    ideb,   idf1,   idf2,  idfac,    idm
-    integer          ::    idm3,   ierr,     ii,  imaxf,  iminf
-    integer          ::  isens3,     j1,     j2,   jdd1,   jdd2
-    integer          ::    jdd3,   jdeb,     jj,  jmaxf,  jminf
-    integer          ::      k1,     k2,   kdd1,   kdd2,   kdd3
-    integer          ::    kdeb,     kk,  kmaxf,  kminf,      l
-    integer          ::    lbgr,      m,    m0b,    m0n, m0ndeb
-    integer          ::  m0nfin,     m1,  m1max,m1maxm1,  m1min
-    integer          ::      m2,  m2max,m2maxm1,  m2min,     m3
-    integer          ::   m3del, m3delp, m3delt, m3delv,  m3max
-    integer          ::   m3min,  m3mxd,  m3pmx,  m3tmx,  m3vmx
-    integer          ::    mdel,  mdel2,     mf,   mfac,  mfacn
-    integer          ::     mfl,  mnpar,   mpar,      n,    n0c
-    integer          ::     n0n,    nc0,   ncbd,    nci,   ncin
-    integer          ::     ncj,    nck,   ndel,  ndel2,  ndelp
-    integer          ::   ndelt,  ndelv,  nfac1,  nfac2,  nfac3
-    integer          ::   nfac4,  nfacf,    nid,   nijd,    njd
-    double precision ::      am2,   cmui1,   cmui2,   cmuj1,   cmuj2
-    double precision ::    cmuk1,   cmuk2,     csc,    cson,   ddist
-    double precision ::     del1,   del1i,     dev,    dist,  distm1
-    double precision ::        e,   epspi,  epstau,  epsvor,    hpar
-    double precision ::    hpari,      mu,      nx,     nxn,      ny
-    double precision ::      nyn,      nz,     nzn,       p,      pi
-    double precision ::    pimax,      ps,      qq,    reyl,    rhoe
-    double precision ::      rm2,  rm3dlp,  rm3dlt,  rm3dlv,      ro
-    double precision ::    rpdel,      rr,    rus0,    rus1,       s
-    double precision ::       sg,      sn,   snorm,    somd,   somru
-    double precision ::   somru2,    somu,   somu2,      sx,      sy
-    double precision ::       sz,     tau,   taumx,      te,    temp
-    double precision ::  theta11,theta11i,    tmod,    toxx,    toxy
-    double precision ::     toxz,    toyy,    toyz,    tozz,     tue
-    double precision ::       tx,      ty,      tz,       u,   uemod
-    double precision ::      uen,     uex,    uex1,    uex2,     uey
-    double precision ::     uey1,    uey2,     uez,    uez1,    uez2
-    double precision ::       un,     und,      us,     us0,     us1
-    double precision ::      usd,      ut,     utd,     utx,     uty
-    double precision ::      utz,       v,     vol,   vormx,      vv
-    double precision ::        w,       x,   xcfac,     xme,    xmue
-    double precision ::       xn,      xs,      xt,       y,   ycfac
-    double precision ::       yn,      ys,      yt,       z,   zcfac
-    double precision ::       zn,      zs,      zt
-    logical          ::    iok,ouvert
+  integer          ::          i1,         i2,       idd1,       idd2,       idd3
+  integer          ::        ideb,       idf1,       idf2,      idfac,        idm
+  integer          ::        idm3,       ierr,         ii,      imaxf,      iminf
+  integer          ::      isens3,         j1,         j2,       jdd1,       jdd2
+  integer          ::        jdd3,       jdeb,         jj,      jmaxf,      jminf
+  integer          ::          k1,         k2,       kdd1,       kdd2,       kdd3
+  integer          ::        kdeb,         kk,      kmaxf,      kminf,          l
+  integer          ::        lbgr,          m,        m0b,        m0n,     m0ndeb
+  integer          ::      m0nfin,         m1,      m1max,    m1maxm1,      m1min
+  integer          ::          m2,      m2max,    m2maxm1,      m2min,         m3
+  integer          ::       m3del,     m3delp,     m3delt,     m3delv,      m3max
+  integer          ::       m3min,      m3mxd,      m3pmx,      m3tmx,      m3vmx
+  integer          ::        mdel,      mdel2,         mf,       mfac,      mfacn
+  integer          ::         mfl,mnpar(ip12),       mpar,          n,        n0c
+  integer          ::         n0n,        nc0, ncbd(ip41),        nci, ncin(ip41)
+  integer          ::         ncj,        nck,       ndel,      ndel2,      ndelp
+  integer          ::       ndelt,      ndelv,      nfac1,      nfac2,      nfac3
+  integer          ::       nfac4,      nfacf,        nid,       nijd,        njd
+  double precision ::           am2,  cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21)
+  double precision ::   cmuk1(ip21),  cmuk2(ip21),          csc,   cson(ip11),        ddist
+  double precision ::          del1,        del1i,          dev,   dist(ip12),       distm1
+  double precision ::             e,        epspi,       epstau,       epsvor,         hpar
+  double precision ::         hpari,     mu(ip12),           nx,    nxn(ip42),           ny
+  double precision ::     nyn(ip42),           nz,    nzn(ip42),            p,     pi(ip00)
+  double precision ::         pimax,     ps(ip11),           qq,         reyl,         rhoe
+  double precision ::           rm2,       rm3dlp,       rm3dlt,       rm3dlv,           ro
+  double precision ::         rpdel,           rr,         rus0,         rus1, s(ip11,ip60)
+  double precision ::            sg,sn(ip31*ndir),        snorm,         somd,        somru
+  double precision ::        somru2,         somu,        somu2,           sx,           sy
+  double precision ::            sz,    tau(ip00),        taumx,           te,   temp(ip11)
+  double precision ::       theta11,     theta11i,         tmod,   toxx(ip12),   toxy(ip12)
+  double precision ::    toxz(ip12),   toyy(ip12),   toyz(ip12),   tozz(ip12),          tue
+  double precision ::            tx,           ty,           tz,            u,        uemod
+  double precision ::           uen,          uex,         uex1,         uex2,          uey
+  double precision ::          uey1,         uey2,          uez,         uez1,         uez2
+  double precision ::      un(ip00),          und,     us(ip00),          us0,          us1
+  double precision ::           usd,     ut(ip00),          utd,          utx,          uty
+  double precision ::           utz,            v,    vol(ip11),        vormx,           vv
+  double precision ::             w,      x(ip12),        xcfac,          xme,         xmue
+  double precision ::            xn,           xs,           xt,      y(ip12),        ycfac
+  double precision ::            yn,           ys,           yt,      z(ip12),        zcfac
+  double precision ::            zn,           zs,           zt
+  logical          ::    iok,ouvert
 !
 !-----------------------------------------------------------------------
 !
@@ -175,15 +175,6 @@ contains
     character(len=1 ) :: c
     character(len=5 ) :: control
 !
-    dimension s(ip11,ip60),vol(ip11),ps(ip11),cson(ip11),temp(ip11)
-    dimension sn(ip31*ndir)
-    dimension x(ip12),y(ip12),z(ip12),mu(ip12),dist(ip12),mnpar(ip12)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41),ncin(ip41)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
-    dimension pi(ip00),tau(ip00),us(ip00),ut(ip00),un(ip00)
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,vort
     ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
          dvzx(ip00),dvzy(ip00),dvzz(ip00),vort(ip12))

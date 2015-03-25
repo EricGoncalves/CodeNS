@@ -34,7 +34,7 @@ contains
     use sortiefichier
     use maillage
     implicit none
-    integer          :: img,  l, lm
+  integer          :: img,  l, lm
 !
 !-----------------------------------------------------------------------
 !

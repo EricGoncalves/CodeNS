@@ -51,21 +51,18 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::      i,    i1,  i1m1,    i2,  i2p1
-    integer          ::     id,     j,    j1,  j1m1,    j2
-    integer          ::   j2p1,    jd,     k,    k1,  k1m1
-    integer          ::     k2,  k2p1,    kd,     l,lgsnlt
-    integer          ::      m,    m1,    m2,    m4,    m5
-    integer          ::      n,   n0c,   n0n,   nid,  nijd
-    integer          ::    njd
-    double precision :: siv,sjv,skv, sn,vol
-    double precision ::   x,  y,  z
+  integer          ::      i,    i1,  i1m1,    i2,  i2p1
+  integer          ::     id,     j,    j1,  j1m1,    j2
+  integer          ::   j2p1,    jd,     k,    k1,  k1m1
+  integer          ::     k2,  k2p1,    kd,     l,lgsnlt
+  integer          ::      m,    m1,    m2,    m4,    m5
+  integer          ::      n,   n0c,   n0n,   nid,  nijd
+  integer          ::    njd
+  double precision ::            siv(ip00),           sjv(ip00),           skv(ip00),sn(lgsnlt,nind,ndir),           vol(ip11)
+  double precision ::              x(ip21),             y(ip21),             z(ip21)
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension sn(lgsnlt,nind,ndir)
-    dimension siv(ip00),sjv(ip00),skv(ip00),vol(ip11)
 !
 
 
@@ -156,17 +153,17 @@ contains
   contains
     function    indn(i,j,k)
       implicit none
-      integer          ::    i,indn,   j,   k
+  integer          ::    i,indn,   j,   k
       indn=n0n+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indn
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine svol

@@ -30,12 +30,11 @@ contains
     use mod_dfgm
 
     implicit none
-    integer          :: imot,nmot
+  integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     call tcmd_dfgm(mot,imot,nmot)
 !

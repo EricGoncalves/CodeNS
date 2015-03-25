@@ -28,14 +28,12 @@ contains
     use para_fige
     use boundary
     implicit none
-    integer          ::    m,  mf, mfb,  ml,  mt
-    integer          ::    n,ncbd,ncin
-    double precision :: t0
+  integer          ::          m,        mf,       mfb,        ml,        mt
+  integer          ::          n,ncbd(ip41),ncin(ip41)
+  double precision :: t0(ip11)
 !
 !-----------------------------------------------------------------------
 !
-    dimension t0(ip11)
-    dimension ncin(ip41),ncbd(ip41)
 !
 !     definition des variables aux points fictifs
 !

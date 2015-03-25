@@ -46,20 +46,16 @@ contains
     use maillage
     use modeleturb
     implicit none
-    integer          ::     i, imax, imin,    j, jmax
-    integer          ::  jmin,    k,  kda, kmax, kmin
-    integer          ::     l,    m,ndmut,  nid, nijd
-    integer          ::   njd
-    double precision ::  mut,utau,  v1,  v2,  v3
-    double precision ::   v4,  v5,  v6,  v7
+  integer          ::     i, imax, imin,    j, jmax
+  integer          ::  jmin,    k,  kda, kmax, kmin
+  integer          ::     l,    m,ndmut,  nid, nijd
+  integer          ::   njd
+  double precision :: mut(ndmut),utau(ip42),  v1(ip00),  v2(ip00),  v3(ip00)
+  double precision ::   v4(ip00),  v5(ip00),  v6(ip00),  v7(ip00)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: eqt
-    dimension v1(ip00),v2(ip00),v3(ip00),v4(ip00), &
-         v5(ip00),v6(ip00),v7(ip00)
-    dimension mut(ndmut)
-    dimension utau(ip42)
 !
 
 !
@@ -115,7 +111,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine writda

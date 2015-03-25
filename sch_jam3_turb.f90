@@ -26,33 +26,24 @@ contains
     use modeleturb
     use mod_met_pardis
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  ind1,  ind2,     j
-    integer          ::     j1,  j1m1,  j1p1,    j2,  j2m1
-    integer          ::     jd,     k,    k1,  k1m1,  k1p1
-    integer          ::     k2,  k2m1,    kd,  kdir,     l
-    integer          :: lgsnlt,     m,    m2,     n,   n0c
-    integer          ::    nci,  ncin,   ncj,   nck,   nid
-    integer          ::   nijd,  ninc,   njd
-    double precision ::   c0,   d, f6x, f6y, f6z
-    double precision ::  f7x, f7y, f7z,fd5x,fd5y
-    double precision :: fd5z,fd6x,fd6y,fd6z, si6
-    double precision ::  si7, sj6, sj7, sk6, sk7
-    double precision ::   sn, ts6, ts7,   u,   v
-    double precision ::  vol
+  integer          ::          i,        i1,      i1m1,      i1p1,        i2
+  integer          ::       i2m1,        id,      ind1,      ind2,         j
+  integer          ::         j1,      j1m1,      j1p1,        j2,      j2m1
+  integer          ::         jd,         k,        k1,      k1m1,      k1p1
+  integer          ::         k2,      k2m1,        kd,      kdir,         l
+  integer          ::     lgsnlt,         m,        m2,         n,       n0c
+  integer          ::        nci,ncin(ip41),       ncj,       nck,       nid
+  integer          ::       nijd,      ninc,       njd
+  double precision ::                   c0,        d(ip11,ip60),           f6x(ip00),           f6y(ip00),           f6z(ip00)
+  double precision ::            f7x(ip00),           f7y(ip00),           f7z(ip00),          fd5x(ip12),          fd5y(ip12)
+  double precision ::           fd5z(ip12),          fd6x(ip12),          fd6y(ip12),          fd6z(ip12),                 si6
+  double precision ::                  si7,                 sj6,                 sj7,                 sk6,                 sk7
+  double precision :: sn(lgsnlt,nind,ndir),           ts6(ip12),           ts7(ip12),        u(ip11,ip60),        v(ip11,ip60)
+  double precision ::            vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60), &
-         vol(ip11)
-    dimension fd5x(ip12),fd5y(ip12),fd5z(ip12), &
-         fd6x(ip12),fd6y(ip12),fd6z(ip12), &
-         ts6 (ip12),ts7 (ip12)
-    dimension sn(lgsnlt,nind,ndir)
-    dimension ncin(ip41)
-    dimension f6x(ip00),f6y(ip00),f6z(ip00), &
-         f7x(ip00),f7y(ip00),f7z(ip00)
 
 !
 
@@ -430,12 +421,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine sch_jam3_turb

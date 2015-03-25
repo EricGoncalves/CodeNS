@@ -21,21 +21,19 @@ contains
     use maillage
     use chainecarac
     implicit none
-    integer          ::       i,     i1,     i2,     id,   iinf
-    integer          ::     img,  inc_i, inc_ij,inc_ijk, inc_ik
-    integer          ::   inc_j, inc_jk,  inc_k,   isup,      j
-    integer          ::      j1,     j2,     jd,   jinf,   jsup
-    integer          ::       k,     k1,     k2,     kd,   kinf
-    integer          ::    ksup,      l,     lm,      n,    n0c
-    integer          ::     n0n,     nc,   ndeb,   nfin,     ni
-    integer          ::     nij,     nj,     nn
-    double precision ::  eps,  ts,  vc, vol,vols
-    double precision :: volt,  vv
+  integer          ::       i,     i1,     i2,     id,   iinf
+  integer          ::     img,  inc_i, inc_ij,inc_ijk, inc_ik
+  integer          ::   inc_j, inc_jk,  inc_k,   isup,      j
+  integer          ::      j1,     j2,     jd,   jinf,   jsup
+  integer          ::       k,     k1,     k2,     kd,   kinf
+  integer          ::    ksup,      l,     lm,      n,    n0c
+  integer          ::     n0n,     nc,   ndeb,   nfin,     ni
+  integer          ::     nij,     nj,     nn
+  double precision ::           eps,           ts,vc(ip11,ip60),    vol(ip11),         vols
+  double precision ::    volt(ip11),vv(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension vc(ip11,ip60),vv(ip11,ip60)
-    dimension vol(ip11),volt(ip11)
 !
 
 !
@@ -208,17 +206,17 @@ contains
   contains
     function    indn(i,j,k)
       implicit none
-      integer          ::    i,indn,   j,   k
+  integer          ::    i,indn,   j,   k
       indn=n0n+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
     end function indn
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*ni+(k-kd1(lm))*nij
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*ni+kd*nij
     end function inc
   end subroutine smg_cn

@@ -18,13 +18,12 @@ contains
     use boundary 
     use mod_valenti
     implicit none
-    integer          :: icmt,imot,  nm,nmot,  no
+  integer          ::      icmt,imot(nmx),       nm,     nmot,       no
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

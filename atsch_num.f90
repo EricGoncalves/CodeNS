@@ -118,57 +118,34 @@ contains
     use mod_sch_ausmp_pond
     use mod_sch_rusanov_prcd
     implicit none
-    integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
-    integer          ::           l,     ldismx,     lgsnlt,         lm, m1tb(ip00)
-    integer          ::  m2tb(ip00),    mcychro,    mcyturb,        mfc,        mfn
-    integer          ::          mg,        mnc,      mnpar,        mnr,         nc
-    integer          ::        ncbd,       ncin,       ncyc,       ndeb,       nfin
-    integer          :: nfrtb(ip00),       npsn
-    double precision ::    bceqt,    cfke,   cmui1,   cmui2,   cmuj1
-    double precision ::    cmuj2,   cmuk1,   cmuk2,    cson,     cvi
-    double precision ::      cvj,     cvk,       d,     d0x,     d0y
-    double precision ::      d0z,    dist,      dt,   dtpas,      ff
-    double precision ::     fgam,      mu,     mut,     nxn,     nyn
-    double precision ::      nzn,    pres,pression,  ptdual,     qcx
-    double precision ::      qcy,     qcz,       r,     rod,    roed
-    double precision ::     roud,    rovd,    rowd,     rpi,     rti
-    double precision ::       sn,     tm1,    tm10,    tm11,    tm12
-    double precision ::     tm13,     tm2,     tm3,     tm4,     tm5
-    double precision ::      tm6,     tm7,     tm8,     tm9,     tn1
-    double precision ::     tn10,     tn2,     tn3,     tn4,     tn5
-    double precision ::      tn6,     tn7,     tn8,     tn9,    toxx
-    double precision ::     toxy,    toxz,    toyy,    toyz,    tozz
-    double precision ::       tp,       u,    utau,       v,     vol
-    double precision ::        x,     xnr,       y,     ynr,       z
-    double precision ::      znr,   ztemp
-    logical          :: gfetke
+  integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
+  integer          ::           l,     ldismx,     lgsnlt,         lm, m1tb(ip00)
+  integer          ::  m2tb(ip00),    mcychro,    mcyturb,        mfc,        mfn
+  integer          ::          mg,  mnc(ip43),mnpar(ip12),  mnr(ip44),         nc
+  integer          ::  ncbd(ip41), ncin(ip41),       ncyc,       ndeb,       nfin
+  integer          :: nfrtb(ip00),       npsn
+  double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
+  double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
+  double precision ::         cvj(ip21),        cvk(ip21),     d(ip11,ip60),        d0x(ip40),        d0y(ip40)
+  double precision ::         d0z(ip40),       dist(ip12),         dt(ip11),            dtpas,    ff(ip11,ip60)
+  double precision ::        fgam(ip42),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
+  double precision ::         nzn(ip42),       pres(ip40),   pression(ip11),ptdual(ip11,ip60),        qcx(ip12)
+  double precision ::         qcy(ip12),        qcz(ip12),          r(ip11),        rod(ip40),       roed(ip40)
+  double precision ::        roud(ip40),       rovd(ip40),       rowd(ip40),        rpi(ip40),        rti(ip40)
+  double precision ::     sn(ip31*ndir),        tm1(ip40),       tm10(ip40),       tm11(ip40),       tm12(ip40)
+  double precision ::        tm13(ip40),        tm2(ip40),        tm3(ip40),        tm4(ip40),        tm5(ip40)
+  double precision ::         tm6(ip40),        tm7(ip40),        tm8(ip40),        tm9(ip40),        tn1(ip00)
+  double precision ::        tn10(ip00),        tn2(ip00),        tn3(ip00),        tn4(ip00),        tn5(ip00)
+  double precision ::         tn6(ip00),        tn7(ip00),        tn8(ip00),        tn9(ip00),       toxx(ip12)
+  double precision ::        toxy(ip12),       toxz(ip12),       toyy(ip12),       toyz(ip12),       tozz(ip12)
+  double precision ::          tp(ip40),     u(ip11,ip60),       utau(ip42),     v(ip11,ip60),        vol(ip11)
+  double precision ::           x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44),          z(ip21)
+  double precision ::         znr(ip44),      ztemp(ip11)
+  logical          :: gfetke
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension dt(ip11),vol(ip11),r(ip11),pression(ip11),ztemp(ip11),cson(ip11)
-    dimension mnpar(ip12),fgam(ip42),utau(ip42)
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60),ff(ip11,ip60),ptdual(ip11,ip60)
-    dimension sn(ip31*ndir)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41),ncin(ip41)
-    dimension bceqt(ip41,neqt)
-    dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40)
-    dimension d0x(ip40),d0y(ip40),d0z(ip40), &
-         rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-    dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
-    dimension mu(ip12),mut(ip12),toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12),qcx(ip12),qcy(ip12), &
-         qcz(ip12),dist(ip12)
-    dimension cfke(ip13),mnc(ip43)
-    dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
-         tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
-    dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
-         tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
-         tm11(ip40),tm12(ip40),tm13(ip40)
-    dimension cvi(ip21),cvj(ip21),cvk(ip21), &
-         cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 
 
 !     keinit : controle initialisation variables k et seconde (epsilon, l, ...)

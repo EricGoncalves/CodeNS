@@ -24,7 +24,7 @@ contains
     use definition
     use mod_convich
     implicit none
-    integer          :: nst
+  integer          :: nst
 !
 !-----------------------------------------------------------------------
 !

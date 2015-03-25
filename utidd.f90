@@ -46,17 +46,13 @@ contains
     use para_var
     use para_fige
     implicit none
-    integer          ::    m, mfl,  ml, mmb, mpb
-    integer          ::   mt,ncbd
-    double precision :: bceqt,  d0x,  d0y,  d0z,  rpi
-    double precision ::   rti
+  integer          ::          m,       mfl,        ml,  mmb(mtt),  mpb(mtt)
+  integer          ::         mt,ncbd(ip41)
+  double precision :: bceqt(ip41,neqt),       d0x(ip40),       d0y(ip40),       d0z(ip40),       rpi(ip40)
+  double precision ::        rti(ip40)
 !
 !-----------------------------------------------------------------------
 !
-    dimension bceqt(ip41,neqt)
-    dimension ncbd(ip41)
-    dimension rpi(ip40),rti(ip40),d0x(ip40),d0y(ip40),d0z(ip40)
-    dimension mmb(mtt),mpb(mtt)
 !
     mt=mmb(mfl)
     do m=1,mt

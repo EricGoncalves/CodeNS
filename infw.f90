@@ -42,17 +42,12 @@ contains
     use mod_utinia
     use mod_readda
     implicit none
-    integer          ::    img,keinit,  kina,     l,    lm
-    double precision ::    mut, tnte1,  utau,     v, vdual
-    double precision :: vdual1,vdual2,     x,     y,     z
+  integer          ::    img,keinit,  kina,     l,    lm
+  double precision ::         mut(ip12), tnte1(ip11,ip60),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60)
+  double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),          x(ip21),          y(ip21),          z(ip21)
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension v(ip11,ip60),tnte1(ip11,ip60)
-    dimension mut(ip12)
-    dimension utau(ip42)
-    dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
 !
     do img=1,lgx
        lm=l+(img-1)*lz

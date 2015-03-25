@@ -19,17 +19,15 @@ contains
     use boundary
     use mod_atindnor
     implicit none
-    integer          ::    dm1,   dm2,   dm3,isens3,     m
-    integer          ::    m10, m1max, m1min,   m20, m2max
-    integer          ::  m2min,    m3,   m30, m3max, m3min
-    integer          ::     mb,   mfb,    mt,     n,  ncin
-    integer          ::     ni,    no,  nper
-    double precision :: d
+  integer          ::        dm1,       dm2,       dm3,    isens3,         m
+  integer          ::        m10,     m1max,     m1min,       m20,     m2max
+  integer          ::      m2min,        m3,       m30,     m3max,     m3min
+  integer          ::         mb,       mfb,        mt,         n,ncin(ip41)
+  integer          ::         ni,        no,      nper
+  double precision :: d(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension d(ip11,ip60)
-    dimension ncin(ip41)
 !
 !c    boucle sur toutes les frontieres
     do no=1,mtbx

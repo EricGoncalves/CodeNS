@@ -57,9 +57,9 @@ contains
     use chainecarac
     use schemanum
     implicit none
-    integer          ::   img, imgi, imgj, imgk,    l
-    integer          ::    lm,   ni,  nid,   nj,  njd
-    integer          ::    nk,  nkd,nptfs
+  integer          ::   img, imgi, imgj, imgk,    l
+  integer          ::    lm,   ni,  nid,   nj,  njd
+  integer          ::    nk,  nkd,nptfs
 !
 !-----------------------------------------------------------------------
 !

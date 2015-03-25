@@ -42,40 +42,32 @@ contains
     use modeleturb
     use mod_pgrad
     implicit none
-    integer          ::     ij,    in,  iter,     j,    kk
-    integer          ::      l,lgsnlt,     m,  m0ns,    mb
-    integer          ::    mfb, mnpar,  mpar,    mt,   n0c
-    integer          ::     nc,  ncbd,  ncin,  ncyc,  ndis
-    integer          :: nfacns,    ni,   nii,    nn,  npsn
-    integer          ::   ntab
-    double precision ::     ca, cklb2, cklb3, coefa, coefb
-    double precision ::  coefc,coefc1, coefp,  conv,   ctk
-    double precision ::   ctmu, ctmu2, dconv,  dist, dist2
-    double precision ::   dnum,   dpc,  dpdt,  dpdx,  dpdy
-    double precision ::   dpdz,  dtop,    dy,   f1i,  fgam
-    double precision ::   fmui,    ki,    li,    mu,   mup
-    double precision ::    mut,   nxn,   nyn,   nzn,    ps
-    double precision ::   rhoi,  rhol,   rk2,  rok2,   rop
-    double precision ::  seuil,    sn,  som1,  som2,  som3
-    double precision ::     sv,    t1,    t2,    t3,  temp
-    double precision ::     tn,   top,  top0, topar,topini
-    double precision ::  tprod,    tt, upyp1,  utau,     v
-    double precision ::    v1t,   v1x,   v1y,   v1z,   vol
-    double precision ::     xi,    yi,  yp02
-    logical          :: lamin
+  integer          ::          ij,         in,       iter,          j,         kk
+  integer          ::           l,     lgsnlt,          m,       m0ns,         mb
+  integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
+  integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,       ndis
+  integer          ::      nfacns,         ni,        nii,         nn,       npsn
+  integer          ::        ntab
+  double precision ::            ca,        cklb2,        cklb3,        coefa,        coefb
+  double precision ::         coefc,       coefc1,        coefp,         conv,          ctk
+  double precision ::          ctmu,        ctmu2,        dconv,   dist(ip12),        dist2
+  double precision ::          dnum,          dpc,         dpdt,   dpdx(ip00),   dpdy(ip00)
+  double precision ::    dpdz(ip00),         dtop,           dy,          f1i,   fgam(ip42)
+  double precision ::          fmui,           ki,           li,     mu(ip12),          mup
+  double precision ::     mut(ip12),    nxn(ip42),    nyn(ip42),    nzn(ip42),     ps(ip11)
+  double precision ::          rhoi,         rhol,          rk2,         rok2,          rop
+  double precision ::         seuil,sn(ip31*ndir),         som1,         som2,         som3
+  double precision ::            sv,           t1,           t2,           t3,   temp(ip11)
+  double precision ::            tn,          top,         top0,        topar,       topini
+  double precision ::   tprod(ip00),           tt,        upyp1,   utau(ip42), v(ip11,ip60)
+  double precision ::           v1t,          v1x,          v1y,          v1z,    vol(ip11)
+  double precision ::            xi,           yi,         yp02
+  logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !
     parameter( ntab=50  )
 !
-    dimension mu(ip12),mut(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension v(ip11,ip60),dist(ip12)
-    dimension mnpar(ip12),fgam(ip42),utau(ip42)
-    dimension temp(ip11),vol(ip11),ps(ip11)
-    dimension sn(ip31*ndir)
-    dimension tprod(ip00),dpdx(ip00),dpdy(ip00),dpdz(ip00)
 !  
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: alfaa,betaa,ff,vit,mui,muti,tempi,topc
     ALLOCATE(alfaa(ntab),betaa(ntab),ff(ntab),topc(2), &

@@ -16,16 +16,14 @@ contains
     use chainecarac
     use mod_lentier
     implicit none
-    integer          ::  icmt, imot, kerr,  klx, lent
-    integer          :: lentd,   lx,   nm
+  integer          ::       icmt, imot(nmx),      kerr,       klx,lent(nobj)
+  integer          ::      lentd,        lx,        nm
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
 !
-    dimension imot(nmx)
-    dimension lent(nobj)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

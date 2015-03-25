@@ -71,22 +71,21 @@ contains
     use sortiefichier
     use modeleturb
     implicit none
-    integer          ::      i1,     i2,    idm,  ilmax,  ilmin
-    integer          ::   imaxf,  iminf,     j1,     j2,  jlmax
-    integer          ::   jlmin,  jmaxf,  jminf,     k1,     k2
-    integer          ::   klmax,  klmin,  kmaxf,  kminf,      l
-    integer          ::     lig,    m0b,    m0n,     m1,  m1deb
-    integer          ::   m1fin,  m1max,m1maxm1,  m1min,     m2
-    integer          ::   m2deb,  m2fin,  m2max,m2maxm1,  m2min
-    integer          ::   mfacn,    mfe,    mfl,      n,    nci
-    integer          ::    ncin,    ncj,    nck,    nfr,  nfrmx
-    integer          ::     nid,   nijd,    njd
-    double precision :: fgam
+  integer          ::         i1,        i2,       idm,     ilmax,     ilmin
+  integer          ::      imaxf,     iminf,        j1,        j2,     jlmax
+  integer          ::      jlmin,     jmaxf,     jminf,        k1,        k2
+  integer          ::      klmax,     klmin,     kmaxf,     kminf,         l
+  integer          ::        lig,       m0b,       m0n,        m1,     m1deb
+  integer          ::      m1fin,     m1max,   m1maxm1,     m1min,        m2
+  integer          ::      m2deb,     m2fin,     m2max,   m2maxm1,     m2min
+  integer          ::      mfacn,       mfe,       mfl,         n,       nci
+  integer          :: ncin(ip41),       ncj,       nck,       nfr,     nfrmx
+  integer          ::        nid,      nijd,       njd
+  double precision :: fgam(ip42)
 !
 !-----------------------------------------------------------------------
 
     character(len=80) ::  ligne
-    dimension fgam(ip42),ncin(ip41)
 !
     open(99,file='fatdon',status='old',err=100)
 !

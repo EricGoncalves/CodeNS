@@ -113,33 +113,24 @@ contains
     use schemanum
     use definition
     implicit none
-    integer          ::    id,   jd,   kd,    l,    m
-    integer          ::    mb,  mfb,  mmb,   mn,  mpb
-    integer          ::   mpn,   mt,  n0c,  n0n,   nc
-    integer          ::  ncbd,  nci, ncij,ncijk, ncik
-    integer          ::   ncj, ncjk,  nck,  nid, nijd
-    integer          ::  nitn,  njd,   nn
-    double precision ::       a2,     alm,     am0,       b,   beta2
-    double precision ::     cson,     d0x,     d0y,     d0z,      df
-    double precision ::      dpn,     eps,       f,   gam2t,    gam7
-    double precision ::     gam8,     nxn,     nyn,     nzn,       p
-    double precision :: pression,      ps,      q2,    qinf,      qn
-    double precision ::      qxs,     qys,     qzs,    resi,  residu
-    double precision ::       ro,    roc0,     rpi,     rti,    temp
-    double precision ::       un,    usdn,   usdn2,       v,       w
-    double precision ::       wn,       y,      ym,       z,      zm
+  integer          ::         id,        jd,        kd,         l,         m
+  integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
+  integer          ::   mpn(mtt),        mt,       n0c,       n0n,        nc
+  integer          :: ncbd(ip41),       nci,      ncij,     ncijk,      ncik
+  integer          ::        ncj,      ncjk,       nck,       nid,      nijd
+  integer          ::       nitn,       njd,        nn
+  double precision ::             a2,     alm(ip40),     am0(ip40),             b,         beta2
+  double precision ::     cson(ip11),     d0x(ip40),     d0y(ip40),     d0z(ip40),            df
+  double precision ::            dpn,           eps,             f,         gam2t,          gam7
+  double precision ::           gam8,     nxn(ip42),     nyn(ip42),     nzn(ip42),       p(ip40)
+  double precision :: pression(ip11),            ps,            q2,          qinf,      qn(ip40)
+  double precision ::            qxs,           qys,           qzs,    resi(ip40),        residu
+  double precision ::       ro(ip40),    roc0(ip40),     rpi(ip40),     rti(ip40),    temp(ip11)
+  double precision ::       un(ip40),    usdn(ip40),   usdn2(ip40),  v(ip11,ip60),             w
+  double precision ::             wn,       y(ip21),      ym(ip40),       z(ip21),      zm(ip40)
 !
 !-----------------------------------------------------------------------
 !
-    dimension rpi(ip40),rti(ip40),d0x(ip40),d0y(ip40),d0z(ip40)
-    dimension v(ip11,ip60)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension mmb(mtt),mpb(mtt),mpn(mtt)
-    dimension usdn2(ip40),roc0(ip40),am0(ip40),alm(ip40), &
-         qn(ip40),p(ip40),resi(ip40),ro(ip40), &
-         un(ip40),usdn(ip40),ym(ip40),zm(ip40)
-    dimension pression(ip11),temp(ip11),cson(ip11)
-    dimension y(ip21),z(ip21)
 !
 
     eps=0.0000001
@@ -252,7 +243,7 @@ contains
   contains
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine clidd2_prcd

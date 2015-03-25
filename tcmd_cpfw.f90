@@ -14,12 +14,11 @@ contains
     use para_fige
     use chainecarac
     implicit none
-    integer          :: imot,nmot
+  integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     return
   end subroutine tcmd_cpfw

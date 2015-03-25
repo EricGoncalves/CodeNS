@@ -62,22 +62,18 @@ contains
     use mod_writdg
     use mod_residu
     implicit none
-    integer          ::   icyc,  imax,   img,  imin,  jmax
-    integer          ::   jmin,  kmax,  kmin,     l,    lm
-    integer          ::      m,    n0,  ncyc,ncycle,    ni
-    integer          ::    nid,  nijd,    nj,   njd,    nk
-    integer          ::   nmax,  npts
-    double precision ::     dt,res1xx,res2yy,res3zz,  res4
-    double precision ::   res5,  res6,  res7,   tn8,     u
-    double precision ::   utau,     v,     x,     y,     z
+  integer          ::   icyc,  imax,   img,  imin,  jmax
+  integer          ::   jmin,  kmax,  kmin,     l,    lm
+  integer          ::      m,    n0,  ncyc,ncycle,    ni
+  integer          ::    nid,  nijd,    nj,   njd,    nk
+  integer          ::   nmax,  npts
+  double precision ::     dt(ip11),res1xx(ip00),res2yy(ip00),res3zz(ip00),  res4(ip00)
+  double precision ::   res5(ip00),  res6(ip00),  res7(ip00),   tn8(ip00),u(ip11,ip60)
+  double precision ::   utau(ip42),v(ip11,ip60),     x(ip21),     y(ip21),     z(ip21)
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
-    dimension u(ip11,ip60),v(ip11,ip60)
-    dimension dt(ip11),x(ip21),y(ip21),z(ip21),utau(ip42)
-    dimension res1xx(ip00),res2yy(ip00),res3zz(ip00),res4(ip00), &
-         res5(ip00),res6(ip00),res7(ip00),tn8(ip00)
     INTEGER,DIMENSION(:),ALLOCATABLE          :: idumx,jdumx,kdumx
     REAL,DIMENSION(:),ALLOCATABLE :: dumy1,dumy2,dumax,dumy2g,dumaxg
     ALLOCATE(idumx(neqt),jdumx(neqt),kdumx(neqt), &

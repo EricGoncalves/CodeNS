@@ -23,12 +23,11 @@ contains
 
     use mod_tcmd_dfpmdtg
     implicit none
-    integer          :: imot,nmot
+  integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     call tcmd_dfpmdtg(mot,imot,nmot)
 !

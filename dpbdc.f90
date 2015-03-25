@@ -49,16 +49,14 @@ contains
     use boundary
     use sortiefichier
     implicit none
-    integer          ::    ii,  img,   jj,   kk,   lc
-    integer          ::   lcm,   ll,    m,  m0c, mfbe
-    integer          ::  mfbi,mfbim,  mnc,   mt,  n0c
-    integer          ::    nc,  nid,  njd,   nn
-    double precision :: pi,pj,pk
+  integer          ::        ii,      img,       jj,       kk,       lc
+  integer          ::       lcm,       ll,        m,      m0c,     mfbe
+  integer          ::      mfbi,    mfbim,mnc(ip43),       mt,      n0c
+  integer          ::        nc,      nid,      njd,       nn
+  double precision :: pi(ip40),pj(ip40),pk(ip40)
 !
 !-----------------------------------------------------------------------
 !
-    dimension mnc(ip43)
-    dimension pi(ip40),pj(ip40),pk(ip40)
 !
     mfbi=nfei(mfbe)
     mfbim=mfbi+(img-1)*mtb

@@ -23,26 +23,23 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  ind1,  ind2,     j
-    integer          ::     j1,  j1m1,  j1p1,    j2,  j2m1
-    integer          ::     jd,     k,    k1,  k1m1,  k1p1
-    integer          ::     k2,  k2m1,    kd,  kdir,lgsnlt
-    integer          ::     lm,     m,     n,   n0c,   nci
-    integer          ::    ncj,   nck,   nid,  nijd,  ninc
-    integer          ::    njd
-    double precision ::   cc, ck2, ck4,cnds,cson
-    double precision ::    d, ds1, ds2, ds3, ds4
-    double precision ::  ds5,eps2,eps4,  ps,  rl
-    double precision ::   sn, snu,  uu,   v,  vv
-    double precision ::   ww
+  integer          ::      i,    i1,  i1m1,  i1p1,    i2
+  integer          ::   i2m1,    id,  ind1,  ind2,     j
+  integer          ::     j1,  j1m1,  j1p1,    j2,  j2m1
+  integer          ::     jd,     k,    k1,  k1m1,  k1p1
+  integer          ::     k2,  k2m1,    kd,  kdir,lgsnlt
+  integer          ::     lm,     m,     n,   n0c,   nci
+  integer          ::    ncj,   nck,   nid,  nijd,  ninc
+  integer          ::    njd
+  double precision ::                   cc,                 ck2,                 ck4,                cnds,          cson(ip11)
+  double precision ::         d(ip11,ip60),                 ds1,                 ds2,                 ds3,                 ds4
+  double precision ::                  ds5,                eps2,                eps4,            ps(ip11),                  rl
+  double precision :: sn(lgsnlt,nind,ndir),           snu(ip00),                  uu,        v(ip11,ip60),                  vv
+  double precision ::                   ww
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension v(ip11,ip60),d(ip11,ip60)
-    dimension ps(ip11),cson(ip11),snu(ip00)
-    dimension sn(lgsnlt,nind,ndir)
 !
 
 
@@ -442,12 +439,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine dissip_jameson

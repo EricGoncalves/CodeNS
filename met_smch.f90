@@ -66,24 +66,20 @@ contains
     use modeleturb
     use chainecarac
     implicit none
-    integer          ::     i,   i1, i1m1, i1p1,   i2
-    integer          ::  i2m1,   id,    j,   j1, j1p1
-    integer          ::    j2, j2m1,   jd,    k,   k1
-    integer          ::  k1p1,   k2, k2m1,   kd,    l
-    integer          ::     m,mnpar,   mp,    n,  n0c
-    integer          ::   nci,  ncj,  nck,  nid, nijd
-    integer          ::   njd
-    double precision ::   dist, dist2, epssk,    f2,    mu
-    double precision :: qcxts5,qcyts6, rodst,  rtur,  sch1
-    double precision ::   sch2,  sch3, tprod,  utau,     v
-    double precision ::     xk, yplus
+  integer          ::           i,         i1,       i1m1,       i1p1,         i2
+  integer          ::        i2m1,         id,          j,         j1,       j1p1
+  integer          ::          j2,       j2m1,         jd,          k,         k1
+  integer          ::        k1p1,         k2,       k2m1,         kd,          l
+  integer          ::           m,mnpar(ip12),         mp,          n,        n0c
+  integer          ::         nci,        ncj,        nck,        nid,       nijd
+  integer          ::         njd
+  double precision ::   dist(ip12),       dist2,       epssk,          f2,    mu(ip12)
+  double precision :: qcxts5(ip12),qcyts6(ip12),       rodst,        rtur,        sch1
+  double precision ::         sch2,        sch3, tprod(ip00),  utau(ip42),v(ip11,ip60)
+  double precision ::           xk,       yplus
 !
 !-----------------------------------------------------------------------
 !
-    dimension v(ip11,ip60)
-    dimension mu(ip12),dist(ip12),mnpar(ip12),utau(ip42), &
-         qcxts5(ip12),qcyts6 (ip12)
-    dimension tprod(ip00)
 !
 
 
@@ -150,12 +146,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_smch

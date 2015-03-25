@@ -13,14 +13,13 @@ contains
 !
     use para_fige
     implicit none
-    integer          ::  icmd, imot, ipos,lgcmd,   nm
-    integer          ::   nm1,  nm2
+  integer          ::      icmd,imot(nmx),     ipos,    lgcmd,       nm
+  integer          ::       nm1,      nm2
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: command
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     do icmd=1,lgcmdx
        command(icmd:icmd)=' '

@@ -40,8 +40,8 @@ contains
     use sortiefichier
     use schemanum
     implicit none
-    integer          :: ierrdis, kamort,    lig,muttrav
-    double precision :: rap_h0
+  integer          :: ierrdis, kamort,    lig,muttrav
+  double precision :: rap_h0
 !
 !-----------------------------------------------------------------------
 !

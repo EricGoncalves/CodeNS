@@ -21,15 +21,14 @@ contains
     use maillage
     use mod_convich
     implicit none
-    integer          :: kncycl,   lgr,  lgrd,  long,longm1
-    integer          ::     nm, nmult,    nr, nrest
+  integer          ::    kncycl,lgr(lgrd),     lgrd,     long,   longm1
+  integer          ::        nm,    nmult,       nr,    nrest
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
     character(len=24) ::  ckvn,cncyresi,cncysave,cncyexpl,cdiscsv,cncycl
     character(len=2 ) :: nlg,nlm,nrr,nrm
-    dimension lgr(lgrd)
 !
     call convich(kkvn,ckvn)
     call convich(kncyresi,cncyresi)

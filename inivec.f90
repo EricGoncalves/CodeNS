@@ -52,33 +52,19 @@ contains
     use constantes
     use chainecarac
     implicit none
-    integer          :: i,m,n
-    double precision ::    cmui1,   cmui2,   cmuj1,   cmuj2,   cmuk1
-    double precision ::    cmuk2,    cson,     cvi,     cvj,     cvk
-    double precision ::       dt,      mu,     mut,pression,  ptdual
-    double precision ::      qcx,     qcy,     qcz,      sn,     tn1
-    double precision ::     tn10,     tn2,     tn3,     tn4,     tn5
-    double precision ::      tn6,     tn7,     tn8,     tn9,   tnte1
-    double precision ::    tnte3,   tnte4,    toxx,    toxy,    toxz
-    double precision ::     toyy,    toyz,    tozz,       v,   vdual
-    double precision ::   vdual1,  vdual2,     vol,   ztemp
+  integer          :: i,m,n
+  double precision ::       cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21),      cmuk1(ip21)
+  double precision ::       cmuk2(ip21),       cson(ip11),        cvi(ip21),        cvj(ip21),        cvk(ip21)
+  double precision ::          dt(ip11),         mu(ip12),        mut(ip12),   pression(ip11),ptdual(ip11,ip60)
+  double precision ::         qcx(ip12),        qcy(ip12),        qcz(ip12),    sn(ip31*ndir),        tn1(ip00)
+  double precision ::        tn10(ip00),        tn2(ip00),        tn3(ip00),        tn4(ip00),        tn5(ip00)
+  double precision ::         tn6(ip00),        tn7(ip00),        tn8(ip00),        tn9(ip00), tnte1(ip11,ip60)
+  double precision ::  tnte3(ip11,ip60), tnte4(ip11,ip60),       toxx(ip12),       toxy(ip12),       toxz(ip12)
+  double precision ::        toyy(ip12),       toyz(ip12),       tozz(ip12),     v(ip11,ip60), vdual(ip11,ip60)
+  double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),        vol(ip11),      ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
-    dimension v(ip11,ip60)
-    dimension vol(ip11),dt(ip11),pression(ip11),ztemp(ip11),cson(ip11)
-    dimension mu(ip12),mut(ip12)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
-         tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12)
-    dimension sn(ip31*ndir)
-    dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
-         tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
-    dimension tnte1(ip11,ip60),tnte3(ip11,ip60),tnte4(ip11,ip60)
-    dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60), &
-         ptdual(ip11,ip60)
-    dimension cvi(ip21),cvj(ip21),cvk(ip21), &
-         cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 !
     do n=1,ip11
        v(n,1)=reelmn

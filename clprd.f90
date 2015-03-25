@@ -60,22 +60,16 @@ contains
     use maillage
     use proprieteflu
     implicit none
-    integer          ::    l,   m,  mb, mfb, mmb
-    integer          ::   mn, mpb, mpn,  mt, n0c
-    integer          ::  n0n,ncbd,  nl
-    double precision ::     cson,     dqn,     nxn,     nyn,     nzn
-    double precision ::     pres,pression,      ps,      qx,     qxs
-    double precision ::       qy,     qys,      qz,     qzs,     rho
-    double precision ::     roc0,    temp,       v
+  integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
+  integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,       n0c
+  integer          ::        n0n,ncbd(ip41),        nl
+  double precision ::     cson(ip11),           dqn,     nxn(ip42),     nyn(ip42),     nzn(ip42)
+  double precision ::     pres(ip40),pression(ip11),            ps,            qx,           qxs
+  double precision ::             qy,           qys,            qz,           qzs,           rho
+  double precision ::           roc0,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension pres(ip40)
-    dimension v(ip11,ip60)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension mmb(mtt),mpb(mtt)
-    dimension mpn(mtt)
-    dimension pression(ip11),temp(ip11),cson(ip11)
 !
     n0n=npn(l)
     n0c=npc(l)

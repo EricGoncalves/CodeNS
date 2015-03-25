@@ -19,13 +19,12 @@ contains
     use definition
 
     implicit none
-    integer          :: icmt,  im,imot,  nm,nmot
+  integer          ::      icmt,       im,imot(nmx),       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

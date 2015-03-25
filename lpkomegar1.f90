@@ -31,36 +31,26 @@ contains
     use definition
     use modeleturb
     implicit none
-    integer          ::   iter,     l,     m,  m0ns,    mb
-    integer          ::    mfb, mnpar,  mpar,    mt,   n0c
-    integer          ::     nc,  ncbd,  ncin,nfacns,    ni
-    integer          ::    nii
-    double precision ::   alpha,   cmu1,   cmu2,   cmu3,     co
-    double precision ::    dist,   dvxx,   dvxy,   dvxz,   dvyx
-    double precision ::    dvyy,   dvyz,   dvzx,   dvzy,   dvzz
-    double precision :: echleps,   fgam,     mu,    mup,    mut
-    double precision ::      n1,     n2,     n3,    nxn,    nyn
-    double precision ::     nzn,  omega,    pka,    pkb,  prodk
-    double precision ::   retur,    rop,     ss,     sv,     t1
-    double precision ::      t2,     t3,   temp,  temp1,     tn
-    double precision ::     top, tparoi,  tprod,     tt,  upyp1
-    double precision ::     uto,      v,    v1t,    v1x,    v1y
-    double precision ::     v1z,     ye,   yp02,     yv
-    logical          :: lamin
+  integer          ::        iter,          l,          m,       m0ns,         mb
+  integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
+  integer          ::          nc, ncbd(ip41), ncin(ip41),     nfacns,         ni
+  integer          ::         nii
+  double precision ::        alpha,        cmu1,        cmu2,        cmu3,          co
+  double precision ::   dist(ip12),  dvxx(ip00),  dvxy(ip00),  dvxz(ip00),  dvyx(ip00)
+  double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)
+  double precision ::      echleps,  fgam(ip42),    mu(ip12),         mup,   mut(ip12)
+  double precision ::           n1,          n2,          n3,   nxn(ip42),   nyn(ip42)
+  double precision ::    nzn(ip42),       omega,         pka,         pkb,       prodk
+  double precision ::        retur,         rop,          ss,          sv,          t1
+  double precision ::           t2,          t3,  temp(ip11),       temp1,          tn
+  double precision ::          top,      tparoi, tprod(ip00),          tt,       upyp1
+  double precision ::          uto,v(ip11,ip60),         v1t,         v1x,         v1y
+  double precision ::          v1z,          ye,        yp02,          yv
+  logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension mu(ip12),mut(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension v(ip11,ip60),dist(ip12)
-    dimension mnpar(ip12),fgam(ip42)
-    dimension tprod(ip00)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-         dvzx(ip00),dvzy(ip00),dvzz(ip00)
-    dimension temp(ip11)
 !
     cmu1=1./sqrt(0.09)
     cmu2=1./(0.09**0.75)

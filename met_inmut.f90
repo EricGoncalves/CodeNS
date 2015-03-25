@@ -13,15 +13,14 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::    i,  i1,  i2,i2m1,ind1
-    integer          :: ind2,   j,  j1,  j2,j2m1
-    integer          ::    k,  k1,  k2,k2m1,   l
-    integer          ::    n, n0c, nid,nijd, njd
-    double precision ::  mu,mut
+  integer          ::    i,  i1,  i2,i2m1,ind1
+  integer          :: ind2,   j,  j1,  j2,j2m1
+  integer          ::    k,  k1,  k2,k2m1,   l
+  integer          ::    n, n0c, nid,nijd, njd
+  double precision ::  mu(ip12),mut(ip12)
 !
 !-----------------------------------------------------------------------
 !
-    dimension mu(ip12),mut(ip12)
 !
 
 !
@@ -55,7 +54,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
   end subroutine met_inmut

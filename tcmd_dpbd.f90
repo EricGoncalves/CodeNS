@@ -21,17 +21,14 @@ contains
     use kcle
     use mod_vallent
     implicit none
-    integer          ::  icmt,   im, imot,  lgr, lgrd
-    integer          ::  lmfb,lmfbd,   nm, nmot
+  integer          ::      icmt,       im,imot(nmx),lgr(nobj),     lgrd
+  integer          :: lmfb(mtb),    lmfbd,       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
     character(len=32) ::  typdat
-    dimension imot(nmx)
-    dimension lmfb(mtb)
-    dimension lgr(nobj)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

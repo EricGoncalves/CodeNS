@@ -57,30 +57,24 @@ contains
     use definition
     use modeleturb
     implicit none
-    integer          ::   iter,     l,     m,  m0ns,    mb
-    integer          ::    mfb, mnpar,  mpar,    mt,   n0c
-    integer          ::     nc,  ncbd,  ncin,  ncyc,nfacns
-    integer          ::     ni,   nii
-    double precision ::       c1,      c2,      c3,      c4,      ca
-    double precision ::       cb,     cta,     ctb,   denom,    dist
-    double precision ::     dudy,    fgam,      mu,     mup,     mut
-    double precision ::       n1,      n2,      n3,     nxn,     nyn
-    double precision ::      nzn,     rc4,rnutilde,     rop,      sv
-    double precision ::       t1,      t2,      t3,    temp,   temp1
-    double precision ::       tn,     top,      tp,      tt,   upyp1
-    double precision ::        v,     v1t,     v1x,     v1y,     v1z
-    double precision ::     yp02,  yplus1
-    logical          :: lamin
+  integer          ::        iter,          l,          m,       m0ns,         mb
+  integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
+  integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
+  integer          ::          ni,        nii
+  double precision ::           c1,          c2,          c3,          c4,          ca
+  double precision ::           cb,         cta,         ctb,       denom,  dist(ip12)
+  double precision ::         dudy,  fgam(ip42),    mu(ip12),         mup,   mut(ip12)
+  double precision ::           n1,          n2,          n3,   nxn(ip42),   nyn(ip42)
+  double precision ::    nzn(ip42),         rc4,    rnutilde,         rop,          sv
+  double precision ::           t1,          t2,          t3,  temp(ip11),       temp1
+  double precision ::           tn,         top,    tp(ip40),          tt,       upyp1
+  double precision :: v(ip11,ip60),         v1t,         v1x,         v1y,         v1z
+  double precision ::         yp02,      yplus1
+  logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension mu(ip12),mut(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension v(ip11,ip60),dist(ip12)
-    dimension mnpar(ip12),fgam(ip42),tp(ip40)
-    dimension temp(ip11)
 !
     sv=110.4/tnz !air
 

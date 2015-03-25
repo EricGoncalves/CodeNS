@@ -25,12 +25,11 @@ contains
     use mod_b1_dfst
     use mod_tcmd_dfst
     implicit none
-    integer          :: imot,nmot, nst
+  integer          :: imot(nmx),     nmot,      nst
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     call tcmd_dfst( &
          mot,imot,nmot, &

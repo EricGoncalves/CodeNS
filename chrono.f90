@@ -67,20 +67,15 @@ contains
     use mod_chronos_prcd
     use mod_chronos
     implicit none
-    integer          ::      i,   img,     j,     k,     l
-    integer          :: lgsnlt,    lm,     n,  ndeb,  nfin
-    integer          ::    nid,  nijd,   njd,  npsn
-    double precision ::     cson,      dt,   dtmin,      mu,     mut
-    double precision :: pression,      sn,     tn1,     tn2,     tn3
-    double precision ::      tn4,       u,     vol
+  integer          ::      i,   img,     j,     k,     l
+  integer          :: lgsnlt,    lm,     n,  ndeb,  nfin
+  integer          ::    nid,  nijd,   njd,  npsn
+  double precision ::     cson(ip11),      dt(ip11),         dtmin,      mu(ip12),     mut(ip12)
+  double precision :: pression(ip11), sn(ip31*ndir),     tn1(ip00),     tn2(ip00),     tn3(ip00)
+  double precision ::      tn4(ip00),  u(ip11,ip60),     vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
-    dimension u(ip11,ip60)
-    dimension dt(ip11),cson(ip11),vol(ip11),pression(ip11)
-    dimension mu(ip12),mut(ip12)
-    dimension sn(ip31*ndir)
-    dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00)
 
 
 
@@ -158,7 +153,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=npc(lm)+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
   end subroutine chrono

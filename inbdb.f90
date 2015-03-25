@@ -45,18 +45,15 @@ contains
     use mod_inbdbdf
     use mod_inbdbst
     implicit none
-    integer          :: ibdcfl,ibdcst,ibddim,   img, kibdb
-    integer          ::      l,    lm,     m,    m0,  mfbe
-    integer          ::   mfbi, mfbim,  mflm,    ml,    mt
-    integer          ::   ncbd,  ncin,    nv,  nvbc
-    double precision :: bceqt,  vbc
+  integer          ::     ibdcfl,    ibdcst,    ibddim,       img,     kibdb
+  integer          ::          l,        lm,         m,        m0,      mfbe
+  integer          ::       mfbi,     mfbim,      mflm,        ml,        mt
+  integer          :: ncbd(ip41),ncin(ip41),        nv,      nvbc
+  double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
 !
 !-----------------------------------------------------------------------
 !
     character(len=4 ) :: clmf
-    dimension vbc(ista*lsta)
-    dimension bceqt(ip41,neqt)
-    dimension ncbd(ip41),ncin(ip41)
 !
     mfbi=nfei(mfbe)
     cl(mfbi)=clmf

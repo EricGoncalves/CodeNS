@@ -129,25 +129,18 @@ contains
     use mod_atccc
     use mod_atindnor
     implicit none
-    integer          ::    dm1,   dm2,   dm3,  ierr,   img
-    integer          :: isens3,     l,    lm,     m,   m10
-    integer          ::  m1max, m1min,   m20, m2max, m2min
-    integer          ::    m30, m3max, m3min,    mf,   mnc
-    integer          ::  mnpar,     n,  ncbd,  ncin,  nfbe
-    integer          ::   nfbi,    no
-    double precision ::  dist,dist2, fgam,  nxn,  nyn
-    double precision ::   nzn,    x,  xcc, xpar,    y
-    double precision ::   ycc, ypar,    z,  zcc, zpar
+  integer          ::         dm1,        dm2,        dm3,       ierr,        img
+  integer          ::      isens3,          l,         lm,          m,        m10
+  integer          ::       m1max,      m1min,        m20,      m2max,      m2min
+  integer          ::         m30,      m3max,      m3min,         mf,  mnc(ip43)
+  integer          :: mnpar(ip12),          n, ncbd(ip41), ncin(ip41),       nfbe
+  integer          ::        nfbi,         no
+  double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
+  double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
+  double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !
-    dimension dist(ip12),mnpar(ip12),fgam(ip42)
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension xpar(ip00),ypar(ip00),zpar(ip00)
-    dimension xcc (ip00),ycc (ip00),zcc (ip00),dist2(ip00)
-    dimension ncin(ip41)
-    dimension mnc(ip43)
 !
 !     -----------------------------------------------------------------
 !

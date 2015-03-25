@@ -69,27 +69,19 @@ contains
     use maillage
     use proprieteflu
     implicit none
-    integer          ::    i,  i1,  i2,i2m1,ind1
-    integer          :: ind2,   j,  j1,  j2,j2m1
-    integer          ::    k,  k1,  k2,k2m1,   l
-    integer          ::    m,   n,  n0, nid,nijd
-    integer          ::  njd
-    double precision ::  ds3, dtx, dty, dtz,dvxx
-    double precision :: dvxy,dvxz,dvyx,dvyy,dvyz
-    double precision :: dvzx,dvzy,dvzz,  mu, mut
-    double precision ::  qcx, qcy, qcz,toxx,toxy
-    double precision :: toxz,toyy,toyz,tozz
+  integer          ::    i,  i1,  i2,i2m1,ind1
+  integer          :: ind2,   j,  j1,  j2,j2m1
+  integer          ::    k,  k1,  k2,k2m1,   l
+  integer          ::    m,   n,  n0, nid,nijd
+  integer          ::  njd
+  double precision ::        ds3, dtx(ip00), dty(ip00), dtz(ip00),dvxx(ip00)
+  double precision :: dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00)
+  double precision :: dvzx(ip00),dvzy(ip00),dvzz(ip00),  mu(ip12), mut(ip12)
+  double precision ::  qcx(ip12), qcy(ip12), qcz(ip12),toxx(ip12),toxy(ip12)
+  double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
 !
 !-----------------------------------------------------------------------
 !
-    dimension mu(ip12),mut(ip12)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12)
-    dimension qcx(ip12),qcy(ip12),qcz(ip12)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-         dvzx(ip00),dvzy(ip00),dvzz(ip00), &
-         dtx(ip00),dty(ip00),dtz(ip00)
 !
 
 !
@@ -134,7 +126,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine zfluto

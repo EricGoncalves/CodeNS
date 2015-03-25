@@ -20,12 +20,11 @@ contains
     use mod_met_cutsa
     use mod_met_cutked
     implicit none
-    integer          :: l
-    double precision :: v
+  integer          :: l
+  double precision :: v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension v(ip11,ip60)
 !
     if(kcutke.eq.0) then
        call met_cut(l,v)

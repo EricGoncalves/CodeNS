@@ -308,46 +308,34 @@ program solve
   use mod_c_inbdb
   use mod_c_dfst
   implicit none
+  integer          ::         img,  imot(nmx),     iyplus,          l,       mfbi
+  integer          ::         mfc,        mfn,        mfr,  mnc(ip43),mnpar(ip12)
+  integer          ::   mnr(ip44), ncbd(ip41), ncin(ip41),       ncyc,       nmot
+  double precision ::               aam, bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21)
+  double precision ::       cmuj1(ip21),      cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11)
+  double precision ::         cvi(ip21),        cvj(ip21),        cvk(ip21),        d0x(ip40),        d0y(ip40)
+  double precision ::         d0z(ip40),       dist(ip12),         dt(ip11),             exs1,             exs2
+  double precision ::        fgam(ip42),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
+  double precision ::         nzn(ip42),       pres(ip40),   pression(ip11),ptdual(ip11,ip60),        qcx(ip12)
+  double precision ::         qcy(ip12),        qcz(ip12),        qtx(ip40),        qty(ip40),        qtz(ip40)
+  double precision ::           r(ip11),        res(ip40),             roam,        rod(ip40),       roed(ip40)
+  double precision ::        roud(ip40),       rovd(ip40),       rowd(ip40),        rpi(ip40),        rti(ip40)
+  double precision ::     sn(ip31*ndir),              tam,        tm1(ip40),       tm10(ip40),       tm11(ip40)
+  double precision ::        tm12(ip40),       tm13(ip40),        tm2(ip40),        tm3(ip40),        tm4(ip40)
+  double precision ::         tm5(ip40),        tm6(ip40),        tm7(ip40),        tm8(ip40),        tm9(ip40)
+  double precision ::         tn1(ip00),       tn10(ip00),        tn2(ip00),        tn3(ip00),        tn4(ip00)
+  double precision ::         tn5(ip00),        tn6(ip00),        tn7(ip00),        tn8(ip00),        tn9(ip00)
+  double precision ::  tnte1(ip11,ip60), tnte2(ip11,ip60), tnte3(ip11,ip60), tnte4(ip11,ip60),       toxx(ip12)
+  double precision ::        toxy(ip12),       toxz(ip12),       toyy(ip12),       toyz(ip12),       tozz(ip12)
+  double precision ::          tp(ip40),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
+  double precision :: vdual2(ip11,ip60),        vol(ip11),          x(ip21),        xnr(ip44),          y(ip21)
+  double precision ::         ynr(ip44),          z(ip21),        znr(ip44),      ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
-  integer           :: iyplus
-  integer           :: img,imot,l,mfbi,mfc,mfn,mfr,mnc,mnpar,mnr,ncbd,ncin
-  integer           :: ncyc,nmot
-  double precision              :: mu,mut,nxn,nyn,nzn
-  double precision  :: aam,bceqt,cfke,cmui1,cmui2,cmuj1,cmuj2,cmuk1
-  double precision  :: cmuk2,cson,cvi,cvj,cvk,d0x,d0y,d0z,dist,dt,exs1
-  double precision  :: exs2,fgam,pres,pression,ptdual,qcx,qcy,qcz,qtx,qty,qtz,r,res,roam
-  double precision  :: rod,roed,roud,rovd,rowd,rpi,rti,sn,tam,tm1,tm10,tm11,tm12,tm13
-  double precision  :: tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tn1,tn10,tn2,tn3,tn4,tn5,tn6,tn7
-  double precision  :: tn8,tn9,tnte1,tnte2,tnte3,tnte4,toxx,toxy,toxz,toyy,toyz,tozz,tp
-  double precision  :: utau,v,vdual,vdual1,vdual2,vol,x,xnr,y,ynr,z,znr,ztemp
   character(len=32) :: comment,mot(nmx)
 !
-  dimension imot(nmx)
-  dimension v(ip11,ip60)
-  dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),ptdual(ip11,ip60)
-  dimension r(ip11),dt(ip11),vol(ip11),ztemp(ip11),pression(ip11),cson(ip11)
-  dimension mu(ip12),mut(ip12),dist(ip12), &
-       toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
-       tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12),mnpar(ip12)
-  dimension cfke(ip13),pres(ip40)
-  dimension sn(ip31*ndir)
-  dimension x(ip21),y(ip21),z(ip21)
-  dimension cvi(ip21),cvj(ip21),cvk(ip21), &
-       cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
-  dimension rpi(ip40),rti(ip40),d0x(ip40),d0y(ip40),d0z(ip40), &
-       qtx(ip40),qty(ip40),qtz(ip40),res(ip40),tp(ip40), &
-       rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-  dimension ncbd(ip41),ncin(ip41)
-  dimension bceqt(ip41,neqt)
-  dimension nxn(ip42),nyn(ip42),nzn(ip42),fgam(ip42),utau(ip42)
-  dimension mnc(ip43)
-  dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
 !     tableaux de travail
-  dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40), &
-       tm5(ip40),tm6(ip40),tm7(ip40),tm8(ip40), &
-       tm9(ip40),tm10(ip40),tm11(ip40),tm12(ip40),tm13(ip40)
 !    tm14(ip40),tm15(ip40),tm16(ip40), &
 !                tm17(ip40),tm18(ip40),tm19(ip40),tm20(ip40), &
 !                tm21(ip40),tm22(ip40),tm23(ip40),tm24(ip40), &
@@ -356,9 +344,6 @@ program solve
 !                tm33(ip40),tm34(ip40),tm35(ip40),tm36(ip40), &
 !                tm37(ip40),tm38(ip40),tm39(ip40),tm40(ip40), &
 !                tm41(ip40),tm42(ip40),tm43(ip40),tm44(ip40)
-  dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
-       tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
-  dimension tnte1(ip11,ip60),tnte2(ip11,ip60),tnte3(ip11,ip60),tnte4(ip11,ip60)
 !
   exs1= 1.
   exs2= 0.

@@ -63,30 +63,24 @@ contains
     use schemanum
     use definition       
     implicit none
-    integer          ::    l,   m,  mb, mfb, mmb
-    integer          ::   mn, mpb, mpn,  mt, n0c
-    integer          ::  n0n,ncbd,  nl
-    double precision ::       a2,     alm,     alp,      am,      ap
-    double precision ::       b0,   beta2,      bs,    cson,    eps0
-    double precision ::     epsm,    epsp,     nxn,     nyn,     nzn
-    double precision ::        p,      pd,pression,      ps,      q2
-    double precision ::     qinf,      qn,     qnd,     qns,     qtx
-    double precision ::     qtxd,    qtxs,     qty,    qtyd,    qtys
-    double precision ::      qtz,    qtzd,    qtzs,     qxd,     qxs
-    double precision ::      qyd,     qys,     qzd,     qzs,     rho
-    double precision ::     rhos,     rmd,     rms,    rocs,     rod
-    double precision ::     roed,    roud,    rovd,    rowd,     rpd
-    double precision ::      rps,    temp,       v
+  integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
+  integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,       n0c
+  integer          ::        n0n,ncbd(ip41),        nl
+  double precision ::             a2,           alm,           alp,            am,            ap
+  double precision ::             b0,         beta2,            bs,    cson(ip11),          eps0
+  double precision ::           epsm,          epsp,     nxn(ip42),     nyn(ip42),     nzn(ip42)
+  double precision ::              p,            pd,pression(ip11),            ps,            q2
+  double precision ::           qinf,            qn,           qnd,           qns,           qtx
+  double precision ::           qtxd,          qtxs,           qty,          qtyd,          qtys
+  double precision ::            qtz,          qtzd,          qtzs,           qxd,           qxs
+  double precision ::            qyd,           qys,           qzd,           qzs,           rho
+  double precision ::           rhos,           rmd,           rms,          rocs,     rod(ip40)
+  double precision ::     roed(ip40),    roud(ip40),    rovd(ip40),    rowd(ip40),           rpd
+  double precision ::            rps,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension v(ip11,ip60)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-    dimension mmb(mtt),mpb(mtt)
-    dimension mpn(mtt)
-    dimension pression(ip11),temp(ip11),cson(ip11)
 !
     n0n=npn(l)
     n0c=npc(l)

@@ -28,35 +28,28 @@ contains
     use chainecarac
     use modeleturb
     implicit none
-    integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          :: ibalai,    id,  ind1,  ind2,     j
-    integer          ::     j1,  j1m1,    j2,  j2m1,    jd
-    integer          ::      k,    k1,  k1m1,    k2,  k2m1
-    integer          ::     kd,  kdir,     l,  ldom,lgsnlt
-    integer          ::     li,    lj,    lk,     m,    mb
-    integer          ::     mf,   mfb,    mt,     n,   n0c
-    integer          ::    nci,  ncin,   ncj,   nck,  ncyc
-    integer          ::     ni,   nid,  nijd,  ninc,   njd
-    integer          ::     no
-    double precision ::       ai,   alpha,   beta6,   beta7,      bi
-    double precision ::      cci,    cfke,     cmt,    cnds,coefdiag
-    double precision ::      di6,     di7,     dj6,     dj7,     dk6
-    double precision ::      dk7,      dt,    dwi6,    dwi7,    fact
-    double precision ::       mu,     mut,      rv,      sn,      td
-    double precision ::      tmi,     tmj,     tmk,     tpi,     tpj
-    double precision ::      tpk,       u,      u1,      u2,      u3
-    double precision ::       uu,       v,     vol,      vv,      ww
+  integer          ::          i,        i1,      i1m1,        i2,      i2m1
+  integer          ::     ibalai,        id,      ind1,      ind2,         j
+  integer          ::         j1,      j1m1,        j2,      j2m1,        jd
+  integer          ::          k,        k1,      k1m1,        k2,      k2m1
+  integer          ::         kd,      kdir,         l,      ldom,    lgsnlt
+  integer          ::         li,        lj,        lk,         m,        mb
+  integer          ::         mf,       mfb,        mt,         n,       n0c
+  integer          ::        nci,ncin(ip41),       ncj,       nck,      ncyc
+  integer          ::         ni,       nid,      nijd,      ninc,       njd
+  integer          ::         no
+  double precision ::                   ai,         alpha(ip00),         beta6(ip00),         beta7(ip00),                  bi
+  double precision ::                  cci,          cfke(ip13),                 cmt,                cnds,      coefdiag(ip00)
+  double precision ::                  di6,                 di7,                 dj6,                 dj7,                 dk6
+  double precision ::                  dk7,            dt(ip11),          dwi6(ip00),          dwi7(ip00),                fact
+  double precision ::             mu(ip12),           mut(ip12),            rv(ip00),sn(lgsnlt,nind,ndir),                  td
+  double precision ::                  tmi,                 tmj,                 tmk,                 tpi,                 tpj
+  double precision ::                  tpk,        u(ip11,ip60),            u1(ip00),            u2(ip00),            u3(ip00)
+  double precision ::                   uu,        v(ip11,ip60),           vol(ip11),                  vv,                  ww
 !
 !-----------------------------------------------------------------
 !
 !
-    dimension v(ip11,ip60),u(ip11,ip60)
-    dimension dt(ip11),vol(ip11),mu(ip12),mut(ip12), &
-         cfke(ip13),ncin(ip41)
-    dimension dwi6(ip00),dwi7(ip00), &
-         u1(ip00),u2(ip00),u3(ip00),rv(ip00), &
-         coefdiag(ip00),alpha(ip00),beta6(ip00),beta7(ip00)
-    dimension sn(lgsnlt,nind,ndir)
 !
 
 
@@ -477,12 +470,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine impli2_eqt_3d

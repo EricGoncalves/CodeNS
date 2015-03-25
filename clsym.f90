@@ -41,20 +41,15 @@ contains
     use para_var
     use para_fige
     implicit none
-    integer          ::    m,  mb, mfb, mmb,  mn
-    integer          ::  mpb, mpn,  mt,ncbd,ncin
-    integer          ::   ni,  nl
-    double precision ::  nxn, nyn, nzn, qn1, qtx
-    double precision ::  qty, qtz, qx1, qy1, qz1
-    double precision ::  ro1,roe1,   v
+  integer          ::          m,        mb,       mfb,  mmb(mtt),        mn
+  integer          ::   mpb(mtt),  mpn(mtt),        mt,ncbd(ip41),ncin(ip41)
+  integer          ::         ni,        nl
+  double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),         qn1,         qtx
+  double precision ::          qty,         qtz,         qx1,         qy1,         qz1
+  double precision ::          ro1,        roe1,v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension v(ip11,ip60)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension mmb(mtt),mpb(mtt)
-    dimension mpn(mtt)
 !
     mt=mmb(mfb)
 !

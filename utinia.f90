@@ -31,24 +31,20 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-    integer          ::     i,   i1,   i2, i2m1,   id
-    integer          ::     j,   j1,   j2, j2m1,   jd
-    integer          ::     k,   k1,   k2, k2m1,   kd
-    integer          ::  kina,    l,    n,   n0,  nci
-    integer          ::  ncij,ncijk, ncik,  ncj, ncjk
-    integer          ::   nck,  nid, nijd,  njd
-    double precision ::      a, alpha,alphar,  beta, betar
-    double precision :: degrad,   mut,     p,  pis2,     q
-    double precision ::  rmach,    ro,   rou,   rov,   row
-    double precision ::      v, vdual,vdual1,vdual2,     x
-    double precision ::      y,    ym,     z,    zm
+  integer          ::     i,   i1,   i2, i2m1,   id
+  integer          ::     j,   j1,   j2, j2m1,   jd
+  integer          ::     k,   k1,   k2, k2m1,   kd
+  integer          ::  kina,    l,    n,   n0,  nci
+  integer          ::  ncij,ncijk, ncik,  ncj, ncjk
+  integer          ::   nck,  nid, nijd,  njd
+  double precision ::                 a,            alpha,           alphar,             beta,            betar
+  double precision ::            degrad,           mut(*),                p,             pis2,                q
+  double precision ::             rmach,               ro,              rou,              rov,              row
+  double precision ::      v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),             x(*)
+  double precision ::              y(*),               ym,             z(*),               zm
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(*),y(*),z(*)
-    dimension v(ip11,ip60)
-    dimension mut(*)
-    dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
 !
 
 
@@ -175,12 +171,12 @@ contains
   contains
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine utinia

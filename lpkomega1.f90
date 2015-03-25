@@ -60,31 +60,24 @@ contains
     use definition
     use modeleturb
     implicit none
-    integer          ::   iter,     l,     m,  m0ns,    mb
-    integer          ::    mfb, mnpar,  mpar,    mt,   n0c
-    integer          ::     nc,  ncbd,  ncin,  ncyc,nfacns
-    integer          ::     ni,   nii
-    double precision ::    cmu1,   cmu2,   cmu3,     co,   dist
-    double precision :: echleps,   fgam,     mu,    mup,    mut
-    double precision ::      n1,     n2,     n3,    nxn,    nyn
-    double precision ::     nzn,  omega,    pka,    pkb,  retur
-    double precision ::     rop,     sv,     t1,     t2,     t3
-    double precision ::    temp,  temp1,     tn,    top, tparoi
-    double precision ::   tprod,     tt,  upyp1,    uto,      v
-    double precision ::     v1t,    v1x,    v1y,    v1z,     ye
-    double precision ::    yp02,     yv
-    logical          :: lamin
+  integer          ::        iter,          l,          m,       m0ns,         mb
+  integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
+  integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
+  integer          ::          ni,        nii
+  double precision ::         cmu1,        cmu2,        cmu3,          co,  dist(ip12)
+  double precision ::      echleps,  fgam(ip42),    mu(ip12),         mup,   mut(ip12)
+  double precision ::           n1,          n2,          n3,   nxn(ip42),   nyn(ip42)
+  double precision ::    nzn(ip42),       omega,         pka,         pkb,       retur
+  double precision ::          rop,          sv,          t1,          t2,          t3
+  double precision ::   temp(ip11),       temp1,          tn,         top,      tparoi
+  double precision ::  tprod(ip00),          tt,       upyp1,         uto,v(ip11,ip60)
+  double precision ::          v1t,         v1x,         v1y,         v1z,          ye
+  double precision ::         yp02,          yv
+  logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension mu(ip12),mut(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension v(ip11,ip60),dist(ip12)
-    dimension mnpar(ip12),fgam(ip42)
-    dimension tprod(ip00)
-    dimension temp(ip11)
 !
     cmu1=1./sqrt(0.09)
     cmu2=1./(0.09**0.75)

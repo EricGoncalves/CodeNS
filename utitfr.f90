@@ -102,44 +102,39 @@ contains
     use schemanum 
     use constantes
     implicit none
-    integer          ::      i1,     i2,   icyc,icyexpl,   idf1
-    integer          ::    idf2,  idfac,    idm,  imaxf,  iminf
-    integer          ::      j1,     j2,  jmaxf,  jminf,     k1
-    integer          ::      k2,  kmaxf,  kminf,      l,    m0b
-    integer          ::     m0n,     m1,  m1max,m1maxm1,  m1min
-    integer          ::      m2,  m2max,m2maxm1,  m2min,     mf
-    integer          ::    mfac,  mfacn,    mfl,    n0c,    n0n
-    integer          ::    ncbd,    nci,    ncj,    nck,  nfac1
-    integer          ::   nfac2,  nfac3,  nfac4,  nfacf,    nid
-    integer          ::    nijd,    njd
-    double precision ::   alfar,  betar, claefr, claero,   clav
-    double precision ::  clavfr,clavtfr,clavtot, cmaefr, cmaero
-    double precision ::    cmav, cmavfr,cmavtfr,cmavtot, cnaefr
-    double precision ::  cnaero,   cnav, cnavfr,cnavtfr,cnavtot
-    double precision ::    csal,   csbe, cxaefr, cxaero,   cxav
-    double precision ::  cxavfr,cxavtfr,cxavtot, cyaefr, cyaero
-    double precision ::    cyav, cyavfr,cyavtfr,cyavtot, czaefr
-    double precision ::  czaero,   czav, czavfr,czavtfr,czavtot
-    double precision ::     dcl,  dclfr,    dcm,  dcmfr,    dcn
-    double precision ::   dcnfr,    dcx,  dcxfr,    dcy,  dcyfr
-    double precision ::     dcz,  dczfr,   dsml,   dsxy,   dsxz
-    double precision ::    dsyz,    dx1,    dx2,    dy1,    dy2
-    double precision ::     dz1,    dz2,    nxn,    nyn,    nzn
-    double precision ::    pres,     ps,  pspi0,   snal,   snbe
-    double precision :: taunorm,tauref0,   toxx,   toxy,   toxz
-    double precision ::    toyy,   toyz,   tozz,    utx,   utxt
-    double precision ::     uty,   utyt,    utz,   utzt,      v
-    double precision ::       x,  xcfac,      y,  ycfac,      z
-    double precision ::   zcfac
+  integer          ::         i1,        i2,      icyc,   icyexpl,      idf1
+  integer          ::       idf2,     idfac,       idm,     imaxf,     iminf
+  integer          ::         j1,        j2,     jmaxf,     jminf,        k1
+  integer          ::         k2,     kmaxf,     kminf,         l,       m0b
+  integer          ::        m0n,        m1,     m1max,   m1maxm1,     m1min
+  integer          ::         m2,     m2max,   m2maxm1,     m2min,        mf
+  integer          ::       mfac,     mfacn,       mfl,       n0c,       n0n
+  integer          :: ncbd(ip41),       nci,       ncj,       nck,     nfac1
+  integer          ::      nfac2,     nfac3,     nfac4,     nfacf,       nid
+  integer          ::       nijd,       njd
+  double precision ::        alfar,       betar,      claefr,      claero,        clav
+  double precision ::       clavfr,     clavtfr,     clavtot,      cmaefr,      cmaero
+  double precision ::         cmav,      cmavfr,     cmavtfr,     cmavtot,      cnaefr
+  double precision ::       cnaero,        cnav,      cnavfr,     cnavtfr,     cnavtot
+  double precision ::         csal,        csbe,      cxaefr,      cxaero,        cxav
+  double precision ::       cxavfr,     cxavtfr,     cxavtot,      cyaefr,      cyaero
+  double precision ::         cyav,      cyavfr,     cyavtfr,     cyavtot,      czaefr
+  double precision ::       czaero,        czav,      czavfr,     czavtfr,     czavtot
+  double precision ::          dcl,       dclfr,         dcm,       dcmfr,         dcn
+  double precision ::        dcnfr,         dcx,       dcxfr,         dcy,       dcyfr
+  double precision ::          dcz,       dczfr,        dsml,        dsxy,        dsxz
+  double precision ::         dsyz,         dx1,         dx2,         dy1,         dy2
+  double precision ::          dz1,         dz2,   nxn(ip42),   nyn(ip42),   nzn(ip42)
+  double precision ::         pres,    ps(ip11),       pspi0,        snal,        snbe
+  double precision ::      taunorm,     tauref0,  toxx(ip12),  toxy(ip12),  toxz(ip12)
+  double precision ::   toyy(ip12),  toyz(ip12),  tozz(ip12),         utx,        utxt
+  double precision ::          uty,        utyt,         utz,        utzt,v(ip11,ip60)
+  double precision ::      x(ip21),       xcfac,     y(ip21),       ycfac,     z(ip21)
+  double precision ::        zcfac
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
-    dimension v(ip11,ip60)
-    dimension ncbd(ip41),ps(ip11)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
 !
     icyexpl=mod(icyc,ncyexpl)
 !

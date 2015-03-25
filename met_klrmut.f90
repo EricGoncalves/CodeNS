@@ -24,31 +24,23 @@ contains
     use modeleturb
     use mod_teq_gradv
     implicit none
-    integer          ::    i,  i1,  i2,i2m1,  id
-    integer          ::    j,  j1,  j2,j2m1,  jd
-    integer          ::    k,  k1,  k2,k2m1,  kd
-    integer          ::    l,   m,   n,  n0, nci
-    integer          ::  ncj, nck, nid,nijd, njd
-    double precision ::    a1,   c1,  c14,   c2,  c22
-    double precision :: cmui1,cmui2,cmuj1,cmuj2,cmuk1
-    double precision :: cmuk2,coef1,coef2, dist, dvxx
-    double precision ::  dvxy, dvxz, dvyx, dvyy, dvyz
-    double precision ::  dvzx, dvzy, dvzz,exp2x,   f1
-    double precision ::    f2,  fmu,   mu,  mut,r2sb1
-    double precision ::  rack,   sn,  ss2,    t, tdef
-    double precision ::     v,  vol,  xl2,  xxi, xxi2
-    double precision ::  zeta
+  integer          ::    i,  i1,  i2,i2m1,  id
+  integer          ::    j,  j1,  j2,j2m1,  jd
+  integer          ::    k,  k1,  k2,k2m1,  kd
+  integer          ::    l,   m,   n,  n0, nci
+  integer          ::  ncj, nck, nid,nijd, njd
+  double precision ::            a1,           c1,          c14,           c2,          c22
+  double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
+  double precision ::   cmuk2(ip21),        coef1,        coef2,   dist(ip12),   dvxx(ip00)
+  double precision ::    dvxy(ip00),   dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00)
+  double precision ::    dvzx(ip00),   dvzy(ip00),   dvzz(ip00),        exp2x,           f1
+  double precision ::            f2,          fmu,     mu(ip12),    mut(ip12),        r2sb1
+  double precision ::          rack,sn(ip31*ndir),          ss2,      t(ip00),         tdef
+  double precision ::  v(ip11,ip60),    vol(ip11),          xl2,          xxi,         xxi2
+  double precision ::          zeta
 !
 !-----------------------------------------------------------------------
 !
-    dimension mu(ip12),mut(ip12),dist(ip12)
-    dimension v(ip11,ip60)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-         dvzx(ip00),dvzy(ip00),dvzz(ip00),t(ip00)
-    dimension sn(ip31*ndir),vol(ip11)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 !
 
 
@@ -134,12 +126,12 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_klrmut

@@ -17,13 +17,12 @@ contains
     use schemanum
     use mod_valenti
     implicit none
-    integer          :: icmt,imot,  nm,nmot
+  integer          ::      icmt,imot(nmx),       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

@@ -68,38 +68,30 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  imax,  imin,  ind1
-    integer          ::   ind2,     j,    j1,  j1m1,  j1p1
-    integer          ::     j2,  j2m1,    jd,  jmax,  jmin
-    integer          ::      k,    k1,  k1m1,  k1p1,    k2
-    integer          ::   k2m1,    kd,  kmax,  kmin,     l
-    integer          :: lgsnlt,     m,     n,    n0,   nci
-    integer          ::    ncj,   nck,   nid,  nijd,   njd
-    double precision ::    c0,cmui1,cmui2,cmuj1,cmuj2
-    double precision :: cmuk1,cmuk2,  dtx,  dty,  dtz
-    double precision ::  dvxx, dvxy, dvxz, dvyx, dvyy
-    double precision ::  dvyz, dvzx, dvzy, dvzz,  eps
-    double precision ::     s, sixx, sixy, sixz, siyx
-    double precision ::  siyy, siyz, sizx, sizy, sizz
-    double precision ::  sjxx, sjxy, sjxz, sjyx, sjyy
-    double precision ::  sjyz, sjzx, sjzy, sjzz, skxx
-    double precision ::  skxy, skxz, skyx, skyy, skyz
-    double precision ::  skzx, skzy, skzz,   sn,  stx
-    double precision ::   sty,  stz, temp,   ts,  vol
-    double precision ::  vols
+  integer          ::      i,    i1,  i1m1,  i1p1,    i2
+  integer          ::   i2m1,    id,  imax,  imin,  ind1
+  integer          ::   ind2,     j,    j1,  j1m1,  j1p1
+  integer          ::     j2,  j2m1,    jd,  jmax,  jmin
+  integer          ::      k,    k1,  k1m1,  k1p1,    k2
+  integer          ::   k2m1,    kd,  kmax,  kmin,     l
+  integer          :: lgsnlt,     m,     n,    n0,   nci
+  integer          ::    ncj,   nck,   nid,  nijd,   njd
+  double precision ::                   c0,         cmui1(ip21),         cmui2(ip21),         cmuj1(ip21),         cmuj2(ip21)
+  double precision ::          cmuk1(ip21),         cmuk2(ip21),           dtx(ip00),           dty(ip00),           dtz(ip00)
+  double precision ::           dvxx(ip00),          dvxy(ip00),          dvxz(ip00),          dvyx(ip00),          dvyy(ip00)
+  double precision ::           dvyz(ip00),          dvzx(ip00),          dvzy(ip00),          dvzz(ip00),                 eps
+  double precision ::         s(ip11,ip60),                sixx,                sixy,                sixz,                siyx
+  double precision ::                 siyy,                siyz,                sizx,                sizy,                sizz
+  double precision ::                 sjxx,                sjxy,                sjxz,                sjyx,                sjyy
+  double precision ::                 sjyz,                sjzx,                sjzy,                sjzz,                skxx
+  double precision ::                 skxy,                skxz,                skyx,                skyy,                skyz
+  double precision ::                 skzx,                skzy,                skzz,sn(lgsnlt,nind,ndir),                 stx
+  double precision ::                  sty,                 stz,          temp(ip11),                  ts,           vol(ip11)
+  double precision ::                 vols
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension sn(lgsnlt,nind,ndir)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-         dvzx(ip00),dvzy(ip00),dvzz(ip00), &
-         dtx (ip00),dty (ip00),dtz (ip00)
-    dimension vol(ip11),temp(ip11),s(ip11,ip60)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 
 !
 
@@ -510,12 +502,12 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine zgrad2

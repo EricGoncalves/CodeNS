@@ -59,29 +59,23 @@ contains
     use maillage
     use proprieteflu
     implicit none
-    integer          ::    l,   m,  mb, mfb, mmb
-    integer          ::   mn, mpb, mpn,  mt, n0c
-    integer          ::  n0n,ncbd,  nl
-    double precision ::       am,      ap,      b0,      bs,    cson
-    double precision ::     eps0,    epsm,    epsp,     nxn,     nyn
-    double precision ::      nzn,       p,      pd,pression,      ps
-    double precision ::      ps0,      qn,     qnd,     qns,     qtx
-    double precision ::     qtxd,    qtxs,     qty,    qtyd,    qtys
-    double precision ::      qtz,    qtzd,    qtzs,     qxd,     qxs
-    double precision ::      qyd,     qys,     qzd,     qzs,      ro
-    double precision ::      ro0,    roc0,     rod,    roed,   roqn0
-    double precision ::      ros,    roud,    rovd,    rowd,    temp
-    double precision ::        v
+  integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
+  integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,       n0c
+  integer          ::        n0n,ncbd(ip41),        nl
+  double precision ::             am,            ap,            b0,            bs,    cson(ip11)
+  double precision ::           eps0,          epsm,          epsp,     nxn(ip42),     nyn(ip42)
+  double precision ::      nzn(ip42),             p,            pd,pression(ip11),            ps
+  double precision ::            ps0,            qn,           qnd,           qns,           qtx
+  double precision ::           qtxd,          qtxs,           qty,          qtyd,          qtys
+  double precision ::            qtz,          qtzd,          qtzs,           qxd,           qxs
+  double precision ::            qyd,           qys,           qzd,           qzs,            ro
+  double precision ::            ro0,          roc0,     rod(ip40),    roed(ip40),         roqn0
+  double precision ::            ros,    roud(ip40),    rovd(ip40),    rowd(ip40),    temp(ip11)
+  double precision ::   v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension v(ip11,ip60)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-    dimension mmb(mtt),mpb(mtt)
-    dimension mpn(mtt)
-    dimension pression(ip11),temp(ip11),cson(ip11)
 !
     n0n=npn(l)
     n0c=npc(l)

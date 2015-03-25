@@ -15,14 +15,13 @@ contains
     use chainecarac
     use mod_reel
     implicit none
-    integer          ::  icmt, imot, kerr,krree,   nm
-    double precision :: rree
+  integer          ::      icmt,imot(nmx),     kerr,    krree,       nm
+  double precision :: rree
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

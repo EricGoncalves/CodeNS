@@ -21,18 +21,15 @@ contains
     use mod_valreel
     use mod_vallent
     implicit none
-    integer          ::  icmt,  img, imot,krree,    l
-    integer          ::  ldom,ldomd,  lgr, lgrd,   lm
-    integer          ::    ng,   nl,   nm, nmot
-    double precision :: rree
+  integer          ::       icmt,       img, imot(nmx),     krree,         l
+  integer          :: ldom(nobj),     ldomd, lgr(nobj),      lgrd,        lm
+  integer          ::         ng,        nl,        nm,      nmot
+  double precision :: rree
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
-    dimension ldom(nobj)
-    dimension lgr(nobj)
 !
     do icmt=1,32
        comment(icmt:icmt)=' '

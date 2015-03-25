@@ -14,7 +14,7 @@ contains
     use sortiefichier
     use mod_cctcmd
     implicit none
-    integer          ::  imot, ipos,lgcmd, nmot
+  integer          :: imot(nmx),     ipos,    lgcmd,     nmot
 !
 !-----------------------------------------------------------------------
 !
@@ -23,7 +23,6 @@ contains
     character(len=32) :: mot(nmx)
     character(len=7 ) :: formatcm
     character(len=4 ) :: longcm
-    dimension imot(nmx)
 !
     call cctcmd(command,lgcmd,mot,imot,1,nmot)
 !

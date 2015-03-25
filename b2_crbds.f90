@@ -22,7 +22,7 @@ contains
     use maillage
     use boundary
     implicit none
-    integer          ::   img, mfbe, mfbi,mfbim
+  integer          ::   img, mfbe, mfbi,mfbim
 !
 !-----------------------------------------------------------------------
 !

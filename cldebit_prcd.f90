@@ -55,23 +55,18 @@ contains
     use schemanum 
     use definition
     implicit none
-    integer          ::    l,   m,  mb, mfb, mmb
-    integer          ::   mn, mpb, mpn,  mt,ncbd
-    integer          ::   nl
-    double precision ::       a2,     alp,   beta2,      ca,      cb
-    double precision ::       cc,    cson,      dp,     dqn,    drho
-    double precision ::      nxn,     nyn,     nzn,    pres,pression
-    double precision ::       ps,      q2,    qinf,     qns,      qx
-    double precision ::      qxs,      qy,     qys,      qz,     qzs
-    double precision ::     rhos,    temp,       v
+  integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
+  integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,ncbd(ip41)
+  integer          ::         nl
+  double precision ::             a2,           alp,         beta2,            ca,            cb
+  double precision ::             cc,    cson(ip11),            dp,           dqn,          drho
+  double precision ::      nxn(ip42),     nyn(ip42),     nzn(ip42),    pres(ip40),pression(ip11)
+  double precision ::             ps,            q2,          qinf,           qns,            qx
+  double precision ::            qxs,            qy,           qys,            qz,           qzs
+  double precision ::           rhos,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension pres(ip40)
-    dimension v(ip11,ip60)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension mmb(mtt),mpb(mtt),mpn(mtt)
-    dimension pression(ip11),temp(ip11),cson(ip11)
 !
     qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
 !

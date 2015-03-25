@@ -118,35 +118,21 @@ contains
     use mod_clprd_prcd
     use mod_cldebit_prcd
     implicit none
-    integer          ::   icyc,   img,  kpst,     l,lgsnlt
-    integer          ::     lm,   mfb,  mfbm,   mnc,   mnr
-    integer          ::   ncbd,  ncin,    no,  npsn
-    double precision ::    bceqt,    cson,     d0x,     d0y,     d0z
-    double precision ::       dt,     nxn,     nyn,     nzn,    pres
-    double precision :: pression,     rod,    roed,    roud,    rovd
-    double precision ::     rowd,     rpi,     rti,      sn,     tm1
-    double precision ::     tm10,    tm11,    tm12,    tm13,     tm2
-    double precision ::      tm3,     tm4,     tm5,     tm6,     tm7
-    double precision ::      tm8,     tm9,      tp,       v,     vol
-    double precision ::        x,     xnr,       y,     ynr,       z
-    double precision ::      znr,   ztemp
+  integer          ::       icyc,       img,      kpst,         l,    lgsnlt
+  integer          ::         lm,       mfb,      mfbm, mnc(ip43), mnr(ip44)
+  integer          :: ncbd(ip41),ncin(ip41),        no,      npsn
+  double precision :: bceqt(ip41,neqt),      cson(ip11),       d0x(ip40),       d0y(ip40),       d0z(ip40)
+  double precision ::         dt(ip11),       nxn(ip42),       nyn(ip42),       nzn(ip42),      pres(ip40)
+  double precision ::   pression(ip11),       rod(ip40),      roed(ip40),      roud(ip40),      rovd(ip40)
+  double precision ::       rowd(ip40),       rpi(ip40),       rti(ip40),   sn(ip31*ndir),       tm1(ip40)
+  double precision ::       tm10(ip40),      tm11(ip40),      tm12(ip40),      tm13(ip40),       tm2(ip40)
+  double precision ::        tm3(ip40),       tm4(ip40),       tm5(ip40),       tm6(ip40),       tm7(ip40)
+  double precision ::        tm8(ip40),       tm9(ip40),        tp(ip40),    v(ip11,ip60),       vol(ip11)
+  double precision ::          x(ip21),       xnr(ip44),         y(ip21),       ynr(ip44),         z(ip21)
+  double precision ::        znr(ip44),     ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
-    dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
-         tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
-         tm11(ip40),tm12(ip40),tm13(ip40)
-    dimension bceqt(ip41,neqt)
-    dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40)
-    dimension d0x(ip40),d0y(ip40),d0z(ip40)
-    dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
-    dimension ncin(ip41),mnc(ip43)
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension v(ip11,ip60)
-    dimension sn(ip31*ndir)
-    dimension vol(ip11),pression(ip11),ztemp(ip11),cson(ip11),dt(ip11)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
 !
     nbd=1
 !

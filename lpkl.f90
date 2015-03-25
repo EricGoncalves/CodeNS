@@ -57,22 +57,15 @@ contains
     use mod_lpkl2
     use mod_lpkl1
     implicit none
-    integer          ::     l, ldom,   mf,  mfb,mnpar
-    integer          ::  ncbd, ncin, ncyc,   no
-    double precision ::  dist, fgam,   mu,  mut,  nxn
-    double precision ::   nyn,  nzn,   tp,tprod,    v
-    double precision :: ztemp
+  integer          ::           l,       ldom,         mf,        mfb,mnpar(ip12)
+  integer          ::  ncbd(ip41), ncin(ip41),       ncyc,         no
+  double precision ::   dist(ip12),  fgam(ip42),    mu(ip12),   mut(ip12),   nxn(ip42)
+  double precision ::    nyn(ip42),   nzn(ip42),    tp(ip40), tprod(ip00),v(ip11,ip60)
+  double precision ::  ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension mu(ip12),mut(ip12)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension v(ip11,ip60),dist(ip12)
-    dimension mnpar(ip12),fgam(ip42)
-    dimension tprod(ip00),tp(ip40)
-    dimension ztemp(ip11)
 !
     nbd=0
     do no=1,mtbx

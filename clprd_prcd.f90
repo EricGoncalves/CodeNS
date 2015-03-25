@@ -54,23 +54,17 @@ contains
     use definition
     use schemanum
     implicit none
-    integer          ::    l,   m,  mb, mfb, mmb
-    integer          ::   mn, mpb, mpn,  mt, n0c
-    integer          ::  n0n,ncbd,  nl
-    double precision ::       a2,     alp,   beta2,    cson,     dqn
-    double precision ::      nxn,     nyn,     nzn,    pres,pression
-    double precision ::       ps,      q2,    qinf,     qns,      qx
-    double precision ::      qxs,      qy,     qys,      qz,     qzs
-    double precision ::      rho,     roc,    temp,       v
+  integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
+  integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,       n0c
+  integer          ::        n0n,ncbd(ip41),        nl
+  double precision ::             a2,           alp,         beta2,    cson(ip11),           dqn
+  double precision ::      nxn(ip42),     nyn(ip42),     nzn(ip42),    pres(ip40),pression(ip11)
+  double precision ::             ps,            q2,          qinf,           qns,            qx
+  double precision ::            qxs,            qy,           qys,            qz,           qzs
+  double precision ::            rho,           roc,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension pres(ip40)
-    dimension v(ip11,ip60)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension mmb(mtt),mpb(mtt)
-    dimension mpn(mtt)
-    dimension pression(ip11),temp(ip11),cson(ip11)
 !
     n0n=npn(l)
     n0c=npc(l)

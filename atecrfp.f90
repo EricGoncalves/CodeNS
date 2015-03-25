@@ -46,20 +46,16 @@ contains
     use para_fige
     use boundary
     implicit none
-    integer          ::   idm,imaxf,iminf,jmaxf,jminf
-    integer          :: kmaxf,kminf,    l,  m0b,  m0n
-    integer          ::    m1,m1max,   m2,m2max, mfac
-    integer          :: mfacn, ncin, nfbi
-    double precision ::  nxn, nyn, nzn,   x,xpar
-    double precision ::    y,ypar,   z,zpar
+  integer          ::        idm,     imaxf,     iminf,     jmaxf,     jminf
+  integer          ::      kmaxf,     kminf,         l,       m0b,       m0n
+  integer          ::         m1,     m1max,        m2,     m2max,      mfac
+  integer          ::      mfacn,ncin(ip41),      nfbi
+  double precision ::  nxn(ip42), nyn(ip42), nzn(ip42),   x(ip21),xpar(ip00)
+  double precision ::    y(ip21),ypar(ip00),   z(ip21),zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension xpar(ip00),ypar(ip00),zpar(ip00)
-    dimension ncin(ip41)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42)
 !
     l=ndlb(nfbi)
     m0b=mpb(nfbi)

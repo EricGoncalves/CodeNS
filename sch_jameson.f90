@@ -25,34 +25,26 @@ contains
     use maillage
     use proprieteflu
     implicit none
-    integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,     id,   ind1,   ind2,isortie
-    integer          ::  ityprk,      j,     j1,   j1m1,   j1p1
-    integer          ::      j2,   j2m1,     jd,      k,     k1
-    integer          ::    k1m1,   k1p1,     k2,   k2m1,     kd
-    integer          ::    kdir, lgsnlt,     lm,      m,      n
-    integer          ::     n0c,    nci,    ncj,    nck,    nid
-    integer          ::    nijd,   ninc,    njd
-    double precision ::    d, fex, fey, fez,  ff
-    double precision ::  fxx, fxy, fxz, fyy, fyz
-    double precision ::  fzz,  ps, qcx, qcy, qcz
-    double precision ::  si0, si1, si2, si3, si4
-    double precision ::  sj0, sj1, sj2, sj3, sj4
-    double precision ::  sk0, sk1, sk2, sk3, sk4
-    double precision ::   sn,toxx,toxy,toxz,toyy
-    double precision :: toyz,tozz,   u,   v
+  integer          ::       i,     i1,   i1m1,   i1p1,     i2
+  integer          ::    i2m1,     id,   ind1,   ind2,isortie
+  integer          ::  ityprk,      j,     j1,   j1m1,   j1p1
+  integer          ::      j2,   j2m1,     jd,      k,     k1
+  integer          ::    k1m1,   k1p1,     k2,   k2m1,     kd
+  integer          ::    kdir, lgsnlt,     lm,      m,      n
+  integer          ::     n0c,    nci,    ncj,    nck,    nid
+  integer          ::    nijd,   ninc,    njd
+  double precision ::         d(ip11,ip60),           fex(ip00),           fey(ip00),           fez(ip00),       ff(ip11,ip60)
+  double precision ::            fxx(ip00),           fxy(ip00),           fxz(ip00),           fyy(ip00),           fyz(ip00)
+  double precision ::            fzz(ip00),            ps(ip11),           qcx(ip12),           qcy(ip12),           qcz(ip12)
+  double precision ::                  si0,                 si1,                 si2,                 si3,                 si4
+  double precision ::                  sj0,                 sj1,                 sj2,                 sj3,                 sj4
+  double precision ::                  sk0,                 sk1,                 sk2,                 sk3,                 sk4
+  double precision :: sn(lgsnlt,nind,ndir),          toxx(ip12),          toxy(ip12),          toxz(ip12),          toyy(ip12)
+  double precision ::           toyz(ip12),          tozz(ip12),        u(ip11,ip60),        v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    dimension v(ip11,ip60),d(ip11,ip60),u(ip11,ip60),ff(ip11,ip60)
-    dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12), &
-         qcx (ip12),qcy (ip12),qcz (ip12)
-    dimension sn(lgsnlt,nind,ndir)                
-    dimension ps(ip11)
-    dimension fxx(ip00),fyy(ip00),fzz(ip00),fxy(ip00),fxz(ip00), &
-         fyz(ip00),fex(ip00),fey(ip00),fez(ip00)
 !
 
 
@@ -502,12 +494,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine sch_jameson

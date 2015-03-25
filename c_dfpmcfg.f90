@@ -30,12 +30,11 @@ contains
 
     use mod_tcmd_dfpmcfg
     implicit none
-    integer          :: imot,nmot
+  integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     call tcmd_dfpmcfg(mot,imot,nmot)
 !

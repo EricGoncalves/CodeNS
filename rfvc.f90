@@ -34,15 +34,12 @@ contains
     use boundary
     use definition
     implicit none
-    integer          ::    m,  mb,  mc,  mf, mfb
-    integer          ::  mnc,  mt,  nc,ncbd,  nd
-    double precision :: cson,  ps,   t,temp,tper
+  integer          ::          m,        mb,        mc,        mf,       mfb
+  integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd
+  double precision ::   cson(ip11),    ps(ip11),t(ip11,ip60),  temp(ip11),        tper
 !
 !-----------------------------------------------------------------------
 !
-    dimension t(ip11,ip60)
-    dimension mnc(ip43),ncbd(ip41)
-    dimension ps(ip11),temp(ip11),cson(ip11)
 !
     do mf=1,nbd
        mfb=lbd(mf)

@@ -32,16 +32,12 @@ contains
     use para_var
     use para_fige
     implicit none
-    integer          ::    m,  mb, mfb, mmb, mpb
-    integer          ::   mt,  nc,ncbd,ncin,  ni
-    double precision ::     cson,pression,   rhoe1,    temp,       v
+  integer          ::          m,        mb,       mfb,  mmb(mtt),  mpb(mtt)
+  integer          ::         mt,        nc,ncbd(ip41),ncin(ip41),        ni
+  double precision ::     cson(ip11),pression(ip11),         rhoe1,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
-    dimension v(ip11,ip60)
-    dimension ncbd(ip41),ncin(ip41)
-    dimension mmb(mtt),mpb(mtt)
-    dimension pression(ip11),temp(ip11),cson(ip11)
 !
     mt=mmb(mfb)
 !

@@ -36,14 +36,13 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::    i,imax,imin,   j,jmax
-    integer          :: jmin,   k, kdg,kmax,kmin
-    integer          ::    l, nid,nijd, njd
-    double precision :: x,y,z
+  integer          ::    i,imax,imin,   j,jmax
+  integer          :: jmin,   k, kdg,kmax,kmin
+  integer          ::    l, nid,nijd, njd
+  double precision :: x(ip00),y(ip00),z(ip00)
 !
 !-----------------------------------------------------------------------
 !
-    dimension x(ip00),y(ip00),z(ip00)
 !
 
 !
@@ -61,7 +60,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine writdg

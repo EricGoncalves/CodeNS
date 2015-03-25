@@ -19,17 +19,16 @@ contains
     use mod_valenti
     use mod_valreel
     implicit none
-    integer          ::   iba, icmt,   im, imot,  jba
-    integer          ::   kba,kibdc,  krr, kval,mfbea
-    integer          :: mfbeb,   nm, nmot
-    double precision :: epsmsh
+  integer          ::       iba,     icmt,       im,imot(nmx),      jba
+  integer          ::       kba,    kibdc,      krr,     kval,    mfbea
+  integer          ::     mfbeb,       nm,     nmot
+  double precision :: epsmsh
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
     character(len=2 ) :: tvi,tvj,tvk
-    dimension imot(nmx)
 !
 !
     do icmt=1,32

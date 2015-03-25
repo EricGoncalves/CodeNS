@@ -26,15 +26,12 @@ contains
     use para_var
     use para_fige
     implicit none
-    integer          :: icyc,   m, mfl,  ml, mmb
-    integer          ::  mpb,  mt
-    double precision :: bceqt, pres
+  integer          ::     icyc,       m,     mfl,      ml,mmb(mtt)
+  integer          :: mpb(mtt),      mt
+  double precision :: bceqt(ip41,neqt),      pres(ip40)
 !
 !-----------------------------------------------------------------------
 !
-    dimension bceqt(ip41,neqt)
-    dimension pres(ip40)
-    dimension mmb(mtt),mpb(mtt)
 !
     mt=mmb(mfl)
     do m=1,mt

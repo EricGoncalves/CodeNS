@@ -15,14 +15,12 @@ contains
     use mod_tcmd_secpfw
     use mod_b1_secpfw
     implicit none
-    integer          :: imot, lgr,lgrd,nmot
+  integer          :: imot(nmx),lgr(nobj),     lgrd,     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
 !
-    dimension imot(nmx)
-    dimension lgr(nobj)
 !
     call tcmd_secpfw( &
          mot,imot,nmot, &

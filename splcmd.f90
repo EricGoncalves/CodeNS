@@ -14,15 +14,14 @@ contains
     use para_var
     use para_fige
     implicit none
-    integer          ::  icmd,   im, imot,  kbl,lgcmd
-    integer          ::    nm, nmot
+  integer          ::      icmd,       im,imot(nmx),      kbl,    lgcmd
+  integer          ::        nm,     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: command
     character(len=32) ::  mot(nmx)
 !
-    dimension imot(nmx)
 !
     nmot=0
     do nm=1,50

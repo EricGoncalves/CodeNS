@@ -17,13 +17,12 @@ contains
 
     use mod_tcmd_intn
     implicit none
-    integer          :: imot,nmot
+  integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
 !
-    dimension imot(nmx)
 !
     call tcmd_intn(mot,imot,nmot)
 !

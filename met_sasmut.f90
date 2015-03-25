@@ -32,30 +32,22 @@ contains
     use modeleturb
     use mod_teq_gradv
     implicit none
-    integer          ::    i,  i1,  i2,i2m1,ind1
-    integer          :: ind2,   j,  j1,  j2,j2m1
-    integer          ::    k,  k1,  k2,k2m1,   l
-    integer          ::    m,   n,  n0, nid,nijd
-    integer          ::  njd
-    double precision ::    a1,cmui1,cmui2,cmuj1,cmuj2
-    double precision :: cmuk1,cmuk2, cmut,coef1,coef2
-    double precision ::    ct, cv13, dist,  ds3, dvxx
-    double precision ::  dvxy, dvxz, dvyx, dvyy, dvyz
-    double precision ::  dvzx, dvzy, dvzz,exp2x,   f2
-    double precision ::   fv1,   mu,  mut,   rk, rota
-    double precision ::    sn,    t,    v,  vol, xkhi
-    double precision :: xkhi3, zeta
+  integer          ::    i,  i1,  i2,i2m1,ind1
+  integer          :: ind2,   j,  j1,  j2,j2m1
+  integer          ::    k,  k1,  k2,k2m1,   l
+  integer          ::    m,   n,  n0, nid,nijd
+  integer          ::  njd
+  double precision ::            a1,  cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21)
+  double precision ::   cmuk1(ip21),  cmuk2(ip21),         cmut,        coef1,        coef2
+  double precision ::            ct,         cv13,   dist(ip12),          ds3,   dvxx(ip00)
+  double precision ::    dvxy(ip00),   dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00)
+  double precision ::    dvzx(ip00),   dvzy(ip00),   dvzz(ip00),        exp2x,           f2
+  double precision ::           fv1,     mu(ip12),    mut(ip12),           rk,         rota
+  double precision :: sn(ip31*ndir),      t(ip00), v(ip11,ip60),    vol(ip11),         xkhi
+  double precision ::         xkhi3,         zeta
 !
 !-----------------------------------------------------------------------
 !
-    dimension mu(ip12),mut(ip12),dist(ip12)
-    dimension v(ip11,ip60)
-    dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
-         dvyx(ip00),dvyy(ip00),dvyz(ip00), &
-         dvzx(ip00),dvzy(ip00),dvzz(ip00),t(ip00)
-    dimension sn(ip31*ndir),vol(ip11)
-    dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
 !
 
 !
@@ -130,7 +122,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine met_sasmut

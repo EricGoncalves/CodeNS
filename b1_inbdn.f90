@@ -20,14 +20,13 @@ contains
     use para_fige
     use sortiefichier
     implicit none
-    integer          ::  kibdn,  lmfb, lmfbd,  long,longm1
-    integer          ::     nm, nmult,    nr, nrest
+  integer          ::       kibdn,lmfb(lmfbd),      lmfbd,       long,     longm1
+  integer          ::          nm,      nmult,         nr,      nrest
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
     character(len=2 ) :: nlg,nlm,nrr,nrm
-    dimension lmfb(lmfbd)
 !
 !
     long=6

@@ -17,19 +17,18 @@ contains
     use chainecarac
     use maillage
     implicit none
-    integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          :: indc,   j,  j1,j1m1,  j2
-    integer          :: j2m1,   k,  k1,k1m1,  k2
-    integer          :: k2m1,   l,   m,   n, n0c
-    integer          ::  nft, nid,nijd, njd
-    double precision :: t
-    logical          :: ouvert
+  integer          ::    i,  i1,i1m1,  i2,i2m1
+  integer          :: indc,   j,  j1,j1m1,  j2
+  integer          :: j2m1,   k,  k1,k1m1,  k2
+  integer          :: k2m1,   l,   m,   n, n0c
+  integer          ::  nft, nid,nijd, njd
+  double precision :: t(ip11,ip60)
+  logical          :: ouvert
 !
 !-----------------------------------------------------------------------
 !
     character*40 nom
     character(len=1 ) :: c
-    dimension t(ip11,ip60)
 !
     indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !

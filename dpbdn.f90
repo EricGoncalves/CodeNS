@@ -50,16 +50,15 @@ contains
     use maillage
     use sortiefichier
     implicit none
-    integer          ::     i,  img,    j,    k,    l
-    integer          ::    lm,  m0b,  m0n,   mb, mfbe
-    integer          ::  mfbi,mfbim,   mm,   mn,   mt
-    integer          ::     n,  n0c, ncbd,  nid, nijd
-    integer          ::   njd
-    double precision :: nxn,nyn,nzn
+  integer          ::          i,       img,         j,         k,         l
+  integer          ::         lm,       m0b,       m0n,        mb,      mfbe
+  integer          ::       mfbi,     mfbim,        mm,        mn,        mt
+  integer          ::          n,       n0c,ncbd(ip41),       nid,      nijd
+  integer          ::        njd
+  double precision :: nxn(ip42),nyn(ip42),nzn(ip42)
 !
 !-----------------------------------------------------------------------
 !
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
 !
 !
     mfbi=nfei(mfbe)
@@ -98,17 +97,17 @@ contains
   contains
     function    iin(n)
       implicit none
-      integer          :: iin,  n
+  integer          :: iin,  n
       iin=id1(lm)+mod(n-n0c-1,nid)
     end function iin
     function    jjn(n)
       implicit none
-      integer          :: jjn,  n
+  integer          :: jjn,  n
       jjn=jd1(lm)+mod((n-n0c-1-(iin(n)-id1(lm)))/nid,njd)
     end function jjn
     function    kkn(n)
       implicit none
-      integer          :: kkn,  n
+  integer          :: kkn,  n
       kkn=kd1(lm)+ &
            (n-n0c-1-(iin(n)-id1(lm))-(jjn(n)-jd1(lm))*nid)/nijd
     end function kkn

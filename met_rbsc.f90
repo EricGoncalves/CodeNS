@@ -15,18 +15,14 @@ contains
     use para_fige
     use boundary
     implicit none
-    integer          ::    m,  mb,  mc,  mf, mfb
-    integer          ::  mnc,  mt,  nc,ncbd,ncin
-    integer          ::   nd, ndm
-    double precision :: s1x,s1y,s1z,s2x,s2y
-    double precision :: s2z
+  integer          ::          m,        mb,        mc,        mf,       mfb
+  integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),ncin(ip41)
+  integer          ::         nd,       ndm
+  double precision :: s1x(ip12),s1y(ip12),s1z(ip12),s2x(ip12),s2y(ip12)
+  double precision :: s2z(ip12)
 !
 !-----------------------------------------------------------------------
 !
-    dimension s1x(ip12),s1y (ip12),s1z(ip12), &
-         s2x(ip12),s2y (ip12),s2z(ip12)
-    dimension ncin(ip41),ncbd(ip41)
-    dimension mnc(ip43)
 !
     do mf=1,nbd
 !

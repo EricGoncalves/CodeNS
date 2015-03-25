@@ -38,9 +38,9 @@ contains
     use maillage
     use chainecarac
     implicit none
-    integer          ::      kl,      l, mdimtb, mdimtc, mdimtn
-    integer          ::  mdimtr,ndimctb,ndimctc,ndimctk,ndimctv
-    integer          :: ndimntb
+  integer          ::      kl,      l, mdimtb, mdimtc, mdimtn
+  integer          ::  mdimtr,ndimctb,ndimctc,ndimctk,ndimctv
+  integer          :: ndimntb
 !
 !-----------------------------------------------------------------------
 !

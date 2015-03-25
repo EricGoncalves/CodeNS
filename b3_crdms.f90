@@ -22,7 +22,7 @@ contains
     use sortiefichier
     use maillage
     implicit none
-    integer          ::  l,ni,nj,nk
+  integer          ::  l,ni,nj,nk
 !
 !-----------------------------------------------------------------------
 !

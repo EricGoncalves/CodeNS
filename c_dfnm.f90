@@ -17,12 +17,11 @@ contains
     use mod_b1_dfnm
 
     implicit none
-    integer          :: imot,nmot
+  integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
 !
     call tcmd_dfnm(mot,imot,nmot)
 !

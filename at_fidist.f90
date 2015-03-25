@@ -62,36 +62,30 @@ contains
     use maillage
     use boundary
     implicit none
-    integer          ::        i,      i1,      i2,    i2m1,    i2m2
-    integer          ::     idif,   idind,     idm,iespacem,      ig
-    integer          ::     igmx,     igr,    igrp,   imaxf,   iminf
-    integer          ::    imini,       j,      j1,      j2,    j2m1
-    integer          ::     j2m2,   jdind,jespacem,      jg,    jgmx
-    integer          ::      jgr,    jgrp,   jmaxf,   jminf,       k
-    integer          ::       k1,      k2,    k2m1,    k2m2,   kdind
-    integer          ::       kg,    kgmx,     kgr,    kgrp,   kmaxf
-    integer          ::    kminf,       l,     m0b,     m0n,      m1
-    integer          ::    m1max,    m1mi,    m1mx,    m1tb,      m2
-    integer          ::    m2max,    m2mi,    m2mx,    m2tb,      mb
-    integer          ::      mbb,    mbmx,      mc,   mfac0,   mfacn
-    integer          ::    mfacp,   mnpar,      mp,   mpar0,   mpar1
-    integer          ::        n,      n0,      nc,  ncelat,  ncelgr
-    integer          ::     ndeb,    nfbi,   nfpar,  nfpar0,   nfrtb
-    integer          ::      nid,    nijd,     njd,      ns,    nsom
-    double precision ::   dist, dist2, dmini,raptat,     x
-    double precision ::    xcc,  xpar,     y,   ycc,  ypar
-    double precision ::      z,   zcc,  zpar
-    logical          :: contig,  degi,  degj,  degk,nondeg
+  integer          ::           i,         i1,         i2,       i2m1,       i2m2
+  integer          ::        idif,      idind,        idm,   iespacem,         ig
+  integer          ::        igmx,        igr,       igrp,      imaxf,      iminf
+  integer          ::       imini,          j,         j1,         j2,       j2m1
+  integer          ::        j2m2,      jdind,   jespacem,         jg,       jgmx
+  integer          ::         jgr,       jgrp,      jmaxf,      jminf,          k
+  integer          ::          k1,         k2,       k2m1,       k2m2,      kdind
+  integer          ::          kg,       kgmx,        kgr,       kgrp,      kmaxf
+  integer          ::       kminf,          l,        m0b,        m0n,         m1
+  integer          ::       m1max,       m1mi,       m1mx, m1tb(ip00),         m2
+  integer          ::       m2max,       m2mi,       m2mx, m2tb(ip00),         mb
+  integer          ::         mbb,       mbmx,         mc,      mfac0,      mfacn
+  integer          ::       mfacp,mnpar(ip12),         mp,      mpar0,      mpar1
+  integer          ::           n,         n0,      nc(8),     ncelat,     ncelgr
+  integer          ::        ndeb,       nfbi,      nfpar,     nfpar0,nfrtb(ip00)
+  integer          ::         nid,       nijd,        njd,         ns,       nsom
+  double precision ::  dist(ip12),dist2(ip00),      dmini,     raptat,    x(ip21)
+  double precision ::   xcc(ip00), xpar(ip00),    y(ip21),  ycc(ip00), ypar(ip00)
+  double precision ::     z(ip21),  zcc(ip00), zpar(ip00)
+  logical          :: contig,  degi,  degj,  degk,nondeg
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension x(ip21),y(ip21),z(ip21)
-    dimension xpar(ip00),ypar(ip00),zpar(ip00)
-    dimension xcc (ip00),ycc (ip00),zcc (ip00),dist2(ip00)
-    dimension dist(ip12),mnpar(ip12)
-    dimension m1tb(ip00),m2tb(ip00),nfrtb(ip00)
-    dimension nc(8)
 !
 
 !
@@ -379,7 +373,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+  integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine at_fidist

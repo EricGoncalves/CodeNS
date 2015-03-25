@@ -70,22 +70,18 @@ contains
     use boundary
     use maillage
     implicit none
-    integer          ::    l,   m,  mb,  mf, mfb
-    integer          :: mfbm, mnr,  mr,  mt,ncbd
-    integer          :: ncin,  nd, nid, njd,  nr
-    double precision ::   cr, qcx,qcxr, qcy,qcyr
-    double precision ::  qcz,qczr,  sr,toxx,toxy
-    double precision :: toxz,toyy,toyz,tozz,txxr
-    double precision :: txyr,txzr,tyyr,tyzr,tzzr
-    double precision ::  xnr, ynr, znr
+  integer          ::          l,         m,        mb,        mf,       mfb
+  integer          ::       mfbm, mnr(ip44),        mr,        mt,ncbd(ip41)
+  integer          :: ncin(ip41),        nd,       nid,       njd,        nr
+  double precision ::         cr, qcx(ip12),      qcxr, qcy(ip12),      qcyr
+  double precision ::  qcz(ip12),      qczr,        sr,toxx(ip12),toxy(ip12)
+  double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12),      txxr
+  double precision ::       txyr,      txzr,      tyyr,      tyzr,      tzzr
+  double precision ::  xnr(ip44), ynr(ip44), znr(ip44)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
-         tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12)
-    dimension ncbd(ip41),ncin(ip41)
-    dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
 !
     do mf=1,nbd
 !

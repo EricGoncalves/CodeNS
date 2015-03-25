@@ -68,28 +68,23 @@ contains
     use maillage
     use proprieteflu
     implicit none
-    integer          ::      i,    i1,    i2,  i2m1,    id
-    integer          ::      j,    j1,    j2,  j2m1,    jd
-    integer          ::      k,    k1,    k2,  k2m1,    kd
-    integer          ::      l,lgsnlt,     m,    mc,    mn
-    integer          ::      n,   n0c,   n0n,    n1,    n2
-    integer          ::     nc,   nci,   ncj,   nck,   nid
-    integer          ::   nijd,   njd
-    double precision ::  cson, dism,   dt,  dte,  dtv
-    double precision ::  etal,   mu,  mut,    q,   qq
-    double precision ::    ro,   rv,  rv1, sfsi, sfsj
-    double precision ::  sfsk,simax,sjmax,skmax, smoy
-    double precision ::    sn,    t,  vol
+  integer          ::      i,    i1,    i2,  i2m1,    id
+  integer          ::      j,    j1,    j2,  j2m1,    jd
+  integer          ::      k,    k1,    k2,  k2m1,    kd
+  integer          ::      l,lgsnlt,     m,    mc,    mn
+  integer          ::      n,   n0c,   n0n,    n1,    n2
+  integer          ::     nc,   nci,   ncj,   nck,   nid
+  integer          ::   nijd,   njd
+  double precision ::           cson(ip11),          dism(ip00),            dt(ip11),                 dte,                 dtv
+  double precision ::                 etal,            mu(ip12),           mut(ip12),                   q,                  qq
+  double precision ::                   ro,                  rv,                 rv1,          sfsi(ip00),          sfsj(ip00)
+  double precision ::           sfsk(ip00),               simax,               sjmax,               skmax,                smoy
+  double precision :: sn(lgsnlt,nind,ndir),        t(ip11,ip60),           vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
 !
-    dimension t(ip11,ip60)
-    dimension mu(ip12),mut(ip12)
-    dimension sn(lgsnlt,nind,ndir)
-    dimension vol(ip11),cson(ip11),dt(ip11)
-    dimension sfsi(ip00),sfsj(ip00),sfsk(ip00),dism(ip00)
 !
 
 
@@ -212,17 +207,17 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+  integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    indn(i,j,k)
       implicit none
-      integer          ::    i,indn,   j,   k
+  integer          ::    i,indn,   j,   k
       indn=n0n+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indn
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine chronos

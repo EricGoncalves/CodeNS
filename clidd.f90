@@ -105,34 +105,24 @@ contains
     use proprieteflu
     use definition
     implicit none
-    integer          ::    id,   jd,   kd,    l,    m
-    integer          ::    mb,  mfb,  mmb,   mn,  mpb
-    integer          ::   mpn,   mt,  n0c,  n0n,   nc
-    integer          ::  ncbd,  nci, ncij,ncijk, ncik
-    integer          ::   ncj, ncjk,  nck,  nid, nijd
-    integer          ::  nitn,  njd,   nn
-    double precision ::      am0,       b,    cson,     d0x,     d0y
-    double precision ::      d0z,      df,     dqn,     eps,       f
-    double precision ::    gam2t,    gam6,    gamt,     nxn,     nyn
-    double precision ::      nzn,       p,pression,      ps,      qn
-    double precision ::      qxs,     qys,     qzs,    resi,  residu
-    double precision ::       ro,    roc0,     rpi,     rti,    temp
-    double precision ::       un,    usdn,   usdn2,       v,       w
-    double precision ::       wn,       y,      ym,       z,      zm
+  integer          ::         id,        jd,        kd,         l,         m
+  integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
+  integer          ::   mpn(mtt),        mt,       n0c,       n0n,        nc
+  integer          :: ncbd(ip41),       nci,      ncij,     ncijk,      ncik
+  integer          ::        ncj,      ncjk,       nck,       nid,      nijd
+  integer          ::       nitn,       njd,        nn
+  double precision ::      am0(ip40),             b,    cson(ip11),     d0x(ip40),     d0y(ip40)
+  double precision ::      d0z(ip40),            df,           dqn,           eps,             f
+  double precision ::          gam2t,          gam6,          gamt,     nxn(ip42),     nyn(ip42)
+  double precision ::      nzn(ip42),       p(ip40),pression(ip11),            ps,      qn(ip40)
+  double precision ::            qxs,           qys,           qzs,    resi(ip40),        residu
+  double precision ::       ro(ip40),    roc0(ip40),     rpi(ip40),     rti(ip40),    temp(ip11)
+  double precision ::       un(ip40),    usdn(ip40),   usdn2(ip40),  v(ip11,ip60),             w
+  double precision ::             wn,       y(ip21),      ym(ip40),       z(ip21),      zm(ip40)
 !
 !-----------------------------------------------------------------------
 !
 !
-    dimension rpi(ip40),rti(ip40)
-    dimension d0x(ip40),d0y(ip40),d0z(ip40)
-    dimension v(ip11,ip60),pression(ip11),temp(ip11),cson(ip11)
-    dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-    dimension mmb(mtt),mpb(mtt)
-    dimension mpn(mtt)
-    dimension usdn2(ip40),roc0(ip40),am0(ip40), &
-         qn(ip40),p(ip40),resi(ip40),ro(ip40), &
-         un(ip40),usdn(ip40),ym(ip40),zm(ip40)
-    dimension y(ip21),z(ip21)
 !
 
 !
@@ -236,7 +226,7 @@ contains
   contains
     function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+  integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine clidd

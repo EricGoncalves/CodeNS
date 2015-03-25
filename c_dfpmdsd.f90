@@ -16,15 +16,12 @@ contains
     use mod_b1_dfpmdsd
     use mod_tcmd_dfpmdsd
     implicit none
-    integer          ::  imot, ldom,ldomd,  lgr, lgrd
-    integer          ::  nmot
+  integer          ::  imot(nmx),ldom(nobj),     ldomd, lgr(nobj),      lgrd
+  integer          ::       nmot
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
-    dimension imot(nmx)
-    dimension ldom(nobj)
-    dimension lgr(nobj)
 !
     call tcmd_dfpmdsd( &
          mot,imot,nmot, &

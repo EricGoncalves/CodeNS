@@ -14,13 +14,12 @@ contains
     use para_fige
     use mod_entier
     implicit none
-    integer          :: imot,kerr,klix,   l,  li
-    integer          ::  lid, lix
+  integer          ::     imot,    kerr,    klix,       l,li(nobj)
+  integer          ::      lid,     lix
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot
-    dimension li(nobj)
 !
     if ((imot.eq.1).and.(mot.eq.'*')) then
        if(klix.eq.0) then
