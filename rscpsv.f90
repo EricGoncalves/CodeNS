@@ -70,12 +70,12 @@ contains
   double precision ::     dt(ip11),res1xx(ip00),res2yy(ip00),res3zz(ip00),  res4(ip00)
   double precision ::   res5(ip00),  res6(ip00),  res7(ip00),   tn8(ip00),u(ip11,ip60)
   double precision ::   utau(ip42),v(ip11,ip60),     x(ip21),     y(ip21),     z(ip21)
+  integer         ,allocatable :: idumx(:),jdumx(:),kdumx(:)
+  double precision,allocatable ::  dumax(:),dumaxg(:), dumy1(:), dumy2(:),dumy2g(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
-    INTEGER,DIMENSION(:),ALLOCATABLE          :: idumx,jdumx,kdumx
-    REAL,DIMENSION(:),ALLOCATABLE :: dumy1,dumy2,dumax,dumy2g,dumaxg
     ALLOCATE(idumx(neqt),jdumx(neqt),kdumx(neqt), &
          dumy1(neqt),dumy2(neqt),dumax(neqt),dumy2g(neqt),dumaxg(neqt))
 

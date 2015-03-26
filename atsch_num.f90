@@ -119,11 +119,10 @@ contains
     use mod_sch_rusanov_prcd
     implicit none
   integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
-  integer          ::           l,     ldismx,     lgsnlt,         lm, m1tb(ip00)
-  integer          ::  m2tb(ip00),    mcychro,    mcyturb,        mfc,        mfn
-  integer          ::          mg,  mnc(ip43),mnpar(ip12),  mnr(ip44),         nc
-  integer          ::  ncbd(ip41), ncin(ip41),       ncyc,       ndeb,       nfin
-  integer          :: nfrtb(ip00),       npsn
+  integer          ::           l,     ldismx,     lgsnlt,         lm,    mcychro
+  integer          ::     mcyturb,        mfc,        mfn,         mg,  mnc(ip43)
+  integer          :: mnpar(ip12),  mnr(ip44),         nc, ncbd(ip41), ncin(ip41)
+  integer          ::        ncyc,       ndeb,       nfin,       npsn
   double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
   double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
   double precision ::         cvj(ip21),        cvk(ip21),     d(ip11,ip60),        d0x(ip40),        d0y(ip40)
@@ -142,6 +141,10 @@ contains
   double precision ::           x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44),          z(ip21)
   double precision ::         znr(ip44),      ztemp(ip11)
   logical          :: gfetke
+  integer         ,allocatable ::  m1tb(:), m2tb(:),nfrtb(:)
+ allocate(m2tb(ip00))
+ allocate(nfrtb(ip00))
+ allocate(m1tb(ip00))
 !
 !-----------------------------------------------------------------------
 !

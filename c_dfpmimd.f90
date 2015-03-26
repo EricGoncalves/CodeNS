@@ -20,12 +20,14 @@ contains
     use mod_b1_dfpmimd
     use mod_tcmd_dfpmimd
     implicit none
-  integer          ::  imot(nmx),ldom(nobj),     ldomd, lgr(nobj),      lgrd
-  integer          ::       nmot
+  integer          :: imot(nmx),    ldomd,     lgrd,     nmot
+  integer         ,allocatable :: ldom(:), lgr(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+ allocate(ldom(nobj))
+ allocate(lgr(nobj))
 !
     call tcmd_dfpmimd( &
          mot,imot,nmot, &

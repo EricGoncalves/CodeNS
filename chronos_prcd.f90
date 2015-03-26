@@ -87,6 +87,7 @@ contains
   double precision ::                sjmax,               skmax,                smoy,sn(lgsnlt,nind,ndir),        t(ip11,ip60)
   double precision ::                   uu,           vol(ip11),                  vv,                  ww,                 xm0
   double precision ::                xmach,              xmach2
+  double precision,allocatable :: beta2v(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -96,7 +97,6 @@ contains
 
 
 !
-    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE     :: beta2v
     ALLOCATE(beta2v(ip21))
 
     n0c =npc(l)

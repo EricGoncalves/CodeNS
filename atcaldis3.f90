@@ -137,9 +137,10 @@ contains
   integer          ::  ncin(ip41),         nf,       nfbe,       nfbi,nfrtb(ip00)
   integer          ::          no
   double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
-  double precision ::   nzn(ip42),raptat(mtb),    x(ip21),  xcc(ip00), xpar(ip00)
-  double precision ::     y(ip21),  ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00)
-  double precision ::  zpar(ip00)
+  double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
+  double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
+  double precision,allocatable :: raptat(:)
+ allocate(raptat(mtb))
 !
 !-----------------------------------------------------------------------
 !

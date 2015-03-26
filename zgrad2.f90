@@ -88,6 +88,7 @@ contains
   double precision ::                 skzx,                skzy,                skzz,sn(lgsnlt,nind,ndir),                 stx
   double precision ::                  sty,                 stz,          temp(ip11),                  ts,           vol(ip11)
   double precision ::                 vols
+  double precision,allocatable :: vx(:),vy(:),vz(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -97,7 +98,6 @@ contains
 
 
 
-    REAL,DIMENSION(:),ALLOCATABLE :: vx,vy,vz
     eps=0.00001
     ALLOCATE(vx(ip00),vy(ip00),vz(ip00))
 

@@ -58,6 +58,7 @@ contains
   double precision ::         v(ip11,ip60),               vitm2,            vl(ip00),                  vm,                 vnl
   double precision ::                  vnm,                 vnr,            vr(ip00),            wl(ip00),                  wm
   double precision ::             wr(ip00)
+  double precision,allocatable :: r1(:),r2(:),r3(:),r4(:),r5(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -65,7 +66,6 @@ contains
 !
 
 
-    REAL,DIMENSION(:),ALLOCATABLE   :: r1,r2,r3,r4,r5
     ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))
 
     isortie=0

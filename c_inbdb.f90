@@ -21,14 +21,16 @@ contains
     use mod_inbdb
     implicit none
   integer          ::     ibdcfl,    ibdcst,    ibddim, imot(nmx),     kibdb
-  integer          ::          l, lmfb(mtb),     lmfbd,ncbd(ip41),ncin(ip41)
-  integer          ::       nmot,      nvbc
+  integer          ::          l,     lmfbd,ncbd(ip41),ncin(ip41),      nmot
+  integer          ::       nvbc
   double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
+  integer         ,allocatable :: lmfb(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: clmf
+ allocate(lmfb(mtb))
 !
 !
 !

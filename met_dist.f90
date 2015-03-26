@@ -1,7 +1,7 @@
 module mod_met_dist
   implicit none
 contains
-  subroutine met_dist(l,x,y,z,Delta)
+  subroutine met_dist(l,x,y,z,delta)
 !
 !***********************************************************************
 !

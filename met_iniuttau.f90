@@ -42,11 +42,11 @@ contains
   double precision ::  txyf5y(ip12), txzf5z(ip12), tyyf6x(ip12), tyzf6y(ip12), tzzf6z(ip12)
   double precision ::  v(ip11,ip60),    vol(ip11),    xnr(ip44),    ynr(ip44),    znr(ip44)
   double precision ::   ztemp(ip11)
+  double precision,allocatable :: dtdx(:),dtdy(:),dtdz(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dtdx,dtdy,dtdz
     ALLOCATE(dtdx(ip00),dtdy(ip00),dtdz(ip00))
 !
     npsn=ndir*npfb(l)+1

@@ -42,14 +42,15 @@ contains
   double precision ::                  dw4,                 dw5,                eps2,                eps4,                  gd
   double precision ::                   ge,                 get,               prec1,               prec3,                pres
   double precision ::             ps(ip11),                  q2,                qinf,                  qq,                 rho
-  double precision ::                   rl,sn(lgsnlt,nind,ndir),          snup(ip00),          temp(ip11),                  uu
-  double precision ::         v(ip11,ip60),                  vn,                  vv,                  ww
+  double precision ::                   rl,sn(lgsnlt,nind,ndir),          snup(ip00),                  uu,        v(ip11,ip60)
+  double precision ::                   vn,                  vv,                  ww
+  double precision,allocatable :: temp(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
 !
-
+ allocate(temp(ip11))
 
 
     n0c=npc(lm)

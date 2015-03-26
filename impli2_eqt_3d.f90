@@ -46,6 +46,7 @@ contains
   double precision ::                  tmi,                 tmj,                 tmk,                 tpi,                 tpj
   double precision ::                  tpk,        u(ip11,ip60),            u1(ip00),            u2(ip00),            u3(ip00)
   double precision ::                   uu,        v(ip11,ip60),           vol(ip11),                  vv,                  ww
+  double precision,allocatable :: coefe(:,:)
 !
 !-----------------------------------------------------------------
 !
@@ -54,7 +55,6 @@ contains
 
 
 
-    DOUBLE PRECISION,DIMENSION(:,:),ALLOCATABLE :: coefe
     ALLOCATE(coefe(ndir,ip00))
 
     n0c=npc(l)

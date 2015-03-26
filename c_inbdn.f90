@@ -24,16 +24,18 @@ contains
     use mod_inbdn
     use mod_tcmd_inbdn
     implicit none
-  integer          ::  imot(nmx),     kibdn,         l, lmfb(mtb),     lmfbd
-  integer          :: ncbd(ip41),      nmot
+  integer          ::  imot(nmx),     kibdn,         l,     lmfbd,ncbd(ip41)
+  integer          ::       nmot
   double precision ::     nxn(ip42),    nyn(ip42),    nzn(ip42),sn(ip31*ndir),    tn1(ip00)
   double precision ::     tn2(ip00),    tn3(ip00),    tn4(ip00),    tn5(ip00),    tn6(ip00)
   double precision ::     tn7(ip00),    tn8(ip00),    tn9(ip00),      x(ip21),      y(ip21)
   double precision ::       z(ip21)
+  integer         ,allocatable :: lmfb(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+ allocate(lmfb(mtb))
 !
 !
 !

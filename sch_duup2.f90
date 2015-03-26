@@ -52,6 +52,8 @@ contains
   double precision ::       cmuk1(ip21),      cmuk2(ip21),       dist(ip12),         mu(ip12),        mut(ip12)
   double precision :: ptdual(ip11,ip60),    sn(ip31*ndir),          t(ip00),      tprod(ip00),     v(ip11,ip60)
   double precision ::  vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),        vol(ip11)
+  double precision,allocatable :: dvxx(:),dvxy(:),dvxz(:),dvyx(:),dvyy(:)
+  double precision,allocatable :: dvyz(:),dvzx(:),dvzy(:),dvzz(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -61,7 +63,6 @@ contains
 !
 
 
-    REAL,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz
     ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
          dvzx(ip00),dvzy(ip00),dvzz(ip00))
 

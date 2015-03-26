@@ -71,13 +71,13 @@ contains
   double precision ::             ur(ip00),        v(ip11,ip60),                  v1,                  v4,                  v5
   double precision ::                vitm2,            vl(ip00),                  vm,                  vn,            vr(ip00)
   double precision ::             wl(ip00),                  wm,            wr(ip00)
+  double precision,allocatable :: r1(:),r2(:),r3(:),r4(:),r5(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
 !
 
-    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE   :: r1,r2,r3,r4,r5
     ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))
 
     n0c=npc(lm)

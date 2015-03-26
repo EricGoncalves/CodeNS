@@ -2,7 +2,7 @@ module mod_met_smddes
   implicit none
 contains
   subroutine met_smddes( &
-       l,x,y,z,Delta, &
+       l,x,y,z,delta, &
        sn, &
        vol,v,mu,dist, &
        dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
@@ -62,12 +62,12 @@ contains
     use mod_met_difsa
     implicit none
   integer          ::      i,    i1,  i1m1,    i2,  i2m1
-  integer          ::   imax,  imin,  ind1,  ind2,  indc
-  integer          ::      j,    j1,  j1m1,    j2,  j2m1
-  integer          ::   jmax,  jmin,     k,    k1,  k1m1
-  integer          ::     k2,  k2m1,  kmax,  kmin,     l
-  integer          :: lgsnlt,     m,     n,   n0c,   nid
-  integer          ::   nijd,   njd,  npsn
+  integer          ::   imax,  imin,  ind1,  ind2,     j
+  integer          ::     j1,  j1m1,    j2,  j2m1,  jmax
+  integer          ::   jmin,     k,    k1,  k1m1,    k2
+  integer          ::   k2m1,  kmax,  kmin,     l,lgsnlt
+  integer          ::      m,     n,   n0c,   nid,  nijd
+  integer          ::    njd,  npsn
   double precision ::        cb2sig,   cfke(ip13),  cmui1(ip21),  cmui2(ip21),  cmuj1(ip21)
   double precision ::   cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),         ct42,        ctdes
   double precision ::          cv13,        cv133,         cw36,  delta(ip00),         dft2
@@ -89,7 +89,6 @@ contains
 !
 !
 !
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
 !     ---------------------------------------------------------------
 !com  sdif --> grad(ro nu_tilde).grad(nu_tilde) * cb2/sigma
@@ -259,5 +258,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+  integer          ::    i,indc,   j,   k
+    indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine met_smddes
 end module mod_met_smddes

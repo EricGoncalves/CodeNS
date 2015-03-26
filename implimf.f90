@@ -43,6 +43,7 @@ contains
   double precision ::                  tn3,                 tn5,        u(ip11,ip60),                  ui,                  uu
   double precision ::         v(ip11,ip60),                  vi,                  vn,           vol(ip11),                  vv
   double precision ::                  wi1,                 wi2,                 wi3,                 wi5
+  double precision,allocatable :: coefdiag(:), coefe(:,:)
 !
 !-----------------------------------------------------------------------
 !
@@ -51,8 +52,6 @@ contains
 
 
 
-    DOUBLE PRECISION,DIMENSION(:,:),ALLOCATABLE :: coefe
-    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE   :: coefdiag
     ALLOCATE(coefe(ndir,ip00))
     ALLOCATE(coefdiag(ip00))
 

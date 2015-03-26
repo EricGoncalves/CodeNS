@@ -2,7 +2,7 @@ module mod_met_smdes
   implicit none
 contains
   subroutine met_smdes( &
-       l,x,y,z,Delta, &
+       l,x,y,z,delta, &
        sn, &
        vol,v,mu,dist, &
        dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &

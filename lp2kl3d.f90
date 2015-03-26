@@ -102,13 +102,14 @@ contains
   double precision ::  v(ip11,ip60),          v1t,          v1x,          v1y,          v1z
   double precision ::     vol(ip11),           xi,           yi,         yp02
   logical          :: lamin
+  double precision,allocatable :: alfaa(:),betaa(:),   ff(:),  mui(:), muti(:)
+  double precision,allocatable :: tempi(:),topcx(:),topcz(:), vitx(:), vitz(:)
 !
 !-----------------------------------------------------------------------
 !
     parameter( ntab=50  )
 !
 !
-    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: alfaa,betaa,ff,vitx,vitz,mui,muti,tempi,topcx,topcz
     ALLOCATE(alfaa(ntab),betaa(ntab),ff(ntab),topcx(2),topcz(2), &
          vitx(ntab),vitz(ntab),mui(ntab),muti(ntab),tempi(ntab))
 

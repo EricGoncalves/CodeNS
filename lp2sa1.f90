@@ -59,13 +59,14 @@ contains
   double precision ::           v1t,          v1x,          v1y,          v1z,    vol(ip11)
   double precision ::            yi,         yp02,       yplusi
   logical          :: lamin
+  double precision,allocatable :: alfaa(:),betaa(:),   ff(:),  mui(:), muti(:)
+  double precision,allocatable :: tempi(:), topc(:),  vit(:)
 !
 !-----------------------------------------------------------------------
 !
     parameter( ntab=50  )
 !
 !      
-    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: alfaa,betaa,ff,vit,mui,muti,tempi,topc
     ALLOCATE(alfaa(ntab),betaa(ntab),ff(ntab),topc(2), &
          vit(ntab),mui(ntab),muti(ntab),tempi(ntab))
 

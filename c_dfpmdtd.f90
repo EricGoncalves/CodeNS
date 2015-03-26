@@ -22,12 +22,14 @@ contains
     use mod_b1_dfpmdtd
     use mod_tcmd_dfpmdtd
     implicit none
-  integer          ::  imot(nmx),ldom(nobj),     ldomd, lgr(nobj),      lgrd
-  integer          ::       nmot
+  integer          :: imot(nmx),    ldomd,     lgrd,     nmot
+  integer         ,allocatable :: ldom(:), lgr(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+ allocate(ldom(nobj))
+ allocate(lgr(nobj))
 !
     call tcmd_dfpmdtd( &
          mot,imot,nmot, &

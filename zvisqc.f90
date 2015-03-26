@@ -125,10 +125,10 @@ contains
   double precision ::    toxx(ip12),   toxy(ip12),   toxz(ip12),   toyy(ip12),   toyz(ip12)
   double precision ::    tozz(ip12),    vol(ip11),      x(ip21),      y(ip21),      z(ip21)
   double precision ::   ztemp(ip11)
+  double precision,allocatable :: dtx(:),dty(:),dtz(:)
 !
 !-----------------------------------------------------------------------
 !
-    REAL,DIMENSION(:),ALLOCATABLE :: dtx,dty,dtz
     ALLOCATE(dtx(ip00),dty(ip00),dtz(ip00))
 !
     do l=1,lzx

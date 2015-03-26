@@ -51,6 +51,7 @@ contains
   double precision ::           toxx(ip12),          toxy(ip12),          toxz(ip12),          toyy(ip12),          toyz(ip12)
   double precision ::           tozz(ip12),        u(ip11,ip60),            ul(ip00),            ur(ip00),        v(ip11,ip60)
   double precision ::             vl(ip00),            vr(ip00),            wl(ip00),            wr(ip00),                  xa
+  double precision,allocatable :: r1(:),r2(:),r3(:),r4(:),r5(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -61,7 +62,6 @@ contains
 !
 
 
-    REAL,DIMENSION(:),ALLOCATABLE   :: r1,r2,r3,r4,r5
     ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))
 
     n0c=npc(lm)

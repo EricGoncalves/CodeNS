@@ -15,11 +15,13 @@ contains
     use mod_tcmd_secpfw
     use mod_b1_secpfw
     implicit none
-  integer          :: imot(nmx),lgr(nobj),     lgrd,     nmot
+  integer          :: imot(nmx),     lgrd,     nmot
+  integer         ,allocatable :: lgr(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+ allocate(lgr(nobj))
 !
 !
     call tcmd_secpfw( &
