@@ -42,9 +42,9 @@ contains
     use mod_utinia
     use mod_readda
     implicit none
-  integer          ::    img,keinit,  kina,     l,    lm
-  double precision ::         mut(ip12), tnte1(ip11,ip60),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60)
-  double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),          x(ip21),          y(ip21),          z(ip21)
+    integer          ::    img,keinit,  kina,     l,    lm
+    double precision ::         mut(ip12), tnte1(ip11,ip60),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60)
+    double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),          x(ip21),          y(ip21),          z(ip21)
 !
 !-----------------------------------------------------------------------
 !

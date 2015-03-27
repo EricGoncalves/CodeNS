@@ -70,14 +70,14 @@ contains
     use boundary
     use maillage
     implicit none
-  integer          ::          l,         m,        mb,        mf,       mfb
-  integer          ::       mfbm, mnr(ip44),        mr,        mt,ncbd(ip41)
-  integer          :: ncin(ip41),        nd,       nid,       njd,        nr
-  double precision ::         cr, qcx(ip12),      qcxr, qcy(ip12),      qcyr
-  double precision ::  qcz(ip12),      qczr,        sr,toxx(ip12),toxy(ip12)
-  double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12),      txxr
-  double precision ::       txyr,      txzr,      tyyr,      tyzr,      tzzr
-  double precision ::  xnr(ip44), ynr(ip44), znr(ip44)
+    integer          ::          l,         m,        mb,        mf,       mfb
+    integer          ::       mfbm, mnr(ip44),        mr,        mt,ncbd(ip41)
+    integer          :: ncin(ip41),        nd,       nid,       njd,        nr
+    double precision ::         cr, qcx(ip12),      qcxr, qcy(ip12),      qcyr
+    double precision ::  qcz(ip12),      qczr,        sr,toxx(ip12),toxy(ip12)
+    double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12),      txxr
+    double precision ::       txyr,      txzr,      tyyr,      tyzr,      tzzr
+    double precision ::  xnr(ip44), ynr(ip44), znr(ip44)
 !
 !-----------------------------------------------------------------------
 !

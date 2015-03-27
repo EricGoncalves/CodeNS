@@ -47,7 +47,7 @@ contains
     use mod_b1_dfnzst
     use mod_dfnzst
     implicit none
-  integer          :: imot(nmx),     nmot,   nonzst
+    integer          :: imot(nmx),     nmot,   nonzst
 !
 !-----------------------------------------------------------------------
 !

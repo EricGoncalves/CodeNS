@@ -45,11 +45,11 @@ contains
     use mod_inbdbdf
     use mod_inbdbst
     implicit none
-  integer          ::     ibdcfl,    ibdcst,    ibddim,       img,     kibdb
-  integer          ::          l,        lm,         m,        m0,      mfbe
-  integer          ::       mfbi,     mfbim,      mflm,        ml,        mt
-  integer          :: ncbd(ip41),ncin(ip41),        nv,      nvbc
-  double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
+    integer          ::     ibdcfl,    ibdcst,    ibddim,       img,     kibdb
+    integer          ::          l,        lm,         m,        m0,      mfbe
+    integer          ::       mfbi,     mfbim,      mflm,        ml,        mt
+    integer          :: ncbd(ip41),ncin(ip41),        nv,      nvbc
+    double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
 !
 !-----------------------------------------------------------------------
 !

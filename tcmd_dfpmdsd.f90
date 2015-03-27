@@ -21,10 +21,10 @@ contains
     use mod_valreel
     use mod_vallent
     implicit none
-  integer          ::       icmt,       img, imot(nmx),     krree,         l
-  integer          :: ldom(nobj),     ldomd, lgr(nobj),      lgrd,        lm
-  integer          ::         ng,        nl,        nm,      nmot
-  double precision :: rree
+    integer          ::       icmt,       img, imot(nmx),     krree,         l
+    integer          :: ldom(nobj),     ldomd, lgr(nobj),      lgrd,        lm
+    integer          ::         ng,        nl,        nm,      nmot
+    double precision :: rree
 !
 !-----------------------------------------------------------------------
 !

@@ -13,8 +13,8 @@ contains
 !
     use para_fige
     implicit none
-  integer          ::      icmd,imot(nmx),     ipos,    lgcmd,       nm
-  integer          ::       nm1,      nm2
+    integer          ::      icmd,imot(nmx),     ipos,    lgcmd,       nm
+    integer          ::       nm1,      nm2
 !
 !-----------------------------------------------------------------------
 !

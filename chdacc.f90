@@ -69,11 +69,11 @@ contains
     use mod_rfspstf
     use mod_cccva
     implicit none
-  integer          ::       imax,      imin,      jmax,      jmin,       kda
-  integer          ::       kmax,      kmin,         l,       mfb,ncbd(ip41)
-  integer          :: ncin(ip41)
-  double precision ::    mut(ip12),   tn1(ip00),   tn2(ip00),   tn3(ip00),   tn4(ip00)
-  double precision ::    tn5(ip00),   tn6(ip00),   tn7(ip00),   tn8(ip00),v(ip11,ip60)
+    integer          ::       imax,      imin,      jmax,      jmin,       kda
+    integer          ::       kmax,      kmin,         l,       mfb,ncbd(ip41)
+    integer          :: ncin(ip41)
+    double precision ::    mut(ip12),   tn1(ip00),   tn2(ip00),   tn3(ip00),   tn4(ip00)
+    double precision ::    tn5(ip00),   tn6(ip00),   tn7(ip00),   tn8(ip00),v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

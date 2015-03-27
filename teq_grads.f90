@@ -23,19 +23,19 @@ contains
     use maillage
     use schemanum
     implicit none
-  integer          ::      i,    i1,  i1m1,  i1p1,    i2
-  integer          ::   i2m1,  i2p1,    id,  ind1,  ind2
-  integer          ::      j,    j1,  j1m1,  j1p1,    j2
-  integer          ::   j2m1,  j2p1,    jd,     k,    k1
-  integer          ::   k1m1,  k1p1,    k2,  k2m1,  k2p1
-  integer          ::     kd,  kdir,     l,lgsnlt,     m
-  integer          ::      n,   n0c,   nci,   ncj,   nck
-  integer          ::    nid,  nijd,  ninc,   njd
-  double precision ::                   c0,         cmui1(ip21),         cmui2(ip21),         cmuj1(ip21),         cmuj2(ip21)
-  double precision ::          cmuk1(ip21),         cmuk2(ip21),          dsdx(ip00),          dsdy(ip00),          dsdz(ip00)
-  double precision ::                  eps,             s(ip00),                 si1,                 si2,                 si3
-  double precision ::                  sj1,                 sj2,                 sj3,                 sk1,                 sk2
-  double precision ::                  sk3,sn(lgsnlt,nind,ndir),                  ts,           vol(ip11),                vols
+    integer          ::      i,    i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  i2p1,    id,  ind1,  ind2
+    integer          ::      j,    j1,  j1m1,  j1p1,    j2
+    integer          ::   j2m1,  j2p1,    jd,     k,    k1
+    integer          ::   k1m1,  k1p1,    k2,  k2m1,  k2p1
+    integer          ::     kd,  kdir,     l,lgsnlt,     m
+    integer          ::      n,   n0c,   nci,   ncj,   nck
+    integer          ::    nid,  nijd,  ninc,   njd
+    double precision ::                   c0,         cmui1(ip21),         cmui2(ip21),         cmuj1(ip21),         cmuj2(ip21)
+    double precision ::          cmuk1(ip21),         cmuk2(ip21),          dsdx(ip00),          dsdy(ip00),          dsdz(ip00)
+    double precision ::                  eps,             s(ip00),                 si1,                 si2,                 si3
+    double precision ::                  sj1,                 sj2,                 sj3,                 sk1,                 sk2
+    double precision ::                  sk3,sn(lgsnlt,nind,ndir),                  ts,           vol(ip11),                vols
 !
 !-----------------------------------------------------------------------
 !
@@ -437,12 +437,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine teq_grads

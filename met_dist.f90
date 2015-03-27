@@ -24,16 +24,16 @@ contains
     use maillage
     use chainecarac
     implicit none
-  integer          ::     i,   i1,   i2, i2m1,   id
-  integer          ::     j,   j1,   j2, j2m1,   jd
-  integer          ::     k,   k1,   k2, k2m1,   kd
-  integer          ::     l,    m,    n,  n0c,  nci
-  integer          ::  ncij,ncijk, ncik,  ncj, ncjk
-  integer          ::   nck,  nid,  njd
-  double precision :: delta(ip00),        dx1,        dx2,        dx3,        dx4
-  double precision ::         dy1,        dy2,        dy3,        dy4,        dz1
-  double precision ::         dz2,        dz3,        dz4,    x(ip21),    y(ip21)
-  double precision ::     z(ip21)
+    integer          ::     i,   i1,   i2, i2m1,   id
+    integer          ::     j,   j1,   j2, j2m1,   jd
+    integer          ::     k,   k1,   k2, k2m1,   kd
+    integer          ::     l,    m,    n,  n0c,  nci
+    integer          ::  ncij,ncijk, ncik,  ncj, ncjk
+    integer          ::   nck,  nid,  njd
+    double precision :: delta(ip00),        dx1,        dx2,        dx3,        dx4
+    double precision ::         dy1,        dy2,        dy3,        dy4,        dz1
+    double precision ::         dz2,        dz3,        dz4,    x(ip21),    y(ip21)
+    double precision ::     z(ip21)
 !
 !-----------------------------------------------------------------------
 !
@@ -132,12 +132,12 @@ contains
   contains
     function    indn(i,j,k)
       implicit none
-  integer          ::    i,indn,   j,   k
+      integer          ::    i,indn,   j,   k
       indn=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
     end function indn
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nid*njd
     end function inc
   end subroutine met_dist

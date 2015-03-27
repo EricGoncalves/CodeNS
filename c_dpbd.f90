@@ -25,20 +25,20 @@ contains
     use mod_dpbd
     use mod_b1_dpbd
     implicit none
-  integer          ::        img, imot(nmx),      lgrd,     lmfbd,        mf
-  integer          ::       mfbe,        mg, mnc(ip43), mnr(ip44),ncbd(ip41)
-  integer          :: ncin(ip41),      nmot
-  double precision :: nxn(ip42),nyn(ip42),nzn(ip42),tm1(ip40),tm2(ip40)
-  double precision :: tm3(ip40),tm4(ip40),tm5(ip40),tm6(ip40),xnr(ip44)
-  double precision :: ynr(ip44),znr(ip44)
-  integer         ,allocatable ::  lgr(:),lmfb(:)
+    integer          ::        img, imot(nmx),      lgrd,     lmfbd,        mf
+    integer          ::       mfbe,        mg, mnc(ip43), mnr(ip44),ncbd(ip41)
+    integer          :: ncin(ip41),      nmot
+    double precision :: nxn(ip42),nyn(ip42),nzn(ip42),tm1(ip40),tm2(ip40)
+    double precision :: tm3(ip40),tm4(ip40),tm5(ip40),tm6(ip40),xnr(ip44)
+    double precision :: ynr(ip44),znr(ip44)
+    integer         ,allocatable ::  lgr(:),lmfb(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
     character(len=32) ::  typdat
- allocate(lmfb(mtb))
- allocate(lgr(nobj))
+    allocate(lmfb(mtb))
+    allocate(lgr(nobj))
 !
 !
 !
@@ -73,7 +73,7 @@ contains
        enddo
     enddo
 !
- deallocate(lmfb,lgr)
+    deallocate(lmfb,lgr)
     return
   end subroutine c_dpbd
 end module mod_c_dpbd

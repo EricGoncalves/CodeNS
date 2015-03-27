@@ -25,12 +25,12 @@ contains
     use mod_met_rbvc
     use mod_met_rbvr
     implicit none
-  integer          ::       kpst,         m,      m0ns,        mb,       mfb
-  integer          ::  mnc(ip43), mnr(ip44),        mt,        n2,        nc
-  integer          :: ncbd(ip41),ncin(ip41),    nfacns,        ni,        nl
-  integer          ::         no
-  double precision :: bceqt(ip41,neqt),        mu(ip12),      utau(ip42),    v(ip11,ip60),       xnr(ip44)
-  double precision ::        ynr(ip44),       znr(ip44)
+    integer          ::       kpst,         m,      m0ns,        mb,       mfb
+    integer          ::  mnc(ip43), mnr(ip44),        mt,        n2,        nc
+    integer          :: ncbd(ip41),ncin(ip41),    nfacns,        ni,        nl
+    integer          ::         no
+    double precision :: bceqt(ip41,neqt),        mu(ip12),      utau(ip42),    v(ip11,ip60),       xnr(ip44)
+    double precision ::        ynr(ip44),       znr(ip44)
 !
 !-----------------------------------------------------------------------
 !

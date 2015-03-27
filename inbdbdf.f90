@@ -14,8 +14,8 @@ contains
     use definition
     use sortiefichier
     implicit none
-  integer          :: ibddim,  nvbc
-  double precision ::           alf0,          bet0,          pdim,          tdim,vbc(ista*lsta)
+    integer          :: ibddim,  nvbc
+    double precision ::           alf0,          bet0,          pdim,          tdim,vbc(ista*lsta)
 !
 !-----------------------------------------------------------------------
 !

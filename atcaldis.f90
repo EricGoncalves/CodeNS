@@ -129,15 +129,15 @@ contains
     use mod_atccc
     use mod_atindnor
     implicit none
-  integer          ::         dm1,        dm2,        dm3,       ierr,        img
-  integer          ::      isens3,          l,         lm,          m,        m10
-  integer          ::       m1max,      m1min,        m20,      m2max,      m2min
-  integer          ::         m30,      m3max,      m3min,         mf,  mnc(ip43)
-  integer          :: mnpar(ip12),          n, ncbd(ip41), ncin(ip41),       nfbe
-  integer          ::        nfbi,         no
-  double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
-  double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
-  double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
+    integer          ::         dm1,        dm2,        dm3,       ierr,        img
+    integer          ::      isens3,          l,         lm,          m,        m10
+    integer          ::       m1max,      m1min,        m20,      m2max,      m2min
+    integer          ::         m30,      m3max,      m3min,         mf,  mnc(ip43)
+    integer          :: mnpar(ip12),          n, ncbd(ip41), ncin(ip41),       nfbe
+    integer          ::        nfbi,         no
+    double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
+    double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
+    double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !

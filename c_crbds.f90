@@ -21,9 +21,9 @@ contains
     use mod_tcmd_crbds
     use mod_crbds
     implicit none
-  integer          ::       imax,      imin, imot(nmx),      jmax,      jmin
-  integer          ::       kini,      kmax,      kmin,         l,      mfbe
-  integer          :: ncbd(ip41),      nmot
+    integer          ::       imax,      imin, imot(nmx),      jmax,      jmin
+    integer          ::       kini,      kmax,      kmin,         l,      mfbe
+    integer          :: ncbd(ip41),      nmot
 !
 !-----------------------------------------------------------------------
 !

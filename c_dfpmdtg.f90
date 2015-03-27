@@ -23,7 +23,7 @@ contains
 
     use mod_tcmd_dfpmdtg
     implicit none
-  integer          :: imot(nmx),     nmot
+    integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !

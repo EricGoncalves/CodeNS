@@ -25,7 +25,7 @@ contains
     use schemanum
     use maillage
     implicit none
-  integer          :: ng
+    integer          :: ng
 !
 !-----------------------------------------------------------------------
 !

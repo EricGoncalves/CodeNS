@@ -15,15 +15,15 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::    i,  i1,i1m1,i1p1,  i2
-  integer          :: i2m1,i2p1,  id,iinc,  is
-  integer          ::    j,  j1,j1m1,j1p1,  j2
-  integer          :: j2m1,j2p1,  jd,jinc,  js
-  integer          ::    k,  k1,k1m1,k1p1,  k2
-  integer          :: k2m1,k2p1,  kd,kinc,  ks
-  integer          ::    l,   m,   n, n0c, nci
-  integer          ::  ncj, nck, nid,nijd, njd
-  double precision :: ds1(ip00),ds2(ip00),ds3(ip00),      ex1,      ex2
+    integer          ::    i,  i1,i1m1,i1p1,  i2
+    integer          :: i2m1,i2p1,  id,iinc,  is
+    integer          ::    j,  j1,j1m1,j1p1,  j2
+    integer          :: j2m1,j2p1,  jd,jinc,  js
+    integer          ::    k,  k1,k1m1,k1p1,  k2
+    integer          :: k2m1,k2p1,  kd,kinc,  ks
+    integer          ::    l,   m,   n, n0c, nci
+    integer          ::  ncj, nck, nid,nijd, njd
+    double precision :: ds1(ip00),ds2(ip00),ds3(ip00),      ex1,      ex2
 !
 !-----------------------------------------------------------------------
 !
@@ -118,12 +118,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_exgr

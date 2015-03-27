@@ -40,14 +40,14 @@ contains
     use maillage
     use boundary
     implicit none
-  integer          ::           i,         i1,         i2,      imini,          j
-  integer          ::          j1,         j2,          k,         k1,         k2
-  integer          ::           l,        m0b,         mb,        mbb,       mbmx
-  integer          ::          mc,mnpar(ip12),         n0,         nc,       nfbi
-  integer          ::         nid,       nijd,        njd,         no
-  double precision ::  dist(ip12),dist2(ip00),      dmini,    x(ip21),  xcc(ip00)
-  double precision ::  xpar(ip00),    y(ip21),  ycc(ip00), ypar(ip00),    z(ip21)
-  double precision ::   zcc(ip00), zpar(ip00)
+    integer          ::           i,         i1,         i2,      imini,          j
+    integer          ::          j1,         j2,          k,         k1,         k2
+    integer          ::           l,        m0b,         mb,        mbb,       mbmx
+    integer          ::          mc,mnpar(ip12),         n0,         nc,       nfbi
+    integer          ::         nid,       nijd,        njd,         no
+    double precision ::  dist(ip12),dist2(ip00),      dmini,    x(ip21),  xcc(ip00)
+    double precision ::  xpar(ip00),    y(ip21),  ycc(ip00), ypar(ip00),    z(ip21)
+    double precision ::   zcc(ip00), zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !
@@ -113,7 +113,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine atdist_2

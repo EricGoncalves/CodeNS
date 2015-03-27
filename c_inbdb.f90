@@ -20,17 +20,17 @@ contains
     use mod_b1_inbdb
     use mod_inbdb
     implicit none
-  integer          ::     ibdcfl,    ibdcst,    ibddim, imot(nmx),     kibdb
-  integer          ::          l,     lmfbd,ncbd(ip41),ncin(ip41),      nmot
-  integer          ::       nvbc
-  double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
-  integer         ,allocatable :: lmfb(:)
+    integer          ::     ibdcfl,    ibdcst,    ibddim, imot(nmx),     kibdb
+    integer          ::          l,     lmfbd,ncbd(ip41),ncin(ip41),      nmot
+    integer          ::       nvbc
+    double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
+    integer         ,allocatable :: lmfb(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: clmf
- allocate(lmfb(mtb))
+    allocate(lmfb(mtb))
 !
 !
 !
@@ -54,7 +54,7 @@ contains
 !
     enddo
 !
- deallocate(lmfb)
+    deallocate(lmfb)
     return
   end subroutine c_inbdb
 end module mod_c_inbdb

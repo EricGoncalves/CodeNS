@@ -21,19 +21,19 @@ contains
     use maillage
     use chainecarac
     implicit none
-  integer          ::      i,    i1,  i1m1,  i1p1,    i2
-  integer          ::   i2m1,  i2p1,    id,  ind1,  ind2
-  integer          ::     is,     j,    j1,  j1m1,  j1p1
-  integer          ::     j2,  j2m1,  j2p1,    jd,     k
-  integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
-  integer          ::   k2p1,    kd,     l,lgsnlt,     m
-  integer          ::     m1,    m2,     n,    n0,    n1
-  integer          ::    nci,   ncj,   nck,   nid,  nijd
-  integer          ::   ninc,   njd
-  double precision ::                    a,                   b,        d(ip11,ip60),                  dd,          del6(ip00)
-  double precision ::           del7(ip00),                rlam,                 rro,                rro1,sn(lgsnlt,nind,ndir)
-  double precision ::         t(ip11,ip60),                   u,                   v,           vol(ip11),                   w
-  double precision ::                    x,                   y,                   z
+    integer          ::      i,    i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  i2p1,    id,  ind1,  ind2
+    integer          ::     is,     j,    j1,  j1m1,  j1p1
+    integer          ::     j2,  j2m1,  j2p1,    jd,     k
+    integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
+    integer          ::   k2p1,    kd,     l,lgsnlt,     m
+    integer          ::     m1,    m2,     n,    n0,    n1
+    integer          ::    nci,   ncj,   nck,   nid,  nijd
+    integer          ::   ninc,   njd
+    double precision ::                    a,                   b,        d(ip11,ip60),                  dd,          del6(ip00)
+    double precision ::           del7(ip00),                rlam,                 rro,                rro1,sn(lgsnlt,nind,ndir)
+    double precision ::         t(ip11,ip60),                   u,                   v,           vol(ip11),                   w
+    double precision ::                    x,                   y,                   z
 !
 !-----------------------------------------------------------------------
 !
@@ -281,22 +281,22 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
     function    amimd(a,b)
       implicit none
-  double precision ::     a,amimd,    b
+      double precision ::     a,amimd,    b
       amimd=sign(1.,a)*max(0.,min(abs(a),b*sign(1.,a)))
     end function amimd
     function    fi1(x,y,z)
       implicit none
-  double precision :: fi1,  x,  y,  z
+      double precision :: fi1,  x,  y,  z
       fi1=amimd(x,amimd(y,z))
     end function fi1
   end subroutine met_roe2o

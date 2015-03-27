@@ -63,16 +63,16 @@ contains
     use schemanum
     use constantes
     use chainecarac
-    use sortiefichier 
+    use sortiefichier
     use mod_chronos_prcd
     use mod_chronos
     implicit none
-  integer          ::      i,   img,     j,     k,     l
-  integer          :: lgsnlt,    lm,     n,  ndeb,  nfin
-  integer          ::    nid,  nijd,   njd,  npsn
-  double precision ::     cson(ip11),      dt(ip11),         dtmin,      mu(ip12),     mut(ip12)
-  double precision :: pression(ip11), sn(ip31*ndir),     tn1(ip00),     tn2(ip00),     tn3(ip00)
-  double precision ::      tn4(ip00),  u(ip11,ip60),     vol(ip11)
+    integer          ::      i,   img,     j,     k,     l
+    integer          :: lgsnlt,    lm,     n,  ndeb,  nfin
+    integer          ::    nid,  nijd,   njd,  npsn
+    double precision ::     cson(ip11),      dt(ip11),         dtmin,      mu(ip12),     mut(ip12)
+    double precision :: pression(ip11), sn(ip31*ndir),     tn1(ip00),     tn2(ip00),     tn3(ip00)
+    double precision ::      tn4(ip00),  u(ip11,ip60),     vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
@@ -153,7 +153,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=npc(lm)+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
   end subroutine chrono

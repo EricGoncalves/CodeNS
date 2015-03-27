@@ -28,10 +28,10 @@ contains
     use para_fige
     use boundary
     implicit none
-  integer          ::          m,        mb,        mf,       mfb,        mt
-  integer          :: ncbd(ip41),ncin(ip41),        nd,       ndm
-  double precision ::  qcx(ip12), qcy(ip12), qcz(ip12),toxx(ip12),toxy(ip12)
-  double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
+    integer          ::          m,        mb,        mf,       mfb,        mt
+    integer          :: ncbd(ip41),ncin(ip41),        nd,       ndm
+    double precision ::  qcx(ip12), qcy(ip12), qcz(ip12),toxx(ip12),toxy(ip12)
+    double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
 !
 !-----------------------------------------------------------------------
 !

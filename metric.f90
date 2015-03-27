@@ -35,16 +35,16 @@ contains
     use maillage
     use boundary
     use schemanum
-    use chainecarac 
+    use chainecarac
     use mod_metrics
     use mod_rfsc
     use mod_rfsr
     implicit none
-  integer          ::        img,         l,        lm,       mfc,       mfr
-  integer          ::  mnc(ip43), mnr(ip44),ncbd(ip41)
-  double precision ::          exs1,         exs2,      r(ip11),sn(ip31*ndir),    tn1(ip00)
-  double precision ::     tn2(ip00),    tn3(ip00),    vol(ip11),      x(ip21),    xnr(ip44)
-  double precision ::       y(ip21),    ynr(ip44),      z(ip21),    znr(ip44)
+    integer          ::        img,         l,        lm,       mfc,       mfr
+    integer          ::  mnc(ip43), mnr(ip44),ncbd(ip41)
+    double precision ::          exs1,         exs2,      r(ip11),sn(ip31*ndir),    tn1(ip00)
+    double precision ::     tn2(ip00),    tn3(ip00),    vol(ip11),      x(ip21),    xnr(ip44)
+    double precision ::       y(ip21),    ynr(ip44),      z(ip21),    znr(ip44)
 !
 !-----------------------------------------------------------------------
 !

@@ -14,8 +14,8 @@ contains
     use para_fige
     use mod_entier
     implicit none
-  integer          ::     imot,    kerr,    klix,       l,li(nobj)
-  integer          ::      lid,     lix
+    integer          ::     imot,    kerr,    klix,       l,li(nobj)
+    integer          ::      lid,     lix
 !
 !-----------------------------------------------------------------------
 !

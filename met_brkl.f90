@@ -19,15 +19,15 @@ contains
     use maillage
     use modeleturb
     implicit none
-  integer          ::    i,  i1,i1m1,  i2,i2m1
-  integer          :: ind1,ind2,   j,  j1,j1m1
-  integer          ::   j2,j2m1,   k,  k1,k1m1
-  integer          ::   k2,k2m1,   l,   m,   n
-  integer          ::   n0, nid,nijd, njd
-  double precision ::         b1s2,        cmu1,  dvxx(ip00),  dvxy(ip00),  dvxz(ip00)
-  double precision ::   dvyx(ip00),  dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00)
-  double precision ::   dvzz(ip00),    mu(ip12),   mut(ip12),       mutmx,        omeg
-  double precision :: v(ip11,ip60)
+    integer          ::    i,  i1,i1m1,  i2,i2m1
+    integer          :: ind1,ind2,   j,  j1,j1m1
+    integer          ::   j2,j2m1,   k,  k1,k1m1
+    integer          ::   k2,k2m1,   l,   m,   n
+    integer          ::   n0, nid,nijd, njd
+    double precision ::         b1s2,        cmu1,  dvxx(ip00),  dvxy(ip00),  dvxz(ip00)
+    double precision ::   dvyx(ip00),  dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00)
+    double precision ::   dvzz(ip00),    mu(ip12),   mut(ip12),       mutmx,        omeg
+    double precision :: v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
@@ -83,7 +83,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
   end subroutine met_brkl

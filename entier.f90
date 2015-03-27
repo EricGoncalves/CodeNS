@@ -3,7 +3,7 @@ module mod_entier
 contains
   subroutine entier(mot,imot,i,kerr)
     implicit none
-  integer          ::    i,imot,kerr
+    integer          ::    i,imot,kerr
 !
 !***********************************************************************
 !

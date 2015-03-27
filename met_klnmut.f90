@@ -52,20 +52,20 @@ contains
     use mod_teq_gradv
     use mod_met_prod
     implicit none
-  integer          ::    i,  i1,  i2,i2m1,  id
-  integer          ::    j,  j1,  j2,j2m1,  jd
-  integer          ::    k,  k1,  k2,k2m1,  kd
-  integer          ::    l,   m,   n,  n0, nci
-  integer          ::  ncj, nck, nid,nijd, njd
-  double precision ::         alpha,           c1,          c14,           c2,          c22
-  double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
-  double precision ::   cmuk2(ip21),         csk2,   dist(ip12),   dvxx(ip00),   dvxy(ip00)
-  double precision ::    dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00)
-  double precision ::    dvzy(ip00),   dvzz(ip00),          eps,           f1,          fmu
-  double precision ::      mu(ip12),    mut(ip12),        mutpr,       prodpr,        r2sb1
-  double precision ::          rack,       ralpha,       sigmaa,sn(ip31*ndir),          ss2
-  double precision ::       t(ip00),  tprod(ip00), v(ip11,ip60),    vol(ip11),          xl2
-  double precision ::           xxi,         xxi2
+    integer          ::    i,  i1,  i2,i2m1,  id
+    integer          ::    j,  j1,  j2,j2m1,  jd
+    integer          ::    k,  k1,  k2,k2m1,  kd
+    integer          ::    l,   m,   n,  n0, nci
+    integer          ::  ncj, nck, nid,nijd, njd
+    double precision ::         alpha,           c1,          c14,           c2,          c22
+    double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
+    double precision ::   cmuk2(ip21),         csk2,   dist(ip12),   dvxx(ip00),   dvxy(ip00)
+    double precision ::    dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00)
+    double precision ::    dvzy(ip00),   dvzz(ip00),          eps,           f1,          fmu
+    double precision ::      mu(ip12),    mut(ip12),        mutpr,       prodpr,        r2sb1
+    double precision ::          rack,       ralpha,       sigmaa,sn(ip31*ndir),          ss2
+    double precision ::       t(ip00),  tprod(ip00), v(ip11,ip60),    vol(ip11),          xl2
+    double precision ::           xxi,         xxi2
 !
 !-----------------------------------------------------------------------
 !
@@ -160,14 +160,14 @@ contains
 !
     return
   contains
-    function    ind(i,j,k) 
+    function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0 +1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_klnmut

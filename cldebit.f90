@@ -61,14 +61,14 @@ contains
     use maillage
     use proprieteflu
     implicit none
-  integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
-  integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,ncbd(ip41)
-  integer          ::         nl
-  double precision ::             a2,            ca,            cb,            cc,    cson(ip11)
-  double precision ::             dp,           dqn,          drho,     nxn(ip42),     nyn(ip42)
-  double precision ::      nzn(ip42),    pres(ip40),pression(ip11),            ps,           qns
-  double precision ::             qx,           qxs,            qy,           qys,            qz
-  double precision ::            qzs,          rhos,          roc0,    temp(ip11),  v(ip11,ip60)
+    integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
+    integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,ncbd(ip41)
+    integer          ::         nl
+    double precision ::             a2,            ca,            cb,            cc,    cson(ip11)
+    double precision ::             dp,           dqn,          drho,     nxn(ip42),     nyn(ip42)
+    double precision ::      nzn(ip42),    pres(ip40),pression(ip11),            ps,           qns
+    double precision ::             qx,           qxs,            qy,           qys,            qz
+    double precision ::            qzs,          rhos,          roc0,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

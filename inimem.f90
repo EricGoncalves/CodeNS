@@ -76,19 +76,19 @@ contains
     use schemanum
     use proprieteflu
     use mod_def
-    use constantes 
+    use constantes
     use mod_inivec
     implicit none
-  integer          :: icmt,ncyc
-  double precision ::       cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21),      cmuk1(ip21)
-  double precision ::       cmuk2(ip21),       cson(ip11),        cvi(ip21),        cvj(ip21),        cvk(ip21)
-  double precision ::          dt(ip11),         mu(ip12),        mut(ip12),   pression(ip11),ptdual(ip11,ip60)
-  double precision ::         qcx(ip12),        qcy(ip12),        qcz(ip12),    sn(ip31*ndir),        tn1(ip00)
-  double precision ::        tn10(ip00),        tn2(ip00),        tn3(ip00),        tn4(ip00),        tn5(ip00)
-  double precision ::         tn6(ip00),        tn7(ip00),        tn8(ip00),        tn9(ip00), tnte1(ip11,ip60)
-  double precision ::  tnte3(ip11,ip60), tnte4(ip11,ip60),       toxx(ip12),       toxy(ip12),       toxz(ip12)
-  double precision ::        toyy(ip12),       toyz(ip12),       tozz(ip12),     v(ip11,ip60), vdual(ip11,ip60)
-  double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),        vol(ip11),      ztemp(ip11)
+    integer          :: icmt,ncyc
+    double precision ::       cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21),      cmuk1(ip21)
+    double precision ::       cmuk2(ip21),       cson(ip11),        cvi(ip21),        cvj(ip21),        cvk(ip21)
+    double precision ::          dt(ip11),         mu(ip12),        mut(ip12),   pression(ip11),ptdual(ip11,ip60)
+    double precision ::         qcx(ip12),        qcy(ip12),        qcz(ip12),    sn(ip31*ndir),        tn1(ip00)
+    double precision ::        tn10(ip00),        tn2(ip00),        tn3(ip00),        tn4(ip00),        tn5(ip00)
+    double precision ::         tn6(ip00),        tn7(ip00),        tn8(ip00),        tn9(ip00), tnte1(ip11,ip60)
+    double precision ::  tnte3(ip11,ip60), tnte4(ip11,ip60),       toxx(ip12),       toxy(ip12),       toxz(ip12)
+    double precision ::        toyy(ip12),       toyz(ip12),       tozz(ip12),     v(ip11,ip60), vdual(ip11,ip60)
+    double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),        vol(ip11),      ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !

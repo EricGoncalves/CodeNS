@@ -61,29 +61,29 @@ contains
     use mod_teq_grads
     use mod_met_difsa
     implicit none
-  integer          ::      i,    i1,  i1m1,    i2,  i2m1
-  integer          ::   imax,  imin,  ind1,  ind2,     j
-  integer          ::     j1,  j1m1,    j2,  j2m1,  jmax
-  integer          ::   jmin,     k,    k1,  k1m1,    k2
-  integer          ::   k2m1,  kmax,  kmin,     l,lgsnlt
-  integer          ::      m,     n,   n0c,   nid,  nijd
-  integer          ::    njd,  npsn
-  double precision ::        cb2sig,   cfke(ip13),  cmui1(ip21),  cmui2(ip21),  cmuj1(ip21)
-  double precision ::   cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),         ct42,        ctdes
-  double precision ::          cv13,        cv133,         cw36,  delta(ip00),         dft2
-  double precision ::          dfv1,         dfv2,          dfw,   dist(ip12),        dist2
-  double precision ::      distddes,       distsa,          dpr,        dsdif,         dsm1
-  double precision ::          dsm2,          dst,   dtdx(ip00),   dtdy(ip00),   dtdz(ip00)
-  double precision ::          dvdv,   dvxx(ip00),   dvxy(ip00),   dvxz(ip00),   dvyx(ip00)
-  double precision ::    dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00),   dvzz(ip00)
-  double precision ::           dxg,           fd,          ft2,          fv1,          fv2
-  double precision ::            fw,        kapd2,       kappa2,      kappad2,     mu(ip12)
-  double precision ::       nutilde, qcxts5(ip12), qcyts6(ip12),        rtil3,        rtil6
-  double precision ::        rtilde,   sdif(ip00),          sm1,          sm2,sn(ip31*ndir)
-  double precision ::        stilde,      t(ip00), txxf5x(ip12), txyf5y(ip12), txzf5z(ip12)
-  double precision ::          uns6, v(ip11,ip60),    vol(ip11),         vort,      x(ip21)
-  double precision ::            xg,          xg6,         xkhi,        xkhi2,        xkhi3
-  double precision ::         xkhi4,      y(ip21),      z(ip21)
+    integer          ::      i,    i1,  i1m1,    i2,  i2m1
+    integer          ::   imax,  imin,  ind1,  ind2,     j
+    integer          ::     j1,  j1m1,    j2,  j2m1,  jmax
+    integer          ::   jmin,     k,    k1,  k1m1,    k2
+    integer          ::   k2m1,  kmax,  kmin,     l,lgsnlt
+    integer          ::      m,     n,   n0c,   nid,  nijd
+    integer          ::    njd,  npsn
+    double precision ::        cb2sig,   cfke(ip13),  cmui1(ip21),  cmui2(ip21),  cmuj1(ip21)
+    double precision ::   cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),         ct42,        ctdes
+    double precision ::          cv13,        cv133,         cw36,  delta(ip00),         dft2
+    double precision ::          dfv1,         dfv2,          dfw,   dist(ip12),        dist2
+    double precision ::      distddes,       distsa,          dpr,        dsdif,         dsm1
+    double precision ::          dsm2,          dst,   dtdx(ip00),   dtdy(ip00),   dtdz(ip00)
+    double precision ::          dvdv,   dvxx(ip00),   dvxy(ip00),   dvxz(ip00),   dvyx(ip00)
+    double precision ::    dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00),   dvzz(ip00)
+    double precision ::           dxg,           fd,          ft2,          fv1,          fv2
+    double precision ::            fw,        kapd2,       kappa2,      kappad2,     mu(ip12)
+    double precision ::       nutilde, qcxts5(ip12), qcyts6(ip12),        rtil3,        rtil6
+    double precision ::        rtilde,   sdif(ip00),          sm1,          sm2,sn(ip31*ndir)
+    double precision ::        stilde,      t(ip00), txxf5x(ip12), txyf5y(ip12), txzf5z(ip12)
+    double precision ::          uns6, v(ip11,ip60),    vol(ip11),         vort,      x(ip21)
+    double precision ::            xg,          xg6,         xkhi,        xkhi2,        xkhi3
+    double precision ::         xkhi4,      y(ip21),      z(ip21)
 !
 !-----------------------------------------------------------------------
 !
@@ -202,16 +202,16 @@ contains
 !
              distsa =dist(n)**2   ! SA standard
              kappad2 =kappa2*distsa ! pour calcul rtilde
-!   
+!
              nutilde=v(n,6)/v(n,1)
-!            
+!
              dvdv=dvxx(m)*dvxx(m)+dvxy(m)*dvxy(m)+dvyx(m)*dvyx(m)+dvyy(m)*dvyy(m)   ! En 2D
-!          SA 
+!          SA
 !            fv1   =xkhi3/(xkhi3+cv13)
 !            fv2=abs(1.-(xkhi/(1.+xkhi*fv1)))
 !            fv2=1.-(xkhi/(1.+xkhi*fv1))
 !            stilde=vort+nutilde*fv2/kappad2
-!            rtilde=nutilde/(stilde*kappad2)    
+!            rtilde=nutilde/(stilde*kappad2)
 !           DDES
              rtilde=nutilde/(sqrt(dvdv)*kappad2)
              rtilde=min(rtilde,1.)    ! limiteur diphasique
@@ -261,8 +261,8 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
-    indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
   end subroutine met_smddes
 end module mod_met_smddes

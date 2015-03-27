@@ -14,8 +14,8 @@ contains
     use para_var
     use para_fige
     implicit none
-  integer          ::      icmd,       im,imot(nmx),      kbl,    lgcmd
-  integer          ::        nm,     nmot
+    integer          ::      icmd,       im,imot(nmx),      kbl,    lgcmd
+    integer          ::        nm,     nmot
 !
 !-----------------------------------------------------------------------
 !

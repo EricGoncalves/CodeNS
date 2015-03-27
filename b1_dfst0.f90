@@ -21,7 +21,7 @@ contains
 !
     use sortiefichier
     implicit none
-  double precision ::  aam,roam, tam
+    double precision ::  aam,roam, tam
 !
 !-----------------------------------------------------------------------
 !

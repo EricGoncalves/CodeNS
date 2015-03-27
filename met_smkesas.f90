@@ -12,7 +12,7 @@ contains
 !
 !***********************************************************************
 !
-!     ACT  calcul du terme source modèle k-e SAS      
+!     ACT  calcul du terme source modèle k-e SAS
 !     Auteur: Jean Decaix 07/2010
 !
 !-----parameters figes--------------------------------------------------
@@ -24,25 +24,25 @@ contains
     use chainecarac
     use mod_met_laplaciens
     implicit none
-  integer          ::      i,    i1,  i1m1,  i1p1,    i2
-  integer          ::   i2m1,  i2p1,    id,     j,    j1
-  integer          ::   j1m1,  j1p1,    j2,  j2m1,  j2p1
-  integer          ::     jd,     k,    k1,  k1m1,  k1p1
-  integer          ::     k2,  k2m1,  k2p1,    kd,     l
-  integer          :: lgsnlt,     m,     n,   n0c,   nci
-  integer          ::    ncj,   nck,   nid,  nijd,   njd
-  integer          ::   npsn
-  double precision ::           arg,            b,   bare(ip00),   bark(ip00),         c1f1
-  double precision ::          c2f2,         cc43,   cfke(ip13),  cmui1(ip21),  cmui2(ip21)
-  double precision ::   cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),            d
-  double precision ::    dtdx(ip00),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00),   dvyx(ip00)
-  double precision ::    dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00),   dvzz(ip00)
-  double precision ::           esk,           f1,           f2,            g,     mu(ip12)
-  double precision ::        nlaplu,         psas,         qsi2,       rdelta,        retur
-  double precision ::        roe2sk, s(ip11,ip60),sn(ip31*ndir),           ss,      t(ip00)
-  double precision ::     tn1(ip00),    tn2(ip00),    tn3(ip00),  tprod(ip00),   tsv6(ip12)
-  double precision ::    tsv7(ip12),    vol(ip11),            x,           xl,          xl1
-  double precision ::           xl2,         xlvk,        xlvk2
+    integer          ::      i,    i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  i2p1,    id,     j,    j1
+    integer          ::   j1m1,  j1p1,    j2,  j2m1,  j2p1
+    integer          ::     jd,     k,    k1,  k1m1,  k1p1
+    integer          ::     k2,  k2m1,  k2p1,    kd,     l
+    integer          :: lgsnlt,     m,     n,   n0c,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,   njd
+    integer          ::   npsn
+    double precision ::           arg,            b,   bare(ip00),   bark(ip00),         c1f1
+    double precision ::          c2f2,         cc43,   cfke(ip13),  cmui1(ip21),  cmui2(ip21)
+    double precision ::   cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),            d
+    double precision ::    dtdx(ip00),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00),   dvyx(ip00)
+    double precision ::    dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00),   dvzz(ip00)
+    double precision ::           esk,           f1,           f2,            g,     mu(ip12)
+    double precision ::        nlaplu,         psas,         qsi2,       rdelta,        retur
+    double precision ::        roe2sk, s(ip11,ip60),sn(ip31*ndir),           ss,      t(ip00)
+    double precision ::     tn1(ip00),    tn2(ip00),    tn3(ip00),  tprod(ip00),   tsv6(ip12)
+    double precision ::    tsv7(ip12),    vol(ip11),            x,           xl,          xl1
+    double precision ::           xl2,         xlvk,        xlvk2
 !
 !-----------------------------------------------------------------------
 !
@@ -117,10 +117,10 @@ contains
             cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
     endif
 !
-!     constantes du modele     
+!     constantes du modele
     f1=1.
     qsi2=1.47   ! constante Menter
-    xkappa=0.41    
+    xkappa=0.41
     cc43=4./3.
 !
     do k=k1,k2m1
@@ -174,12 +174,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_smkesas

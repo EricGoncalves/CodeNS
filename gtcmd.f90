@@ -15,10 +15,10 @@ contains
 !
     use para_fige
     use sortiefichier
-    use constantes 
+    use constantes
     implicit none
-  integer          ::   icmd,  ilin,  ipos,ksuite, lgcmd
-  integer          ::  lglin,   lgt
+    integer          ::   icmd,  ilin,  ipos,ksuite, lgcmd
+    integer          ::  lglin,   lgt
 !
 !-----------------------------------------------------------------------
 !

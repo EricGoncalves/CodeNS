@@ -82,20 +82,20 @@ contains
     use modeleturb
     use definition
     implicit none
-  integer          ::        iter,         lm,          m,       m0ns,         mb
-  integer          ::        mfbm,mnpar(ip12),       mpar,         mt,        n0c
-  integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
-  integer          ::          ni,        nii
-  double precision ::           co,  dist(ip12),  fgam(ip42),    mu(ip12),         mup
-  double precision ::    mut(ip12),          n1,          n2,          n3,   nxn(ip42)
-  double precision ::    nyn(ip42),   nzn(ip42),         pka,         pkb,         qc1
-  double precision ::    qcx(ip12),   qcy(ip12),   qcz(ip12),         rop,          sv
-  double precision ::           t1,          t2,          t3,  temp(ip11),       temp1
-  double precision ::           tn,         top,  toxx(ip12),  toxy(ip12),  toxz(ip12)
-  double precision ::   toyy(ip12),  toyz(ip12),  tozz(ip12),      tparoi,          tt
-  double precision ::        upyp1,v(ip11,ip60),         v1t,         v1x,         v1y
-  double precision ::          v1z,        yp02
-  logical          :: lamin
+    integer          ::        iter,         lm,          m,       m0ns,         mb
+    integer          ::        mfbm,mnpar(ip12),       mpar,         mt,        n0c
+    integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
+    integer          ::          ni,        nii
+    double precision ::           co,  dist(ip12),  fgam(ip42),    mu(ip12),         mup
+    double precision ::    mut(ip12),          n1,          n2,          n3,   nxn(ip42)
+    double precision ::    nyn(ip42),   nzn(ip42),         pka,         pkb,         qc1
+    double precision ::    qcx(ip12),   qcy(ip12),   qcz(ip12),         rop,          sv
+    double precision ::           t1,          t2,          t3,  temp(ip11),       temp1
+    double precision ::           tn,         top,  toxx(ip12),  toxy(ip12),  toxz(ip12)
+    double precision ::   toyy(ip12),  toyz(ip12),  tozz(ip12),      tparoi,          tt
+    double precision ::        upyp1,v(ip11,ip60),         v1t,         v1x,         v1y
+    double precision ::          v1z,        yp02
+    logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !

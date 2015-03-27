@@ -17,12 +17,12 @@ contains
 !
     use para_fige
     use chainecarac
-    use maillage 
+    use maillage
     use kcle
     use mod_vallent
     implicit none
-  integer          ::      icmt,       im,imot(nmx),lgr(nobj),     lgrd
-  integer          :: lmfb(mtb),    lmfbd,       nm,     nmot
+    integer          ::      icmt,       im,imot(nmx),lgr(nobj),     lgrd
+    integer          :: lmfb(mtb),    lmfbd,       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !

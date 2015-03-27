@@ -9,7 +9,7 @@ contains
        t,dtdx,dtdy,dtdz,bark,bare, &
        qcxts5,qcyts6, &
        tn1,tn2,tn3, &
-       cson, & 
+       cson, &
        cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !***********************************************************************
@@ -66,14 +66,14 @@ contains
     use mod_met_smkes
     use mod_met_exgr
     implicit none
-  integer          :: l
-  double precision ::    bare(ip00),   bark(ip00),   cfke(ip13),  cmui1(ip21),  cmui2(ip21)
-  double precision ::   cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),   cson(ip11)
-  double precision ::    dtdx(ip00),   dtdy(ip00),   dtdz(ip00),   dvxx(ip00),   dvxy(ip00)
-  double precision ::    dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00)
-  double precision ::    dvzy(ip00),   dvzz(ip00),     mu(ip12),    mut(ip12), qcxts5(ip12)
-  double precision ::  qcyts6(ip12),sn(ip31*ndir),      t(ip00),    tn1(ip00),    tn2(ip00)
-  double precision ::     tn3(ip00),  tprod(ip00), v(ip11,ip60),    vol(ip11)
+    integer          :: l
+    double precision ::    bare(ip00),   bark(ip00),   cfke(ip13),  cmui1(ip21),  cmui2(ip21)
+    double precision ::   cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),   cson(ip11)
+    double precision ::    dtdx(ip00),   dtdy(ip00),   dtdz(ip00),   dvxx(ip00),   dvxy(ip00)
+    double precision ::    dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00)
+    double precision ::    dvzy(ip00),   dvzz(ip00),     mu(ip12),    mut(ip12), qcxts5(ip12)
+    double precision ::  qcyts6(ip12),sn(ip31*ndir),      t(ip00),    tn1(ip00),    tn2(ip00)
+    double precision ::     tn3(ip00),  tprod(ip00), v(ip11,ip60),    vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
@@ -132,7 +132,7 @@ contains
             mu,v,cfke, &
             cson, &
             tprod,bark,bare,qcxts5,qcyts6)
-    elseif(equatt(4:4).eq.'L') then      ! Jean Decaix 06/2010 
+    elseif(equatt(4:4).eq.'L') then      ! Jean Decaix 06/2010
 !      terme source pour k-e SAS
        call met_smkesas( &
             l, &

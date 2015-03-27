@@ -42,10 +42,10 @@ contains
     use boundary
     use sortiefichier
     implicit none
-  integer          ::          i,       img,         j,         k,         l
-  integer          ::         lm,         m,        m0,      mfbe,      mfbi
-  integer          ::      mfbim,        mm,        mt,         n,       n0c
-  integer          :: ncbd(ip41),       nid,      nijd,       njd
+    integer          ::          i,       img,         j,         k,         l
+    integer          ::         lm,         m,        m0,      mfbe,      mfbi
+    integer          ::      mfbim,        mm,        mt,         n,       n0c
+    integer          :: ncbd(ip41),       nid,      nijd,       njd
 !
 !-----------------------------------------------------------------------
 !
@@ -84,17 +84,17 @@ contains
   contains
     function    iin(n)
       implicit none
-  integer          :: iin,  n
+      integer          :: iin,  n
       iin=id1(lm)+mod(n-n0c-1,nid)
     end function iin
     function    jjn(n)
       implicit none
-  integer          :: jjn,  n
+      integer          :: jjn,  n
       jjn=jd1(lm)+mod((n-n0c-1-(iin(n)-id1(lm)))/nid,njd)
     end function jjn
     function    kkn(n)
       implicit none
-  integer          :: kkn,  n
+      integer          :: kkn,  n
       kkn=kd1(lm)+ &
            (n-n0c-1-(iin(n)-id1(lm))-(jjn(n)-jd1(lm))*nid)/nijd
     end function kkn

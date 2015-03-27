@@ -17,7 +17,7 @@ contains
     use mod_b1_end
 
     implicit none
-  integer          :: imot(nmx),     nmot
+    integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !

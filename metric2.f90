@@ -36,19 +36,19 @@ contains
     use maillage
     use chainecarac
     implicit none
-  integer          ::     i,   i1, i1p1,   i2, i2m1
-  integer          ::    id,    j,   j1, j1p1,   j2
-  integer          ::  j2m1,   jd,    k,   k1, k1p1
-  integer          ::    k2, k2m1,   kd,    l,    m
-  integer          ::     n,  n0c,  nci, ncij,ncijk
-  integer          ::  ncik,  ncj, ncjk,  nck,  nid
-  integer          ::   njd
-  double precision :: cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21)
-  double precision :: cmuk2(ip21),        dmi,        dmj,        dmk,        dpi
-  double precision ::         dpj,        dpk,         tk,    x(ip21),         xe
-  double precision ::          xn,         xp,         xr,    y(ip21),         ye
-  double precision ::          yn,         yp,         yr,    z(ip21),         ze
-  double precision ::          zn,         zp,         zr
+    integer          ::     i,   i1, i1p1,   i2, i2m1
+    integer          ::    id,    j,   j1, j1p1,   j2
+    integer          ::  j2m1,   jd,    k,   k1, k1p1
+    integer          ::    k2, k2m1,   kd,    l,    m
+    integer          ::     n,  n0c,  nci, ncij,ncijk
+    integer          ::  ncik,  ncj, ncjk,  nck,  nid
+    integer          ::   njd
+    double precision :: cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21)
+    double precision :: cmuk2(ip21),        dmi,        dmj,        dmk,        dpi
+    double precision ::         dpj,        dpk,         tk,    x(ip21),         xe
+    double precision ::          xn,         xp,         xr,    y(ip21),         ye
+    double precision ::          yn,         yp,         yr,    z(ip21),         ze
+    double precision ::          zn,         zp,         zr
 !
 !-----------------------------------------------------------------------
 !
@@ -510,12 +510,12 @@ contains
   contains
     function    indn(i,j,k)
       implicit none
-  integer          ::    i,indn,   j,   k
+      integer          ::    i,indn,   j,   k
       indn=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nid*njd
     end function indn
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nid*njd
     end function inc
   end subroutine metric2

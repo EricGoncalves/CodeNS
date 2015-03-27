@@ -6,10 +6,10 @@ contains
        nxn,nyn,nzn, &
        ncin,ncbd,mfb,l, &
        vol,sn,ncyc, &
-       mnpar,fgam,  &        
+       mnpar,fgam,  &
        utau,  &
        dpdx,dpdy,dpdz, &
-       ps,temp)      
+       ps,temp)
 !
 !***********************************************************************
 !
@@ -40,33 +40,33 @@ contains
     use modeleturb
     use mod_pgrad
     implicit none
-  integer          ::          ij,         in,       iter,          j,         kk
-  integer          ::           l,     lgsnlt,          m,       m0ns,         mb
-  integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
-  integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,       ndis
-  integer          ::      nfacns,         ni,        nii,         nn,       npsn
-  integer          ::        ntab
-  double precision ::            c1,          c13,          c18,           c2,           c3
-  double precision ::            c4,           ca,           cb,         conv,          ctk
-  double precision ::          ctmu,        ctmu2,        dconv,   dist(ip12),         dnum
-  double precision ::          dpdt,   dpdx(ip00),   dpdy(ip00),   dpdz(ip00),         dtop
-  double precision ::          dudy,           dy,   fgam(ip42),     mu(ip12),          mup
-  double precision ::     mut(ip12),    nxn(ip42),    nyn(ip42),    nzn(ip42),     ps(ip11)
-  double precision ::           rc4,         rhoi,     rnutilde,          rop,        seuil
-  double precision :: sn(ip31*ndir),           sv,           t1,           t2,           t3
-  double precision ::    temp(ip11),           tn,          top,         top0,        topar
-  double precision ::        topini,           tt,        upyp1,   utau(ip42), v(ip11,ip60)
-  double precision ::           v1t,          v1x,          v1y,          v1z,    vol(ip11)
-  double precision ::            yi,         yp02,       yplusi
-  logical          :: lamin
-  double precision,allocatable :: alfaa(:),betaa(:),   ff(:),  mui(:), muti(:)
-  double precision,allocatable :: tempi(:), topc(:),  vit(:)
+    integer          ::          ij,         in,       iter,          j,         kk
+    integer          ::           l,     lgsnlt,          m,       m0ns,         mb
+    integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
+    integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,       ndis
+    integer          ::      nfacns,         ni,        nii,         nn,       npsn
+    integer          ::        ntab
+    double precision ::            c1,          c13,          c18,           c2,           c3
+    double precision ::            c4,           ca,           cb,         conv,          ctk
+    double precision ::          ctmu,        ctmu2,        dconv,   dist(ip12),         dnum
+    double precision ::          dpdt,   dpdx(ip00),   dpdy(ip00),   dpdz(ip00),         dtop
+    double precision ::          dudy,           dy,   fgam(ip42),     mu(ip12),          mup
+    double precision ::     mut(ip12),    nxn(ip42),    nyn(ip42),    nzn(ip42),     ps(ip11)
+    double precision ::           rc4,         rhoi,     rnutilde,          rop,        seuil
+    double precision :: sn(ip31*ndir),           sv,           t1,           t2,           t3
+    double precision ::    temp(ip11),           tn,          top,         top0,        topar
+    double precision ::        topini,           tt,        upyp1,   utau(ip42), v(ip11,ip60)
+    double precision ::           v1t,          v1x,          v1y,          v1z,    vol(ip11)
+    double precision ::            yi,         yp02,       yplusi
+    logical          :: lamin
+    double precision,allocatable :: alfaa(:),betaa(:),   ff(:),  mui(:), muti(:)
+    double precision,allocatable :: tempi(:), topc(:),  vit(:)
 !
 !-----------------------------------------------------------------------
 !
     parameter( ntab=50  )
 !
-!      
+!
     ALLOCATE(alfaa(ntab),betaa(ntab),ff(ntab),topc(2), &
          vit(ntab),mui(ntab),muti(ntab),tempi(ntab))
 
@@ -79,10 +79,10 @@ contains
     c13=1./3.
     c18=1./18.
 !
-    mt=mmb(mfb)  
+    mt=mmb(mfb)
     m0ns=mpn(mfb)
     n0c=npc(l)
-!     
+!
 !     mise a zero des tableaux
     do in=1,ntab
        alfaa(in)=0.
@@ -93,7 +93,7 @@ contains
 !
 !--------------------------------------------------------------
 !-----initialisation de utau-----------------------------------
-    if(ncyc.eq.icytur0) then 
+    if(ncyc.eq.icytur0) then
 !      boucle sur les facettes d'une frontiere paroi
        do m=1,mt
           mb=mpb(mfb)+m
@@ -113,7 +113,7 @@ contains
           v1x=v(ni,2)/v(ni,1)
           v1y=v(ni,3)/v(ni,1)
           v1z=v(ni,4)/v(ni,1)
-!       tangente normee a la paroi     
+!       tangente normee a la paroi
           tn=v1x*nxn(nfacns)+v1y*nyn(nfacns)+v1z*nzn(nfacns)
           t1=v1x-tn*nxn(nfacns)
           t2=v1y-tn*nyn(nfacns)
@@ -141,7 +141,7 @@ contains
                 top=rop*v1t**2/(log(dist(ni)*sqrt(rop*top)/mup)/vkar+cllog)**2
              enddo
           endif
-          utau(nfacns)=sign(1.,top)*sqrt(abs(top)/rop) 
+          utau(nfacns)=sign(1.,top)*sqrt(abs(top)/rop)
        enddo !fin boucle sur facettes paroi
     endif
 !-----fin initialisation de utau--------------------------------
@@ -158,15 +158,15 @@ contains
     do m=1,mt
        mb=mpb(mfb)+m
        ni=ncin(mb)
-       nc=ncbd(mb)       
-       nii=ni-n0c    
+       nc=ncbd(mb)
+       nii=ni-n0c
        nfacns=m0ns+m
        mpar=mnpar(ni)
 !       vitesse cellule 1
        v1x=v(ni,2)/v(ni,1)
        v1y=v(ni,3)/v(ni,1)
        v1z=v(ni,4)/v(ni,1)
-!       tangente normee a la paroi     
+!       tangente normee a la paroi
        tn=v1x*nxn(nfacns)+v1y*nyn(nfacns)+v1z*nzn(nfacns)
        t1=v1x-tn*nxn(nfacns)
        t2=v1y-tn*nyn(nfacns)
@@ -175,7 +175,7 @@ contains
        t1=t1/tt
        t2=t2/tt
        t3=t3/tt
-!       composante tangentielle de la vitesse dans repere paroi : v1t     
+!       composante tangentielle de la vitesse dans repere paroi : v1t
        v1t=v1x*t1+v1y*t2+v1z*t3
 !       masse volumique a la paroi
        rop=v(ni,1)*temp(ni)/temp(nc)
@@ -186,25 +186,25 @@ contains
 !       distance
        dy=dist(ni)/(ndis-1)
 !**************************************************************************
-!--------boucle Newton sur top--------------------------------------------- 
+!--------boucle Newton sur top---------------------------------------------
 !***************************************************************************
        dconv=1.
-       do while (dconv.gt.seuil) 
+       do while (dconv.gt.seuil)
           top0=topar
-!         boucle pour calculer la derivee de la fonction pour le Newton    
+!         boucle pour calculer la derivee de la fonction pour le Newton
           do kk=1,2
-             topini=topar 
-             conv=1.            
-!          viscosite a la paroi 
+             topini=topar
+             conv=1.
+!          viscosite a la paroi
              mup=mu(ni)
 !          balayage pour calculet muti
              do nn=2,ndis
                 yi=(nn-1)*dy
                 mui(nn)=mu(ni)
-!           test sur la transition 
+!           test sur la transition
                 if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
                    muti(nn)=0.
-                else    
+                else
                    rhoi=v(ni,1)
                    dudy=(vit(nn)-vit(nn-1))/dy
                    yplusi=yi*sqrt(abs(topar)*rop)/mup
@@ -212,18 +212,18 @@ contains
                    muti(nn)=mup*kappa*yplusi*(1.-exp(-yplusi/19.))**2
                 endif
              enddo
-!--------------------------------------------------------------- 
+!---------------------------------------------------------------
 !         integration de la vitesse
-!--------------------------------------------------------------       
+!--------------------------------------------------------------
 !         initialisation du calcul
              vit(1)=0.
              vit(ndis)=v1t
              ctk=-0.5*(mup+mui(2)+muti(2))/dy
-             ctmu2=0.5*(mui(2)+muti(2)+mui(3)+muti(3))/dy 
+             ctmu2=0.5*(mui(2)+muti(2)+mui(3)+muti(3))/dy
              betaa(ndis)=v1t
-!         calcul des alfa, beta 
+!         calcul des alfa, beta
              do ij=ndis-1,3,-1
-                ctmu=0.5*(mui(ij)+muti(ij)+mui(ij+1)+muti(ij+1))/dy 
+                ctmu=0.5*(mui(ij)+muti(ij)+mui(ij+1)+muti(ij+1))/dy
                 alfaa(ij)=(ctk+ctmu*alfaa(ij+1))/ctmu
                 betaa(ij)=-(dpdt*(ij-1)*dy-ctmu*betaa(ij+1))/ctmu
              enddo
@@ -232,8 +232,8 @@ contains
                 vit(j)=alfaa(j)*vit(2)+betaa(j)
              enddo
              mup=mu(ni)
-             topc(kk)=-ctk*vit(2)-dy*0.5*dpdt       
-             topar=topini+dtop          
+             topc(kk)=-ctk*vit(2)-dy*0.5*dpdt
+             topar=topini+dtop
           enddo
           dnum=topc(2)-topc(1)-dtop
           if(abs(dnum).le.tiny(1.)) then
@@ -241,13 +241,13 @@ contains
           else
              topar=top0-(topc(1)-top0)*dtop/(topc(2)-topc(1)-dtop)
           endif
-          dconv=abs(top0-topar)    
+          dconv=abs(top0-topar)
           dtop=dconv
 !************************************************************************
 !------fin boucle du Newton----------------------------------------------
 !************************************************************************
        enddo
-!       test sur la transition 
+!       test sur la transition
        if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
           v(ni,6)=rokinf
 !        vitesse de frottement utau
@@ -260,7 +260,7 @@ contains
           v(ni,6)=max(rnutilde,epsk)
           v(nc,6)=0.
        endif
-!     fin boucle sur facettes d'une frontiere paroi      
+!     fin boucle sur facettes d'une frontiere paroi
     enddo
 
     DEALLOCATE(alfaa,betaa,ff,vit,mui,muti,tempi,topc)

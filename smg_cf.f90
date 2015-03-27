@@ -23,8 +23,8 @@ contains
     use mod_smg_cf_2d
     use mod_smg_cf_3d
     implicit none
-  integer          :: imgc,imgf
-  double precision :: vc(ip11,ip60),    vol(ip11),vv(ip11,ip60)
+    integer          :: imgc,imgf
+    double precision :: vc(ip11,ip60),    vol(ip11),vv(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

@@ -128,19 +128,19 @@ contains
     use mod_atdist_3
     use mod_at_fidist
     implicit none
-  integer          ::         dm1,        dm2,        dm3,    idefaut,       ierr
-  integer          ::         if0,        if1,    igr(lz),     isens3,    jgr(lz)
-  integer          ::     kgr(lz),          l,     ldismx,          m,        m10
-  integer          ::       m1max,      m1min, m1tb(ip00),        m20,      m2max
-  integer          ::       m2min, m2tb(ip00),        m30,      m3max,      m3min
-  integer          ::          mf,  mnc(ip43),mnpar(ip12),          n, ncbd(ip41)
-  integer          ::  ncin(ip41),         nf,       nfbe,       nfbi,nfrtb(ip00)
-  integer          ::          no
-  double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
-  double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
-  double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
-  double precision,allocatable :: raptat(:)
- allocate(raptat(mtb))
+    integer          ::         dm1,        dm2,        dm3,    idefaut,       ierr
+    integer          ::         if0,        if1,    igr(lz),     isens3,    jgr(lz)
+    integer          ::     kgr(lz),          l,     ldismx,          m,        m10
+    integer          ::       m1max,      m1min, m1tb(ip00),        m20,      m2max
+    integer          ::       m2min, m2tb(ip00),        m30,      m3max,      m3min
+    integer          ::          mf,  mnc(ip43),mnpar(ip12),          n, ncbd(ip41)
+    integer          ::  ncin(ip41),         nf,       nfbe,       nfbi,nfrtb(ip00)
+    integer          ::          no
+    double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
+    double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
+    double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
+    double precision,allocatable :: raptat(:)
+    allocate(raptat(mtb))
 !
 !-----------------------------------------------------------------------
 !
@@ -362,7 +362,7 @@ contains
 !
     enddo
 !
-  deallocate(raptat)
+    deallocate(raptat)
     return
   end subroutine atcaldis3
 end module mod_atcaldis3

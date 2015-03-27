@@ -16,7 +16,7 @@ contains
 !     ACT
 !_A    Lois de paroi - Approche de Smith - CAS 3D
 !_A    - parois adiabatiques
-!_A    - integration du profil de vitesse entre la paroi et 
+!_A    - integration du profil de vitesse entre la paroi et
 !_A      le premier point du maillage
 !_A    - contrainte de frottement imposee a la paroi
 !_A    - flux de chaleur imposee a la paroi
@@ -79,16 +79,16 @@ contains
     use modeleturb
     use definition
     implicit none
-  integer          ::          m,      m0ns,        mb,       mfb,        mt
-  integer          ::         nc,ncbd(ip41),ncin(ip41),      ncyc,    nfacns
-  integer          ::         ni
-  double precision ::           e1,          e2,          e3,          n1,          n2
-  double precision ::           n3,   nxn(ip42),   nyn(ip42),   nzn(ip42),         qc1
-  double precision ::    qcx(ip12),   qcy(ip12),   qcz(ip12),         rop,          t1
-  double precision ::           t2,          t3,  temp(ip11),          tn,        topx
-  double precision ::   topz(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12)
-  double precision ::   toyz(ip12),  tozz(ip12),          tt,  utau(ip42),v(ip11,ip60)
-  double precision ::          v1x,         v1y,         v1z
+    integer          ::          m,      m0ns,        mb,       mfb,        mt
+    integer          ::         nc,ncbd(ip41),ncin(ip41),      ncyc,    nfacns
+    integer          ::         ni
+    double precision ::           e1,          e2,          e3,          n1,          n2
+    double precision ::           n3,   nxn(ip42),   nyn(ip42),   nzn(ip42),         qc1
+    double precision ::    qcx(ip12),   qcy(ip12),   qcz(ip12),         rop,          t1
+    double precision ::           t2,          t3,  temp(ip11),          tn,        topx
+    double precision ::   topz(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12)
+    double precision ::   toyz(ip12),  tozz(ip12),          tt,  utau(ip42),v(ip11,ip60)
+    double precision ::          v1x,         v1y,         v1z
 !
 !-----------------------------------------------------------------------
 !

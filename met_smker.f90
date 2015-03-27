@@ -20,18 +20,18 @@ contains
     use maillage
     use modeleturb
     implicit none
-  integer          ::    i,  i1,i1m1,i1p1,  i2
-  integer          :: i2m1,  id,   j,  j1,j1p1
-  integer          ::   j2,j2m1,  jd,   k,  k1
-  integer          :: k1p1,  k2,k2m1,  kd,   l
-  integer          ::    m,   n, n0c, nci, nid
-  integer          :: nijd, njd
-  double precision ::           as,           b,        c1f1,        c2f2,  cfke(ip13)
-  double precision ::            d,  dvxx(ip00),  dvxy(ip00),  dvxz(ip00),  dvyx(ip00)
-  double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)
-  double precision ::          esk,           g,      rdelta,      roe2sk,s(ip11,ip60)
-  double precision ::  tprod(ip00),  tsv6(ip12),  tsv7(ip12),           x,         xl1
-  double precision ::          xl2
+    integer          ::    i,  i1,i1m1,i1p1,  i2
+    integer          :: i2m1,  id,   j,  j1,j1p1
+    integer          ::   j2,j2m1,  jd,   k,  k1
+    integer          :: k1p1,  k2,k2m1,  kd,   l
+    integer          ::    m,   n, n0c, nci, nid
+    integer          :: nijd, njd
+    double precision ::           as,           b,        c1f1,        c2f2,  cfke(ip13)
+    double precision ::            d,  dvxx(ip00),  dvxy(ip00),  dvxz(ip00),  dvyx(ip00)
+    double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)
+    double precision ::          esk,           g,      rdelta,      roe2sk,s(ip11,ip60)
+    double precision ::  tprod(ip00),  tsv6(ip12),  tsv7(ip12),           x,         xl1
+    double precision ::          xl2
 !
 !-----------------------------------------------------------------------
 !
@@ -97,12 +97,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_smker

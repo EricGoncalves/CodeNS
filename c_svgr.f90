@@ -34,9 +34,9 @@ contains
     use mod_svgr
     use mod_tcmd_svgr
     implicit none
-  integer          :: imot(nmx),        l,     nmot
-  double precision :: tn1(ip00),tn2(ip00),tn3(ip00),  x(ip21),  y(ip21)
-  double precision ::   z(ip21)
+    integer          :: imot(nmx),        l,     nmot
+    double precision :: tn1(ip00),tn2(ip00),tn3(ip00),  x(ip21),  y(ip21)
+    double precision ::   z(ip21)
 !
 !-----------------------------------------------------------------------
 !

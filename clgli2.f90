@@ -44,12 +44,12 @@ contains
     use para_fige
     use proprieteflu
     implicit none
-  integer          ::          m,        mb,       mfb,  mmb(mtt),        mn
-  integer          ::   mpb(mtt),  mpn(mtt),        mt,ncbd(ip41),ncin(ip41)
-  integer          ::         ni,        nl
-  double precision ::     cson(ip11),     nxn(ip42),     nyn(ip42),     nzn(ip42),pression(ip11)
-  double precision ::             qn,           qtx,           qty,           qtz,            qx
-  double precision ::             qy,            qz,           rho,    temp(ip11),  v(ip11,ip60)
+    integer          ::          m,        mb,       mfb,  mmb(mtt),        mn
+    integer          ::   mpb(mtt),  mpn(mtt),        mt,ncbd(ip41),ncin(ip41)
+    integer          ::         ni,        nl
+    double precision ::     cson(ip11),     nxn(ip42),     nyn(ip42),     nzn(ip42),pression(ip11)
+    double precision ::             qn,           qtx,           qty,           qtz,            qx
+    double precision ::             qy,            qz,           rho,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

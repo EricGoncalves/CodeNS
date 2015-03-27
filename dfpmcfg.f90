@@ -23,7 +23,7 @@ contains
     use maillage
     use boundary
     implicit none
-  integer          :: mfbe,  no
+    integer          :: mfbe,  no
 !
 !-----------------------------------------------------------------------
 !

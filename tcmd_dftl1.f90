@@ -16,7 +16,7 @@ contains
     use kcle
     use mod_cctcmd
     implicit none
-  integer          :: imot(nmx),     itit,    lgcmd,     nmot
+    integer          :: imot(nmx),     itit,    lgcmd,     nmot
 !
 !-----------------------------------------------------------------------
 !

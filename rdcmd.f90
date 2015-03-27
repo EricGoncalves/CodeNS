@@ -15,7 +15,7 @@ contains
     use mod_gtcmd
     use mod_splcmd
     implicit none
-  integer          :: imot(nmx),    lgcmd,     nmot
+    integer          :: imot(nmx),    lgcmd,     nmot
 !
 !-----------------------------------------------------------------------
 !

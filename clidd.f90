@@ -105,20 +105,20 @@ contains
     use proprieteflu
     use definition
     implicit none
-  integer          ::         id,        jd,        kd,         l,         m
-  integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
-  integer          ::   mpn(mtt),        mt,       n0c,       n0n,        nc
-  integer          :: ncbd(ip41),       nci,      ncij,     ncijk,      ncik
-  integer          ::        ncj,      ncjk,       nck,       nid,      nijd
-  integer          ::       nitn,       njd,        nn
-  double precision ::      am0(ip40),             b,    cson(ip11),     d0x(ip40),     d0y(ip40)
-  double precision ::      d0z(ip40),            df,           dqn,           eps,             f
-  double precision ::          gam2t,          gam6,          gamt,     nxn(ip42),     nyn(ip42)
-  double precision ::      nzn(ip42),       p(ip40),pression(ip11),            ps,      qn(ip40)
-  double precision ::            qxs,           qys,           qzs,    resi(ip40),        residu
-  double precision ::       ro(ip40),    roc0(ip40),     rpi(ip40),     rti(ip40),    temp(ip11)
-  double precision ::       un(ip40),    usdn(ip40),   usdn2(ip40),  v(ip11,ip60),             w
-  double precision ::             wn,       y(ip21),      ym(ip40),       z(ip21),      zm(ip40)
+    integer          ::         id,        jd,        kd,         l,         m
+    integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
+    integer          ::   mpn(mtt),        mt,       n0c,       n0n,        nc
+    integer          :: ncbd(ip41),       nci,      ncij,     ncijk,      ncik
+    integer          ::        ncj,      ncjk,       nck,       nid,      nijd
+    integer          ::       nitn,       njd,        nn
+    double precision ::      am0(ip40),             b,    cson(ip11),     d0x(ip40),     d0y(ip40)
+    double precision ::      d0z(ip40),            df,           dqn,           eps,             f
+    double precision ::          gam2t,          gam6,          gamt,     nxn(ip42),     nyn(ip42)
+    double precision ::      nzn(ip42),       p(ip40),pression(ip11),            ps,      qn(ip40)
+    double precision ::            qxs,           qys,           qzs,    resi(ip40),        residu
+    double precision ::       ro(ip40),    roc0(ip40),     rpi(ip40),     rti(ip40),    temp(ip11)
+    double precision ::       un(ip40),    usdn(ip40),   usdn2(ip40),  v(ip11,ip60),             w
+    double precision ::             wn,       y(ip21),      ym(ip40),       z(ip21),      zm(ip40)
 !
 !-----------------------------------------------------------------------
 !
@@ -226,7 +226,7 @@ contains
   contains
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine clidd

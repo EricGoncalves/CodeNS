@@ -71,23 +71,23 @@ contains
     use maillage
     use proprieteflu
     implicit none
-  integer          ::       i,     i1,     i2,   i2m1,     id
-  integer          :: isortie,  ivisq,      j,     j1,     j2
-  integer          ::    j2m1,     jd,      k,     k1,     k2
-  integer          ::    k2m1,     kd,      l, lgsnlt,      m
-  integer          ::      mc,     mn,      n,    n0c,    n0n
-  integer          ::      n1,     n2,     nc,    nci,    ncj
-  integer          ::     nck,    nid,   nijd,    njd
-  double precision ::                 Lref,                  a2,               beta2,              beta2e,               betau
-  double precision ::                 betv,                cflc,                 cpi,          cson(ip11),          dism(ip00)
-  double precision ::                  dpi,                 dpj,                 dpm,            dt(ip11),                 dte
-  double precision ::                  dtv,                etal,            mu(ip12),           mut(ip12),            ps(ip11)
-  double precision ::                    q,                  q2,                qinf,                rlam,                  rv
-  double precision ::                  rv1,          sfsi(ip00),          sfsj(ip00),          sfsk(ip00),               simax
-  double precision ::                sjmax,               skmax,                smoy,sn(lgsnlt,nind,ndir),        t(ip11,ip60)
-  double precision ::                   uu,           vol(ip11),                  vv,                  ww,                 xm0
-  double precision ::                xmach,              xmach2
-  double precision,allocatable :: beta2v(:)
+    integer          ::       i,     i1,     i2,   i2m1,     id
+    integer          :: isortie,  ivisq,      j,     j1,     j2
+    integer          ::    j2m1,     jd,      k,     k1,     k2
+    integer          ::    k2m1,     kd,      l, lgsnlt,      m
+    integer          ::      mc,     mn,      n,    n0c,    n0n
+    integer          ::      n1,     n2,     nc,    nci,    ncj
+    integer          ::     nck,    nid,   nijd,    njd
+    double precision ::                 Lref,                  a2,               beta2,              beta2e,               betau
+    double precision ::                 betv,                cflc,                 cpi,          cson(ip11),          dism(ip00)
+    double precision ::                  dpi,                 dpj,                 dpm,            dt(ip11),                 dte
+    double precision ::                  dtv,                etal,            mu(ip12),           mut(ip12),            ps(ip11)
+    double precision ::                    q,                  q2,                qinf,                rlam,                  rv
+    double precision ::                  rv1,          sfsi(ip00),          sfsj(ip00),          sfsk(ip00),               simax
+    double precision ::                sjmax,               skmax,                smoy,sn(lgsnlt,nind,ndir),        t(ip11,ip60)
+    double precision ::                   uu,           vol(ip11),                  vv,                  ww,                 xm0
+    double precision ::                xmach,              xmach2
+    double precision,allocatable :: beta2v(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -309,17 +309,17 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    indn(i,j,k)
       implicit none
-  integer          ::    i,indn,   j,   k
+      integer          ::    i,indn,   j,   k
       indn=n0n+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indn
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine chronos_prcd

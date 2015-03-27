@@ -24,15 +24,15 @@ contains
     use chainecarac
     use proprieteflu
     implicit none
-  integer          ::    i,  i1,i1m1,  i2,i2m1
-  integer          :: indc,   j,  j1,j1m1,  j2
-  integer          :: j2m1,   k,  k1,k1m1,  k2
-  integer          :: k2m1,   l,   m,   n, n0c
-  integer          ::  nid,nijd, njd
-  double precision ::   dist(ip12),           e,    mu(ip12),   mut(ip12),    ps(ip11)
-  double precision :: t(ip11,ip60),           u,           v,           w,     x(ip21)
-  double precision ::          xcc,     y(ip21),         ycc,     z(ip21),         zcc
-  logical          :: ouvert
+    integer          ::    i,  i1,i1m1,  i2,i2m1
+    integer          :: indc,   j,  j1,j1m1,  j2
+    integer          :: j2m1,   k,  k1,k1m1,  k2
+    integer          :: k2m1,   l,   m,   n, n0c
+    integer          ::  nid,nijd, njd
+    double precision ::   dist(ip12),           e,    mu(ip12),   mut(ip12),    ps(ip11)
+    double precision :: t(ip11,ip60),           u,           v,           w,     x(ip21)
+    double precision ::          xcc,     y(ip21),         ycc,     z(ip21),         zcc
+    logical          :: ouvert
 !
 !-----------------------------------------------------------------------
 !

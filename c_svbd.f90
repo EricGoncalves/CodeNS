@@ -34,8 +34,8 @@ contains
     use boundary
     use sortiefichier
     implicit none
-  integer          ::  imot(nmx),        m0,      mfbi,        mt,ncbd(ip41)
-  integer          ::       nmot
+    integer          ::  imot(nmx),        m0,      mfbi,        mt,ncbd(ip41)
+    integer          ::       nmot
 !
 !-----------------------------------------------------------------------
 !

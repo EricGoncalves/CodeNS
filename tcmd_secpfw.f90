@@ -21,9 +21,9 @@ contains
     use mod_valenti
     use mod_vallent
     implicit none
-  integer          ::      icmt,     ient,       im,imot(nmx),    kient
-  integer          :: lgr(nobj),     lgrd,       ng,      ngr,       nm
-  integer          ::      nmot
+    integer          ::      icmt,     ient,       im,imot(nmx),    kient
+    integer          :: lgr(nobj),     lgrd,       ng,      ngr,       nm
+    integer          ::      nmot
 !
 !-----------------------------------------------------------------------
 !

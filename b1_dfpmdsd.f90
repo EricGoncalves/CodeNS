@@ -25,9 +25,9 @@ contains
     use kcle
     use mod_convich
     implicit none
-  integer          ::       ldomd,ldom(ldomd),       lgrd,  lgr(lgrd),         lm
-  integer          ::        long,     longm1,         nm,      nmult,         nr
-  integer          ::       nrest
+    integer          ::       ldomd,ldom(ldomd),       lgrd,  lgr(lgrd),         lm
+    integer          ::        long,     longm1,         nm,      nmult,         nr
+    integer          ::       nrest
 !
 !-----------------------------------------------------------------------
 !

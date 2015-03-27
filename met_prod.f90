@@ -17,15 +17,15 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::    i,  i1,i1m1,  i2,i2m1
-  integer          :: ind1,ind2,   j,  j1,j1m1
-  integer          ::   j2,j2m1,   k,  k1,k1m1
-  integer          ::   k2,k2m1,   l,   m,   n
-  integer          ::  n0c,ncyc, nid,nijd, njd
-  double precision ::          ds3,  dvxx(ip00),  dvxy(ip00),  dvxz(ip00),  dvyx(ip00)
-  double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)
-  double precision ::    mut(ip12),s(ip11,ip60),       torxx,       torxy,       torxz
-  double precision ::        toryy,       toryz,       torzz, tprod(ip00)
+    integer          ::    i,  i1,i1m1,  i2,i2m1
+    integer          :: ind1,ind2,   j,  j1,j1m1
+    integer          ::   j2,j2m1,   k,  k1,k1m1
+    integer          ::   k2,k2m1,   l,   m,   n
+    integer          ::  n0c,ncyc, nid,nijd, njd
+    double precision ::          ds3,  dvxx(ip00),  dvxy(ip00),  dvxz(ip00),  dvyx(ip00)
+    double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)
+    double precision ::    mut(ip12),s(ip11,ip60),       torxx,       torxy,       torxz
+    double precision ::        toryy,       toryz,       torzz, tprod(ip00)
 !
 !-----------------------------------------------------------------------
 !
@@ -77,7 +77,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
   end subroutine met_prod

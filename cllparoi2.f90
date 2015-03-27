@@ -3,7 +3,7 @@ module mod_cllparoi2
 contains
   subroutine cllparoi2( &
        img,ncyc, &
-       v, & 
+       v, &
        nxn,nyn,nzn, &
        ncin,ncbd, &
        toxx,toxy,toxz,toyy,toyz,tozz, &
@@ -56,9 +56,9 @@ contains
 !_I    mmb        : com int (mtt       ) ; nombre de facettes d'une frontiere
 !_I    mpb        : com int (mtt       ) ; pointeur fin de front precedente
 !_I                                        dans tableaux de base des front.
-!_I    mpd        : com int (mtt       ) ; tableau de pointeur sur l'ensemble 
+!_I    mpd        : com int (mtt       ) ; tableau de pointeur sur l'ensemble
 !_I                                        des frontieres
-!_I    ldp        : com int(           ) ; tableau des labels des noeuds deplaces 
+!_I    ldp        : com int(           ) ; tableau des labels des noeuds deplaces
 !_I    nba        : com int (mtb       ) ; rang de traitement d'une front
 !_I    ndlb       : com int (mtb       ) ; numero dom contenant la frontiere
 !_I    mpn        : com int (mtt       ) ; pointeur fin de front precedente
@@ -76,12 +76,12 @@ contains
     use mod_lparoi4
     use mod_lparoi3d
     implicit none
-  integer          ::        img,       mfb,ncbd(ip41),ncin(ip41),      ncyc
-  integer          ::         no
-  double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),   qcx(ip12),   qcy(ip12)
-  double precision ::    qcz(ip12),  topz(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12)
-  double precision ::   toyy(ip12),  toyz(ip12),  tozz(ip12),  utau(ip42),v(ip11,ip60)
-  double precision ::  ztemp(ip11)
+    integer          ::        img,       mfb,ncbd(ip41),ncin(ip41),      ncyc
+    integer          ::         no
+    double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),   qcx(ip12),   qcy(ip12)
+    double precision ::    qcz(ip12),  topz(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12)
+    double precision ::   toyy(ip12),  toyz(ip12),  tozz(ip12),  utau(ip42),v(ip11,ip60)
+    double precision ::  ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !

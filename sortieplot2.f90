@@ -26,15 +26,15 @@ contains
     use chainecarac
     use proprieteflu
     implicit none
-  integer          ::    i,  i1,i1m1,  i2,i2m1
-  integer          ::    j,  j1,j1m1,  j2,j2m1
-  integer          ::    k,  k1,k1m1,  k2,k2m1
-  integer          ::    l,   m,   n, n0c, nid
-  integer          :: nijd, njd
-  double precision ::   cson(ip11),  dist(ip12),           e,    mu(ip12),   mut(ip12)
-  double precision ::     ps(ip11),          qq,t(ip11,ip60),  temp(ip11),  toxy(ip12)
-  double precision ::            u,           v,           w,     x(ip21),         xcc
-  double precision ::          xme,     y(ip21),         ycc,     z(ip21),         zcc
+    integer          ::    i,  i1,i1m1,  i2,i2m1
+    integer          ::    j,  j1,j1m1,  j2,j2m1
+    integer          ::    k,  k1,k1m1,  k2,k2m1
+    integer          ::    l,   m,   n, n0c, nid
+    integer          :: nijd, njd
+    double precision ::   cson(ip11),  dist(ip12),           e,    mu(ip12),   mut(ip12)
+    double precision ::     ps(ip11),          qq,t(ip11,ip60),  temp(ip11),  toxy(ip12)
+    double precision ::            u,           v,           w,     x(ip21),         xcc
+    double precision ::          xme,     y(ip21),         ycc,     z(ip21),         zcc
 !
 !-----------------------------------------------------------------------
 !
@@ -105,7 +105,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
   end subroutine sortieplot2

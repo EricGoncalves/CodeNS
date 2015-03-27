@@ -28,14 +28,14 @@ contains
 !
     use para_var
     use para_fige
-    use maillage 
+    use maillage
     use sortiefichier
     use definition
     use mod_readdg
     use mod_smg_fcm
     implicit none
-  integer          ::  img,king,   l
-  double precision :: x(ip21),y(ip21),z(ip21)
+    integer          ::  img,king,   l
+    double precision :: x(ip21),y(ip21),z(ip21)
 !
 !-----------------------------------------------------------------------
 !

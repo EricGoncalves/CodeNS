@@ -27,7 +27,7 @@ contains
     use sortiefichier
     use mod_b1_dfst0
     implicit none
-  double precision ::  aam,roam, tam
+    double precision ::  aam,roam, tam
 !
 !-----------------------------------------------------------------------
 !

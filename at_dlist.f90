@@ -44,13 +44,13 @@ contains
     use para_fige
     use boundary
     implicit none
-  integer          ::         idm,      imaxf,      iminf,      jmaxf,      jminf
-  integer          ::       kmaxf,      kminf,          l,        m0b,        m0n
-  integer          ::          m1,      m1max, m1tb(ip00),         m2,      m2max
-  integer          ::  m2tb(ip00),       mfac,      mfacn, ncin(ip41),       nfbi
-  integer          :: nfrtb(ip00)
-  double precision ::    x(ip21),xpar(ip00),   y(ip21),ypar(ip00),   z(ip21)
-  double precision :: zpar(ip00)
+    integer          ::         idm,      imaxf,      iminf,      jmaxf,      jminf
+    integer          ::       kmaxf,      kminf,          l,        m0b,        m0n
+    integer          ::          m1,      m1max, m1tb(ip00),         m2,      m2max
+    integer          ::  m2tb(ip00),       mfac,      mfacn, ncin(ip41),       nfbi
+    integer          :: nfrtb(ip00)
+    double precision ::    x(ip21),xpar(ip00),   y(ip21),ypar(ip00),   z(ip21)
+    double precision :: zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !

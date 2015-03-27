@@ -41,12 +41,12 @@ contains
     use para_var
     use para_fige
     implicit none
-  integer          ::          m,        mb,       mfb,  mmb(mtt),        mn
-  integer          ::   mpb(mtt),  mpn(mtt),        mt,ncbd(ip41),ncin(ip41)
-  integer          ::         ni,        nl
-  double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),         qn1,         qtx
-  double precision ::          qty,         qtz,         qx1,         qy1,         qz1
-  double precision ::          ro1,        roe1,v(ip11,ip60)
+    integer          ::          m,        mb,       mfb,  mmb(mtt),        mn
+    integer          ::   mpb(mtt),  mpn(mtt),        mt,ncbd(ip41),ncin(ip41)
+    integer          ::         ni,        nl
+    double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),         qn1,         qtx
+    double precision ::          qty,         qtz,         qx1,         qy1,         qz1
+    double precision ::          ro1,        roe1,v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

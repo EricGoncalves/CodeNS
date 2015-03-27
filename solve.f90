@@ -7,7 +7,7 @@ program solve
 !_A   Logiciel de calcul par domaines d'ecoulements tridimensionnels
 !_A   de fluide parfait par resolution des equations d'Euler
 !_A   ou de fluide visqueux par resolution des equations de
-!_A   resolution des equations de Navier-Stokes moyennees 
+!_A   resolution des equations de Navier-Stokes moyennees
 !_A   completees par un modele de turbulence.
 !
 !     VAL
@@ -36,58 +36,58 @@ program solve
 !     I/O
 !
 !     LOC
-!_L    ki2        : com real(lt    ) ; coef de dissipation ordre 2    
-!_L    ki4        : com real(lt    ) ; coef de dissipation ordre 4           
-!_L    titrt1     : com char         ; titre du calcul                     
+!_L    ki2        : com real(lt    ) ; coef de dissipation ordre 2
+!_L    ki4        : com real(lt    ) ; coef de dissipation ordre 4
+!_L    titrt1     : com char         ; titre du calcul
 !_L    cb         : com char         ; mess interpretation, err indeterminee
-!_L    cc         : com char         ; mess interpretation, char trop long   
-!_L    cd         : com char         ; mess interpretation, pas de dom cree  
-!_L    ch         : com char         ; mess interpretation, donnee non char  
+!_L    cc         : com char         ; mess interpretation, char trop long
+!_L    cd         : com char         ; mess interpretation, pas de dom cree
+!_L    ch         : com char         ; mess interpretation, donnee non char
 !_L    ci         : com char         ; mess interpretation, donnee non entier
-!_L    cf         : com char         ; mess interpretation, pas de fr creee  
+!_L    cf         : com char         ; mess interpretation, pas de fr creee
 !_L    cm         : com char         ; mess interpretation, donnee non liste d'entiers
-!_L    cr         : com char         ; mess interpretation, donnee non reel 
-!_L    cs         : com char         ; mess interpretation, suite de commande manquante  
+!_L    cr         : com char         ; mess interpretation, donnee non reel
+!_L    cs         : com char         ; mess interpretation, suite de commande manquante
 !_L    equat      : com char         ; type d'equations modelisant l'ecoulement
 !_L    cl         : com char(mtb   ) ; type de cond lim a appliquer
 !_L    config     : com char         ; type de config geometrique du calcul
-!_L    discsv     : com char         ; changement de discretisation (centre/noeud) 
+!_L    discsv     : com char         ; changement de discretisation (centre/noeud)
 !_L    td         : com char(lz    ) ; type de domaine (struct/non struct))
-!_L    indfl      : com char(mtb   ) ; type de plan de la frontiere 
-!_L    pis2       : com real         ; pi divise par 2 
-!_L    raddeg     : com real         ; coef de transf rad en deg   
-!_L    degrad     : com real         ; coef de transf deg en rad    
+!_L    indfl      : com char(mtb   ) ; type de plan de la frontiere
+!_L    pis2       : com real         ; pi divise par 2
+!_L    raddeg     : com real         ; coef de transf rad en deg
+!_L    degrad     : com real         ; coef de transf deg en rad
 !_L    lzx        : com int          ; nbr total de domaines
 !_L    lgx        : com int          ; nombre de niveaux de grille utilises
 !_L    mtbx       : com int          ; nbr total de frontieres
 !_L    mtnx       : com int          ; nbr total de frontieres a normales stockes
 !_L    mtcx       : com int          ; nbr total de frontieres coincidentes
 !_L    mtrx       : com int          ; nbr total de frontieres recouvertes
-!_L    mtax       : com int          ; nbr total de frontieres autres     
-!_L    ndimubx    : com int          ; nbr de cellules du plus grd domaine (pts fictifs inclus)  
+!_L    mtax       : com int          ; nbr total de frontieres autres
+!_L    ndimubx    : com int          ; nbr de cellules du plus grd domaine (pts fictifs inclus)
 !_L    ndimctbx   : com int          ; nbr de cellules de tts les domaines (pts fictifs inclus)
-!_L    ndimntbx   : com int          ; nbr de noeuds de tts les domaines (pts fictifs inclus) 
-!_L    mdimubx    : com int          ; nbr de pts de la plus grde front    
-!_L    mdimtbx    : com int          ; nbr de pts de ttes les front        
-!_L    mdimtnx    : com int          ; nbr de pts de ttes les front a normales stockees 
-!_L    mdimtcx    : com int          ; nbr de pts de ttes les front coincidentes   
-!_L    mdimtrx    : com int          ; nbr de pts de ttes les front recouvertes   
+!_L    ndimntbx   : com int          ; nbr de noeuds de tts les domaines (pts fictifs inclus)
+!_L    mdimubx    : com int          ; nbr de pts de la plus grde front
+!_L    mdimtbx    : com int          ; nbr de pts de ttes les front
+!_L    mdimtnx    : com int          ; nbr de pts de ttes les front a normales stockees
+!_L    mdimtcx    : com int          ; nbr de pts de ttes les front coincidentes
+!_L    mdimtrx    : com int          ; nbr de pts de ttes les front recouvertes
 !_L    kimp       : com int          ; niveau de sortie sur unite logi imp
 !_L    perio      : com real         ; periodicite geometrique en angle ou distance selon config
-!_L    ptrans     : com real         ; distance pour periodicite    
-!_L    protat     : com real         ; angle(rad) pour periodicite     
-!_L    klomg      : com int          ; cle pour rotation du repere relatif  
+!_L    ptrans     : com real         ; distance pour periodicite
+!_L    protat     : com real         ; angle(rad) pour periodicite
+!_L    klomg      : com int          ; cle pour rotation du repere relatif
 !_L    omg        : com real         ; vitesse rotation du repere relatif
-!_L    numt       : com int          ; cycle courant du calcul           
-!_L    ncycle     : com int          ; nbr tot de cycles de l'execution courante 
+!_L    numt       : com int          ; cycle courant du calcul
+!_L    ncycle     : com int          ; nbr tot de cycles de l'execution courante
 !_L    npn        : com int (lt    ) ; pointeur fin de dom precedent dans tab tous noeuds
-!_L    nnn        : com int (lt    ) ; nombre de noeuds du dom (dont fic.)  
+!_L    nnn        : com int (lt    ) ; nombre de noeuds du dom (dont fic.)
 !_L    npc        : com int (lt    ) ; pointeur fin de dom precedent dans tab toutes cellules
-!_L    nnc        : com int (lt    ) ; nombre de cellules du dom (dont fic.) 
+!_L    nnc        : com int (lt    ) ; nombre de cellules du dom (dont fic.)
 !_L    npfb       : com int (lt    ) ; pointeur fin de dom precedent dans tab toutes facettes
-!_L    nnfb       : com int (lt    ) ; nombre de facettes du dom (dont fic.) 
-!_L    id1        : com int (lt    ) ; indice min en i fictif         
-!_L    ii1        : com int (lt    ) ; indice min en i reel 
+!_L    nnfb       : com int (lt    ) ; nombre de facettes du dom (dont fic.)
+!_L    id1        : com int (lt    ) ; indice min en i fictif
+!_L    ii1        : com int (lt    ) ; indice min en i reel
 !_L    ii2        : com int (lt    ) ; indice max en i reel
 !_L    id2        : com int (lt    ) ; indice max en i fictif
 !_L    jd1        : com int (lt    ) ; indice min en j fictif
@@ -99,60 +99,60 @@ program solve
 !_L    kk2        : com int (lt    ) ; indice max en k reel
 !_L    kd2        : com int (lt    ) ; indice max en k fictif
 !_L    npfq       : com int (lt    ) ; pointeur fin de dom precedent dans tab toutes facettes quad
-!_L    nnfq       : com int (lt    ) ; nbr facettes quad du dom (dont fic.)  
-!_L    nnfql      : com int (lt    ) ; nbr facettes quad limites du dom   
-!_L    nnfqc      : com int (lt    ) ; nbr facettes quad coincidentes du dom 
-!_L    npft       : com int (lt    ) ; pointeur fin de dom precedent dans tab toutes facettes triang 
-!_L    nnft       : com int (lt    ) ; nbr facettes trian du dom (dont fic.) 
-!_L    nnftl      : com int (lt    ) ; nbr facettes triang limites du dom   
-!_L    nnftc      : com int (lt    ) ; nbr facettes triang coinc du dom      
-!_L    nbd        : com int          ; nombre de frontieres a traiter       
-!_L    lbd        : com int (mtt   ) ; numero de front a traiter             
-!_L    mmb        : com int (mtt   ) ; nombre de pts d'une frontiere         
+!_L    nnfq       : com int (lt    ) ; nbr facettes quad du dom (dont fic.)
+!_L    nnfql      : com int (lt    ) ; nbr facettes quad limites du dom
+!_L    nnfqc      : com int (lt    ) ; nbr facettes quad coincidentes du dom
+!_L    npft       : com int (lt    ) ; pointeur fin de dom precedent dans tab toutes facettes triang
+!_L    nnft       : com int (lt    ) ; nbr facettes trian du dom (dont fic.)
+!_L    nnftl      : com int (lt    ) ; nbr facettes triang limites du dom
+!_L    nnftc      : com int (lt    ) ; nbr facettes triang coinc du dom
+!_L    nbd        : com int          ; nombre de frontieres a traiter
+!_L    lbd        : com int (mtt   ) ; numero de front a traiter
+!_L    mmb        : com int (mtt   ) ; nombre de pts d'une frontiere
 !_L    mpb        : com int (mtt   ) ; pointeur fin de front precedente dans tableaux de base des front.
-!_L    nba        : com int (mtb   ) ; rang de traitement d'une front       
-!_L    ndlb       : com int (mtb   ) ; numero dom contenant la frontiere    
-!_L    nfei       : com int (mtb   ) ; numero de base interne d'une front en fct du numero externe 
+!_L    nba        : com int (mtb   ) ; rang de traitement d'une front
+!_L    ndlb       : com int (mtb   ) ; numero dom contenant la frontiere
+!_L    nfei       : com int (mtb   ) ; numero de base interne d'une front en fct du numero externe
 !_L    iminb      : com int (mtt   ) ; indice min en i d'une front
 !_L    imaxb      : com int (mtt   ) ; indice max en i d'une front
 !_L    jminb      : com int (mtt   ) ; indice min en j d'une front
 !_L    jmaxb      : com int (mtt   ) ; indice max en j d'une front
 !_L    kminb      : com int (mtt   ) ; indice min en k d'une front
 !_L    kmaxb      : com int (mtt   ) ; indice max en k d'une front
-!_L    mpr        : com int (mtt   ) ; pointeur fin de front precedente dans tab front recouvertes 
+!_L    mpr        : com int (mtt   ) ; pointeur fin de front precedente dans tab front recouvertes
 !_L    nfbr       : com int (mtb   ) ; numero dans numerotation interne d'une frontiere recouverte
-!_L    ndrr       : com int (mtb   ) ; numero de domaine recouvrant     
-!_L    srotr      : com real(mtb   ) ; rotation amenant une front periodique dans sa position recouverte, sinus  
-!_L    crotr      : com real(mtb   ) ; rotation amenant une front periodique dans sa position recouverte, cosinus 
-!_L    mpc        : com int (mtt   ) ; pointeur fin de front precedente dans tableaux front coinc    
+!_L    ndrr       : com int (mtb   ) ; numero de domaine recouvrant
+!_L    srotr      : com real(mtb   ) ; rotation amenant une front periodique dans sa position recouverte, sinus
+!_L    crotr      : com real(mtb   ) ; rotation amenant une front periodique dans sa position recouverte, cosinus
+!_L    mpc        : com int (mtt   ) ; pointeur fin de front precedente dans tableaux front coinc
 !_L    nfbc       : com int (mtb   ) ; numero dans numerotation interne d'une frontiere coincidente
-!_L    ndcc       : com int (mtb   ) ; numero du dom coicident     
+!_L    ndcc       : com int (mtb   ) ; numero du dom coicident
 !_L    mdnc       : com int (mtt   ) ; saut d'ind entre pt front fictif et pt interieur pour la front coinc
 !_L    mpn        : com int (mtt   ) ; pointeur fin de front precedente dans tab front a normales stockees
 !_L    nfbn       : com int (mtb   ) ; numero dans numerotation interne
 !
-!_L    nfba       : com int (mtb   ) ; numero dans numerotation interne d'une frontiere autre   
+!_L    nfba       : com int (mtb   ) ; numero dans numerotation interne d'une frontiere autre
 !_L    gam        : com real         ; rapport des chaleurs specifiques
-!_L    gam1       : com real         ; rap chal spec -1                   
-!_L    gam2       : com real         ; (rap chal spec -1)/2                 
-!_L    gam3       : com real         ; 1/rap chal spec                     
-!_L    gam4       : com real         ; 1/(rap chal spec -1                  
-!_L    gam5       : com real         ; rap chal spec/(rap chal spec -1)     
-!_L    rgp        : com real         ; constante des gaz parfaits adim       
-!_L    cp         : com real         ; chal spec a pres cste adim            
-!_L    cv         : com real         ; chal spec a vol cst adim             
-!_L    pr         : com real         ; nombre de Prandtl                   
-!_L    prt        : com real         ; nombre de Prandtl turbulent           
+!_L    gam1       : com real         ; rap chal spec -1
+!_L    gam2       : com real         ; (rap chal spec -1)/2
+!_L    gam3       : com real         ; 1/rap chal spec
+!_L    gam4       : com real         ; 1/(rap chal spec -1
+!_L    gam5       : com real         ; rap chal spec/(rap chal spec -1)
+!_L    rgp        : com real         ; constante des gaz parfaits adim
+!_L    cp         : com real         ; chal spec a pres cste adim
+!_L    cv         : com real         ; chal spec a vol cst adim
+!_L    pr         : com real         ; nombre de Prandtl
+!_L    prt        : com real         ; nombre de Prandtl turbulent
 !_L    reynz      : com real         ; nombre de Reynolds calcule avec les grandeurs d'adimensionnement,
-!_L                                    pour definir la loi de Sutherland     
-!_L    nfi        : com int          ; nbr de rangees de pts fictifs         
-!_L    kdit       : com int          ; type dissipation artificielle        
-!_L    kfmg       : com int          ; choix technique  multigrille         
+!_L                                    pour definir la loi de Sutherland
+!_L    nfi        : com int          ; nbr de rangees de pts fictifs
+!_L    kdit       : com int          ; type dissipation artificielle
+!_L    kfmg       : com int          ; choix technique  multigrille
 !_L    kcg        : com int          ; cle calcul metrique grilles grossieres;
 !_L    tnz        : com real         ; etat pour adimensionnement, temperature
 !_L    ronz       : com real         ; etat pour adimensionnement, masse volumique
 !_L    anz        : com real         ; etat pour adimensionnement, vitesse du son d'arret
-!_L    dnz        : com real         ; etat pour adimensionnement longueur 
+!_L    dnz        : com real         ; etat pour adimensionnement longueur
 !_L    roa1       : com real         ; etat de reference utilisateur adimensionne, masse volumique d'arret
 !_L    aa1        : com real         ; etat de reference utilisateur adimensionne, vitesse du son d'arret
 !_L    ta1        : com real         ; etat de reference utilisateur adimensionne, temperature d'arret
@@ -160,9 +160,9 @@ program solve
 !_L    ha1        : com real         ; enthalpie d'arret de l'etat de reference utilisateur adimensionne
 !_L    icytur0    : com int          ; nbr de cycl en deb de calcul au cours desquelles mut n'est pas mis a jour
 !_L    ncyturb    : com int          ; freq en it de mise a jour de mut
-!_L    pctvort    : com real(lt    ) ; pourcentage de tourbillon pour calcul d'epaisseur de couche lim 
+!_L    pctvort    : com real(lt    ) ; pourcentage de tourbillon pour calcul d'epaisseur de couche lim
 !_L    kdtl       : com int          ; cle d'utilisation pas de temps local
-!_L    icychr0    : com int          ; nbr de cycle en deb de calcul au cours desquelles le pas de temps 
+!_L    icychr0    : com int          ; nbr de cycle en deb de calcul au cours desquelles le pas de temps
 !_L                                    est mis a jour a chaque it
 !_L    ncychro    : com int          ; freq en it de mise a jour du pas de temps
 !_L    dt1min     : com real         ; pas de temps constant desire
@@ -178,9 +178,9 @@ program solve
 !_C   definitions :
 !_C   -----------
 !_C   sous-domaine         : partie du domaine de calcul maillee avec un maillage structure i,j,k .
-!_C   frontiere            : ensemble de points appartenant a certaines des six surfaces limites des   
+!_C   frontiere            : ensemble de points appartenant a certaines des six surfaces limites des
 !_C                          sous-domaines, en tout point duquel on applique une meme condition a la limite .
-!_C   frontiere coincidente: partie d' une des six surfaces limites d'un sous-domaine , qui coincide avec 
+!_C   frontiere coincidente: partie d' une des six surfaces limites d'un sous-domaine , qui coincide avec
 !_C                          une autre partie d'une des six surfaces limites d'un sous-domaine.
 !_C   frontiere non coincidente: partie d' une des six surfaces limites d'un sous-domaine, qui est adjacente
 !_C                              a une autre partie d'une des six surfaces limites d'un sous-domaine.
@@ -768,118 +768,118 @@ program solve
 !
   enddo
 !
- call deallocdata
+  call deallocdata
 contains
 
-subroutine allocdata
-implicit none
+  subroutine allocdata
+    implicit none
 
- allocate(mnr(ip44))
- allocate(mnc(ip43))
- allocate(ncin(ip41))
- allocate(ncbd(ip41))
- allocate(imot(nmx))
- allocate(mnpar(ip12))
- allocate(dist(ip12))
- allocate(rod(ip40))
- allocate(nyn(ip42))
- allocate(vdual2(ip11,ip60))
- allocate(vdual1(ip11,ip60))
- allocate(rti(ip40))
- allocate(utau(ip42))
- allocate(tozz(ip12))
- allocate(ptdual(ip11,ip60))
- allocate(pression(ip11))
- allocate(dt(ip11))
- allocate(fgam(ip42))
- allocate(x(ip21))
- allocate(ynr(ip44))
- allocate(qtz(ip40))
- allocate(qtx(ip40))
- allocate(qty(ip40))
- allocate(mut(ip12))
- allocate(res(ip40))
- allocate(cfke(ip13))
- allocate(cmuk1(ip21))
- allocate(tnte2(ip11,ip60))
- allocate(cvi(ip21))
- allocate(vdual(ip11,ip60))
- allocate(bceqt(ip41,neqt))
- allocate(tm1(ip40))
- allocate(tm2(ip40))
- allocate(tm3(ip40))
- allocate(tm4(ip40))
- allocate(tm5(ip40))
- allocate(tm6(ip40))
- allocate(tm7(ip40))
- allocate(tm8(ip40))
- allocate(tm9(ip40))
- allocate(ztemp(ip11))
- allocate(tn10(ip00))
- allocate(tn8(ip00))
- allocate(tm12(ip40))
- allocate(tm13(ip40))
- allocate(tm10(ip40))
- allocate(tm11(ip40))
- allocate(tp(ip40))
- allocate(rpi(ip40))
- allocate(toyy(ip12))
- allocate(toyz(ip12))
- allocate(tn5(ip00))
- allocate(tn4(ip00))
- allocate(tn7(ip00))
- allocate(tn6(ip00))
- allocate(tn1(ip00))
- allocate(tn3(ip00))
- allocate(tn2(ip00))
- allocate(qcz(ip12))
- allocate(qcy(ip12))
- allocate(qcx(ip12))
- allocate(tn9(ip00))
- allocate(d0z(ip40))
- allocate(d0y(ip40))
- allocate(d0x(ip40))
- allocate(rowd(ip40))
- allocate(tnte4(ip11,ip60))
- allocate(tnte1(ip11,ip60))
- allocate(pres(ip40))
- allocate(tnte3(ip11,ip60))
- allocate(cson(ip11))
- allocate(xnr(ip44))
- allocate(mu(ip12))
- allocate(r(ip11))
- allocate(cvj(ip21))
- allocate(cvk(ip21))
- allocate(cmuk2(ip21))
- allocate(z(ip21))
- allocate(nzn(ip42))
- allocate(v(ip11,ip60))
- allocate(vol(ip11))
- allocate(znr(ip44))
- allocate(cmuj2(ip21))
- allocate(cmuj1(ip21))
- allocate(roud(ip40))
- allocate(roed(ip40))
- allocate(toxz(ip12))
- allocate(toxy(ip12))
- allocate(toxx(ip12))
- allocate(cmui2(ip21))
- allocate(cmui1(ip21))
- allocate(rovd(ip40))
- allocate(y(ip21))
- allocate(nxn(ip42))
- allocate(sn(ip31*ndir))
-end subroutine allocdata
-subroutine deallocdata
-implicit none
+    allocate(mnr(ip44))
+    allocate(mnc(ip43))
+    allocate(ncin(ip41))
+    allocate(ncbd(ip41))
+    allocate(imot(nmx))
+    allocate(mnpar(ip12))
+    allocate(dist(ip12))
+    allocate(rod(ip40))
+    allocate(nyn(ip42))
+    allocate(vdual2(ip11,ip60))
+    allocate(vdual1(ip11,ip60))
+    allocate(rti(ip40))
+    allocate(utau(ip42))
+    allocate(tozz(ip12))
+    allocate(ptdual(ip11,ip60))
+    allocate(pression(ip11))
+    allocate(dt(ip11))
+    allocate(fgam(ip42))
+    allocate(x(ip21))
+    allocate(ynr(ip44))
+    allocate(qtz(ip40))
+    allocate(qtx(ip40))
+    allocate(qty(ip40))
+    allocate(mut(ip12))
+    allocate(res(ip40))
+    allocate(cfke(ip13))
+    allocate(cmuk1(ip21))
+    allocate(tnte2(ip11,ip60))
+    allocate(cvi(ip21))
+    allocate(vdual(ip11,ip60))
+    allocate(bceqt(ip41,neqt))
+    allocate(tm1(ip40))
+    allocate(tm2(ip40))
+    allocate(tm3(ip40))
+    allocate(tm4(ip40))
+    allocate(tm5(ip40))
+    allocate(tm6(ip40))
+    allocate(tm7(ip40))
+    allocate(tm8(ip40))
+    allocate(tm9(ip40))
+    allocate(ztemp(ip11))
+    allocate(tn10(ip00))
+    allocate(tn8(ip00))
+    allocate(tm12(ip40))
+    allocate(tm13(ip40))
+    allocate(tm10(ip40))
+    allocate(tm11(ip40))
+    allocate(tp(ip40))
+    allocate(rpi(ip40))
+    allocate(toyy(ip12))
+    allocate(toyz(ip12))
+    allocate(tn5(ip00))
+    allocate(tn4(ip00))
+    allocate(tn7(ip00))
+    allocate(tn6(ip00))
+    allocate(tn1(ip00))
+    allocate(tn3(ip00))
+    allocate(tn2(ip00))
+    allocate(qcz(ip12))
+    allocate(qcy(ip12))
+    allocate(qcx(ip12))
+    allocate(tn9(ip00))
+    allocate(d0z(ip40))
+    allocate(d0y(ip40))
+    allocate(d0x(ip40))
+    allocate(rowd(ip40))
+    allocate(tnte4(ip11,ip60))
+    allocate(tnte1(ip11,ip60))
+    allocate(pres(ip40))
+    allocate(tnte3(ip11,ip60))
+    allocate(cson(ip11))
+    allocate(xnr(ip44))
+    allocate(mu(ip12))
+    allocate(r(ip11))
+    allocate(cvj(ip21))
+    allocate(cvk(ip21))
+    allocate(cmuk2(ip21))
+    allocate(z(ip21))
+    allocate(nzn(ip42))
+    allocate(v(ip11,ip60))
+    allocate(vol(ip11))
+    allocate(znr(ip44))
+    allocate(cmuj2(ip21))
+    allocate(cmuj1(ip21))
+    allocate(roud(ip40))
+    allocate(roed(ip40))
+    allocate(toxz(ip12))
+    allocate(toxy(ip12))
+    allocate(toxx(ip12))
+    allocate(cmui2(ip21))
+    allocate(cmui1(ip21))
+    allocate(rovd(ip40))
+    allocate(y(ip21))
+    allocate(nxn(ip42))
+    allocate(sn(ip31*ndir))
+  end subroutine allocdata
+  subroutine deallocdata
+    implicit none
 
- deallocate(mnr,mnc,ncin,ncbd,imot,mnpar,dist,rod,nyn,vdual2,vdual1,rti)
- deallocate(utau,tozz,ptdual,pression,dt,fgam,x,ynr,qtz,qtx,qty,mut,res,cfke,cmuk1)
- deallocate(tnte2,cvi,vdual,bceqt,tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,ztemp,tn10)
- deallocate(tn8,tm12,tm13,tm10,tm11,tp,rpi,toyy,toyz,tn5,tn4,tn7,tn6,tn1,tn3,tn2)
- deallocate(qcz,qcy,qcx,tn9,d0z,d0y,d0x,rowd,tnte4,tnte1,pres,tnte3,cson,xnr,mu)
- deallocate(r,cvj,cvk,cmuk2,z,nzn,v,vol,znr,cmuj2,cmuj1,roud,roed,toxz,toxy,toxx)
- deallocate(cmui2,cmui1,rovd,y,nxn,sn)
+    deallocate(mnr,mnc,ncin,ncbd,imot,mnpar,dist,rod,nyn,vdual2,vdual1,rti)
+    deallocate(utau,tozz,ptdual,pression,dt,fgam,x,ynr,qtz,qtx,qty,mut,res,cfke,cmuk1)
+    deallocate(tnte2,cvi,vdual,bceqt,tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,ztemp,tn10)
+    deallocate(tn8,tm12,tm13,tm10,tm11,tp,rpi,toyy,toyz,tn5,tn4,tn7,tn6,tn1,tn3,tn2)
+    deallocate(qcz,qcy,qcx,tn9,d0z,d0y,d0x,rowd,tnte4,tnte1,pres,tnte3,cson,xnr,mu)
+    deallocate(r,cvj,cvk,cmuk2,z,nzn,v,vol,znr,cmuj2,cmuj1,roud,roed,toxz,toxy,toxx)
+    deallocate(cmui2,cmui1,rovd,y,nxn,sn)
 
-end subroutine deallocdata
+  end subroutine deallocdata
 end program solve

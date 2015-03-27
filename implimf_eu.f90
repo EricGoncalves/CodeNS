@@ -26,28 +26,28 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-  integer          ::      i,    i1,  i1m1,    i2,  i2m1
-  integer          ::     id,  ind1,  ind2,ityprk,     j
-  integer          ::     j1,  j1m1,    j2,  j2m1,    jd
-  integer          ::      k,    k1,  k1m1,    k2,  k2m1
-  integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
-  integer          ::     ls,     m,     n,   n0c,   nci
-  integer          ::    ncj,   nck,   nid,  nijd,  ninc
-  integer          ::    njd
-  double precision ::                   cc,                cnds,      coefdiag(ip00),          cson(ip11),        d(ip11,ip60)
-  double precision ::           dfex(ip00),          dfey(ip00),          dfez(ip00),          dfxx(ip00),          dfxy(ip00)
-  double precision ::           dfxz(ip00),          dfyy(ip00),          dfyz(ip00),          dfzz(ip00),            dt(ip11)
-  double precision ::                dtpas,                fact,                 fex,                 fey,                 fez
-  double precision ::        ff(ip11,ip60),                fiex,                fiey,                fiez,                fixx
-  double precision ::                 fixy,                fixz,                fiyy,                fiyz,                fizz
-  double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
-  double precision ::                  fzz,                pres,            ps(ip11),sn(lgsnlt,nind,ndir),                 tn1
-  double precision ::                  tn2,                 tn3,                 tn4,                 tn5,        u(ip11,ip60)
-  double precision ::                   ui,                  uu,        v(ip11,ip60),                  vi,           vol(ip11)
-  double precision ::                   vv,                  wi,                 wi1,                 wi2,                 wi3
-  double precision ::                  wi4,                 wi5,                  ww
-  double precision,allocatable :: coefe(:,:),   d2w1(:),   d2w2(:),   d2w3(:),   d2w4(:)
-  double precision,allocatable ::    d2w5(:)
+    integer          ::      i,    i1,  i1m1,    i2,  i2m1
+    integer          ::     id,  ind1,  ind2,ityprk,     j
+    integer          ::     j1,  j1m1,    j2,  j2m1,    jd
+    integer          ::      k,    k1,  k1m1,    k2,  k2m1
+    integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
+    integer          ::     ls,     m,     n,   n0c,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,  ninc
+    integer          ::    njd
+    double precision ::                   cc,                cnds,      coefdiag(ip00),          cson(ip11),        d(ip11,ip60)
+    double precision ::           dfex(ip00),          dfey(ip00),          dfez(ip00),          dfxx(ip00),          dfxy(ip00)
+    double precision ::           dfxz(ip00),          dfyy(ip00),          dfyz(ip00),          dfzz(ip00),            dt(ip11)
+    double precision ::                dtpas,                fact,                 fex,                 fey,                 fez
+    double precision ::        ff(ip11,ip60),                fiex,                fiey,                fiez,                fixx
+    double precision ::                 fixy,                fixz,                fiyy,                fiyz,                fizz
+    double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
+    double precision ::                  fzz,                pres,            ps(ip11),sn(lgsnlt,nind,ndir),                 tn1
+    double precision ::                  tn2,                 tn3,                 tn4,                 tn5,        u(ip11,ip60)
+    double precision ::                   ui,                  uu,        v(ip11,ip60),                  vi,           vol(ip11)
+    double precision ::                   vv,                  wi,                 wi1,                 wi2,                 wi3
+    double precision ::                  wi4,                 wi5,                  ww
+    double precision,allocatable :: coefe(:,:),   d2w1(:),   d2w2(:),   d2w3(:),   d2w4(:)
+    double precision,allocatable ::    d2w5(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -86,8 +86,8 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
-!!!!$OMP PARALLEL default(SHARED) 
-!!!!$OMP DO 
+!!!!$OMP PARALLEL default(SHARED)
+!!!!$OMP DO
     do n=ind1,ind2
        m=n-n0c
        d(n,1)=0.
@@ -108,7 +108,7 @@ contains
        coefe(2,m)=0.
        coefe(3,m)=0.
     enddo
-!!!!$OMP END DO 
+!!!!$OMP END DO
 !
 !------coef diagonal ------------------------------------------------
 !
@@ -538,12 +538,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine implimf_eu

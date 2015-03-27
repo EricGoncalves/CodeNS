@@ -5,10 +5,10 @@ contains
        v,mu,mut,dist, &
        nxn,nyn,nzn, &
        ncin,ncbd,l, &
-       vol,sn,ncyc, &   
-       mnpar,fgam,  &   
+       vol,sn,ncyc, &
+       mnpar,fgam,  &
        tprod,tp,utau,topz, &
-       tn1,tn2,tn3, & 
+       tn1,tn2,tn3, &
        pression,ztemp)
 !
 !***********************************************************************
@@ -25,7 +25,7 @@ contains
 !_I    ncin       : arg int (ip41      ) ; ind dans un tab tous domaines de la
 !_I                                        cell. interieure adjacente a la front
 !_I    ncbd       : arg int (ip41      ) ; ind dans un tab tous domaines d'une
-!_I                                        cellule frontiere fictive 
+!_I                                        cellule frontiere fictive
 !_I    nxn        : arg real(ip42      ) ; composante en x du vecteur directeur
 !_I                                        normal a une facette frontiere
 !_I    nyn        : arg real(ip42      ) ; composante en y du vecteur directeur
@@ -59,12 +59,12 @@ contains
     use mod_lp2kl3d
     use mod_lp2kl1
     implicit none
-  integer          ::           l,       ldom,         mf,        mfb,mnpar(ip12)
-  integer          ::  ncbd(ip41), ncin(ip41),       ncyc,         no
-  double precision ::     dist(ip12),    fgam(ip42),      mu(ip12),     mut(ip12),     nxn(ip42)
-  double precision ::      nyn(ip42),     nzn(ip42),pression(ip11), sn(ip31*ndir),     tn1(ip00)
-  double precision ::      tn2(ip00),     tn3(ip00),    topz(ip11),      tp(ip40),   tprod(ip00)
-  double precision ::     utau(ip42),  v(ip11,ip60),     vol(ip11),   ztemp(ip11)
+    integer          ::           l,       ldom,         mf,        mfb,mnpar(ip12)
+    integer          ::  ncbd(ip41), ncin(ip41),       ncyc,         no
+    double precision ::     dist(ip12),    fgam(ip42),      mu(ip12),     mut(ip12),     nxn(ip42)
+    double precision ::      nyn(ip42),     nzn(ip42),pression(ip11), sn(ip31*ndir),     tn1(ip00)
+    double precision ::      tn2(ip00),     tn3(ip00),    topz(ip11),      tp(ip40),   tprod(ip00)
+    double precision ::     utau(ip42),  v(ip11,ip60),     vol(ip11),   ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
@@ -83,7 +83,7 @@ contains
     enddo
 !
     do mf=1,nbd
-!     boucle sur les frontieres a traiter (parois)     
+!     boucle sur les frontieres a traiter (parois)
        mfb=lbd(mf)
        if(cl(mfb)(1:3).eq.'lp4') then
 !       parois adiabatiques
@@ -92,10 +92,10 @@ contains
                nxn,nyn,nzn, &
                ncin,ncbd,mfb,l, &
                vol,sn,ncyc,  &
-               mnpar,fgam,  &        
+               mnpar,fgam,  &
                tprod,utau, &
-               tn1,tn2,tn3, & 
-               pression,ztemp) 
+               tn1,tn2,tn3, &
+               pression,ztemp)
 !
        elseif(cl(mfb)(1:3).eq.'lp5') then
           call lp2kl3d( &
@@ -103,9 +103,9 @@ contains
                nxn,nyn,nzn, &
                ncin,ncbd,mfb,l, &
                vol,sn,ncyc,  &
-               mnpar,fgam,  &        
+               mnpar,fgam,  &
                tprod,utau,topz, &
-               tn1,tn2,tn3, & 
+               tn1,tn2,tn3, &
                pression,ztemp)
 !
        elseif(cl(mfb)(1:3).eq.'lp6') then
@@ -116,11 +116,11 @@ contains
 !                ncin,ncbd,mfb,l, &
 !                vol,sn,ncyc, &
 !                mnpar,fgam, &
-!                tprod,utau)    
+!                tprod,utau)
        endif
 !
     enddo
-!      
+!
     return
   end subroutine lp2kl
 

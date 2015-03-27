@@ -19,7 +19,7 @@ contains
 !     ACT
 !_A   Schema WENO de Jiang&Chu, ordre 3 pondere.
 !_A   Formulation 3D avec schema de Roe.
-!_A   Prise en compte de la metrique du maillage.  
+!_A   Prise en compte de la metrique du maillage.
 !
 !*******************************************************************
 !-----parameters figes----------------------------------------------
@@ -29,71 +29,71 @@ contains
     use maillage
     use proprieteflu
     implicit none
-  integer          ::       i,     i1,   i1m1,   i1p1,     i2
-  integer          ::    i2m1,   i2m2,     id,   iexp,   ind1
-  integer          ::    ind2,isortie, ityprk,      j,     j1
-  integer          ::    j1m1,   j1p1,     j2,   j2m1,   j2m2
-  integer          ::      jd,      k,     k1,   k1m1,   k1p1
-  integer          ::      k2,   k2m1,   k2m2,     kd,   kdir
-  integer          ::  lgsnlt,     lm,      m,     m1,      n
-  integer          ::     n0c,     n1,    nci,    ncj,    nck
-  integer          ::     nid,   nijd,   ninc,    njd
-  double precision ::                   al,                  am,                am2i,                  ar,              beta11
-  double precision ::               beta12,              beta21,              beta22,              beta31,              beta32
-  double precision ::               beta41,              beta42,              beta51,              beta52,                 c00
-  double precision ::                  c01,                 c10,                 c11,                 c20,                 c21
-  double precision ::          cmui1(ip21),         cmui2(ip21),         cmuj1(ip21),         cmuj2(ip21),         cmuk1(ip21)
-  double precision ::          cmuk2(ip21),                cnds,           cvi(ip21),           cvj(ip21),           cvk(ip21)
-  double precision ::                 d1c1,                d1c2,                d1c3,                d2c1,                d2c2
-  double precision ::                 d2c3,                d3c1,                d3c2,                d3c3,                d4c1
-  double precision ::                 d4c2,                d4c3,                d5c1,                d5c2,                d5c3
-  double precision ::                  df1,                 df2,                 df3,                 df4,                 df5
-  double precision ::                  dg1,                 dg2,                 dg3,                 dg4,                 dg5
-  double precision ::                  dh1,                 dh2,                 dh3,                 dh4,                 dh5
-  double precision ::                  eps,                  f1,                 f11,                 f12,                  f2
-  double precision ::                  f21,                 f22,                  f3,                 f31,                 f32
-  double precision ::                   f4,                 f41,                 f42,                  f5,                 f51
-  double precision ::                  f52,                 fc1,                 fc2,                 fc3,                 fc4
-  double precision ::                  fc5,           fex(ip00),           fey(ip00),           fez(ip00),       ff(ip11,ip60)
-  double precision ::                  fv2,                 fv3,                 fv4,                 fv5,           fxx(ip00)
-  double precision ::            fxy(ip00),           fxz(ip00),           fyy(ip00),           fyz(ip00),           fzz(ip00)
-  double precision ::                   g1,                 g11,                 g12,                 g1m,                 g1p
-  double precision ::                   g2,                 g21,                 g22,                 g2m,                 g2p
-  double precision ::                   g3,                 g31,                 g32,                  g4,                 g41
-  double precision ::                  g42,                  g5,                 g51,                 g52,                 gc1
-  double precision ::                  gc2,                 gc3,                 gc4,                 gc5,                  gd
-  double precision ::                  gd1,                 gd2,                 gv2,                 gv3,                 gv4
-  double precision ::                  gv5,                  h1,                 h11,                 h12,                  h2
-  double precision ::                  h21,                 h22,                  h3,                 h31,                 h32
-  double precision ::                   h4,                 h41,                 h42,                  h5,                 h51
-  double precision ::                  h52,                 hc1,                 hc2,                 hc3,                 hc4
-  double precision ::                  hc5,                  hl,                  hm,                  hr,                 hv2
-  double precision ::                  hv3,                 hv4,                 hv5,                  nx,                  ny
-  double precision ::                   nz,                 p11,                 p12,                 p13,                 p14
-  double precision ::                  p15,                 p21,                 p22,                 p23,                 p24
-  double precision ::                  p25,                 p31,                 p32,                 p33,                 p34
-  double precision ::                  p35,                 p41,                 p42,                 p43,                 p44
-  double precision ::                  p45,                 p51,                 p52,                 p53,                 p54
-  double precision ::                  p55,            ps(ip11),                 q11,                 q12,                 q13
-  double precision ::                  q14,                 q15,                 q1f,               q1f1m,               q1f1p
-  double precision ::                q1f2p,                 q21,                 q22,                 q23,                 q24
-  double precision ::                  q25,                 q2f,               q2f1m,               q2f1p,               q2f2p
-  double precision ::                  q31,                 q32,                 q33,                 q34,                 q35
-  double precision ::                  q3f,               q3f1m,               q3f1p,               q3f2p,                 q41
-  double precision ::                  q42,                 q43,                 q44,                 q45,                 q4f
-  double precision ::                q4f1m,               q4f1p,               q4f2p,                 q51,                 q52
-  double precision ::                  q53,                 q54,                 q55,                 q5f,               q5f1m
-  double precision ::                q5f1p,               q5f2p,           qcx(ip12),           qcy(ip12),           qcz(ip12)
-  double precision ::               rhoami,              rhoiam,                rhom,               rhomi,sn(lgsnlt,nind,ndir)
-  double precision ::                   sw,          toxx(ip12),          toxy(ip12),          toxz(ip12),          toyy(ip12)
-  double precision ::           toyz(ip12),          tozz(ip12),        u(ip11,ip60),                  ul,                  um
-  double precision ::                   ur,        v(ip11,ip60),                  v1,                  v4,                  v5
-  double precision ::                vitm2,                  vl,                  vm,                  vn,                  vr
-  double precision ::                  w11,                 w12,                 w13,                 w14,                 w15
-  double precision ::                  w21,                 w22,                 w23,                 w24,                 w25
-  double precision ::                   wl,                  wm,                  wr,                ww11,                ww12
-  double precision ::                 ww13,                ww14,                ww15,                ww21,                ww22
-  double precision ::                 ww23,                ww24,                ww25
+    integer          ::       i,     i1,   i1m1,   i1p1,     i2
+    integer          ::    i2m1,   i2m2,     id,   iexp,   ind1
+    integer          ::    ind2,isortie, ityprk,      j,     j1
+    integer          ::    j1m1,   j1p1,     j2,   j2m1,   j2m2
+    integer          ::      jd,      k,     k1,   k1m1,   k1p1
+    integer          ::      k2,   k2m1,   k2m2,     kd,   kdir
+    integer          ::  lgsnlt,     lm,      m,     m1,      n
+    integer          ::     n0c,     n1,    nci,    ncj,    nck
+    integer          ::     nid,   nijd,   ninc,    njd
+    double precision ::                   al,                  am,                am2i,                  ar,              beta11
+    double precision ::               beta12,              beta21,              beta22,              beta31,              beta32
+    double precision ::               beta41,              beta42,              beta51,              beta52,                 c00
+    double precision ::                  c01,                 c10,                 c11,                 c20,                 c21
+    double precision ::          cmui1(ip21),         cmui2(ip21),         cmuj1(ip21),         cmuj2(ip21),         cmuk1(ip21)
+    double precision ::          cmuk2(ip21),                cnds,           cvi(ip21),           cvj(ip21),           cvk(ip21)
+    double precision ::                 d1c1,                d1c2,                d1c3,                d2c1,                d2c2
+    double precision ::                 d2c3,                d3c1,                d3c2,                d3c3,                d4c1
+    double precision ::                 d4c2,                d4c3,                d5c1,                d5c2,                d5c3
+    double precision ::                  df1,                 df2,                 df3,                 df4,                 df5
+    double precision ::                  dg1,                 dg2,                 dg3,                 dg4,                 dg5
+    double precision ::                  dh1,                 dh2,                 dh3,                 dh4,                 dh5
+    double precision ::                  eps,                  f1,                 f11,                 f12,                  f2
+    double precision ::                  f21,                 f22,                  f3,                 f31,                 f32
+    double precision ::                   f4,                 f41,                 f42,                  f5,                 f51
+    double precision ::                  f52,                 fc1,                 fc2,                 fc3,                 fc4
+    double precision ::                  fc5,           fex(ip00),           fey(ip00),           fez(ip00),       ff(ip11,ip60)
+    double precision ::                  fv2,                 fv3,                 fv4,                 fv5,           fxx(ip00)
+    double precision ::            fxy(ip00),           fxz(ip00),           fyy(ip00),           fyz(ip00),           fzz(ip00)
+    double precision ::                   g1,                 g11,                 g12,                 g1m,                 g1p
+    double precision ::                   g2,                 g21,                 g22,                 g2m,                 g2p
+    double precision ::                   g3,                 g31,                 g32,                  g4,                 g41
+    double precision ::                  g42,                  g5,                 g51,                 g52,                 gc1
+    double precision ::                  gc2,                 gc3,                 gc4,                 gc5,                  gd
+    double precision ::                  gd1,                 gd2,                 gv2,                 gv3,                 gv4
+    double precision ::                  gv5,                  h1,                 h11,                 h12,                  h2
+    double precision ::                  h21,                 h22,                  h3,                 h31,                 h32
+    double precision ::                   h4,                 h41,                 h42,                  h5,                 h51
+    double precision ::                  h52,                 hc1,                 hc2,                 hc3,                 hc4
+    double precision ::                  hc5,                  hl,                  hm,                  hr,                 hv2
+    double precision ::                  hv3,                 hv4,                 hv5,                  nx,                  ny
+    double precision ::                   nz,                 p11,                 p12,                 p13,                 p14
+    double precision ::                  p15,                 p21,                 p22,                 p23,                 p24
+    double precision ::                  p25,                 p31,                 p32,                 p33,                 p34
+    double precision ::                  p35,                 p41,                 p42,                 p43,                 p44
+    double precision ::                  p45,                 p51,                 p52,                 p53,                 p54
+    double precision ::                  p55,            ps(ip11),                 q11,                 q12,                 q13
+    double precision ::                  q14,                 q15,                 q1f,               q1f1m,               q1f1p
+    double precision ::                q1f2p,                 q21,                 q22,                 q23,                 q24
+    double precision ::                  q25,                 q2f,               q2f1m,               q2f1p,               q2f2p
+    double precision ::                  q31,                 q32,                 q33,                 q34,                 q35
+    double precision ::                  q3f,               q3f1m,               q3f1p,               q3f2p,                 q41
+    double precision ::                  q42,                 q43,                 q44,                 q45,                 q4f
+    double precision ::                q4f1m,               q4f1p,               q4f2p,                 q51,                 q52
+    double precision ::                  q53,                 q54,                 q55,                 q5f,               q5f1m
+    double precision ::                q5f1p,               q5f2p,           qcx(ip12),           qcy(ip12),           qcz(ip12)
+    double precision ::               rhoami,              rhoiam,                rhom,               rhomi,sn(lgsnlt,nind,ndir)
+    double precision ::                   sw,          toxx(ip12),          toxy(ip12),          toxz(ip12),          toyy(ip12)
+    double precision ::           toyz(ip12),          tozz(ip12),        u(ip11,ip60),                  ul,                  um
+    double precision ::                   ur,        v(ip11,ip60),                  v1,                  v4,                  v5
+    double precision ::                vitm2,                  vl,                  vm,                  vn,                  vr
+    double precision ::                  w11,                 w12,                 w13,                 w14,                 w15
+    double precision ::                  w21,                 w22,                 w23,                 w24,                 w25
+    double precision ::                   wl,                  wm,                  wr,                ww11,                ww12
+    double precision ::                 ww13,                ww14,                ww15,                ww21,                ww22
+    double precision ::                 ww23,                ww24,                ww25
 !
 !-------------------------------------------------------------------
 !
@@ -359,7 +359,7 @@ contains
 !         d1c2=(q1f1p-q1f)**2
 !         d1c3=(q1f2p-q1f1p)**2
              d1c1=4.*((q1f-q1f1m)*c10)**2
-             d1c2=4.*((q1f1p-q1f)*c01)**2         
+             d1c2=4.*((q1f1p-q1f)*c01)**2
              d1c3=4.*((q1f2p-q1f1p)*c01*c21/c00)**2
              d2c1=4.*((q2f-q2f1m)*c10)**2
              d2c2=4.*((q2f1p-q2f)*c01)**2
@@ -403,7 +403,7 @@ contains
              g1p=cmui2(m1)*cvi(m1)/(cmui1(m)*cvi(m)+cmui2(m)*cvi(m)+cmui2(m1)*cvi(m1))
              g2p=1.-g1p
              g2m=cmui1(m1)*cvi(m1)/(cmui1(m1)*cvi(m1)+cmui2(m1)*cvi(m1)+cmui2(m+2*ninc)*cvi(m+2*ninc))
-             g1m=1.-g2m   
+             g1m=1.-g2m
 !        calculs des poids wi
              ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
                   +0.5*(1.-sign(1.,v1))*(g1m/beta11)
@@ -609,11 +609,11 @@ contains
 !-------------------------------------------------------------------
 !        produit de Q avec les flux Euler aux points (i-1) a (i+2)
              q1f1m=q11*v(n-ninc  ,4)+q12*fxz(m-ninc)  +q13*fyz(m-ninc) &
-                  +q14*fzz(m-ninc)  +q15*fez(m-ninc) 
+                  +q14*fzz(m-ninc)  +q15*fez(m-ninc)
              q1f  =q11*v(n       ,4)+q12*fxz(m)       +q13*fyz(m) &
                   +q14*fzz(m)       +q15*fez(m)
              q1f1p=q11*v(n+ninc  ,4)+q12*fxz(m+ninc)  +q13*fyz(m+ninc) &
-                  +q14*fzz(m+ninc)  +q15*fez(m+ninc)     
+                  +q14*fzz(m+ninc)  +q15*fez(m+ninc)
              q1f2p=q11*v(n+2*ninc,4)+q12*fxz(m+2*ninc)+q13*fyz(m+2*ninc) &
                   +q14*fzz(m+2*ninc)+q15*fez(m+2*ninc)
 !
@@ -652,12 +652,12 @@ contains
                   +q54*fzz(m+ninc)  +q55*fez(m+ninc)
              q5f2p=q51*v(n+2*ninc,4)+q52*fxz(m+2*ninc)+q53*fyz(m+2*ninc) &
                   +q54*fzz(m+2*ninc)+q55*fez(m+2*ninc)
-!        calcul des flux d'ordre 2 sur les 2 stencils       
+!        calcul des flux d'ordre 2 sur les 2 stencils
              h11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
                   +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
              h12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
                   +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
-!     
+!
              h21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
                   +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
              h22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
@@ -766,7 +766,7 @@ contains
                   +(cmui2(m1)*toxz(n)+cmui1(m1)*toxz(n1))*sn(m1,kdir,3)
              fv3=(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,1) &
                   +(cmui2(m1)*toyy(n)+cmui1(m1)*toyy(n1))*sn(m1,kdir,2) &
-                  +(cmui2(m1)*toyz(n)+cmui1(m1)*toyz(n1))*sn(m1,kdir,3)  
+                  +(cmui2(m1)*toyz(n)+cmui1(m1)*toyz(n1))*sn(m1,kdir,3)
              fv4=(cmui2(m1)*toxz(n)+cmui1(m1)*toxz(n1))*sn(m1,kdir,1) &
                   +(cmui2(m1)*toyz(n)+cmui1(m1)*toyz(n1))*sn(m1,kdir,2) &
                   +(cmui2(m1)*tozz(n)+cmui1(m1)*tozz(n1))*sn(m1,kdir,3)
@@ -975,7 +975,7 @@ contains
 !         d1c2=(q1f1p-q1f)**2
 !         d1c3=(q1f2p-q1f1p)**2
              d1c1=4.*((q1f-q1f1m)*c10)**2
-             d1c2=4.*((q1f1p-q1f)*c01)**2         
+             d1c2=4.*((q1f1p-q1f)*c01)**2
              d1c3=4.*((q1f2p-q1f1p)*c01*c21/c00)**2
              d2c1=4.*((q2f-q2f1m)*c10)**2
              d2c2=4.*((q2f1p-q2f)*c01)**2
@@ -1225,11 +1225,11 @@ contains
 !-------------------------------------------------------------------
 !        produit de Q avec les flux Euler aux points (i-1) a (i+2)
              q1f1m=q11*v(n-ninc  ,4)+q12*fxz(m-ninc)  +q13*fyz(m-ninc) &
-                  +q14*fzz(m-ninc)  +q15*fez(m-ninc) 
+                  +q14*fzz(m-ninc)  +q15*fez(m-ninc)
              q1f  =q11*v(n       ,4)+q12*fxz(m)       +q13*fyz(m) &
                   +q14*fzz(m)       +q15*fez(m)
              q1f1p=q11*v(n+ninc  ,4)+q12*fxz(m+ninc)  +q13*fyz(m+ninc) &
-                  +q14*fzz(m+ninc)  +q15*fez(m+ninc)     
+                  +q14*fzz(m+ninc)  +q15*fez(m+ninc)
              q1f2p=q11*v(n+2*ninc,4)+q12*fxz(m+2*ninc)+q13*fyz(m+2*ninc) &
                   +q14*fzz(m+2*ninc)+q15*fez(m+2*ninc)
 !
@@ -1268,12 +1268,12 @@ contains
                   +q54*fzz(m+ninc)  +q55*fez(m+ninc)
              q5f2p=q51*v(n+2*ninc,4)+q52*fxz(m+2*ninc)+q53*fyz(m+2*ninc) &
                   +q54*fzz(m+2*ninc)+q55*fez(m+2*ninc)
-!        calcul des flux d'ordre 2 sur les 2 stencils       
+!        calcul des flux d'ordre 2 sur les 2 stencils
              h11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
                   +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
              h12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
                   +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
-!     
+!
              h21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
                   +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
              h22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
@@ -1295,7 +1295,7 @@ contains
                   +0.5*(1.-sign(1.,v5))*(q5f1p*c11 +q5f2p*c10)
 !        calcul des senseurs beta (au carre)
              iexp=2
-!         iexp=1 
+!         iexp=1
              beta11=(0.5*(1.+sign(1.,v1))*d1c1 &
                   +0.5*(1.-sign(1.,v1))*d1c2+eps)**iexp
              beta12=(0.5*(1.+sign(1.,v1))*d1c2 &
@@ -1393,7 +1393,7 @@ contains
                   +(cmuj2(m1)*(toxy(n )*ul+toyy(n )*vl+toyz(n )*wl+qcy(n )) &
                   +cmuj1(m1)*(toxy(n1)*ur+toyy(n1)*vr+toyz(n1)*wr+qcy(n1)))*sn(m1,kdir,2) &
                   +(cmuj2(m1)*(toxz(n )*ul+toyz(n )*vl+tozz(n )*wl+qcz(n )) &
-                  +cmuj1(m1)*(toxz(n1)*ur+toyz(n1)*vr+tozz(n1)*wr+qcz(n1)))*sn(m1,kdir,3) 
+                  +cmuj1(m1)*(toxz(n1)*ur+toyz(n1)*vr+tozz(n1)*wr+qcz(n1)))*sn(m1,kdir,3)
              u(n1,1)=u(n1,1)-dg1
              u(n1,2)=u(n1,2)-dg2+0.5*gv2
              u(n1,3)=u(n1,3)-dg3+0.5*gv3
@@ -1419,8 +1419,8 @@ contains
           ind2 = indc(i2m1,j,k)
           do n=ind1,ind2
              m=n-n0c
-             m1=m+ninc 
-             n1=n+ninc 
+             m1=m+ninc
+             n1=n+ninc
 !        vecteur normal unitaire a la face consideree (face k+1/2)
              cnds=sqrt(sn(m1,kdir,1)*sn(m1,kdir,1)+ &
                   sn(m1,kdir,2)*sn(m1,kdir,2)+ &
@@ -1593,7 +1593,7 @@ contains
 !         d1c2=(q1f1p-q1f)**2
 !         d1c3=(q1f2p-q1f1p)**2
              d1c1=4.*((q1f-q1f1m)*c10)**2
-             d1c2=4.*((q1f1p-q1f)*c01)**2         
+             d1c2=4.*((q1f1p-q1f)*c01)**2
              d1c3=4.*((q1f2p-q1f1p)*c01*c21/c00)**2
              d2c1=4.*((q2f-q2f1m)*c10)**2
              d2c2=4.*((q2f1p-q2f)*c01)**2
@@ -1843,11 +1843,11 @@ contains
 !-------------------------------------------------------------------
 !        produit de Q avec les flux Euler aux points (i-1) a (i+2)
              q1f1m=q11*v(n-ninc  ,4)+q12*fxz(m-ninc)  +q13*fyz(m-ninc) &
-                  +q14*fzz(m-ninc)  +q15*fez(m-ninc) 
+                  +q14*fzz(m-ninc)  +q15*fez(m-ninc)
              q1f  =q11*v(n       ,4)+q12*fxz(m)       +q13*fyz(m) &
                   +q14*fzz(m)       +q15*fez(m)
              q1f1p=q11*v(n+ninc  ,4)+q12*fxz(m+ninc)  +q13*fyz(m+ninc) &
-                  +q14*fzz(m+ninc)  +q15*fez(m+ninc)     
+                  +q14*fzz(m+ninc)  +q15*fez(m+ninc)
              q1f2p=q11*v(n+2*ninc,4)+q12*fxz(m+2*ninc)+q13*fyz(m+2*ninc) &
                   +q14*fzz(m+2*ninc)+q15*fez(m+2*ninc)
 !
@@ -1886,12 +1886,12 @@ contains
                   +q54*fzz(m+ninc)  +q55*fez(m+ninc)
              q5f2p=q51*v(n+2*ninc,4)+q52*fxz(m+2*ninc)+q53*fyz(m+2*ninc) &
                   +q54*fzz(m+2*ninc)+q55*fez(m+2*ninc)
-!        calcul des flux d'ordre 2 sur les 2 stencils       
+!        calcul des flux d'ordre 2 sur les 2 stencils
              h11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
                   +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
              h12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
                   +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
-!     
+!
              h21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
                   +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
              h22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
@@ -1913,7 +1913,7 @@ contains
                   +0.5*(1.-sign(1.,v5))*(q5f1p*c11 +q5f2p*c10)
 !        calcul des senseurs beta (au carre)
              iexp=2
-!         iexp=1 
+!         iexp=1
              beta11=(0.5*(1.+sign(1.,v1))*d1c1 &
                   +0.5*(1.-sign(1.,v1))*d1c2+eps)**iexp
              beta12=(0.5*(1.+sign(1.,v1))*d1c2 &
@@ -1999,7 +1999,7 @@ contains
 !        calcul des flux visqueux (multiplies par -2)
              hv2=(toxx(n)+toxx(n1))*sn(m1,kdir,1) &
                   +(toxy(n)+toxy(n1))*sn(m1,kdir,2) &
-                  +(toxz(n)+toxz(n1))*sn(m1,kdir,3) 
+                  +(toxz(n)+toxz(n1))*sn(m1,kdir,3)
              hv3=(toxy(n)+toxy(n1))*sn(m1,kdir,1) &
                   +(toyy(n)+toyy(n1))*sn(m1,kdir,2) &
                   +(toyz(n)+toyz(n1))*sn(m1,kdir,3)
@@ -2037,8 +2037,8 @@ contains
        ind2 = indc(i1,j2m1,k)
        do n=ind1,ind2,ncj
           m=n-n0c
-!       flux a la facette frontiere 
-          f1=v(n-ninc,2)*sn(m,kdir,1) & 
+!       flux a la facette frontiere
+          f1=v(n-ninc,2)*sn(m,kdir,1) &
                + v(n-ninc,3)*sn(m,kdir,2) &
                + v(n-ninc,4)*sn(m,kdir,3)
           f2=(fxx(m-ninc)-toxx(n-ninc))*sn(m,kdir,1) &
@@ -2067,11 +2067,11 @@ contains
     do k=k1,k2m1
        ind1 = indc(i2m1,j1  ,k)
        ind2 = indc(i2m1,j2m1,k)
-       do n=ind1,ind2,ncj       
+       do n=ind1,ind2,ncj
           m=n-n0c
           m1=m+ninc
           n1=n+ninc
-!       flux a la facette frontiere             
+!       flux a la facette frontiere
           f1=v(n1,2)*sn(m1,kdir,1) &
                + v(n1,3)*sn(m1,kdir,2) &
                + v(n1,4)*sn(m1,kdir,3)
@@ -2093,7 +2093,7 @@ contains
           u(n,1)=u(n,1)+f1
           u(n,2)=u(n,2)+f2
           u(n,3)=u(n,3)+f3
-          u(n,4)=u(n,4)+f4        
+          u(n,4)=u(n,4)+f4
           u(n,5)=u(n,5)+f5
        enddo
     enddo
@@ -2106,7 +2106,7 @@ contains
        ind2 = indc(i2m1,j1,k)
        do n=ind1,ind2
           m=n-n0c
-!       flux a la facette frontiere 
+!       flux a la facette frontiere
           g1=v(n-ninc,2)*sn(m,kdir,1) &
                + v(n-ninc,3)*sn(m,kdir,2) &
                + v(n-ninc,4)*sn(m,kdir,3)
@@ -2140,7 +2140,7 @@ contains
           m=n-n0c
           m1=m+ninc
           n1=n+ninc
-!       flux a la facette frontiere        
+!       flux a la facette frontiere
           g1=v(n1,2)*sn(m1,kdir,1) &
                + v(n1,3)*sn(m1,kdir,2) &
                + v(n1,4)*sn(m1,kdir,3)
@@ -2175,7 +2175,7 @@ contains
        ind2 = indc(i2m1,j,k1)
        do n=ind1,ind2
           m=n-n0c
-!       flux a la facette frontiere 
+!       flux a la facette frontiere
           h1=v(n-ninc,2)*sn(m,kdir,1) &
                + v(n-ninc,3)*sn(m,kdir,2) &
                + v(n-ninc,4)*sn(m,kdir,3)
@@ -2288,12 +2288,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine sch_weno3pond_3d

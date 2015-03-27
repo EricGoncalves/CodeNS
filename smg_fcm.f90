@@ -20,13 +20,13 @@ contains
     use maillage
     use chainecarac
     implicit none
-  integer          ::    i, i1c, i2c,  ic,  if
-  integer          :: imgc,imgf,   j, j1c, j2c
-  integer          ::   jc,  jf,   k, k1c, k2c
-  integer          ::   kc,  kf,   l, lmc, lmf
-  integer          ::  n0c, n0f,  nc,  nf, nic
-  integer          ::  nif,nijc,nijf, njc, njf
-  double precision :: x(ip21),y(ip21),z(ip21)
+    integer          ::    i, i1c, i2c,  ic,  if
+    integer          :: imgc,imgf,   j, j1c, j2c
+    integer          ::   jc,  jf,   k, k1c, k2c
+    integer          ::   kc,  kf,   l, lmc, lmf
+    integer          ::  n0c, n0f,  nc,  nf, nic
+    integer          ::  nif,nijc,nijf, njc, njf
+    double precision :: x(ip21),y(ip21),z(ip21)
 !
 !-----------------------------------------------------------------------
 !
@@ -79,12 +79,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lmc))+(j-jd1(lmc))*nic+(k-kd1(lmc))*nijc
     end function indc
     function    indf(i,j,k)
       implicit none
-  integer          ::    i,indf,   j,   k
+      integer          ::    i,indf,   j,   k
       indf=n0f+1+(i-id1(lmf))+(j-jd1(lmf))*nif+(k-kd1(lmf))*nijf
     end function indf
   end subroutine smg_fcm

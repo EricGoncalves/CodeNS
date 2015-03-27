@@ -44,9 +44,9 @@ contains
     use maillage
     use boundary
     implicit none
-  integer          ::          l,         m,        m0,    mdnmfb,      mfbi
-  integer          ::         ml,        mt,ncbd(ip41),ncin(ip41),       nid
-  integer          ::        njd
+    integer          ::          l,         m,        m0,    mdnmfb,      mfbi
+    integer          ::         ml,        mt,ncbd(ip41),ncin(ip41),       nid
+    integer          ::        njd
 !
 !-----------------------------------------------------------------------
 !

@@ -30,7 +30,7 @@ contains
 
     use mod_tcmd_dfpmcfg
     implicit none
-  integer          :: imot(nmx),     nmot
+    integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !

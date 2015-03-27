@@ -62,16 +62,16 @@ contains
     use mod_writdg
     use mod_residu
     implicit none
-  integer          ::   icyc,  imax,   img,  imin,  jmax
-  integer          ::   jmin,  kmax,  kmin,     l,    lm
-  integer          ::      m,    n0,  ncyc,ncycle,    ni
-  integer          ::    nid,  nijd,    nj,   njd,    nk
-  integer          ::   nmax,  npts
-  double precision ::     dt(ip11),res1xx(ip00),res2yy(ip00),res3zz(ip00),  res4(ip00)
-  double precision ::   res5(ip00),  res6(ip00),  res7(ip00),   tn8(ip00),u(ip11,ip60)
-  double precision ::   utau(ip42),v(ip11,ip60),     x(ip21),     y(ip21),     z(ip21)
-  integer         ,allocatable :: idumx(:),jdumx(:),kdumx(:)
-  double precision,allocatable ::  dumax(:),dumaxg(:), dumy1(:), dumy2(:),dumy2g(:)
+    integer          ::   icyc,  imax,   img,  imin,  jmax
+    integer          ::   jmin,  kmax,  kmin,     l,    lm
+    integer          ::      m,    n0,  ncyc,ncycle,    ni
+    integer          ::    nid,  nijd,    nj,   njd,    nk
+    integer          ::   nmax,  npts
+    double precision ::     dt(ip11),res1xx(ip00),res2yy(ip00),res3zz(ip00),  res4(ip00)
+    double precision ::   res5(ip00),  res6(ip00),  res7(ip00),   tn8(ip00),u(ip11,ip60)
+    double precision ::   utau(ip42),v(ip11,ip60),     x(ip21),     y(ip21),     z(ip21)
+    integer         ,allocatable :: idumx(:),jdumx(:),kdumx(:)
+    double precision,allocatable ::  dumax(:),dumaxg(:), dumy1(:), dumy2(:),dumy2g(:)
 !
 !-----------------------------------------------------------------------
 !

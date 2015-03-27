@@ -23,8 +23,8 @@ contains
     use kcle
     use mod_convich
     implicit none
-  integer          ::   long,longm1,    nm, nmult,    no
-  integer          ::     nr, nrest
+    integer          ::   long,longm1,    nm, nmult,    no
+    integer          ::     nr, nrest
 !
 !-----------------------------------------------------------------------
 !

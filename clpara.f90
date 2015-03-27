@@ -32,9 +32,9 @@ contains
     use para_var
     use para_fige
     implicit none
-  integer          ::          m,        mb,       mfb,  mmb(mtt),  mpb(mtt)
-  integer          ::         mt,        nc,ncbd(ip41),ncin(ip41),        ni
-  double precision ::     cson(ip11),pression(ip11),         rhoe1,    temp(ip11),  v(ip11,ip60)
+    integer          ::          m,        mb,       mfb,  mmb(mtt),  mpb(mtt)
+    integer          ::         mt,        nc,ncbd(ip41),ncin(ip41),        ni
+    double precision ::     cson(ip11),pression(ip11),         rhoe1,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

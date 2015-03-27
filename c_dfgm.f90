@@ -23,14 +23,14 @@ contains
 !-----parameters figes--------------------------------------------------
 !
     use para_fige
-    use sortiefichier 
+    use sortiefichier
     use mod_tcmd_dfgm
     use mod_b1_dfgm
 
     use mod_dfgm
 
     implicit none
-  integer          :: imot(nmx),     nmot
+    integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !

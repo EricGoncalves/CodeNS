@@ -26,9 +26,9 @@ contains
     use para_var
     use para_fige
     implicit none
-  integer          ::     icyc,       m,     mfl,      ml,mmb(mtt)
-  integer          :: mpb(mtt),      mt
-  double precision :: bceqt(ip41,neqt),      pres(ip40)
+    integer          ::     icyc,       m,     mfl,      ml,mmb(mtt)
+    integer          :: mpb(mtt),      mt
+    double precision :: bceqt(ip41,neqt),      pres(ip40)
 !
 !-----------------------------------------------------------------------
 !

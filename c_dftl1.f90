@@ -15,7 +15,7 @@ contains
     use sortiefichier
     use mod_tcmd_dftl1
     implicit none
-  integer          :: imot(nmx),     nmot
+    integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !

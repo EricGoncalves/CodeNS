@@ -40,8 +40,8 @@ contains
     use sortiefichier
     use schemanum
     implicit none
-  integer          :: ierrdis, kamort,    lig,muttrav
-  double precision :: rap_h0
+    integer          :: ierrdis, kamort,    lig,muttrav
+    double precision :: rap_h0
 !
 !-----------------------------------------------------------------------
 !
@@ -100,7 +100,7 @@ contains
 !---------------------------------------------------------------------------
 !       Modele k-eps de Jones et Launder (1972)
 !       2JLS -> SST    ; 2JLR -> realisable   ; 2JLM -> Cmu variable
-!       2JLC -> compressible   ;  2JLL -> SAS 
+!       2JLC -> compressible   ;  2JLL -> SAS
 !---------------------------------------------------------------------------
 !
     if(equatt(1:3).eq.'2JL') then

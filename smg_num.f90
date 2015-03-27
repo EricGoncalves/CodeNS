@@ -68,30 +68,30 @@ contains
     use mod_rscpsv
     use mod_atsch_num
     implicit none
-  integer          ::        icyc,     icycle,    icyexpl,      idcyc,        img
-  integer          ::        iter,     itypdf,     ityprk,          l,         lm
-  integer          ::     mcyresi,    mcysave,        mfc,        mfr,         mg
-  integer          ::        mglp,  mnc(ip43),mnpar(ip12),  mnr(ip44),         nc
-  integer          ::  ncbd(ip41), ncin(ip41),       ncyc,      ncycl,      ndcyc
-  integer          ::        ndeb,       nfin,        ngx
-  double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
-  double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
-  double precision ::         cvj(ip21),        cvk(ip21),        d0x(ip40),        d0y(ip40),        d0z(ip40)
-  double precision :: d_volt(ip11,ip60),       dist(ip12),         dt(ip11), ff_du(ip11,ip60),       fgam(ip42)
-  double precision ::          mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42),        nzn(ip42)
-  double precision ::        pres(ip40),   pression(ip11),ptdual(ip11,ip60),        qcx(ip12),        qcy(ip12)
-  double precision ::         qcz(ip12),        qtx(ip40),        qty(ip40),        qtz(ip40),          r(ip11)
-  double precision ::         rod(ip40),       roed(ip40),       roud(ip40),       rovd(ip40),       rowd(ip40)
-  double precision ::         rpi(ip40),        rti(ip40),    sn(ip31*ndir),        tm1(ip40),       tm10(ip40)
-  double precision ::        tm11(ip40),       tm12(ip40),       tm13(ip40),        tm2(ip40),        tm3(ip40)
-  double precision ::         tm4(ip40),        tm5(ip40),        tm6(ip40),        tm7(ip40),        tm8(ip40)
-  double precision ::         tm9(ip40),        tn1(ip00),       tn10(ip00),        tn2(ip00),        tn3(ip00)
-  double precision ::         tn4(ip00),        tn5(ip00),        tn6(ip00),        tn7(ip00),        tn8(ip00)
-  double precision ::         tn9(ip00),       toxx(ip12),       toxy(ip12),       toxz(ip12),       toyy(ip12)
-  double precision ::        toyz(ip12),       tozz(ip12),         tp(ip40),    u0(ip11,ip60), u_duv(ip11,ip60)
-  double precision ::        utau(ip42),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
-  double precision ::         vol(ip11),          x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44)
-  double precision ::           z(ip21),        znr(ip44),      ztemp(ip11)
+    integer          ::        icyc,     icycle,    icyexpl,      idcyc,        img
+    integer          ::        iter,     itypdf,     ityprk,          l,         lm
+    integer          ::     mcyresi,    mcysave,        mfc,        mfr,         mg
+    integer          ::        mglp,  mnc(ip43),mnpar(ip12),  mnr(ip44),         nc
+    integer          ::  ncbd(ip41), ncin(ip41),       ncyc,      ncycl,      ndcyc
+    integer          ::        ndeb,       nfin,        ngx
+    double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
+    double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
+    double precision ::         cvj(ip21),        cvk(ip21),        d0x(ip40),        d0y(ip40),        d0z(ip40)
+    double precision :: d_volt(ip11,ip60),       dist(ip12),         dt(ip11), ff_du(ip11,ip60),       fgam(ip42)
+    double precision ::          mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42),        nzn(ip42)
+    double precision ::        pres(ip40),   pression(ip11),ptdual(ip11,ip60),        qcx(ip12),        qcy(ip12)
+    double precision ::         qcz(ip12),        qtx(ip40),        qty(ip40),        qtz(ip40),          r(ip11)
+    double precision ::         rod(ip40),       roed(ip40),       roud(ip40),       rovd(ip40),       rowd(ip40)
+    double precision ::         rpi(ip40),        rti(ip40),    sn(ip31*ndir),        tm1(ip40),       tm10(ip40)
+    double precision ::        tm11(ip40),       tm12(ip40),       tm13(ip40),        tm2(ip40),        tm3(ip40)
+    double precision ::         tm4(ip40),        tm5(ip40),        tm6(ip40),        tm7(ip40),        tm8(ip40)
+    double precision ::         tm9(ip40),        tn1(ip00),       tn10(ip00),        tn2(ip00),        tn3(ip00)
+    double precision ::         tn4(ip00),        tn5(ip00),        tn6(ip00),        tn7(ip00),        tn8(ip00)
+    double precision ::         tn9(ip00),       toxx(ip12),       toxy(ip12),       toxz(ip12),       toyy(ip12)
+    double precision ::        toyz(ip12),       tozz(ip12),         tp(ip40),    u0(ip11,ip60), u_duv(ip11,ip60)
+    double precision ::        utau(ip42),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
+    double precision ::         vol(ip11),          x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44)
+    double precision ::           z(ip21),        znr(ip44),      ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
@@ -123,9 +123,9 @@ contains
     endif
 !
 !*************************************************************************
-!                                                         
-!     INTEGRATION TEMPORELLE - boucle en temps physique                  
-!                                                       
+!
+!     INTEGRATION TEMPORELLE - boucle en temps physique
+!
 !*************************************************************************
 !
     do icycle=1,ncycl
@@ -313,7 +313,7 @@ contains
                       enddo
                       nbd=mtcx
 !           call rfvc(ff_du,ncbd,mnc)
-                      call rfvc( & 
+                      call rfvc( &
                            ff_du,ncbd,mnc, &
                            pression,ztemp,cson)
                    endif
@@ -435,7 +435,7 @@ contains
                   'cccc',ncin,ncbd, &
                   tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
 !
-             if(kfmg.lt.3) then  
+             if(kfmg.lt.3) then
 !         sorties tecplot
                 call sortieplot2(    &
                      x,y,z,l,v,dist, &

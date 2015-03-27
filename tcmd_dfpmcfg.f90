@@ -15,10 +15,10 @@ contains
     use kcle
     use chainecarac
     use maillage
-    use boundary 
+    use boundary
     use mod_valenti
     implicit none
-  integer          ::      icmt,imot(nmx),       nm,     nmot,       no
+    integer          ::      icmt,imot(nmx),       nm,     nmot,       no
 !
 !-----------------------------------------------------------------------
 !

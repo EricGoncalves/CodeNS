@@ -34,11 +34,11 @@ contains
     use para_fige
     use boundary
     implicit none
-  integer          ::        dm1,       dm2,       dm3,    isens3,         m
-  integer          ::         m0,       m0n,        mb,       mbn,        mt
-  integer          ::        nci,ncin(ip41),      ndm3,      nfbi
-  double precision ::    x(ip21),xpar(ip00),   y(ip21),ypar(ip00),   z(ip21)
-  double precision :: zpar(ip00)
+    integer          ::        dm1,       dm2,       dm3,    isens3,         m
+    integer          ::         m0,       m0n,        mb,       mbn,        mt
+    integer          ::        nci,ncin(ip41),      ndm3,      nfbi
+    double precision ::    x(ip21),xpar(ip00),   y(ip21),ypar(ip00),   z(ip21)
+    double precision :: zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !

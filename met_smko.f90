@@ -51,16 +51,16 @@ contains
     use maillage
     use modeleturb
     implicit none
-  integer          ::    i,  i1,  i2,i2m1,ind1
-  integer          :: ind2,   j,  j1,  j2,j2m1
-  integer          ::    k,  k1,  k2,k2m1,   l
-  integer          ::    m,   n, n0c, nid,nijd
-  integer          ::  njd
-  double precision ::           aa,       betac,      betasc,          cd,  cfke(ip13)
-  double precision ::   cson(ip11),        gkgo,        omeg,qcxts5(ip12),qcyts6(ip12)
-  double precision ::  tprod(ip00),txxf5x(ip12),txyf5y(ip12),txzf5z(ip12),tyyf6x(ip12)
-  double precision :: tyzf6y(ip12),tzzf6z(ip12),v(ip11,ip60),         xmt,        xmt0
-  double precision ::           xw
+    integer          ::    i,  i1,  i2,i2m1,ind1
+    integer          :: ind2,   j,  j1,  j2,j2m1
+    integer          ::    k,  k1,  k2,k2m1,   l
+    integer          ::    m,   n, n0c, nid,nijd
+    integer          ::  njd
+    double precision ::           aa,       betac,      betasc,          cd,  cfke(ip13)
+    double precision ::   cson(ip11),        gkgo,        omeg,qcxts5(ip12),qcyts6(ip12)
+    double precision ::  tprod(ip00),txxf5x(ip12),txyf5y(ip12),txzf5z(ip12),tyyf6x(ip12)
+    double precision :: tyzf6y(ip12),tzzf6z(ip12),v(ip11,ip60),         xmt,        xmt0
+    double precision ::           xw
 !
 !-----------------------------------------------------------------------
 !
@@ -117,12 +117,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    fmt(aa)
       implicit none
-  double precision ::  aa,fmt
+      double precision ::  aa,fmt
       fmt=0.5*(1.+sign(1.,aa-xmt0))*(aa**2-xmt0**2)
     end function fmt
   end subroutine met_smko

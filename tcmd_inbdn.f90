@@ -20,8 +20,8 @@ contains
     use mod_valenti
     use mod_vallent
     implicit none
-  integer          ::       icmt, imot(nmx),     kibdn,      kval,lmfb(nobj)
-  integer          ::      lmfbd,        nm,      nmot
+    integer          ::       icmt, imot(nmx),     kibdn,      kval,lmfb(nobj)
+    integer          ::      lmfbd,        nm,      nmot
 !
 !-----------------------------------------------------------------------
 !

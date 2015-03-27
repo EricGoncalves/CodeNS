@@ -33,12 +33,12 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::     i,   i1,   i2,indjk,    j
-  integer          ::    j1,   j2,    k,   k1,   k2
-  integer          ::     l,    m,    n,   n0,  nid
-  integer          ::  nijd,  njd
-  double precision ::   x(ip21),xcc(ip00),  y(ip21),ycc(ip00),  z(ip21)
-  double precision :: zcc(ip00)
+    integer          ::     i,   i1,   i2,indjk,    j
+    integer          ::    j1,   j2,    k,   k1,   k2
+    integer          ::     l,    m,    n,   n0,  nid
+    integer          ::  nijd,  njd
+    double precision ::   x(ip21),xcc(ip00),  y(ip21),ycc(ip00),  z(ip21)
+    double precision :: zcc(ip00)
 !
 !-----------------------------------------------------------------------
 !
@@ -90,7 +90,7 @@ contains
   contains
     function    ind(  j,k)
       implicit none
-  integer          :: ind,  j,  k
+      integer          :: ind,  j,  k
       ind=n0+1+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine atccc

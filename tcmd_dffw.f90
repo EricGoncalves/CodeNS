@@ -19,7 +19,7 @@ contains
     use definition
 
     implicit none
-  integer          ::      icmt,       im,imot(nmx),       nm,     nmot
+    integer          ::      icmt,       im,imot(nmx),       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !

@@ -20,16 +20,16 @@ contains
     use maillage
     use chainecarac
     implicit none
-  integer          ::      i,   i1c,   i2c,    ic,    id
-  integer          ::     if,  imgc,  imgf,incf_i,incf_j
-  integer          :: incf_k,     j,   j1c,   j2c,    jc
-  integer          ::     jd,    jf,     k,   k1c,   k2c
-  integer          ::     kc,    kd,    kf,     l,   lmc
-  integer          ::    lmf,   n0c,   n0f,    nc,   nf1
-  integer          ::    nf2,   nf3,   nf4,   nf5,   nf6
-  integer          ::    nf7,   nf8,   nic,   nif,  nijc
-  integer          ::   nijf,   njc,   njf
-  double precision ::   v(ip11),vol(ip11)
+    integer          ::      i,   i1c,   i2c,    ic,    id
+    integer          ::     if,  imgc,  imgf,incf_i,incf_j
+    integer          :: incf_k,     j,   j1c,   j2c,    jc
+    integer          ::     jd,    jf,     k,   k1c,   k2c
+    integer          ::     kc,    kd,    kf,     l,   lmc
+    integer          ::    lmf,   n0c,   n0f,    nc,   nf1
+    integer          ::    nf2,   nf3,   nf4,   nf5,   nf6
+    integer          ::    nf7,   nf8,   nic,   nif,  nijc
+    integer          ::   nijf,   njc,   njf
+    double precision ::   v(ip11),vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
@@ -132,17 +132,17 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lmc))+(j-jd1(lmc))*nic+(k-kd1(lmc))*nijc
     end function indc
     function    indf(i,j,k)
       implicit none
-  integer          ::    i,indf,   j,   k
+      integer          ::    i,indf,   j,   k
       indf=n0f+1+(i-id1(lmf))+(j-jd1(lmf))*nif+(k-kd1(lmf))*nijf
     end function indf
     function    incf(id,jd,kd)
       implicit none
-  integer          ::   id,incf,  jd,  kd
+      integer          ::   id,incf,  jd,  kd
       incf=id+jd*nif+kd*nijf
     end function incf
   end subroutine smg_fcs

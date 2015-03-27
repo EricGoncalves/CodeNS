@@ -26,27 +26,27 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-  integer          ::      i,    i1,  i1m1,    i2,  i2m1
-  integer          ::     id,  ind1,  ind2,ityprk,     j
-  integer          ::     j1,  j1m1,    j2,  j2m1,    jd
-  integer          ::      k,    k1,  k1m1,    k2,  k2m1
-  integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
-  integer          ::     ls,     m,     n,   n0c,   nci
-  integer          ::    ncj,   nck,   nid,  nijd,  ninc
-  integer          ::    njd
-  double precision ::                   cc,                cnds,          cson(ip11),        d(ip11,ip60),          dfex(ip00)
-  double precision ::           dfey(ip00),          dfez(ip00),          dfxx(ip00),          dfxy(ip00),          dfxz(ip00)
-  double precision ::           dfyy(ip00),          dfyz(ip00),          dfzz(ip00),            dt(ip11),               dtpas
-  double precision ::                 fact,                 fex,                 fey,                 fez,       ff(ip11,ip60)
-  double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
-  double precision ::                  fzz,            mu(ip12),           mut(ip12),                pres,            ps(ip11)
-  double precision ::             rv(ip00),sn(lgsnlt,nind,ndir),                 tn1,                 tn2,                 tn3
-  double precision ::                  tn4,                 tn5,        u(ip11,ip60),                  ui,                  uu
-  double precision ::         v(ip11,ip60),                  vi,                  vn,           vol(ip11),                  vv
-  double precision ::                   wi,                 wi1,                 wi2,                 wi3,                 wi4
-  double precision ::                  wi5,                  ww
-  double precision,allocatable :: coefdiag(:), coefe(:,:),    d2w1(:),    d2w2(:),    d2w3(:)
-  double precision,allocatable ::     d2w4(:),    d2w5(:)
+    integer          ::      i,    i1,  i1m1,    i2,  i2m1
+    integer          ::     id,  ind1,  ind2,ityprk,     j
+    integer          ::     j1,  j1m1,    j2,  j2m1,    jd
+    integer          ::      k,    k1,  k1m1,    k2,  k2m1
+    integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
+    integer          ::     ls,     m,     n,   n0c,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,  ninc
+    integer          ::    njd
+    double precision ::                   cc,                cnds,          cson(ip11),        d(ip11,ip60),          dfex(ip00)
+    double precision ::           dfey(ip00),          dfez(ip00),          dfxx(ip00),          dfxy(ip00),          dfxz(ip00)
+    double precision ::           dfyy(ip00),          dfyz(ip00),          dfzz(ip00),            dt(ip11),               dtpas
+    double precision ::                 fact,                 fex,                 fey,                 fez,       ff(ip11,ip60)
+    double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
+    double precision ::                  fzz,            mu(ip12),           mut(ip12),                pres,            ps(ip11)
+    double precision ::             rv(ip00),sn(lgsnlt,nind,ndir),                 tn1,                 tn2,                 tn3
+    double precision ::                  tn4,                 tn5,        u(ip11,ip60),                  ui,                  uu
+    double precision ::         v(ip11,ip60),                  vi,                  vn,           vol(ip11),                  vv
+    double precision ::                   wi,                 wi1,                 wi2,                 wi3,                 wi4
+    double precision ::                  wi5,                  ww
+    double precision,allocatable :: coefdiag(:), coefe(:,:),    d2w1(:),    d2w2(:),    d2w3(:)
+    double precision,allocatable ::     d2w4(:),    d2w5(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -89,8 +89,8 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
-!!!$OMP PARALLEL 
-!!!$OMP DO 
+!!!$OMP PARALLEL
+!!!$OMP DO
     do n=ind1,ind2
        m=n-n0c
        d(n,1)=0.
@@ -112,7 +112,7 @@ contains
        coefe(3,m)=0.
        rv(m)=0.
     enddo
-!!!$OMP END DO 
+!!!$OMP END DO
 
 !-----rayon spectral visqueux et coef diagonal------------------------------
 
@@ -228,7 +228,7 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO 
+!!!$OMP END DO
 
 !------calcul instationnaire avec dts-----------------------------------
 
@@ -244,7 +244,7 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO 
+!!!$OMP END DO
     endif
 
 !*************************************************************************
@@ -271,7 +271,7 @@ contains
                 enddo
              enddo
           enddo
-!!!$OMP END DO 
+!!!$OMP END DO
        else
 !!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
           do k=k1,k2m1
@@ -288,7 +288,7 @@ contains
                 enddo
              enddo
           enddo
-!!!$OMP END DO 
+!!!$OMP END DO
        endif
 
 !------direction i------------------------------------------
@@ -344,7 +344,7 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO 
+!!!$OMP END DO
 
 !------direction j------------------------------------------
 
@@ -399,7 +399,7 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO 
+!!!$OMP END DO
 
 !------direction k------------------------------------------
 
@@ -454,7 +454,7 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO 
+!!!$OMP END DO
 
 !*******************************************************************************
 !     Calcul de l'increment implicite
@@ -508,7 +508,7 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO 
+!!!$OMP END DO
 
     enddo  !fin boucle sous-iterations
 !
@@ -531,7 +531,7 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO 
+!!!$OMP END DO
 !!!$OMP END PARALLEL
 
     DEALLOCATE(coefe,coefdiag,d2w1,d2w2,d2w3,d2w4,d2w5)
@@ -540,12 +540,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine implimf_3d

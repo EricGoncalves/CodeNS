@@ -49,7 +49,7 @@ contains
     use kcle
     use proprieteflu
     implicit none
-  integer          :: nonzst
+    integer          :: nonzst
 !
 !-----------------------------------------------------------------------
 !

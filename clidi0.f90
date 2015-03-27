@@ -15,8 +15,8 @@ contains
 !_A    Calcul des variables sur les facettes frontieres par
 !_A    traitement des conditions aux limites :
 !_A     (direction de la vitesse absolue)/dt=0,
-!_A     pression d'arret imposee ,  pi=pa1*rpi 
-!_A     enthalpie d'arret imposee , hi=ha1*rti 
+!_A     pression d'arret imposee ,  pi=pa1*rpi
+!_A     enthalpie d'arret imposee , hi=ha1*rti
 !_A    Utilisation d une relation de compatibilite en ro,p,qx,qy,qz.
 !_A    Normales interieures.
 !
@@ -28,21 +28,21 @@ contains
     use proprieteflu
     use definition
     implicit none
-  integer          ::         id,        jd,        kd,         l,         m
-  integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
-  integer          ::   mpn(mtt),        mt,       n0c,       n0n,        nc
-  integer          :: ncbd(ip41),       nci,      ncij,     ncijk,      ncik
-  integer          ::        ncj,      ncjk,       nck,       nid,      nijd
-  integer          ::       nitn,       njd,        nn
-  double precision ::      am0(ip40),             b,          coef,    cson(ip11),            df
-  double precision ::            dqn,           eps,             f,         gam2t,          gam6
-  double precision ::           gamt,     nxn(ip42),     nyn(ip42),     nzn(ip42),       p(ip40)
-  double precision :: pression(ip11),            ps,      qn(ip40),           qns,           qxs
-  double precision ::            qys,           qzs,    resi(ip40),        residu,      ro(ip40)
-  double precision ::     roc0(ip40),         roq20,         roqn0,   rovn0(ip40),         rovv0
-  double precision ::      rpi(ip40),     rti(ip40),    temp(ip11),      un(ip40),   usdn2(ip40)
-  double precision ::   v(ip11,ip60),            vn,     vy0(ip40),     vz0(ip40),       y(ip21)
-  double precision ::       ym(ip40),       z(ip21),      zm(ip40)
+    integer          ::         id,        jd,        kd,         l,         m
+    integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
+    integer          ::   mpn(mtt),        mt,       n0c,       n0n,        nc
+    integer          :: ncbd(ip41),       nci,      ncij,     ncijk,      ncik
+    integer          ::        ncj,      ncjk,       nck,       nid,      nijd
+    integer          ::       nitn,       njd,        nn
+    double precision ::      am0(ip40),             b,          coef,    cson(ip11),            df
+    double precision ::            dqn,           eps,             f,         gam2t,          gam6
+    double precision ::           gamt,     nxn(ip42),     nyn(ip42),     nzn(ip42),       p(ip40)
+    double precision :: pression(ip11),            ps,      qn(ip40),           qns,           qxs
+    double precision ::            qys,           qzs,    resi(ip40),        residu,      ro(ip40)
+    double precision ::     roc0(ip40),         roq20,         roqn0,   rovn0(ip40),         rovv0
+    double precision ::      rpi(ip40),     rti(ip40),    temp(ip11),      un(ip40),   usdn2(ip40)
+    double precision ::   v(ip11,ip60),            vn,     vy0(ip40),     vz0(ip40),       y(ip21)
+    double precision ::       ym(ip40),       z(ip21),      zm(ip40)
 !
 !-----------------------------------------------------------------------
 !
@@ -158,7 +158,7 @@ contains
   contains
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine clidi0

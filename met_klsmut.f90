@@ -24,20 +24,20 @@ contains
     use modeleturb
     use mod_teq_gradv
     implicit none
-  integer          ::    i,  i1,  i2,i2m1,  id
-  integer          ::    j,  j1,  j2,j2m1,  jd
-  integer          ::    k,  k1,  k2,k2m1,  kd
-  integer          ::    l,   m,   n,  n0, nci
-  integer          ::  ncj, nck, nid,nijd, njd
-  double precision ::            a1,           c1,          c14,           c2,          c22
-  double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
-  double precision ::   cmuk2(ip21),        coef1,        coef2,   dist(ip12),   dvxx(ip00)
-  double precision ::    dvxy(ip00),   dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00)
-  double precision ::    dvzx(ip00),   dvzy(ip00),   dvzz(ip00),        exp2x,           f1
-  double precision ::            f2,          fmu,     mu(ip12),    mut(ip12),        r2sb1
-  double precision ::          rack,         rota,sn(ip31*ndir),          ss2,      t(ip00)
-  double precision ::  v(ip11,ip60),    vol(ip11),          xl2,          xxi,         xxi2
-  double precision ::          zeta
+    integer          ::    i,  i1,  i2,i2m1,  id
+    integer          ::    j,  j1,  j2,j2m1,  jd
+    integer          ::    k,  k1,  k2,k2m1,  kd
+    integer          ::    l,   m,   n,  n0, nci
+    integer          ::  ncj, nck, nid,nijd, njd
+    double precision ::            a1,           c1,          c14,           c2,          c22
+    double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
+    double precision ::   cmuk2(ip21),        coef1,        coef2,   dist(ip12),   dvxx(ip00)
+    double precision ::    dvxy(ip00),   dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00)
+    double precision ::    dvzx(ip00),   dvzy(ip00),   dvzz(ip00),        exp2x,           f1
+    double precision ::            f2,          fmu,     mu(ip12),    mut(ip12),        r2sb1
+    double precision ::          rack,         rota,sn(ip31*ndir),          ss2,      t(ip00)
+    double precision ::  v(ip11,ip60),    vol(ip11),          xl2,          xxi,         xxi2
+    double precision ::          zeta
 !
 !-----------------------------------------------------------------------
 !
@@ -115,7 +115,7 @@ contains
              zeta=max(coef1,coef2)
              exp2x=exp(min(2.*zeta**2,25.))
              f2=(exp2x-1.)/(exp2x+1.)
-             a1=0.3  
+             a1=0.3
              mut(n)=v(n,6)/max(rack*v(n,1)/(fmu*v(n,7)*r2sb1),rota*f2/a1)
           enddo
        enddo
@@ -125,12 +125,12 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_klsmut

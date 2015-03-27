@@ -25,7 +25,7 @@ contains
     use mod_b1_dfst
     use mod_tcmd_dfst
     implicit none
-  integer          :: imot(nmx),     nmot,      nst
+    integer          :: imot(nmx),     nmot,      nst
 !
 !-----------------------------------------------------------------------
 !

@@ -39,15 +39,15 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::    i,  i1,i1m1,  i2,i2p1
-  integer          ::   id,iinc,  is,   j,  j1
-  integer          :: j1m1,  j2,j2p1,  jd,jinc
-  integer          ::   js,   k,  k1,k1m1,  k2
-  integer          :: k2p1,  kd,kinc,  ks,   l
-  integer          ::    n,  n0, nci,nci2, ncj
-  integer          :: ncj2, nck,nck2, nid,nijd
-  integer          ::  njd
-  double precision ::     ex1,    ex2,x(ip21),y(ip21),z(ip21)
+    integer          ::    i,  i1,i1m1,  i2,i2p1
+    integer          ::   id,iinc,  is,   j,  j1
+    integer          :: j1m1,  j2,j2p1,  jd,jinc
+    integer          ::   js,   k,  k1,k1m1,  k2
+    integer          :: k2p1,  kd,kinc,  ks,   l
+    integer          ::    n,  n0, nci,nci2, ncj
+    integer          :: ncj2, nck,nck2, nid,nijd
+    integer          ::  njd
+    double precision ::     ex1,    ex2,x(ip21),y(ip21),z(ip21)
 !
 !-----------------------------------------------------------------------
 !
@@ -132,12 +132,12 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine extmhg

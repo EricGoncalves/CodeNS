@@ -61,11 +61,11 @@ contains
     use schemanum
     use definition
     implicit none
-  integer          ::   idefconf,  idefxref,      ierr,     ligne,      mflu
-  integer          ::         nb,ncbd(ip41)
-  double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),        omg1,          p2
-  double precision ::          rpi,         rti,        tpar,v(ip11,ip60),     x(ip21)
-  double precision ::      y(ip21),     z(ip21)
+    integer          ::   idefconf,  idefxref,      ierr,     ligne,      mflu
+    integer          ::         nb,ncbd(ip41)
+    double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),        omg1,          p2
+    double precision ::          rpi,         rti,        tpar,v(ip11,ip60),     x(ip21)
+    double precision ::      y(ip21),     z(ip21)
 !
 !**********************************************************************
 !

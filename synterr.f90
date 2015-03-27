@@ -14,7 +14,7 @@ contains
     use sortiefichier
     use mod_cctcmd
     implicit none
-  integer          :: imot(nmx),     ipos,    lgcmd,     nmot
+    integer          :: imot(nmx),     ipos,    lgcmd,     nmot
 !
 !-----------------------------------------------------------------------
 !

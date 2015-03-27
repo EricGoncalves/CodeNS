@@ -79,28 +79,28 @@ contains
     use mod_zvismo
     use mod_sch_rusanov_prcd
     implicit none
-  integer          ::        icyc,     icycle,        img,     itypdf,          l
-  integer          ::      lgsnlt,         lm,    mcyturb,        mfc,        mfn
-  integer          ::   mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41), ncin(ip41)
-  integer          ::        ncyc,       npsn
-  double precision ::  bceqt(ip41,neqt),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21)
-  double precision ::       cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21),        cvj(ip21)
-  double precision ::         cvk(ip21),     d(ip11,ip60),        d0x(ip40),        d0y(ip40),        d0z(ip40)
-  double precision ::        dist(ip12),    ff(ip11,ip60),       fgam(ip42),         mu(ip12),        mut(ip12)
-  double precision ::         nxn(ip42),        nyn(ip42),        nzn(ip42),       pres(ip40),   pression(ip11)
-  double precision :: ptdual(ip11,ip60),        qcx(ip12),        qcy(ip12),        qcz(ip12),          r(ip11)
-  double precision ::         rod(ip40),       roed(ip40),       roud(ip40),       rovd(ip40),       rowd(ip40)
-  double precision ::         rpi(ip40),        rti(ip40),    sn(ip31*ndir),        tm1(ip40),       tm10(ip40)
-  double precision ::        tm11(ip40),       tm12(ip40),       tm13(ip40),        tm2(ip40),        tm3(ip40)
-  double precision ::         tm4(ip40),        tm5(ip40),        tm6(ip40),        tm7(ip40),        tm8(ip40)
-  double precision ::         tm9(ip40),        tn1(ip00),       tn10(ip00),        tn2(ip00),        tn3(ip00)
-  double precision ::         tn4(ip00),        tn5(ip00),        tn6(ip00),        tn7(ip00),        tn8(ip00)
-  double precision ::         tn9(ip00),       toxx(ip12),       toxy(ip12),       toxz(ip12),       toyy(ip12)
-  double precision ::        toyz(ip12),       tozz(ip12),         tp(ip40),     u(ip11,ip60),     v(ip11,ip60)
-  double precision ::         vol(ip11),          x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44)
-  double precision ::           z(ip21),        znr(ip44),      ztemp(ip11)
-  double precision,allocatable :: dt(:)
- allocate(dt(ip11))
+    integer          ::        icyc,     icycle,        img,     itypdf,          l
+    integer          ::      lgsnlt,         lm,    mcyturb,        mfc,        mfn
+    integer          ::   mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41), ncin(ip41)
+    integer          ::        ncyc,       npsn
+    double precision ::  bceqt(ip41,neqt),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21)
+    double precision ::       cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21),        cvj(ip21)
+    double precision ::         cvk(ip21),     d(ip11,ip60),        d0x(ip40),        d0y(ip40),        d0z(ip40)
+    double precision ::        dist(ip12),    ff(ip11,ip60),       fgam(ip42),         mu(ip12),        mut(ip12)
+    double precision ::         nxn(ip42),        nyn(ip42),        nzn(ip42),       pres(ip40),   pression(ip11)
+    double precision :: ptdual(ip11,ip60),        qcx(ip12),        qcy(ip12),        qcz(ip12),          r(ip11)
+    double precision ::         rod(ip40),       roed(ip40),       roud(ip40),       rovd(ip40),       rowd(ip40)
+    double precision ::         rpi(ip40),        rti(ip40),    sn(ip31*ndir),        tm1(ip40),       tm10(ip40)
+    double precision ::        tm11(ip40),       tm12(ip40),       tm13(ip40),        tm2(ip40),        tm3(ip40)
+    double precision ::         tm4(ip40),        tm5(ip40),        tm6(ip40),        tm7(ip40),        tm8(ip40)
+    double precision ::         tm9(ip40),        tn1(ip00),       tn10(ip00),        tn2(ip00),        tn3(ip00)
+    double precision ::         tn4(ip00),        tn5(ip00),        tn6(ip00),        tn7(ip00),        tn8(ip00)
+    double precision ::         tn9(ip00),       toxx(ip12),       toxy(ip12),       toxz(ip12),       toyy(ip12)
+    double precision ::        toyz(ip12),       tozz(ip12),         tp(ip40),     u(ip11,ip60),     v(ip11,ip60)
+    double precision ::         vol(ip11),          x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44)
+    double precision ::           z(ip21),        znr(ip44),      ztemp(ip11)
+    double precision,allocatable :: dt(:)
+    allocate(dt(ip11))
 !
 !-----------------------------------------------------------------------
 !
@@ -143,7 +143,7 @@ contains
           lbd(mfc)=nfbc(mfc)+(img-1)*mtb
        enddo
        nbd=mtcx
-       call rfvc( & 
+       call rfvc( &
             v,ncbd,mnc, &
             pression,ztemp,cson)
 !
@@ -201,7 +201,7 @@ contains
             toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
             icyc,mcyturb, &
             ncbd,ncin,mnc, &
-            sn,vol, & 
+            sn,vol, &
             tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
             cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
             ztemp)
@@ -426,7 +426,7 @@ contains
           endif
 !
 !-------------- WENO 3 pondere-----------------------------------------
-!     
+!
        elseif(ischema.eq.11) then
           if(equat(3:4).eq.'2d') then
              call sch_weno3pond( &
@@ -556,7 +556,7 @@ contains
 !
     enddo
 !
- deallocate(dt)
+    deallocate(dt)
     return
   end subroutine smg_flu
 end module mod_smg_flu

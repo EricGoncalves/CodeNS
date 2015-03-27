@@ -23,11 +23,11 @@ contains
     use schemanum
     use maillage
     implicit none
-  integer          ::    i,  i1,  i2,i2m1,   j
-  integer          ::   j1,  j2,j2m1,   k,  k1
-  integer          ::   k2,k2m1,   l,  n0, nid
-  integer          :: nijd, njd
-  double precision ::  vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
+    integer          ::    i,  i1,  i2,i2m1,   j
+    integer          ::   j1,  j2,j2m1,   k,  k1
+    integer          ::   k2,k2m1,   l,  n0, nid
+    integer          :: nijd, njd
+    double precision ::  vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
@@ -103,7 +103,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind= n0 + 1 + (i-id1(l)) + (j-jd1(l))*nid + (k-kd1(l))*nijd
     end function ind
   end subroutine svdual

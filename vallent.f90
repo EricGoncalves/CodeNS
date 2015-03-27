@@ -16,8 +16,8 @@ contains
     use chainecarac
     use mod_lentier
     implicit none
-  integer          ::       icmt, imot(nmx),      kerr,       klx,lent(nobj)
-  integer          ::      lentd,        lx,        nm
+    integer          ::       icmt, imot(nmx),      kerr,       klx,lent(nobj)
+    integer          ::      lentd,        lx,        nm
 !
 !-----------------------------------------------------------------------
 !

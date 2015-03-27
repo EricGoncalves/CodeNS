@@ -17,13 +17,13 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::    i,  i1,i1m1,i1p1,  i2
-  integer          :: i2m1,ind1,ind2,   j,  j1
-  integer          :: j1m1,j1p1,  j2,j2m1,   k
-  integer          ::   k1,k1m1,k1p1,  k2,k2m1
-  integer          ::   lm,   n, n0c, nid,nijd
-  integer          ::  njd
-  double precision ::     dt(ip11),         dtv,u(ip11,ip60),v(ip11,ip60),   vol(ip11)
+    integer          ::    i,  i1,i1m1,i1p1,  i2
+    integer          :: i2m1,ind1,ind2,   j,  j1
+    integer          :: j1m1,j1p1,  j2,j2m1,   k
+    integer          ::   k1,k1m1,k1p1,  k2,k2m1
+    integer          ::   lm,   n, n0c, nid,nijd
+    integer          ::  njd
+    double precision ::     dt(ip11),         dtv,u(ip11,ip60),v(ip11,ip60),   vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
@@ -71,7 +71,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
   end subroutine sch_expli

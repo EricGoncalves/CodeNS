@@ -16,8 +16,8 @@ contains
     use chainecarac
     use mod_entier
     implicit none
-  integer          ::      icmt,     ient,imot(nmx),     kerr,    kient
-  integer          ::        nm
+    integer          ::      icmt,     ient,imot(nmx),     kerr,    kient
+    integer          ::        nm
 !
 !-----------------------------------------------------------------------
 !

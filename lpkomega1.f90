@@ -60,20 +60,20 @@ contains
     use definition
     use modeleturb
     implicit none
-  integer          ::        iter,          l,          m,       m0ns,         mb
-  integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
-  integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
-  integer          ::          ni,        nii
-  double precision ::         cmu1,        cmu2,        cmu3,          co,  dist(ip12)
-  double precision ::      echleps,  fgam(ip42),    mu(ip12),         mup,   mut(ip12)
-  double precision ::           n1,          n2,          n3,   nxn(ip42),   nyn(ip42)
-  double precision ::    nzn(ip42),       omega,         pka,         pkb,       retur
-  double precision ::          rop,          sv,          t1,          t2,          t3
-  double precision ::   temp(ip11),       temp1,          tn,         top,      tparoi
-  double precision ::  tprod(ip00),          tt,       upyp1,         uto,v(ip11,ip60)
-  double precision ::          v1t,         v1x,         v1y,         v1z,          ye
-  double precision ::         yp02,          yv
-  logical          :: lamin
+    integer          ::        iter,          l,          m,       m0ns,         mb
+    integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
+    integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
+    integer          ::          ni,        nii
+    double precision ::         cmu1,        cmu2,        cmu3,          co,  dist(ip12)
+    double precision ::      echleps,  fgam(ip42),    mu(ip12),         mup,   mut(ip12)
+    double precision ::           n1,          n2,          n3,   nxn(ip42),   nyn(ip42)
+    double precision ::    nzn(ip42),       omega,         pka,         pkb,       retur
+    double precision ::          rop,          sv,          t1,          t2,          t3
+    double precision ::   temp(ip11),       temp1,          tn,         top,      tparoi
+    double precision ::  tprod(ip00),          tt,       upyp1,         uto,v(ip11,ip60)
+    double precision ::          v1t,         v1x,         v1y,         v1z,          ye
+    double precision ::         yp02,          yv
+    logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !

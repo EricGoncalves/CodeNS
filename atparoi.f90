@@ -27,7 +27,7 @@ contains
     use boundary
     use maillage
     implicit none
-  integer          ::    l,   n,  nf,nfbe,nfbi
+    integer          ::    l,   n,  nf,nfbe,nfbi
 !
 !-----------------------------------------------------------------------
 !

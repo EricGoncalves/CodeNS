@@ -94,24 +94,24 @@ contains
     use mod_met_smkl
     use mod_met_smko
     implicit none
-  integer          ::      icycle,          l,     lgsnlt,         mf,        mfc
-  integer          ::         mfr,  mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41)
-  integer          ::  ncin(ip41),       ncyc,       npsn
-  double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
-  double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),     d(ip11,ip60)
-  double precision ::        dist(ip12),         dt(ip11),       dtdx(ip00),       dtdy(ip00),       dtdz(ip00)
-  double precision ::        fgam(ip42),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
-  double precision ::         nzn(ip42),   pression(ip11),ptdual(ip11,ip60),     qcxts5(ip12),     qcyts6(ip12)
-  double precision ::      qcz000(ip12),    sn(ip31*ndir),          t(ip00),        tn1(ip00),       tn10(ip00)
-  double precision ::         tn2(ip00),        tn3(ip00),        tn9(ip00),       topz(ip11),         tp(ip40)
-  double precision ::       tprod(ip00),     txxf5x(ip12),     txyf5y(ip12),     txzf5z(ip12),     tyyf6x(ip12)
-  double precision ::      tyzf6y(ip12),     tzzf6z(ip12),     u(ip11,ip60),       utau(ip42),     v(ip11,ip60)
-  double precision ::         vol(ip11),          x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44)
-  double precision ::           z(ip21),        znr(ip44),      ztemp(ip11)
-  double precision,allocatable :: coefe(:,:),   dvxx(:),   dvxy(:),   dvxz(:),   dvyx(:)
-  double precision,allocatable ::    dvyy(:),   dvyz(:),   dvzx(:),   dvzy(:),   dvzz(:)
-  double precision,allocatable :: fracmod(:)
- allocate(coefe(ndir,ip00))
+    integer          ::      icycle,          l,     lgsnlt,         mf,        mfc
+    integer          ::         mfr,  mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41)
+    integer          ::  ncin(ip41),       ncyc,       npsn
+    double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
+    double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),     d(ip11,ip60)
+    double precision ::        dist(ip12),         dt(ip11),       dtdx(ip00),       dtdy(ip00),       dtdz(ip00)
+    double precision ::        fgam(ip42),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
+    double precision ::         nzn(ip42),   pression(ip11),ptdual(ip11,ip60),     qcxts5(ip12),     qcyts6(ip12)
+    double precision ::      qcz000(ip12),    sn(ip31*ndir),          t(ip00),        tn1(ip00),       tn10(ip00)
+    double precision ::         tn2(ip00),        tn3(ip00),        tn9(ip00),       topz(ip11),         tp(ip40)
+    double precision ::       tprod(ip00),     txxf5x(ip12),     txyf5y(ip12),     txzf5z(ip12),     tyyf6x(ip12)
+    double precision ::      tyzf6y(ip12),     tzzf6z(ip12),     u(ip11,ip60),       utau(ip42),     v(ip11,ip60)
+    double precision ::         vol(ip11),          x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44)
+    double precision ::           z(ip21),        znr(ip44),      ztemp(ip11)
+    double precision,allocatable :: coefe(:,:),   dvxx(:),   dvxy(:),   dvxz(:),   dvyx(:)
+    double precision,allocatable ::    dvyy(:),   dvyz(:),   dvzx(:),   dvzy(:),   dvzz(:)
+    double precision,allocatable :: fracmod(:)
+    allocate(coefe(ndir,ip00))
 !
 !-----------------------------------------------------------------------
 !
@@ -283,10 +283,10 @@ contains
                   v,mu,mut,dist, &
                   nxn,nyn,nzn, &
                   ncin,ncbd,l, &
-                  vol,sn,ncyc, &   
-                  mnpar,fgam,  &   
+                  vol,sn,ncyc, &
+                  mnpar,fgam,  &
                   tprod,tp,utau,topz, &
-                  tn1,tn2,tn3, & 
+                  tn1,tn2,tn3, &
                   pression,ztemp)
           elseif((equatt(1:3).eq.'2JL').or.(equatt(1:3).eq.'2LS')) then
 !              Modele k-eps de Jones-Launder ou de Launder-Sharma
@@ -294,10 +294,10 @@ contains
                   v,mu,mut,dist, &
                   nxn,nyn,nzn, &
                   ncin,ncbd,l, &
-                  vol,sn,ncyc, &   
-                  mnpar,fgam,  &   
+                  vol,sn,ncyc, &
+                  mnpar,fgam,  &
                   tprod,tp,utau, &
-                  tn1,tn2,tn3, & 
+                  tn1,tn2,tn3, &
                   pression,ztemp)
           elseif((equatt(1:3).eq.'2WL').or.(equatt(1:3).eq.'2KO') &
                .or.(equatt(1:3).eq.'2MT')) then
@@ -306,10 +306,10 @@ contains
                   v,mu,mut,dist, &
                   nxn,nyn,nzn, &
                   ncin,ncbd,l, &
-                  vol,sn,ncyc, &   
-                  mnpar,fgam,  &   
+                  vol,sn,ncyc, &
+                  mnpar,fgam,  &
                   tprod,tp,utau, &
-                  tn1,tn2,tn3, & 
+                  tn1,tn2,tn3, &
                   pression,ztemp)
           elseif(equatt(1:3).eq.'1SA') then
 !              Modele de Spalart-Allmaras
@@ -317,10 +317,10 @@ contains
                   v,mu,mut,dist, &
                   nxn,nyn,nzn, &
                   ncin,ncbd,l, &
-                  vol,sn,ncyc, &   
-                  mnpar,fgam,  &   
+                  vol,sn,ncyc, &
+                  mnpar,fgam,  &
                   tp,utau,     &
-                  tn1,tn2,tn3, & 
+                  tn1,tn2,tn3, &
                   pression,ztemp)
           endif
        endif
@@ -342,7 +342,7 @@ contains
 !
        if(ksecmb.le.1) then
 !
-!              modele de Jones Launder 
+!              modele de Jones Launder
 !
           call met_smke( &
                l, &

@@ -52,18 +52,18 @@ contains
     use para_fige
     use maillage
     use proprieteflu
-    use schemanum 
+    use schemanum
     use definition
     implicit none
-  integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
-  integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,ncbd(ip41)
-  integer          ::         nl
-  double precision ::             a2,           alp,         beta2,            ca,            cb
-  double precision ::             cc,    cson(ip11),            dp,           dqn,          drho
-  double precision ::      nxn(ip42),     nyn(ip42),     nzn(ip42),    pres(ip40),pression(ip11)
-  double precision ::             ps,            q2,          qinf,           qns,            qx
-  double precision ::            qxs,            qy,           qys,            qz,           qzs
-  double precision ::           rhos,    temp(ip11),  v(ip11,ip60)
+    integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
+    integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,ncbd(ip41)
+    integer          ::         nl
+    double precision ::             a2,           alp,         beta2,            ca,            cb
+    double precision ::             cc,    cson(ip11),            dp,           dqn,          drho
+    double precision ::      nxn(ip42),     nyn(ip42),     nzn(ip42),    pres(ip40),pression(ip11)
+    double precision ::             ps,            q2,          qinf,           qns,            qx
+    double precision ::            qxs,            qy,           qys,            qz,           qzs
+    double precision ::           rhos,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

@@ -60,13 +60,13 @@ contains
     use maillage
     use proprieteflu
     implicit none
-  integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
-  integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,       n0c
-  integer          ::        n0n,ncbd(ip41),        nl
-  double precision ::     cson(ip11),           dqn,     nxn(ip42),     nyn(ip42),     nzn(ip42)
-  double precision ::     pres(ip40),pression(ip11),            ps,            qx,           qxs
-  double precision ::             qy,           qys,            qz,           qzs,           rho
-  double precision ::           roc0,    temp(ip11),  v(ip11,ip60)
+    integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
+    integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,       n0c
+    integer          ::        n0n,ncbd(ip41),        nl
+    double precision ::     cson(ip11),           dqn,     nxn(ip42),     nyn(ip42),     nzn(ip42)
+    double precision ::     pres(ip40),pression(ip11),            ps,            qx,           qxs
+    double precision ::             qy,           qys,            qz,           qzs,           rho
+    double precision ::           roc0,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

@@ -22,10 +22,10 @@ contains
     use mod_valreel
     use mod_vallent
     implicit none
-  integer          ::    ibdcfl,   ibdcst,   ibddim,     icmt,       im
-  integer          :: imot(nmx),    kibdb,     kval,lmfb(mtb),    lmfbd
-  integer          ::        nm,     nmot,      nmr,     nvbc
-  double precision :: vbc(ista*lsta)
+    integer          ::    ibdcfl,   ibdcst,   ibddim,     icmt,       im
+    integer          :: imot(nmx),    kibdb,     kval,lmfb(mtb),    lmfbd
+    integer          ::        nm,     nmot,      nmr,     nvbc
+    double precision :: vbc(ista*lsta)
 !
 !-----------------------------------------------------------------------
 !

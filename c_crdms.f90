@@ -18,8 +18,8 @@ contains
     use mod_b2_crdms
     use mod_tcmd_crdms
     implicit none
-  integer          :: imot(nmx),        l,       ni,       nj,       nk
-  integer          ::      nmot
+    integer          :: imot(nmx),        l,       ni,       nj,       nk
+    integer          ::      nmot
 !
 !-----------------------------------------------------------------------
 !

@@ -44,11 +44,11 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::          i,        ii,      imax,      imin,         j
-  integer          ::         jj,      jmax,      jmin,         k,        kk
-  integer          ::       kmax,      kmin,         l,         m,        m0
-  integer          ::         mt,        n0,ncbd(ip41),       nid,      nijd
-  integer          ::        njd
+    integer          ::          i,        ii,      imax,      imin,         j
+    integer          ::         jj,      jmax,      jmin,         k,        kk
+    integer          ::       kmax,      kmin,         l,         m,        m0
+    integer          ::         mt,        n0,ncbd(ip41),       nid,      nijd
+    integer          ::        njd
 !
 !-----------------------------------------------------------------------
 !
@@ -130,7 +130,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine initis

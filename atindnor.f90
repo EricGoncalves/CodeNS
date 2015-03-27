@@ -56,11 +56,11 @@ contains
     use maillage
     use boundary
     implicit none
-  integer          ::    dm1,   dm2,   dm3,  imax,  imin
-  integer          :: isens3,  jmax,  jmin,  kmax,  kmin
-  integer          ::      l,   m10, m1max, m1min,   m20
-  integer          ::  m2max, m2min,   m30, m3max, m3min
-  integer          ::   mfbi,  nfbe,   nid,   njd
+    integer          ::    dm1,   dm2,   dm3,  imax,  imin
+    integer          :: isens3,  jmax,  jmin,  kmax,  kmin
+    integer          ::      l,   m10, m1max, m1min,   m20
+    integer          ::  m2max, m2min,   m30, m3max, m3min
+    integer          ::   mfbi,  nfbe,   nid,   njd
 !
 !-----------------------------------------------------------------------
 !

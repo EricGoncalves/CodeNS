@@ -19,10 +19,10 @@ contains
     use mod_valenti
     use mod_valreel
     implicit none
-  integer          ::       iba,     icmt,       im,imot(nmx),      jba
-  integer          ::       kba,    kibdc,      krr,     kval,    mfbea
-  integer          ::     mfbeb,       nm,     nmot
-  double precision :: epsmsh
+    integer          ::       iba,     icmt,       im,imot(nmx),      jba
+    integer          ::       kba,    kibdc,      krr,     kval,    mfbea
+    integer          ::     mfbeb,       nm,     nmot
+    double precision :: epsmsh
 !
 !-----------------------------------------------------------------------
 !

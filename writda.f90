@@ -46,12 +46,12 @@ contains
     use maillage
     use modeleturb
     implicit none
-  integer          ::     i, imax, imin,    j, jmax
-  integer          ::  jmin,    k,  kda, kmax, kmin
-  integer          ::     l,    m,ndmut,  nid, nijd
-  integer          ::   njd
-  double precision :: mut(ndmut),utau(ip42),  v1(ip00),  v2(ip00),  v3(ip00)
-  double precision ::   v4(ip00),  v5(ip00),  v6(ip00),  v7(ip00)
+    integer          ::     i, imax, imin,    j, jmax
+    integer          ::  jmin,    k,  kda, kmax, kmin
+    integer          ::     l,    m,ndmut,  nid, nijd
+    integer          ::   njd
+    double precision :: mut(ndmut),utau(ip42),  v1(ip00),  v2(ip00),  v3(ip00)
+    double precision ::   v4(ip00),  v5(ip00),  v6(ip00),  v7(ip00)
 !
 !-----------------------------------------------------------------------
 !
@@ -98,11 +98,11 @@ contains
 !     open(100,file='testecri.tec',form='formatted',status='unknown')
 !     do j=1,jmax
 !      do i=1,imax
-!       do k=1,1 
+!       do k=1,1
 !        write(1,'(8(e20.12),3i5)')  &
 !           v1(ind(i,j,k)),v2(ind(i,j,k)),v3(ind(i,j,k)),v4(ind(i,j,k)),v5(ind(i,j,k)), &
 !     v6(ind(i,j,k)),v7(ind(i,j,k)),mut(ind(i,j,k)),i,j,k
-!        enddo      
+!        enddo
 !       enddo
 !      enddo
 !      close(100)
@@ -111,7 +111,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine writda

@@ -64,19 +64,19 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::      i,    i1,  i1m1,  i1p1,    i2
-  integer          ::   i2m1,    id,  imax,  imin,  ind1
-  integer          ::   ind2,     j,    j1,  j1m1,  j1p1
-  integer          ::     j2,  j2m1,    jd,  jmax,  jmin
-  integer          ::      k,    k1,  k1m1,  k1p1,    k2
-  integer          ::   k2m1,    kd,  kmax,  kmin,     l
-  integer          :: lgsnlt,     m,     n,    n0,   nci
-  integer          ::    ncj,   nck,   nid,  nijd,   njd
-  double precision ::                   c0,           dtx(ip00),           dty(ip00),           dtz(ip00),          dvxx(ip00)
-  double precision ::           dvxy(ip00),          dvxz(ip00),          dvyx(ip00),          dvyy(ip00),          dvyz(ip00)
-  double precision ::           dvzx(ip00),          dvzy(ip00),          dvzz(ip00),                 eps,        s(ip11,ip60)
-  double precision :: sn(lgsnlt,nind,ndir),          temp(ip11),                  ts,           vol(ip11),                vols
-  double precision,allocatable :: vx(:),vy(:),vz(:)
+    integer          ::      i,    i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,    id,  imax,  imin,  ind1
+    integer          ::   ind2,     j,    j1,  j1m1,  j1p1
+    integer          ::     j2,  j2m1,    jd,  jmax,  jmin
+    integer          ::      k,    k1,  k1m1,  k1p1,    k2
+    integer          ::   k2m1,    kd,  kmax,  kmin,     l
+    integer          :: lgsnlt,     m,     n,    n0,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,   njd
+    double precision ::                   c0,           dtx(ip00),           dty(ip00),           dtz(ip00),          dvxx(ip00)
+    double precision ::           dvxy(ip00),          dvxz(ip00),          dvyx(ip00),          dvyy(ip00),          dvyz(ip00)
+    double precision ::           dvzx(ip00),          dvzy(ip00),          dvzz(ip00),                 eps,        s(ip11,ip60)
+    double precision :: sn(lgsnlt,nind,ndir),          temp(ip11),                  ts,           vol(ip11),                vols
+    double precision,allocatable :: vx(:),vy(:),vz(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -449,12 +449,12 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine zgrad

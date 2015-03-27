@@ -26,24 +26,24 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-  integer          ::      i,    i1,  i1m1,    i2,  i2m1
-  integer          ::     id,  ind1,  ind2,ityprk,     j
-  integer          ::     j1,  j1m1,    j2,  j2m1,    jd
-  integer          ::      k,    k1,  k1m1,    k2,  k2m1
-  integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
-  integer          ::     ls,     m,     n,   n0c,   nci
-  integer          ::    ncj,   nck,   nid,  nijd,  ninc
-  integer          ::    njd
-  double precision ::                   cc,                cnds,          cson(ip11),        d(ip11,ip60),          d2w1(ip00)
-  double precision ::           d2w2(ip00),          d2w3(ip00),          d2w5(ip00),          dfex(ip00),          dfey(ip00)
-  double precision ::           dfxx(ip00),          dfxy(ip00),          dfyy(ip00),            dt(ip11),               dtpas
-  double precision ::                 fact,                 fex,                 fey,       ff(ip11,ip60),                 fxx
-  double precision ::                  fxy,                 fyy,            mu(ip12),           mut(ip12),                pres
-  double precision ::             ps(ip11),            rv(ip00),sn(lgsnlt,nind,ndir),                 tn1,                 tn2
-  double precision ::                  tn3,                 tn5,        u(ip11,ip60),                  ui,                  uu
-  double precision ::         v(ip11,ip60),                  vi,                  vn,           vol(ip11),                  vv
-  double precision ::                  wi1,                 wi2,                 wi3,                 wi5
-  double precision,allocatable :: coefdiag(:), coefe(:,:)
+    integer          ::      i,    i1,  i1m1,    i2,  i2m1
+    integer          ::     id,  ind1,  ind2,ityprk,     j
+    integer          ::     j1,  j1m1,    j2,  j2m1,    jd
+    integer          ::      k,    k1,  k1m1,    k2,  k2m1
+    integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
+    integer          ::     ls,     m,     n,   n0c,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,  ninc
+    integer          ::    njd
+    double precision ::                   cc,                cnds,          cson(ip11),        d(ip11,ip60),          d2w1(ip00)
+    double precision ::           d2w2(ip00),          d2w3(ip00),          d2w5(ip00),          dfex(ip00),          dfey(ip00)
+    double precision ::           dfxx(ip00),          dfxy(ip00),          dfyy(ip00),            dt(ip11),               dtpas
+    double precision ::                 fact,                 fex,                 fey,       ff(ip11,ip60),                 fxx
+    double precision ::                  fxy,                 fyy,            mu(ip12),           mut(ip12),                pres
+    double precision ::             ps(ip11),            rv(ip00),sn(lgsnlt,nind,ndir),                 tn1,                 tn2
+    double precision ::                  tn3,                 tn5,        u(ip11,ip60),                  ui,                  uu
+    double precision ::         v(ip11,ip60),                  vi,                  vn,           vol(ip11),                  vv
+    double precision ::                  wi1,                 wi2,                 wi3,                 wi5
+    double precision,allocatable :: coefdiag(:), coefe(:,:)
 !
 !-----------------------------------------------------------------------
 !
@@ -90,8 +90,8 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
-!!!$OMP PARALLEL 
-!!!$OMP DO 
+!!!$OMP PARALLEL
+!!!$OMP DO
     do n=ind1,ind2
        m=n-n0c
        d(n,1)=0.
@@ -108,7 +108,7 @@ contains
        coefe(2,m)=0.
        rv(m)=0.
     enddo
-!!!$OMP END DO 
+!!!$OMP END DO
 !
 !-----rayon spectral visqueux et coef diagonal------------------------------
 !
@@ -125,7 +125,7 @@ contains
              coefdiag(m)=vol(n)/dt(n)
           enddo
        enddo
-!!!$OMP END DO 
+!!!$OMP END DO
     enddo
 !
 !-----remplissage du coefficient diagonal par direction--------------------------
@@ -153,7 +153,7 @@ contains
                   + (rv(m)+rv(m-ninc))*cnds/(vol(n)+vol(n-ninc))
           enddo
        enddo
-!!!$OMP END DO 
+!!!$OMP END DO
     enddo
 !
 !!!$OMP SINGLE
@@ -179,7 +179,7 @@ contains
                   +(rv(m)+rv(m-ninc))*cnds/(vol(n)+vol(n-ninc))
           enddo
        enddo
-!!!$OMP END DO 
+!!!$OMP END DO
     enddo
 !
     do k=k1,k2m1
@@ -193,7 +193,7 @@ contains
                   + coefe(2,m) + coefe(2,m+ncj)
           enddo
        enddo
-!!!$OMP END DO 
+!!!$OMP END DO
     enddo
 !
 !------calcul instationnaire avec dts
@@ -209,7 +209,7 @@ contains
                 coefdiag(m)=coefdiag(m) + fact*vol(n)/dtpas
              enddo
           enddo
-!!!$OMP END DO 
+!!!$OMP END DO
        enddo
     endif
 !
@@ -235,7 +235,7 @@ contains
                    d2w5(m)=-u(n,5)
                 enddo
              enddo
-!!!$OMP END DO 
+!!!$OMP END DO
           enddo
        else
           do k=k1,k2m1
@@ -251,7 +251,7 @@ contains
                    d2w5(m)=-u(n,5)-ff(n,5)
                 enddo
              enddo
-!!!$OMP END DO 
+!!!$OMP END DO
           enddo
        endif
 !
@@ -271,13 +271,13 @@ contains
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
-                     +0.5*(d(n,3)+d(n-ninc,3))*sn(m,kdir,2) 
+                     +0.5*(d(n,3)+d(n-ninc,3))*sn(m,kdir,2)
                 tn2=0.5*(dfxx(m)+dfxx(m-ninc))*sn(m,kdir,1) &
-                     +0.5*(dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2) 
+                     +0.5*(dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2)
                 tn3=0.5*(dfxy(m)+dfxy(m-ninc))*sn(m,kdir,1) &
-                     +0.5*(dfyy(m)+dfyy(m-ninc))*sn(m,kdir,2) 
+                     +0.5*(dfyy(m)+dfyy(m-ninc))*sn(m,kdir,2)
                 tn5=0.5*(dfex(m)+dfex(m-ninc))*sn(m,kdir,1) &
-                     +0.5*(dfey(m)+dfey(m-ninc))*sn(m,kdir,2) 
+                     +0.5*(dfey(m)+dfey(m-ninc))*sn(m,kdir,2)
                 d2w1(m)=d2w1(m) + tn1 &
                      + coefe(kdir,m)*d(n-ninc,1) &
                      + coefe(kdir,m+ninc)*d(n+ninc,1)
@@ -296,7 +296,7 @@ contains
                 d2w5(m-ninc)=d2w5(m-ninc) - tn5
              enddo
           enddo
-!!!$OMP END DO 
+!!!$OMP END DO
        enddo
 !
 !------direction j------------------------------------------
@@ -315,13 +315,13 @@ contains
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
-                     +0.5*(d(n,3)+d(n-ninc,3))*sn(m,kdir,2) 
+                     +0.5*(d(n,3)+d(n-ninc,3))*sn(m,kdir,2)
                 tn2=0.5*(dfxx(m)+dfxx(m-ninc))*sn(m,kdir,1) &
-                     +0.5*(dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2) 
+                     +0.5*(dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2)
                 tn3=0.5*(dfxy(m)+dfxy(m-ninc))*sn(m,kdir,1) &
-                     +0.5*(dfyy(m)+dfyy(m-ninc))*sn(m,kdir,2) 
+                     +0.5*(dfyy(m)+dfyy(m-ninc))*sn(m,kdir,2)
                 tn5=0.5*(dfex(m)+dfex(m-ninc))*sn(m,kdir,1) &
-                     +0.5*(dfey(m)+dfey(m-ninc))*sn(m,kdir,2) 
+                     +0.5*(dfey(m)+dfey(m-ninc))*sn(m,kdir,2)
                 d2w1(m)=d2w1(m) + tn1 &
                      + coefe(kdir,m)*d(n-ninc,1) &
                      + coefe(kdir,m+ninc)*d(n+ninc,1)
@@ -340,7 +340,7 @@ contains
                 d2w5(m-ninc)=d2w5(m-ninc) - tn5
              enddo
           enddo
-!!!$OMP END DO 
+!!!$OMP END DO
        enddo
 !
 !*******************************************************************************
@@ -383,7 +383,7 @@ contains
                 dfey(m)=vi*(wi5+pres-pinfl)-fey
              enddo
           enddo
-!!!$OMP END DO 
+!!!$OMP END DO
        enddo
 !
     enddo  !fin boucle sous-iterations
@@ -406,7 +406,7 @@ contains
              v(n,5)=v(n,5)+d(n,5)
           enddo
        enddo
-!!!$OMP END DO 
+!!!$OMP END DO
     enddo
 !!!$OMP END PARALLEL
 
@@ -416,12 +416,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine implimf

@@ -15,10 +15,10 @@ contains
     use para_fige
     use boundary
     implicit none
-  integer          ::          m,        mb,        mf,       mfb,        mt
-  integer          :: ncbd(ip41),ncin(ip41),        nd,       ndm
-  double precision :: s1x(ip12),s1y(ip12),s1z(ip12),s2x(ip12),s2y(ip12)
-  double precision :: s2z(ip12)
+    integer          ::          m,        mb,        mf,       mfb,        mt
+    integer          :: ncbd(ip41),ncin(ip41),        nd,       ndm
+    double precision :: s1x(ip12),s1y(ip12),s1z(ip12),s2x(ip12),s2y(ip12)
+    double precision :: s2z(ip12)
 !
 !-----------------------------------------------------------------------
 !

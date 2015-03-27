@@ -31,14 +31,14 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::    i,  i1,i1m1,  i2,i2m1
-  integer          :: iinc,  is,   j,  j1,j1m1
-  integer          ::   j2,j2m1,jinc,  js,   k
-  integer          ::   k1,k1m1,  k2,k2m1,kinc
-  integer          ::   ks,   l,   n,  n0,  n1
-  integer          ::   n2,  n3,  n4, nid,nijd
-  integer          ::  njd
-  double precision :: t(ip11)
+    integer          ::    i,  i1,i1m1,  i2,i2m1
+    integer          :: iinc,  is,   j,  j1,j1m1
+    integer          ::   j2,j2m1,jinc,  js,   k
+    integer          ::   k1,k1m1,  k2,k2m1,kinc
+    integer          ::   ks,   l,   n,  n0,  n1
+    integer          ::   n2,  n3,  n4, nid,nijd
+    integer          ::  njd
+    double precision :: t(ip11)
 !
 !-----------------------------------------------------------------------
 !
@@ -145,7 +145,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine rfspstc

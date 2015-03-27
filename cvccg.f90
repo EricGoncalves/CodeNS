@@ -46,13 +46,13 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::    i,  i1,i1m1,  i2,  id
-  integer          :: inc1,inc2,inc3,   j,  j1
-  integer          :: j1m1,  j2,  jd,   k,  k1
-  integer          :: k1m1,  k2,  kd,   l,   m
-  integer          ::    n,  n0, nid,nijd, njd
-  double precision ::  x(ip21),xx(ip00), y(ip21),yy(ip00), z(ip21)
-  double precision :: zz(ip00)
+    integer          ::    i,  i1,i1m1,  i2,  id
+    integer          :: inc1,inc2,inc3,   j,  j1
+    integer          :: j1m1,  j2,  jd,   k,  k1
+    integer          :: k1m1,  k2,  kd,   l,   m
+    integer          ::    n,  n0, nid,nijd, njd
+    double precision ::  x(ip21),xx(ip00), y(ip21),yy(ip00), z(ip21)
+    double precision :: zz(ip00)
 !
 !-----------------------------------------------------------------------
 !
@@ -106,12 +106,12 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine cvccg

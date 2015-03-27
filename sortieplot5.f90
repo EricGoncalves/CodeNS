@@ -26,16 +26,16 @@ contains
     use chainecarac
     use proprieteflu
     implicit none
-  integer          ::    i,  i1,i1m1,  i2,i2m1
-  integer          :: indc,   j,  j1,j1m1,  j2
-  integer          :: j2m1,   k,  k1,k1m1,  k2
-  integer          :: k2m1,   l,   m,   n, n0c
-  integer          ::  nid,nijd, njd
-  double precision ::   cson(ip11),  dist(ip12),           e,    mu(ip12),   mut(ip12)
-  double precision ::     ps(ip11),          qq,t(ip11,ip60),        taur,  temp(ip11)
-  double precision ::   toxy(ip12),           u,           v,          ve,          vk
-  double precision ::            w,     x(ip21),         xcc,         xme,         xmt
-  double precision ::      y(ip21),         ycc,     z(ip21),         zcc
+    integer          ::    i,  i1,i1m1,  i2,i2m1
+    integer          :: indc,   j,  j1,j1m1,  j2
+    integer          :: j2m1,   k,  k1,k1m1,  k2
+    integer          :: k2m1,   l,   m,   n, n0c
+    integer          ::  nid,nijd, njd
+    double precision ::   cson(ip11),  dist(ip12),           e,    mu(ip12),   mut(ip12)
+    double precision ::     ps(ip11),          qq,t(ip11,ip60),        taur,  temp(ip11)
+    double precision ::   toxy(ip12),           u,           v,          ve,          vk
+    double precision ::            w,     x(ip21),         xcc,         xme,         xmt
+    double precision ::      y(ip21),         ycc,     z(ip21),         zcc
 !
 !-----------------------------------------------------------------------
 !
@@ -93,7 +93,7 @@ contains
              xme=sqrt(qq)/cson(n)
              vk=t(n,6)/t(n,1)
              ve=t(n,7)/t(n,1)
-!         -<u'v'>=mut*toxy/(rho*(mu+mut))    
+!         -<u'v'>=mut*toxy/(rho*(mu+mut))
              taur=mut(n)*toxy(n)/(t(n,1)*(mu(n)+mut(n)))
              xmt=sqrt(2*vk)/cson(n)
 !

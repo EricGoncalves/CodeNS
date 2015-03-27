@@ -16,12 +16,12 @@ contains
     use maillage
     use modeleturb
     implicit none
-  integer          ::    i,  i1,i1m1,  i2,i2m1
-  integer          ::   id,   j,  j1,j1m1,  j2
-  integer          :: j2m1,  jd,   k,  k1,k1m1
-  integer          ::   k2,k2m1,  kd,   l,   n
-  integer          ::  n0c, nci, nid,nijd, njd
-  double precision :: s(ip11,ip60)
+    integer          ::    i,  i1,i1m1,  i2,i2m1
+    integer          ::   id,   j,  j1,j1m1,  j2
+    integer          :: j2m1,  jd,   k,  k1,k1m1
+    integer          ::   k2,k2m1,  kd,   l,   n
+    integer          ::  n0c, nci, nid,nijd, njd
+    double precision :: s(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
@@ -69,12 +69,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine met_cutsa

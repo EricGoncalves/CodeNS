@@ -15,8 +15,8 @@ contains
     use chainecarac
     use mod_reel
     implicit none
-  integer          ::      icmt,imot(nmx),     kerr,    krree,       nm
-  double precision :: rree
+    integer          ::      icmt,imot(nmx),     kerr,    krree,       nm
+    double precision :: rree
 !
 !-----------------------------------------------------------------------
 !

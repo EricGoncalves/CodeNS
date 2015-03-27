@@ -61,22 +61,22 @@ contains
     use maillage
     use proprieteflu
     use schemanum
-    use definition       
+    use definition
     implicit none
-  integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
-  integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,       n0c
-  integer          ::        n0n,ncbd(ip41),        nl
-  double precision ::             a2,           alm,           alp,            am,            ap
-  double precision ::             b0,         beta2,            bs,    cson(ip11),          eps0
-  double precision ::           epsm,          epsp,     nxn(ip42),     nyn(ip42),     nzn(ip42)
-  double precision ::              p,            pd,pression(ip11),            ps,            q2
-  double precision ::           qinf,            qn,           qnd,           qns,           qtx
-  double precision ::           qtxd,          qtxs,           qty,          qtyd,          qtys
-  double precision ::            qtz,          qtzd,          qtzs,           qxd,           qxs
-  double precision ::            qyd,           qys,           qzd,           qzs,           rho
-  double precision ::           rhos,           rmd,           rms,          rocs,     rod(ip40)
-  double precision ::     roed(ip40),    roud(ip40),    rovd(ip40),    rowd(ip40),           rpd
-  double precision ::            rps,    temp(ip11),  v(ip11,ip60)
+    integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
+    integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,       n0c
+    integer          ::        n0n,ncbd(ip41),        nl
+    double precision ::             a2,           alm,           alp,            am,            ap
+    double precision ::             b0,         beta2,            bs,    cson(ip11),          eps0
+    double precision ::           epsm,          epsp,     nxn(ip42),     nyn(ip42),     nzn(ip42)
+    double precision ::              p,            pd,pression(ip11),            ps,            q2
+    double precision ::           qinf,            qn,           qnd,           qns,           qtx
+    double precision ::           qtxd,          qtxs,           qty,          qtyd,          qtys
+    double precision ::            qtz,          qtzd,          qtzs,           qxd,           qxs
+    double precision ::            qyd,           qys,           qzd,           qzs,           rho
+    double precision ::           rhos,           rmd,           rms,          rocs,     rod(ip40)
+    double precision ::     roed(ip40),    roud(ip40),    rovd(ip40),    rowd(ip40),           rpd
+    double precision ::            rps,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

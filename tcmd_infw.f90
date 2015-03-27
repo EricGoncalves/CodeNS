@@ -21,8 +21,8 @@ contains
     use mod_valenti
     use mod_vallent
     implicit none
-  integer          ::       icmt, imot(nmx),      kina,      kval,ldom(nobj)
-  integer          ::      ldomd,        nm,      nmot
+    integer          ::       icmt, imot(nmx),      kina,      kval,ldom(nobj)
+    integer          ::      ldomd,        nm,      nmot
 !
 !-----------------------------------------------------------------------
 !

@@ -76,22 +76,22 @@ contains
     use boundary
     use sortiefichier
     implicit none
-  integer          ::        dnc,        i1,        i2,      idf1,      idf2
-  integer          ::      idfac,       idm,     imaxf,     iminf,        j1
-  integer          ::         j2,     jmaxf,     jminf,        k1,        k2
-  integer          ::      kimpl,     kmaxf,     kminf,         l,       m0b
-  integer          ::        m0n,        m1,     m1max,   m1maxm1,     m1min
-  integer          ::         m2,     m2max,   m2maxm1,     m2min,        mf
-  integer          ::       mfac,     mfacn,       mfl,       n0c,       n0n
-  integer          ::         nc,ncbd(ip41),       nci,ncin(ip41),       ncj
-  integer          ::        nck,     nfac1,     nfac2,     nfac3,     nfac4
-  integer          ::      nfacf,       nid,      nijd,       njd
-  double precision ::   dist(ip12),       distp,    mu(ip12),   nxn(ip42),   nyn(ip42)
-  double precision ::    nzn(ip42),s(ip11,ip60),        sxyb,     taunorm,       taupe
-  double precision ::   toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12),  toyz(ip12)
-  double precision ::   tozz(ip12),        utau,         utx,        utxt,         uty
-  double precision ::         utyt,         utz,        utzt,     x(ip12),       xcfac
-  double precision ::      y(ip12),       ycfac,      yplusp,     z(ip12),       zcfac
+    integer          ::        dnc,        i1,        i2,      idf1,      idf2
+    integer          ::      idfac,       idm,     imaxf,     iminf,        j1
+    integer          ::         j2,     jmaxf,     jminf,        k1,        k2
+    integer          ::      kimpl,     kmaxf,     kminf,         l,       m0b
+    integer          ::        m0n,        m1,     m1max,   m1maxm1,     m1min
+    integer          ::         m2,     m2max,   m2maxm1,     m2min,        mf
+    integer          ::       mfac,     mfacn,       mfl,       n0c,       n0n
+    integer          ::         nc,ncbd(ip41),       nci,ncin(ip41),       ncj
+    integer          ::        nck,     nfac1,     nfac2,     nfac3,     nfac4
+    integer          ::      nfacf,       nid,      nijd,       njd
+    double precision ::   dist(ip12),       distp,    mu(ip12),   nxn(ip42),   nyn(ip42)
+    double precision ::    nzn(ip42),s(ip11,ip60),        sxyb,     taunorm,       taupe
+    double precision ::   toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12),  toyz(ip12)
+    double precision ::   tozz(ip12),        utau,         utx,        utxt,         uty
+    double precision ::         utyt,         utz,        utzt,     x(ip12),       xcfac
+    double precision ::      y(ip12),       ycfac,      yplusp,     z(ip12),       zcfac
 !
 !-----------------------------------------------------------------------
 !

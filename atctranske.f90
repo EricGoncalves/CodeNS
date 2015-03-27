@@ -41,12 +41,12 @@ contains
     use maillage
     use modeleturb
     implicit none
-  integer          ::           i,         i1,         i2,       i2m1,       ind1
-  integer          ::        ind2,          j,         j1,         j2,       j2m1
-  integer          ::           k,         k1,         k2,       k2m1,          l
-  integer          :: mnpar(ip12),       mpar,          n,        n0c,        nid
-  integer          ::        nijd,        njd
-  double precision ::   fgam(ip42),    mu(ip12),   mut(ip12),v(ip11,ip60)
+    integer          ::           i,         i1,         i2,       i2m1,       ind1
+    integer          ::        ind2,          j,         j1,         j2,       j2m1
+    integer          ::           k,         k1,         k2,       k2m1,          l
+    integer          :: mnpar(ip12),       mpar,          n,        n0c,        nid
+    integer          ::        nijd,        njd
+    double precision ::   fgam(ip42),    mu(ip12),   mut(ip12),v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
@@ -91,7 +91,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
   end subroutine atctranske

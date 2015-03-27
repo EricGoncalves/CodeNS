@@ -54,14 +54,14 @@ contains
     use definition
     use schemanum
     implicit none
-  integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
-  integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,       n0c
-  integer          ::        n0n,ncbd(ip41),        nl
-  double precision ::             a2,           alp,         beta2,    cson(ip11),           dqn
-  double precision ::      nxn(ip42),     nyn(ip42),     nzn(ip42),    pres(ip40),pression(ip11)
-  double precision ::             ps,            q2,          qinf,           qns,            qx
-  double precision ::            qxs,            qy,           qys,            qz,           qzs
-  double precision ::            rho,           roc,    temp(ip11),  v(ip11,ip60)
+    integer          ::          l,         m,        mb,       mfb,  mmb(mtt)
+    integer          ::         mn,  mpb(mtt),  mpn(mtt),        mt,       n0c
+    integer          ::        n0n,ncbd(ip41),        nl
+    double precision ::             a2,           alp,         beta2,    cson(ip11),           dqn
+    double precision ::      nxn(ip42),     nyn(ip42),     nzn(ip42),    pres(ip40),pression(ip11)
+    double precision ::             ps,            q2,          qinf,           qns,            qx
+    double precision ::            qxs,            qy,           qys,            qz,           qzs
+    double precision ::            rho,           roc,    temp(ip11),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

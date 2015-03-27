@@ -43,13 +43,13 @@ contains
     use chainecarac
     use modeleturb
     implicit none
-  integer          ::        i,      i1,      i2,    i2m1,       j
-  integer          ::       j1,      j2,    j2m1,       k,      k1
-  integer          ::       k2,    k2m1,     kda,       l,       m
-  integer          :: mdimtnxl,       n,      n0,     nid,    nijd
-  integer          ::      njd,    resu
-  double precision ::         mut(ip12),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
-  double precision :: vdual2(ip11,ip60)
+    integer          ::        i,      i1,      i2,    i2m1,       j
+    integer          ::       j1,      j2,    j2m1,       k,      k1
+    integer          ::       k2,    k2m1,     kda,       l,       m
+    integer          :: mdimtnxl,       n,      n0,     nid,    nijd
+    integer          ::      njd,    resu
+    double precision ::         mut(ip12),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
+    double precision :: vdual2(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
@@ -125,11 +125,11 @@ contains
 !     open(200,file='testlec.tec',form='formatted',status='unknown')
 !     do j=1,j2m1
 !      do i=1,i2m1
-!       do k=1,1 
+!       do k=1,1
 !        write(1,'(8(e20.12),3i5)')  &
 !           v(ind(i,j,k),1) ,v(ind(i,j,k),2),v(ind(i,j,k),3),v(ind(i,j,k),4),v(ind(i,j,k),5), &
 !     v(ind(i,j,k),6),v(ind(i,j,k),7),mut(ind(i,j,k)),i,j,k
-!        enddo      
+!        enddo
 !       enddo
 !     enddo
 !     close(200)
@@ -183,7 +183,7 @@ contains
 !           (((vdual(ind(i,j,k),6),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
 !       read(98) &
 !           (((vdual(ind(i,j,k),7),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
-! 
+!
 !       READ(98) &
 !           (((vdual1(ind(i,j,k),1),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
 !       READ(98) &
@@ -220,7 +220,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine readda

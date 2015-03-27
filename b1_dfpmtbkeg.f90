@@ -49,7 +49,7 @@ contains
          alfak, &
          alfae, &
          rki2t, &
-         rki4t  
+         rki4t
 !
     return
   end subroutine b1_dfpmtbkeg

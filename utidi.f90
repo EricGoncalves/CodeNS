@@ -38,9 +38,9 @@ contains
     use para_var
     use para_fige
     implicit none
-  integer          ::          m,       mfl,        ml,  mmb(mtt),  mpb(mtt)
-  integer          ::         mt,ncbd(ip41)
-  double precision :: bceqt(ip41,neqt),       rpi(ip40),       rti(ip40)
+    integer          ::          m,       mfl,        ml,  mmb(mtt),  mpb(mtt)
+    integer          ::         mt,ncbd(ip41)
+    double precision :: bceqt(ip41,neqt),       rpi(ip40),       rti(ip40)
 !
 !-----------------------------------------------------------------------
 !

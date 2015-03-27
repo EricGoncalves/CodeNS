@@ -24,12 +24,12 @@ contains
     use mod_met_kocmut
     use mod_met_komut
     implicit none
-  integer          ::           l,mnpar(ip12), ncbd(ip41), ncin(ip41)
-  double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
-  double precision ::   cmuk2(ip21),   dist(ip12),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00)
-  double precision ::    dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00)
-  double precision ::    dvzz(ip00),     mu(ip12),    mut(ip12),      s(ip00),sn(ip31*ndir)
-  double precision ::  v(ip11,ip60),    vol(ip11)
+    integer          ::           l,mnpar(ip12), ncbd(ip41), ncin(ip41)
+    double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
+    double precision ::   cmuk2(ip21),   dist(ip12),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00)
+    double precision ::    dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00)
+    double precision ::    dvzz(ip00),     mu(ip12),    mut(ip12),      s(ip00),sn(ip31*ndir)
+    double precision ::  v(ip11,ip60),    vol(ip11)
 !
 !-----------------------------------------------------------------------
 !

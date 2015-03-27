@@ -34,9 +34,9 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::  l, m, n,n0
-  double precision ::   mmut(ip00),   mut(ip12),v(ip11,ip60),   vv1(ip00),   vv2(ip00)
-  double precision ::    vv3(ip00),   vv4(ip00),   vv5(ip00),   vv6(ip00),   vv7(ip00)
+    integer          ::  l, m, n,n0
+    double precision ::   mmut(ip00),   mut(ip12),v(ip11,ip60),   vv1(ip00),   vv2(ip00)
+    double precision ::    vv3(ip00),   vv4(ip00),   vv5(ip00),   vv6(ip00),   vv7(ip00)
 !
 !-----------------------------------------------------------------------
 !

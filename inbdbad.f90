@@ -16,8 +16,8 @@ contains
     use definition
     use boundary
     implicit none
-  integer          :: mfl, nv
-  double precision :: adim
+    integer          :: mfl, nv
+    double precision :: adim
 !
 !-----------------------------------------------------------------------
 !

@@ -3,8 +3,8 @@ module mod_reel
 contains
   subroutine reel(mot,imot,r,kerr)
     implicit none
-  integer          :: imot,kerr
-  double precision :: r
+    integer          :: imot,kerr
+    double precision :: r
 !
 !***********************************************************************
 !

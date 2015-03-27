@@ -20,8 +20,8 @@ contains
     use mod_met_cutsa
     use mod_met_cutked
     implicit none
-  integer          :: l
-  double precision :: v(ip11,ip60)
+    integer          :: l
+    double precision :: v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

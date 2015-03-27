@@ -22,11 +22,11 @@ contains
     use mod_tcmd_inbdc
     use mod_inbdc
     implicit none
-  integer          ::        iba, imot(nmx),       jba,       kba,     kibdc
-  integer          ::        krr,     mfbea,     mfbeb, mnc(ip43),ncbd(ip41)
-  integer          :: ncin(ip41),      nmot
-  double precision ::  epsmsh,   exs1,   exs2,x(ip21),y(ip21)
-  double precision :: z(ip21)
+    integer          ::        iba, imot(nmx),       jba,       kba,     kibdc
+    integer          ::        krr,     mfbea,     mfbeb, mnc(ip43),ncbd(ip41)
+    integer          :: ncin(ip41),      nmot
+    double precision ::  epsmsh,   exs1,   exs2,x(ip21),y(ip21)
+    double precision :: z(ip21)
 !
 !-----------------------------------------------------------------------
 !

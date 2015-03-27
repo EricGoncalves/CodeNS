@@ -46,13 +46,13 @@ contains
     use proprieteflu
     use sortiefichier
     implicit none
-  integer          ::      i,    i1,    i2,  i2m1,iarret
-  integer          ::   ind1,  ind2,     j,    j1,    j2
-  integer          ::   j2m1,     k,    k1,    k2,  k2m1
-  integer          ::      l,     n,    n0,   nid,  nijd
-  integer          ::    njd
-  double precision ::            a,          bl,    mu(ip12),s(ip11,ip60),  temp(ip11)
-  double precision ::        usrey
+    integer          ::      i,    i1,    i2,  i2m1,iarret
+    integer          ::   ind1,  ind2,     j,    j1,    j2
+    integer          ::   j2m1,     k,    k1,    k2,  k2m1
+    integer          ::      l,     n,    n0,   nid,  nijd
+    integer          ::    njd
+    double precision ::            a,          bl,    mu(ip12),s(ip11,ip60),  temp(ip11)
+    double precision ::        usrey
 !
 !-----------------------------------------------------------------------
 !
@@ -104,7 +104,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine zvismo

@@ -34,10 +34,10 @@ contains
     use maillage
     use proprieteflu
     implicit none
-  integer          ::          m,        mb,       mfb,  mmb(mtt),  mpb(mtt)
-  integer          ::         mt,ncbd(ip41),ncin(ip41),        ni,        nl
-  double precision ::     cson(ip11),          epar,pression(ip11),         rhoe1,    temp(ip11)
-  double precision ::       tp(ip40),  v(ip11,ip60)
+    integer          ::          m,        mb,       mfb,  mmb(mtt),  mpb(mtt)
+    integer          ::         mt,ncbd(ip41),ncin(ip41),        ni,        nl
+    double precision ::     cson(ip11),          epar,pression(ip11),         rhoe1,    temp(ip11)
+    double precision ::       tp(ip40),  v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
@@ -60,7 +60,7 @@ contains
        v(nl,4)=0.
 !
        pression(nl)=pression(ni)      !hypothese dPdn=0
-       temp(nl)=tp(m)          
+       temp(nl)=tp(m)
        cson(nl)=sqrt(temp(nl))
     enddo
 !

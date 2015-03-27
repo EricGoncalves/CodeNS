@@ -27,33 +27,33 @@ contains
     use maillage
     use proprieteflu
     use schemanum
-    use definition 
+    use definition
     implicit none
-  integer          ::      i,    i1,  i1m1,    i2,  i2m1
-  integer          ::     id,  ind1,  ind2,ityprk,     j
-  integer          ::     j1,  j1m1,    j2,  j2m1,    jd
-  integer          ::      k,    k1,  k1m1,    k2,  k2m1
-  integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
-  integer          ::     ls,     m,     n,   n0c,   nci
-  integer          ::    ncj,   nck,   nid,  nijd,  ninc
-  integer          ::    njd
-  double precision ::                   a2,               beta2,                cnds,               cndsi,               cndsj
-  double precision ::                coefa,          cson(ip11),        d(ip11,ip60),          dfex(ip00),          dfey(ip00)
-  double precision ::           dfez(ip00),          dfxx(ip00),          dfxy(ip00),          dfxz(ip00),          dfyy(ip00)
-  double precision ::           dfyz(ip00),          dfzz(ip00),            dt(ip11),               dtpas,                dw11
-  double precision ::                 dw12,                dw13,                dw15,                dw21,                dw22
-  double precision ::                 dw23,                dw25,                fact,                 fex,                 fey
-  double precision ::                  fez,       ff(ip11,ip60),                 fxx,                 fxy,                 fxz
-  double precision ::                  fyy,                 fyz,                 fzz,                  gd,                  ge
-  double precision ::                  get,            mu(ip12),           mut(ip12),              precon,                pres
-  double precision ::             ps(ip11),                  q2,                qinf,                rhoe,            rv(ip00)
-  double precision :: sn(lgsnlt,nind,ndir),                 ti1,                 ti2,                 ti3,                 ti5
-  double precision ::                  tj1,                 tj2,                 tj3,                 tj5,        u(ip11,ip60)
-  double precision ::                   ui,                  uu,        v(ip11,ip60),                  vi,                  vn
-  double precision ::            vol(ip11),                  vv,                  wi,                 wi1,                 wi2
-  double precision ::                  wi3,                 wi4,                 wi5,                  ww
-  double precision,allocatable ::    coefb(:),coefdiag(:), coefe(:,:), coefv(:,:),    d2w1(:)
-  double precision,allocatable ::     d2w2(:),    d2w3(:),    d2w4(:),    d2w5(:)
+    integer          ::      i,    i1,  i1m1,    i2,  i2m1
+    integer          ::     id,  ind1,  ind2,ityprk,     j
+    integer          ::     j1,  j1m1,    j2,  j2m1,    jd
+    integer          ::      k,    k1,  k1m1,    k2,  k2m1
+    integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
+    integer          ::     ls,     m,     n,   n0c,   nci
+    integer          ::    ncj,   nck,   nid,  nijd,  ninc
+    integer          ::    njd
+    double precision ::                   a2,               beta2,                cnds,               cndsi,               cndsj
+    double precision ::                coefa,          cson(ip11),        d(ip11,ip60),          dfex(ip00),          dfey(ip00)
+    double precision ::           dfez(ip00),          dfxx(ip00),          dfxy(ip00),          dfxz(ip00),          dfyy(ip00)
+    double precision ::           dfyz(ip00),          dfzz(ip00),            dt(ip11),               dtpas,                dw11
+    double precision ::                 dw12,                dw13,                dw15,                dw21,                dw22
+    double precision ::                 dw23,                dw25,                fact,                 fex,                 fey
+    double precision ::                  fez,       ff(ip11,ip60),                 fxx,                 fxy,                 fxz
+    double precision ::                  fyy,                 fyz,                 fzz,                  gd,                  ge
+    double precision ::                  get,            mu(ip12),           mut(ip12),              precon,                pres
+    double precision ::             ps(ip11),                  q2,                qinf,                rhoe,            rv(ip00)
+    double precision :: sn(lgsnlt,nind,ndir),                 ti1,                 ti2,                 ti3,                 ti5
+    double precision ::                  tj1,                 tj2,                 tj3,                 tj5,        u(ip11,ip60)
+    double precision ::                   ui,                  uu,        v(ip11,ip60),                  vi,                  vn
+    double precision ::            vol(ip11),                  vv,                  wi,                 wi1,                 wi2
+    double precision ::                  wi3,                 wi4,                 wi5,                  ww
+    double precision,allocatable ::    coefb(:),coefdiag(:), coefe(:,:), coefv(:,:),    d2w1(:)
+    double precision,allocatable ::     d2w2(:),    d2w3(:),    d2w4(:),    d2w5(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -95,8 +95,8 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
-!!!$OMP PARALLEL 
-!!!$OMP DO 
+!!!$OMP PARALLEL
+!!!$OMP DO
     do n=ind1,ind2
        m=n-n0c
        d(n,1)=0.
@@ -121,7 +121,7 @@ contains
        coefv(3,m)=0.
        rv(m)=0.
     enddo
-!!!$OMP END DO 
+!!!$OMP END DO
 !
 !------rayon spectral visqueux et coef diagonal------------------------------
 !
@@ -450,12 +450,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine implimf_prcd2

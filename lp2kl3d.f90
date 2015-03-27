@@ -79,31 +79,31 @@ contains
     use modeleturb
     use mod_pgrad
     implicit none
-  integer          ::          ij,         in,       iter,          j,         jk
-  integer          ::          kk,          l,     lgsnlt,          m,       m0ns
-  integer          ::          mb,        mfb,mnpar(ip12),       mpar,         mt
-  integer          ::         n0c,         nc, ncbd(ip41), ncin(ip41),       ncyc
-  integer          ::        ndis,     nfacns,         ni,        nii,         nn
-  integer          ::        npsn,       ntab
-  double precision ::            ca,          cc3,        cklb2,        cklb3,        coefa
-  double precision ::         coefb,        coefc,       coefc1,        coefp,         conv
-  double precision ::           ctk,         ctmu,        ctmu2,        dconv,       dconvx
-  double precision ::        dconvz,   dist(ip12),        dist2,          dpc,         dpde
-  double precision ::          dpdt,   dpdx(ip00),   dpdy(ip00),   dpdz(ip00),        dtopx
-  double precision ::         dtopz,           dy,           e1,           e2,           e3
-  double precision ::           f1i,   fgam(ip42),         fmui,           ki,           li
-  double precision ::      mu(ip12),          mup,    mut(ip12),    nxn(ip42),    nyn(ip42)
-  double precision ::     nzn(ip42),     ps(ip11),         rhoi,         rhol,          rk2
-  double precision ::          rok2,          rop,        seuil,sn(ip31*ndir),         som1
-  double precision ::          som2,         som3,           sv,           t1,           t2
-  double precision ::            t3,   temp(ip11),           tn,          top,       toparx
-  double precision ::        toparz,      topinix,      topiniz,        topx0,   topz(ip11)
-  double precision ::         topz0,  tprod(ip00),           tt,        upyp1,   utau(ip42)
-  double precision ::  v(ip11,ip60),          v1t,          v1x,          v1y,          v1z
-  double precision ::     vol(ip11),           xi,           yi,         yp02
-  logical          :: lamin
-  double precision,allocatable :: alfaa(:),betaa(:),   ff(:),  mui(:), muti(:)
-  double precision,allocatable :: tempi(:),topcx(:),topcz(:), vitx(:), vitz(:)
+    integer          ::          ij,         in,       iter,          j,         jk
+    integer          ::          kk,          l,     lgsnlt,          m,       m0ns
+    integer          ::          mb,        mfb,mnpar(ip12),       mpar,         mt
+    integer          ::         n0c,         nc, ncbd(ip41), ncin(ip41),       ncyc
+    integer          ::        ndis,     nfacns,         ni,        nii,         nn
+    integer          ::        npsn,       ntab
+    double precision ::            ca,          cc3,        cklb2,        cklb3,        coefa
+    double precision ::         coefb,        coefc,       coefc1,        coefp,         conv
+    double precision ::           ctk,         ctmu,        ctmu2,        dconv,       dconvx
+    double precision ::        dconvz,   dist(ip12),        dist2,          dpc,         dpde
+    double precision ::          dpdt,   dpdx(ip00),   dpdy(ip00),   dpdz(ip00),        dtopx
+    double precision ::         dtopz,           dy,           e1,           e2,           e3
+    double precision ::           f1i,   fgam(ip42),         fmui,           ki,           li
+    double precision ::      mu(ip12),          mup,    mut(ip12),    nxn(ip42),    nyn(ip42)
+    double precision ::     nzn(ip42),     ps(ip11),         rhoi,         rhol,          rk2
+    double precision ::          rok2,          rop,        seuil,sn(ip31*ndir),         som1
+    double precision ::          som2,         som3,           sv,           t1,           t2
+    double precision ::            t3,   temp(ip11),           tn,          top,       toparx
+    double precision ::        toparz,      topinix,      topiniz,        topx0,   topz(ip11)
+    double precision ::         topz0,  tprod(ip00),           tt,        upyp1,   utau(ip42)
+    double precision ::  v(ip11,ip60),          v1t,          v1x,          v1y,          v1z
+    double precision ::     vol(ip11),           xi,           yi,         yp02
+    logical          :: lamin
+    double precision,allocatable :: alfaa(:),betaa(:),   ff(:),  mui(:), muti(:)
+    double precision,allocatable :: tempi(:),topcx(:),topcz(:), vitx(:), vitz(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -158,7 +158,7 @@ contains
           v1x=v(ni,2)/v(ni,1)
           v1y=v(ni,3)/v(ni,1)
           v1z=v(ni,4)/v(ni,1)
-!       tangente normee a la paroi     
+!       tangente normee a la paroi
           tn=v1x*nxn(nfacns)+v1y*nyn(nfacns)+v1z*nzn(nfacns)
           t1=v1x-tn*nxn(nfacns)
           t2=v1y-tn*nyn(nfacns)
@@ -186,7 +186,7 @@ contains
                 top=rop*v1t**2/(log(dist(ni)*sqrt(rop*top)/mup)/vkar+cllog)**2
              enddo
           endif
-          utau(nfacns)=sign(1.,top)*sqrt(abs(top)/rop) 
+          utau(nfacns)=sign(1.,top)*sqrt(abs(top)/rop)
        enddo !fin boucle sur facettes paroi
     endif
 !-----fin initialisation de utau--------------------------------

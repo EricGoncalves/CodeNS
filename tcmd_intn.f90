@@ -17,7 +17,7 @@ contains
     use schemanum
     use mod_valenti
     implicit none
-  integer          ::      icmt,imot(nmx),       nm,     nmot
+    integer          ::      icmt,imot(nmx),       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !

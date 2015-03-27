@@ -19,9 +19,9 @@ contains
     use chainecarac
     use mod_valenti
     implicit none
-  integer          ::      icmt,       im,     imax,     imin,imot(nmx)
-  integer          ::      jmax,     jmin,     kini,     kmax,     kmin
-  integer          ::      kval,        l,     mfbe,       nm,     nmot
+    integer          ::      icmt,       im,     imax,     imin,imot(nmx)
+    integer          ::      jmax,     jmin,     kini,     kmax,     kmin
+    integer          ::      kval,        l,     mfbe,       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !

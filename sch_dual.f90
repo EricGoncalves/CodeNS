@@ -19,13 +19,13 @@ contains
     use maillage
     use schemanum
     implicit none
-  integer          ::      i,    i1,    i2,  i2m1,icycle
-  integer          ::   ind1,  ind2,     j,    j1,    j2
-  integer          ::   j2m1,     k,    k1,    k2,  k2m1
-  integer          ::     lm,     n,   n0c,   nid,  nijd
-  integer          ::    njd
-  double precision ::                c0,              dti,             fact,ptdual(ip11,ip60),     u(ip11,ip60)
-  double precision ::      v(ip11,ip60),        vol(ip11)
+    integer          ::      i,    i1,    i2,  i2m1,icycle
+    integer          ::   ind1,  ind2,     j,    j1,    j2
+    integer          ::   j2m1,     k,    k1,    k2,  k2m1
+    integer          ::     lm,     n,   n0c,   nid,  nijd
+    integer          ::    njd
+    double precision ::                c0,              dti,             fact,ptdual(ip11,ip60),     u(ip11,ip60)
+    double precision ::      v(ip11,ip60),        vol(ip11)
 !
 !-----------------------------------------------------------------------
 !
@@ -69,7 +69,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
   end subroutine sch_dual

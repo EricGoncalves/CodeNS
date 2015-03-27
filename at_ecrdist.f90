@@ -17,11 +17,11 @@ contains
     use sortiefichier
     use maillage
     implicit none
-  integer          ::           i,         i1,         i2,       i2m1,        iwd
-  integer          ::           j,         j1,         j2,       j2m1,          k
-  integer          ::          k1,         k2,       k2m1,          l,         l0
-  integer          :: mnpar(ip12),         n0,        nid,       nijd,        njd
-  double precision :: dist(ip12)
+    integer          ::           i,         i1,         i2,       i2m1,        iwd
+    integer          ::           j,         j1,         j2,       j2m1,          k
+    integer          ::          k1,         k2,       k2m1,          l,         l0
+    integer          :: mnpar(ip12),         n0,        nid,       nijd,        njd
+    double precision :: dist(ip12)
 !
 !-----------------------------------------------------------------------
 !
@@ -122,7 +122,7 @@ contains
   contains
     function    ind(i,j,k)
       implicit none
-  integer          ::   i,ind,  j,  k
+      integer          ::   i,ind,  j,  k
       ind=n0+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
   end subroutine at_ecrdist

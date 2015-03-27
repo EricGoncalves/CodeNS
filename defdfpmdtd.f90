@@ -15,7 +15,7 @@ contains
     use schemanum
     use kcle
     implicit none
-  integer          :: l
+    integer          :: l
 !
 !-----------------------------------------------------------------------
 !

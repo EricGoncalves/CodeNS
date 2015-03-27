@@ -52,13 +52,13 @@ contains
     use boundary
     use definition
     implicit none
-  integer          ::          m,        mb,        mc,        mf,       mfb
-  integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),ncin(ip41)
-  integer          ::         nd,       ndm
-  double precision ::         cr, qcx(ip12),      qcxr, qcy(ip12),      qcyr
-  double precision ::  qcz(ip12),      qczr,        sr,toxx(ip12),toxy(ip12)
-  double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12),      txxr
-  double precision ::       txyr,      txzr,      tyyr,      tyzr,      tzzr
+    integer          ::          m,        mb,        mc,        mf,       mfb
+    integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),ncin(ip41)
+    integer          ::         nd,       ndm
+    double precision ::         cr, qcx(ip12),      qcxr, qcy(ip12),      qcyr
+    double precision ::  qcz(ip12),      qczr,        sr,toxx(ip12),toxy(ip12)
+    double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12),      txxr
+    double precision ::       txyr,      txzr,      tyyr,      tyzr,      tzzr
 !
 !-----------------------------------------------------------------------
 !

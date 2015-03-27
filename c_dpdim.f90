@@ -41,9 +41,9 @@ contains
     use mod_b2_dpdim
 
     implicit none
-  integer          :: imot(nmx),       kl,        l,   mdimtb,   mdimtc
-  integer          ::    mdimtn,   mdimtr,  ndimctb,  ndimctc,  ndimctk
-  integer          ::   ndimctv,  ndimntb,     nmot
+    integer          :: imot(nmx),       kl,        l,   mdimtb,   mdimtc
+    integer          ::    mdimtn,   mdimtr,  ndimctb,  ndimctc,  ndimctk
+    integer          ::   ndimctv,  ndimntb,     nmot
 !
 !-----------------------------------------------------------------------
 !

@@ -17,7 +17,7 @@ contains
 
     use mod_tcmd_intn
     implicit none
-  integer          :: imot(nmx),     nmot
+    integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !

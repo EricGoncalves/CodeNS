@@ -38,10 +38,10 @@ contains
     use chainecarac
     use mod_norm
     implicit none
-  integer          ::     i1,    i2,  imax,  imin,    j1
-  integer          ::     j2,  jmax,  jmin,    k1,    k2
-  integer          ::   kmax,  kmin,     l,lgsnlt
-  double precision :: sn(lgsnlt,nind,ndir),             x(ip21),             y(ip21),             z(ip21)
+    integer          ::     i1,    i2,  imax,  imin,    j1
+    integer          ::     j2,  jmax,  jmin,    k1,    k2
+    integer          ::   kmax,  kmin,     l,lgsnlt
+    double precision :: sn(lgsnlt,nind,ndir),             x(ip21),             y(ip21),             z(ip21)
 !
 !-----------------------------------------------------------------------
 !

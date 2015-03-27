@@ -54,14 +54,14 @@ contains
     use maillage
     use boundary
     implicit none
-  integer          ::         dm3,       ierr,     isens3,          l,          m
-  integer          ::         m0b,        m0n,         m3,      m3max,      m3min
-  integer          ::          mb,        mbn,mnpar(ip12),         mt,         n0
-  integer          ::          nc,        nci,       ncil, ncin(ip41),        ncl
-  integer          ::        ncm1,      ncm1l,       nfbi
-  double precision :: dist(ip12),     distn, nxn(ip42), nyn(ip42), nzn(ip42)
-  double precision ::    x(ip21), xcc(ip00),xpar(ip00),   y(ip21), ycc(ip00)
-  double precision :: ypar(ip00),   z(ip21), zcc(ip00),zpar(ip00)
+    integer          ::         dm3,       ierr,     isens3,          l,          m
+    integer          ::         m0b,        m0n,         m3,      m3max,      m3min
+    integer          ::          mb,        mbn,mnpar(ip12),         mt,         n0
+    integer          ::          nc,        nci,       ncil, ncin(ip41),        ncl
+    integer          ::        ncm1,      ncm1l,       nfbi
+    double precision :: dist(ip12),     distn, nxn(ip42), nyn(ip42), nzn(ip42)
+    double precision ::    x(ip21), xcc(ip00),xpar(ip00),   y(ip21), ycc(ip00)
+    double precision :: ypar(ip00),   z(ip21), zcc(ip00),zpar(ip00)
 !
 !-----------------------------------------------------------------------
 !

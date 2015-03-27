@@ -34,9 +34,9 @@ contains
     use para_fige
     use boundary
     implicit none
-  integer          ::          m,        mb,        mf,       mfb,        mt
-  integer          :: ncbd(ip41),ncin(ip41),        nd,        ni
-  double precision ::   cson(ip11),    ps(ip11),t(ip11,ip60),  temp(ip11)
+    integer          ::          m,        mb,        mf,       mfb,        mt
+    integer          :: ncbd(ip41),ncin(ip41),        nd,        ni
+    double precision ::   cson(ip11),    ps(ip11),t(ip11,ip60),  temp(ip11)
 !
 !-----------------------------------------------------------------------
 !

@@ -17,8 +17,8 @@ contains
     use chainecarac
     use mod_valenti
     implicit none
-  integer          ::      icmt,imot(nmx),     kval,        l,       ni
-  integer          ::        nj,       nk,       nm,     nmot
+    integer          ::      icmt,imot(nmx),     kval,        l,       ni
+    integer          ::        nj,       nk,       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !

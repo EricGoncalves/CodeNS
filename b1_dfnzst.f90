@@ -19,7 +19,7 @@ contains
 !
     use sortiefichier
     implicit none
-  integer          :: nonzst
+    integer          :: nonzst
 !
 !-----------------------------------------------------------------------
 !

@@ -20,7 +20,7 @@ contains
     use maillage
     use boundary
     implicit none
-  integer          :: m
+    integer          :: m
 !
 !-----------------------------------------------------------------------
 !

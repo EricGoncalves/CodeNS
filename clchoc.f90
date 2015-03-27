@@ -35,11 +35,11 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-  integer          ::          m,        mb,       mfb,        ml,  mmb(mtt)
-  integer          ::   mpb(mtt),        mt,ncbd(ip41),        nl
-  double precision ::          a22,       angle,     cmach22,        gam6,           p
-  double precision ::           p2,        rmn2,          ro,         ro2,        thet
-  double precision ::           tt,v(ip11,ip60),         v22,          xx
+    integer          ::          m,        mb,       mfb,        ml,  mmb(mtt)
+    integer          ::   mpb(mtt),        mt,ncbd(ip41),        nl
+    double precision ::          a22,       angle,     cmach22,        gam6,           p
+    double precision ::           p2,        rmn2,          ro,         ro2,        thet
+    double precision ::           tt,v(ip11,ip60),         v22,          xx
 !
 !-----------------------------------------------------------------------
 !

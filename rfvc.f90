@@ -34,9 +34,9 @@ contains
     use boundary
     use definition
     implicit none
-  integer          ::          m,        mb,        mc,        mf,       mfb
-  integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd
-  double precision ::   cson(ip11),    ps(ip11),t(ip11,ip60),  temp(ip11),        tper
+    integer          ::          m,        mb,        mc,        mf,       mfb
+    integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd
+    double precision ::   cson(ip11),    ps(ip11),t(ip11,ip60),  temp(ip11),        tper
 !
 !-----------------------------------------------------------------------
 !

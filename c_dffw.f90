@@ -26,7 +26,7 @@ contains
     use mod_b1_dffw
 
     implicit none
-  integer          :: imot(nmx),     nmot
+    integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !

@@ -89,20 +89,20 @@ contains
     use definition
     use sortiefichier
     implicit none
-  integer          ::         i,      ia1,      ia2,      ib1,      ib2
-  integer          ::       iba,       ii,     imax,      img,    inpcb
-  integer          ::       ipb,        j,      ja1,      ja2,      jb1
-  integer          ::       jb2,      jba,       jj,     jmax,      jpb
-  integer          ::         k,      ka1,      ka2,      kb1,      kb2
-  integer          ::       kba,   kinitc,       kk,     kmax,      kpb
-  integer          ::       krr,        l,       la,       lb,     lper
-  integer          ::         m,      m0c,       mc,     mfba,mnc(ip43)
-  integer          ::        na,      nai,      naj,      nak,       nb
-  integer          ::       nbv,    ncilb,    ncjlb,    ncklb,    nidla
-  integer          ::     nidlb,   nijdla,   nijdlb,    njdla,    njdlb
-  integer          ::       nvi,      nvj,      nvk
-  double precision ::  cnrota,   dist,    eps, snrota,x(ip21)
-  double precision :: y(ip21),    ynb,z(ip21),    znb
+    integer          ::         i,      ia1,      ia2,      ib1,      ib2
+    integer          ::       iba,       ii,     imax,      img,    inpcb
+    integer          ::       ipb,        j,      ja1,      ja2,      jb1
+    integer          ::       jb2,      jba,       jj,     jmax,      jpb
+    integer          ::         k,      ka1,      ka2,      kb1,      kb2
+    integer          ::       kba,   kinitc,       kk,     kmax,      kpb
+    integer          ::       krr,        l,       la,       lb,     lper
+    integer          ::         m,      m0c,       mc,     mfba,mnc(ip43)
+    integer          ::        na,      nai,      naj,      nak,       nb
+    integer          ::       nbv,    ncilb,    ncjlb,    ncklb,    nidla
+    integer          ::     nidlb,   nijdla,   nijdlb,    njdla,    njdlb
+    integer          ::       nvi,      nvj,      nvk
+    double precision ::  cnrota,   dist,    eps, snrota,x(ip21)
+    double precision :: y(ip21),    ynb,z(ip21),    znb
 !
 !-----------------------------------------------------------------------
 !

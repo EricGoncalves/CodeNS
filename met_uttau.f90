@@ -21,16 +21,16 @@ contains
     use boundary
     use sortiefichier
     implicit none
-  integer          ::         i1,        i2,      i2m1,        j1,        j2
-  integer          ::       j2m1,        k1,        k2,      k2m1,         l
-  integer          ::         m0,       m0n,        m1,        mf,      mfac
-  integer          ::      mfacn,       mfl,        mt,        n0,       n0c
-  integer          :: ncbd(ip41),       nci,       ncj,       nck,     nfacf
-  integer          ::        nid,      nijd,       njd
-  double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),s(ip11,ip60),     taunorm
-  double precision ::        taupe,  toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12)
-  double precision ::   toyz(ip12),  tozz(ip12),  utau(ip42),         utx,        utxt
-  double precision ::          uty,        utyt,         utz,        utzt
+    integer          ::         i1,        i2,      i2m1,        j1,        j2
+    integer          ::       j2m1,        k1,        k2,      k2m1,         l
+    integer          ::         m0,       m0n,        m1,        mf,      mfac
+    integer          ::      mfacn,       mfl,        mt,        n0,       n0c
+    integer          :: ncbd(ip41),       nci,       ncj,       nck,     nfacf
+    integer          ::        nid,      nijd,       njd
+    double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),s(ip11,ip60),     taunorm
+    double precision ::        taupe,  toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12)
+    double precision ::   toyz(ip12),  tozz(ip12),  utau(ip42),         utx,        utxt
+    double precision ::          uty,        utyt,         utz,        utzt
 !
 !-----------------------------------------------------------------------
 !

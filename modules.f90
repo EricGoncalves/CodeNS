@@ -43,12 +43,12 @@ implicit none
   parameter(nvar   =7)
 !  parameter(    ccg=1./3.) !3D
 !  parameter(    cng=1./3.) !3D
-  parameter(    ccg=1./2.) 
+  parameter(    ccg=1./2.)
   parameter(    cng=1./2.)
   parameter(    cfg=1.)
 !parameter(     ccg2=3) !3D
 !parameter(     cng2=3) !3D
-  parameter(   ccg2=2) 
+  parameter(   ccg2=2)
   parameter(   cng2=2)
   parameter(   cfg2=1)
   parameter(ip00=ndimub)

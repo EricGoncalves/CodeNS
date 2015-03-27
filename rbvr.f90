@@ -52,11 +52,11 @@ contains
     use boundary
     use maillage
     implicit none
-  integer          ::          l,         m,        mf,       mfb,      mfbm
-  integer          ::         ml, mnr(ip44),        mr,        mt,ncbd(ip41)
-  integer          :: ncin(ip41),        nd,       nid,       njd,        nr
-  double precision ::          aux,          cr,          sr,t(ip11,ip60),   xnr(ip44)
-  double precision ::    ynr(ip44),   znr(ip44)
+    integer          ::          l,         m,        mf,       mfb,      mfbm
+    integer          ::         ml, mnr(ip44),        mr,        mt,ncbd(ip41)
+    integer          :: ncin(ip41),        nd,       nid,       njd,        nr
+    double precision ::          aux,          cr,          sr,t(ip11,ip60),   xnr(ip44)
+    double precision ::    ynr(ip44),   znr(ip44)
 !
 !-----------------------------------------------------------------------
 !

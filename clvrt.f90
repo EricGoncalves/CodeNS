@@ -23,28 +23,28 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-  integer          ::         id,        jd,        kd,         l,         m
-  integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
-  integer          ::   mpn(mtt),        mt,       n0c,       n0n,ncbd(ip41)
-  integer          ::        nci,      ncij,     ncijk,      ncik,       ncj
-  integer          ::       ncjk,       nck,       nid,      nijd,       njd
-  integer          ::         nl,        nn
-  double precision ::             am,            ap,            b0,            bs,    cson(ip11)
-  double precision ::            dvx,           dvz,            dx,            dz,          eps0
-  double precision ::           epsm,          epsp,          gami,         gm1sg,         gsgm1
-  double precision ::      nxn(ip42),     nyn(ip42),     nzn(ip42),             p,           pd0
-  double precision ::            pdd,            pi,pression(ip11),            ps,         qcs4p
-  double precision ::            qd0,           qd2,          qd20,            qn,           qnd
-  double precision ::            qns,           qtx,          qtxd,          qtxs,           qty
-  double precision ::           qtyd,          qtys,           qtz,          qtzd,          qtzs
-  double precision ::            qxd,          qxd0,           qxs,           qyd,          qyd0
-  double precision ::            qys,           qzd,          qzd0,           qzs,            ro
-  double precision ::            ro0,          roc0,     rod(ip40),          rod0,          rodd
-  double precision ::     roed(ip40),         roqn0,           ros,    roud(ip40),    rovd(ip40)
-  double precision ::     rowd(ip40),    temp(ip11),  v(ip11,ip60),        vrtalr,        vrtang
-  double precision ::         vrtbet,        vrtdel,        vrtden,        vrtdis,        vrtfac
-  double precision ::         vrtsin,          vrtx,          vrtz,       x(ip21),       y(ip21)
-  double precision ::        z(ip21)
+    integer          ::         id,        jd,        kd,         l,         m
+    integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
+    integer          ::   mpn(mtt),        mt,       n0c,       n0n,ncbd(ip41)
+    integer          ::        nci,      ncij,     ncijk,      ncik,       ncj
+    integer          ::       ncjk,       nck,       nid,      nijd,       njd
+    integer          ::         nl,        nn
+    double precision ::             am,            ap,            b0,            bs,    cson(ip11)
+    double precision ::            dvx,           dvz,            dx,            dz,          eps0
+    double precision ::           epsm,          epsp,          gami,         gm1sg,         gsgm1
+    double precision ::      nxn(ip42),     nyn(ip42),     nzn(ip42),             p,           pd0
+    double precision ::            pdd,            pi,pression(ip11),            ps,         qcs4p
+    double precision ::            qd0,           qd2,          qd20,            qn,           qnd
+    double precision ::            qns,           qtx,          qtxd,          qtxs,           qty
+    double precision ::           qtyd,          qtys,           qtz,          qtzd,          qtzs
+    double precision ::            qxd,          qxd0,           qxs,           qyd,          qyd0
+    double precision ::            qys,           qzd,          qzd0,           qzs,            ro
+    double precision ::            ro0,          roc0,     rod(ip40),          rod0,          rodd
+    double precision ::     roed(ip40),         roqn0,           ros,    roud(ip40),    rovd(ip40)
+    double precision ::     rowd(ip40),    temp(ip11),  v(ip11,ip60),        vrtalr,        vrtang
+    double precision ::         vrtbet,        vrtdel,        vrtden,        vrtdis,        vrtfac
+    double precision ::         vrtsin,          vrtx,          vrtz,       x(ip21),       y(ip21)
+    double precision ::        z(ip21)
 !
 !-----------------------------------------------------------------------
 !
@@ -174,7 +174,7 @@ contains
   contains
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine clvrt

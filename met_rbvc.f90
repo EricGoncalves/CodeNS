@@ -15,10 +15,10 @@ contains
     use para_fige
     use boundary
     implicit none
-  integer          ::          m,        mb,        mc,        mf,       mfb
-  integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),ncin(ip41)
-  integer          ::         nd,       ndm
-  double precision :: t(ip11,ip60)
+    integer          ::          m,        mb,        mc,        mf,       mfb
+    integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),ncin(ip41)
+    integer          ::         nd,       ndm
+    double precision :: t(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

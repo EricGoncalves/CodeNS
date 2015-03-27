@@ -17,7 +17,7 @@ contains
     use definition
     use mod_valreel
     implicit none
-  integer          ::      icmt,       im,imot(nmx),       nm,     nmot
+    integer          ::      icmt,       im,imot(nmx),       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !

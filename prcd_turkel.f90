@@ -24,21 +24,21 @@ contains
     use schemanum
     use definition
     implicit none
-  integer          ::      i,    i1,  i1m1,  i1p1,    i2
-  integer          ::   i2m1,  ind1,  ind2,     j,    j1
-  integer          ::   j1m1,  j1p1,    j2,  j2m1,     k
-  integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
-  integer          :: lgsnlt,    lm,     m,     n,   n0c
-  integer          ::    nid,  nijd,   njd
-  double precision ::                   a2,               beta2,               cndsi,               cndsj,               cndsk
-  double precision ::           cson(ip11),                  gd,                  ge,                 get,                 p11
-  double precision ::                  p12,                 p13,                 p14,                 p15,                 p21
-  double precision ::                  p22,                 p23,                 p24,                 p25,                 p31
-  double precision ::                  p32,                 p33,                 p34,                 p35,                 p41
-  double precision ::                  p42,                 p43,                 p44,                 p45,                 p51
-  double precision ::                  p52,                 p53,                 p54,                 p55,                  q2
-  double precision ::                 qinf,sn(lgsnlt,nind,ndir),          temp(ip11),        u(ip11,ip60),                  uu
-  double precision ::         v(ip11,ip60),                  vv,                  ww
+    integer          ::      i,    i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  ind1,  ind2,     j,    j1
+    integer          ::   j1m1,  j1p1,    j2,  j2m1,     k
+    integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
+    integer          :: lgsnlt,    lm,     m,     n,   n0c
+    integer          ::    nid,  nijd,   njd
+    double precision ::                   a2,               beta2,               cndsi,               cndsj,               cndsk
+    double precision ::           cson(ip11),                  gd,                  ge,                 get,                 p11
+    double precision ::                  p12,                 p13,                 p14,                 p15,                 p21
+    double precision ::                  p22,                 p23,                 p24,                 p25,                 p31
+    double precision ::                  p32,                 p33,                 p34,                 p35,                 p41
+    double precision ::                  p42,                 p43,                 p44,                 p45,                 p51
+    double precision ::                  p52,                 p53,                 p54,                 p55,                  q2
+    double precision ::                 qinf,sn(lgsnlt,nind,ndir),          temp(ip11),        u(ip11,ip60),                  uu
+    double precision ::         v(ip11,ip60),                  vv,                  ww
 !
 !-----------------------------------------------------------------------
 !
@@ -129,7 +129,7 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
   end subroutine prcd_turkel

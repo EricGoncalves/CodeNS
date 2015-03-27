@@ -14,7 +14,7 @@ contains
     use para_fige
     use chainecarac
     implicit none
-  integer          :: imot(nmx),     nmot
+    integer          :: imot(nmx),     nmot
 !
 !-----------------------------------------------------------------------
 !

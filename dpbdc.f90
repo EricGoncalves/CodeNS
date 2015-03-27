@@ -49,11 +49,11 @@ contains
     use boundary
     use sortiefichier
     implicit none
-  integer          ::        ii,      img,       jj,       kk,       lc
-  integer          ::       lcm,       ll,        m,      m0c,     mfbe
-  integer          ::      mfbi,    mfbim,mnc(ip43),       mt,      n0c
-  integer          ::        nc,      nid,      njd,       nn
-  double precision :: pi(ip40),pj(ip40),pk(ip40)
+    integer          ::        ii,      img,       jj,       kk,       lc
+    integer          ::       lcm,       ll,        m,      m0c,     mfbe
+    integer          ::      mfbi,    mfbim,mnc(ip43),       mt,      n0c
+    integer          ::        nc,      nid,      njd,       nn
+    double precision :: pi(ip40),pj(ip40),pk(ip40)
 !
 !-----------------------------------------------------------------------
 !

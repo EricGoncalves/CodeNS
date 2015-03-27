@@ -20,14 +20,14 @@ contains
     use mod_ingr
     use mod_b1_ingr
     implicit none
-  integer          :: imot(nmx),     king,        l,    ldomd,     nmot
-  double precision :: x(ip21),y(ip21),z(ip21)
-  integer         ,allocatable :: ldom(:)
+    integer          :: imot(nmx),     king,        l,    ldomd,     nmot
+    double precision :: x(ip21),y(ip21),z(ip21)
+    integer         ,allocatable :: ldom(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
- allocate(ldom(nobj))
+    allocate(ldom(nobj))
 !
 !
     call tcmd_ingr( &
@@ -42,7 +42,7 @@ contains
        call ingr(ldom(l),x,y,z,king)
     enddo
 !
- deallocate(ldom)
+    deallocate(ldom)
     return
   end subroutine c_ingr
 end module mod_c_ingr

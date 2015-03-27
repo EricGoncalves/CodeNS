@@ -26,32 +26,32 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-  integer          ::       i,     i1,   i1m1,   i1p1,     i2
-  integer          ::    i2m1,     id,   ind1,   ind2,isortie
-  integer          ::  ityprk,      j,     j1,   j1m1,   j1p1
-  integer          ::      j2,   j2m1,     jd,      k,     k1
-  integer          ::    k1m1,   k1p1,     k2,   k2m1,     kd
-  integer          ::    kdir, lgsnlt,     lm,      m,      n
-  integer          ::     n0c,     n1,    nci,    ncj,    nck
-  integer          ::     nid,   nijd,   ninc,    njd
-  double precision ::                   al,                  am,                  ar,                cnds,                  el
-  double precision ::                   er,                 fc1,                 fc2,                 fc3,                 fc4
-  double precision ::                  fc5,                 fex,                 fey,                 fez,       ff(ip11,ip60)
-  double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
-  double precision ::                  fzz,                 gc1,                 gc2,                 gc3,                 gc4
-  double precision ::                  gc5,                  gd,                 gd1,                 gd2,                 hc1
-  double precision ::                  hc2,                 hc3,                 hc4,                 hc5,                  hl
-  double precision ::                   hm,                  hr,                 ids,                  nx,                  ny
-  double precision ::                   nz,            pl(ip00),           prr(ip00),            ps(ip11),                 pst
-  double precision ::                  q2l,                 q2r,              rhoest,          rhol(ip00),                rhom
-  double precision ::           rhor(ip00),               rhost,              rhoust,              rhovst,              rhowst
-  double precision ::                  si1,                 si2,                 si3,                 si4,                 si5
-  double precision ::                  sj1,                 sj2,                 sj3,                 sj4,                 sj5
-  double precision ::                  sk1,                 sk2,                 sk3,                 sk4,                 sk5
-  double precision ::                   sl,sn(lgsnlt,nind,ndir),                  sr,                 sst,        u(ip11,ip60)
-  double precision ::             ul(ip00),                  um,            ur(ip00),        v(ip11,ip60),               vitm2
-  double precision ::             vl(ip00),                  vm,                 vnl,                 vnm,                 vnr
-  double precision ::             vr(ip00),            wl(ip00),                  wm,            wr(ip00)
+    integer          ::       i,     i1,   i1m1,   i1p1,     i2
+    integer          ::    i2m1,     id,   ind1,   ind2,isortie
+    integer          ::  ityprk,      j,     j1,   j1m1,   j1p1
+    integer          ::      j2,   j2m1,     jd,      k,     k1
+    integer          ::    k1m1,   k1p1,     k2,   k2m1,     kd
+    integer          ::    kdir, lgsnlt,     lm,      m,      n
+    integer          ::     n0c,     n1,    nci,    ncj,    nck
+    integer          ::     nid,   nijd,   ninc,    njd
+    double precision ::                   al,                  am,                  ar,                cnds,                  el
+    double precision ::                   er,                 fc1,                 fc2,                 fc3,                 fc4
+    double precision ::                  fc5,                 fex,                 fey,                 fez,       ff(ip11,ip60)
+    double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
+    double precision ::                  fzz,                 gc1,                 gc2,                 gc3,                 gc4
+    double precision ::                  gc5,                  gd,                 gd1,                 gd2,                 hc1
+    double precision ::                  hc2,                 hc3,                 hc4,                 hc5,                  hl
+    double precision ::                   hm,                  hr,                 ids,                  nx,                  ny
+    double precision ::                   nz,            pl(ip00),           prr(ip00),            ps(ip11),                 pst
+    double precision ::                  q2l,                 q2r,              rhoest,          rhol(ip00),                rhom
+    double precision ::           rhor(ip00),               rhost,              rhoust,              rhovst,              rhowst
+    double precision ::                  si1,                 si2,                 si3,                 si4,                 si5
+    double precision ::                  sj1,                 sj2,                 sj3,                 sj4,                 sj5
+    double precision ::                  sk1,                 sk2,                 sk3,                 sk4,                 sk5
+    double precision ::                   sl,sn(lgsnlt,nind,ndir),                  sr,                 sst,        u(ip11,ip60)
+    double precision ::             ul(ip00),                  um,            ur(ip00),        v(ip11,ip60),               vitm2
+    double precision ::             vl(ip00),                  vm,                 vnl,                 vnm,                 vnr
+    double precision ::             vr(ip00),            wl(ip00),                  wm,            wr(ip00)
 !
 !-----------------------------------------------------------------------
 !
@@ -881,12 +881,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine sch_hllc_euler

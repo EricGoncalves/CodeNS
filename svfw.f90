@@ -33,11 +33,11 @@ contains
     use mod_chdacc
     use mod_writda
     implicit none
-  integer          ::       imax,      imin,      jmax,      jmin,      kmax
-  integer          ::       kmin,         l,ncbd(ip41),ncin(ip41)
-  double precision ::    mut(ip12),   tn1(ip00),   tn2(ip00),   tn3(ip00),   tn4(ip00)
-  double precision ::    tn5(ip00),   tn6(ip00),   tn7(ip00),   tn8(ip00),  utau(ip42)
-  double precision :: v(ip11,ip60)
+    integer          ::       imax,      imin,      jmax,      jmin,      kmax
+    integer          ::       kmin,         l,ncbd(ip41),ncin(ip41)
+    double precision ::    mut(ip12),   tn1(ip00),   tn2(ip00),   tn3(ip00),   tn4(ip00)
+    double precision ::    tn5(ip00),   tn6(ip00),   tn7(ip00),   tn8(ip00),  utau(ip42)
+    double precision :: v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !

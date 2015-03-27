@@ -113,21 +113,21 @@ contains
     use schemanum
     use definition
     implicit none
-  integer          ::         id,        jd,        kd,         l,         m
-  integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
-  integer          ::   mpn(mtt),        mt,       n0c,       n0n,        nc
-  integer          :: ncbd(ip41),       nci,      ncij,     ncijk,      ncik
-  integer          ::        ncj,      ncjk,       nck,       nid,      nijd
-  integer          ::       nitn,       njd,        nn
-  double precision ::             a2,     alm(ip40),     am0(ip40),             b,         beta2
-  double precision ::     cson(ip11),     d0x(ip40),     d0y(ip40),     d0z(ip40),            df
-  double precision ::            dpn,           eps,             f,         gam2t,          gam7
-  double precision ::           gam8,     nxn(ip42),     nyn(ip42),     nzn(ip42),       p(ip40)
-  double precision :: pression(ip11),            ps,            q2,          qinf,      qn(ip40)
-  double precision ::            qxs,           qys,           qzs,    resi(ip40),        residu
-  double precision ::       ro(ip40),    roc0(ip40),     rpi(ip40),     rti(ip40),    temp(ip11)
-  double precision ::       un(ip40),    usdn(ip40),   usdn2(ip40),  v(ip11,ip60),             w
-  double precision ::             wn,       y(ip21),      ym(ip40),       z(ip21),      zm(ip40)
+    integer          ::         id,        jd,        kd,         l,         m
+    integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
+    integer          ::   mpn(mtt),        mt,       n0c,       n0n,        nc
+    integer          :: ncbd(ip41),       nci,      ncij,     ncijk,      ncik
+    integer          ::        ncj,      ncjk,       nck,       nid,      nijd
+    integer          ::       nitn,       njd,        nn
+    double precision ::             a2,     alm(ip40),     am0(ip40),             b,         beta2
+    double precision ::     cson(ip11),     d0x(ip40),     d0y(ip40),     d0z(ip40),            df
+    double precision ::            dpn,           eps,             f,         gam2t,          gam7
+    double precision ::           gam8,     nxn(ip42),     nyn(ip42),     nzn(ip42),       p(ip40)
+    double precision :: pression(ip11),            ps,            q2,          qinf,      qn(ip40)
+    double precision ::            qxs,           qys,           qzs,    resi(ip40),        residu
+    double precision ::       ro(ip40),    roc0(ip40),     rpi(ip40),     rti(ip40),    temp(ip11)
+    double precision ::       un(ip40),    usdn(ip40),   usdn2(ip40),  v(ip11,ip60),             w
+    double precision ::             wn,       y(ip21),      ym(ip40),       z(ip21),      zm(ip40)
 !
 !-----------------------------------------------------------------------
 !
@@ -243,7 +243,7 @@ contains
   contains
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine clidd2_prcd

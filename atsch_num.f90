@@ -118,33 +118,33 @@ contains
     use mod_sch_ausmp_pond
     use mod_sch_rusanov_prcd
     implicit none
-  integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
-  integer          ::           l,     ldismx,     lgsnlt,         lm,    mcychro
-  integer          ::     mcyturb,        mfc,        mfn,         mg,  mnc(ip43)
-  integer          :: mnpar(ip12),  mnr(ip44),         nc, ncbd(ip41), ncin(ip41)
-  integer          ::        ncyc,       ndeb,       nfin,       npsn
-  double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
-  double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
-  double precision ::         cvj(ip21),        cvk(ip21),     d(ip11,ip60),        d0x(ip40),        d0y(ip40)
-  double precision ::         d0z(ip40),       dist(ip12),         dt(ip11),            dtpas,    ff(ip11,ip60)
-  double precision ::        fgam(ip42),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
-  double precision ::         nzn(ip42),       pres(ip40),   pression(ip11),ptdual(ip11,ip60),        qcx(ip12)
-  double precision ::         qcy(ip12),        qcz(ip12),          r(ip11),        rod(ip40),       roed(ip40)
-  double precision ::        roud(ip40),       rovd(ip40),       rowd(ip40),        rpi(ip40),        rti(ip40)
-  double precision ::     sn(ip31*ndir),        tm1(ip40),       tm10(ip40),       tm11(ip40),       tm12(ip40)
-  double precision ::        tm13(ip40),        tm2(ip40),        tm3(ip40),        tm4(ip40),        tm5(ip40)
-  double precision ::         tm6(ip40),        tm7(ip40),        tm8(ip40),        tm9(ip40),        tn1(ip00)
-  double precision ::        tn10(ip00),        tn2(ip00),        tn3(ip00),        tn4(ip00),        tn5(ip00)
-  double precision ::         tn6(ip00),        tn7(ip00),        tn8(ip00),        tn9(ip00),       toxx(ip12)
-  double precision ::        toxy(ip12),       toxz(ip12),       toyy(ip12),       toyz(ip12),       tozz(ip12)
-  double precision ::          tp(ip40),     u(ip11,ip60),       utau(ip42),     v(ip11,ip60),        vol(ip11)
-  double precision ::           x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44),          z(ip21)
-  double precision ::         znr(ip44),      ztemp(ip11)
-  logical          :: gfetke
-  integer         ,allocatable ::  m1tb(:), m2tb(:),nfrtb(:)
- allocate(m2tb(ip00))
- allocate(nfrtb(ip00))
- allocate(m1tb(ip00))
+    integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
+    integer          ::           l,     ldismx,     lgsnlt,         lm,    mcychro
+    integer          ::     mcyturb,        mfc,        mfn,         mg,  mnc(ip43)
+    integer          :: mnpar(ip12),  mnr(ip44),         nc, ncbd(ip41), ncin(ip41)
+    integer          ::        ncyc,       ndeb,       nfin,       npsn
+    double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
+    double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
+    double precision ::         cvj(ip21),        cvk(ip21),     d(ip11,ip60),        d0x(ip40),        d0y(ip40)
+    double precision ::         d0z(ip40),       dist(ip12),         dt(ip11),            dtpas,    ff(ip11,ip60)
+    double precision ::        fgam(ip42),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
+    double precision ::         nzn(ip42),       pres(ip40),   pression(ip11),ptdual(ip11,ip60),        qcx(ip12)
+    double precision ::         qcy(ip12),        qcz(ip12),          r(ip11),        rod(ip40),       roed(ip40)
+    double precision ::        roud(ip40),       rovd(ip40),       rowd(ip40),        rpi(ip40),        rti(ip40)
+    double precision ::     sn(ip31*ndir),        tm1(ip40),       tm10(ip40),       tm11(ip40),       tm12(ip40)
+    double precision ::        tm13(ip40),        tm2(ip40),        tm3(ip40),        tm4(ip40),        tm5(ip40)
+    double precision ::         tm6(ip40),        tm7(ip40),        tm8(ip40),        tm9(ip40),        tn1(ip00)
+    double precision ::        tn10(ip00),        tn2(ip00),        tn3(ip00),        tn4(ip00),        tn5(ip00)
+    double precision ::         tn6(ip00),        tn7(ip00),        tn8(ip00),        tn9(ip00),       toxx(ip12)
+    double precision ::        toxy(ip12),       toxz(ip12),       toyy(ip12),       toyz(ip12),       tozz(ip12)
+    double precision ::          tp(ip40),     u(ip11,ip60),       utau(ip42),     v(ip11,ip60),        vol(ip11)
+    double precision ::           x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44),          z(ip21)
+    double precision ::         znr(ip44),      ztemp(ip11)
+    logical          :: gfetke
+    integer         ,allocatable ::  m1tb(:), m2tb(:),nfrtb(:)
+    allocate(m2tb(ip00))
+    allocate(nfrtb(ip00))
+    allocate(m1tb(ip00))
 !
 !-----------------------------------------------------------------------
 !
@@ -285,7 +285,7 @@ contains
                 lbd(mfc)=nfbc(mfc)+(img-1)*mtb
              enddo
              nbd=mtcx
-             call rfvc( & 
+             call rfvc( &
                   v,ncbd,mnc, &
                   pression,ztemp,cson)
 !
@@ -306,7 +306,7 @@ contains
                       call met_iniuttau( &
                            l,mu,mut,v,equat, &
                            toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                           sn,vol, &                 
+                           sn,vol, &
                            ncbd,ncin,mnc, &
                            mnr,xnr,ynr,znr, &
                            nxn,nyn,nzn, &
@@ -430,7 +430,7 @@ contains
        lbd(mfc)=nfbc(mfc)+(img-1)*mtb
     enddo
     nbd=mtcx
-    call rfvc( & 
+    call rfvc( &
          v,ncbd,mnc, &
          pression,ztemp,cson)
 !
@@ -540,8 +540,8 @@ contains
             toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
             icyc,mcyturb, &
             ncbd,ncin,mnc, &
-            sn,vol, &  
-            tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &                 
+            sn,vol, &
+            tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
             cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
             ztemp)
     endif
@@ -578,7 +578,7 @@ contains
 !         approche de Smith
        call cllparoi2( &
             img,ncyc, &
-            v, & 
+            v, &
             nxn,nyn,nzn, &
             ncin,ncbd, &
             toxx,toxy,toxz,toyy,toyz,tozz, &
@@ -820,11 +820,11 @@ contains
 !                 u,v,ff, &
 !                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
 !                 equat, &
-!                 sn(npsn),lgsnlt, 
+!                 sn(npsn),lgsnlt,
 !                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
 !                 pression,cson)
           endif
-!     
+!
 !--------Schema WENO ordre 3 pondere-----------------------------------
 !
        elseif(ischema.eq.11) then
@@ -1105,7 +1105,7 @@ contains
 !
     enddo      !fin boucle sur domaines
 
- deallocate(m2tb,nfrtb,m1tb)
+    deallocate(m2tb,nfrtb,m1tb)
     return
   end subroutine atsch_num
 end module mod_atsch_num

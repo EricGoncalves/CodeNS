@@ -28,9 +28,9 @@ contains
     use para_fige
     use boundary
     implicit none
-  integer          ::          m,        mf,       mfb,        ml,        mt
-  integer          ::          n,ncbd(ip41),ncin(ip41)
-  double precision :: t0(ip11)
+    integer          ::          m,        mf,       mfb,        ml,        mt
+    integer          ::          n,ncbd(ip41),ncin(ip41)
+    double precision :: t0(ip11)
 !
 !-----------------------------------------------------------------------
 !

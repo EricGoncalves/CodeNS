@@ -18,7 +18,7 @@ contains
     use mod_valenti
     use mod_valreel
     implicit none
-  integer          ::      icmt,imot(nmx),       nm,     nmot
+    integer          ::      icmt,imot(nmx),       nm,     nmot
 !
 !-----------------------------------------------------------------------
 !

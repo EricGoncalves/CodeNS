@@ -14,18 +14,18 @@ contains
     use chainecarac
     use schemanum
     implicit none
-  integer          ::        i,     i1c,     i2c,      ic,      id
-  integer          ::       if,    imgc,    imgf,  incc_i,  incc_j
-  integer          ::   incc_k,  incf_i, incf_ij,incf_ijk, incf_ik
-  integer          ::   incf_j, incf_jk,  incf_k,       j,     j1c
-  integer          ::      j2c,      jc,      jd,      jf,       k
-  integer          ::      k1c,     k2c,      kc,      kd,      kf
-  integer          ::        l,     lmc,     lmf,    n0cf,    n0nc
-  integer          ::      nc1,     nc2,     nc3,     nc4,     nf1
-  integer          ::      nf2,     nf3,     nf4,     nic,     nif
-  integer          ::     nijc,    nijf,     njc,     njf
-  double precision ::           cc1,          cc2,          cc3,          cc4,          sss
-  double precision :: vc(ip11,ip60),    vol(ip11),vv(ip11,ip60)
+    integer          ::        i,     i1c,     i2c,      ic,      id
+    integer          ::       if,    imgc,    imgf,  incc_i,  incc_j
+    integer          ::   incc_k,  incf_i, incf_ij,incf_ijk, incf_ik
+    integer          ::   incf_j, incf_jk,  incf_k,       j,     j1c
+    integer          ::      j2c,      jc,      jd,      jf,       k
+    integer          ::      k1c,     k2c,      kc,      kd,      kf
+    integer          ::        l,     lmc,     lmf,    n0cf,    n0nc
+    integer          ::      nc1,     nc2,     nc3,     nc4,     nf1
+    integer          ::      nf2,     nf3,     nf4,     nic,     nif
+    integer          ::     nijc,    nijf,     njc,     njf
+    double precision ::           cc1,          cc2,          cc3,          cc4,          sss
+    double precision :: vc(ip11,ip60),    vol(ip11),vv(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
@@ -275,22 +275,22 @@ contains
   contains
     function    indn_c(i,j,k)
       implicit none
-  integer          ::      i,indn_c,     j,     k
+      integer          ::      i,indn_c,     j,     k
       indn_c=n0nc+1+(i-id1(lmc))+(j-jd1(lmc))*nic+(k-kd1(lmc))*nijc
     end function indn_c
     function    indc_f(i,j,k)
       implicit none
-  integer          ::      i,indc_f,     j,     k
+      integer          ::      i,indc_f,     j,     k
       indc_f=n0cf+1+(i-id1(lmf))+(j-jd1(lmf))*nif+(k-kd1(lmf))*nijf
     end function indc_f
     function    inc_c(id,jd,kd)
       implicit none
-  integer          ::    id,inc_c,   jd,   kd
+      integer          ::    id,inc_c,   jd,   kd
       inc_c=id+jd*nic+kd*nijc
     end function inc_c
     function    inc_f(id,jd,kd)
       implicit none
-  integer          ::    id,inc_f,   jd,   kd
+      integer          ::    id,inc_f,   jd,   kd
       inc_f=id+jd*nif+kd*nijf
     end function inc_f
   end subroutine smg_cf_2d

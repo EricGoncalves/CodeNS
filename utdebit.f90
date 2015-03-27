@@ -42,16 +42,16 @@ contains
     use para_fige
     use maillage
     implicit none
-  integer          ::          i,        i1,        i2,        id,      ind1
-  integer          ::       ind2,         j,        j1,        j2,        jd
-  integer          ::          k,        k1,        k2,        kd,      kdir
-  integer          ::     lgsnlt,        lm,         m,        mb,       mfb
-  integer          ::   mmb(mtt),        mn,  mpb(mtt),  mpn(mtt),        mt
-  integer          ::          n,       n0c,ncbd(ip41),       nci,       ncj
-  integer          ::        nck,       nid,      nijd,      ninc,       njd
-  integer          ::         nl
-  double precision ::     bceqt(ip41,neqt),                 dqm,           nxn(ip42),           nyn(ip42),           nzn(ip42)
-  double precision ::           pres(ip40),                 qms,                rqns,sn(lgsnlt,nind,ndir),        v(ip11,ip60)
+    integer          ::          i,        i1,        i2,        id,      ind1
+    integer          ::       ind2,         j,        j1,        j2,        jd
+    integer          ::          k,        k1,        k2,        kd,      kdir
+    integer          ::     lgsnlt,        lm,         m,        mb,       mfb
+    integer          ::   mmb(mtt),        mn,  mpb(mtt),  mpn(mtt),        mt
+    integer          ::          n,       n0c,ncbd(ip41),       nci,       ncj
+    integer          ::        nck,       nid,      nijd,      ninc,       njd
+    integer          ::         nl
+    double precision ::     bceqt(ip41,neqt),                 dqm,           nxn(ip42),           nyn(ip42),           nzn(ip42)
+    double precision ::           pres(ip40),                 qms,                rqns,sn(lgsnlt,nind,ndir),        v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
@@ -106,12 +106,12 @@ contains
   contains
     function    indc(i,j,k)
       implicit none
-  integer          ::    i,indc,   j,   k
+      integer          ::    i,indc,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
     function    inc(id,jd,kd)
       implicit none
-  integer          ::  id,inc, jd, kd
+      integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine utdebit
