@@ -905,6 +905,7 @@ contains
     enddo  !fin de boucle sur les domaines
 
     DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,fracmod)
+    deallocate(coefe)
 
     return
   end subroutine met_num

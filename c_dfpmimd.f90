@@ -40,6 +40,7 @@ contains
             lgr,lgrd)
     endif
 !
+ deallocate(ldom,lgr)
     return
   end subroutine c_dfpmimd
 end module mod_c_dfpmimd

@@ -61,7 +61,7 @@ contains
        kl=max(kl,kmf(l))
     enddo
 !
-    form='(''1'',''Verification du dimensionnement du code:'',/,' &
+    form='(''Verification du dimensionnement du code:'',/,' &
          //'1x,39(1h-),                             //,' &
          //'1x,''code     '',  11x,''calcul    '',7x/,' &
          //'1x,''----     '',  11x,''------    '',7x//,' &

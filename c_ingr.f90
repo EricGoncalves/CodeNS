@@ -42,6 +42,7 @@ contains
        call ingr(ldom(l),x,y,z,king)
     enddo
 !
+ deallocate(ldom)
     return
   end subroutine c_ingr
 end module mod_c_ingr

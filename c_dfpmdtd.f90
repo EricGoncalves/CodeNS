@@ -42,6 +42,7 @@ contains
             lgr,lgrd)
     endif
 !
+ deallocate(ldom,lgr)
     return
   end subroutine c_dfpmdtd
 end module mod_c_dfpmdtd

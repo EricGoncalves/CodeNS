@@ -17,7 +17,7 @@ contains
     use para_fige
     use sortiefichier
     implicit none
-  integer          ::   lgr(lgrd),       lgrd,lmfb(lmfbd),      lmfbd,       long
+  integer          ::        lgrd,      lmfbd,  lgr(lgrd),lmfb(lmfbd),       long
   integer          ::      longm1,         nm,      nmult,         nr,      nrest
 !
 !-----------------------------------------------------------------------

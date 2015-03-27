@@ -362,6 +362,7 @@ contains
 !
     enddo
 !
+  deallocate(raptat)
     return
   end subroutine atcaldis3
 end module mod_atcaldis3

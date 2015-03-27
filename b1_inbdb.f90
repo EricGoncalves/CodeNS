@@ -22,8 +22,8 @@ contains
     use para_fige
     use sortiefichier
     implicit none
-  integer          ::      ibdcfl,     ibdcst,     ibddim,      kibdb,lmfb(lmfbd)
-  integer          ::       lmfbd,       long,     longm1,         nm,      nmult
+  integer          ::      ibdcfl,     ibdcst,     ibddim,      kibdb,lmfbd
+  integer          :: lmfb(lmfbd),       long,     longm1,         nm,      nmult
   integer          ::         npd,         nr,      nrest,       nvbc
   double precision :: vbc(ista*lsta)
 !

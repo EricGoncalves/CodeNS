@@ -50,6 +50,7 @@ contains
 !
     enddo
 !
+ deallocate(ldom)
     return
   end subroutine c_infw
 end module mod_c_infw

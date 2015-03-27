@@ -61,6 +61,7 @@ contains
 !
     enddo
 !
+ deallocate(lmfb)
     return
   end subroutine c_inbdn
 end module mod_c_inbdn

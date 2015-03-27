@@ -18,7 +18,7 @@ contains
 !
     use sortiefichier
     implicit none
-  integer          ::        king,ldom(ldomd),      ldomd,       long,     longm1
+  integer          ::        king,      ldomd,ldom(ldomd),       long,     longm1
   integer          ::          nm,      nmult,         nr,      nrest
 !
 !-----------------------------------------------------------------------

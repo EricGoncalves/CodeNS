@@ -32,6 +32,7 @@ contains
        call b1_secpfw(lgr,lgrd)
     endif
 !
+ deallocate(lgr)
     return
   end subroutine c_secpfw
 end module mod_c_secpfw

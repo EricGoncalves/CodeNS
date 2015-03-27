@@ -556,6 +556,7 @@ contains
 !
     enddo
 !
+ deallocate(dt)
     return
   end subroutine smg_flu
 end module mod_smg_flu

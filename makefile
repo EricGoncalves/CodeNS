@@ -157,19 +157,19 @@ OBJS =  ${SRCS:.f90=.o}
 # CMD		Name of the executable
 # PROFLIB	Library needed for profiling
 #
-FC =  gfortran
-#FC =  ifort
+#FC =  gfortran
+FC =  ifort
 #CMD =	 solver_air_testperfo
 CMD =	 solver_air
 
 # To perform the default compilation, use the first line
 #FFLAGS =  -Ofast -march=native -ffast-math -funsafe-math-optimizations -fdefault-double-8 -fdefault-real-8 -ffree-line-length-none # -fopenmp -ftree-loop-distribution -ftree-loop-im
-FFLAGS = -fdefault-double-8 -fdefault-real-8 -O0 -g3 -Wall -fbacktrace -ffpe-trap=zero,overflow,invalid -fbounds-check -Wextra -fimplicit-none -Wimplicit-interface -fPIC -Wno-unused-parameter  -Wno-unused  -pedantic -std=f2008 # -finit-real=snan  -fcheck=all -Wno-unused-dummy-argument 
+#FFLAGS = -fdefault-double-8 -fdefault-real-8 -O0 -g3 -Wall -fbacktrace -ffpe-trap=zero,overflow,invalid -fbounds-check -Wextra -fimplicit-none -Wimplicit-interface -fPIC -Wno-unused-parameter  -Wno-unused  -pedantic -std=f2008 # -finit-real=snan  -fcheck=all -Wno-unused-dummy-argument 
 #FFLAGS =  -O2   -fdefault-double-8 -fdefault-real-8  -p -fno-inline-functions
 #FFLAGS = -r8 -fast #-openmp -parallel -threads 
 #FFLAGS = -r8 -O2 -g#-openmp -parallel -threads 
 #FFLAGS = -r8 -fast -openmp -parallel -threads 
-#FFLAGS = -r8 -O0 -g -traceback  -C -debug all -warn all,nounused -fpe0 -ftrapuv -nozero -fstack-protector-all  -init=snan -WB -fp-stack-check -u -gen-interfaces  -stand f08 #-openmp -parallel -threads -warn nodeclarations
+FFLAGS = -r8 -O0 -g -traceback  -C -debug all -warn all,nounused -fpe0 -ftrapuv -nozero -fstack-protector-all  -init=snan -WB -fp-stack-check -u -gen-interfaces  -stand f08 #-openmp -parallel -threads -warn nodeclarations
 
 # Lines from here on down should not need to be changed.
 #

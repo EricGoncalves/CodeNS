@@ -1105,6 +1105,7 @@ contains
 !
     enddo      !fin boucle sur domaines
 
+ deallocate(m2tb,nfrtb,m1tb)
     return
   end subroutine atsch_num
 end module mod_atsch_num

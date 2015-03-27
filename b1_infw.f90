@@ -20,7 +20,7 @@ contains
     use chainecarac
     use modeleturb
     implicit none
-  integer          ::        kina,ldom(ldomd),      ldomd,       long,     longm1
+  integer          ::        kina,      ldomd,ldom(ldomd),       long,     longm1
   integer          ::          nm,      nmult,         nr,      nrest
 !
 !-----------------------------------------------------------------------

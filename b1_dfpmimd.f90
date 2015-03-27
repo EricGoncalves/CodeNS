@@ -25,7 +25,7 @@ contains
     use chainecarac
     use mod_convich
     implicit none
-  integer          :: ldom(ldomd),      ldomd,  lgr(lgrd),       lgrd,         lm
+  integer          ::       ldomd,       lgrd,ldom(ldomd),  lgr(lgrd),         lm
   integer          ::        long,     longm1,         nm,      nmult,         nr
   integer          ::       nrest
 !

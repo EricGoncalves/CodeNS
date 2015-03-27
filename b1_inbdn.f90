@@ -20,7 +20,7 @@ contains
     use para_fige
     use sortiefichier
     implicit none
-  integer          ::       kibdn,lmfb(lmfbd),      lmfbd,       long,     longm1
+  integer          ::       kibdn,      lmfbd,lmfb(lmfbd),       long,     longm1
   integer          ::          nm,      nmult,         nr,      nrest
 !
 !-----------------------------------------------------------------------

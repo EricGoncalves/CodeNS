@@ -21,7 +21,7 @@ contains
     use maillage
     use mod_convich
     implicit none
-  integer          ::    kncycl,lgr(lgrd),     lgrd,     long,   longm1
+  integer          ::    kncycl,     lgrd,lgr(lgrd),     long,   longm1
   integer          ::        nm,    nmult,       nr,    nrest
 !
 !-----------------------------------------------------------------------

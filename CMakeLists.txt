@@ -8,19 +8,19 @@ set(LINK_SEARCH_END_STATIC ON)
 # ifort compiler (LINUX)
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
 message( STATUS "Fortran compiler: " ${CMAKE_Fortran_COMPILER} )
-set(CMAKE_Fortran_FLAGS_RELEASE "-Ofast") #-g 
+set(CMAKE_Fortran_FLAGS_RELEASE "-Ofast  -fPIC -g  -traceback") #-g 
 #set(CMAKE_Fortran_FLAGS_RELEASE "-O3 ") #-g 
-set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g -traceback  -C -debug all -warn all,nounused -fpe0 -ftrapuv -nozero -fstack-protector-all  -init=snan -WB -fp-stack-check -u -gen-interfaces ") # -stand f08 -warn nodeclarations
+set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g -traceback  -C -debug all -warn all,nounused -fpe0 -ftrapuv -nozero -fstack-protector-all  -init=snan -WB -fp-stack-check -u -gen-interfaces  -fPIC") # -stand f08 -warn nodeclarations
 set(DOUBLE "-r8")
-set(OPENMP "-openmp -parallel -thread")
+set(OPENMP "-openmp -parallel -threads")
 endif ()
 
 # gfortran compiler (LINUX)
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
 message( STATUS "Fortran compiler: " ${CMAKE_Fortran_COMPILER} )
 #set(CMAKE_Fortran_FLAGS_RELEASE "-Ofast -march=native -ffast-math -funsafe-math-optimizations -ffree-line-length-none") #-ftree-loop-distribution -ftree-loop-im
-set(CMAKE_Fortran_FLAGS_RELEASE "-O3 -march=native -ffast-math -funsafe-math-optimizations -ffree-line-length-none ") #-ftree-loop-distribution -ftree-loop-im
-set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra -fimplicit-none -Wimplicit-interface -Wno-unused-dummy-argument -Wno-unused-parameter -Wno-unused -fPIC -fcheck=all -fbacktrace") #-pedantic -std=f2008 -finit-real=snan
+set(CMAKE_Fortran_FLAGS_RELEASE "-O3 -march=native -ffast-math -funsafe-math-optimizations -ffree-line-length-none  -fPIC") #-ftree-loop-distribution -ftree-loop-im
+set(CMAKE_Fortran_FLAGS_DEBUG "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra -fimplicit-none -Wimplicit-interface -Wno-unused-parameter -Wno-unused -fPIC -fbacktrace") #  -Wno-unused-dummy-argument -fcheck=all -pedantic -std=f2008 -finit-real=snan
 set(DOUBLE "-fdefault-real-8 -fdefault-double-8")
 set(OPENMP "-fopenmp")
 endif ()
@@ -73,8 +73,10 @@ set_target_properties(solver_air PROPERTIES LINK_SEARCH_END_STATIC ON)
 set_property(TARGET solver_air PROPERTY LINK_SEARCH_START_STATIC ON)
 set_property(TARGET solver_air PROPERTY LINK_SEARCH_END_STATIC ON)
 
+if (${CMAKE_BUILD_TYPE} MATCHES "Release")
 set_target_properties(solver_air PROPERTIES INTERPROCEDURAL_OPTIMIZATION ON)
 set_property(TARGET solver_air PROPERTY LINK_INTERPROCEDURAL_OPTIMIZATIONC ON)
+endif()
 
 find_library(M_LIB m)
 target_link_libraries(solver_air ${M_LIB})

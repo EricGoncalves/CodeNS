@@ -675,7 +675,7 @@ contains
        enddo
 !
     endif
-
+    deallocate(temp)
     return
   contains
     function    indc(i,j,k)

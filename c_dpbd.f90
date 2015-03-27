@@ -73,6 +73,7 @@ contains
        enddo
     enddo
 !
+ deallocate(lmfb,lgr)
     return
   end subroutine c_dpbd
 end module mod_c_dpbd

@@ -54,6 +54,7 @@ contains
 !
     enddo
 !
+ deallocate(lmfb)
     return
   end subroutine c_inbdb
 end module mod_c_inbdb
