@@ -26,9 +26,7 @@ contains
     do l=1,lz
        kmf(l) =1
        lmax(l)=10
-    enddo
-!
-    do l=1,lz
+
        kkmf(l) =1
        klmax(l)=1
     enddo

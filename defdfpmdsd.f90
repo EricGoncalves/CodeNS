@@ -26,9 +26,7 @@ contains
     do l=1,lz
        ki2(l)=0.0
        ki4(l)=0.032
-    enddo
-!
-    do l=1,lz
+
        kki2(l)=1
        kki4(l)=1
     enddo

@@ -113,6 +113,7 @@ contains
     nitn=0
     residu=1.
     do while( (residu.gt.eps).and.(nitn.lt.20) )
+       residu=0.
        do m=1,mt
           mb=mpb(mfb)+m
 !-------la notation b designe la quantite 1/(1+((gam-1)/2)m**2)
@@ -124,10 +125,7 @@ contains
           dqn=-f/df
           resi(m)=abs(dqn)/qn(m)
           qn(m)=qn(m)+dqn
-       enddo
-!
-       residu=0.
-       do m=1,mt
+
           residu=max(residu,resi(m))
        enddo
        nitn=nitn+1

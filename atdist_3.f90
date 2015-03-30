@@ -96,10 +96,8 @@ contains
                    mbb=m0b+mb
                    dist2(mb)=(xcc(mc)-xpar(mbb))**2+(ycc(mc)-ypar(mbb))**2+ &
                         (zcc(mc)-zpar(mbb))**2
-                enddo
 !
 !             existe une fonction pour le minimum
-                do mb=1,mbmx
                    if(dist2(mb).lt.dmini) then
                       imini=m0b+mb
                       dmini=dist2(mb)

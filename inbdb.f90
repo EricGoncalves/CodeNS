@@ -78,8 +78,8 @@ contains
 !
 !  Preparation du tableau de conditions aux limites
 !
-    do nv=1,nvbc
-       do img=1,lgx
+    do img=1,lgx
+      do nv=1,nvbc
           mflm = mfbi + (img-1)*mtb
           mt = mmb(mflm)
           do m=1,mt

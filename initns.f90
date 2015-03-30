@@ -280,8 +280,8 @@ contains
 !
 !     m1 : m1min a m1max ,  m2 : m2min a m2max
 !
-    do m1=m1min,m1max
-       do m2=m2min,m2max
+    do m2=m2min,m2max
+      do m1=m1min,m1max
           mn=m0n+m1+(m2-1)*dm
 !
           nn=sqrt(nxn(mn)*nxn(mn)+nyn(mn)*nyn(mn)+nzn(mn)*nzn(mn))

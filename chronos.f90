@@ -128,9 +128,7 @@ contains
                   sn(m,1,3)*sn(m,1,3)
           enddo
        enddo
-    enddo
-!
-    do k=k1,k2m1
+
        do j=j1,j2
 !!$OMP SIMD
           do i=i1,i2m1

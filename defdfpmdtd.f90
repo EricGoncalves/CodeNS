@@ -21,9 +21,7 @@ contains
 !
     do l=1,lz
        eta(l) =1.0
-    enddo
-!
-    do l=1,lz
+
        keta(l)=1
     enddo
 !

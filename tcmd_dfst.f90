@@ -34,8 +34,8 @@ contains
     enddo
     kval=0
 !
-    do nst=1,nsta
-       do lst=1,lsta
+    do lst=1,lsta
+      do nst=1,nsta
           if (kvarst(nst,lst).eq.2) kvarst(nst,lst)=3
        enddo
     enddo

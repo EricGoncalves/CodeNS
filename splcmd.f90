@@ -27,8 +27,8 @@ contains
     do nm=1,50
        do im=1,32
           mot(nm)(im:im)=' '
-          imot(nm)=0
        enddo
+       imot(nm)=0
     enddo
     kbl=0
     im=0

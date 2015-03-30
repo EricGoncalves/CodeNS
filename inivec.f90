@@ -129,8 +129,8 @@ contains
        cmuk2(n)=1.
     enddo
 !
-    do n=1,ip11
-       do i=1,ip60
+    do i=1,ip60
+      do n=1,ip11
           vdual(n,i)  = reelmx
           vdual1(n,i) = reelmx
           vdual2(n,i) = reelmx
