@@ -64,6 +64,7 @@ contains
 !
     ind1=indc(i1  ,j1  ,k1  )
     ind2=indc(i2m1,j2m1,k2m1)
+!$OMP SIMD
     do n=ind1,ind2
        fd5x(n)=(mu(n)+mut(n)*sigmk)*fd5x(n)
        fd5y(n)=(mu(n)+mut(n)*sigmk)*fd5y(n)

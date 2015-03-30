@@ -73,6 +73,7 @@ contains
        njd=jd2(l)-jd1(l)+1
 !
 !!$OMP SIMD
+!$OMP SIMD
        do m=1,mt
           mr=mpr(mfbm)+m
           nr=mnr(mr)

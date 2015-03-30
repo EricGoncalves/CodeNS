@@ -82,6 +82,7 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2  ,j2  ,k2  )
+!$OMP SIMD
     do n=ind1,ind2
        u(n,1)=0.
        u(n,2)=0.
@@ -101,6 +102,7 @@ contains
     endif
 !
     if (equat(1:2).eq.'ns') then
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           u(n,1)=0.
@@ -122,6 +124,7 @@ contains
                -toxz(n)*v(n,2)-toyz(n)*v(n,3))/v(n,1)-qcz(n)
        enddo
     else
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           u(n,1)=0.
@@ -155,6 +158,7 @@ contains
           ind1 = indc(i1p1,j,k)
           ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              si0=(cmui1(m)*v(n,2)+cmui2(m)*v(n-ninc,2))*sn(m,kdir,1) &
@@ -254,6 +258,7 @@ contains
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              sj0=(cmuj1(m)*v(n,2)+cmuj2(m)*v(n-ninc,2))*sn(m,kdir,1) &
@@ -289,6 +294,7 @@ contains
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
 !!$OMP SIMD
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           sj0= 2*v(n-ninc,2)*sn(m,kdir,1) &
@@ -318,6 +324,7 @@ contains
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
 !!$OMP SIMD
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           sj0= 2*v(n,2)*sn(m,kdir,1) &
@@ -354,6 +361,7 @@ contains
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 sk0=(cmuk1(m)*v(n,2)+cmuk2(m)*v(n-ninc,2))*sn(m,kdir,1) &
@@ -389,6 +397,7 @@ contains
           ind1 = indc(i1  ,j,k1)
           ind2 = indc(i2m1,j,k1)
 !!$OMP SIMD
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              sk0= 2*v(n-ninc,2)*sn(m,kdir,1) &
@@ -418,6 +427,7 @@ contains
           ind1 = indc(i1  ,j,k2)
           ind2 = indc(i2m1,j,k2)
 !!$OMP SIMD
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              sk0= 2*v(n,2)*sn(m,kdir,1) &
@@ -451,6 +461,7 @@ contains
        do j=j1,j2m1
           ind1=indc(i1,j,k)
           ind2=indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              u(n,1)=0.5*u(n,1)-d(n,1)
@@ -483,6 +494,7 @@ contains
           do j=j1,j2m1
              ind1=indc(i1,j,k)
              ind2=indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 ff(n,1) = ff(n,1) - u(n,1)

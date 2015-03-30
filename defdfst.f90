@@ -20,11 +20,14 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-    do nst=1,nsta
-       do lst=1,lsta
+    do lst=1,lsta
+!$OMP SIMD
+       do nst=1,nsta
           varst(nst,lst)=reelmx
-          kvarst(nst,lst)=0
+          kvarst(nst,lst)=1
        enddo
+    enddo
+    do nst=1,nsta
        varst(nst,1)=1.
        varst(nst,2)=1.
        varst(nst,3)=300.
@@ -32,9 +35,6 @@ contains
        varst(nst,5)=0.
        varst(nst,6)=0.
        varst(nst,7)=0.
-       do lst=1,7
-          kvarst(nst,lst)=1
-       enddo
     enddo
 !
     return

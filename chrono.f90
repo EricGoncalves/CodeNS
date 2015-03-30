@@ -121,6 +121,7 @@ contains
           nijd = nid*njd
           do k = kk1(lm),kk2(lm)-1
              do j = jj1(lm),jj2(lm)-1
+!$OMP SIMD
                 do i = ii1(lm),ii2(lm)-1
                    n = indc(i,j,k)
                    dtmin=min(dtmin,dt(n))
@@ -142,6 +143,7 @@ contains
           lm=l+(img-1)*lz
           ndeb = indc(id1(lm),jd1(lm),kd1(lm))
           nfin = indc(id2(lm),jd2(lm),kd2(lm))
+!$OMP SIMD
           do n = ndeb,nfin
              dt(n)=dtmin
           enddo

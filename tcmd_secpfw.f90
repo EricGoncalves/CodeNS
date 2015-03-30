@@ -30,6 +30,7 @@ contains
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
 !
+!$OMP SIMD
     do icmt=1,32
        comment(icmt:icmt)=' '
     enddo
@@ -39,6 +40,7 @@ contains
     if(kncysave.eq.2) kncysave=3
     if(kncyexpl.eq.2) kncyexpl=3
     if(kdiscsv.eq.2)  kdiscsv=3
+!$OMP SIMD
     do ngr=1,lg
        if(kncycle(ngr).eq.2)  kncycle(ngr)=3
     enddo

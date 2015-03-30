@@ -97,6 +97,7 @@ contains
     mt=mmb(mfb)
     m0ns=mpn(mfb)
 !
+!$OMP SIMD
     do m=1,mt
        mb=mpb(mfb)+m
        ni=ncin(mb)

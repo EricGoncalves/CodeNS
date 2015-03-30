@@ -68,6 +68,7 @@ contains
     if(equat(3:5).eq.'2dk') then
 !******************************************************************************
        do j=j1,j2m1
+!$OMP SIMD
           do i=i1,i2m1
              n=indn(i,j,k1)
              m=n-n0c
@@ -91,6 +92,7 @@ contains
 !
        do k=k1,k2m1
           do j=j1,j2m1
+!$OMP SIMD
              do i=i1,i2m1
                 n=indn(i,j,k)
                 m=n-n0c

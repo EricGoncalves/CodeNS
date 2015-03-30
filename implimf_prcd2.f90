@@ -97,6 +97,7 @@ contains
     ind2 = indc(i2+1,j2+1,k2+1)
 !!!$OMP PARALLEL
 !!!$OMP DO
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
        d(n,1)=0.
@@ -130,6 +131,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
 !         rv(m)=(gam/v(n,1))*(mu(n)/pr+mut(n)/prt)
@@ -154,6 +156,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1,j,k)
           ind2 = indc(i2,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -183,6 +186,7 @@ contains
        do j=j1,j2
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -207,6 +211,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              coefb(m)=coefv(1,m) + coefv(1,m+nci) &
@@ -228,6 +233,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 coefdiag(m)=coefdiag(m) + fact*vol(n)/dt1min
@@ -251,6 +257,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 d2w1(m)=-u(n,1)
@@ -269,6 +276,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 ti1=(d(n,2)+d(n-nci,2))*sn(m,1,1) &
@@ -379,6 +387,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 d(n,1)=d2w1(m)/coefdiag(m)
@@ -432,6 +441,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              v(n,1)=v(n,1)+d(n,1)
              v(n,2)=v(n,2)+d(n,2)

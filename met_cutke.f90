@@ -54,6 +54,7 @@ contains
     do k=k1,k2m1
        do j=j1,j2m1
           n=indc(i1m1,j,k)
+!$OMP SIMD
           do i=i1,i2
              n=n+nci
              if(s(n,6).lt.epsk) then

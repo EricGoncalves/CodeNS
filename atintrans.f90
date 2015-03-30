@@ -102,6 +102,7 @@ contains
     ktransi=1
 !
 !     initialisation de "fgam" a 1
+!$OMP SIMD
     do n=1,mdimtnx
        fgam(n)=1.
     enddo
@@ -202,6 +203,7 @@ contains
        idm=m1max-m1min
        do m2=m2deb,m2fin
 !         boucle sur les bandes
+!$OMP SIMD
           do m1=m1deb,m1fin
 !           boucle sur les cellules de la bande
              mfacn=m0n+m1+(m2-1)*idm

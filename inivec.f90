@@ -66,6 +66,7 @@ contains
 !-----------------------------------------------------------------------
 !
 !
+!$OMP SIMD
     do n=1,ip11
        v(n,1)=reelmn
        v(n,2)=reelmn
@@ -95,14 +96,17 @@ contains
        cson(n)=reelmn
     enddo
 !
+!$OMP SIMD
     do n=1,ip31*ndir
        sn(n)=reelmx
     enddo
 !
+!$OMP SIMD
     do n=1,ip11
        vol(n)=0.
     enddo
 !
+!$OMP SIMD
     do n=1,ip12
        toxx(n)=0.
        toyy(n)=0.
@@ -117,6 +121,7 @@ contains
        mut(n) =0.
     enddo
 !
+!$OMP SIMD
     do n=1,ip21
        cvi(n)=1.
        cvj(n)=1.
@@ -129,6 +134,7 @@ contains
        cmuk2(n)=1.
     enddo
 !
+!$OMP SIMD COLLAPSE(2)
     do i=1,ip60
       do n=1,ip11
           vdual(n,i)  = reelmx
@@ -138,6 +144,7 @@ contains
        enddo
     enddo
 !
+!$OMP SIMD
     do m= 1,ip00
        tn1 (m)=reelmx
        tn2 (m)=reelmx

@@ -44,6 +44,7 @@ contains
        mt=mmb(mfb)
 !
 !!$OMP SIMD
+!$OMP SIMD
        do m=1,mt
           mc=mpc(mfb)+m
           nc=mnc(mc)

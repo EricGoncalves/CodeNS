@@ -105,6 +105,7 @@ contains
     ind2=indc(i2+1,j2+1,k2+1)
 !!!$OMP PARALLEL
 !!!$OMP DO
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
        dwi6(m)=0.
@@ -129,6 +130,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              rv(m)=(mu(n)+mut(n)/cmt)/v(n,1)
@@ -153,6 +155,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1,j,k)
           ind2 = indc(i2,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -179,6 +182,7 @@ contains
        do j=j1,j2
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -205,6 +209,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -226,6 +231,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              coefdiag(m)=coefdiag(m) + coefe(1,m) + coefe(1,m+nci) &
@@ -310,6 +316,7 @@ contains
     ind1=indc(i1m1,j1m1,k1m1)-n0c
     ind2=indc(i2+1,j2+1,k2+1)-n0c
 !!!$OMP DO
+!$OMP SIMD
     do m=ind1,ind2
        alpha(m)=0.
        beta6(m)=0.
@@ -324,6 +331,7 @@ contains
           do j=j2m1,j1,-1
              ind1=indc(i1  ,j,k)
              ind2=indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 td=-u1(m+nci)+u1(m)-u3(m+nck)+u3(m)
@@ -351,6 +359,7 @@ contains
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
              ind2=indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dwi6(m)=alpha(m)*dwi6(m-ncj)+beta6(m)
@@ -367,6 +376,7 @@ contains
     ind1=indc(i1m1,j1m1,k1m1)-n0c
     ind2=indc(i2+1,j2+1,k2+1)-n0c
 !!!$OMP DO
+!$OMP SIMD
     do m=ind1,ind2
        alpha(m)=0.
        beta6(m)=0.
@@ -381,6 +391,7 @@ contains
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
              ind2=indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 td=-u1(m+nci)+u1(m)-u2(m+ncj)+u2(m)
@@ -408,6 +419,7 @@ contains
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
              ind2=indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dwi6(m)=alpha(m)*dwi6(m-nck)+beta6(m)
@@ -435,6 +447,7 @@ contains
        do mf=1,nbd
           mfb=lbd(mf)
           mt=mmb(mfb)
+!$OMP SIMD
           do m=1,mt
              mb=mpb(mfb)+m
              ni=ncin(mb)-n0c
@@ -454,6 +467,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              v(n,6)=v(n,6)+dwi6(m)

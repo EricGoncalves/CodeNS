@@ -54,6 +54,7 @@ contains
     do k=k1,k2m1
        do j=j1,j2m1
           n=indc(i1-1,j,k)
+!$OMP SIMD
           do i=i1,i2m1
              n=n+nci
              if (s(n,6).lt.0.) then

@@ -78,6 +78,7 @@ contains
        do j = j1m1,j2,jinc
           js = -js
 !!!$OMP SIMD
+!$OMP SIMD
           do i = i1,i2m1
              n = ind(i,j,k)
              n1= ind(i,j+js,k+ks)

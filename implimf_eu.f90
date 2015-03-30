@@ -88,6 +88,7 @@ contains
     ind2 = indc(i2+1,j2+1,k2+1)
 !!!!$OMP PARALLEL default(SHARED)
 !!!!$OMP DO
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
        d(n,1)=0.
@@ -117,6 +118,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              coefdiag(m)=vol(n)/dt(n)
@@ -137,6 +139,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1,j,k)
           ind2 = indc(i2,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -163,6 +166,7 @@ contains
        do j=j1,j2
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -184,6 +188,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              coefdiag(m)=coefdiag(m) + coefe(1,m) + coefe(1,m+nci) &
@@ -202,6 +207,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 coefdiag(m)=coefdiag(m) + fact*vol(n)/dt1min
@@ -220,6 +226,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -239,6 +246,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 coefdiag(m)=coefdiag(m) + coefe(3,m) + coefe(3,m+nck)
@@ -262,6 +270,7 @@ contains
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    d2w1(m)=-u(n,1)
@@ -278,6 +287,7 @@ contains
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    d2w1(m)=-u(n,1)-ff(n,1)
@@ -299,6 +309,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1,j,k)
              ind2 = indc(i2,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
@@ -350,6 +361,7 @@ contains
           do j=j1,j2
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
@@ -403,6 +415,7 @@ contains
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
@@ -459,6 +472,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 d(n,1)=d2w1(m)/coefdiag(m)

@@ -92,6 +92,7 @@ contains
 !
     do k=kk1(l),kk2(l)-1
        do j=jj1(l),jj2(l)-1
+!$OMP SIMD
           do i=ii1(l),ii2(l)-1
              nn=indn(i,j,k)
              nc=indc(i,j,k)

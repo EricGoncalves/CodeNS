@@ -31,6 +31,7 @@ contains
     character(len=2 ) :: tvi,tvj,tvk
 !
 !
+!$OMP SIMD
     do icmt=1,32
        comment(icmt:icmt)=' '
     enddo
@@ -133,6 +134,7 @@ contains
                 call synterr(mot,imot,nm,comment)
              else
                 tvi(1:2)='  '
+!$OMP SIMD
                 do im=1,imot(nm)
                    tvi(im:im)=mot(nm)(im:im)
                 enddo
@@ -144,6 +146,7 @@ contains
                 call synterr(mot,imot,nm,comment)
              else
                 tvj(1:2)='  '
+!$OMP SIMD
                 do im=1,imot(nm)
                    tvj(im:im)=mot(nm)(im:im)
                 enddo
@@ -155,6 +158,7 @@ contains
                 call synterr(mot,imot,nm,comment)
              else
                 tvk(1:2)='  '
+!$OMP SIMD
                 do im=1,imot(nm)
                    tvk(im:im)=mot(nm)(im:im)
                 enddo

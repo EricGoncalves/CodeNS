@@ -281,6 +281,7 @@ contains
                             dmini=1.e+20
 !                   boucle coupee en 2 pour vectorisation
                             do m1=m1mi,m1mx
+!$OMP SIMD
                                do m2=m2mi,m2mx
                                   mfac0=m1+(m2-1)*idm
                                   dist2(mfacn)=(xcc(mc)-xpar(mfacn))**2+ &
@@ -339,6 +340,7 @@ contains
                                m0b=mpn(nfbi)
                                mbmx=mmb(nfbi)
 !
+!$OMP SIMD
                                do mb=1,mbmx
                                   mbb=m0b+mb
                                   dist2(mb)=(xcc(mc)-xpar(mbb))**2+ &

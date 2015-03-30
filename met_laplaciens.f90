@@ -89,6 +89,7 @@ contains
 !     initialisation
     ind1=indc(i1m1,j1m1,k1m1)-n0c
     ind2=indc(i2p1,j2p1,k2p1)-n0c
+!$OMP SIMD
     do m=ind1,ind2
        dsd2x(m)=0.
        dsd2y(m)=0.
@@ -110,6 +111,7 @@ contains
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
@@ -126,6 +128,7 @@ contains
              ind1 = indc(i1  ,j,k1)
              ind2 = indc(i2m1,j,k1)
 !!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
@@ -138,6 +141,7 @@ contains
              ind1 = indc(i1  ,j,k2)
              ind2 = indc(i2m1,j,k2)
 !!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
@@ -160,6 +164,7 @@ contains
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*(dsx(m)+dsy(m-ninc))
@@ -176,6 +181,7 @@ contains
              ind1 = indc(i1  ,j1,k)
              ind2 = indc(i2m1,j1,k)
 !!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
@@ -188,6 +194,7 @@ contains
              ind1 = indc(i1  ,j2,k)
              ind2 = indc(i2m1,j2,k)
 !!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
@@ -210,6 +217,7 @@ contains
                 ind1 = indc(i1p1,j,k)
                 ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*(dsx(m)+dsx(m-ninc))
@@ -263,6 +271,7 @@ contains
                 ind1 = indc(i1,j,k)
                 ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    sk1=(cmuk1(m)*dsx(m)+cmuk2(m)*dsx(m-ninc))*sn(m,kdir,1)
@@ -282,6 +291,7 @@ contains
              ind1 = indc(i1 ,j,k1)
              ind2 = indc(i2m1,j,k1)
 !!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
@@ -294,6 +304,7 @@ contains
              ind1 = indc(i1 ,j,k2)
              ind2 = indc(i2m1,j,k2)
 !!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
@@ -316,6 +327,7 @@ contains
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    sj1=(cmuj1(m)*dsx(m)+cmuj2(m)*dsx(m-ninc))*sn(m,kdir,1)
@@ -335,6 +347,7 @@ contains
              ind1=indc(i1  ,j1,k)
              ind2=indc(i2m1,j1,k)
 !!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsd2x(m)=dsd2x(m)-sn(m,kdir,1)*2*dsx(m-ninc)
@@ -347,6 +360,7 @@ contains
              ind1 = indc(i1  ,j2,k)
              ind2 = indc(i2m1,j2,k)
 !!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsd2x(m-ninc)=dsd2x(m-ninc)+sn(m,kdir,1)*2*dsx(m)
@@ -369,6 +383,7 @@ contains
                 ind1 = indc(i1p1,j,k)
                 ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    si1=(cmui1(m)*dsx(m)+cmui2(m)*dsx(m-ninc))*sn(m,kdir,1)
@@ -417,6 +432,7 @@ contains
 !
     ind1 = indc(i1  ,j1  ,k1  )
     ind2 = indc(i2m1,j2m1,k2m1)
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
 !       le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t

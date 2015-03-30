@@ -91,6 +91,7 @@ contains
     if(equat(3:5).eq.'2dk') then
 !******************************************************************************
        do j=j1p1,j2m1
+!$OMP SIMD
           do i=i1p1,i2m1
              n=indn(i,j,k1)
              m=n-n0c
@@ -196,6 +197,7 @@ contains
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
+!$OMP SIMD
        do j=j1p1,j2
           m=indn(i1,j,k1)-n0c
           cmuj1(m)=cmuj1(m+nci)
@@ -204,6 +206,7 @@ contains
           cvj(m)=cvj(m+nci)
        enddo
 !
+!$OMP SIMD
        do i=i1p1,i2
           m=indn(i,j1,k1)-n0c
           cmui1(m)=cmui1(m+ncj)
@@ -221,6 +224,7 @@ contains
 !******************************************************************************
 !
        do k=k1p1,k2m1
+!$OMP SIMD
           do i=i1p1,i2m1
              n=indn(i,j1,k)
              m=n-n0c
@@ -316,6 +320,7 @@ contains
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
+!$OMP SIMD
        do k=k1p1,k2
           m=indn(i1,j1,k)-n0c
           cmuk1(m)=cmuk1(m+nci)
@@ -324,6 +329,7 @@ contains
           cvk(m)=cvk(m+nci)
        enddo
 !
+!$OMP SIMD
        do i=i1p1,i2
           m=indn(i,j1,k1)-n0c
           cmui1(m)=cmui1(m+nck)
@@ -341,6 +347,7 @@ contains
 !******************************************************************************
 !
        do k=k1p1,k2m1
+!$OMP SIMD
           do j=j1p1,j2m1
              n=indn(i1,j,k)
              m=n-n0c
@@ -435,6 +442,7 @@ contains
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
+!$OMP SIMD
        do j=j1p1,j2
           m=indn(i1,j,k1)-n0c
           cmuj1(m)=cmuj1(m+nck)
@@ -443,6 +451,7 @@ contains
           cvj(m)=cvj(m+nck)
        enddo
 !
+!$OMP SIMD
        do k=k1p1,k2
           m=indn(i1,j1,k)-n0c
           cmuk1(m)=cmuk1(m+ncj)
@@ -461,6 +470,7 @@ contains
 !
        do k=k1p1,k2m1
           do j=j1p1,j2m1
+!$OMP SIMD
              do i=i1p1,i2m1
                 n=indn(i,j,k)
                 m=n-n0c
@@ -608,6 +618,7 @@ contains
 !c----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2
+!$OMP SIMD
           do k=k1p1,k2
              m=indn(i1,j,k)-n0c
              cmuj1(m)=cmuj1(m+nci)
@@ -621,6 +632,7 @@ contains
        enddo
 !
        do i=i1p1,i2
+!$OMP SIMD
           do j=j1p1,j2
              m=indn(i,j,k1)-n0c
              cmui1(m)=cmui1(m+nck)
@@ -634,6 +646,7 @@ contains
        enddo
 !
        do i=i1p1,i2
+!$OMP SIMD
           do k=k1p1,k2
              m=indn(i,j1,k)-n0c
              cmui1(m)=cmui1(m+ncj)
@@ -646,6 +659,7 @@ contains
           enddo
        enddo
 !
+!$OMP SIMD
        do i=i1p1,i2
           m=indn(i,j1,k1)-n0c
           cmui1(m)=cmui1(m+ncj)
@@ -655,6 +669,7 @@ contains
           cvi(m)=cvi(m+ncj)
        enddo
 !
+!$OMP SIMD
        do j=j1p1,j2
           m=indn(i1,j,k1)-n0c
           cmuj1(m)=cmuj1(m+nci)
@@ -664,6 +679,7 @@ contains
           cvj(m)=cvj(m+nci)
        enddo
 !
+!$OMP SIMD
        do k=k1p1,k2
           m=indn(i1,j1,k)-n0c
           cmuk1(m)=cmuk1(m+ncj)

@@ -51,6 +51,7 @@ contains
           mt=mmb(mfb)
           if (cl(mfb)(4:4).eq.' ') then
 !             valeurs d'injection egales aux valeurs a l'infini
+!$OMP SIMD
              do m=1,mt
                 mb=mpb(mfb)+m
                 nc=ncbd(mb)
@@ -75,6 +76,7 @@ contains
        else if (cl(mfb)(1:3).eq.'idi') then
           call met_rbve(v,ncin,ncbd)
           mt=mmb(mfb)
+!$OMP SIMD
           do m=1,mt
              mb=mpb(mfb)+m
              nc=ncbd(mb)
@@ -115,6 +117,7 @@ contains
           if (kparoi.eq.0) then
 !             traitement standard
 !!$OMP SIMD
+!$OMP SIMD
              do m=1,mt
                 mb=mpb(mfb)+m
                 nl=ncbd(mb)
@@ -133,6 +136,7 @@ contains
           elseif (kparoi.eq.2) then
 !            calcul de omega a la paroi
              m0ns=mpn(mfb)
+!$OMP SIMD
              do m=1,mt
                 mb=mpb(mfb)+m
                 nl=ncbd(mb)
@@ -152,6 +156,7 @@ contains
           if (kparoi.eq.0) then
 !             traitement standard
 !!$OMP SIMD
+!$OMP SIMD
              do m=1,mt
                 mb=mpb(mfb)+m
                 nl=ncbd(mb)
@@ -172,6 +177,7 @@ contains
 !             modele k-omega rugueux et bas Reynolds
              rkplus=5.
              m0ns=mpn(mfb)
+!$OMP SIMD
              do m=1,mt
                 mb=mpb(mfb)+m
                 nl=ncbd(mb)
@@ -242,6 +248,7 @@ contains
           call met_rbve(v,ncin,ncbd)
           mt=mmb(mfb)
 !!$OMP SIMD
+!$OMP SIMD
           do m=1,mt
              mb=mpb(mfb)+m
              nl=ncbd(mb)
@@ -255,6 +262,7 @@ contains
           call met_rbve(v,ncin,ncbd)
           mt=mmb(mfb)
 !!$OMP SIMD
+!$OMP SIMD
           do m=1,mt
              mb=mpb(mfb)+m
              nl=ncbd(mb)
@@ -304,6 +312,7 @@ contains
           if(kparoi.eq.0) then
 !            traitement standard
 !!$OMP SIMD
+!$OMP SIMD
              do m=1,mt
                 mb=mpb(mfb)+m
                 nl=ncbd(mb)

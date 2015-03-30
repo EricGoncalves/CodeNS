@@ -82,6 +82,7 @@ contains
     endif
 !
 !!$OMP SIMD
+!$OMP SIMD
     do m=1,mt
 !
        qxd0=roud(m)/rod(m)

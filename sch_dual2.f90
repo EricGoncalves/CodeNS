@@ -52,6 +52,7 @@ contains
        do j=j1,j2m1
           ind1=indc(i1,j,k)
           ind2=indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              c0=vol(n)*dti
              u(n,1)=u(n,1) + c0*(fact*v(n,1)+ ptdual(n,1))

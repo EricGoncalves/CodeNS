@@ -50,6 +50,7 @@ contains
           ind1 = indc(i1,j,k)
           ind2 = indc(i2m1,j,k)
           if(itypdf.ne.0) then
+!$OMP SIMD
              do m = ind1,ind2
                 n = m+n0c
                 df(n,1)=df(n,1) + dfi(n,1)
@@ -59,6 +60,7 @@ contains
                 df(n,5)=df(n,5) + dfi(n,5)
              enddo
           else
+!$OMP SIMD
              do m = ind1,ind2
                 n = m+n0c
                 df(n,1)=dfi(n,1)

@@ -53,6 +53,7 @@ contains
           do j = j1,j2m1
              ind1 = indc(i1,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do m = ind1,ind2
                 nc= m+n0c
                 v(nc,1) = v(nc,1) + dc(nc,1)

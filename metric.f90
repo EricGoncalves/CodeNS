@@ -67,6 +67,7 @@ contains
 !
     if (mtcx.gt.0) then
        do img=1,lgx
+!$OMP SIMD
           do mfc=1,mtcx
              lbd(mfc)=nfbc(mfc)+(img-1)*mtb
           enddo

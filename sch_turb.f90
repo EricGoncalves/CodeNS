@@ -76,6 +76,7 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2  ,j2  ,k2  )
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
        u(n,6)=0.
@@ -92,6 +93,7 @@ contains
        ind2 = indc(i2  ,j2  ,k2  )
     endif
 !
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
        f6x(m)=v(n,6)*(v(n,2)/v(n,1))-fd5x(n)
@@ -116,6 +118,7 @@ contains
           ind1 = indc(i1p1,j,k)
           ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              si6= (f6x(m)+f6x(m-ninc))*sn(m,kdir,1) &
@@ -176,6 +179,7 @@ contains
           ind1 = indc(i1,j,k)
           ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              sj6= (f6x(m)+f6x(m-ninc))*sn(m,kdir,1) &
@@ -196,6 +200,7 @@ contains
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
 !!$OMP SIMD
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           sj6= 2*f6x(m-ninc)*sn(m,kdir,1) &
@@ -213,6 +218,7 @@ contains
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
 !!$OMP SIMD
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           sj6= 2*f6x(m)*sn(m,kdir,1) &
@@ -237,6 +243,7 @@ contains
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
 !!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 sk6= (f6x(m)+f6x(m-ninc))*sn(m,kdir,1) &
@@ -257,6 +264,7 @@ contains
           ind1 = indc(i1  ,j,k1)
           ind2 = indc(i2m1,j,k1)
 !!$OMP SIMD
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              sk6= 2*f6x(m-ninc)*sn(m,kdir,1) &
@@ -274,6 +282,7 @@ contains
           ind1 = indc(i1  ,j,k2)
           ind2 = indc(i2m1,j,k2)
 !!$OMP SIMD
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              sk6= 2*f6x(m)*sn(m,kdir,1) &
@@ -304,6 +313,7 @@ contains
        do j=j1,j2m1
           ind1=indc(i1  ,j,k)
           ind2=indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              u(n,6)=0.5*u(n,6) - vol(n)*ts6(n) - d(n,6)

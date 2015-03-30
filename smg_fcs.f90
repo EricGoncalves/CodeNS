@@ -71,6 +71,7 @@ contains
              do jc = j1c,j2c-1
                 jf = 2*jc -1
 !!$OMP SIMD
+!$OMP SIMD
                 do ic = i1c,i2c-1
                    if = 2*ic - 1
 !
@@ -99,6 +100,7 @@ contains
              do jc = j1c,j2c-1
                 jf = 2*jc -1
 !!$OMP SIMD
+!$OMP SIMD
                 do ic = i1c,i2c-1
                    if = 2*ic - 1
 !

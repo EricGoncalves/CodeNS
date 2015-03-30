@@ -71,6 +71,7 @@ contains
 !
     ind1 = indc(i1  ,j1,  k1  )
     ind2 = indc(i2m1,j2m1,k2m1)
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
        cndsi=sqrt(sn(m,1,1)*sn(m,1,1)+ &

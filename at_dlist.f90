@@ -80,6 +80,7 @@ contains
 !
 !     boucle sur toutes les facettes de la paroi
     do m2=1,m2max-1
+!$OMP SIMD
        do m1=1,m1max-1
           mfac =m0b+m1+(m2-1)*idm
           mfacn=m0n+m1+(m2-1)*idm

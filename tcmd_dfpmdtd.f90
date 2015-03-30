@@ -33,10 +33,12 @@ contains
     character(len=32) ::  mot(nmx)
 !
 !
+!$OMP SIMD
     do icmt=1,32
        comment(icmt:icmt)=' '
     enddo
 !
+!$OMP SIMD
     do l=1,lt
        if(keta(l).eq.2) keta(l)=3
     enddo

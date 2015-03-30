@@ -125,6 +125,7 @@ contains
                 m0b=mpn(nfbi)
                 mbmx=mmb(nfbi)
 !
+!$OMP SIMD
                 do mb=1,mbmx
                    mbb=m0b+mb
                    dist2(mb)=(xcc(mc)-xpar(mbb))**2+(ycc(mc)-ypar(mbb))**2+ &

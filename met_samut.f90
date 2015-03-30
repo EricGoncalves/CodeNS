@@ -62,6 +62,7 @@ contains
     do k=k1,k2m1
        do j=j1,j2m1
           n=ind(i1-1,j,k)
+!$OMP SIMD
           do i=i1,i2m1
              n=n+nci
              xkhi=v(n,6)/mu(n)

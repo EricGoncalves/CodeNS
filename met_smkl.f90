@@ -176,6 +176,7 @@ contains
           do j=jmin,jmax
              ind1=indc(imin,j,k)
              ind2=indc(imax,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 t(m)=v(n,1)
@@ -200,6 +201,7 @@ contains
     do k=k1,k2m1
        do j=j1,j2m1
           n=indc(i1m1,j,k)
+!$OMP SIMD
           do i=i1,i2m1
              n=n+nci
              m=n-n0c

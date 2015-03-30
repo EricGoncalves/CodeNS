@@ -325,6 +325,7 @@ contains
           cnavb=0.
           sxyb=0.
 !
+!$OMP SIMD
           do m1=m1min,m1maxm1
              mfac=m0b+m1+(m2-1)*idm
              mfacn=m0n+m1+(m2-1)*idm

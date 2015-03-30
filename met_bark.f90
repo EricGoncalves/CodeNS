@@ -85,6 +85,7 @@ contains
        do j=jmin,jmax
           ind1=indc(imin,j,k)
           ind2=indc(imax,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              t(m)= sqrt(s(n,6)/s(n,1))
@@ -106,6 +107,7 @@ contains
 !
     ind1=indc(i1  ,j1  ,k1  )
     ind2=indc(i2m1,j2m1,k2m1)
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
        bark(m)=dtdx(m)*dtdx(m)+dtdy(m)*dtdy(m)+dtdz(m)*dtdz(m)
