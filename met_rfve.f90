@@ -21,7 +21,7 @@ contains
     do mf=1,nbd
        mfb=lbd(mf)
        mt=mmb(mfb)
-!!$OMP SIMD
+!$OMP SIMD
        do m=1,mt
           mb=mpb(mfb)+m
           nd=ncbd(mb)

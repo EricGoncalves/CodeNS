@@ -81,7 +81,6 @@ contains
        vrtbet=sqrt(1.-vrtmac*vrtmac)
     endif
 !
-!!$OMP SIMD
 !$OMP SIMD
     do m=1,mt
 !

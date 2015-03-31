@@ -189,7 +189,7 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
-!!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 skxx=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,1)
@@ -237,7 +237,6 @@ contains
        do j=j1,j2m1
           ind1 = ind(i1  ,j,k1)
           ind2 = ind(i2m1,j,k1)
-!!$OMP SIMD
 !$OMP SIMD
           do n=ind1,ind2
              m=n-n0
@@ -259,7 +258,6 @@ contains
        do j=j1,j2m1
           ind1 = ind(i1  ,j,k2)
           ind2 = ind(i2m1,j,k2)
-!!$OMP SIMD
 !$OMP SIMD
           do n=ind1,ind2
              m=n-n0
@@ -288,7 +286,7 @@ contains
           do k=k1,k2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
-!!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 sjxx=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,1)
@@ -336,7 +334,6 @@ contains
        do k=k1,k2m1
           ind1 = ind(i1  ,j1,k)
           ind2 = ind(i2m1,j1,k)
-!!$OMP SIMD
 !$OMP SIMD
           do n=ind1,ind2
              m=n-n0
@@ -358,7 +355,6 @@ contains
        do k=k1,k2m1
           ind1 = ind(i1  ,j2,k)
           ind2 = ind(i2m1,j2,k)
-!!$OMP SIMD
 !$OMP SIMD
           do n=ind1,ind2
              m=n-n0
@@ -387,7 +383,6 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1p1,j,k)
              ind2 = ind(i2m1,j,k)
-!!$OMP SIMD
 !$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
@@ -436,7 +431,7 @@ contains
        do k=k1,k2m1
           ind1 = ind(i1,j1  ,k)
           ind2 = ind(i1,j2m1,k)
-!!$OMP SIMD
+!$OMP SIMD
           do n=ind1,ind2,ncj
              m=n-n0
              dvxx(m)=dvxx(m)-sn(m,1,1)*2*vx(m-nci)
@@ -457,7 +452,7 @@ contains
        do k=k1,k2m1
           ind1 = ind(i2,j1  ,k)
           ind2 = ind(i2,j2m1,k)
-!!$OMP SIMD
+!$OMP SIMD
           do n=ind1,ind2,ncj
              m=n-n0
              dvxx(m-nci)=dvxx(m-nci)+sn(m,1,1)*2*vx(m)

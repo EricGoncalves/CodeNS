@@ -41,7 +41,6 @@ contains
     do mf=1,nbd
        mfb=lbd(mf)
        mt=mmb(mfb)
-!!$OMP SIMD
        do m=1,mt
           ml=mpb(mfb)+m
           n=ncbd(ml)

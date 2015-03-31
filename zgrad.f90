@@ -177,7 +177,6 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
-!!$OMP SIMD
 !$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
@@ -194,7 +193,6 @@ contains
                 dty(m)=dty(m)-sn(m,3,2)*(temp(n)+temp(n-nck))
                 dtz(m)=dtz(m)-sn(m,3,3)*(temp(n)+temp(n-nck))
              enddo
-!!$OMP SIMD
 !$OMP SIMD
              do n=ind1,ind2
                 m=n-n0

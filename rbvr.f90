@@ -75,7 +75,6 @@ contains
        nid=id2(l)-id1(l)+1
        njd=jd2(l)-jd1(l)+1
 !
-!!$OMP SIMD
 !$OMP SIMD
        do m=1,mt
           mr=mpr(mfbm)+m
