@@ -92,21 +92,20 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
-
     ALLOCATE(coefe(ind1-n0c:ind2-n0c,ndir))
     ALLOCATE(d2w1(ind1-n0c:ind2-n0c),d2w2(ind1-n0c:ind2-n0c),&
              d2w3(ind1-n0c:ind2-n0c),d2w4(ind1-n0c:ind2-n0c),&
              d2w5(ind1-n0c:ind2-n0c))
 
-!!$OMP PARALLEL default(SHARED)
+!$OMP PARALLEL default(SHARED)
     do k=1,5
-!!$OMP DO SIMD
+!$OMP DO SIMD
       do n=ind1,ind2
          d(n,k)=0.
       enddo
-!!$OMP END DO SIMD
+!$OMP END DO SIMD
     enddo
-!!$OMP DO SIMD
+!$OMP DO SIMD
     do n=ind1,ind2
        m=n-n0c
        dfxx(m)=0.
@@ -127,12 +126,12 @@ contains
        coefe(m,2)=0.
        coefe(m,3)=0.
     enddo
-!!$OMP END DO SIMD
+!$OMP END DO SIMD
 !
 !------coef diagonal ------------------------------------------------
 !
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
     do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
@@ -142,16 +141,16 @@ contains
              coefdiag(m)=vol(n)*(fact+1./dt(n))
           enddo
        enddo
-!!$OMP END DO
     enddo
+!$OMP END DO
 !
 !-----remplissage du coefficient diagonal par direction---------------
 !
 do kdir=1,numdir
    ninc=inc_dir(4,kdir)
 !
+!$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,cc)
     do k=k1,inc_dir(1,kdir)
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,cc)
        do j=j1,inc_dir(2,kdir)
           ind1 = indc(i1,j,k)
           ind2 = indc(inc_dir(3,kdir),j,k)
@@ -171,11 +170,11 @@ do kdir=1,numdir
                   + ww*sn(m,kdir,3))) + sqrt(cnds)*cc
           enddo
        enddo
-!!$OMP END DO
     enddo
+!$OMP END DO
 !
+!$OMP DO PRIVATE(j,n,m,ind1,ind2)
     do k=k1,inc_dir(1,kdir)
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
        do j=j1,inc_dir(2,kdir)
           ind1 = indc(i1  ,j,k)
           ind2 = indc(inc_dir(3,kdir),j,k)
@@ -185,8 +184,8 @@ do kdir=1,numdir
                coefdiag(m)=coefdiag(m) + coefe(m,kdir) + coefe(m+ninc,kdir)
           enddo
        enddo
-!!$OMP END DO
     enddo
+!$OMP END DO
 enddo
 !
 !*************************************************************************
@@ -198,7 +197,7 @@ enddo
 !-----residu explicite------------------------------------------
 !
         do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
+!$OMP DO PRIVATE(j,n,m,ind1,ind2)
            do j=j1,j2m1
               ind1 = indc(i1  ,j,k)
               ind2 = indc(i2m1,j,k)
@@ -213,10 +212,10 @@ enddo
               enddo
            enddo
         enddo
-
+!$OMP END DO
        if(ityprk.ne.0) then
+!$OMP DO PRIVATE(j,n,m,ind1,ind2)
           do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
@@ -231,14 +230,15 @@ enddo
                 enddo
              enddo
           enddo
+!$OMP END DO
        endif
 !
 !------direction i------------------------------------------
 !
 !
     do kdir=1,numdir
+!$OMP DO PRIVATE(j,n,m,ind1,ind2,tn1,tn2,tn3,tn5)
        do k=k1,inc_dir(1,kdir)
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2,tn1,tn2,tn3,tn5)
           do j=j1,inc_dir(2,kdir)
              ninc=inc_dir(4,kdir)
              ind1 = indc(i1,j,k)
@@ -283,10 +283,9 @@ enddo
                 d2w5(m-ninc)=d2w5(m-ninc) - tn5
              enddo
           enddo
-!!$OMP END DO
        enddo
+!$OMP END DO
 enddo
-
 !
 !*******************************************************************************
 !
@@ -294,10 +293,10 @@ enddo
 !c    actualisation des variables conservatives et des flux
 !c    calcul des increments de flux
 !
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,wi1,wi2,wi3,wi4,wi5,ui,vi,wi,pres,&
+!$OMP fixx,fixy,fixz,fiyy,fiyz,fizz,fiex,fiey,fiez,&
+!$OMP fxx,fxy,fxz,fyy,fyz,fzz,fex,fey,fez)
        do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2,wi1,wi2,wi3,wi4,wi5,ui,vi,wi,pres,&
-!!$OMP fixx,fixy,fixz,fiyy,fiyz,fizz,fiex,fiey,fiez,&
-!!$OMP fxx,fxy,fxz,fyy,fyz,fzz,fex,fey,fez)
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
@@ -351,8 +350,8 @@ enddo
                 dfez(m)=fiez-fez
              enddo
           enddo
-!!$OMP END DO
        enddo
+!$OMP END DO
 !
     enddo  !fin boucle sous-iterations
 !
@@ -361,8 +360,8 @@ enddo
 !*************************************************************************
 !
 !
+!$OMP DO PRIVATE(k,j,n,ind1,ind2)
     do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,ind1,ind2)
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
@@ -370,10 +369,10 @@ enddo
              v(n,:)=v(n,:)+d(n,:)
           enddo
        enddo
-!!$OMP END DO
     enddo
+!$OMP END DO
 
-!!$OMP END PARALLEL
+!$OMP END PARALLEL
 
     DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
 
