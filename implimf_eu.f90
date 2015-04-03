@@ -90,16 +90,18 @@ contains
 !
 !-----initalisation--------------------------------
 !
+!$OMP PARALLEL default(SHARED) private(kdir,ninc,m,n,k,j,ind1,ind2)
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
+!$OMP SINGLE
     ALLOCATE(coefe(ind1-n0c:ind2-n0c,ndir))
     ALLOCATE(d2w1(ind1-n0c:ind2-n0c),d2w2(ind1-n0c:ind2-n0c),&
              d2w3(ind1-n0c:ind2-n0c),d2w4(ind1-n0c:ind2-n0c),&
              d2w5(ind1-n0c:ind2-n0c))
+!$OMP END SINGLE
 
-!$OMP PARALLEL default(SHARED) private(kdir,ninc,m,n,k,j,ind1,ind2)
     do k=1,5
-!$OMP DO SIMD private(m)
+!$OMP DO SIMD
       do n=ind1,ind2
          d(n,k)=0.
       enddo
@@ -149,12 +151,12 @@ contains
 do kdir=1,numdir
    ninc=inc_dir(4,kdir)
 !
-!$OMP DO PRIVATE(cnds,uu,vv,ww,cc) collapse(2)
+!$OMP DO PRIVATE(cnds,uu,vv,ww,cc,norm,norm1) collapse(2)
     do k=k1,inc_dir(1,kdir)
        do j=j1,inc_dir(2,kdir)
           ind1 = indc(i1,j,k)
           ind2 = indc(inc_dir(3,kdir),j,k)
-!$OMP SIMD private(m,cnds,uu,vv,ww,cc)
+!$OMP SIMD private(m,cnds,uu,vv,ww,cc,norm,norm1)
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -236,8 +238,8 @@ enddo
 !------direction i------------------------------------------
 !
 !
-!$OMP DO PRIVATE(tn1,tn2,tn3,tn5)  collapse(3)
     do kdir=1,numdir
+!$OMP DO PRIVATE(tn1,tn2,tn3,tn5)  collapse(2)
        do k=k1,inc_dir(1,kdir)
           do j=j1,inc_dir(2,kdir)
              ninc=inc_dir(4,kdir)
@@ -284,8 +286,8 @@ enddo
              enddo
           enddo
        enddo
-enddo
 !$OMP END DO
+enddo
 !
 !*******************************************************************************
 !

@@ -216,8 +216,8 @@ if (equat(6:7).eq.'ke') kfin=7
                 ndeb=npc(lm)+1
                 nfin=npc(lm)+nnc(lm)
 !
+!$OMP SIMD collapse(2)
                 do k=1,kfin
-!$OMP SIMD
                   do nc=ndeb,nfin
                    u0(nc,k)=v(nc,k)
                   enddo
