@@ -102,10 +102,10 @@ contains
 
     do k=1,5
 !$OMP DO SIMD
-      do n=ind1,ind2
+    do n=ind1,ind2
          d(n,k)=0.
       enddo
-!$OMP END DO SIMD
+!$OMP END DO SIMD nowait
     enddo
 !$OMP DO SIMD private(m)
     do n=ind1,ind2
@@ -128,7 +128,7 @@ contains
        coefe(m,2)=0.
        coefe(m,3)=0.
     enddo
-!$OMP END DO SIMD
+!$OMP END DO SIMD nowait
 !
 !------coef diagonal ------------------------------------------------
 !
@@ -187,7 +187,7 @@ do kdir=1,numdir
           enddo
        enddo
     enddo
-!$OMP END DO
+!$OMP END DO 
 enddo
 !
 !*************************************************************************
@@ -373,7 +373,7 @@ enddo
           enddo
        enddo
     enddo
-!$OMP END DO
+!$OMP END DO nowait
 
 !$OMP END PARALLEL
 
