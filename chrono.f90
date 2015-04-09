@@ -97,6 +97,7 @@ contains
                cson)
 !
        elseif(kprec.ge.1) then
+!$OMP SINGLE
           call chronos_prcd( &
                lm,eta(lm),mu,mut, &
                u, &
@@ -105,6 +106,7 @@ contains
                vol, &
                tn1,tn2,tn3,tn4, &
                cson,pression)
+!$OMP END SINGLE
        endif
 !
     enddo
@@ -119,6 +121,7 @@ contains
           nid  = id2(lm)-id1(lm)+1
           njd  = jd2(lm)-jd1(lm)+1
           nijd = nid*njd
+!$OMP DO COLLAPSE(2) REDUCTION(min:dtmin)
           do k = kk1(lm),kk2(lm)-1
              do j = jj1(lm),jj2(lm)-1
 !$OMP SIMD
@@ -128,14 +131,17 @@ contains
                 enddo
              enddo
           enddo
+!$OMP ENDDO
 !
        enddo
 !
        dtmin=min(dt1min,dtmin)
        if(dtmin.lt.dt1min) then
+!$OMP SINGLE
           write(imp,'("===> chrono")')
           write(imp,'(2(1pe11.3))') &
                dtmin,dt1min
+!$OMP END SINGLE
           STOP
        endif
 !
@@ -143,10 +149,11 @@ contains
           lm=l+(img-1)*lz
           ndeb = indc(id1(lm),jd1(lm),kd1(lm))
           nfin = indc(id2(lm),jd2(lm),kd2(lm))
-!$OMP SIMD
+!$OMP DO SIMD
           do n = ndeb,nfin
              dt(n)=dtmin
           enddo
+!$OMP END DO SIMD
        enddo
 !
     endif

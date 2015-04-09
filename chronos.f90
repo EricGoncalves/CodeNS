@@ -86,10 +86,6 @@ contains
     character(len=7 ) :: equat
 !
 !
-
-
-
-
     n0c =npc(l)
     n0n =npn(l)
     i1  =ii1(l)
@@ -113,11 +109,13 @@ contains
 !
     n1=indc(i1,j1,k1)
     n2=indc(i2,j2,k2)
-!$OMP SIMD
+!$OMP DO SIMD
     do n=n1,n2
        dt(n)=0.
     enddo
+!$OMP END DO SIMD
 !
+!$OMP DO COLLAPSE(2)
     do k=k1,k2m1
        do j=j1,j2m1
 !$OMP SIMD
@@ -129,7 +127,11 @@ contains
                   sn(m,1,3)*sn(m,1,3)
           enddo
        enddo
+    enddo
+!$OMP END DO NOWAIT
 
+!$OMP DO COLLAPSE(2)
+    do k=k1,k2m1
        do j=j1,j2
 !$OMP SIMD
           do i=i1,i2m1
@@ -141,7 +143,9 @@ contains
           enddo
        enddo
     enddo
-!
+!$OMP END DO NOWAIT
+
+!$OMP DO COLLAPSE(2)
     do k=k1,k2
        do j=j1,j2m1
 !$OMP SIMD
@@ -154,7 +158,9 @@ contains
           enddo
        enddo
     enddo
-!
+!$OMP END DO
+
+!$OMP DO COLLAPSE(2)
     do k=k1,k2m1
        do j=j1,j2m1
           mn=indn(i1-1,j,k)-n0n
@@ -172,7 +178,9 @@ contains
           enddo
        enddo
     enddo
-!
+!$OMP END DO NOWAIT
+
+!$OMP DO COLLAPSE(2)
     do k=k1,k2m1
        do j=j1,j2m1
 !$OMP SIMD
@@ -187,8 +195,10 @@ contains
           enddo
        enddo
     enddo
+!$OMP END DO
 
     if (equat(1:2).eq.'ns') then
+!$OMP DO COLLAPSE(2)
        do k=k1,k2m1
           do j=j1,j2m1
 !$OMP SIMD
@@ -202,6 +212,7 @@ contains
              enddo
           enddo
        enddo
+!$OMP END DO
     endif
 
     return

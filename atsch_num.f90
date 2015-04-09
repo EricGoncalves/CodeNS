@@ -420,7 +420,7 @@ contains
 !
 !-------calcul du pas de temps------------------------------------------------
 !
-!!$OMP END SINGLE
+!$OMP END SINGLE
     if((mcychro.eq.1).or.(icyc.lt.icychr0)) then
        call chrono( &
             img, &
@@ -429,7 +429,7 @@ contains
             tn1,tn2,tn3,tn4, &
             cson,pression)
     endif
-!!$OMP SINGLE
+!$OMP SINGLE
 !
 !-------prolongement des variables aux bords-------------------------------
 !
