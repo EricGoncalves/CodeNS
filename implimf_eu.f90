@@ -90,7 +90,7 @@ contains
 !
 !-----initalisation--------------------------------
 !
-!$OMP PARALLEL default(SHARED) private(kdir,ninc,m,n,k,j,ind1,ind2)
+!!$OMP PARALLEL default(SHARED) private(kdir,ninc,m,n,k,j,ind1,ind2)
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
 !$OMP SINGLE
@@ -187,7 +187,7 @@ do kdir=1,numdir
           enddo
        enddo
     enddo
-!$OMP END DO 
+!$OMP END DO
 enddo
 !
 !*************************************************************************
@@ -375,7 +375,7 @@ enddo
     enddo
 !$OMP END DO nowait
 
-!$OMP END PARALLEL
+!!$OMP END PARALLEL
 
     DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
 

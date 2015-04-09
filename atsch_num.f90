@@ -145,7 +145,9 @@ contains
 
     allocate(m2tb(ip00))
     allocate(nfrtb(ip00))
-    allocate(m1tb(ip00))
+    allocate(m1tb(ip00))!private(gfetke,dtpas,mcychro,mcyturb,l,lm,ndeb,nfin,lgsnlt)
+!$OMP PARALLEL default(SHARED)
+!$OMP SINGLE
 !
 !-----------------------------------------------------------------------
 !
@@ -601,15 +603,19 @@ contains
 !       calcul de l'increment explicite (calcul des flux numeriques)
 !----------------------------------------------------------------------
 !
+!$OMP END SINGLE
     do l=1,lzx
+!$OMP SINGLE
        lm=l+(img-1)*lz
        npsn  =ndir*npfb(lm)+1
        lgsnlt=nnn(lm)
+!$OMP END SINGLE
 !
 !--------Schema de Jameson--------------------------------------------
 !
        SELECT CASE(ischema)
        CASE(1)
+!$OMP SINGLE
           call sch_jameson( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -618,9 +624,11 @@ contains
                sn(npsn),lgsnlt, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression)
+!$OMP END SINGLE
 !
        CASE(2)
 !         version ponderee
+!$OMP SINGLE
           call sch_jameson_pond( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -630,9 +638,11 @@ contains
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression, &
                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+!$OMP END SINGLE
 !
        CASE(3)
 !         version ordre 3 avec correction de l'erreur dispersive
+!$OMP SINGLE
           call sch_jameson3( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -641,9 +651,11 @@ contains
                sn(npsn),lgsnlt, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression)
+!$OMP END SINGLE
 !
        CASE(4)
 !         version ordre 3 avec correction de l'erreur dispersive + ponderation
+!$OMP SINGLE
           call sch_jameson3pond( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -654,10 +666,12 @@ contains
                pression, &
                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
                cvi,cvj,cvk)
+!$OMP END SINGLE
 !
 !--------Schema AUSM+ de Liou--------------------------------------------
 !
        CASE(5)
+!$OMP SINGLE
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
                 call sch_ausmp( &
@@ -682,7 +696,9 @@ contains
 !
 !--------Schema AUSM+ pondere--------------------------------------
 !
+!$OMP END SINGLE
        CASE(6)
+!$OMP SINGLE
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
                 call sch_ausmp_pond( &
@@ -700,7 +716,9 @@ contains
 !
 !--------Schema de Roe--------------------------------------------
 !
+!$OMP END SINGLE
        CASE(7)
+!$OMP SINGLE
 !
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
@@ -735,7 +753,9 @@ contains
 !
 !--------Schema de Roe pondere------------------------------------
 !
+!$OMP END SINGLE
        CASE(8)
+!$OMP SINGLE
           if(kprec.eq.0) then
              call sch_roe_pond( &
                   lm,ityprk, &
@@ -762,7 +782,9 @@ contains
 !
 !--------Schema de Rusanov avec extrapolation MUSCL----------------------------------
 !
+!$OMP END SINGLE
        CASE(9)
+!$OMP SINGLE
 !
           if(kprec.eq.0) then
              call sch_rusanov( &
@@ -785,7 +807,9 @@ contains
           endif
 !--------Schema de Jiang&Chu WENO ordre 3-----------------------------------
 !
+!$OMP END SINGLE
        CASE(10)
+!$OMP SINGLE
 !           if(kprec.eq.0) then
           if(equat(3:4).eq.'2d') then
 ! attention: muscl sert de cle pour splitting
@@ -840,7 +864,9 @@ contains
 !
 !--------Schema WENO ordre 3 pondere-----------------------------------
 !
+!$OMP END SINGLE
        CASE(11)
+!$OMP SINGLE
           if(equat(3:4).eq.'2d') then
 ! attention: muscl sert de cle pour splitting
              if(muscl.eq.0) then
@@ -879,7 +905,9 @@ contains
 !
 !--------Schema WENO ordre 5-----------------------------------
 !
+!$OMP END SINGLE
        CASE(12)
+!$OMP SINGLE
           if(equat(3:4).eq.'2d') then
              call sch_weno5( &
                   lm,ityprk, &
@@ -902,7 +930,9 @@ contains
 !
 !--------Schema WENO ordre 5 pondere---------------------------------
 !
+!$OMP END SINGLE
        CASE(13)
+!$OMP SINGLE
           if(equat(3:4).eq.'2d') then
              call sch_weno5pond( &
                   lm,ityprk, &
@@ -928,7 +958,9 @@ contains
 !
 !--------Schema HLLC avec extrapolation MUSCL-------------------------
 !
+!$OMP END SINGLE
        CASE(14)
+!$OMP SINGLE
 !
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
@@ -959,7 +991,9 @@ contains
                   tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                   pression)
           endif
+!$OMP END SINGLE
        END SELECT
+!$OMP SINGLE
 !
 !--------Preconditionnement basse vitesse de Turkel--------------------
 !        calcul des residus preconditionnes pour calcul tout explicite
@@ -999,9 +1033,12 @@ contains
 !      avance d'un pas de temps des variables
 !*************************************************************************
 !
+!$OMP END SINGLE
        if(kmf(lm).eq.0) then
 !        calcul tout explicite
+!$OMP SINGLE
           call sch_expli(lm,u,v,dt,vol)
+!$OMP END SINGLE
 !
        elseif(kmf(lm).eq.1) then
 !-------------------------------------------------------------------------
@@ -1009,6 +1046,7 @@ contains
 !-------------------------------------------------------------------------
 !
           if(equat(1:2).eq.'ns') then
+!$OMP SINGLE
              if(kprec.eq.0) then
                 if(equat(3:4).eq.'2d') then
                    call implimf( &
@@ -1070,6 +1108,7 @@ contains
 !                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
 !                 pression,cson)
 !             endif
+!$OMP END SINGLE
 !
 !-------Equations d'Euler------------------------------------------
 !
@@ -1118,6 +1157,7 @@ contains
 !
     enddo      !fin boucle sur domaines
 
+!$OMP END PARALLEL
     deallocate(m2tb,nfrtb,m1tb)
     return
   end subroutine atsch_num
