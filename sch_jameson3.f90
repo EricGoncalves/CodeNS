@@ -48,9 +48,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
-
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)
@@ -87,8 +84,7 @@ contains
        ind2 = indc(i2  ,j2  ,k2  )
     endif
 !
-!!$OMP DO SIMD
-!$OMP SIMD
+!$OMP DO SIMD
        do n=ind1,ind2
           m=n-n0c
           u(n,1)=0.
@@ -107,10 +103,9 @@ contains
         fey(m)=(v(n,5)+ps(n)-pinfl)*v(n,3)*norm
         fez(m)=(v(n,5)+ps(n)-pinfl)*v(n,4)*norm
        enddo
-!!$OMP END DO SIMD
+!$OMP END DO SIMD
     if (equat(1:2).eq.'ns') then
-!!$OMP DO SIMD
-!$OMP SIMD
+!$OMP DO SIMD
        do n=ind1,ind2
           m=n-n0c
           fxx(m)=fxx(m)-toxx(n)
@@ -123,7 +118,7 @@ contains
           fey(m)=fey(m)-(toyy(n)*v(n,3)+toxy(n)*v(n,2)+toyz(n)*v(n,4))/v(n,1)-qcy(n)
           fez(m)=fez(m)-(tozz(n)*v(n,4)+toxz(n)*v(n,2)+toyz(n)*v(n,3))/v(n,1)-qcz(n)
        enddo
-!!$OMP END DO SIMD
+!$OMP END DO SIMD
     endif
 !
 !     coefficient
@@ -138,7 +133,7 @@ contains
     kdir=1
     ninc=nci
 !
-!!$OMP DO collapse(2)
+!$OMP DO collapse(2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1+2,j,k)
@@ -176,9 +171,9 @@ contains
           enddo
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i1p1,j1  ,k)
        ind2 = indc(i1p1,j2m1,k)
@@ -211,9 +206,9 @@ contains
           u(n-ninc,5)=u(n-ninc,5)+si4
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i2m1,j1  ,k)
        ind2 = indc(i2m1,j2m1,k)
@@ -246,9 +241,9 @@ contains
           u(n-ninc,5)=u(n-ninc,5)+si4
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i1,j1  ,k)
        ind2 = indc(i1,j2m1,k)
@@ -276,9 +271,9 @@ contains
           u(n,5)=u(n,5)-si4
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i2,j1  ,k)
        ind2 = indc(i2,j2m1,k)
@@ -306,14 +301,14 @@ contains
           u(n-ninc,5)=u(n-ninc,5)+si4
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
 !------direction j------------------------------------------------------------
 !
     kdir=2
     ninc=ncj
 !
-!!$OMP DO collapse(2)
+!$OMP DO collapse(2)
     do k=k1,k2m1
        do j=j1+2,j2-2
           ind1 = indc(i1  ,j,k)
@@ -351,9 +346,9 @@ contains
           enddo
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i1  ,j1p1,k)
        ind2 = indc(i2m1,j1p1,k)
@@ -387,9 +382,9 @@ contains
           u(n-ninc,5)=u(n-ninc,5)+sj4
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i1  ,j2m1,k)
        ind2 = indc(i2m1,j2m1,k)
@@ -423,9 +418,9 @@ contains
           u(n-ninc,5)=u(n-ninc,5)+sj4
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
@@ -454,9 +449,9 @@ contains
           u(n,5)=u(n,5)-sj4
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
@@ -485,7 +480,7 @@ contains
           u(n-ninc,5)=u(n-ninc,5)+sj4
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
 !------direction k----------------------------------------------
 !
@@ -493,7 +488,7 @@ contains
        kdir=3
        ninc=nck
 !
-!!$OMP DO collapse(2)
+!$OMP DO collapse(2)
        do k=k1+2,k2-2
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
@@ -531,9 +526,9 @@ contains
              enddo
           enddo
        enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k1p1)
           ind2 = indc(i2m1,j,k1p1)
@@ -567,9 +562,9 @@ contains
              u(n-ninc,5)=u(n-ninc,5)+sk4
           enddo
        enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k2m1)
           ind2 = indc(i2m1,j,k2m1)
@@ -603,9 +598,9 @@ contains
              u(n-ninc,5)=u(n-ninc,5)+sk4
           enddo
        enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k1)
           ind2 = indc(i2m1,j,k1)
@@ -634,9 +629,9 @@ contains
              u(n,5)=u(n,5)-sk4
           enddo
        enddo
-!!$OMP END DO
+!$OMP END DO
 !
-!!$OMP DO
+!$OMP DO
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k2)
           ind2 = indc(i2m1,j,k2)
@@ -665,13 +660,13 @@ contains
              u(n-ninc,5)=u(n-ninc,5)+sk4
           enddo
        enddo
-!!$OMP END DO
+!$OMP END DO
 !
     endif
 !
 !------normalisation et ajout de la dissipation artificielle------
 !
-!!$OMP DO collapse(2)
+!$OMP DO collapse(2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1=indc(i1  ,j,k)
@@ -687,7 +682,7 @@ contains
           enddo
        enddo
     enddo
-!!$OMP END DO
+!$OMP END DO
 !
 !      write(6,'("===>sch_jam4: ecriture increment expli")')
 !      k=1
@@ -702,7 +697,7 @@ contains
 !-----calcul de la 'forcing function'---------------------------
 !
     if(ityprk.ne.0) then
-!!$OMP DO collapse(2)
+!$OMP DO collapse(2)
        do k=k1,k2m1
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
@@ -718,7 +713,7 @@ contains
              enddo
           enddo
        enddo
-!!$OMP END DO
+!$OMP END DO
     endif
 
     return

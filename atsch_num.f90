@@ -642,7 +642,6 @@ contains
 !
        CASE(3)
 !         version ordre 3 avec correction de l'erreur dispersive
-!$OMP SINGLE
           call sch_jameson3( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -651,7 +650,6 @@ contains
                sn(npsn),lgsnlt, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression)
-!$OMP END SINGLE
 !
        CASE(4)
 !         version ordre 3 avec correction de l'erreur dispersive + ponderation
