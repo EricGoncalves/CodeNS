@@ -66,7 +66,7 @@ contains
     rcga2=1./cga**2
     rgam1=1./(gam-1.)
     if(ityprk.eq.0) then
-!$OMP SIMD
+!$OMP DO SIMD
        do m=ind1,ind2
           nc=m+n0c
 !       coordonnees centre facette
@@ -87,10 +87,11 @@ contains
           u(nc,1) = u(nc,1) - ts1*vol(nc)
           u(nc,5) = u(nc,5) - ts1*vol(nc)*rgam1
        enddo
+!$OMP END DO SIMD
 !
     else
 !
-!$OMP SIMD
+!$OMP DO SIMD
        do m=ind1,ind2
           nc=m+n0c
 !       coordonnees centre facette
@@ -110,6 +111,7 @@ contains
           u(nc,1) = u(nc,1) + ff(nc,1) - ts1*vol(nc)
           u(nc,5) = u(nc,5) + ff(nc,5) - ts1*vol(nc)*rgam1
        enddo
+!$OMP END DO SIMD
     endif
 !
     return

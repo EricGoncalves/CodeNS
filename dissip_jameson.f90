@@ -84,11 +84,12 @@ contains
        ind2 = indc(i2  ,j2  ,k2  )
     endif
     do k=1,5
-!$OMP SIMD
+!$OMP DO SIMD
        do n=ind1,ind2
           d(n,k)=0.
 !          ps(n)=gam1*(v(n,5)-pinfl-0.5*(v(n,2)**2+v(n,3)**2+v(n,4)**2)/v(n,1))
        enddo
+!$OMP END DO SIMD nowait
     enddo
 !
 !*********************************************************************
@@ -101,6 +102,7 @@ contains
     ninc=nci
 !
 !c---senseur dissipation artificielle
+!$OMP DO COLLAPSE(2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -113,7 +115,9 @@ contains
           enddo
        enddo
     enddo
+!$OMP END DO
 !
+!$OMP DO COLLAPSE(2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1p1,j,k)
@@ -154,7 +158,9 @@ contains
           enddo
        enddo
     enddo
+!$OMP END DO
 !
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i1,j1  ,k)
        ind2 = indc(i1,j2m1,k)
@@ -181,7 +187,9 @@ contains
           d(n,5)=d(n,5)-ds5
        enddo
     enddo
+!$OMP END DO
 !
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i2,j1  ,k)
        ind2 = indc(i2,j2m1,k)
@@ -208,6 +216,7 @@ contains
           d(n-ninc,5)=d(n-ninc,5)+ds5
        enddo
     enddo
+!$OMP END DO
 !
 !------direction j----------------------------------------------
 !
@@ -215,6 +224,7 @@ contains
     ninc=ncj
 !
 !c---senseur dissipation artificielle
+!$OMP DO COLLAPSE(2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -227,7 +237,9 @@ contains
           enddo
        enddo
     enddo
+!$OMP END DO
 !
+!$OMP DO COLLAPSE(2)
     do k=k1,k2m1
        do j=j1p1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -268,7 +280,9 @@ contains
           enddo
        enddo
     enddo
+!$OMP END DO
 !
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
@@ -296,7 +310,9 @@ contains
           d(n,5)=d(n,5)-ds5
        enddo
     enddo
+!$OMP END DO
 !
+!$OMP DO
     do k=k1,k2m1
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
@@ -324,6 +340,7 @@ contains
           d(n-ninc,5)=d(n-ninc,5)+ds5
        enddo
     enddo
+!$OMP END DO
 !
 !------direction k----------------------------------------------
 !
@@ -332,6 +349,7 @@ contains
        ninc=nck
 !
 !----senseur dissipation artificielle
+!$OMP DO COLLAPSE(2)
        do k=k1,k2m1
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
@@ -344,7 +362,9 @@ contains
              enddo
           enddo
        enddo
+!$OMP END DO
 !
+!$OMP DO COLLAPSE(2)
        do k=k1p1,k2m1
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
@@ -385,7 +405,9 @@ contains
              enddo
           enddo
        enddo
+!$OMP END DO
 !
+!$OMP DO
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k1)
           ind2 = indc(i2m1,j,k1)
@@ -413,7 +435,9 @@ contains
              d(n,5)=d(n,5)-ds5
           enddo
        enddo
+!$OMP END DO
 !
+!$OMP DO
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k2)
           ind2 = indc(i2m1,j,k2)
@@ -441,6 +465,7 @@ contains
              d(n-ninc,5)=d(n-ninc,5)+ds5
           enddo
        enddo
+!$OMP END DO
 !
     endif
 

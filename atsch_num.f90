@@ -143,11 +143,14 @@ contains
     double precision ::         znr(ip44),      ztemp(ip11)
     logical          :: gfetke
 
+!$OMP SINGLE
     allocate(m2tb(ip00))
     allocate(nfrtb(ip00))
-    allocate(m1tb(ip00))!private(gfetke,dtpas,mcychro,mcyturb,l,lm,ndeb,nfin,lgsnlt)
-!$OMP PARALLEL default(SHARED)
-!$OMP SINGLE
+    allocate(m1tb(ip00))
+!$OMP END SINGLE
+
+!private(l,lm,ndeb,nfin,lgsnlt)
+!$OMP PARALLEL default(SHARED) private(gfetke,dtpas,mcychro,mcyturb)
 !
 !-----------------------------------------------------------------------
 !
@@ -190,6 +193,7 @@ contains
 !     calcul de la distance aux parois
 !-----------------------------------------------------------
 !
+!$OMP SINGLE
     if (ncyc.eq.1 .and. img.eq.mg ) then
 !        calcul distance pour epaisseurs integrales si necessaire
        SELECT CASE(kcaldis)
@@ -416,6 +420,7 @@ contains
 !
 !-------calcul du pas de temps------------------------------------------------
 !
+!!$OMP END SINGLE
     if((mcychro.eq.1).or.(icyc.lt.icychr0)) then
        call chrono( &
             img, &
@@ -424,6 +429,7 @@ contains
             tn1,tn2,tn3,tn4, &
             cson,pression)
     endif
+!!$OMP SINGLE
 !
 !-------prolongement des variables aux bords-------------------------------
 !
@@ -447,11 +453,14 @@ contains
 !-------calcul dissipation artificielle du schema de Jameson--------------
 !
 !      champ moyen
+!$OMP END SINGLE
     if(ischema.le.4) then
        do l=1,lzx
+!$OMP SINGLE
           lm=l+(img-1)*lz
           npsn  =ndir*npfb(lm)+1
           lgsnlt=nnn(lm)
+!$OMP END SINGLE
 !
           SELECT CASE(kprec)
           CASE(0)
@@ -461,20 +470,25 @@ contains
                   sn(npsn),lgsnlt, &
                   tn1,pression,cson)
           CASE(1)  !(P,u,S)
+!$OMP SINGLE
 !            call dissip_jameson_prcd( &
 !                 lm,v,d, &
 !                 equat, &
 !                 sn(npsn),lgsnlt, &
 !                 tn2,tn3,pression,ztemp,cson)
+!$OMP END SINGLE
           CASE(2)  !(P,u,e)
+!$OMP SINGLE
              call dissip_jameson_prcd2( &
                   lm,v,d, &
                   equat, &
                   sn(npsn),lgsnlt, &
                   tn1,pression,cson)
+!$OMP END SINGLE
           END SELECT
        enddo
     endif
+!$OMP SINGLE
 !
 !       champ turbulent
     if((kditur.eq.1).or.(kditur.eq.3)) then
@@ -1016,6 +1030,7 @@ contains
                   vol,ptdual)
           endif
        endif
+!$OMP END SINGLE
 !
 !--------contribution acoustique ----------------------------------------
 !
@@ -1031,7 +1046,6 @@ contains
 !      avance d'un pas de temps des variables
 !*************************************************************************
 !
-!$OMP END SINGLE
        if(kmf(lm).eq.0) then
 !        calcul tout explicite
 !$OMP SINGLE
