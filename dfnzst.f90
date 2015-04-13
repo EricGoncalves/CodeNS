@@ -50,6 +50,7 @@ contains
     use proprieteflu
     implicit none
     integer          :: nonzst
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -67,6 +68,7 @@ contains
     cp=1./(gam-1.)
     cv=cp/gam
 !
+!$OMP END MASTER
     return
   end subroutine dfnzst
 end module mod_dfnzst

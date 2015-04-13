@@ -110,6 +110,7 @@ contains
     character(len=6 ) :: typa,typb
     character(len=7 ) :: equat
     character(len=2 ) :: tvi,tvj,tvk
+!$OMP MASTER
 !
     nidla = id2(la)-id1(la)+1
     njdla = jd2(la)-jd1(la)+1
@@ -381,6 +382,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine initcs
 end module mod_initcs

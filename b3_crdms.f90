@@ -23,6 +23,7 @@ contains
     use maillage
     implicit none
     integer          ::  l,ni,nj,nk
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -37,6 +38,7 @@ contains
 999 format(   /2x,'Nb tot de pts (hors fic.):',9x,i8, &
          /2x,'-------------------------')
 !
+!$OMP END MASTER
     return
   end subroutine b3_crdms
 end module mod_b3_crdms

@@ -20,6 +20,7 @@ contains
     use schemanum
     implicit none
     integer          :: l
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -32,6 +33,7 @@ contains
        kki4(l)=1
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine defdfpmdsd
 end module mod_defdfpmdsd

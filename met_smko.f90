@@ -61,6 +61,7 @@ contains
     double precision ::  tprod(ip00),txxf5x(ip12),txyf5y(ip12),txzf5z(ip12),tyyf6x(ip12)
     double precision :: tyzf6y(ip12),tzzf6z(ip12),v(ip11,ip60),         xmt,        xmt0
     double precision ::           xw
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -114,6 +115,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

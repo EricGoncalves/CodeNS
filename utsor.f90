@@ -178,6 +178,7 @@ contains
     double precision ::         snal,        snbe,         sxy,        sxyb,         sxz
     double precision ::          syz,           u,           v,           w,     x(ip21)
     double precision ::        xcfac,     y(ip21),       ycfac,     z(ip21),       zcfac
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -204,6 +205,7 @@ contains
 !
 !     SORTIES RELATIVES A DES VALEURS SUR LES PAROIS
 !
+!$OMP END MASTER
     if(kvglo.eq.0) return
     if(nbfll.eq.0) return
 !

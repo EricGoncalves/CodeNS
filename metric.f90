@@ -45,6 +45,7 @@ contains
     double precision ::          exs1,         exs2,      r(ip11),sn(ip31*ndir),    tn1(ip00)
     double precision ::     tn2(ip00),    tn3(ip00),    vol(ip11),      x(ip21),    xnr(ip44)
     double precision ::       y(ip21),    ynr(ip44),      z(ip21),    znr(ip44)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -88,6 +89,7 @@ contains
        enddo
     endif
 !
+!$OMP END MASTER
     return
   end subroutine metric
 end module mod_metric

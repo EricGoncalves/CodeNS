@@ -20,6 +20,7 @@ contains
     integer          ::         nd,       ndm
     double precision :: s1x(ip12),s1y(ip12),s1z(ip12),s2x(ip12),s2y(ip12)
     double precision :: s2z(ip12)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -50,6 +51,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine met_rbsc
 end module mod_met_rbsc

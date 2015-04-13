@@ -128,6 +128,7 @@ contains
     double precision ::       ro(ip40),    roc0(ip40),     rpi(ip40),     rti(ip40),    temp(ip11)
     double precision ::       un(ip40),    usdn(ip40),   usdn2(ip40),  v(ip11,ip60),             w
     double precision ::             wn,       y(ip21),      ym(ip40),       z(ip21),      zm(ip40)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -241,6 +242,7 @@ contains
        cson(nc)=sqrt(temp(nc))
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    inc(id,jd,kd)

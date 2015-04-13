@@ -82,6 +82,7 @@ contains
     double precision ::    qcz(ip12),  topz(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12)
     double precision ::   toyy(ip12),  toyz(ip12),  tozz(ip12),  utau(ip42),v(ip11,ip60)
     double precision ::  ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -112,6 +113,7 @@ contains
        endif
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine cllparoi2
 end module mod_cllparoi2

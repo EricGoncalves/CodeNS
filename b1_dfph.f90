@@ -31,6 +31,7 @@ contains
 !
     character(len=1316) :: form
     character(len=24) ::  cgam,crd,cpinfl,cql,cpr,cprt,creynz
+!$OMP MASTER
 !
     call convich(kgam,cgam)
     call convich(krd,crd)
@@ -59,6 +60,7 @@ contains
             reynz,creynz
     endif
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfph
 end module mod_b1_dfph

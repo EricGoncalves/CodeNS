@@ -41,6 +41,7 @@ contains
     integer          ::   lm,   n,  n0, nid,nijd
     integer          ::  njd
     double precision :: vol(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -93,6 +94,7 @@ contains
 1002 format(//,5x,' nombre de volumes negatifs :',i6)
 1003 format(///,5x,'arret du programme car mailles negatives')
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

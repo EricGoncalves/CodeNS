@@ -89,6 +89,7 @@ contains
     double precision ::   topz(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12)
     double precision ::   toyz(ip12),  tozz(ip12),          tt,  utau(ip42),v(ip11,ip60)
     double precision ::          v1x,         v1y,         v1z
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -155,6 +156,7 @@ contains
 !     fin boucle sur facettes d'une frontiere paroi
     end do
 !
+!$OMP END MASTER
     return
   end subroutine lparoi3d
 end module mod_lparoi3d

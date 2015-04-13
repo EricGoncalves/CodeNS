@@ -59,6 +59,7 @@ contains
     double precision ::  qcz(ip12),      qczr,        sr,toxx(ip12),toxy(ip12)
     double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12),      txxr
     double precision ::       txyr,      txzr,      tyyr,      tyzr,      tzzr
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -103,6 +104,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine rbtc
 end module mod_rbtc

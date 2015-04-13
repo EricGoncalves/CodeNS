@@ -17,6 +17,7 @@ contains
     use definition
     implicit none
     integer          :: lst,nst
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -37,6 +38,7 @@ contains
        varst(nst,7)=0.
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine defdfst
 end module mod_defdfst

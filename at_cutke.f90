@@ -22,6 +22,7 @@ contains
     implicit none
     integer          :: l
     double precision :: v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -42,6 +43,7 @@ contains
        stop
     endif
 !
+!$OMP END MASTER
     return
   end subroutine at_cutke
 end module mod_at_cutke

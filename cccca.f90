@@ -41,6 +41,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
+!$OMP MASTER
 !
     n0=npc(l)
 !
@@ -85,6 +86,7 @@ contains
        enddo
     endif
 !
+!$OMP END MASTER
     return
   end subroutine cccca
 end module mod_cccca

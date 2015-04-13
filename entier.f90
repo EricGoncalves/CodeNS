@@ -15,6 +15,7 @@ contains
     character(len=32) ::  mot
     character(len=4 ) :: formatm
     character(len=1 ) :: longm
+!$OMP MASTER
 !
     write(longm,'(i1)') imot
     formatm='(i'//longm//')'
@@ -23,6 +24,7 @@ contains
     kerr=1
 100 continue
 !
+!$OMP END MASTER
     return
   end subroutine entier
 end module mod_entier

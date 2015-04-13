@@ -27,6 +27,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
     allocate(ldom(nobj))
 !
 !
@@ -43,6 +44,7 @@ contains
     enddo
 !
     deallocate(ldom)
+!$OMP END MASTER
     return
   end subroutine c_ingr
 end module mod_c_ingr

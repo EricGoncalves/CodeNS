@@ -28,6 +28,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     call tcmd_dfpmdtg(mot,imot,nmot)
 !
@@ -35,6 +36,7 @@ contains
        call b1_dfpmdtg
     endif
 !
+!$OMP END MASTER
     return
   end subroutine c_dfpmdtg
 end module mod_c_dfpmdtg

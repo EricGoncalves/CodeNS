@@ -26,6 +26,7 @@ contains
     use maillage
     implicit none
     integer          :: ng
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -47,6 +48,7 @@ contains
        kncycle(ng)=0
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine defsecpfw
 end module mod_defsecpfw

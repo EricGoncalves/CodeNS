@@ -54,6 +54,7 @@ contains
     integer          ::      mfbi,    mfbim,mnc(ip43),       mt,      n0c
     integer          ::        nc,      nid,      njd,       nn
     double precision :: pi(ip40),pj(ip40),pk(ip40)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -96,6 +97,7 @@ contains
          4x,'  nc',2x,' ic',2x,' jc', 2x,' kc'/)
 1920 format(1x,i5,2x,i6,3(2x,i3))
 !
+!$OMP END MASTER
     return
   end subroutine dpbdc
 end module mod_dpbdc

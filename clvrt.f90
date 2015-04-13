@@ -45,6 +45,7 @@ contains
     double precision ::         vrtbet,        vrtdel,        vrtden,        vrtdis,        vrtfac
     double precision ::         vrtsin,          vrtx,          vrtz,       x(ip21),       y(ip21)
     double precision ::        z(ip21)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -171,6 +172,7 @@ contains
        cson(nl)=sqrt(temp(nl))
     enddo
 !
+!$OMP END MASTER
   contains
     function    inc(id,jd,kd)
       implicit none

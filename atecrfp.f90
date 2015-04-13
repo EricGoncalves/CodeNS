@@ -52,6 +52,7 @@ contains
     integer          ::      mfacn,ncin(ip41),      nfbi
     double precision ::  nxn(ip42), nyn(ip42), nzn(ip42),   x(ip21),xpar(ip00)
     double precision ::    y(ip21),ypar(ip00),   z(ip21),zpar(ip00)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -88,6 +89,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine atecrfp
 end module mod_atecrfp

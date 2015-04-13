@@ -27,6 +27,7 @@ contains
 !
     character(len=1316) :: form
     character(len=2 ) :: nlg,nlm,nrr,nrm
+!$OMP MASTER
 !
 !
     long=6
@@ -79,6 +80,7 @@ contains
 !
     write(imp,form) lmfb,kibdn
 !
+!$OMP END MASTER
     return
   end subroutine b1_inbdn
 end module mod_b1_inbdn

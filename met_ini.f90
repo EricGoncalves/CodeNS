@@ -25,6 +25,7 @@ contains
     double precision ::    dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00),   dvzz(ip00)
     double precision ::      mu(ip12),    mut(ip12),      s(ip00),sn(ip31*ndir), v(ip11,ip60)
     double precision ::     vol(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -46,6 +47,7 @@ contains
 !
 !      call met_cut(l,v)
 !
+!$OMP END MASTER
     return
   end subroutine met_ini
 end module mod_met_ini

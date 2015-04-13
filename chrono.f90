@@ -97,7 +97,7 @@ contains
                cson)
 !
        elseif(kprec.ge.1) then
-!$OMP SINGLE
+!$OMP MASTER
           call chronos_prcd( &
                lm,eta(lm),mu,mut, &
                u, &
@@ -106,7 +106,7 @@ contains
                vol, &
                tn1,tn2,tn3,tn4, &
                cson,pression)
-!$OMP END SINGLE
+!$OMP END MASTER
        endif
 !
     enddo
@@ -137,11 +137,11 @@ contains
 !
        dtmin=min(dt1min,dtmin)
        if(dtmin.lt.dt1min) then
-!$OMP SINGLE
+!$OMP MASTER
           write(imp,'("===> chrono")')
           write(imp,'(2(1pe11.3))') &
                dtmin,dt1min
-!$OMP END SINGLE
+!$OMP END MASTER
           STOP
        endif
 !

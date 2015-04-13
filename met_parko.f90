@@ -86,6 +86,7 @@ contains
     integer          ::        nfac,      nmaxp,       nmin,      nminp,       npar
     double precision ::   dist(ip12),    mu(ip12),   mut(ip12),        pond,     romegal
     double precision :: v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -189,6 +190,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine met_parko
 end module mod_met_parko

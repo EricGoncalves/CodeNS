@@ -52,6 +52,7 @@ contains
 !
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: disc
+!$OMP MASTER
 !
 !
     call tcmd_svfw( &
@@ -67,6 +68,7 @@ contains
          disc,ncin,ncbd, &
          tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
 !
+!$OMP END MASTER
     return
   end subroutine c_svfw
 end module mod_c_svfw

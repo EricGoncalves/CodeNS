@@ -37,6 +37,7 @@ contains
     integer          ::    njd
     double precision ::       allfae,    mu(ip12),   mut(ip12),      omegha,        rapk
     double precision ::       reytur,v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -84,6 +85,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

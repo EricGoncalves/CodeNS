@@ -28,6 +28,7 @@ contains
 
     character(len=1316) :: form
     character(len=24) ::  cequat,cklomg,comg
+!$OMP MASTER
 !
     call convich(kequat,cequat)
     call convich(kklomg,cklomg)
@@ -43,6 +44,7 @@ contains
          klomg,cklomg, &
          omg,comg
 !
+!$OMP END MASTER
     return
   end subroutine b1_dffw
 end module mod_b1_dffw

@@ -74,6 +74,7 @@ contains
     double precision ::          v1t,         v1x,         v1y,         v1z,          ye
     double precision ::         yp02,          yv
     logical          :: lamin
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -188,6 +189,7 @@ contains
 !       fin boucle sur facettes paroi
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine lpkomega1
 

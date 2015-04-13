@@ -37,6 +37,7 @@ contains
 !
     character(len=32) ::  mot(nmx)
     character(len=32) ::  typdat
+!$OMP MASTER
     allocate(lmfb(mtb))
     allocate(lgr(nobj))
 !
@@ -74,6 +75,7 @@ contains
     enddo
 !
     deallocate(lmfb,lgr)
+!$OMP END MASTER
     return
   end subroutine c_dpbd
 end module mod_c_dpbd

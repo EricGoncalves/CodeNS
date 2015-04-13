@@ -31,6 +31,7 @@ contains
 !
     character(len=1316) :: form
     character(len=24) ::  ckdtl,cicychr0,cncychro,cdt1min
+!$OMP MASTER
 !
     call convich(kkdtl,ckdtl)
     call convich(kicychr0,cicychr0)
@@ -49,6 +50,7 @@ contains
          ncychro,cncychro, &
          dt1min,cdt1min
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfpmdtg
 end module mod_b1_dfpmdtg

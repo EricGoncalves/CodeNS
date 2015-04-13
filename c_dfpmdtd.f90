@@ -28,6 +28,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
     allocate(ldom(nobj))
     allocate(lgr(nobj))
 !
@@ -43,6 +44,7 @@ contains
     endif
 !
     deallocate(ldom,lgr)
+!$OMP END MASTER
     return
   end subroutine c_dfpmdtd
 end module mod_c_dfpmdtd

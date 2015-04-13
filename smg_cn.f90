@@ -31,6 +31,7 @@ contains
     integer          ::     nij,     nj,     nn
     double precision ::           eps,           ts,vc(ip11,ip60),    vol(ip11),         vols
     double precision ::    volt(ip11),vv(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -212,6 +213,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indn(i,j,k)

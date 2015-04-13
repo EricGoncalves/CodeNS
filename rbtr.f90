@@ -78,6 +78,7 @@ contains
     double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12),      txxr
     double precision ::       txyr,      txzr,      tyyr,      tyzr,      tzzr
     double precision ::  xnr(ip44), ynr(ip44), znr(ip44)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -228,6 +229,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine rbtr
 end module mod_rbtr

@@ -23,6 +23,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=4 ) :: clmf
+!$OMP MASTER
 !
     roist =varst(ibdcst,1)
     aist  =varst(ibdcst,2)
@@ -134,6 +135,7 @@ contains
        stop
     end if
 !
+!$OMP END MASTER
     return
   end subroutine inbdbst
 end module mod_inbdbst

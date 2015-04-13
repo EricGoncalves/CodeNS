@@ -33,6 +33,7 @@ contains
     character(len=1316) :: form
     character(len=24) ::  ceta
     character(len=2 ) :: nlg,nlm,nrr,nrm
+!$OMP MASTER
 !
 !
     lm=ldom(1)+(lgr(1)-1)*lz
@@ -127,6 +128,7 @@ contains
 !
     write(imp,form) lgr,eta(lm),ceta
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfpmdtd
 end module mod_b1_dfpmdtd

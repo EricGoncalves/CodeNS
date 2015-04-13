@@ -39,6 +39,7 @@ contains
     integer          ::        nci,ncin(ip41),      ndm3,      nfbi
     double precision ::    x(ip21),xpar(ip00),   y(ip21),ypar(ip00),   z(ip21)
     double precision :: zpar(ip00)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -64,6 +65,7 @@ contains
        zpar(mbn)=(z(nci)+z(nci+dm1)+z(nci+dm2)+z(nci+dm1+dm2))*.25
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine atccfp
 end module mod_atccfp

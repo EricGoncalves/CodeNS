@@ -20,6 +20,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot
+!$OMP MASTER
 !
     if ((imot.eq.1).and.(mot.eq.'*')) then
        if(klix.eq.0) then
@@ -37,6 +38,7 @@ contains
        lid=1
     endif
 !
+!$OMP END MASTER
     return
 !
   end subroutine lentier

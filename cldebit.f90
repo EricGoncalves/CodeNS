@@ -69,6 +69,7 @@ contains
     double precision ::      nzn(ip42),    pres(ip40),pression(ip11),            ps,           qns
     double precision ::             qx,           qxs,            qy,           qys,            qz
     double precision ::            qzs,          rhos,          roc0,    temp(ip11),  v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -110,6 +111,7 @@ contains
        cson(nl)=sqrt(temp(nl))
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine cldebit
 end module mod_cldebit

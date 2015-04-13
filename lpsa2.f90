@@ -71,6 +71,7 @@ contains
     double precision :: v(ip11,ip60),         v1t,         v1x,         v1y,         v1z
     double precision ::         yp02,      yplus1
     logical          :: lamin
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -196,6 +197,7 @@ contains
 !       fin boucle sur facettes paroi
     end do
 !
+!$OMP END MASTER
     return
   end subroutine lpsa2
 

@@ -68,6 +68,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indmf
+!$OMP MASTER
 !
     mtbx=mtbx+1
     kmtbx=2
@@ -122,6 +123,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine crbds
 end module mod_crbds

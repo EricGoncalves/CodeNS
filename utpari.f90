@@ -21,6 +21,7 @@ contains
     integer          ::        m,     mfl,      ml,mmb(mtt),mpb(mtt)
     integer          ::       mt
     double precision :: bceqt(ip41,neqt),        tp(ip40)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -32,6 +33,7 @@ contains
        tp(m)=bceqt(ml,1)
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine utpari
 end module mod_utpari

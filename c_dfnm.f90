@@ -22,6 +22,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     call tcmd_dfnm(mot,imot,nmot)
 !
@@ -29,6 +30,7 @@ contains
        call b1_dfnm
     endif
 !
+!$OMP END MASTER
     return
   end subroutine c_dfnm
 end module mod_c_dfnm

@@ -31,6 +31,7 @@ contains
     integer          ::  nck, nid,nijd, njd
     double precision ::         cv13,         fv1,    mu(ip12),   mut(ip12),v(ip11,ip60)
     double precision ::         xkhi,       xkhi3
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -73,6 +74,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

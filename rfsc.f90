@@ -34,6 +34,7 @@ contains
     integer          ::          m,        mb,        mc,        mf,       mfb
     integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd
     double precision :: t(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -57,6 +58,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine rfsc
 end module mod_rfsc

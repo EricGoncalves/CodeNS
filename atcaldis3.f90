@@ -140,6 +140,7 @@ contains
     double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
     double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
     double precision,allocatable :: raptat(:)
+!$OMP MASTER
     allocate(raptat(mtb))
 !
 !-----------------------------------------------------------------------
@@ -365,6 +366,7 @@ contains
     enddo
 !
     deallocate(raptat)
+!$OMP END MASTER
     return
   end subroutine atcaldis3
 end module mod_atcaldis3

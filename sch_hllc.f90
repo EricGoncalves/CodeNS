@@ -63,6 +63,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
+!$OMP MASTER
 !
 
 
@@ -1399,6 +1400,7 @@ contains
 
     DEALLOCATE(r1,r2,r3,r4,r5)
 
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

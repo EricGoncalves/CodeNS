@@ -79,6 +79,7 @@ contains
     double precision :: dvzx(ip00),dvzy(ip00),dvzz(ip00),  mu(ip12), mut(ip12)
     double precision ::  qcx(ip12), qcy(ip12), qcz(ip12),toxx(ip12),toxy(ip12)
     double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -123,6 +124,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

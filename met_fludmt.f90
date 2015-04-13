@@ -49,6 +49,7 @@ contains
     double precision ::   fd5x(ip12),       fd5x0,  fd5y(ip12),  fd5z(ip12),  fd6x(ip12)
     double precision ::   fd6y(ip12),  fd6z(ip12),         fm1,         fm2,  frac(ip12)
     double precision ::     mu(ip12),   mut(ip12),s(ip11,ip60),       sigme
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -115,6 +116,7 @@ contains
        enddo
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

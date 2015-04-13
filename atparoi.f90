@@ -28,6 +28,7 @@ contains
     use maillage
     implicit none
     integer          ::    l,   n,  nf,nfbe,nfbi
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -61,6 +62,7 @@ contains
        stop
     end if
 !
+!$OMP END MASTER
     return
   end subroutine atparoi
 end module mod_atparoi

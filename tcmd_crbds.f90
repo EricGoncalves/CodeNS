@@ -28,6 +28,7 @@ contains
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
     character(len=2 ) :: indmf
+!$OMP MASTER
 !
 !$OMP SIMD
     do icmt=1,32
@@ -126,6 +127,7 @@ contains
        endif
     endif
 !
+!$OMP END MASTER
     return
   end subroutine tcmd_crbds
 end module mod_tcmd_crbds

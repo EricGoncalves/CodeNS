@@ -38,6 +38,7 @@ contains
     double precision ::          rack,sn(ip31*ndir),          ss2,      t(ip00),         tdef
     double precision ::  v(ip11,ip60),    vol(ip11),          xl2,          xxi,         xxi2
     double precision ::          zeta
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -123,6 +124,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

@@ -41,6 +41,7 @@ contains
     integer          ::          m,       mfl,        ml,  mmb(mtt),  mpb(mtt)
     integer          ::         mt,ncbd(ip41)
     double precision :: bceqt(ip41,neqt),       rpi(ip40),       rti(ip40)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -53,6 +54,7 @@ contains
        rti(m)=bceqt(ml,2)
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine utidi
 end module mod_utidi

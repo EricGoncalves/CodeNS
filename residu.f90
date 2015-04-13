@@ -84,6 +84,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
 !
 
@@ -255,6 +256,7 @@ contains
 
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

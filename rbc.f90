@@ -118,6 +118,7 @@ contains
     double precision ::        tm9(ip40),        tp(ip40),    v(ip11,ip60),       vol(ip11),         x(ip21)
     double precision ::        xnr(ip44),         y(ip21),       ynr(ip44),         z(ip21),       znr(ip44)
     double precision ::      ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -198,6 +199,7 @@ contains
        endif
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine rbc
 end module mod_rbc

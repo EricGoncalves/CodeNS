@@ -28,6 +28,7 @@ contains
          ckfmg,clgx,ckcg, &
          ckdualns,ctol,ctolke,cniter,cnitur, &
          cischema,cmuscl,cilim,cxk,ckprec,ccte,ckvisq
+!$OMP MASTER
 !
     call convich(knfi,cnfi)
     call convich(kkfmg,ckfmg)
@@ -79,6 +80,7 @@ contains
             tolke,ctolke,nitur,cnitur
     endif
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfnm
 end module mod_b1_dfnm

@@ -54,6 +54,7 @@ contains
     double precision ::  vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),        vol(ip11)
     double precision,allocatable :: dvxx(:),dvxy(:),dvxz(:),dvyx(:),dvyy(:)
     double precision,allocatable :: dvyz(:),dvzx(:),dvzy(:),dvzz(:)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -256,6 +257,7 @@ contains
 
     DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz)
 
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

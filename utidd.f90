@@ -50,6 +50,7 @@ contains
     integer          ::         mt,ncbd(ip41)
     double precision :: bceqt(ip41,neqt),       d0x(ip40),       d0y(ip40),       d0z(ip40),       rpi(ip40)
     double precision ::        rti(ip40)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -65,6 +66,7 @@ contains
        d0z(m)=bceqt(ml,5)
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine utidd
 end module mod_utidd

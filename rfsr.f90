@@ -50,6 +50,7 @@ contains
     integer          ::         ml, mnr(ip44),        mr,        mt,ncbd(ip41)
     integer          ::         nd,       nid,       njd,        nr
     double precision ::   t(ip11),xnr(ip44),ynr(ip44),znr(ip44)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -87,6 +88,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine rfsr
 end module mod_rfsr

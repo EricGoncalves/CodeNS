@@ -48,6 +48,7 @@ contains
     double precision ::  dist(ip12),dist2(ip00),      dmini,    x(ip21),  xcc(ip00)
     double precision ::  xpar(ip00),    y(ip21),  ycc(ip00), ypar(ip00),    z(ip21)
     double precision ::   zcc(ip00), zpar(ip00)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -108,6 +109,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

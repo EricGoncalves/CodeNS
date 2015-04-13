@@ -34,6 +34,7 @@ contains
     double precision ::    dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00)
     double precision ::    dvzy(ip00),   dvzz(ip00),     mu(ip12),    mut(ip12),        retur
     double precision :: sn(ip31*ndir),           ss,      t(ip00), v(ip11,ip60),    vol(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -90,6 +91,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

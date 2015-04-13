@@ -33,6 +33,7 @@ contains
     character(len=8 ) :: cadim
     character(len=4 ) :: cl
     character(len=2 ) :: nlg,nlm,nrr,nrm
+!$OMP MASTER
 !
 !
 !
@@ -143,6 +144,7 @@ contains
        write(imp,form) cadim,(vbc(npd),npd=1,nvbc)
     endif
 !
+!$OMP END MASTER
     return
   end subroutine b1_inbdb
 end module mod_b1_inbdb

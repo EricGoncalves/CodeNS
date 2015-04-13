@@ -65,6 +65,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indmf
+!$OMP MASTER
 !
 !     ..................................................................
 !     l           : numero de domaine
@@ -199,6 +200,7 @@ contains
        end if
     end if
 !
+!$OMP END MASTER
     return
   end subroutine atindnor
 end module mod_atindnor

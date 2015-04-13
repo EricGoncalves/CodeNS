@@ -28,6 +28,7 @@ contains
 !
     character(len=1316) :: form
     character(len=24) ::  cicytur0,cncyturb
+!$OMP MASTER
 !
     call convich(kicytur0,cicytur0)
     call convich(kncyturb,cncyturb)
@@ -39,6 +40,7 @@ contains
     write(imp,form) icytur0,cicytur0, &
          ncyturb,cncyturb
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfpmtbn
 end module mod_b1_dfpmtbn

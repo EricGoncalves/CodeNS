@@ -31,6 +31,7 @@ contains
     integer          ::          m,        mf,       mfb,        ml,        mt
     integer          ::          n,ncbd(ip41),ncin(ip41)
     double precision :: t0(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -50,6 +51,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine rfspstf
 end module mod_rfspstf

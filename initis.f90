@@ -53,6 +53,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indfl
+!$OMP MASTER
 !
 
 !
@@ -132,6 +133,7 @@ contains
 !
     end if
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

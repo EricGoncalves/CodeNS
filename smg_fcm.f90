@@ -27,6 +27,7 @@ contains
     integer          ::  n0c, n0f,  nc,  nf, nic
     integer          ::  nif,nijc,nijf, njc, njf
     double precision :: x(ip21),y(ip21),z(ip21)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -75,6 +76,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

@@ -25,6 +25,7 @@ contains
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
 !$OMP SIMD
     do icmt=1,32
@@ -72,6 +73,7 @@ contains
        enddo
     endif
 !
+!$OMP END MASTER
     return
   end subroutine tcmd_dffw
 end module mod_tcmd_dffw

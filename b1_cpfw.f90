@@ -19,11 +19,13 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
     form='(/,2x,''realisation du calcul'',/' &
          //'2x,''---------------------'')'
     write(imp,form)
 !
+!$OMP END MASTER
     return
   end subroutine b1_cpfw
 end module mod_b1_cpfw

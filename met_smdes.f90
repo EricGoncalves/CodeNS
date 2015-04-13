@@ -81,6 +81,7 @@ contains
     double precision ::          uns6, v(ip11,ip60),    vol(ip11),         vort,      x(ip21)
     double precision ::            xg,          xg6,         xkhi,        xkhi2,        xkhi3
     double precision ::         xkhi4,      y(ip21),      z(ip21)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -247,6 +248,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

@@ -64,6 +64,7 @@ contains
     double precision ::             ps,            q2,          qinf,           qns,            qx
     double precision ::            qxs,            qy,           qys,            qz,           qzs
     double precision ::           rhos,    temp(ip11),  v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -108,6 +109,7 @@ contains
        cson(nl)=sqrt(temp(nl))
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine cldebit_prcd
 end module mod_cldebit_prcd

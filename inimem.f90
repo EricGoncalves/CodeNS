@@ -93,6 +93,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  comment
+!$OMP MASTER
 !
 !
 !     mise a vide de la variable de commentaire
@@ -182,6 +183,7 @@ contains
          tnte1,tnte3,tnte4, &
          tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10)
 !
+!$OMP END MASTER
     return
   end subroutine inimem
 end module mod_inimem

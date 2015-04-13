@@ -45,6 +45,7 @@ contains
     integer          ::   n0, nid,nijd, njd
     double precision ::   fd5x(ip12),  fd5y(ip12),  fd5z(ip12),  fd6x(ip12),  fd6y(ip12)
     double precision ::   fd6z(ip12),    mu(ip12),s(ip11,ip60),      smutot
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -110,6 +111,7 @@ contains
        fd6z(n)=0.
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

@@ -28,6 +28,7 @@ contains
     double precision ::         cmu1,  dvxx(ip00),  dvxy(ip00),  dvxz(ip00),  dvyx(ip00)
     double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)
     double precision ::    mut(ip12),       mutmx,        rota,v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -76,6 +77,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

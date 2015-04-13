@@ -31,6 +31,7 @@ contains
     character(len=1316) :: form
     character(len=24) ::  cd,cm,cal,cbe
     character(len=24) ::  ct,cro,ca
+!$OMP MASTER
 !
     call convich(kvarst(nst,4),cd)
     call convich(kvarst(nst,5),cm)
@@ -66,6 +67,7 @@ contains
          varst(nst,6),cal, &
          varst(nst,7),cbe
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfst
 end module mod_b1_dfst

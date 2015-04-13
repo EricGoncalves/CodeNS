@@ -39,6 +39,7 @@ contains
     integer          ::  nijd,  njd
     double precision ::   x(ip21),xcc(ip00),  y(ip21),ycc(ip00),  z(ip21)
     double precision :: zcc(ip00)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -88,6 +89,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(  j,k)

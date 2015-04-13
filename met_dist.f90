@@ -34,6 +34,7 @@ contains
     double precision ::         dy1,        dy2,        dy3,        dy4,        dz1
     double precision ::         dz2,        dz3,        dz4,    x(ip21),    y(ip21)
     double precision ::     z(ip21)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -130,6 +131,7 @@ contains
 !******************************************************************
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    indn(i,j,k)

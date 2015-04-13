@@ -37,6 +37,7 @@ contains
     integer          ::    k2m1,      l,      m,      n,    n0c
     integer          ::     nid,   nijd,    njd
     double precision ::     cson(ip11),pression(ip11),          rhoe,  v(ip11,ip60),   ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -94,6 +95,7 @@ contains
        enddo
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

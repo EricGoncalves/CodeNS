@@ -29,6 +29,7 @@ contains
 !
     character*40 nom
     character(len=1 ) :: c
+!$OMP MASTER
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -73,6 +74,7 @@ contains
     enddo
 
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

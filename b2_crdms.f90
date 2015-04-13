@@ -39,6 +39,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
     form='(/ 2x,''numero de la grille      : '',11x,i5/' &
          //'2x,''nb de noeuds (dont fic.) : '',10x,i6/' &
@@ -61,6 +62,7 @@ contains
             kd1(lm),kk1(lm),kk2(lm),kd2(lm)
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine b2_crdms
 end module mod_b2_crdms

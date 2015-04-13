@@ -50,6 +50,7 @@ contains
     double precision ::     cson(ip11),     nxn(ip42),     nyn(ip42),     nzn(ip42),pression(ip11)
     double precision ::             qn,           qtx,           qty,           qtz,            qx
     double precision ::             qy,            qz,           rho,    temp(ip11),  v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -82,6 +83,7 @@ contains
        cson(nl)=cson(ni)
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine clgli2
 end module mod_clgli2

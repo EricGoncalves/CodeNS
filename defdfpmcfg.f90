@@ -21,6 +21,7 @@ contains
     use boundary
     implicit none
     integer          :: m
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -31,6 +32,7 @@ contains
 !
     knba=1
 !
+!$OMP END MASTER
     return
   end subroutine defdfpmcfg
 end module mod_defdfpmcfg

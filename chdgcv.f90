@@ -59,6 +59,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=4 ) :: disc
+!$OMP MASTER
 !
     if(disc.eq.'cvcc') then
        call cvccg( &
@@ -98,6 +99,7 @@ contains
        kdg=kdgv
     endif
 !
+!$OMP END MASTER
     return
   end subroutine chdgcv
 end module mod_chdgcv

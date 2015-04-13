@@ -31,6 +31,7 @@ contains
     integer          ::          m,        mf,       mfb,        ml,        mt
     integer          ::          n,ncbd(ip41),ncin(ip41),        ni
     double precision :: t(ip12)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -51,6 +52,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine rbse
 end module mod_rbse

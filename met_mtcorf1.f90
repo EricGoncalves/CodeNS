@@ -49,6 +49,7 @@ contains
     integer          ::        mpn1,          n, ncin(ip41),       nfac,       nmin
     integer          ::        npar
     double precision :: dist(ip12),frac(ip12)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -154,6 +155,7 @@ contains
 !       fin de boucle sur parois
     end do
 !
+!$OMP END MASTER
     return
   end subroutine met_mtcorf1
 end module mod_met_mtcorf1

@@ -92,6 +92,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
+!$OMP MASTER
 !
 
 
@@ -307,6 +308,7 @@ contains
 
     DEALLOCATE(beta2v)
 
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

@@ -51,6 +51,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
+!$OMP MASTER
 !
 
 
@@ -135,10 +136,10 @@ contains
 
 !-----remplissage du coefficient diagonal par direction--------------------------
 
-!$OMP SINGLE
+!$OMP MASTER
     kdir=1
     ninc=nci
-!$OMP END SINGLE
+!$OMP END MASTER
 
 !$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,cc)
     do k=k1,k2m1
@@ -163,10 +164,10 @@ contains
     enddo
 !$OMP END DO
 
-!$OMP SINGLE
+!$OMP MASTER
     kdir=2
     ninc=ncj
-!$OMP END SINGLE
+!$OMP END MASTER
 
 !$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,cc)
     do k=k1,k2m1
@@ -191,10 +192,10 @@ contains
     enddo
 !$OMP END DO
 
-!$OMP SINGLE
+!$OMP MASTER
     kdir=3
     ninc=nck
-!$OMP END SINGLE
+!$OMP END MASTER
 
 !$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,cc)
     do k=k1,k2
@@ -301,10 +302,10 @@ contains
 
 !------direction i------------------------------------------
 
-!$OMP SINGLE
+!$OMP MASTER
        kdir=1
        ninc=nci
-!$OMP END SINGLE
+!$OMP END MASTER
 
 !$OMP DO PRIVATE(k,j,n,m,ind1,ind2,tn1,tn2,tn3,tn4,tn5)
        do k=k1,k2m1
@@ -356,10 +357,10 @@ contains
 
 !------direction j------------------------------------------
 
-!$OMP SINGLE
+!$OMP MASTER
        kdir=2
        ninc=ncj
-!$OMP END SINGLE
+!$OMP END MASTER
 
 !$OMP DO PRIVATE(k,j,n,m,ind1,ind2,tn1,tn2,tn3,tn4,tn5)
        do k=k1,k2m1
@@ -411,10 +412,10 @@ contains
 
 !------direction k------------------------------------------
 
-!$OMP SINGLE
+!$OMP MASTER
        kdir=3
        ninc=nck
-!$OMP END SINGLE
+!$OMP END MASTER
 
 !$OMP DO PRIVATE(k,j,n,m,ind1,ind2,tn1,tn2,tn3,tn4,tn5)
        do k=k1,k2
@@ -545,6 +546,7 @@ contains
 
     DEALLOCATE(coefe,coefdiag,d2w1,d2w2,d2w3,d2w4,d2w5)
 
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

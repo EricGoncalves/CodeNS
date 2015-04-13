@@ -30,6 +30,7 @@ contains
     double precision ::           cc6,          cc7,          cc8,          cix,        cixm1
     double precision ::           ciy,        ciym1,          ciz,        cizm1,          sss
     double precision :: vc(ip11,ip60),    vol(ip11),vv(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -626,6 +627,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indn_c(i,j,k)

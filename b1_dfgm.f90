@@ -27,6 +27,7 @@ contains
 !
     character(len=1316) :: form
     character(len=24) ::  cconfig,cperio
+!$OMP MASTER
 !
     call convich(kconfig,cconfig)
     call convich(kperio,cperio)
@@ -54,6 +55,7 @@ contains
             perio,cperio
     endif
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfgm
 end module mod_b1_dfgm

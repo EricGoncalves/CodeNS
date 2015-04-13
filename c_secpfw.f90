@@ -21,6 +21,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
     allocate(lgr(nobj))
 !
 !
@@ -33,6 +34,7 @@ contains
     endif
 !
     deallocate(lgr)
+!$OMP END MASTER
     return
   end subroutine c_secpfw
 end module mod_c_secpfw

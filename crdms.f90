@@ -60,6 +60,7 @@ contains
     integer          ::   img, imgi, imgj, imgk,    l
     integer          ::    lm,   ni,  nid,   nj,  njd
     integer          ::    nk,  nkd,nptfs
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -110,6 +111,7 @@ contains
        ndimntbx=ndimntbx+nnn(lm)
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine crdms
 end module mod_crdms

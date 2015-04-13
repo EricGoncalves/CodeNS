@@ -32,6 +32,7 @@ contains
 !
     character(len=2 ) :: tvi,tvj,tvk
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
 !
     call tcmd_inbdc( &
@@ -52,6 +53,7 @@ contains
          krr,mfbea,mfbeb,kibdc,epsmsh, &
          iba,jba,kba,tvi,tvj,tvk)
 !
+!$OMP END MASTER
     return
   end subroutine c_inbdc
 end module mod_c_inbdc

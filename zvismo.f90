@@ -53,6 +53,7 @@ contains
     integer          ::    njd
     double precision ::            a,          bl,    mu(ip12),s(ip11,ip60),  temp(ip11)
     double precision ::        usrey
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -101,6 +102,7 @@ contains
        stop
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

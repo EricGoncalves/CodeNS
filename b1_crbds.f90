@@ -37,6 +37,7 @@ contains
 !
     character(len=1316) :: form
     character(len=2 ) :: indfl
+!$OMP MASTER
 !
     if ((kini.eq.1).or.(kini.eq.2)) then
        form='(/,2x,''creation d''''une frontiere rectangle'',/' &
@@ -59,6 +60,7 @@ contains
     endif
     write(imp,form) mfb,l,imin,imax,jmin,jmax,kmin,kmax,indfl,kini
 !
+!$OMP END MASTER
     return
   end subroutine b1_crbds
 end module mod_b1_crbds

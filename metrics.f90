@@ -71,6 +71,7 @@ contains
     double precision ::          exs1,         exs2,      r(ip11),sn(ip31*ndir),    tn1(ip00)
     double precision ::     tn2(ip00),    tn3(ip00),    vol(ip11),      x(ip21),      y(ip21)
     double precision ::            yc,      z(ip21),           zc
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -125,6 +126,7 @@ contains
        call vervol(l,vol)
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    indn(i,j,k)

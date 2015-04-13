@@ -36,6 +36,7 @@ contains
     implicit none
     integer          ::  img,king,   l
     double precision :: x(ip21),y(ip21),z(ip21)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -57,6 +58,7 @@ contains
        enddo
     end if
 !
+!$OMP END MASTER
     return
   end subroutine ingr
 end module mod_ingr

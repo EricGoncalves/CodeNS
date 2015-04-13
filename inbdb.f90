@@ -54,6 +54,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=4 ) :: clmf
+!$OMP MASTER
 !
     mfbi=nfei(mfbe)
     cl(mfbi)=clmf
@@ -114,6 +115,7 @@ contains
        endif
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine inbdb
 end module mod_inbdb

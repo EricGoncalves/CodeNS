@@ -40,6 +40,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
+!$OMP MASTER
 !
 !
 
@@ -455,6 +456,7 @@ contains
        dsdz(m)=dsdz(m)*c0
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

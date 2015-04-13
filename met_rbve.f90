@@ -17,6 +17,7 @@ contains
     integer          ::          m,        mf,       mfb,        ml,        mt
     integer          ::          n,ncbd(ip41),ncin(ip41),        ni
     double precision :: t(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -35,6 +36,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine met_rbve
 end module mod_met_rbve

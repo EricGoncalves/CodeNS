@@ -65,6 +65,7 @@ contains
     double precision ::   dist(ip12),  fgam(ip42),    mu(ip12),   mut(ip12),   nxn(ip42)
     double precision ::    nyn(ip42),   nzn(ip42),    tp(ip40), tprod(ip00),v(ip11,ip60)
     double precision ::  ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -108,6 +109,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine lpkomega
 

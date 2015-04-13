@@ -20,6 +20,7 @@ contains
 !
     character(len=1316) :: command
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     do icmd=1,lgcmdx
        command(icmd:icmd)=' '
@@ -36,6 +37,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine cctcmd
 end module mod_cctcmd

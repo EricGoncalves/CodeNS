@@ -22,6 +22,7 @@ contains
     integer          ::         nd,       nid,       njd,        nr
     double precision ::           cr,          sr,t(ip11,ip60),   xnr(ip44),   ynr(ip44)
     double precision ::    znr(ip44)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -71,6 +72,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine met_rbvr
 end module mod_met_rbvr

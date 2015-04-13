@@ -24,12 +24,14 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
     form='(//,2x,''definition de la normalisation''/' &
          //'2x,''------------------------------'',/' &
          //'2x,''numero de l''''etat         : '',9x,i2)'
     write(imp,form)nonzst
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfnzst
 end module mod_b1_dfnzst

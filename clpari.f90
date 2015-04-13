@@ -38,6 +38,7 @@ contains
     integer          ::         mt,ncbd(ip41),ncin(ip41),        ni,        nl
     double precision ::     cson(ip11),          epar,pression(ip11),         rhoe1,    temp(ip11)
     double precision ::       tp(ip40),  v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -64,6 +65,7 @@ contains
        cson(nl)=sqrt(temp(nl))
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine clpari
 end module mod_clpari

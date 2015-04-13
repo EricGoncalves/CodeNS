@@ -34,6 +34,7 @@ contains
     double precision ::    dvzz(ip00),          eta,     mu(ip12),    mut(ip12),        retur
     double precision :: sn(ip31*ndir),           ss,          ss2,      t(ip00), v(ip11,ip60)
     double precision ::     vol(ip11),           ww,          ww2
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -94,6 +95,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

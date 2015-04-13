@@ -39,6 +39,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
 !     mfbi=nfei(mfbe)
     m0c =mpc(mfbi)
@@ -48,6 +49,7 @@ contains
 !                 kfc,mnc, &
 !                 mt,m0c)
 !
+!$OMP END MASTER
     return
   end subroutine c_svbdc
 end module mod_c_svbdc

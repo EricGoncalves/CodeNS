@@ -87,6 +87,7 @@ contains
 !-------------------------------------------------------------------
 !
     character(len=7 ) :: equat
+!$OMP MASTER
 
 
 
@@ -2229,6 +2230,7 @@ contains
        enddo
     endif
 
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

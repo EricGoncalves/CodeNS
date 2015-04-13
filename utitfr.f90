@@ -131,6 +131,7 @@ contains
     double precision ::          uty,        utyt,         utz,        utzt,v(ip11,ip60)
     double precision ::      x(ip21),       xcfac,     y(ip21),       ycfac,     z(ip21)
     double precision ::        zcfac
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -138,6 +139,7 @@ contains
 !
     icyexpl=mod(icyc,ncyexpl)
 !
+!$OMP END MASTER
     if(kvglo.eq.0) return
     if(nbfll.eq.0) return
 !

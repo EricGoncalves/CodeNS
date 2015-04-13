@@ -29,6 +29,7 @@ contains
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
     character(len=2 ) :: tvi,tvj,tvk
+!$OMP MASTER
 !
 !
 !$OMP SIMD
@@ -191,6 +192,7 @@ contains
 !
     endif
 !
+!$OMP END MASTER
     return
   end subroutine tcmd_inbdc
 end module mod_tcmd_inbdc

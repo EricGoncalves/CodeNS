@@ -56,6 +56,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: eqt
+!$OMP MASTER
 !
 
 !
@@ -107,6 +108,7 @@ contains
 !      enddo
 !      close(100)
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

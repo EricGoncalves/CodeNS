@@ -35,6 +35,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     call tcmd_dfgm(mot,imot,nmot)
 !
@@ -44,6 +45,7 @@ contains
 !
     call dfgm
 !
+!$OMP END MASTER
     return
   end subroutine c_dfgm
 end module mod_c_dfgm

@@ -42,6 +42,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1 ) :: c
+!$OMP MASTER
 !
 !
 
@@ -169,6 +170,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

@@ -28,6 +28,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     call tcmd_dfpmtbkeg(mot,imot,nmot)
 !
@@ -35,6 +36,7 @@ contains
        call b1_dfpmtbkeg
     endif
 !
+!$OMP END MASTER
     return
   end subroutine c_dfpmtbkeg
 end module mod_c_dfpmtbkeg

@@ -60,6 +60,7 @@ contains
     integer          ::  ncbd(ip41), ncin(ip41),       ncyc,         no
     double precision ::   dist(ip12),  fgam(ip42),    mu(ip12),   mut(ip12),   nxn(ip42)
     double precision ::    nyn(ip42),   nzn(ip42),    tp(ip40),v(ip11,ip60), ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -101,6 +102,7 @@ contains
 !
     end do
 !
+!$OMP END MASTER
     return
   end subroutine lpsa
 

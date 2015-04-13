@@ -67,6 +67,7 @@ contains
     double precision ::     pres(ip40),pression(ip11),            ps,            qx,           qxs
     double precision ::             qy,           qys,            qz,           qzs,           rho
     double precision ::           roc0,    temp(ip11),  v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -104,6 +105,7 @@ contains
        cson(nl)=sqrt(temp(nl))
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine clprd
 end module mod_clprd

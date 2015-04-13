@@ -18,6 +18,7 @@ contains
     integer          ::    k,  k1,  k2,k2m1,   l
     integer          ::    n, n0c, nid,nijd, njd
     double precision ::  mu(ip12),mut(ip12)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -51,6 +52,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

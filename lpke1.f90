@@ -42,6 +42,7 @@ contains
     double precision ::        upyp1,         uto,v(ip11,ip60),         v1t,         v1x
     double precision ::          v1y,         v1z,          ye,        yp02,          yv
     logical          :: lamin
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -168,6 +169,7 @@ contains
 !     fin boucle sur facettes paroi
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine lpke1
 

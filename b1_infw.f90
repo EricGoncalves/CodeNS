@@ -27,6 +27,7 @@ contains
 !
     character(len=1316) :: form
     character(len=2 ) :: nlg,nlm,nrr,nrm
+!$OMP MASTER
 !
     long=6
     longm1=long-1
@@ -83,6 +84,7 @@ contains
        write(imp,form) keinit
     endif
 !
+!$OMP END MASTER
     return
   end subroutine b1_infw
 end module mod_b1_infw

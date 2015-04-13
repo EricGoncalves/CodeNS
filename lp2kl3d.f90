@@ -108,6 +108,7 @@ contains
 !-----------------------------------------------------------------------
 !
     parameter( ntab=50  )
+!$OMP MASTER
 !
 !
     ALLOCATE(alfaa(ntab),betaa(ntab),ff(ntab),topcx(2),topcz(2), &
@@ -378,6 +379,7 @@ contains
 
     DEALLOCATE(alfaa,betaa,ff,vitx,vitz,mui,muti,tempi,topcx,topcz)
 
+!$OMP END MASTER
     return
   end subroutine lp2kl3d
 end module mod_lp2kl3d

@@ -19,6 +19,7 @@ contains
     integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),ncin(ip41)
     integer          ::         nd,       ndm
     double precision :: t(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -45,6 +46,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine met_rbvc
 end module mod_met_rbvc

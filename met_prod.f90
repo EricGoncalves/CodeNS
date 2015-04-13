@@ -26,6 +26,7 @@ contains
     double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)
     double precision ::    mut(ip12),s(ip11,ip60),       torxx,       torxy,       torxz
     double precision ::        toryy,       toryz,       torzz, tprod(ip00)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -74,6 +75,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

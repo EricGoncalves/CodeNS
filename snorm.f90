@@ -46,6 +46,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: eqt
+!$OMP MASTER
 !
     i1=ii1(l)
     i2=ii2(l)
@@ -70,6 +71,7 @@ contains
          sn(1,2,1),sn(1,2,2),sn(1,2,3), &
          sn(1,3,1),sn(1,3,2),sn(1,3,3))
 !
+!$OMP END MASTER
     return
   end subroutine snorm
 end module mod_snorm

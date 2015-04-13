@@ -27,6 +27,7 @@ contains
     integer          ::   lm,   n,  n0,ncyc, nid
     integer          :: nijd, njd
     double precision ::      dt(ip11),       durmy2,         resr,u0(ip11,ip60), v(ip11,ip60)
+!$OMP MASTER
 !
 !--------------------------------------------------------------------
 !
@@ -71,6 +72,7 @@ contains
     resite=sqrt(durmy2)
     write(sor3,'(1x,i6,1x,i6,1x,e13.6)') ncyc,icyc,resite
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

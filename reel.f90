@@ -16,6 +16,7 @@ contains
     character(len=32) ::  mot
     character(len=7 ) :: formatm
     character(len=2 ) :: longm
+!$OMP MASTER
 !
     write(longm,'(i2)') imot
     formatm='(e'//longm//'.0)'
@@ -24,6 +25,7 @@ contains
     kerr=1
 100 continue
 !
+!$OMP END MASTER
     return
   end subroutine reel
 end module mod_reel

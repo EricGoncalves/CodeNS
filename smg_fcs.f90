@@ -30,6 +30,7 @@ contains
     integer          ::    nf7,   nf8,   nic,   nif,  nijc
     integer          ::   nijf,   njc,   njf
     double precision ::   v(ip11),vol(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -128,6 +129,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

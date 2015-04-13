@@ -42,6 +42,7 @@ contains
     double precision ::             rmach,               ro,              rou,              rov,              row
     double precision ::      v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),          x(ip21)
     double precision ::           y(ip21),               ym,          z(ip21),               zm
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -170,6 +171,7 @@ contains
        enddo
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    inc(id,jd,kd)

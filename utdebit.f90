@@ -52,6 +52,7 @@ contains
     integer          ::         nl
     double precision ::     bceqt(ip41,neqt),                 dqm,           nxn(ip42),           nyn(ip42),           nzn(ip42)
     double precision ::           pres(ip40),                 qms,                rqns,sn(lgsnlt,nind,ndir),        v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -103,6 +104,7 @@ contains
        pres(m)=(bceqt(mb,1)/qms)*rqns
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

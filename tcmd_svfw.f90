@@ -24,6 +24,7 @@ contains
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: disc
+!$OMP MASTER
 !
 !$OMP SIMD
     do icmt=1,32
@@ -48,6 +49,7 @@ contains
        endif
     endif
 !
+!$OMP END MASTER
     return
   end subroutine tcmd_svfw
 end module mod_tcmd_svfw

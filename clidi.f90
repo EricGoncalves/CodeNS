@@ -80,6 +80,7 @@ contains
     double precision ::      nxn(ip42),     nyn(ip42),     nzn(ip42),          pres,pression(ip11)
     double precision ::           qinf,            qn,           qxs,           qys,           qzs
     double precision ::            rho,     rpi(ip40),     rti(ip40),    temp(ip11),  v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -136,6 +137,7 @@ contains
        cson(nc)=sqrt(temp(nc))
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    inc(id,jd,kd)

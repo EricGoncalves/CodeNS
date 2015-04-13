@@ -15,6 +15,7 @@ contains
     implicit none
     integer          :: kvar
     character(len=24) ::  cvar
+!$OMP MASTER
 !
     if(kvar.eq.0) then
        cvar=c0
@@ -26,6 +27,7 @@ contains
        cvar=c3
     endif
 !
+!$OMP END MASTER
     return
   end subroutine convich
 end module mod_convich

@@ -60,6 +60,7 @@ contains
     integer          ::    njd
     double precision ::            siv(ip00),           sjv(ip00),           skv(ip00),sn(lgsnlt,nind,ndir),           vol(ip11)
     double precision ::              x(ip21),             y(ip21),             z(ip21)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -153,6 +154,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indn(i,j,k)

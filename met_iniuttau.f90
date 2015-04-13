@@ -47,6 +47,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
+!$OMP MASTER
     ALLOCATE(dtdx(ip00),dtdy(ip00),dtdz(ip00))
 !
     npsn=ndir*npfb(l)+1
@@ -123,6 +124,7 @@ contains
 
     DEALLOCATE(dtdx,dtdy,dtdz)
 
+!$OMP END MASTER
     return
   end subroutine met_iniuttau
 end module mod_met_iniuttau

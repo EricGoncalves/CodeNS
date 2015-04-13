@@ -25,6 +25,7 @@ contains
     integer          ::         mb,       mfb,        mt,         n,ncin(ip41)
     integer          ::         ni,        no,      nper
     double precision :: d(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -58,6 +59,7 @@ contains
        endif
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine met_pardis
 

@@ -24,6 +24,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     call tcmd_crdms( &
          mot,imot,nmot, &
@@ -42,6 +43,7 @@ contains
        call b3_crdms(l,ni,nj,nk)
     endif
 !
+!$OMP END MASTER
     return
   end subroutine c_crdms
 end module mod_c_crdms

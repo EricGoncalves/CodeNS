@@ -25,6 +25,7 @@ contains
 !
     character(len=1316) :: form
     character(len=24) :: ckexl
+!$OMP MASTER
 !
     call convich(kkexl,ckexl)
 !
@@ -33,6 +34,7 @@ contains
          //'2x,''cle d''''initialisation     : '',11x,i5,2x,a)'
     write(imp,form) kexl,ckexl
 !
+!$OMP END MASTER
     return
   end subroutine b1_cpbd
 end module mod_b1_cpbd

@@ -142,6 +142,7 @@ contains
 !
     character(len=2 ) :: indfb
     character(len=7 ) :: eqt
+!$OMP MASTER
 !
     eps=1.e-10
 !
@@ -296,6 +297,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine initns
 end module mod_initns

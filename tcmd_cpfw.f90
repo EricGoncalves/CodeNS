@@ -19,7 +19,9 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
+!$OMP END MASTER
     return
   end subroutine tcmd_cpfw
 end module mod_tcmd_cpfw

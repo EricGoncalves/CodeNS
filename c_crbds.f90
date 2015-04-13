@@ -29,6 +29,7 @@ contains
 !
     character(len=32) ::  mot(nmx)
     character(len=2 ) :: indmf
+!$OMP MASTER
 !
 !
     call tcmd_crbds( &
@@ -53,6 +54,7 @@ contains
        call b2_crbds(mfbe)
     endif
 !
+!$OMP END MASTER
     return
   end subroutine c_crbds
 end module mod_c_crbds

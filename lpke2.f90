@@ -74,6 +74,7 @@ contains
     double precision ::          v1x,         v1y,         v1z,          ye,        yp02
     double precision ::           yv
     logical          :: lamin
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -199,6 +200,7 @@ contains
 !     fin boucle sur facettes paroi
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine lpke2
 end module mod_lpke2

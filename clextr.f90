@@ -31,6 +31,7 @@ contains
     integer          ::          m,        mb,       mfb,  mmb(mtt),  mpb(mtt)
     integer          ::         mt,ncbd(ip41),ncin(ip41),        ni,        nl
     double precision ::     cson(ip11),pression(ip11),    temp(ip11),  v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -51,6 +52,7 @@ contains
        cson(nl)=cson(ni)
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine clextr
 end module mod_clextr

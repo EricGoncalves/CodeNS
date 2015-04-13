@@ -45,6 +45,7 @@ contains
     double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)
     double precision ::   fgam(ip42),    mu(ip12),   mut(ip12),   nxn(ip42),   nyn(ip42)
     double precision ::    nzn(ip42), tprod(ip00),v(ip11,ip60), ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -89,6 +90,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine lpker
 

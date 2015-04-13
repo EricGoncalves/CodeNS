@@ -76,6 +76,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
     ALLOCATE(idumx(neqt),jdumx(neqt),kdumx(neqt), &
          dumy1(neqt),dumy2(neqt),dumax(neqt),dumy2g(neqt),dumaxg(neqt))
 
@@ -189,6 +190,7 @@ contains
 
     DEALLOCATE(idumx,jdumx,kdumx,dumy1,dumy2,dumax,dumy2g,dumaxg)
 
+!$OMP END MASTER
     return
   end subroutine rscpsv
 end module mod_rscpsv

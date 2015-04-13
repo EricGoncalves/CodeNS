@@ -145,10 +145,10 @@ contains
 !
 !-----remplissage du coefficient diagonal par direction------------------
 !
-!$OMP SINGLE
+!$OMP MASTER
     kdir=1
     ninc=nci
-!$OMP END SINGLE
+!$OMP END MASTER
 !
     do k=k1,k2m1
 !$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,a2,beta2)
@@ -175,10 +175,10 @@ contains
 !$OMP END DO
     enddo
 !
-!$OMP SINGLE
+!$OMP MASTER
     kdir=2
     ninc=ncj
-!$OMP END SINGLE
+!$OMP END MASTER
 !
     do k=k1,k2m1
 !$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,a2,beta2)

@@ -27,6 +27,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
     form='(/,2x,''definition des parametres ke''/' &
          //'2x,''----------------------------'',/' &
@@ -51,6 +52,7 @@ contains
          rki2t, &
          rki4t
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfpmtbkeg
 end module mod_b1_dfpmtbkeg

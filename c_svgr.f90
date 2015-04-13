@@ -42,6 +42,7 @@ contains
 !
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: disc
+!$OMP MASTER
 !
 !
     call tcmd_svgr( &
@@ -57,6 +58,7 @@ contains
          tn1,tn2,tn3, &
          disc)
 !
+!$OMP END MASTER
     return
   end subroutine c_svgr
 end module mod_c_svgr

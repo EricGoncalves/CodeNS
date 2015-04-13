@@ -26,6 +26,7 @@ contains
     integer          ::     nijc,    nijf,     njc,     njf
     double precision ::           cc1,          cc2,          cc3,          cc4,          sss
     double precision :: vc(ip11,ip60),    vol(ip11),vv(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -275,6 +276,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indn_c(i,j,k)

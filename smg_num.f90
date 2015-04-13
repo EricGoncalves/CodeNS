@@ -92,6 +92,7 @@ contains
     double precision ::        utau(ip42),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
     double precision ::         vol(ip11),          x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44)
     double precision ::           z(ip21),        znr(ip44),      ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -472,6 +473,7 @@ if (equat(6:7).eq.'ke') kfin=7
 !
     enddo    ! fin boucle icycle sur temps physique
 !
+!$OMP END MASTER
     return
   end subroutine smg_num
 end module mod_smg_num

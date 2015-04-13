@@ -70,6 +70,7 @@ contains
     double precision ::           ss, tprod(ip00),txxf5x(ip12),txyf5y(ip12),txzf5z(ip12)
     double precision :: tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12),v(ip11,ip60),      w4sig2
     double precision ::         wgam,        wsig,       xgam1,       xgam2,        zeta
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -171,6 +172,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

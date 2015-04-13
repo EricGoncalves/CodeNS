@@ -16,11 +16,13 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
     form='(/,2x,''essai termine'',/' &
          //'2x,''-------------'',)'
     write(imp,form)
 !
+!$OMP END MASTER
     return
   end subroutine b1_end
 end module mod_b1_end

@@ -47,6 +47,7 @@ contains
     integer          :: mnpar(ip12),       mpar,          n,        n0c,        nid
     integer          ::        nijd,        njd
     double precision ::   fgam(ip42),    mu(ip12),   mut(ip12),v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -87,6 +88,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

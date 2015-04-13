@@ -22,6 +22,7 @@ contains
 !
     character(len=1316) :: command
     character(len=32)   :: mot(nmx)
+!$OMP MASTER
 !
     if(ktitrt1.eq.2) ktitrt1=3
 !
@@ -39,6 +40,7 @@ contains
 !
     ktitrt1=2
 !
+!$OMP END MASTER
     return
   end subroutine tcmd_dftl1
 end module mod_tcmd_dftl1

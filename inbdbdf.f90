@@ -20,6 +20,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=4 ) :: clmf
+!$OMP MASTER
 !
     if(ibddim.eq.0) then
        pdim=1.
@@ -125,6 +126,7 @@ contains
        stop
     endif
 !
+!$OMP END MASTER
     return
   end subroutine inbdbdf
 end module mod_inbdbdf

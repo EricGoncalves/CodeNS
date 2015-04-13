@@ -31,6 +31,7 @@ contains
     character(len=1316) :: form
     character(len=24) ::  cnba
     character(len=2 ) :: nlg,nlm,nrr,nrm
+!$OMP MASTER
 !
     call convich(knba,cnba)
 !
@@ -80,6 +81,7 @@ contains
 !
     write(imp,form) (nba(no),no=1,mtbx)
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfpmcfg
 end module mod_b1_dfpmcfg

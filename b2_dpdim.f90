@@ -45,6 +45,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
     ndimctb=nint((1.+kdimg*ccg)*ndimctf)
     ndimctv=kdimv*(ndimctb-1)+1
@@ -87,6 +88,7 @@ contains
          mdimub,mdimubx,mdimtb,mdimtbx,mdimtn,mdimtnx, &
          mdimtc,mdimtcx,mdimtr,mdimtrx
 !
+!$OMP END MASTER
     return
   end subroutine b2_dpdim
 end module mod_b2_dpdim

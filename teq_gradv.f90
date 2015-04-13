@@ -32,6 +32,7 @@ contains
     double precision ::   cmuk2(ip21),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00),   dvyx(ip00)
     double precision ::    dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00),   dvzz(ip00)
     double precision ::       s(ip00),sn(ip31*ndir), t(ip11,ip60),    vol(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -167,6 +168,7 @@ contains
          dvzx,dvzy,dvzz, &
          cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

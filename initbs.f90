@@ -51,6 +51,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indf
+!$OMP MASTER
 !
     nid=id2(l)-id1(l)+1
     njd=jd2(l)-jd1(l)+1
@@ -68,6 +69,7 @@ contains
        ncin(ml)=ncbd(ml)+mdnmfb
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine initbs
 end module mod_initbs

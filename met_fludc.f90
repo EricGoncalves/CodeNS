@@ -53,6 +53,7 @@ contains
     double precision ::   dtdx(ip00),  dtdy(ip00),  dtdz(ip00),  fd5x(ip12),  fd5y(ip12)
     double precision ::   fd5z(ip12),  fd6x(ip12),  fd6y(ip12),  fd6z(ip12),    mu(ip12)
     double precision ::    mut(ip12),s(ip11,ip60),     t(ip00)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -117,6 +118,7 @@ contains
        fd6z(n)=(mu(n)+mut(n)/alfae)*fd6z(n)
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

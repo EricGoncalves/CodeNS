@@ -32,6 +32,7 @@ contains
     double precision ::          esk,           g,      rdelta,      roe2sk,s(ip11,ip60)
     double precision ::  tprod(ip00),  tsv6(ip12),  tsv7(ip12),           x,         xl1
     double precision ::          xl2
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -94,6 +95,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

@@ -100,6 +100,7 @@ contains
     double precision ::         vol(ip11),          x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44)
     double precision ::           z(ip21),        znr(ip44),      ztemp(ip11)
     double precision,allocatable :: dt(:)
+!$OMP MASTER
     allocate(dt(ip11))
 !
 !-----------------------------------------------------------------------
@@ -559,6 +560,7 @@ contains
     enddo
 !
     deallocate(dt)
+!$OMP END MASTER
     return
   end subroutine smg_flu
 end module mod_smg_flu

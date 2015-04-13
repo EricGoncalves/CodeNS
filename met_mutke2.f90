@@ -57,6 +57,7 @@ contains
     double precision ::          s24,txxf5x(ip12),txyf5y(ip12),txzf5z(ip12),tyyf6x(ip12)
     double precision :: tyzf6y(ip12),tzzf6z(ip12),v(ip11,ip60),          x1,          xk
     double precision ::           xl,        zeta
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -177,6 +178,7 @@ contains
        enddo
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

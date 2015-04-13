@@ -27,6 +27,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
     form='(/,2x,''creation d''''un domaine '',/' &
          //'2x,''----------------------'',/' &
@@ -34,6 +35,7 @@ contains
          //'2x,''nb de pts du maillage fin: '',11x,3i5)'
     write(imp,form) l,ni,nj,nk
 !
+!$OMP END MASTER
     return
   end subroutine b1_crdms
 end module mod_b1_crdms

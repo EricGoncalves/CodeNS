@@ -65,6 +65,7 @@ contains
     double precision ::      nyn(ip42),     nzn(ip42),pression(ip11), sn(ip31*ndir),     tn1(ip00)
     double precision ::      tn2(ip00),     tn3(ip00),    topz(ip11),      tp(ip40),   tprod(ip00)
     double precision ::     utau(ip42),  v(ip11,ip60),     vol(ip11),   ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -121,6 +122,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine lp2kl
 

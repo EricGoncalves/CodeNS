@@ -63,6 +63,7 @@ contains
     double precision :: qcyts6(ip12),        rcmu,          ss, tprod(ip00),txxf5x(ip12)
     double precision :: txyf5y(ip12),txzf5z(ip12),tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12)
     double precision :: v(ip11,ip60),          xw
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -110,6 +111,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

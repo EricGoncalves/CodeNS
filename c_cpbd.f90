@@ -103,6 +103,7 @@ contains
 !
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
 !
     call tcmd_cpbd(mot,imot,nmot)
@@ -121,6 +122,7 @@ contains
          tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
          tm12,tm13,pression,ztemp,cson)
 !
+!$OMP END MASTER
     return
   end subroutine c_cpbd
 end module mod_c_cpbd

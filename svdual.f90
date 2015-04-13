@@ -28,6 +28,7 @@ contains
     integer          ::   k2,k2m1,   l,  n0, nid
     integer          :: nijd, njd
     double precision ::  vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -99,6 +100,7 @@ contains
 !
     close(98)
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

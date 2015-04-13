@@ -24,6 +24,7 @@ contains
     use boundary
     implicit none
     integer          :: mfbe,  no
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -33,6 +34,7 @@ contains
        nba(no)=nfei(mfbe)
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine dfpmcfg
 end module mod_dfpmcfg

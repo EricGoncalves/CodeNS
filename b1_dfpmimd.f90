@@ -34,6 +34,7 @@ contains
     character(len=1316) :: form
     character(len=24) ::  ckmf,clmax
     character(len=2 ) :: nlg,nlm,nrr,nrm
+!$OMP MASTER
 !
 !
     lm=ldom(1)+(lgr(1)-1)*lz
@@ -129,6 +130,7 @@ contains
 !
     write(imp,form) lgr,kmf(lm),ckmf
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfpmimd
 end module mod_b1_dfpmimd

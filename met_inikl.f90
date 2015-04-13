@@ -28,6 +28,7 @@ contains
     double precision ::    dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00)
     double precision ::    dvzz(ip00),     mu(ip12),    mut(ip12),      s(ip00),sn(ip31*ndir)
     double precision ::  v(ip11,ip60),    vol(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -53,6 +54,7 @@ contains
          l, &
          v,mu,mut,dist)
 !
+!$OMP END MASTER
     return
   end subroutine met_inikl
 end module mod_met_inikl

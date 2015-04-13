@@ -66,6 +66,7 @@ contains
     double precision ::          rack,       ralpha,       sigmaa,sn(ip31*ndir),          ss2
     double precision ::       t(ip00),  tprod(ip00), v(ip11,ip60),    vol(ip11),          xl2
     double precision ::           xxi,         xxi2
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -159,6 +160,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

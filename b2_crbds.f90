@@ -27,6 +27,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
     mfbi=nfei(mfbe)
 !
@@ -39,6 +40,7 @@ contains
        write(imp,form) img,mmb(mfbim),mpb(mfbim)
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine b2_crbds
 end module mod_b2_crbds

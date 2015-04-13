@@ -98,6 +98,7 @@ contains
     double precision ::            xk,      xkapad2,           xl,          xl1,          xl2
     double precision ::       xlskap2,         xlvk
     logical          :: impli
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -323,6 +324,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

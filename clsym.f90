@@ -47,6 +47,7 @@ contains
     double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),         qn1,         qtx
     double precision ::          qty,         qtz,         qx1,         qy1,         qz1
     double precision ::          ro1,        roe1,v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -78,6 +79,7 @@ contains
        v(nl,5)=roe1
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine clsym
 end module mod_clsym

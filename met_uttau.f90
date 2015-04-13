@@ -31,6 +31,7 @@ contains
     double precision ::        taupe,  toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12)
     double precision ::   toyz(ip12),  tozz(ip12),  utau(ip42),         utx,        utxt
     double precision ::          uty,        utyt,         utz,        utzt
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -102,6 +103,7 @@ contains
 !       fin boucle sur les parois
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine met_uttau
 end module mod_met_uttau

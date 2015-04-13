@@ -79,6 +79,7 @@ contains
 !
     character(len=7 ) :: equat
     character(len=4 ) :: disc
+!$OMP MASTER
 !
     if(disc.eq.'cccc') then
        call cccca( &
@@ -146,6 +147,7 @@ contains
        kda=kdav
     endif
 !
+!$OMP END MASTER
     return
   end subroutine chdacc
 end module mod_chdacc

@@ -104,6 +104,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=4) :: clsave(mtb)
+!$OMP MASTER
 !
 !
     if (kexl.eq.0) then
@@ -163,6 +164,7 @@ contains
        cl(mfb)=clsave(mfb)
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine cpbd
 end module mod_cpbd

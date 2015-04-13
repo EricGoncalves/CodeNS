@@ -27,6 +27,7 @@ contains
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
 !$OMP SIMD
     do icmt=1,32
@@ -51,6 +52,7 @@ contains
        call valenti(mot,imot,nm,kibdn,kval)
     endif
 !
+!$OMP END MASTER
     return
   end subroutine tcmd_inbdn
 end module mod_tcmd_inbdn

@@ -220,6 +220,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
 !
 !-----calcul de la metrique-------------------------------------------
@@ -366,6 +367,7 @@ contains
        endif
     enddo !fin des iterations
 !
+!$OMP END MASTER
     return
   end subroutine cpfw
 end module mod_cpfw

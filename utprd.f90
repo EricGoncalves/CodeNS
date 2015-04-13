@@ -29,6 +29,7 @@ contains
     integer          ::     icyc,       m,     mfl,      ml,mmb(mtt)
     integer          :: mpb(mtt),      mt
     double precision :: bceqt(ip41,neqt),      pres(ip40)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -40,5 +41,6 @@ contains
        pres(m)=bceqt(ml,1)
     enddo
 !
+!$OMP END MASTER
   end subroutine utprd
 end module mod_utprd

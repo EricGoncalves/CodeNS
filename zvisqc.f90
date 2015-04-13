@@ -126,6 +126,7 @@ contains
     double precision ::    tozz(ip12),    vol(ip11),      x(ip21),      y(ip21),      z(ip21)
     double precision ::   ztemp(ip11)
     double precision,allocatable :: dtx(:),dty(:),dtz(:)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -209,6 +210,7 @@ contains
 
     DEALLOCATE(dtx,dty,dtz)
 
+!$OMP END MASTER
     return
   end subroutine zvisqc
 end module mod_zvisqc

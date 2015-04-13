@@ -24,6 +24,7 @@ contains
 !
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
 !
 !$OMP SIMD
@@ -45,6 +46,7 @@ contains
        call valenti(mot,imot,nm,nonzst,kval)
     endif
 !
+!$OMP END MASTER
     return
   end subroutine tcmd_dfnzst
 end module mod_tcmd_dfnzst

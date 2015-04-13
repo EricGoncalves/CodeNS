@@ -15,6 +15,7 @@ contains
     use chainecarac
     implicit none
     integer          :: itit
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -24,6 +25,7 @@ contains
     titrt1='  CALCUL RANS  '
     ktitrt1=1
 !
+!$OMP END MASTER
     return
   end subroutine defdftl1
 end module mod_defdftl1

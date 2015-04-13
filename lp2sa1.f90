@@ -65,6 +65,7 @@ contains
 !-----------------------------------------------------------------------
 !
     parameter( ntab=50  )
+!$OMP MASTER
 !
 !
     ALLOCATE(alfaa(ntab),betaa(ntab),ff(ntab),topc(2), &
@@ -268,6 +269,7 @@ contains
 
     DEALLOCATE(alfaa,betaa,ff,vit,mui,muti,tempi,topc)
 
+!$OMP END MASTER
     return
   end subroutine lp2sa1
 end module mod_lp2sa1

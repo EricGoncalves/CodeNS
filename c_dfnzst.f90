@@ -52,6 +52,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     call tcmd_dfnzst( &
          mot,imot,nmot, &
@@ -63,6 +64,7 @@ contains
 !
     call dfnzst(nonzst)
 !
+!$OMP END MASTER
     return
   end subroutine c_dfnzst
 end module mod_c_dfnzst

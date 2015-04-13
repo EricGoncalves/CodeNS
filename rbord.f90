@@ -130,6 +130,7 @@ contains
     double precision ::        tm8(ip40),       tm9(ip40),        tp(ip40),    v(ip11,ip60),       vol(ip11)
     double precision ::          x(ip21),       xnr(ip44),         y(ip21),       ynr(ip44),         z(ip21)
     double precision ::        znr(ip44),     ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -418,6 +419,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine rbord
 end module mod_rbord

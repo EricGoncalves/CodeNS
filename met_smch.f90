@@ -77,6 +77,7 @@ contains
     double precision :: qcxts5(ip12),qcyts6(ip12),       rodst,        rtur,        sch1
     double precision ::         sch2,        sch3, tprod(ip00),  utau(ip42),v(ip11,ip60)
     double precision ::           xk,       yplus
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -143,6 +144,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

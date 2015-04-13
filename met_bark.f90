@@ -36,6 +36,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
+!$OMP MASTER
 !
 
 !
@@ -114,6 +115,7 @@ contains
        bark(m)=-2.*mu(n)*bark(m)
     enddo
 
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

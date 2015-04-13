@@ -62,6 +62,7 @@ contains
     double precision ::  tnte3(ip11,ip60), tnte4(ip11,ip60),       toxx(ip12),       toxy(ip12),       toxz(ip12)
     double precision ::        toyy(ip12),       toyz(ip12),       tozz(ip12),     v(ip11,ip60), vdual(ip11,ip60)
     double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),        vol(ip11),      ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -158,6 +159,7 @@ contains
        tn10(m)=reelmx
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine inivec
 end module mod_inivec

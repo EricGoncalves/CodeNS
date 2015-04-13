@@ -40,6 +40,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     m0  =mpb(mfbi)
     mt  =mmb(mfbi)
@@ -48,6 +49,7 @@ contains
 !                 kfi,ncbd, &
 !                 mt,m0)
 !
+!$OMP END MASTER
     return
   end subroutine c_svbd
 end module mod_c_svbd

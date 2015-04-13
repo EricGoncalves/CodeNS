@@ -50,6 +50,7 @@ contains
     integer          ::      njd,    resu
     double precision ::         mut(ip12),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
     double precision :: vdual2(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -218,6 +219,7 @@ contains
 !       close(98)
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

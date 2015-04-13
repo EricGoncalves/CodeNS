@@ -81,6 +81,7 @@ contains
     double precision ::    nyn(ip42),   nzn(ip42),   qcx(ip12),   qcy(ip12),   qcz(ip12)
     double precision ::   toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12),  toyz(ip12)
     double precision ::   tozz(ip12),    tp(ip40),v(ip11,ip60), ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -124,6 +125,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine cllparoi1
 end module mod_cllparoi1

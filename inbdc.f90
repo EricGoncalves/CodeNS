@@ -130,6 +130,7 @@ contains
     character(len=2 ) :: tvi,tvj,tvk
     character(len=7 ) :: eqt
     character(len=6 ) :: typa,typb
+!$OMP MASTER
 !
 !
     mfbia=nfei(mfbea)
@@ -221,6 +222,7 @@ contains
        end if
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine inbdc
 end module mod_inbdc

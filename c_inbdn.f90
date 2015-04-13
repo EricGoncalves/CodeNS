@@ -35,6 +35,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
     allocate(lmfb(mtb))
 !
 !
@@ -62,6 +63,7 @@ contains
     enddo
 !
     deallocate(lmfb)
+!$OMP END MASTER
     return
   end subroutine c_inbdn
 end module mod_c_inbdn

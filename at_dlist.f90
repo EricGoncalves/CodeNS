@@ -51,6 +51,7 @@ contains
     integer          :: nfrtb(ip00)
     double precision ::    x(ip21),xpar(ip00),   y(ip21),ypar(ip00),   z(ip21)
     double precision :: zpar(ip00)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -90,6 +91,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine at_dlist
 end module mod_at_dlist

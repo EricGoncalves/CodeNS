@@ -21,6 +21,7 @@ contains
     integer          ::   k2,k2m1,  kd,   l,   n
     integer          ::  n0c, nci, nid,nijd, njd
     double precision :: s(ip11,ip60),       test6,       test7,          ts
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -65,6 +66,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

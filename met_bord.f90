@@ -31,6 +31,7 @@ contains
     integer          ::         no
     double precision :: bceqt(ip41,neqt),        mu(ip12),      utau(ip42),    v(ip11,ip60),       xnr(ip44)
     double precision ::        ynr(ip44),       znr(ip44)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -341,6 +342,7 @@ contains
 !
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine met_bord
 end module mod_met_bord

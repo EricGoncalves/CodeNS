@@ -22,6 +22,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
 !
     call tcmd_intn(mot,imot,nmot)
@@ -30,6 +31,7 @@ contains
        call b1_intn
     endif
 !
+!$OMP END MASTER
     return
   end subroutine c_intn
 end module mod_c_intn

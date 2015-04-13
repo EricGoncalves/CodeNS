@@ -96,6 +96,7 @@ contains
     double precision ::        upyp1,v(ip11,ip60),         v1t,         v1x,         v1y
     double precision ::          v1z,        yp02
     logical          :: lamin
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -237,6 +238,7 @@ contains
 !     fin boucle sur facettes d'une frontiere paroi
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine lparoi1
 end module mod_lparoi1

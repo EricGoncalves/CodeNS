@@ -77,6 +77,7 @@ contains
     double precision ::           rhos,           rmd,           rms,          rocs,     rod(ip40)
     double precision ::     roed(ip40),    roud(ip40),    rovd(ip40),    rowd(ip40),           rpd
     double precision ::            rps,    temp(ip11),  v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -147,6 +148,7 @@ contains
        cson(nl)=sqrt(temp(nl))
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine clnrd_prcd
 end module mod_clnrd_prcd

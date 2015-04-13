@@ -63,6 +63,7 @@ contains
     double precision ::      nyn(ip42),     nzn(ip42),pression(ip11), sn(ip31*ndir),     tn1(ip00)
     double precision ::      tn2(ip00),     tn3(ip00),      tp(ip40),    utau(ip42),  v(ip11,ip60)
     double precision ::      vol(ip11),   ztemp(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -108,6 +109,7 @@ contains
        endif
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine lp2sa
 

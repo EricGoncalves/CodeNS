@@ -22,6 +22,7 @@ contains
 !
     character(len=1316) :: form
     character(len=24) ::  cnumt
+!$OMP MASTER
 !
     call convich(knumt,cnumt)
 !
@@ -30,6 +31,7 @@ contains
          //'2x,''numt                     : '',11x,i5,2x,a)'
     write(imp,form) numt,cnumt
 !
+!$OMP END MASTER
     return
   end subroutine b1_intn
 end module mod_b1_intn

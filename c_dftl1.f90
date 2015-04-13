@@ -20,6 +20,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     call tcmd_dftl1(mot,imot,nmot)
 !
@@ -27,6 +28,7 @@ contains
 !            call b1_dftl1
 !      endif
 !
+!$OMP END MASTER
     return
   end subroutine c_dftl1
 end module mod_c_dftl1

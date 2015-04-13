@@ -21,10 +21,12 @@ contains
 !
     character(len=1316) :: command
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     call gtcmd(command,lgcmd)
     call splcmd(command,lgcmd,mot,imot,nmot)
 !
+!$OMP END MASTER
     return
   end subroutine rdcmd
 end module mod_rdcmd

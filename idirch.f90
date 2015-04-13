@@ -22,6 +22,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: ch
+!$OMP MASTER
 !
     idirch = 0
 !
@@ -52,6 +53,7 @@ contains
 !
 1000 format(10x,'caracter - type of subdomain face incomprehensible')
 !
+!$OMP END MASTER
     return
   end function idirch
 end module mod_idirch

@@ -44,6 +44,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     m0n =mpn(mfbi)
     mt  =mmb(mfbi)
@@ -52,6 +53,7 @@ contains
 !                 kfn,nxn,nyn,nzn, &
 !                 mt,m0n)
 !
+!$OMP END MASTER
     return
   end subroutine c_svbdn
 end module mod_c_svbdn

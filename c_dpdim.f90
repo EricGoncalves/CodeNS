@@ -48,6 +48,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     ndimctb=nint((1.+kdimg*ccg)*ndimctf)
     ndimctv=kdimv*(ndimctb-1)+1
@@ -85,6 +86,7 @@ contains
     if (mdimtc .lt.mdimtcx ) stop 'dimensionnement incorrecte'
     if (mdimtr .lt.mdimtrx ) stop 'dimensionnement incorrecte'
 !
+!$OMP END MASTER
     return
   end subroutine c_dpdim
 end module mod_c_dpdim

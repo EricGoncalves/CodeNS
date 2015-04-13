@@ -96,6 +96,7 @@ contains
 !
     character(len=2 ) :: indfb
     character(len=7 ) :: eqt
+!$OMP MASTER
 !
     mfbi=nfei(mfbe)
 !
@@ -143,6 +144,7 @@ contains
 
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine inbdn
 end module mod_inbdn

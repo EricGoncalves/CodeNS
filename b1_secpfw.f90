@@ -29,6 +29,7 @@ contains
     character(len=1316) :: form
     character(len=24) ::  ckvn,cncyresi,cncysave,cncyexpl,cdiscsv,cncycl
     character(len=2 ) :: nlg,nlm,nrr,nrm
+!$OMP MASTER
 !
     call convich(kkvn,ckvn)
     call convich(kncyresi,cncyresi)
@@ -97,6 +98,7 @@ contains
 !
     write(imp,form) lgr,ncycle(lgr(1)),cncycl
 !
+!$OMP END MASTER
     return
   end subroutine b1_secpfw
 end module mod_b1_secpfw

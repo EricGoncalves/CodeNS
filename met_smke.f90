@@ -74,6 +74,7 @@ contains
     double precision ::    dvzy(ip00),   dvzz(ip00),     mu(ip12),    mut(ip12), qcxts5(ip12)
     double precision ::  qcyts6(ip12),sn(ip31*ndir),      t(ip00),    tn1(ip00),    tn2(ip00)
     double precision ::     tn3(ip00),  tprod(ip00), v(ip11,ip60),    vol(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -144,6 +145,7 @@ contains
             cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
     endif
 !
+!$OMP END MASTER
     return
   end subroutine met_smke
 end module mod_met_smke

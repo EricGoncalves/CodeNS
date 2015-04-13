@@ -31,6 +31,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     call tcmd_dffw(mot,imot,nmot)
 !
@@ -40,6 +41,7 @@ contains
 !
     call dffw
 !
+!$OMP END MASTER
     return
   end subroutine c_dffw
 end module mod_c_dffw

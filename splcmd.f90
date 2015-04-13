@@ -21,6 +21,7 @@ contains
 !
     character(len=1316) :: command
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
 !
     nmot=0
@@ -50,6 +51,7 @@ contains
     enddo
     if (nmot.ne.0) imot(nmot)=im
 !
+!$OMP END MASTER
     return
   end subroutine splcmd
 end module mod_splcmd

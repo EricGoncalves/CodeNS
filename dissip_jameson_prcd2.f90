@@ -49,6 +49,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
+!$OMP MASTER
 !
     allocate(temp(ip11))
 
@@ -687,6 +688,7 @@ contains
 !
     endif
     deallocate(temp)
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

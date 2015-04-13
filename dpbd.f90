@@ -35,6 +35,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  typdat
+!$OMP MASTER
 !
 !
     l=ndlb(nfei(mfbe))
@@ -67,6 +68,7 @@ contains
        stop 'Type de sortie frontiere inconnu'
     endif
 !
+!$OMP END MASTER
     return
   end subroutine dpbd
 end module mod_dpbd

@@ -36,6 +36,7 @@ contains
     integer          ::   nijd,   njd
     double precision ::                  cc0,          dpdx(ip00),          dpdy(ip00),          dpdz(ip00),                 eps
     double precision ::             ps(ip11),sn(lgsnlt,nind,ndir),                  ts,           vol(ip11),                vols
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -240,6 +241,7 @@ contains
        dpdz(m)=dpdz(m)*cc0
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

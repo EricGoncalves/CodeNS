@@ -40,6 +40,7 @@ contains
     integer          ::    n,  n0, nid,nijd, njd
     double precision :: fd5x(ip12),fd5y(ip12),fd5z(ip12),fd6x(ip12),fd6y(ip12)
     double precision :: fd6z(ip12),  mu(ip12), mut(ip12)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -75,6 +76,7 @@ contains
        fd6z(n)=(mu(n)+mut(n)*sigmw)*fd6z(n)
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

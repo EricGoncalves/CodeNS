@@ -92,6 +92,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indf
+!$OMP MASTER
 !
 !.....calcul des indices
 !
@@ -365,6 +366,7 @@ contains
        cson(nlc)=sqrt(ztemp(nlc))
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    inc(id,jd,kd)

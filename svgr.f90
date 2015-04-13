@@ -41,6 +41,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=4 ) :: disc
+!$OMP MASTER
 !
 !     changement eventuel de discretisation
 !
@@ -57,6 +58,7 @@ contains
          imin,imax,jmin,jmax,kmin,kmax, &
          tn1,tn2,tn3)
 !
+!$OMP END MASTER
     return
   end subroutine svgr
 end module mod_svgr

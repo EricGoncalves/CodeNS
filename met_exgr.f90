@@ -24,6 +24,7 @@ contains
     integer          ::    l,   m,   n, n0c, nci
     integer          ::  ncj, nck, nid,nijd, njd
     double precision :: ds1(ip00),ds2(ip00),ds3(ip00),      ex1,      ex2
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -116,6 +117,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

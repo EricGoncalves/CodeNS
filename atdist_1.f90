@@ -62,6 +62,7 @@ contains
     double precision :: dist(ip12),     distn, nxn(ip42), nyn(ip42), nzn(ip42)
     double precision ::    x(ip21), xcc(ip00),xpar(ip00),   y(ip21), ycc(ip00)
     double precision :: ypar(ip00),   z(ip21), zcc(ip00),zpar(ip00)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -134,6 +135,7 @@ contains
        end if
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine atdist_1
 end module mod_atdist_1

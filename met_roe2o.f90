@@ -34,6 +34,7 @@ contains
     double precision ::           del7(ip00),                rlam,                 rro,                rro1,sn(lgsnlt,nind,ndir)
     double precision ::         t(ip11,ip60),                   u,                   v,           vol(ip11),                   w
     double precision ::                    x,                   y,                   z
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -279,6 +280,7 @@ contains
 !
     endif
 
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

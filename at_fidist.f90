@@ -82,6 +82,7 @@ contains
     double precision ::   xcc(ip00), xpar(ip00),    y(ip21),  ycc(ip00), ypar(ip00)
     double precision ::     z(ip21),  zcc(ip00), zpar(ip00)
     logical          :: contig,  degi,  degj,  degk,nondeg
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -369,6 +370,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

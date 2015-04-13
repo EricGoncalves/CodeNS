@@ -27,6 +27,7 @@ contains
     integer          ::         njd
     double precision ::   dist(ip12),         fmu,    mu(ip12),   mut(ip12),  utau(ip42)
     double precision :: v(ip11,ip60),       yplus
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -71,6 +72,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

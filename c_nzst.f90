@@ -50,6 +50,7 @@ contains
     use definition
     implicit none
     double precision ::  aam,roam, tam
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -59,6 +60,7 @@ contains
     pa1=roa1*ta1/gam
     ha1=cp*ta1
 !
+!$OMP END MASTER
     return
   end subroutine c_nzst
 end module mod_c_nzst

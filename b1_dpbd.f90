@@ -25,6 +25,7 @@ contains
     character(len=1316) :: form
     character(len=32) ::  typdat
     character(len=2 ) :: nlg,nlm,nrr,nrm
+!$OMP MASTER
 !
 !
     long=6
@@ -111,6 +112,7 @@ contains
 !
     write(imp,form) lgr
 !
+!$OMP END MASTER
     return
   end subroutine b1_dpbd
 end module mod_b1_dpbd

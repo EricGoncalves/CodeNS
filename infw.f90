@@ -45,6 +45,7 @@ contains
     integer          ::    img,keinit,  kina,     l,    lm
     double precision ::         mut(ip12), tnte1(ip11,ip60),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60)
     double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),          x(ip21),          y(ip21),          z(ip21)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -91,6 +92,7 @@ contains
        endif
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine infw
 end module mod_infw

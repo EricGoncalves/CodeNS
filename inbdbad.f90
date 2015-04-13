@@ -22,6 +22,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=20) ::  chvar
+!$OMP MASTER
 !
     nv=1
     adim=1.
@@ -111,6 +112,7 @@ contains
 !
     endif
 !
+!$OMP END MASTER
     return
   end subroutine inbdbad
 end module mod_inbdbad

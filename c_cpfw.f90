@@ -65,6 +65,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
 !
     call tcmd_cpfw(mot,imot,nmot)
@@ -97,6 +98,7 @@ contains
          cvi,cvj,cvk, &
          cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
+!$OMP END MASTER
     return
   end subroutine c_cpfw
 end module mod_c_cpfw

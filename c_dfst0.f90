@@ -28,6 +28,7 @@ contains
     use mod_b1_dfst0
     implicit none
     double precision ::  aam,roam, tam
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -35,6 +36,7 @@ contains
        call b1_dfst0(roam,aam,tam)
     endif
 !
+!$OMP END MASTER
     return
   end subroutine c_dfst0
 end module mod_c_dfst0

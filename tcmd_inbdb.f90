@@ -32,6 +32,7 @@ contains
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: clmf
+!$OMP MASTER
 !
 !$OMP SIMD
     do icmt=1,32
@@ -79,6 +80,7 @@ contains
     endif
 !
     nm=nm+1
+!$OMP END MASTER
     if(nmot.lt.nm) return
 !
     if((imot(nm).eq.4).and.(mot(nm).eq.'file')) then

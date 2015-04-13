@@ -43,6 +43,7 @@ contains
     double precision ::         exp2x,           f2,     mu(ip12),    mut(ip12),         omeg
     double precision ::          rota,sn(ip31*ndir),      t(ip00), v(ip11,ip60),    vol(ip11)
     double precision ::          zeta
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -123,6 +124,7 @@ contains
        enddo
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

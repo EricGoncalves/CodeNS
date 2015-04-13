@@ -22,6 +22,7 @@ contains
 !
     character(len=1316) :: form
     character(len=4 ) :: disc
+!$OMP MASTER
 !
     form='(/,2x,''sauvegarde du maillage'',/' &
          //'2x,''----------------------'',/' &
@@ -29,6 +30,7 @@ contains
 !
     write(imp,form) disc
 !
+!$OMP END MASTER
     return
   end subroutine b1_svgr
 end module mod_b1_svgr

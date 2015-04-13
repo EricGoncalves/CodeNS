@@ -25,6 +25,7 @@ contains
     implicit none
     integer          :: imgc,imgf
     double precision :: vc(ip11,ip60),    vol(ip11),vv(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -68,6 +69,7 @@ contains
        stop 'smg_cf'
     end if
 !
+!$OMP END MASTER
     return
   end subroutine smg_cf
 end module mod_smg_cf

@@ -44,6 +44,7 @@ contains
 !
     character(len=1316) :: form
     character(len=2 ) :: tvi,tvj,tvk
+!$OMP MASTER
 !
     form='(/,2x,''calculs pour frontiere coincidente'',/' &
          //'2x,''----------------------------------'',/' &
@@ -64,6 +65,7 @@ contains
        endif
     endif
 !
+!$OMP END MASTER
     return
   end subroutine b1_inbdc
 end module mod_b1_inbdc

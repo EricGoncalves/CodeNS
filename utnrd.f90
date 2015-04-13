@@ -63,6 +63,7 @@ contains
     double precision ::            rmach,              ro,       rod(ip40),             roe,      roed(ip40)
     double precision ::              rou,      roud(ip40),             rov,      rovd(ip40),             row
     double precision ::       rowd(ip40),         y(ip21),              ym,         z(ip21),              zm
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -126,6 +127,7 @@ contains
        roed(m)=roe+.5*(rovd(m)**2-rov**2+rowd(m)**2-row**2)/ro
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    inc(id,jd,kd)

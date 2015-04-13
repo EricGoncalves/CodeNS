@@ -43,6 +43,7 @@ contains
     double precision ::     tn1(ip00),    tn2(ip00),    tn3(ip00),  tprod(ip00),   tsv6(ip12)
     double precision ::    tsv7(ip12),    vol(ip11),            x,           xl,          xl1
     double precision ::           xl2,         xlvk,        xlvk2
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -171,6 +172,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

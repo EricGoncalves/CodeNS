@@ -111,6 +111,7 @@ contains
     double precision,allocatable :: coefe(:,:),   dvxx(:),   dvxy(:),   dvxz(:),   dvyx(:)
     double precision,allocatable ::    dvyy(:),   dvyz(:),   dvzx(:),   dvzy(:),   dvzz(:)
     double precision,allocatable :: fracmod(:)
+!$OMP MASTER
     allocate(coefe(ndir,ip00))
 !
 !-----------------------------------------------------------------------
@@ -910,6 +911,7 @@ contains
     DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,fracmod)
     deallocate(coefe)
 
+!$OMP END MASTER
     return
   end subroutine met_num
 end module mod_met_num

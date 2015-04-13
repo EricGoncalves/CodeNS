@@ -40,6 +40,7 @@ contains
     integer          :: jmin,   k, kdg,kmax,kmin
     integer          ::    l, nid,nijd, njd
     double precision :: x(ip00),y(ip00),z(ip00)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -56,6 +57,7 @@ contains
     write(kdg)(((y(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
     write(kdg)(((z(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

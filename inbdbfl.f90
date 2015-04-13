@@ -27,6 +27,7 @@ contains
 !
     character(len=20) ::  chvar,frmt
     character(len=80) ::  titre
+!$OMP MASTER
 !
 ! lecture du fichier de conditions aux limites
 !
@@ -90,6 +91,7 @@ contains
 1030 format (a)
 5555 format (6(e12.5))
 !
+!$OMP END MASTER
     return
   end subroutine inbdbfl
 end module mod_inbdbfl

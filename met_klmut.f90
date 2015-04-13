@@ -28,6 +28,7 @@ contains
     double precision ::           f1,         fmu,    mu(ip12),   mut(ip12),       r2sb1
     double precision ::         rack,         ss2,v(ip11,ip60),         xl2,         xxi
     double precision ::         xxi2
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -87,6 +88,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

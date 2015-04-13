@@ -57,6 +57,7 @@ contains
     integer          :: ncin(ip41),        nd,       nid,       njd,        nr
     double precision ::          aux,          cr,          sr,t(ip11,ip60),   xnr(ip44)
     double precision ::    ynr(ip44),   znr(ip44)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -158,6 +159,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine rbvr
 end module mod_rbvr

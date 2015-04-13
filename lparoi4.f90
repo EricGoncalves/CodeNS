@@ -84,6 +84,7 @@ contains
     double precision ::           tn,         top,  toxx(ip12),  toxy(ip12),  toxz(ip12)
     double precision ::   toyy(ip12),  toyz(ip12),  tozz(ip12),          tt,  utau(ip42)
     double precision :: v(ip11,ip60),         v1x,         v1y,         v1z
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -146,6 +147,7 @@ contains
 !     fin boucle sur facettes d'une frontiere paroi
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine lparoi4
 end module mod_lparoi4

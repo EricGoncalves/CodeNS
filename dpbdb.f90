@@ -48,6 +48,7 @@ contains
     integer          ::         lm,         m,        m0,      mfbe,      mfbi
     integer          ::      mfbim,        mm,        mt,         n,       n0c
     integer          :: ncbd(ip41),ncin(ip41),       nid,      nijd,       njd
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -81,6 +82,7 @@ contains
 1900 format('1     m',4x,'  l',2x,'img',2x,'  i',2x,'  j', 2x,'  k',2x,'      ncin'/)
 1910 format(1x,i5,2x,5(2x,i3),5x,i7)
 !
+!$OMP END MASTER
     return
   contains
     function    iin(n)

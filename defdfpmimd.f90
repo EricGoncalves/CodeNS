@@ -20,6 +20,7 @@ contains
     use kcle
     implicit none
     integer          :: l
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -32,6 +33,7 @@ contains
        klmax(l)=1
     enddo
 !
+!$OMP END MASTER
     return
   end subroutine defdfpmimd
 end module mod_defdfpmimd

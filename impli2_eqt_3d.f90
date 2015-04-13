@@ -47,6 +47,7 @@ contains
     double precision ::                  tpk,        u(ip11,ip60),            u1(ip00),            u2(ip00),            u3(ip00)
     double precision ::                   uu,        v(ip11,ip60),           vol(ip11),                  vv,                  ww
     double precision,allocatable :: coefe(:,:)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------
 !
@@ -144,10 +145,10 @@ contains
 !-----remplissage des coefficients par direction
 !*****************************************************************
 !
-!$OMP SINGLE
+!$OMP MASTER
     kdir=1
     ninc=nci
-!$OMP END SINGLE
+!$OMP END MASTER
 !
 !$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww)
     do k=k1,k2m1
@@ -171,10 +172,10 @@ contains
     enddo
 !$OMP END DO
 !
-!$OMP SINGLE
+!$OMP MASTER
     kdir=2
     ninc=ncj
-!$OMP END SINGLE
+!$OMP END MASTER
 !
 !$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww)
     do k=k1,k2m1
@@ -198,10 +199,10 @@ contains
     enddo
 !$OMP END DO
 !
-!$OMP SINGLE
+!$OMP MASTER
     kdir=3
     ninc=nck
-!$OMP END SINGLE
+!$OMP END MASTER
 !
 !$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww)
     do k=k1,k2
@@ -477,6 +478,7 @@ contains
 
     DEALLOCATE(coefe)
 
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

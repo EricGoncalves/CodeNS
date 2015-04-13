@@ -34,6 +34,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=32) ::  mot(nmx)
+!$OMP MASTER
 !
     call tcmd_dfph(mot,imot,nmot)
 !
@@ -43,6 +44,7 @@ contains
 !
     call dfph
 !
+!$OMP END MASTER
     return
   end subroutine c_dfph
 end module mod_c_dfph

@@ -39,6 +39,7 @@ contains
     double precision ::                  p52,                 p53,                 p54,                 p55,                  q2
     double precision ::                 qinf,sn(lgsnlt,nind,ndir),          temp(ip11),        u(ip11,ip60),                  uu
     double precision ::         v(ip11,ip60),                  vv,                  ww
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -126,6 +127,7 @@ contains
        u(n,5)=p51*u(n,1)+p52*u(n,2)+p53*u(n,3)+p54*u(n,4)+p55*u(n,5)
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

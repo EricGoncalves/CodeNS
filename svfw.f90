@@ -42,6 +42,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=4 ) :: disc
+!$OMP MASTER
 !
 !
 !     changement eventuel de discretisation
@@ -60,6 +61,7 @@ contains
          imin,imax,jmin,jmax,kmin,kmax, &
          tn1,tn2,tn3,tn4,tn5,tn6,tn7,ip12,tn8)
 !
+!$OMP END MASTER
     return
   end subroutine svfw
 end module mod_svfw

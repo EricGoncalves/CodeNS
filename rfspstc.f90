@@ -39,6 +39,7 @@ contains
     integer          ::   n2,  n3,  n4, nid,nijd
     integer          ::  njd
     double precision :: t(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -141,6 +142,7 @@ contains
        enddo
     enddo
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

@@ -47,6 +47,7 @@ contains
     double precision ::          omeg,         rcmu,         rmut,         rota,         smut
     double precision :: sn(ip31*ndir),           ss,      t(ip00), v(ip11,ip60),    vol(ip11)
     double precision ::          zeta
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -134,6 +135,7 @@ contains
        enddo
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

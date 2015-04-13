@@ -38,6 +38,7 @@ contains
     integer          ::   k2,k2m1,   l,   n,  n0
     integer          ::  nid,nijd, njd
     double precision :: v(ip11,ip60)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -74,6 +75,7 @@ contains
 !      read(98)(( v(ind(i,0,k),3),i=i1,i2m1),k=k1,k2m1)
 !      read(98)(( v(ind(i,0,k),5),i=i1,i2m1),k=k1,k2m1)
 !
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)

@@ -30,6 +30,7 @@ contains
 !
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: clmf
+!$OMP MASTER
     allocate(lmfb(mtb))
 !
 !
@@ -55,6 +56,7 @@ contains
     enddo
 !
     deallocate(lmfb)
+!$OMP END MASTER
     return
   end subroutine c_inbdb
 end module mod_c_inbdb

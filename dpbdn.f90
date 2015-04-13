@@ -56,6 +56,7 @@ contains
     integer          ::          n,       n0c,ncbd(ip41),       nid,      nijd
     integer          ::        njd
     double precision :: nxn(ip42),nyn(ip42),nzn(ip42)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -93,6 +94,7 @@ contains
          2x,'    nzn   '/)
 1910 format(1x,i5,4x,i3,2x,i3,2x,i6,3(2x,i3),3(2x,f10.6))
 !
+!$OMP END MASTER
     return
   contains
     function    iin(n)

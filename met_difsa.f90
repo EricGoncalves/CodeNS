@@ -59,6 +59,7 @@ contains
     double precision ::   cmuk2(ip21),   dtdx(ip00),   dtdy(ip00),   dtdz(ip00), s(ip11,ip60)
     double precision ::    sdif(ip00),sn(ip31*ndir),      t(ip00), txxf5x(ip12), txyf5y(ip12)
     double precision ::  txzf5z(ip12),    vol(ip11)
+!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -142,6 +143,7 @@ contains
             dtdz(m)*txzf5z(n)
        sdif(m)=sdif(m)*cb2/sigma
     enddo
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

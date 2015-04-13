@@ -26,6 +26,7 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
+!$OMP MASTER
 !
     form='(/4x ,''grandeurs d''''arret amont :''/' &
          //'4x ,''~~~~~~~~~~~~~~~~~~~~~~~  ''/,' &
@@ -34,6 +35,7 @@ contains
          //'4x ,''tam    ='',e12.5,'' K    '')'
     write(imp,form) roam,aam,tam
 !
+!$OMP END MASTER
     return
   end subroutine b1_dfst0
 end module mod_b1_dfst0
