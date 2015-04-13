@@ -37,7 +37,6 @@ contains
     integer          ::    k2m1,      l,      m,      n,    n0c
     integer          ::     nid,   nijd,    njd
     double precision ::     cson(ip11),pression(ip11),          rhoe,  v(ip11,ip60),   ztemp(ip11)
-!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -66,6 +65,7 @@ contains
     j2m1=j2-1
     k2m1=k2-1
 !
+!$OMP DO COLLAPSE(2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -81,7 +81,9 @@ contains
           enddo
        enddo
     enddo
+!$OMP END DO
 !
+!$OMP MASTER
     isortie=0
     if(isortie.eq.1) then
        write(6,'("===>zpres")')
@@ -94,8 +96,8 @@ contains
                j,n,v(n,1),pression(n),ztemp(n),cson(n)
        enddo
     endif
-!
 !$OMP END MASTER
+!
     return
   contains
     function    indc(i,j,k)

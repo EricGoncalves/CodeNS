@@ -131,7 +131,7 @@ contains
                 enddo
              enddo
           enddo
-!$OMP ENDDO
+!$OMP END DO
 !
        enddo
 !

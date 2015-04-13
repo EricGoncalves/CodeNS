@@ -149,8 +149,6 @@ contains
     allocate(m1tb(ip00))
 !$OMP END SINGLE
 
-!private(l,lm,ndeb,nfin,lgsnlt)
-!$OMP PARALLEL default(SHARED) private(gfetke,dtpas,mcychro,mcyturb)
 !
 !-----------------------------------------------------------------------
 !
@@ -193,7 +191,6 @@ contains
 !     calcul de la distance aux parois
 !-----------------------------------------------------------
 !
-!$OMP MASTER
     if (ncyc.eq.1 .and. img.eq.mg ) then
 !        calcul distance pour epaisseurs integrales si necessaire
        SELECT CASE(kcaldis)
@@ -420,8 +417,6 @@ contains
 !
 !-------calcul du pas de temps------------------------------------------------
 !
-!$OMP END MASTER
-!$OMP BARRIER
     if((mcychro.eq.1).or.(icyc.lt.icychr0)) then
        call chrono( &
             img, &
@@ -430,7 +425,6 @@ contains
             tn1,tn2,tn3,tn4, &
             cson,pression)
     endif
-!$OMP MASTER
 !
 !-------prolongement des variables aux bords-------------------------------
 !
@@ -454,16 +448,11 @@ contains
 !-------calcul dissipation artificielle du schema de Jameson--------------
 !
 !      champ moyen
-!$OMP END MASTER
-!$OMP BARRIER
     if(ischema.le.4) then
        do l=1,lzx
-!$OMP MASTER
           lm=l+(img-1)*lz
           npsn  =ndir*npfb(lm)+1
           lgsnlt=nnn(lm)
-!$OMP END MASTER
-!$OMP BARRIER
 !
           SELECT CASE(kprec)
           CASE(0)
@@ -473,27 +462,21 @@ contains
                   sn(npsn),lgsnlt, &
                   tn1,pression,cson)
           CASE(1)  !(P,u,S)
-!$OMP MASTER
 !            call dissip_jameson_prcd( &
 !                 lm,v,d, &
 !                 equat, &
 !                 sn(npsn),lgsnlt, &
 !                 tn2,tn3,pression,ztemp,cson)
-!$OMP END MASTER
-!$OMP BARRIER
           CASE(2)  !(P,u,e)
-!$OMP MASTER
              call dissip_jameson_prcd2( &
                   lm,v,d, &
                   equat, &
                   sn(npsn),lgsnlt, &
                   tn1,pression,cson)
-!$OMP END MASTER
 !$OMP BARRIER
           END SELECT
        enddo
     endif
-!$OMP MASTER
 !
 !       champ turbulent
     if((kditur.eq.1).or.(kditur.eq.3)) then
@@ -622,21 +605,16 @@ contains
 !       calcul de l'increment explicite (calcul des flux numeriques)
 !----------------------------------------------------------------------
 !
-!$OMP END MASTER
 !$OMP BARRIER
     do l=1,lzx
-!$OMP MASTER
        lm=l+(img-1)*lz
        npsn  =ndir*npfb(lm)+1
        lgsnlt=nnn(lm)
-!$OMP END MASTER
-!$OMP BARRIER
 !
 !--------Schema de Jameson--------------------------------------------
 !
        SELECT CASE(ischema)
        CASE(1)
-!$OMP MASTER
           call sch_jameson( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -645,12 +623,9 @@ contains
                sn(npsn),lgsnlt, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression)
-!$OMP END MASTER
-!$OMP BARRIER
 !
        CASE(2)
 !         version ponderee
-!$OMP MASTER
           call sch_jameson_pond( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -660,8 +635,6 @@ contains
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression, &
                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-!$OMP END MASTER
-!$OMP BARRIER
 !
        CASE(3)
 !         version ordre 3 avec correction de l'erreur dispersive
@@ -676,7 +649,6 @@ contains
 !
        CASE(4)
 !         version ordre 3 avec correction de l'erreur dispersive + ponderation
-!$OMP MASTER
           call sch_jameson3pond( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -687,13 +659,10 @@ contains
                pression, &
                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
                cvi,cvj,cvk)
-!$OMP END MASTER
-!$OMP BARRIER
 !
 !--------Schema AUSM+ de Liou--------------------------------------------
 !
        CASE(5)
-!$OMP MASTER
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
                 call sch_ausmp( &
@@ -718,10 +687,7 @@ contains
 !
 !--------Schema AUSM+ pondere--------------------------------------
 !
-!$OMP END MASTER
-!$OMP BARRIER
        CASE(6)
-!$OMP MASTER
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
                 call sch_ausmp_pond( &
@@ -739,10 +705,7 @@ contains
 !
 !--------Schema de Roe--------------------------------------------
 !
-!$OMP END MASTER
-!$OMP BARRIER
        CASE(7)
-!$OMP MASTER
 !
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
@@ -777,10 +740,7 @@ contains
 !
 !--------Schema de Roe pondere------------------------------------
 !
-!$OMP END MASTER
-!$OMP BARRIER
        CASE(8)
-!$OMP MASTER
           if(kprec.eq.0) then
              call sch_roe_pond( &
                   lm,ityprk, &
@@ -807,10 +767,7 @@ contains
 !
 !--------Schema de Rusanov avec extrapolation MUSCL----------------------------------
 !
-!$OMP END MASTER
-!$OMP BARRIER
        CASE(9)
-!$OMP MASTER
 !
           if(kprec.eq.0) then
              call sch_rusanov( &
@@ -833,10 +790,7 @@ contains
           endif
 !--------Schema de Jiang&Chu WENO ordre 3-----------------------------------
 !
-!$OMP END MASTER
-!$OMP BARRIER
        CASE(10)
-!$OMP MASTER
 !           if(kprec.eq.0) then
           if(equat(3:4).eq.'2d') then
 ! attention: muscl sert de cle pour splitting
@@ -891,10 +845,7 @@ contains
 !
 !--------Schema WENO ordre 3 pondere-----------------------------------
 !
-!$OMP END MASTER
-!$OMP BARRIER
        CASE(11)
-!$OMP MASTER
           if(equat(3:4).eq.'2d') then
 ! attention: muscl sert de cle pour splitting
              if(muscl.eq.0) then
@@ -933,10 +884,7 @@ contains
 !
 !--------Schema WENO ordre 5-----------------------------------
 !
-!$OMP END MASTER
-!$OMP BARRIER
        CASE(12)
-!$OMP MASTER
           if(equat(3:4).eq.'2d') then
              call sch_weno5( &
                   lm,ityprk, &
@@ -959,10 +907,7 @@ contains
 !
 !--------Schema WENO ordre 5 pondere---------------------------------
 !
-!$OMP END MASTER
-!$OMP BARRIER
        CASE(13)
-!$OMP MASTER
           if(equat(3:4).eq.'2d') then
              call sch_weno5pond( &
                   lm,ityprk, &
@@ -988,10 +933,7 @@ contains
 !
 !--------Schema HLLC avec extrapolation MUSCL-------------------------
 !
-!$OMP END MASTER
-!$OMP BARRIER
        CASE(14)
-!$OMP MASTER
 !
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
@@ -1022,10 +964,7 @@ contains
                   tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                   pression)
           endif
-!$OMP END MASTER
-!$OMP BARRIER
        END SELECT
-!$OMP MASTER
 !
 !--------Preconditionnement basse vitesse de Turkel--------------------
 !        calcul des residus preconditionnes pour calcul tout explicite
@@ -1050,11 +989,10 @@ contains
                   vol,ptdual)
           endif
        endif
-!$OMP END MASTER
-!$OMP BARRIER
 !
 !--------contribution acoustique ----------------------------------------
 !
+!$OMP BARRIER
        if(lacou.eq.1) then
           call sch_acou( &
                lm,ityprk, &
@@ -1069,10 +1007,7 @@ contains
 !
        if(kmf(lm).eq.0) then
 !        calcul tout explicite
-!$OMP MASTER
           call sch_expli(lm,u,v,dt,vol)
-!$OMP END MASTER
-!$OMP BARRIER
 !
        elseif(kmf(lm).eq.1) then
 !-------------------------------------------------------------------------
@@ -1080,7 +1015,6 @@ contains
 !-------------------------------------------------------------------------
 !
           if(equat(1:2).eq.'ns') then
-!$OMP MASTER
              if(kprec.eq.0) then
                 if(equat(3:4).eq.'2d') then
                    call implimf( &
@@ -1142,8 +1076,6 @@ contains
 !                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
 !                 pression,cson)
 !             endif
-!$OMP END MASTER
-!$OMP BARRIER
 !
 !-------Equations d'Euler------------------------------------------
 !
@@ -1191,8 +1123,6 @@ contains
        endif
 !
     enddo      !fin boucle sur domaines
-
-!$OMP END PARALLEL
     deallocate(m2tb,nfrtb,m1tb)
     return
   end subroutine atsch_num

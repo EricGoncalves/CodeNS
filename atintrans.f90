@@ -86,6 +86,7 @@ contains
 !-----------------------------------------------------------------------
 
     character(len=80) ::  ligne
+!$OMP MASTER
 !
     open(99,file='fatdon',status='old',err=100)
 !
@@ -216,14 +217,14 @@ contains
 !
 300 format(a80)
 !
-    return
+    goto 10
 !
 301 continue
 !     fin de fichier. Pas de transition
     ktransi=0
     write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ou tout turbulent")')
     close(99)
-    return
+    goto 10
 !
 100 continue
     write(imp,'(/,"!!!atintrans: erreur ouverture fichier fatdon")')
@@ -241,6 +242,8 @@ contains
     write(imp,'(/,"!!!atintrans: erreur positionnement dans fatdon")')
     stop
 !
+10  continue
+!$OMP END MASTER
     return
   end subroutine atintrans
 end module mod_atintrans

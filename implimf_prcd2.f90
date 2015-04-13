@@ -95,8 +95,7 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
-!$OMP PARALLEL
-!$OMP DO SIMD
+!$OMP DO !SIMD
     do n=ind1,ind2
        m=n-n0c
        d(n,1)=0.
@@ -121,7 +120,7 @@ contains
        coefv(3,m)=0.
        rv(m)=0.
     enddo
-!$OMP END DO SIMD
+!$OMP END DO !SIMD
 !
 !------rayon spectral visqueux et coef diagonal------------------------------
 !
@@ -451,7 +450,6 @@ contains
        enddo
 !$OMP END DO
     enddo
-!$OMP END PARALLEL
 
     DEALLOCATE(coefe,coefv,coefdiag,coefb,d2w1,d2w2,d2w3,d2w4,d2w5)
 

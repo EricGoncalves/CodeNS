@@ -232,6 +232,7 @@ if (equat(6:7).eq.'ke') kfin=7
 !       application du schema - avance d'un pas de temps
 !-------------------------------------------------------------------------
 !
+!$OMP PARALLEL default(shared)
              call atsch_num( &
                   img,ityprk, &
                   icyc,ncyc,idcyc,icycle, &
@@ -257,6 +258,7 @@ if (equat(6:7).eq.'ke') kfin=7
                   pression,ztemp,cson, &
                   cvi,cvj,cvk, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+!$OMP END PARALLEL
 !
           enddo                       ! Fin boucle sur img (descente)
 !

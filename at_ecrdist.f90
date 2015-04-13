@@ -27,6 +27,7 @@ contains
 !
     character(len=8) :: nomfich
 !
+!$OMP MASTER
 
 !
     iwd=98
@@ -110,7 +111,7 @@ contains
        end do
        close(iwd)
     end if
-    return
+    goto 10
 !
 50  continue
     write(imp,'("!!!at_ecrdist: erreur ouverture fichier=",a8)') &
@@ -119,6 +120,9 @@ contains
     write(imp,'("!!!at_ecrdist: erreur ouverture fichier=fdist-aux")')
     stop
 !
+10  continue
+!$OMP END MASTER
+    return
   contains
     function    ind(i,j,k)
       implicit none

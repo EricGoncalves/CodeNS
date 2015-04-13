@@ -37,7 +37,6 @@ contains
     integer          ::          m,        mb,        mc,        mf,       mfb
     integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd
     double precision ::   cson(ip11),    ps(ip11),t(ip11,ip60),  temp(ip11),        tper
-!$OMP MASTER
 !
 !-----------------------------------------------------------------------
 !
@@ -46,7 +45,7 @@ contains
        mfb=lbd(mf)
        mt =mmb(mfb)
        tper=protat*real(mper(mfb))
-!$OMP SIMD
+!$OMP DO !SIMD
        do m=1,mt
           mc=mpc(mfb)+m
           nc=mnc(mc)
@@ -62,9 +61,9 @@ contains
           temp(nd)=temp(nc)
           cson(nd)=cson(nc)
        enddo
+!$OMP END DO !SIMD
     enddo
 !
-!$OMP END MASTER
     return
   end subroutine rfvc
 end module mod_rfvc

@@ -26,7 +26,7 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-
+!$OMP MASTER
 !
     ird=98
     open(ird,file='fdist',form='unformatted',status='old',err=50)
@@ -55,11 +55,7 @@ contains
             (((mnpar(ind(i,j,k)),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
        ldismx=ldismx+1
     end do
-!
-10  continue
-    close(ird)
-    write(imp,'("===>at_lecdist: fin lecture fichier= fdist  nb domaines lus=",i3)')ldismx
-    return
+    goto 10
 !
 50  continue
     write(imp,'("!!!at_lecdist: erreur ouverture fichier fdist")')
@@ -71,6 +67,10 @@ contains
     write(imp,'("!!!at_lecdist: fin prematuree fichier fdist")')
     stop
 !
+10  continue
+    close(ird)
+    write(imp,'("===>at_lecdist: fin lecture fichier= fdist  nb domaines lus=",i3)')ldismx
+!$OMP END MASTER
     return
   contains
     function    ind(i,j,k)
