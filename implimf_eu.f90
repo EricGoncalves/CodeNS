@@ -100,13 +100,13 @@ contains
 !$OMP END SINGLE
 
     do k=1,5
-!$OMP DO SIMD
-    do n=ind1,ind2
+!$OMP DO !SIMD
+      do n=ind1,ind2
          d(n,k)=0.
       enddo
-!$OMP END DO SIMD nowait
+!$OMP END DO nowait !SIMD
     enddo
-!$OMP DO SIMD private(m)
+!$OMP DO !SIMD
     do n=ind1,ind2
        m=n-n0c
        dfxx(m)=0.
@@ -127,7 +127,7 @@ contains
        coefe(m,2)=0.
        coefe(m,3)=0.
     enddo
-!$OMP END DO SIMD nowait
+!$OMP END DO nowait !SIMD
 !
 !------coef diagonal ------------------------------------------------
 !
@@ -136,7 +136,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
-!$OMP SIMD private(m)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              coefdiag(m)=vol(n)*(fact+1./dt(n))
@@ -150,12 +150,12 @@ contains
 do kdir=1,numdir
    ninc=inc_dir(4,kdir)
 !
-!$OMP DO PRIVATE(cnds,uu,vv,ww,cc,norm,norm1) collapse(2)
+!$OMP DO collapse(2)
     do k=k1,inc_dir(1,kdir)
        do j=j1,inc_dir(2,kdir)
           ind1 = indc(i1,j,k)
           ind2 = indc(inc_dir(3,kdir),j,k)
-!$OMP SIMD private(m,cnds,uu,vv,ww,cc,norm,norm1)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -179,7 +179,7 @@ do kdir=1,numdir
        do j=j1,inc_dir(2,kdir)
           ind1 = indc(i1  ,j,k)
           ind2 = indc(inc_dir(3,kdir),j,k)
-!$OMP SIMD private(m)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
                coefdiag(m)=coefdiag(m) + coefe(m,kdir) + coefe(m+ninc,kdir)
@@ -202,7 +202,7 @@ enddo
            do j=j1,j2m1
               ind1 = indc(i1  ,j,k)
               ind2 = indc(i2m1,j,k)
-!$OMP SIMD private(m)
+!$OMP SIMD
               do n=ind1,ind2
                  m=n-n0c
                  d2w1(m)=-u(n,1)
@@ -220,7 +220,7 @@ enddo
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
-!$OMP SIMD private(m)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    d2w1(m)=d2w1(m)-ff(n,1)
@@ -238,13 +238,13 @@ enddo
 !
 !
     do kdir=1,numdir
-!$OMP DO PRIVATE(tn1,tn2,tn3,tn5)  collapse(2)
+!$OMP DO collapse(2)
        do k=k1,inc_dir(1,kdir)
           do j=j1,inc_dir(2,kdir)
              ninc=inc_dir(4,kdir)
              ind1 = indc(i1,j,k)
              ind2 = indc(inc_dir(3,kdir),j,k)
-!$OMP SIMD private(m,tn1,tn2,tn3,tn5)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*((d(n,2)+d(n-ninc,2))*sn(m,kdir,1)    &
@@ -294,16 +294,12 @@ enddo
 !c    actualisation des variables conservatives et des flux
 !c    calcul des increments de flux
 !
-!$OMP DO PRIVATE(wi1,wi2,wi3,wi4,wi5,ui,vi,wi,pres,&
-!$OMP fixx,fixy,fixz,fiyy,fiyz,fizz,fiex,fiey,fiez,&
-!$OMP fxx,fxy,fxz,fyy,fyz,fzz,fex,fey,fez,norm) collapse(2)
+!$OMP DO
        do k=k1,k2m1
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!$OMP SIMD  private(m,wi1,wi2,wi3,wi4,wi5,ui,vi,wi,pres,&
-!$OMP fixx,fixy,fixz,fiyy,fiyz,fizz,fiex,fiey,fiez,&
-!$OMP fxx,fxy,fxz,fyy,fyz,fzz,fex,fey,fez,norm)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 d(n,1)=d2w1(m)/coefdiag(m)

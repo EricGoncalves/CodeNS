@@ -84,7 +84,7 @@ contains
        ind2 = indc(i2  ,j2  ,k2  )
     endif
 !
-!$OMP DO SIMD
+!$OMP DO !SIMD
        do n=ind1,ind2
           m=n-n0c
           u(n,1)=0.
@@ -103,9 +103,9 @@ contains
         fey(m)=(v(n,5)+ps(n)-pinfl)*v(n,3)*norm
         fez(m)=(v(n,5)+ps(n)-pinfl)*v(n,4)*norm
        enddo
-!$OMP END DO SIMD
+!$OMP END DO !SIMD
     if (equat(1:2).eq.'ns') then
-!$OMP DO SIMD
+!$OMP DO !SIMD
        do n=ind1,ind2
           m=n-n0c
           fxx(m)=fxx(m)-toxx(n)
@@ -118,7 +118,7 @@ contains
           fey(m)=fey(m)-(toyy(n)*v(n,3)+toxy(n)*v(n,2)+toyz(n)*v(n,4))/v(n,1)-qcy(n)
           fez(m)=fez(m)-(tozz(n)*v(n,4)+toxz(n)*v(n,2)+toyz(n)*v(n,3))/v(n,1)-qcz(n)
        enddo
-!$OMP END DO SIMD
+!$OMP END DO !SIMD
     endif
 !
 !     coefficient

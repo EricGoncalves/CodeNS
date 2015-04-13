@@ -109,11 +109,11 @@ contains
 !
     n1=indc(i1,j1,k1)
     n2=indc(i2,j2,k2)
-!$OMP DO SIMD
+!$OMP DO !SIMD
     do n=n1,n2
        dt(n)=0.
     enddo
-!$OMP END DO SIMD
+!$OMP END DO !SIMD
 !
 !$OMP DO COLLAPSE(2)
     do k=k1,k2m1

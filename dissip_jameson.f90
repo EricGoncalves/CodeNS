@@ -84,12 +84,12 @@ contains
        ind2 = indc(i2  ,j2  ,k2  )
     endif
     do k=1,5
-!$OMP DO SIMD
+!$OMP DO !SIMD
        do n=ind1,ind2
           d(n,k)=0.
 !          ps(n)=gam1*(v(n,5)-pinfl-0.5*(v(n,2)**2+v(n,3)**2+v(n,4)**2)/v(n,1))
        enddo
-!$OMP END DO SIMD nowait
+!$OMP END DO nowait !SIMD
     enddo
 !
 !*********************************************************************

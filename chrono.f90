@@ -149,11 +149,11 @@ contains
           lm=l+(img-1)*lz
           ndeb = indc(id1(lm),jd1(lm),kd1(lm))
           nfin = indc(id2(lm),jd2(lm),kd2(lm))
-!$OMP DO SIMD
+!$OMP DO !SIMD
           do n = ndeb,nfin
              dt(n)=dtmin
           enddo
-!$OMP END DO SIMD
+!$OMP END DO !SIMD
        enddo
 !
     endif
