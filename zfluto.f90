@@ -107,7 +107,6 @@ contains
        do j=j1,j2m1
           ind1=ind(i1  ,j,k)
           ind2=ind(i2m1,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              toxx(n)=ds3*(mu(n)+mut(n))*(2*dvxx(m)-dvyy(m)-dvzz(m))

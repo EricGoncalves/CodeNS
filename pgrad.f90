@@ -78,7 +78,6 @@ contains
 !     initialisation
     ind1=ind(id1(l),jd1(l),kd1(l))-n0
     ind2=ind(id2(l),jd2(l),kd2(l))-n0
-!$OMP SIMD
     do m=ind1,ind2
        dpdx(m)=0.
        dpdy(m)=0.
@@ -94,7 +93,6 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 dpdx(m    )=dpdx(m    )-sn(m,3,1)*(ps(n)+ps(n-nck))
@@ -110,7 +108,6 @@ contains
        do j=j1,j2m1
           ind1 = ind(i1  ,j,k1)
           ind2 = ind(i2m1,j,k1)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              dpdx(m)=dpdx(m)-sn(m,3,1)*2*ps(n-nck)
@@ -122,7 +119,6 @@ contains
        do j=j1,j2m1
           ind1 = ind(i1  ,j,k2)
           ind2 = ind(i2m1,j,k2)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              dpdx(m-nck)=dpdx(m-nck)+sn(m,3,1)*2*ps(n)
@@ -140,7 +136,6 @@ contains
           do k=k1,k2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 dpdx(m    )=dpdx(m    )-sn(m,2,1)*(ps(n)+ps(n-ncj))
@@ -156,7 +151,6 @@ contains
        do k=k1,k2m1
           ind1 = ind(i1  ,j1,k)
           ind2 = ind(i2m1,j1,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              dpdx(m)=dpdx(m)-sn(m,2,1)*2*ps(n-ncj)
@@ -168,7 +162,6 @@ contains
        do k=k1,k2m1
           ind1 = ind(i1  ,j2,k)
           ind2 = ind(i2m1,j2,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              dpdx(m-ncj)=dpdx(m-ncj)+sn(m,2,1)*2*ps(n)
@@ -186,7 +179,6 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1p1,j,k)
              ind2 = ind(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 dpdx(m    )=dpdx(m    )-sn(m,1,1)*(ps(n)+ps(n-nci))
@@ -227,7 +219,6 @@ contains
 !
     ind1 = ind(i1  ,j1  ,k1  )
     ind2 = ind(i2m1,j2m1,k2m1)
-!$OMP SIMD
     do n=ind1,ind2
        m=n-n0
 !       le coefficient 1/2 provient de la moyenne de ps

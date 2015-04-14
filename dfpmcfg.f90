@@ -27,7 +27,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!$OMP SIMD
     do no=1,mtbx
        mfbe=nba(no)
        nba(no)=nfei(mfbe)

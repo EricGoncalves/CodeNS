@@ -25,7 +25,6 @@ contains
     character(len=32) ::  mot(nmx)
     character(len=4 ) :: disc
 !
-!$OMP SIMD
     do icmt=1,32
        comment(icmt:icmt)=' '
     enddo
@@ -41,7 +40,6 @@ contains
           call synterr(mot,imot,nm,comment)
        else
           disc(1:4)='    '
-!$OMP SIMD
           do im=1,imot(nm)
              disc(im:im)=mot(nm)(im:im)
           enddo

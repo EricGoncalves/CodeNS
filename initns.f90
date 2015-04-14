@@ -194,7 +194,6 @@ contains
        mb=m0b
        do k=kmin,kmax-1
           do j=jmin,jmax-1
-!$OMP SIMD
              do i=imin,imax
                 mn=mn+1
                 mb=mb+1
@@ -231,7 +230,6 @@ contains
        mb=m0b
        do k=kmin,kmax-1
           do j=jmin,jmax
-!$OMP SIMD
              do i=imin,imax-1
                 mn=mn+1
                 mb=mb+1
@@ -268,7 +266,6 @@ contains
        mb=m0b
        do k=kmin,kmax
           do j=jmin,jmax-1
-!$OMP SIMD
              do i=imin,imax-1
                 mn=mn+1
                 mb=mb+1
@@ -284,7 +281,6 @@ contains
 !     m1 : m1min a m1max ,  m2 : m2min a m2max
 !
     do m2=m2min,m2max
-!$OMP SIMD
       do m1=m1min,m1max
           mn=m0n+m1+(m2-1)*dm
 !

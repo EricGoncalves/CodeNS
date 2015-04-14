@@ -71,7 +71,6 @@ contains
     gamt=gam/aa1**2
     gam2t=gam2/aa1**2
 !
-!$OMP SIMD
     do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m
@@ -115,7 +114,6 @@ contains
     residu=1.
     do while( (residu.gt.eps).and.(nitn.lt.20) )
        residu=0.
-!$OMP SIMD
        do m=1,mt
           mb=mpb(mfb)+m
 !-------la notation b designe la quantite 1/(1+((gam-1)/2)m**2)
@@ -133,7 +131,6 @@ contains
        nitn=nitn+1
     enddo
 !
-!$OMP SIMD
     do m=1,mt
        mb=mpb(mfb)+m
        nc=ncbd(mb)

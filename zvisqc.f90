@@ -179,7 +179,6 @@ contains
 !
     enddo
 !
-!$OMP SIMD
     do mf=1,mtnx
        lbd(mf)=nfbn(mf)+(img-1)*mtb
     enddo
@@ -188,7 +187,6 @@ contains
          toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
          ncbd,ncin)
 !
-!$OMP SIMD
     do mf=1,mtax
        lbd(mf)=nfba(mf)+(img-1)*mtb
     enddo
@@ -198,7 +196,6 @@ contains
          ncbd,ncin)
 !
 !
-!$OMP SIMD
     do mfc=1,mtcx
        lbd(mfc)=nfbc(mfc)+(img-1)*mtb
     enddo

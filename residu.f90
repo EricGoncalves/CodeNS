@@ -111,7 +111,6 @@ contains
     coef=1./real(nmax)
 !
     if(equat(6:7).eq.'ke') then
-!$OMP SIMD
        do m=1,neqt
           dumy1(m)=0.
           dumy2(m)=0.
@@ -121,7 +120,6 @@ contains
           kdumx(m)=0
        enddo
     else
-!$OMP SIMD
        do m=1,5
           dumy1(m)=0.
           dumy2(m)=0.
@@ -193,7 +191,6 @@ contains
     if (equat(6:7).eq.'ke') then
        do k=k1,k2m1
           do j=j1,j2m1
-!$OMP SIMD
              do i=i1,i2m1
                 n=ind(i,j,k)
                 m=n-n0

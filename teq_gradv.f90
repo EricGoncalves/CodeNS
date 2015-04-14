@@ -84,7 +84,6 @@ contains
        do j=jmin,jmax
           ind1=indc(imin,j,k)
           ind2=indc(imax,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              t(n,1) = max(t(n,1),1.e-20)
           enddo
@@ -95,7 +94,6 @@ contains
        do j=jmin,jmax
           ind1=indc(imin,j,k)
           ind2=indc(imax,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              s(m)= t(n,2)/t(n,1)
@@ -121,7 +119,6 @@ contains
        do j=jmin,jmax
           ind1=indc(imin,j,k)
           ind2=indc(imax,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              s(m)= t(n,3)/t(n,1)
@@ -147,7 +144,6 @@ contains
        do j=jmin,jmax
           ind1=indc(imin,j,k)
           ind2=indc(imax,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              s(m)= t(n,4)/t(n,1)

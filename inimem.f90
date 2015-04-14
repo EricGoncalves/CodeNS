@@ -97,7 +97,6 @@ contains
 !
 !     mise a vide de la variable de commentaire
 !
-!$OMP SIMD
     do icmt=1,32
        comment(icmt:icmt)=' '
     enddo

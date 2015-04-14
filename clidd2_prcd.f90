@@ -158,7 +158,6 @@ contains
 !
     qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
 !
-!$OMP SIMD
     do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m
@@ -219,7 +218,6 @@ contains
        residu=1.
     enddo
 !
-!$OMP SIMD
     do m=1,mt
        mb=mpb(mfb)+m
        nc=ncbd(mb)

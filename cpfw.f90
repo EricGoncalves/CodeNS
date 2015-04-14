@@ -256,7 +256,6 @@ contains
 !
 !-----reperage des frontieres autres------------------------------------
 !
-!$OMP SIMD
        do mfb=1,mtbx
           lbd(mfb)=1
        enddo
@@ -329,7 +328,6 @@ contains
 !     mise a jour de variables a l'interface du raccord
 !     -------------------------------------------------
 !
-!$OMP SIMD
        do mfc=1,mtcx
           lbd(mfc)=nfbc(mfc)+(img-1)*mtb
        enddo

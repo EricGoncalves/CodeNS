@@ -74,7 +74,6 @@ contains
        ind1=indc(i1m1,j1m1,k1m1)
        ind2=indc(i2  ,j2  ,k2  )
     endif
-!$OMP SIMD
     do n=ind1,ind2
        d(n,6)=0.
        d(n,7)=0.
@@ -93,7 +92,6 @@ contains
        do j=j1,j2m1
           ind1=indc(i1,j,k)
           ind2=indc(i2,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              n1=n-ninc
@@ -126,7 +124,6 @@ contains
        do j=j1,j2
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              n1=n-ninc
@@ -160,7 +157,6 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 n1=n-ninc

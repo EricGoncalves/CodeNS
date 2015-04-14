@@ -104,7 +104,6 @@ contains
           if(resu .EQ. 0) then
              read(kda) utau(1:mdimtnxl)
           else
-!$OMP SIMD
              do m=1,ip42
                 utau(m)=1.e-04
              enddo
@@ -138,7 +137,6 @@ contains
     if(kfmg.eq.3) then
        do k=k1,k2m1
           do j=j1,j2m1
-!$OMP SIMD
              do i=i1,i2m1
                 n = ind(i,j,k)
                 vdual(n,1) = v(n,1)

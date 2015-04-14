@@ -81,7 +81,6 @@ contains
          dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
          dtdx,dtdy,dtdz)
 !
-!$OMP SIMD
     do mf=1,mtnx
        lbd(mf)=nfbn(mf)
     enddo
@@ -91,7 +90,6 @@ contains
          qcxts5,qcyts6,qcz000, &
          ncbd,ncin)
 !
-!$OMP SIMD
     do mf=1,mtax
        lbd(mf)=nfba(mf)
     enddo
@@ -101,7 +99,6 @@ contains
          qcxts5,qcyts6,qcz000, &
          ncbd,ncin)
 !
-!$OMP SIMD
     do mfc=1,mtcx
        lbd(mfc)=nfbc(mfc)
     enddo

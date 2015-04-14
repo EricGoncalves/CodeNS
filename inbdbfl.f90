@@ -70,7 +70,6 @@ contains
                   chvar)
 !
              read(kfa,5555) (bceqt(mpb(mflm)+m,nv),m=1,mt)
-!$OMP SIMD
              do m=1,mt
                 ml=mpb(mflm)+m
                 bceqt(ml,nv)=bceqt(ml,nv)/adim

@@ -62,7 +62,6 @@ contains
           jf = 2*jc -1
           if(equat(3:5).eq.'2dj') jf = jc
 !
-!$OMP SIMD
           do ic = i1c,i2c
              if = 2*ic - 1
              nf = indf(if,jf,kf)

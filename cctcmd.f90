@@ -29,7 +29,6 @@ contains
     do nm=nm1,nm2
        lgcmd=lgcmd+1
        command(lgcmd:lgcmd)=' '
-!$OMP SIMD
        do ipos=1,imot(nm)
           lgcmd=lgcmd+1
           command(lgcmd:lgcmd)=mot(nm)(ipos:ipos)

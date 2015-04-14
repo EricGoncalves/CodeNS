@@ -87,7 +87,6 @@ contains
 !
 ! Stockage de vdual1 dans vdual2, vdual dans vdual1 et v dans vdual
 ! Calcul de ptdual
-!$OMP SIMD
        do m=ind1,ind2
           nc=m+n0c
           vdual2(nc,1) = vdual1(nc,1)
@@ -123,7 +122,6 @@ contains
        if(kdualns.gt.0) then
           call at_cutke(lm,v)
 !
-!$OMP SIMD
           do m=ind1,ind2
              nc=m+n0c
              vdual2(nc,6) = vdual1(nc,6)

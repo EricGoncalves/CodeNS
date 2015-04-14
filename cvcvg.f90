@@ -67,7 +67,6 @@ contains
 !
     do k=k1,k2
        do j=j1,j2
-!$OMP SIMD
           do i=i1,i2
              n=ind(i,j,k)
              m=n-n0

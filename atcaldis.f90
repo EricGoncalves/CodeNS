@@ -195,7 +195,6 @@ contains
 !     ----------------------------------------------------------
 !       initialisation des distances a une valeur infinie
 !
-!$OMP SIMD
     do n=1,ndimctbx
        dist(n) =reelmx
        mnpar(n)=0

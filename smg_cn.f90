@@ -47,7 +47,6 @@ contains
        ndeb = npn(lm)+1
        nfin = npn(lm)+nnn(lm)
 !
-!$OMP SIMD
        do n = ndeb,nfin
           vv(n,1)=0.
           vv(n,2)=0.
@@ -100,7 +99,6 @@ contains
        do k=kinf,ksup
           do j=jinf,jsup
 !
-!$OMP SIMD
              do i=iinf,isup
                 nn = indn(i,j,k)
                 nc = indc(i,j,k)
@@ -112,7 +110,6 @@ contains
                 volt(nn)  = volt(nn)+vol(nc)
              enddo
 !
-!$OMP SIMD
              do i=iinf,isup
                 nn = indn(i,j,k)+inc_i
                 nc = indc(i,j,k)
@@ -124,7 +121,6 @@ contains
                 volt(nn)  = volt(nn)+vol(nc)
              enddo
 !
-!$OMP SIMD
              do i=iinf,isup
                 nn = indn(i,j,k)+inc_j
                 nc = indc(i,j,k)
@@ -136,7 +132,6 @@ contains
                 volt(nn)  = volt(nn)+vol(nc)
              enddo
 !
-!$OMP SIMD
              do i=iinf,isup
                 nn = indn(i,j,k)+inc_ij
                 nc = indc(i,j,k)
@@ -148,7 +143,6 @@ contains
                 volt(nn)  = volt(nn)+vol(nc)
              enddo
 !
-!$OMP SIMD
              do i=iinf,isup
                 nn = indn(i,j,k)+inc_k
                 nc = indc(i,j,k)
@@ -160,7 +154,6 @@ contains
                 volt(nn)  = volt(nn)+vol(nc)
              enddo
 !
-!$OMP SIMD
              do i=iinf,isup
                 nn = indn(i,j,k)+inc_ik
                 nc = indc(i,j,k)
@@ -172,7 +165,6 @@ contains
                 volt(nn)  = volt(nn)+vol(nc)
              enddo
 !
-!$OMP SIMD
              do i=iinf,isup
                 nn = indn(i,j,k)+inc_jk
                 nc = indc(i,j,k)
@@ -184,7 +176,6 @@ contains
                 volt(nn)  = volt(nn)+vol(nc)
              enddo
 !
-!$OMP SIMD
              do i=iinf,isup
                 nn = indn(i,j,k)+inc_ijk
                 nc = indc(i,j,k)
@@ -199,7 +190,6 @@ contains
           enddo
        enddo
 !
-!$OMP SIMD
        do n = ndeb,nfin
           ts=sign(0.5,-volt(n))
           vols = (0.5+ts)*eps+(0.5-ts)*volt(n)

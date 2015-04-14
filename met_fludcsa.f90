@@ -98,7 +98,6 @@ contains
 !
     ind1=indc(i1  ,j1  ,k1  )
     ind2=indc(i2m1,j2m1,k2m1)
-!$OMP SIMD
     do n=ind1,ind2
 !        m=n-n0
        smutot=sigma1*(mu(n)+s(n,6))

@@ -70,7 +70,6 @@ contains
        sr=-sin(real(mper(mfb))*protat)
        cr= cos(real(mper(mfb))*protat)
 !
-!$OMP SIMD
        do m=1,mt
           mc =mpc(mfb)+m
           nc =mnc(mc)

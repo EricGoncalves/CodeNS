@@ -26,7 +26,6 @@ contains
     character(len=32) ::  mot(nmx)
 !
 !
-!$OMP SIMD
     do icmt=1,32
        comment(icmt:icmt)=' '
     enddo

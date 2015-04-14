@@ -72,7 +72,6 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 mut(n)=v(n,1)*v(n,6)/v(n,7)
              enddo
@@ -95,7 +94,6 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 omeg=v(n,7)/v(n,1)

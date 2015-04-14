@@ -557,7 +557,6 @@ contains
 !-------------------------------------------------------------------------------
 !
 !        frontieres a normales stockees
-!$OMP SIMD
     do mf=1,mtnx
        lbd(mf)=nfbn(mf)
     enddo
@@ -567,7 +566,6 @@ contains
          ncbd,ncin)
 
 !       frontieres autres
-!$OMP SIMD
     do mf=1,mtax
        lbd(mf)=nfba(mf)
     enddo
@@ -577,7 +575,6 @@ contains
          ncbd,ncin)
 
 !        frontieres coincidentes
-!$OMP SIMD
     do mfc=1,mtcx
        lbd(mfc)=nfbc(mfc)
     enddo

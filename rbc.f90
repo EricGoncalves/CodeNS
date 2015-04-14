@@ -125,7 +125,6 @@ contains
 !-----remplissage des valeurs de v aux points fictifs pour
 !     les CL couplees avec le champs
 !
-!$OMP SIMD
     do mf=1,mtnx
        lbd(mf)=nfbn(mf)
     enddo
@@ -134,7 +133,6 @@ contains
          v,pression,ztemp,cson, &
          ncbd,ncin)
 !
-!$OMP SIMD
     do mf=1,mtax
        lbd(mf)=nfba(mf)
     enddo
@@ -143,7 +141,6 @@ contains
          v,pression,ztemp,cson, &
          ncbd,ncin)
 !
-!$OMP SIMD
     do mfc=1,mtcx
        lbd(mfc)=nfbc(mfc)
     enddo
@@ -171,7 +168,6 @@ contains
          pression,ztemp,cson)
 !
     if (equat(1:2).eq.'ns') then
-!$OMP SIMD
        do mf=1,mtbx
           lbd(mf)=mf
        enddo

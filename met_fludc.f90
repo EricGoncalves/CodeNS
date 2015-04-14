@@ -101,7 +101,6 @@ contains
 !
     ind1=indc(i1  ,j1  ,k1  )
     ind2=indc(i2m1,j2m1,k2m1)
-!$OMP SIMD
     do n=ind1,ind2
        fd5x(n)=(mu(n)+mut(n)/alfak)*fd5x(n)
        fd5y(n)=(mu(n)+mut(n)/alfak)*fd5y(n)
@@ -110,7 +109,6 @@ contains
 !
     ind1=indc(i1  ,j1  ,k1  )
     ind2=indc(i2m1,j2m1,k2m1)
-!$OMP SIMD
     do n=ind1,ind2
        fd6x(n)=(mu(n)+mut(n)/alfae)*fd6x(n)
        fd6y(n)=(mu(n)+mut(n)/alfae)*fd6y(n)

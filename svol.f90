@@ -92,7 +92,6 @@ contains
 !
     do k=k1m1,k2p1
        do j=j1m1,j2
-!$OMP SIMD
           do i=i1m1,i2
              n=indn(i,j,k)
              m=n-n0n
@@ -108,7 +107,6 @@ contains
 !
     do j=j1m1,j2p1
        do k=k1m1,k2
-!$OMP SIMD
           do i=i1m1,i2
              n=indn(i,j,k)
              m=n-n0n
@@ -124,7 +122,6 @@ contains
 !
     do i=i1m1,i2p1
        do k=k1m1,k2
-!$OMP SIMD
           do j=j1m1,j2
              n=indn(i,j,k)
              m=n-n0n
@@ -140,7 +137,6 @@ contains
 !
     do k=k1m1,k2
        do j=j1m1,j2
-!$OMP SIMD
           do i=i1m1,i2
              n = indc(i,j,k)
              m1 = n-n0c

@@ -25,7 +25,6 @@ contains
        if(klix.eq.0) then
           kerr=-1
        else
-!$OMP SIMD
           do l=1,lix
              li(l)=l
           enddo

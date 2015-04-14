@@ -62,7 +62,6 @@ contains
     if (indf(1:1).eq.'k') &
          mdnmfb=sign(1,-abs(kk1(l)-kminb(mfbi)))*nid*njd
 !
-!$OMP SIMD
     do m=1,mt
        ml=m0+m
        ncin(ml)=ncbd(ml)+mdnmfb

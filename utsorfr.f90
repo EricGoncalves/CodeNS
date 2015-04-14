@@ -454,7 +454,6 @@ contains
 !                 mfacn  : pointeur tableaux frontieres a normales stockees
 !                 nfacf  : pointeur tableaux toutes cellules
 !
-!$OMP SIMD
           do m1=m1min,m1maxm1
 !           boucle sur les cellules de la bande
              mfac =m0b+m1+(m2-1)*idm

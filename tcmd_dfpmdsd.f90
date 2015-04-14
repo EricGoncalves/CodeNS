@@ -31,12 +31,10 @@ contains
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
 !
-!$OMP SIMD
     do icmt=1,32
        comment(icmt:icmt)=' '
     enddo
 !
-!$OMP SIMD
     do l=1,lt
        if(kki2(l).eq.2) kki2(l)=3
        if(kki4(l).eq.2) kki4(l)=3

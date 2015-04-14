@@ -44,7 +44,6 @@ contains
 !
     n0=npc(l)
 !
-!$OMP SIMD
     do m=1,nnc(l)
        vv1(m)=0.
        vv2(m)=0.
@@ -53,7 +52,6 @@ contains
        vv5(m)=0.
        mmut(m)=0.
     enddo
-!$OMP SIMD
     do m=1,nnc(l)
        n=m+n0
        vv1(m)=v(n,1)
@@ -64,7 +62,6 @@ contains
     enddo
 !
     if (equat(1:2).eq.'ns') then
-!$OMP SIMD
        do m=1,nnc(l)
           n=m+n0
           mmut(m)=mut(n)
@@ -72,12 +69,10 @@ contains
     endif
 !
     if(equat(6:7).eq.'ke') then
-!$OMP SIMD
        do m=1,nnc(l)
           vv6(m)=0.
           vv7(m)=0.
        enddo
-!$OMP SIMD
        do m=1,nnc(l)
           n=m+n0
           vv6(m)=v(n,6)

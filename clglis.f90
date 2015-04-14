@@ -145,7 +145,6 @@ contains
     tworgm1= 2.0*rgm1
     gm1rg  = 1.0/grgm1
 !
-!$OMP SIMD
     do m=1,mt
 !
 !.......initialisation

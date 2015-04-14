@@ -258,7 +258,6 @@ contains
 !
              ndeb=npc(lm)+1
              nfin=npc(lm)+nnc(lm)
-!$OMP SIMD
              do nc=ndeb,nfin
                 v(nc,6)=epsk
                 v(nc,7)=epse
@@ -274,7 +273,6 @@ contains
 !
           if(icyc.ge.icytur0) then
 !
-!$OMP SIMD
              do mfn=1,mtnx
                 lbd(mfn)=nfbn(mfn)+(img-1)*mtb
              enddo
@@ -283,7 +281,6 @@ contains
                   v,pression,ztemp,cson, &
                   ncbd,ncin)
 !
-!$OMP SIMD
              do mfc=1,mtcx
                 lbd(mfc)=nfbc(mfc)+(img-1)*mtb
              enddo
@@ -422,7 +419,6 @@ contains
 !
 !-------prolongement des variables aux bords-------------------------------
 !
-!$OMP SIMD
     do mfn=1,mtnx
        lbd(mfn)=nfbn(mfn)+(img-1)*mtb
     enddo
@@ -430,7 +426,6 @@ contains
 !        call rfve( &
 !                 v,pression,ztemp,cson, &
 !                 ncbd,ncin)
-!$OMP SIMD
     do mfc=1,mtcx
        lbd(mfc)=nfbc(mfc)+(img-1)*mtb
     enddo
@@ -472,14 +467,12 @@ contains
 !
 !       champ turbulent
     if((kditur.eq.1).or.(kditur.eq.3)) then
-!$OMP SIMD
        do mfn=1,mtnx
           lbd(mfn)=nfbn(mfn)+(img-1)*mtb
        enddo
        nbd=mtnx
        call met_rfve(v,ncbd,ncin)
 !
-!$OMP SIMD
        do mfc=1,mtcx
           lbd(mfc)=nfbc(mfc)+(img-1)*mtb
        enddo

@@ -86,8 +86,6 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
-!!$OMP PARALLEL default(SHARED)
-!!$OMP DO SIMD
     do n=ind1,ind2
        m=n-n0c
        d(n,1)=0.
@@ -108,37 +106,29 @@ contains
        coefe(2,m)=0.
        coefe(3,m)=0.
     enddo
-!!$OMP END DO SIMD
 !
 !------coef diagonal ------------------------------------------------
 !
     do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              coefdiag(m)=vol(n)/dt(n)
           enddo
        enddo
-!!$OMP END DO
     enddo
 !
 !-----remplissage du coefficient diagonal par direction---------------
 !
-!!$OMP SINGLE
     kdir=1
     ninc=nci
-!!$OMP END SINGLE
 !
     do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,cc)
        do j=j1,j2m1
           ind1 = indc(i1,j,k)
           ind2 = indc(i2,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -152,20 +142,15 @@ contains
                   + ww*sn(m,kdir,3))) + sqrt(cnds)*cc
           enddo
        enddo
-!!$OMP END DO
     enddo
 !
-!!$OMP SINGLE
     kdir=2
     ninc=ncj
-!!$OMP END SINGLE
 !
     do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,cc)
        do j=j1,j2
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -179,22 +164,18 @@ contains
                   + ww*sn(m,kdir,3))) + sqrt(cnds)*cc
           enddo
        enddo
-!!$OMP END DO
     enddo
 !
     do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
-!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              coefdiag(m)=coefdiag(m) + coefe(1,m) + coefe(1,m+nci) &
                   + coefe(2,m) + coefe(2,m+ncj)
           enddo
        enddo
-!!$OMP END DO
     enddo
 !
 !      calcul instationnaire avec pas de temps dual
@@ -202,17 +183,14 @@ contains
     if(kfmg.eq.3) then
        fact=1.5
        do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 coefdiag(m)=coefdiag(m) + fact*vol(n)/dt1min
              enddo
           enddo
-!!$OMP END DO
        enddo
     endif
 !
@@ -225,7 +203,6 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -245,7 +222,6 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 coefdiag(m)=coefdiag(m) + coefe(3,m) + coefe(3,m+nck)
@@ -265,11 +241,9 @@ contains
 !
        if(ityprk.eq.0) then
           do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
-!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    d2w1(m)=-u(n,1)
@@ -279,14 +253,12 @@ contains
                    d2w5(m)=-u(n,5)
                 enddo
              enddo
-!!$OMP END DO
           enddo
        else
           do k=k1,k2m1
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
-!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    d2w1(m)=-u(n,1)-ff(n,1)
@@ -308,7 +280,6 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1,j,k)
              ind2 = indc(i2,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
@@ -356,11 +327,9 @@ contains
        ninc=ncj
 !
        do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2,tn1,tn2,tn3,tn5)
           do j=j1,j2
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
@@ -400,7 +369,6 @@ contains
                 d2w5(m-ninc)=d2w5(m-ninc) - tn5
              enddo
           enddo
-!!$OMP END DO
        enddo
 !
 !------direction k------------------------------------------
@@ -410,11 +378,9 @@ contains
           ninc=nck
 !
           do k=k1,k2
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2,tn1,tn2,tn3,tn5)
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
-!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
@@ -454,7 +420,6 @@ contains
                    d2w5(m-ninc)=d2w5(m-ninc) - tn5
                 enddo
              enddo
-!!$OMP END DO
           enddo
        endif
 !
@@ -465,13 +430,9 @@ contains
 !c    calcul des increments de flux
 !
        do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,m,ind1,ind2,wi1,wi2,wi3,wi4,wi5,ui,vi,wi,pres,&
-!!$OMP fixx,fixy,fixz,fiyy,fiyz,fizz,fiex,fiey,fiez,&
-!!$OMP fxx,fxy,fxz,fyy,fyz,fzz,fex,fey,fez)
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 d(n,1)=d2w1(m)/coefdiag(m)
@@ -522,7 +483,6 @@ contains
                 dfez(m)=fiez-fez
              enddo
           enddo
-!!$OMP END DO
        enddo
 !
     enddo  !fin boucle sous-iterations
@@ -533,7 +493,6 @@ contains
 !
 !
     do k=k1,k2m1
-!!$OMP DO PRIVATE(j,n,ind1,ind2)
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
@@ -541,9 +500,7 @@ contains
              v(n,:)=v(n,:)+d(n,:)
           enddo
        enddo
-!!$OMP END DO
     enddo
-!!$OMP END PARALLEL
 
     DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
 

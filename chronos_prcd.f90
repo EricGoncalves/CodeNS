@@ -122,14 +122,12 @@ contains
 !
     n1=indc(i1,j1,k1)
     n2=indc(i2,j2,k2)
-!$OMP SIMD
     do n=n1,n2
        dt(n)=0.
     enddo
 !
     do k=k1,k2m1
        do j=j1,j2m1
-!$OMP SIMD
           do i=i1,i2
              n=indn(i,j,k)
              m=n-n0n
@@ -140,7 +138,6 @@ contains
        enddo
 
        do j=j1,j2
-!$OMP SIMD
           do i=i1,i2m1
              n=indn(i,j,k)
              m=n-n0n
@@ -153,7 +150,6 @@ contains
 !
     do k=k1,k2
        do j=j1,j2m1
-!$OMP SIMD
           do i=i1,i2m1
              n=indn(i,j,k)
              m=n-n0n
@@ -168,7 +164,6 @@ contains
        do j=j1,j2m1
           mn=indn(i1-1,j,k)-n0n
           mc=indc(i1-1,j,k)-n0c
-!$OMP SIMD
           do i=i1,i2m1
              mn=mn+nci
              mc=mc+nci
@@ -205,7 +200,6 @@ contains
 !
     do k=k1,k2m1
        do j=j1,j2m1
-!$OMP SIMD
           do i=i1,i2m1
              nc=indc(i,j,k)
              mc=nc-n0c
@@ -225,7 +219,6 @@ contains
     if (equat(1:2).eq.'ns') then
        do k=k1,k2m1
           do j=j1,j2m1
-!$OMP SIMD
              do i=i1,i2m1
                 nc=indc(i,j,k)
                 mc=nc-n0c
@@ -246,7 +239,6 @@ contains
        xm0=0.6
        do k=k1,k2m1
           do j=j1,j2m1
-!$OMP SIMD
              do i=i1,i2m1
                 nc=indc(i,j,k)
                 mc=nc-n0c

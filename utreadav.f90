@@ -91,7 +91,6 @@ contains
 !
     do k=k1,k2m1
        do j=j1,j2m1
-!$OMP SIMD
           do i=i1,i2m1
              n=ind(i,j,k)
              v(n,1)=.125*(u(n        ,1)+u(n+        nck,1) &
@@ -122,7 +121,6 @@ contains
        read(inia1)((( u(ind(i,j,k),1),i=i1,i2),j=j1,j2),k=k1,k2)
        do k=k1,k2m1
           do j=j1,j2m1
-!$OMP SIMD
              do i=i1,i2m1
                 n=ind(i,j,k)
                 mut(n)=.125*(u(n        ,1)+u(n+        nck,1) &
@@ -139,7 +137,6 @@ contains
        read(inia1)((( u(ind(i,j,k),7),i=i1,i2),j=j1,j2),k=k1,k2)
        do k=k1,k2m1
           do j=j1,j2m1
-!$OMP SIMD
              do i=i1,i2m1
                 n=ind(i,j,k)
                 v(n,6)=.125*(u(n        ,6)+u(n+        nck,6) &
@@ -157,7 +154,6 @@ contains
     elseif(equat(6:7).eq.'ke') then
        do k=k1,k2m1
           do j=j1,j2m1
-!$OMP SIMD
              do i=i1,i2m1
                 n=ind(i,j,k)
                 v(n,6)=0.

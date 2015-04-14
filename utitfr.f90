@@ -283,7 +283,6 @@ contains
        cnavfr=0.
 !
        do m2=m2min,m2maxm1
-!$OMP SIMD
           do m1=m1min,m1maxm1
              mfac =m0b+m1+(m2-1)*idm
              mfacn=m0n+m1+(m2-1)*idm

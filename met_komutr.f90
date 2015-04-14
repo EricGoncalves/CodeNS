@@ -89,7 +89,6 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 ss=v(n,1)*sqrt(4.*(dvxx(m)**2+dvyy(m)**2+ &
@@ -109,7 +108,6 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
-!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 omeg=v(n,7)/v(n,1)

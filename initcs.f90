@@ -350,7 +350,6 @@ contains
     m=0
     do k=ka1,kmax
        do j=ja1,jmax
-!$OMP SIMD
           do i=ia1,imax
              m=m+1
              mc=m0c+m

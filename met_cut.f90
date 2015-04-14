@@ -53,7 +53,6 @@ contains
     do k=k1,k2m1
        do j=j1,j2m1
           n=indc(i1-1,j,k)
-!$OMP SIMD
           do i=i1,i2m1
              n=n+nci
              test6=sign(1.,s(n,6)-epsk)

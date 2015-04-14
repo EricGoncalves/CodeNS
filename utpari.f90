@@ -26,7 +26,6 @@ contains
 !
 !
     mt=mmb(mfl)
-!$OMP SIMD
     do m=1,mt
        ml=mpb(mfl)+m
        tp(m)=bceqt(ml,1)

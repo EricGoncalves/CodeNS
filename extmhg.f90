@@ -93,7 +93,6 @@ contains
     do k = k1m1,k2p1,kinc
        ks = -ks
        do j = j1,j2
-!$OMP SIMD
           do i = i1,i2
              n = ind(i,j,k)
              x(n) = ex1*x(n+ks*nck)+ex2*x(n+ks*nck2)
@@ -120,7 +119,6 @@ contains
        js = -1
        do j = j1m1,j2p1,jinc
           js = -js
-!$OMP SIMD
           do i = i1m1,i2p1
              n = ind(i,j,k)
              x(n) = ex1*x(n+js*ncj)+ex2*x(n+js*ncj2)

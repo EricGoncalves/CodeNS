@@ -68,7 +68,6 @@ contains
     v22   =a22*cmach22
 !
     mt=mmb(mfb)
-!$OMP SIMD
     do m=1,mt
        mb=mpb(mfb)+m
        nl=ncbd(mb)

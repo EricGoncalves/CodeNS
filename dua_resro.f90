@@ -53,7 +53,6 @@ contains
 !
        do k=k1,k2m1
           do j=j1,j2m1
-!$OMP SIMD
              do i=i1,i2m1
                 n=ind(i,j,k)
                 resr=(v(n,1)-u0(n,1))/dt(n)

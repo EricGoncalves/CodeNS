@@ -67,7 +67,6 @@ contains
     if (indfl.eq.'i1') then
        ii=imin-1
        do k=kmin,kmax-1
-!$OMP SIMD
           do j=jmin,jmax-1
              m=m+1
              ncbd(m)=ind(ii,j,k)
@@ -78,7 +77,6 @@ contains
     else if (indfl.eq.'i2') then
        ii=imax
        do k=kmin,kmax-1
-!$OMP SIMD
           do j=jmin,jmax-1
              m=m+1
              ncbd(m)=ind(ii,j,k)
@@ -89,7 +87,6 @@ contains
     elseif (indfl.eq.'j1') then
        jj=jmin-1
        do k=kmin,kmax-1
-!$OMP SIMD
           do i=imin,imax-1
              m=m+1
              ncbd(m)=ind(i,jj,k)
@@ -100,7 +97,6 @@ contains
     elseif (indfl.eq.'j2') then
        jj=jmax
        do k=kmin,kmax-1
-!$OMP SIMD
           do i=imin,imax-1
              m=m+1
              ncbd(m)=ind(i,jj,k)
@@ -111,7 +107,6 @@ contains
     elseif (indfl.eq.'k1') then
        kk=kmin-1
        do j=jmin,jmax-1
-!$OMP SIMD
           do i=imin,imax-1
              m=m+1
              ncbd(m)=ind(i,j,kk)
@@ -122,7 +117,6 @@ contains
     elseif (indfl.eq.'k2') then
        kk=kmax
        do j=jmin,jmax-1
-!$OMP SIMD
           do i=imin,imax-1
              m=m+1
              ncbd(m)=ind(i,j,kk)
