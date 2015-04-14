@@ -84,9 +84,9 @@ contains
     numdir=2
     if(equat(3:4).eq.'3d') numdir=3
     fact=0.
-
 !      calcul instationnaire avec pas de temps dual
     if(kfmg.eq.3) fact=1.5/dt1min
+
 !
 !-----initalisation--------------------------------
 !
@@ -128,6 +128,7 @@ contains
        coefe(m,3)=0.
     enddo
 !$OMP END DO nowait !SIMD
+
 !
 !------coef diagonal ------------------------------------------------
 !
@@ -153,10 +154,10 @@ do kdir=1,numdir
 !$OMP DO collapse(2)
     do k=k1,inc_dir(1,kdir)
        do j=j1,inc_dir(2,kdir)
-          ind1 = indc(i1,j,k)
-          ind2 = indc(inc_dir(3,kdir),j,k)
+           ind1 = indc(i1  ,j,k)
+           ind2 = indc(inc_dir(3,kdir),j,k)
 !$OMP SIMD
-          do n=ind1,ind2
+           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
                   sn(m,kdir,2)*sn(m,kdir,2)+ &
@@ -168,7 +169,7 @@ do kdir=1,numdir
              cc=0.5*(cson(n)+cson(n-ninc))
              coefe(m,kdir)=0.5*(abs(  uu*sn(m,kdir,1) &
                                     + vv*sn(m,kdir,2) &
-                  + ww*sn(m,kdir,3))) + sqrt(cnds)*cc
+                                    + ww*sn(m,kdir,3) )) + sqrt(cnds)*cc
           enddo
        enddo
     enddo
@@ -177,17 +178,18 @@ do kdir=1,numdir
 !$OMP DO collapse(2)
     do k=k1,inc_dir(1,kdir)
        do j=j1,inc_dir(2,kdir)
-          ind1 = indc(i1  ,j,k)
-          ind2 = indc(inc_dir(3,kdir),j,k)
+             ind1 = indc(i1  ,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
 !$OMP SIMD
-          do n=ind1,ind2
-             m=n-n0c
+             do n=ind1,ind2
+               m=n-n0c
                coefdiag(m)=coefdiag(m) + coefe(m,kdir) + coefe(m+ninc,kdir)
           enddo
        enddo
     enddo
 !$OMP END DO
 enddo
+
 !
 !*************************************************************************
 !c    boucle sur les sous-iterations
@@ -214,6 +216,7 @@ enddo
            enddo
         enddo
 !$OMP END DO
+
        if(ityprk.ne.0) then
 !$OMP DO collapse(2)
           do k=k1,k2m1
@@ -250,37 +253,177 @@ enddo
                 tn1=0.5*((d(n,2)+d(n-ninc,2))*sn(m,kdir,1)    &
                      +   (d(n,3)+d(n-ninc,3))*sn(m,kdir,2)    &
                      +   (d(n,4)+d(n-ninc,4))*sn(m,kdir,3))
-                tn2=0.5*((dfxx(m)+dfxx(m-ninc))*sn(m,kdir,1)  &
-                     +   (dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2)  &
-                     +   (dfxz(m)+dfxz(m-ninc))*sn(m,kdir,3))
-                tn3=0.5*((dfxy(m)+dfxy(m-ninc))*sn(m,kdir,1)  &
-                     +   (dfyy(m)+dfyy(m-ninc))*sn(m,kdir,2)  &
-                     +   (dfyz(m)+dfyz(m-ninc))*sn(m,kdir,3))
-                tn4=0.5*((dfxz(m)+dfxz(m-ninc))*sn(m,kdir,1)  &
-                     +   (dfyz(m)+dfyz(m-ninc))*sn(m,kdir,2)  &
-                     +   (dfzz(m)+dfzz(m-ninc))*sn(m,kdir,3))
-                tn5=0.5*((dfex(m)+dfex(m-ninc))*sn(m,kdir,1)  &
-                     +   (dfey(m)+dfey(m-ninc))*sn(m,kdir,2)  &
-                     +   (dfez(m)+dfez(m-ninc))*sn(m,kdir,3))
                 d2w1(m)=d2w1(m) + tn1 &
                      + coefe(m,kdir)*d(n-ninc,1) &
                      + coefe(m+ninc,kdir)*d(n+ninc,1)
+             enddo
+          enddo
+       enddo
+!$OMP END DO 
+!$OMP DO collapse(2)
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ninc=inc_dir(4,kdir)
+             ind1 = indc(i1,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0c
+                tn1=0.5*((d(n,2)+d(n-ninc,2))*sn(m,kdir,1)    &
+                     +   (d(n,3)+d(n-ninc,3))*sn(m,kdir,2)    &
+                     +   (d(n,4)+d(n-ninc,4))*sn(m,kdir,3))
+                d2w1(m-ninc)=d2w1(m-ninc) - tn1
+             enddo
+          enddo
+       enddo
+!$OMP END DO nowait
+enddo
+    do kdir=1,numdir
+!$OMP DO collapse(2)
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ninc=inc_dir(4,kdir)
+             ind1 = indc(i1,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0c
+                tn2=0.5*((dfxx(m)+dfxx(m-ninc))*sn(m,kdir,1)  &
+                     +   (dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2)  &
+                     +   (dfxz(m)+dfxz(m-ninc))*sn(m,kdir,3))
                 d2w2(m)=d2w2(m) + tn2 &
                      + coefe(m,kdir)*d(n-ninc,2) &
                      + coefe(m+ninc,kdir)*d(n+ninc,2)
+             enddo
+          enddo
+       enddo
+!$OMP END DO 
+!$OMP DO collapse(2)
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ninc=inc_dir(4,kdir)
+             ind1 = indc(i1,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0c
+                tn2=0.5*((dfxx(m)+dfxx(m-ninc))*sn(m,kdir,1)  &
+                     +   (dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2)  &
+                     +   (dfxz(m)+dfxz(m-ninc))*sn(m,kdir,3))
+                d2w2(m-ninc)=d2w2(m-ninc) - tn2
+             enddo
+          enddo
+       enddo
+!$OMP END DO nowait
+enddo
+    do kdir=1,numdir
+!$OMP DO collapse(2)
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ninc=inc_dir(4,kdir)
+             ind1 = indc(i1,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0c
+                tn3=0.5*((dfxy(m)+dfxy(m-ninc))*sn(m,kdir,1)  &
+                     +   (dfyy(m)+dfyy(m-ninc))*sn(m,kdir,2)  &
+                     +   (dfyz(m)+dfyz(m-ninc))*sn(m,kdir,3))
                 d2w3(m)=d2w3(m) + tn3 &
                      + coefe(m,kdir)*d(n-ninc,3) &
                      + coefe(m+ninc,kdir)*d(n+ninc,3)
+             enddo
+          enddo
+       enddo
+!$OMP END DO
+!$OMP DO collapse(2)
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ninc=inc_dir(4,kdir)
+             ind1 = indc(i1,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0c
+                tn3=0.5*((dfxy(m)+dfxy(m-ninc))*sn(m,kdir,1)  &
+                     +   (dfyy(m)+dfyy(m-ninc))*sn(m,kdir,2)  &
+                     +   (dfyz(m)+dfyz(m-ninc))*sn(m,kdir,3))
+                d2w3(m-ninc)=d2w3(m-ninc) - tn3
+             enddo
+          enddo
+       enddo
+!$OMP END DO nowait
+enddo
+    do kdir=1,numdir
+!$OMP DO  collapse(2)
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ninc=inc_dir(4,kdir)
+             ind1 = indc(i1,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0c
+                tn4=0.5*((dfxz(m)+dfxz(m-ninc))*sn(m,kdir,1)  &
+                     +   (dfyz(m)+dfyz(m-ninc))*sn(m,kdir,2)  &
+                     +   (dfzz(m)+dfzz(m-ninc))*sn(m,kdir,3))
                 d2w4(m)=d2w4(m) + tn4 &
                      + coefe(m,kdir)*d(n-ninc,4) &
                      + coefe(m+ninc,kdir)*d(n+ninc,4)
+             enddo
+          enddo
+       enddo
+!$OMP END DO 
+!$OMP DO  collapse(2)
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ninc=inc_dir(4,kdir)
+             ind1 = indc(i1,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0c
+                tn4=0.5*((dfxz(m)+dfxz(m-ninc))*sn(m,kdir,1)  &
+                     +   (dfyz(m)+dfyz(m-ninc))*sn(m,kdir,2)  &
+                     +   (dfzz(m)+dfzz(m-ninc))*sn(m,kdir,3))
+                d2w4(m-ninc)=d2w4(m-ninc) - tn4
+             enddo
+          enddo
+       enddo
+!$OMP END DO nowait
+enddo
+    do kdir=1,numdir
+!$OMP DO  collapse(2)
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ninc=inc_dir(4,kdir)
+             ind1 = indc(i1,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0c
+                tn5=0.5*((dfex(m)+dfex(m-ninc))*sn(m,kdir,1)  &
+                     +   (dfey(m)+dfey(m-ninc))*sn(m,kdir,2)  &
+                     +   (dfez(m)+dfez(m-ninc))*sn(m,kdir,3))
                 d2w5(m)=d2w5(m) + tn5 &
                      + coefe(m,kdir)*d(n-ninc,5) &
                      + coefe(m+ninc,kdir)*d(n+ninc,5)
-                d2w1(m-ninc)=d2w1(m-ninc) - tn1
-                d2w2(m-ninc)=d2w2(m-ninc) - tn2
-                d2w3(m-ninc)=d2w3(m-ninc) - tn3
-                d2w4(m-ninc)=d2w4(m-ninc) - tn4
+             enddo
+          enddo
+       enddo
+!$OMP END DO
+!$OMP DO  collapse(2)
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ninc=inc_dir(4,kdir)
+             ind1 = indc(i1,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0c
+                tn5=0.5*((dfex(m)+dfex(m-ninc))*sn(m,kdir,1)  &
+                     +   (dfey(m)+dfey(m-ninc))*sn(m,kdir,2)  &
+                     +   (dfez(m)+dfez(m-ninc))*sn(m,kdir,3))
                 d2w5(m-ninc)=d2w5(m-ninc) - tn5
              enddo
           enddo
@@ -369,7 +512,6 @@ enddo
        enddo
     enddo
 !$OMP END DO nowait
-
     DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
 
     return
