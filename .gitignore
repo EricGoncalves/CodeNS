@@ -3,3 +3,4 @@ solver_air_testperfo
 *~
 *.o
 *.mod
+/.project
