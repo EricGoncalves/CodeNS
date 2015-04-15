@@ -189,7 +189,8 @@ contains
 !
     if (ncyc.eq.1 .and. img.eq.mg ) then
 !        calcul distance pour epaisseurs integrales si necessaire
-       if(kcaldis.eq.1 .or. kcaldis.eq.2) then
+       SELECT CASE(kcaldis)
+       CASE(1:2)
 !          1->integration suivant lignes de maillage
 !          2->minimum distance cellule-facette sans optimisation
           call atcaldis( &
@@ -198,7 +199,7 @@ contains
                dist,mnpar,fgam,img, &
                ncin,mnc,ncbd)
 !
-       elseif(kcaldis.eq.3) then
+       CASE(3)
 !          3->minimum distance cellule-facette avec optimisation
           call atcaldis3( &
                x,y,z,nxn,nyn,nzn, &
@@ -207,17 +208,17 @@ contains
                ncin,mnc,ncbd, &
                m1tb,m2tb,nfrtb)
 !
-       elseif(kcaldis.eq.0 .and. klecdis.eq.1) then
+       CASE(0)
+          if(klecdis.eq.1) then
 !          lecture des distances
           call at_lecdist( &
                ldismx,dist,mnpar)
 
-       elseif(kcaldis.eq.0) then
-!
-       else
+          endif
+      case DEFAULT
           write(imp,'(/,''!atsch_num calcul distance non prevu STOP'')')
           stop
-       endif
+       END SELECT
        if(kecrdis.eq.1) then
 !          ecriture "fdist" des distances pour tous les domaines
           call at_ecrdist( &
@@ -290,7 +291,8 @@ contains
                   pression,ztemp,cson)
 !
              do l=1,lzx
-                if(kinke.eq.1) then
+                SELECT CASE(kinke)
+                CASE(1)
 !
                    call met_ini( &
                         l,v,mut,mu, &
@@ -316,13 +318,13 @@ contains
 !
                    endif
 !
-                else if(kinke.eq.2) then
+                CASE(2)
 !
 !------------Modele de Spalart Allmaras------------------------------
 !
                    call met_inisa(l,v,mut,mu)
 !
-                else if(kinke.eq.3) then
+                CASE(3)
 !
 !-------------Modele k-l de Smith----------------------------------
 !
@@ -332,7 +334,7 @@ contains
                         tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                         cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-                else if(kinke.eq.4) then
+                CASE(4)
 !
 !-------------Modele k-omega de Wilcox ou Menter----------------------
 !             Modele k-omega bas Reynolds de Wilcox
@@ -364,15 +366,15 @@ contains
                         tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                         cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-                else if(kinke.eq.6) then
+                CASE(6)
 !
                    write(imp,'(/,"!!!atsch_num: kinke=",i4,4x,"commencer le calcul avec k-l de Smith")')kinke
                    stop
 !
-                else
+                CASE DEFAULT
                    write(imp,'(/,"!!!atsch_num: kinke=",i4,4x,"non prevue-STOP")')kinke
                    stop
-                endif
+                END SELECT
              enddo   ! fin boucle domaine
 !
              if(kutau.eq.1) then
@@ -443,25 +445,26 @@ contains
           npsn  =ndir*npfb(lm)+1
           lgsnlt=nnn(lm)
 !
-          if(kprec.eq.0) then
+          SELECT CASE(kprec)
+          CASE(0)
              call dissip_jameson( &
                   lm,v,d, &
                   equat, &
                   sn(npsn),lgsnlt, &
                   tn1,pression,cson)
-          elseif(kprec.eq.1) then  !(P,u,S)
+          CASE(1)  !(P,u,S)
 !            call dissip_jameson_prcd( &
 !                 lm,v,d, &
 !                 equat, &
 !                 sn(npsn),lgsnlt, &
 !                 tn2,tn3,pression,ztemp,cson)
-          elseif(kprec.eq.2) then  !(P,u,e)
+          CASE(2)  !(P,u,e)
              call dissip_jameson_prcd2( &
                   lm,v,d, &
                   equat, &
                   sn(npsn),lgsnlt, &
                   tn1,pression,cson)
-          endif
+          END SELECT
        enddo
     endif
 !
@@ -597,7 +600,8 @@ contains
 !
 !--------Schema de Jameson--------------------------------------------
 !
-       if(ischema.eq.1) then
+       SELECT CASE(ischema)
+       CASE(1)
           call sch_jameson( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -607,7 +611,7 @@ contains
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression)
 !
-       elseif(ischema.eq.2) then
+       CASE(2)
 !         version ponderee
           call sch_jameson_pond( &
                lm,ityprk, &
@@ -619,7 +623,7 @@ contains
                pression, &
                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-       elseif(ischema.eq.3) then
+       CASE(3)
 !         version ordre 3 avec correction de l'erreur dispersive
           call sch_jameson3( &
                lm,ityprk, &
@@ -630,7 +634,7 @@ contains
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression)
 !
-       elseif(ischema.eq.4) then
+       CASE(4)
 !         version ordre 3 avec correction de l'erreur dispersive + ponderation
           call sch_jameson3pond( &
                lm,ityprk, &
@@ -645,7 +649,7 @@ contains
 !
 !--------Schema AUSM+ de Liou--------------------------------------------
 !
-       elseif(ischema.eq.5) then
+       CASE(5)
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
                 call sch_ausmp( &
@@ -670,7 +674,7 @@ contains
 !
 !--------Schema AUSM+ pondere--------------------------------------
 !
-       elseif(ischema.eq.6) then
+       CASE(6)
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
                 call sch_ausmp_pond( &
@@ -688,7 +692,7 @@ contains
 !
 !--------Schema de Roe--------------------------------------------
 !
-       elseif(ischema.eq.7) then
+       CASE(7)
 !
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
@@ -723,7 +727,7 @@ contains
 !
 !--------Schema de Roe pondere------------------------------------
 !
-       elseif(ischema.eq.8) then
+       CASE(8)
           if(kprec.eq.0) then
              call sch_roe_pond( &
                   lm,ityprk, &
@@ -750,7 +754,7 @@ contains
 !
 !--------Schema de Rusanov avec extrapolation MUSCL----------------------------------
 !
-       elseif(ischema.eq.9) then
+       CASE(9)
 !
           if(kprec.eq.0) then
              call sch_rusanov( &
@@ -773,11 +777,12 @@ contains
           endif
 !--------Schema de Jiang&Chu WENO ordre 3-----------------------------------
 !
-       elseif(ischema.eq.10) then
+       CASE(10)
 !           if(kprec.eq.0) then
           if(equat(3:4).eq.'2d') then
 ! attention: muscl sert de cle pour splitting
-             if(muscl.eq.0) then
+             SELECT CASE(muscl)
+             CASE(0)
                 call sch_weno3( &
                      lm,ityprk, &
                      u,v,ff, &
@@ -786,7 +791,7 @@ contains
                      sn(npsn),lgsnlt, &
                      tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                      pression)
-             elseif(muscl.eq.1) then !Steger&Warming
+             CASE(1) !Steger&Warming
                 call sch_weno3split( &
                      lm,ityprk, &
                      u,v,ff, &
@@ -795,7 +800,7 @@ contains
                      sn(npsn),lgsnlt, &
                      tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                      pression)
-             elseif(muscl.eq.2) then !Lax&Friedrichs
+             CASE(2) !Lax&Friedrichs
                 call sch_weno3split2( &
                      lm,ityprk, &
                      u,v,ff, &
@@ -804,7 +809,7 @@ contains
                      sn(npsn),lgsnlt, &
                      tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                      pression)
-             endif
+             END SELECT
           elseif(equat(3:4).eq.'3d') then
              call sch_weno3_3d( &
                   lm,ityprk, &
@@ -827,7 +832,7 @@ contains
 !
 !--------Schema WENO ordre 3 pondere-----------------------------------
 !
-       elseif(ischema.eq.11) then
+       CASE(11)
           if(equat(3:4).eq.'2d') then
 ! attention: muscl sert de cle pour splitting
              if(muscl.eq.0) then
@@ -866,7 +871,7 @@ contains
 !
 !--------Schema WENO ordre 5-----------------------------------
 !
-       elseif(ischema.eq.12) then
+       CASE(12)
           if(equat(3:4).eq.'2d') then
              call sch_weno5( &
                   lm,ityprk, &
@@ -889,7 +894,7 @@ contains
 !
 !--------Schema WENO ordre 5 pondere---------------------------------
 !
-       elseif(ischema.eq.13) then
+       CASE(13)
           if(equat(3:4).eq.'2d') then
              call sch_weno5pond( &
                   lm,ityprk, &
@@ -915,7 +920,7 @@ contains
 !
 !--------Schema HLLC avec extrapolation MUSCL-------------------------
 !
-       elseif(ischema.eq.15) then
+       CASE(14)
 !
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
@@ -946,7 +951,7 @@ contains
                   tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                   pression)
           endif
-       endif
+       END SELECT
 !
 !--------Preconditionnement basse vitesse de Turkel--------------------
 !        calcul des residus preconditionnes pour calcul tout explicite
