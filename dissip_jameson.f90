@@ -129,15 +129,15 @@ contains
              cc=0.5*(cson(n)+cson(n-ninc))
              rl=abs(uu*sn(m,kdir,1)+vv*sn(m,kdir,2)+ww*sn(m,kdir,3))+sqrt(cnds)*cc
              ds1=eps2*rl*(v(n,1)-v(n-ninc,1)) &
-                  -eps4*rl*(v(n+ninc,1)-3.*v(n,1)+3.*v(n-ninc,1)-v(n-2*ninc,1))
+                  -eps4*rl*(v(n+ninc,1)+3.*(v(n-ninc,1)-v(n,1))-v(n-2*ninc,1))
              ds2=eps2*rl*(v(n,2)-v(n-ninc,2)) &
-                  -eps4*rl*(v(n+ninc,2)-3.*v(n,2)+3.*v(n-ninc,2)-v(n-2*ninc,2))
+                  -eps4*rl*(v(n+ninc,2)+3.*(v(n-ninc,2)-v(n,2))-v(n-2*ninc,2))
              ds3=eps2*rl*(v(n,3)-v(n-ninc,3)) &
-                  -eps4*rl*(v(n+ninc,3)-3.*v(n,3)+3.*v(n-ninc,3)-v(n-2*ninc,3))
+                  -eps4*rl*(v(n+ninc,3)+3.*(v(n-ninc,3)-v(n,3))-v(n-2*ninc,3))
              ds4=eps2*rl*(v(n,4)-v(n-ninc,4)) &
-                  -eps4*rl*(v(n+ninc,4)-3.*v(n,4)+3.*v(n-ninc,4)-v(n-2*ninc,4))
+                  -eps4*rl*(v(n+ninc,4)+3.*(v(n-ninc,4)-v(n,4))-v(n-2*ninc,4))
              ds5=eps2*rl*(v(n,5)-v(n-ninc,5)) &
-                  -eps4*rl*(v(n+ninc,5)-3.*v(n,5)+3.*v(n-ninc,5)-v(n-2*ninc,5))
+                  -eps4*rl*(v(n+ninc,5)+3.*(v(n-ninc,5)-v(n,5))-v(n-2*ninc,5))
              d(n,1)=d(n,1)-ds1
              d(n,2)=d(n,2)-ds2
              d(n,3)=d(n,3)-ds3
@@ -241,15 +241,15 @@ contains
              cc=0.5*(cson(n)+cson(n-ninc))
              rl=abs(uu*sn(m,kdir,1)+vv*sn(m,kdir,2)+ww*sn(m,kdir,3))+sqrt(cnds)*cc
              ds1=eps2*rl*(v(n,1)-v(n-ninc,1)) &
-                  -eps4*rl*(v(n+ninc,1)-3.*v(n,1)+3.*v(n-ninc,1)-v(n-2*ninc,1))
+                  -eps4*rl*(v(n+ninc,1)+3.*(v(n-ninc,1)-v(n,1))-v(n-2*ninc,1))
              ds2=eps2*rl*(v(n,2)-v(n-ninc,2)) &
-                  -eps4*rl*(v(n+ninc,2)-3.*v(n,2)+3.*v(n-ninc,2)-v(n-2*ninc,2))
+                  -eps4*rl*(v(n+ninc,2)+3.*(v(n-ninc,2)-v(n,2))-v(n-2*ninc,2))
              ds3=eps2*rl*(v(n,3)-v(n-ninc,3)) &
-                  -eps4*rl*(v(n+ninc,3)-3.*v(n,3)+3.*v(n-ninc,3)-v(n-2*ninc,3))
+                  -eps4*rl*(v(n+ninc,3)+3.*(v(n-ninc,3)-v(n,3))-v(n-2*ninc,3))
              ds4=eps2*rl*(v(n,4)-v(n-ninc,4)) &
-                  -eps4*rl*(v(n+ninc,4)-3.*v(n,4)+3.*v(n-ninc,4)-v(n-2*ninc,4))
+                  -eps4*rl*(v(n+ninc,4)+3.*(v(n-ninc,4)-v(n,4))-v(n-2*ninc,4))
              ds5=eps2*rl*(v(n,5)-v(n-ninc,5)) &
-                  -eps4*rl*(v(n+ninc,5)-3.*v(n,5)+3.*v(n-ninc,5)-v(n-2*ninc,5))
+                  -eps4*rl*(v(n+ninc,5)+3.*(v(n-ninc,5)-v(n,5))-v(n-2*ninc,5))
              d(n,1)=d(n,1)-ds1
              d(n,2)=d(n,2)-ds2
              d(n,3)=d(n,3)-ds3
@@ -354,15 +354,15 @@ contains
                 cc=0.5*(cson(n)+cson(n-ninc))
                 rl=abs(uu*sn(m,kdir,1)+vv*sn(m,kdir,2)+ww*sn(m,kdir,3))+sqrt(cnds)*cc
                 ds1=eps2*rl*(v(n,1)-v(n-ninc,1)) &
-                     -eps4*rl*(v(n+ninc,1)-3.*v(n,1)+3.*v(n-ninc,1)-v(n-2*ninc,1))
+                     -eps4*rl*(v(n+ninc,1)+3.*(v(n-ninc,1)-v(n,1))-v(n-2*ninc,1))
                 ds2=eps2*rl*(v(n,2)-v(n-ninc,2)) &
-                     -eps4*rl*(v(n+ninc,2)-3.*v(n,2)+3.*v(n-ninc,2)-v(n-2*ninc,2))
+                     -eps4*rl*(v(n+ninc,2)+3.*(v(n-ninc,2)-v(n,2))-v(n-2*ninc,2))
                 ds3=eps2*rl*(v(n,3)-v(n-ninc,3)) &
-                     -eps4*rl*(v(n+ninc,3)-3.*v(n,3)+3.*v(n-ninc,3)-v(n-2*ninc,3))
+                     -eps4*rl*(v(n+ninc,3)+3.*(v(n-ninc,3)-v(n,3))-v(n-2*ninc,3))
                 ds4=eps2*rl*(v(n,4)-v(n-ninc,4)) &
-                     -eps4*rl*(v(n+ninc,4)-3.*v(n,4)+3.*v(n-ninc,4)-v(n-2*ninc,4))
+                     -eps4*rl*(v(n+ninc,4)+3.*(v(n-ninc,4)-v(n,4))-v(n-2*ninc,4))
                 ds5=eps2*rl*(v(n,5)-v(n-ninc,5)) &
-                     -eps4*rl*(v(n+ninc,5)-3.*v(n,5)+3.*v(n-ninc,5)-v(n-2*ninc,5))
+                     -eps4*rl*(v(n+ninc,5)+3.*(v(n-ninc,5)-v(n,5))-v(n-2*ninc,5))
                 d(n,1)=d(n,1)-ds1
                 d(n,2)=d(n,2)-ds2
                 d(n,3)=d(n,3)-ds3
