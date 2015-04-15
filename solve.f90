@@ -335,7 +335,9 @@ program solve
 !-----------------------------------------------------------------------
 !
   character(len=32) :: comment,mot(nmx)
+  integer :: Time_1,clock_rate,Time_2,m
   call allocdata()
+  temp_array=0.
 !
 !     tableaux de travail
 !    tm14(ip40),tm15(ip40),tm16(ip40), &
@@ -459,6 +461,7 @@ program solve
 !--   COMPUTE FLOW
         if((imot(2).eq.4).and.(mot(2)(1:4).eq.'flow')) then
 !
+           call system_clock(Time_1,clock_rate)
            call c_cpfw( &
                 mot,imot,nmot, &
                 ncyc, &
@@ -483,6 +486,11 @@ program solve
                 pression,ztemp,cson, &
                 cvi,cvj,cvk, &
                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+           CALL system_clock(Time_2)
+           do m=1,neqt
+             write(*,*) m,temp_array(m,:)
+           enddo
+           print*,'TEMPS DE CALCUL ',(Time_2-Time_1)*1./clock_rate
 !
 !--   COMPUTE BOUNDARY
         else if((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then

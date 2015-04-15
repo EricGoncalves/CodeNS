@@ -18,10 +18,10 @@ contains
     use maillage
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          :: indc,   j,  j1,j1m1,  j2
+    integer          ::    j,  j1,j1m1,  j2
     integer          :: j2m1,   k,  k1,k1m1,  k2
     integer          :: k2m1,   l,   m,   n, n0c
-    integer          ::  nft, nid,nijd, njd
+    integer          ::  nft, nid, njd,nijd
     double precision :: t(ip11,ip60)
     logical          :: ouvert
 !
@@ -29,8 +29,6 @@ contains
 !
     character*40 nom
     character(len=1 ) :: c
-!
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -73,7 +71,14 @@ contains
        write(nft,'(4(1pe15.6))') &
             t(n,1),t(n,2),t(n,4),t(n,5)
     enddo
+
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine sortieacou
 end module mod_sortieacou

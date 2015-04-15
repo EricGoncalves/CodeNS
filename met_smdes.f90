@@ -102,7 +102,7 @@ contains
 !     ---------------------------------------------------------------
 !com  calcul de la dimension max d'une cellule de calcul
 !
-    call met_dist(l,x,y,z,Delta)
+    call met_dist(l,x,y,z,delta)
 !
 !     --------------------------------------------------------------
 !com  calcul des termes sources
@@ -200,7 +200,7 @@ contains
              xkhi2 =xkhi**2
              xkhi3 =xkhi2*xkhi
 !            dist2 =dist(n)**2
-             dist2 =min(dist(n),ctdes*Delta(m))**2
+             dist2 =min(dist(n),ctdes*delta(m))**2
              nutilde=v(n,6)/v(n,1)
              kapd2  =kappa2*dist2
 !

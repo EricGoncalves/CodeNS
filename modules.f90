@@ -218,7 +218,7 @@ implicit none
   integer          ::     lsortie,      nbfll,      nfreq,nmfint(mtb),        out
   integer          ::         sec,       sor1,       sor2,       sor3,      sorf1
   integer          ::       sorf2
-  double precision :: alpha0, beta0,p0spi0,q0spi0,  sref
+  double precision :: alpha0, beta0,p0spi0,q0spi0,  sref,temp_array(neqt,3)
   double precision ::     v0, xlref,  xref,  yref,  zref
   data kimp/3/
   data lec,imp,out,sec,sor1,sor2,kfa,sor3/11,12,13,14,15,16,17,18/

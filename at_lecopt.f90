@@ -34,7 +34,7 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-    character(len=80) ligne
+    character(len=80) :: ligne
 !
     write(imp,'(/,"==>at_lecopt: lecture relations domaines-paroi pour calcul optimise de la distance",/)')
 !

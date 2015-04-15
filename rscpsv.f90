@@ -107,6 +107,10 @@ contains
             dumy1,dumy2,dumax, &
             idumx,jdumx,kdumx)
 !
+       temp_array(:,1)=dumy1
+       temp_array(:,2)=dumy2
+       temp_array(:,3)=dumax
+
        if(img.eq.1) then
           if(ncyc.eq.ncycle) then
              imin=ii1(l)

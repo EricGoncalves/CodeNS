@@ -73,7 +73,7 @@ contains
     integer          ::     mcyresi,    mcysave,        mfc,        mfr,         mg
     integer          ::        mglp,  mnc(ip43),mnpar(ip12),  mnr(ip44),         nc
     integer          ::  ncbd(ip41), ncin(ip41),       ncyc,      ncycl,      ndcyc
-    integer          ::        ndeb,       nfin,        ngx
+    integer          ::        ndeb,       nfin,        ngx,kfin,k
     double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
     double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
     double precision ::         cvj(ip21),        cvk(ip21),        d0x(ip40),        d0y(ip40),        d0z(ip40)
@@ -95,6 +95,8 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+kfin=5
+if (equat(6:7).eq.'ke') kfin=7
 !
 !
 !     niveau de grille courant --> mg
@@ -213,20 +215,11 @@ contains
                 ndeb=npc(lm)+1
                 nfin=npc(lm)+nnc(lm)
 !
-                do nc=ndeb,nfin
-                   u0(nc,1)=v(nc,1)
-                   u0(nc,2)=v(nc,2)
-                   u0(nc,3)=v(nc,3)
-                   u0(nc,4)=v(nc,4)
-                   u0(nc,5)=v(nc,5)
+                do k=1,kfin
+                  do nc=ndeb,nfin
+                   u0(nc,k)=v(nc,k)
+                  enddo
                 enddo
-!
-                if (equat(6:7).eq.'ke') then
-                   do nc=ndeb,nfin
-                      u0(nc,6)=v(nc,6)
-                      u0(nc,7)=v(nc,7)
-                   enddo
-                endif
              enddo
 !
              ityprk = 1

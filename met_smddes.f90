@@ -104,7 +104,7 @@ contains
 !     ---------------------------------------------------------------
 !com  calcul de la dimension max d'une cellule de calcul
 !
-    call met_dist(l,x,y,z,Delta)
+    call met_dist(l,x,y,z,delta)
 !
 !     --------------------------------------------------------------
 !com  calcul des termes sources
@@ -218,7 +218,7 @@ contains
              rtil6 =rtilde**6
              rtil3=(8.*rtilde)**3   ! DDES initiale
              fd=1.-tanh(rtil3)      ! fonction DDES
-             distddes=dist(n)-fd*max(0.,dist(n)-ctdes*Delta(m))    ! nouvelle distance DDES
+             distddes=dist(n)-fd*max(0.,dist(n)-ctdes*delta(m))    ! nouvelle distance DDES
              dist2=distddes**2     !DDES
              kapd2=kappa2*dist2
 !
