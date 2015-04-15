@@ -30,7 +30,7 @@ contains
     integer          ::    nid,  nijd,   njd
     double precision ::         dtpas,ff(ip11,ip60),         omeg,        temps,          ts1
     double precision ::  u(ip11,ip60),    vol(ip11),      x(ip21),          xcc,      y(ip21)
-    double precision ::           ycc,      z(ip21),          zcc
+    double precision ::           ycc,      z(ip21),          zcc,log2,puls,rcga2,rgam1
 !
 !-----------------------------------------------------------------------
 !
@@ -59,7 +59,12 @@ contains
     ind2 = indc(i2m1,j2m1,k2m1)
 !     pulsation
     omeg=4.*pis2*freq
+    log2=log(2.)
+    temps=real(idcyc)*dtpas
+    puls=cos(omeg*temps)
 !
+    rcga2=1./cga**2
+    rgam1=1./(gam-1.)
     if(ityprk.eq.0) then
        do m=ind1,ind2
           nc=m+n0c
@@ -74,13 +79,12 @@ contains
                +z(nc+nijd)+z(nc+nijd+1)+z(nc+nijd+nid)+z(nc+nijd+nid+1))* &
                0.125
 !
-          temps=real(idcyc)*dtpas
-!        ts1=0.5*exp(-log(2.)*((xcc-x0)**2 + (ycc-y0)**2
-!     &           +  (zcc-z0)**2)/cga**2)*cos(omeg*temps)
-          ts1=0.5*exp(-log(2.)*((xcc-x0)**2+(ycc-y0)**2)/cga**2) &
-               *cos(omeg*temps)
+!        ts1=0.5*exp(-log2*((xcc-x0)**2 + (ycc-y0)**2
+!     &           +  (zcc-z0)**2)*rcga2)*puls
+          ts1=0.5*exp(-log2*((xcc-x0)**2+(ycc-y0)**2)*rcga2) &
+               *puls
           u(nc,1) = u(nc,1) - ts1*vol(nc)
-          u(nc,5) = u(nc,5) - ts1*vol(nc)/(gam-1.)
+          u(nc,5) = u(nc,5) - ts1*vol(nc)*rgam1
        enddo
 !
     else
@@ -98,13 +102,11 @@ contains
                +z(nc+nijd)+z(nc+nijd+1)+z(nc+nijd+nid)+z(nc+nijd+nid+1))* &
                0.125
 !
-          temps=real(idcyc)*dtpas
-!        ts1=1.*exp(-log(2.)*((xcc-x0)**2 + (ycc-y0)**2
-!     &           +  (zcc-z0)**2)/cga**2)*cos(omeg*temps)
-          ts1=0.5*exp(-log(2.)*((xcc-x0)**2+(ycc-y0)**2)/cga**2) &
-               *cos(omeg*temps)
+!        ts1=1.*exp(-log2*((xcc-x0)**2 + (ycc-y0)**2
+!     &           +  (zcc-z0)**2)*rcga2)*puls
+          ts1=0.5*exp(-log2*((xcc-x0)**2+(ycc-y0)**2)*rcga2) *puls
           u(nc,1) = u(nc,1) + ff(nc,1) - ts1*vol(nc)
-          u(nc,5) = u(nc,5) + ff(nc,5) - ts1*vol(nc)/(gam-1.)
+          u(nc,5) = u(nc,5) + ff(nc,5) - ts1*vol(nc)*rgam1
        enddo
     endif
 !
