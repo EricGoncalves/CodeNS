@@ -1,5 +1,6 @@
 module mod_atsch_num
   implicit none
+  integer         ,allocatable ::  m1tb(:), m2tb(:),nfrtb(:)
 contains
   subroutine atsch_num( &
        img,ityprk, &
@@ -141,7 +142,7 @@ contains
     double precision ::           x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44),          z(ip21)
     double precision ::         znr(ip44),      ztemp(ip11)
     logical          :: gfetke
-    integer         ,allocatable ::  m1tb(:), m2tb(:),nfrtb(:)
+
     allocate(m2tb(ip00))
     allocate(nfrtb(ip00))
     allocate(m1tb(ip00))

@@ -1,5 +1,7 @@
 module mod_implimf_eu
   implicit none
+    double precision,allocatable :: coefe(:,:),   d2w1(:),   d2w2(:),   d2w3(:),   d2w4(:)
+    double precision,allocatable ::    d2w5(:)
 contains
   subroutine implimf_eu( &
        lm,u,dt,v,d,ff, &
@@ -46,15 +48,11 @@ contains
     double precision ::                   ui,                  uu,        v(ip11,ip60),                  vi,           vol(ip11)
     double precision ::                   vv,                  wi,                 wi1,                 wi2,                 wi3
     double precision ::                  wi4,                 wi5,                  ww,norm,norm1
-    double precision,allocatable :: coefe(:,:),   d2w1(:),   d2w2(:),   d2w3(:),   d2w4(:)
-    double precision,allocatable ::    d2w5(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
 !
-    ALLOCATE(coefe(ip00,ndir))
-    ALLOCATE(d2w1(ip00),d2w2(ip00),d2w3(ip00),d2w4(ip00),d2w5(ip00))
 
     n0c=npc(lm)
     i1=ii1(lm)
@@ -94,6 +92,12 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
+
+    ALLOCATE(coefe(ind1-n0c:ind2-n0c,ndir))
+    ALLOCATE(d2w1(ind1-n0c:ind2-n0c),d2w2(ind1-n0c:ind2-n0c),&
+             d2w3(ind1-n0c:ind2-n0c),d2w4(ind1-n0c:ind2-n0c),&
+             d2w5(ind1-n0c:ind2-n0c))
+
     do k=1,5
       do n=ind1,ind2
          d(n,k)=0.
@@ -340,7 +344,6 @@ enddo
           enddo
        enddo
     enddo
-
     DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
 
     return
