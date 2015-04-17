@@ -309,9 +309,9 @@ program solve
   use mod_c_dfst
   implicit none
   integer          ::    img,iyplus,     l,  mfbi,   mfc
-  integer          ::    mfn,   mfr,  ncyc,  nmot
+  integer          ::    mfn,   mfr,  ncyc,  nmot,imot(nmx)
   double precision ::  aam,exs1,exs2,roam, tam
-  integer         ,allocatable ::  imot(:),  mnc(:),mnpar(:),  mnr(:), ncbd(:)
+  integer         ,allocatable ::  mnc(:),mnpar(:),  mnr(:), ncbd(:)
   integer         ,allocatable ::  ncin(:)
   double precision,allocatable ::  bceqt(:,:),    cfke(:),   cmui1(:),   cmui2(:),   cmuj1(:)
   double precision,allocatable ::    cmuj2(:),   cmuk1(:),   cmuk2(:),    cson(:),     cvi(:)
@@ -616,6 +616,7 @@ program solve
         endif
 !--   END
      elseif((imot(1).eq.3).and.(mot(1)(1:3).eq.'end')) then
+        call deallocdata
         call c_end(mot,imot,nmot)
 !--   INIT
      elseif((imot(1).eq.4).and.(mot(1)(1:4).eq.'init')) then
@@ -776,7 +777,6 @@ program solve
 !
   enddo
 !
-  call deallocdata
 contains
 
   subroutine allocdata
@@ -786,7 +786,6 @@ contains
     allocate(mnc(ip43))
     allocate(ncin(ip41))
     allocate(ncbd(ip41))
-    allocate(imot(nmx))
     allocate(mnpar(ip12))
     allocate(dist(ip12))
     allocate(rod(ip40))
@@ -881,7 +880,7 @@ contains
   subroutine deallocdata
     implicit none
 
-    deallocate(mnr,mnc,ncin,ncbd,imot,mnpar,dist,rod,nyn,vdual2,vdual1,rti)
+    deallocate(mnr,mnc,ncin,ncbd,mnpar,dist,rod,nyn,vdual2,vdual1,rti)
     deallocate(utau,tozz,ptdual,pression,dt,fgam,x,ynr,qtz,qtx,qty,mut,res,cfke,cmuk1)
     deallocate(tnte2,cvi,vdual,bceqt,tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,ztemp,tn10)
     deallocate(tn8,tm12,tm13,tm10,tm11,tp,rpi,toyy,toyz,tn5,tn4,tn7,tn6,tn1,tn3,tn2)

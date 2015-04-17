@@ -79,6 +79,9 @@ contains
     ALLOCATE(idumx(neqt),jdumx(neqt),kdumx(neqt), &
          dumy1(neqt),dumy2(neqt),dumax(neqt),dumy2g(neqt),dumaxg(neqt))
 
+    dumy1=0.
+    dumy2=0.
+    dumax=0.
     do m=1,neqtx
        dumy2g(m)=0.
        dumaxg(m)=0.

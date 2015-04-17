@@ -110,6 +110,11 @@ contains
        dfey(m)=0.
        dfzz(m)=0.
        dfez(m)=0.
+       d2w1(m)=0.
+       d2w2(m)=0.
+       d2w3(m)=0.
+       d2w4(m)=0.
+       d2w5(m)=0.
        coefe(m,1)=0.
        coefe(m,2)=0.
        coefe(m,3)=0.
