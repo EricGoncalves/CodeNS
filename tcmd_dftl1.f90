@@ -31,6 +31,7 @@ contains
        enddo
     else
        call cctcmd(command,lgcmd,mot,imot,3,nmot)
+!$OMP SIMD
        do itit=1,80
           titrt1(itit:itit)=command(itit:itit)
        enddo

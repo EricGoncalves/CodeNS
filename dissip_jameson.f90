@@ -84,6 +84,7 @@ contains
        ind2 = indc(i2  ,j2  ,k2  )
     endif
     do k=1,5
+!$OMP SIMD
        do n=ind1,ind2
           d(n,k)=0.
 !          ps(n)=gam1*(v(n,5)-pinfl-0.5*(v(n,2)**2+v(n,3)**2+v(n,4)**2)/v(n,1))
@@ -104,6 +105,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              snu(m)=abs(ps(n+ninc)-2.*ps(n)+ps(n-ninc)) &
@@ -116,6 +118,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1p1,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              eps2=ck2*max(snu(m-ninc),snu(m))
@@ -216,6 +219,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              snu(m)=abs(ps(n+ninc)-2.*ps(n)+ps(n-ninc)) &
@@ -228,6 +232,7 @@ contains
        do j=j1p1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              eps2=ck2*max(snu(m-ninc),snu(m))
@@ -267,6 +272,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           eps2=ck2*snu(m)
@@ -294,6 +300,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           eps2=ck2*snu(m-ninc)
@@ -329,6 +336,7 @@ contains
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
              ind2=indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 snu(m)=abs(ps(n+ninc)-2.*ps(n)+ps(n-ninc)) &
@@ -341,6 +349,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 eps2=ck2*max(snu(m-ninc),snu(m))
@@ -380,6 +389,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k1)
           ind2 = indc(i2m1,j,k1)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              eps2=ck2*snu(m)
@@ -407,6 +417,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k2)
           ind2 = indc(i2m1,j,k2)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              eps2=ck2*snu(m-ninc)

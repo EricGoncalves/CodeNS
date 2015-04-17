@@ -71,6 +71,7 @@ contains
     qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
 !
     mt=mmb(mfb)
+!$OMP SIMD
     do m=1,mt
        mb=mpb(mfb)+m
        mn=mpn(mfb)+m

@@ -103,6 +103,7 @@ contains
     do k=k1,k2m1
        do j=j1,j2m1
           n=indc(i1m1,j,k)
+!$OMP SIMD
           do i=i1,i2m1
              n=n+nci
              m=n-n0c
@@ -133,6 +134,7 @@ contains
        do k=k1,k2m1
           do j=j1,j2m1
              n=indc(i1-1,j,k)
+!$OMP SIMD
              do i=i1,i2m1
                 n=n+nci
 !
@@ -163,6 +165,7 @@ contains
        do k=k1,k2m1
           do j=j1,j2m1
              n=indc(i1-1,j,k)
+!$OMP SIMD
              do i=i1,i2m1
                 n=n+nci
                 retur=(v(n,6)**2)/(v(n,7)*mu(n))

@@ -21,6 +21,7 @@ contains
 !-----------------------------------------------------------------------
 !
     do lst=1,lsta
+!$OMP SIMD
        do nst=1,nsta
           varst(nst,lst)=reelmx
           kvarst(nst,lst)=1

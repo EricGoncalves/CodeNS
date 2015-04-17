@@ -79,6 +79,7 @@ contains
 !     initialisation
     ind1=indc(i1m1,j1m1,k1m1)-n0c
     ind2=indc(i2p1,j2p1,k2p1)-n0c
+!$OMP SIMD
     do m=ind1,ind2
        dsdx(m)=0.
        dsdy(m)=0.
@@ -99,12 +100,14 @@ contains
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    dsdx(m)=dsdx(m)-sn(m,kdir,1)*(s(m)+s(m-ninc))
                    dsdy(m)=dsdy(m)-sn(m,kdir,2)*(s(m)+s(m-ninc))
                    dsdz(m)=dsdz(m)-sn(m,kdir,3)*(s(m)+s(m-ninc))
                 enddo
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*(s(m)+s(m-ninc))
@@ -117,6 +120,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k1)
              ind2 = indc(i2m1,j,k1)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsdx(m)=dsdx(m)-sn(m,kdir,1)*2*s(m-ninc)
@@ -128,6 +132,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k2)
              ind2 = indc(i2m1,j,k2)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*2*s(m)
@@ -149,12 +154,14 @@ contains
              do k=k1,k2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    dsdx(m)=dsdx(m)-sn(m,kdir,1)*(s(m)+s(m-ninc))
                    dsdy(m)=dsdy(m)-sn(m,kdir,2)*(s(m)+s(m-ninc))
                    dsdz(m)=dsdz(m)-sn(m,kdir,3)*(s(m)+s(m-ninc))
                 enddo
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*(s(m)+s(m-ninc))
@@ -167,6 +174,7 @@ contains
           do k=k1,k2m1
              ind1 = indc(i1  ,j1,k)
              ind2 = indc(i2m1,j1,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsdx(m)=dsdx(m)-sn(m,kdir,1)*2*s(m-ninc)
@@ -178,6 +186,7 @@ contains
           do k=k1,k2m1
              ind1 = indc(i1  ,j2,k)
              ind2 = indc(i2m1,j2,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*2*s(m)
@@ -199,12 +208,14 @@ contains
              do j=j1,j2m1
                 ind1 = indc(i1p1,j,k)
                 ind2 = indc(i2m1,j,k)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    dsdx(m)=dsdx(m)-sn(m,kdir,1)*(s(m)+s(m-ninc))
                    dsdy(m)=dsdy(m)-sn(m,kdir,2)*(s(m)+s(m-ninc))
                    dsdz(m)=dsdz(m)-sn(m,kdir,3)*(s(m)+s(m-ninc))
                 enddo
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*(s(m)+s(m-ninc))
@@ -217,6 +228,7 @@ contains
           do k=k1,k2m1
              ind1 = indc(i1,j1  ,k)
              ind2 = indc(i1,j2m1,k)
+!$OMP SIMD
              do n=ind1,ind2,ncj
                 m=n-n0c
                 dsdx(m)=dsdx(m)-sn(m,kdir,1)*2*s(m-ninc)
@@ -228,6 +240,7 @@ contains
           do k=k1,k2m1
              ind1 = indc(i2,j1  ,k)
              ind2 = indc(i2,j2m1,k)
+!$OMP SIMD
              do n=ind1,ind2,ncj
                 m=n-n0c
                 dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*2*s(m)
@@ -252,6 +265,7 @@ contains
              do j=j1,j2m1
                 ind1 = indc(i1,j,k)
                 ind2 = indc(i2m1,j,k)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    sk1=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,1)
@@ -261,6 +275,7 @@ contains
                    dsdy(m)=dsdy(m)-sk2
                    dsdz(m)=dsdz(m)-sk3
                 enddo
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    sk1=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,1)
@@ -276,6 +291,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1 ,j,k1)
              ind2 = indc(i2m1,j,k1)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsdx(m)=dsdx(m)-sn(m,kdir,1)*2*s(m-ninc)
@@ -287,6 +303,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1 ,j,k2)
              ind2 = indc(i2m1,j,k2)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*2*s(m)
@@ -309,6 +326,7 @@ contains
              do k=k1,k2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    sj1=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,1)
@@ -318,6 +336,7 @@ contains
                    dsdy(m)=dsdy(m)-sj2
                    dsdz(m)=dsdz(m)-sj3
                 enddo
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    sj1=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,1)
@@ -333,6 +352,7 @@ contains
           do k=k1,k2m1
              ind1=indc(i1  ,j1,k)
              ind2=indc(i2m1,j1,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsdx(m)=dsdx(m)-sn(m,kdir,1)*2*s(m-ninc)
@@ -344,6 +364,7 @@ contains
           do k=k1,k2m1
              ind1 = indc(i1  ,j2,k)
              ind2 = indc(i2m1,j2,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*2*s(m)
@@ -365,6 +386,7 @@ contains
              do j=j1,j2m1
                 ind1 = indc(i1p1,j,k)
                 ind2 = indc(i2m1,j,k)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    si1=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,1)
@@ -374,6 +396,7 @@ contains
                    dsdy(m)=dsdy(m)-si2
                    dsdz(m)=dsdz(m)-si3
                 enddo
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    si1=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,1)
@@ -389,6 +412,7 @@ contains
           do k=k1,k2m1
              ind1 = indc(i1,j1  ,k)
              ind2 = indc(i1,j2m1,k)
+!$OMP SIMD
              do n=ind1,ind2,ncj
                 m=n-n0c
                 dsdx(m)=dsdx(m)-sn(m,kdir,1)*2*s(m-ninc)
@@ -400,6 +424,7 @@ contains
           do k=k1,k2m1
              ind1 = indc(i2,j1  ,k)
              ind2 = indc(i2,j2m1,k)
+!$OMP SIMD
              do n=ind1,ind2,ncj
                 m=n-n0c
                 dsdx(m-ninc)=dsdx(m-ninc)+sn(m,kdir,1)*2*s(m)
@@ -417,6 +442,7 @@ contains
 !
     ind1 = indc(i1  ,j1  ,k1  )
     ind2 = indc(i2m1,j2m1,k2m1)
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
 !       le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t

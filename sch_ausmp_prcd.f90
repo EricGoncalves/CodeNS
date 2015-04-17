@@ -97,6 +97,7 @@ contains
        ind1 = indc(i1m1,j1m1,k1m1)
        ind2 = indc(i2  ,j2  ,k2  )
     endif
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
        u(n,1)=0.
@@ -128,6 +129,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1p1,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              rhol(m)=v(n-ninc,1)+0.25*muscl*( &
@@ -239,6 +241,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1,j1  ,k)
        ind2 = indc(i1,j2m1,k)
+!$OMP SIMD
        do n=ind1,ind2,ncj
           m=n-n0c
           n1=n-ninc
@@ -281,6 +284,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i2,j1  ,k)
        ind2 = indc(i2,j2m1,k)
+!$OMP SIMD
        do n=ind1,ind2,ncj
           m=n-n0c
           fxx=v(n,2)*(v(n,2)/v(n,1))+ps(n)-pinfl-toxx(n)
@@ -330,6 +334,7 @@ contains
        do j=j1p1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              rhol(m)=v(n-ninc,1)+0.25*muscl*( &
@@ -441,6 +446,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           n1=n-ninc
@@ -483,6 +489,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           fxx=v(n,2)*(v(n,2)/v(n,1))+ps(n)-pinfl-toxx(n)
@@ -531,6 +538,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 rhol(m)=v(n-ninc,1)+0.25*muscl*( &
@@ -641,6 +649,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k1)
           ind2 = indc(i2m1,j,k1)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              n1=n-ninc
@@ -683,6 +692,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k2)
           ind2 = indc(i2m1,j,k2)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              fxx=v(n,2)*(v(n,2)/v(n,1))+ps(n)-pinfl-toxx(n)
@@ -729,6 +739,7 @@ contains
           do j=j1,j2m1
              ind1=indc(i1,j,k)
              ind2=indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 ff(n,1) = ff(n,1) - u(n,1)

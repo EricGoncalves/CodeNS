@@ -84,6 +84,7 @@ contains
        do j=j1,j2m1
           ind1=ind(i1  ,j,k)
           ind2=ind(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              if(temp(n).le.0.) then
                 iarret=iarret+1

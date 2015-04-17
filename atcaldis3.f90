@@ -224,6 +224,7 @@ contains
        do l=1,lzx
           nbdrat(l)=nbd
           if(l.lt.lz) npbrat(l+1)=npbrat(l)+nbdrat(l)
+!$OMP SIMD
           do nf=1,nbd
              lbdrat(npbrat(l)+nf)=lbd(nf)
           end do
@@ -240,6 +241,7 @@ contains
 !
 !       initialisation des distances a une valeur infinie
 !
+!$OMP SIMD
     do n=1,ndimctbx
        dist(n) =reelmx
        mnpar(n)=0

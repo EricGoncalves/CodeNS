@@ -114,6 +114,7 @@ if (equat(6:7).eq.'ke') kfin=7
        do l=1,lzx
           ndeb=npc(l)+1
           nfin=npc(l)+nnc(l)
+!$OMP SIMD
           do nc=ndeb,nfin
              vdual2(nc,1)=0.
              vdual2(nc,2)=0.
@@ -216,6 +217,7 @@ if (equat(6:7).eq.'ke') kfin=7
                 nfin=npc(lm)+nnc(lm)
 !
                 do k=1,kfin
+!$OMP SIMD
                   do nc=ndeb,nfin
                    u0(nc,k)=v(nc,k)
                   enddo
@@ -291,6 +293,7 @@ if (equat(6:7).eq.'ke') kfin=7
                       lm = l+(img-1)*lz
                       ndeb=npc(lm)+1
                       nfin=npc(lm)+nnc(lm)
+!$OMP SIMD
                       do nc=ndeb,nfin
                          ff_du(nc,1)=v(nc,1)-u0(nc,1)
                          ff_du(nc,2)=v(nc,2)-u0(nc,2)
@@ -301,6 +304,7 @@ if (equat(6:7).eq.'ke') kfin=7
                    enddo
 !
                    if(mtcx.gt.0) then
+!$OMP SIMD
                       do mfc=1,mtcx
                          lbd(mfc)=nfbc(mfc)+(img-1)*mtb
                       enddo

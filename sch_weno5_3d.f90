@@ -150,6 +150,7 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2  ,j2  ,k2  )
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0c
        u(n,1)=0.
@@ -239,6 +240,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m2,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              m1=m+ninc
@@ -1262,6 +1264,7 @@ contains
        do j=j1,j2m2
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              m1=m+ninc
@@ -2285,6 +2288,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              m1=m+ninc
@@ -3377,6 +3381,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
 !       flux a la facette frontiere
@@ -3409,6 +3414,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j2m1,k)
        ind2 = indc(i2m1,j2m1,k)
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
           m1=m+ninc
@@ -3446,6 +3452,7 @@ contains
     do j=j1,j2m1
        ind1 = indc(i1  ,j,k1)
        ind2 = indc(i2m1,j,k1)
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
 !       flux a la facette frontiere
@@ -3478,6 +3485,7 @@ contains
     do j=j1,j2m1
        ind1 = indc(i1  ,j,k2m1)
        ind2 = indc(i2m1,j,k2m1)
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0c
 !       flux a la facette frontiere
@@ -3529,6 +3537,7 @@ contains
           do j=j1,j2m1
              ind1=indc(i1,j,k)
              ind2=indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 ff(n,1) = ff(n,1) - u(n,1)

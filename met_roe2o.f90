@@ -79,6 +79,7 @@ contains
        do j = j1m1,j2
           ind1 = ind(i1m1,j,k)+n0
           ind2 = ind(i2  ,j,k)+n0
+!$OMP SIMD
           do n = ind1,ind2
              d(n,6)=0.
              d(n,7)=0.
@@ -98,6 +99,7 @@ contains
           do j = j1,j2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
+!$OMP SIMD
              do m = ind1,ind2
                 n = m+n0
                 n1 = n-ninc
@@ -113,6 +115,7 @@ contains
           do j = j1,j2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
+!$OMP SIMD
              do m = ind1,ind2
                 n = m+n0
                 n1 = n-ninc
@@ -126,6 +129,7 @@ contains
           do j = j1,j2m1
              ind1 = ind(i1,j,k)
              ind2 = ind(i2m1,j,k)
+!$OMP SIMD
              do m = ind1,ind2
                 n=m+n0
                 m1=m-ninc
@@ -160,6 +164,7 @@ contains
           do j = j1,j2
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
+!$OMP SIMD
              do m = ind1,ind2
                 n       = m+n0
                 n1      = n-ninc
@@ -175,6 +180,7 @@ contains
              is=-is
              ind1 = ind(i1,  j,k)
              ind2 = ind(i2m1,j,k)
+!$OMP SIMD
              do m = ind1,ind2
                 del6(m)=del6(m+is*ninc)
                 del7(m)=del7(m+is*ninc)
@@ -186,6 +192,7 @@ contains
           do j = j1,j2
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
+!$OMP SIMD
              do m = ind1,ind2
                 n       = m+n0
                 m1      = m-ninc
@@ -220,6 +227,7 @@ contains
           do j = j1,j2
              ind1 = ind(i1,j,k)
              ind2 = ind(i2,j,k)
+!$OMP SIMD
              do m = ind1,ind2
                 n       = m+n0
                 n1      = n-ninc
@@ -235,6 +243,7 @@ contains
           do k = k1,k2m1
              ind1 = ind(i,j1  ,k)
              ind2 = ind(i,j2m1,k)
+!$OMP SIMD
              do m = ind1,ind2,ncj
                 del6(m)=del6(m+is*ninc)
                 del7(m)=del7(m+is*ninc)
@@ -246,6 +255,7 @@ contains
           do j = j1,j2m1
              ind1 = ind(i1,j,k)
              ind2 = ind(i2,j,k)
+!$OMP SIMD
              do m = ind1,ind2
                 n       = m+n0
                 m1      = m-ninc

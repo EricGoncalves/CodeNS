@@ -140,6 +140,7 @@ contains
        do j=jmin,jmax
           ind1=ind(imin,j,k)
           ind2=ind(imax,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              vx(m)=s(n,2)/s(n,1)
@@ -152,6 +153,7 @@ contains
 !     initialisation
     ind1=ind(id1(l),jd1(l),kd1(l))-n0
     ind2=ind(id2(l),jd2(l),kd2(l))-n0
+!$OMP SIMD
     do m=ind1,ind2
        dvxx(m)=0.
        dvxy(m)=0.
@@ -175,6 +177,7 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 dvxx(m)=dvxx(m)-sn(m,3,1)*(vx(m)+vx(m-nck))
@@ -190,6 +193,7 @@ contains
                 dty(m)=dty(m)-sn(m,3,2)*(temp(n)+temp(n-nck))
                 dtz(m)=dtz(m)-sn(m,3,3)*(temp(n)+temp(n-nck))
              enddo
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 dvxx(m-nck)=dvxx(m-nck)+sn(m,3,1)*(vx(m)+vx(m-nck))
@@ -211,6 +215,7 @@ contains
        do j=j1,j2m1
           ind1 = ind(i1  ,j,k1)
           ind2 = ind(i2m1,j,k1)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              dvxx(m)=dvxx(m)-sn(m,3,1)*2*vx(m-nck)
@@ -231,6 +236,7 @@ contains
        do j=j1,j2m1
           ind1 = ind(i1  ,j,k2)
           ind2 = ind(i2m1,j,k2)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              dvxx(m-nck)=dvxx(m-nck)+sn(m,3,1)*2*vx(m)
@@ -258,6 +264,7 @@ contains
           do k=k1,k2m1
              ind1 = ind(i1  ,j,k)
              ind2 = ind(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 dvxx(m)=dvxx(m)-sn(m,2,1)*(vx(m)+vx(m-ncj))
@@ -273,6 +280,7 @@ contains
                 dty(m)=dty(m)-sn(m,2,2)*(temp(n)+temp(n-ncj))
                 dtz(m)=dtz(m)-sn(m,2,3)*(temp(n)+temp(n-ncj))
              enddo
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 dvxx(m-ncj)=dvxx(m-ncj)+sn(m,2,1)*(vx(m)+vx(m-ncj))
@@ -294,6 +302,7 @@ contains
        do k=k1,k2m1
           ind1 = ind(i1  ,j1,k)
           ind2 = ind(i2m1,j1,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              dvxx(m)=dvxx(m)-sn(m,2,1)*2*vx(m-ncj)
@@ -314,6 +323,7 @@ contains
        do k=k1,k2m1
           ind1 = ind(i1  ,j2,k)
           ind2 = ind(i2m1,j2,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0
              dvxx(m-ncj)=dvxx(m-ncj)+sn(m,2,1)*2*vx(m)
@@ -341,6 +351,7 @@ contains
           do j=j1,j2m1
              ind1 = ind(i1p1,j,k)
              ind2 = ind(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 dvxx(m)=dvxx(m)-sn(m,1,1)*(vx(m)+vx(m-nci))
@@ -356,6 +367,7 @@ contains
                 dty(m)=dty(m)-sn(m,1,2)*(temp(n)+temp(n-nci))
                 dtz(m)=dtz(m)-sn(m,1,3)*(temp(n)+temp(n-nci))
              enddo
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
                 dvxx(m-nci)=dvxx(m-nci)+sn(m,1,1)*(vx(m)+vx(m-nci))
@@ -420,6 +432,7 @@ contains
 !
     ind1 = ind(i1  ,j1  ,k1  )
     ind2 = ind(i2m1,j2m1,k2m1)
+!$OMP SIMD
     do n=ind1,ind2
        m=n-n0
 !      le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t

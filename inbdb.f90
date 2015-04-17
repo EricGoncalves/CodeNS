@@ -72,6 +72,7 @@ contains
     endif
 !
     nbdc(mfbi)=nvbc
+!$OMP SIMD
     do nv=1,nvbc
        bc(mfbi,nv)=vbc(nv)
     enddo
@@ -82,6 +83,7 @@ contains
       do nv=1,nvbc
           mflm = mfbi + (img-1)*mtb
           mt = mmb(mflm)
+!$OMP SIMD
           do m=1,mt
              ml=mpb(mflm)+m
              bceqt(ml,nv)=vbc(nv)

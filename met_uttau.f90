@@ -67,6 +67,7 @@ contains
 !       m0n : idem pour frontieres a normale stockee
 !       mt  : nombre de facettes dans frontiere
 !
+!$OMP SIMD
        do m1=1,mt
 !         boucle sur les facettes de la paroi
 !

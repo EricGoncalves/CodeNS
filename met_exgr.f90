@@ -76,6 +76,7 @@ contains
     do k=k1m1,k2,kinc
        ks=-ks
        do j=j1,j2m1
+!$OMP SIMD
           do i=i1,i2m1
              n=indc(i,j,k)
              m=n-n0c
@@ -104,6 +105,7 @@ contains
        js=-1
        do j=j1m1,j2,jinc
           js=-js
+!$OMP SIMD
           do i=i1m1,i2
              n=indc(i,j,k)
              m=n-n0c

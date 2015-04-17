@@ -94,6 +94,7 @@ contains
 !
     n1=ind(i1m1,j1m1,k1m1)-n0
     n2=ind(i2p1,j2p1,k2p1)-n0
+!$OMP SIMD
     do m=n1,n2
        vv1(m)=0.
        vv2(m)=0.
@@ -104,6 +105,7 @@ contains
     enddo
 !
     if(equat(6:7).eq.'ke') then
+!$OMP SIMD
        do m=n1,n2
           vv6(m)=0.
           vv7(m)=0.
@@ -136,6 +138,7 @@ contains
 !
     do k=kmin,kmax
        do j=jmin,jmax
+!$OMP SIMD
           do i=imin,imax
              n=ind(i,j,k)
              m=n-n0
@@ -191,6 +194,7 @@ contains
     if (equat(1:2).eq.'ns') then
        do k=kmin,kmax
           do j=jmin,jmax
+!$OMP SIMD
              do i=imin,imax
                 n=ind(i,j,k)
                 m=n-n0
@@ -210,6 +214,7 @@ contains
     if(equat(6:7).eq.'ke') then
        do k=kmin,kmax
           do j=jmin,jmax
+!$OMP SIMD
              do i=imin,imax
                 n=ind(i,j,k)
                 m=n-n0
@@ -239,6 +244,7 @@ contains
 !
        do k=k1,k2
           do j=j1,j2
+!$OMP SIMD
              do i=i1,i2
                 n=ind(i,j,k)
                 m=n-n0
@@ -254,6 +260,7 @@ contains
        if (equat(1:2).eq.'ns') then
           do k=k1,k2
              do j=j1,j2
+!$OMP SIMD
                 do i=i1,i2
                    n=ind(i,j,k)
                    m=n-n0
@@ -266,6 +273,7 @@ contains
        if(equat(6:7).eq.'ke') then
           do k=k1,k2
              do j=j1,j2
+!$OMP SIMD
                 do i=i1,i2
                    n=ind(i,j,k)
                    m=n-n0

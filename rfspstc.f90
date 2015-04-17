@@ -77,6 +77,7 @@ contains
        js = -1
        do j = j1m1,j2,jinc
           js = -js
+!$OMP SIMD
           do i = i1,i2m1
              n = ind(i,j,k)
              n1= ind(i,j+js,k+ks)
@@ -93,6 +94,7 @@ contains
        ks = -1
        do k = k1m1,k2,kinc
           ks = -ks
+!$OMP SIMD
           do j = j1,j2m1
              n = ind(i,j,k)
              n1= ind(i+is,j,k+ks)
@@ -109,6 +111,7 @@ contains
        is = -1
        do i = i1m1,i2,iinc
           is = -is
+!$OMP SIMD
           do k = k1,k2m1
              n = ind(i,j,k)
              n1= ind(i+is,j+js,k)

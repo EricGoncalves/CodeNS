@@ -82,6 +82,7 @@ contains
 !
 !       modele de Wilcox
 !
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0
           fd5x0=fd5x(n)
@@ -97,6 +98,7 @@ contains
 !
 !       Modele de Menter
 !
+!$OMP SIMD
        do n=ind1,ind2
           m=n-n0
           fm1=frac(n)

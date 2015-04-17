@@ -61,6 +61,7 @@ contains
           lig=lig+1
 !
 !         valeurs par defaut
+!$OMP SIMD
           do l=1,lzx
              igr(l)=igrl
              jgr(l)=jgrl

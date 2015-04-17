@@ -82,6 +82,7 @@ contains
     dumy1=0.
     dumy2=0.
     dumax=0.
+!$OMP SIMD
     do m=1,neqtx
        dumy2g(m)=0.
        dumaxg(m)=0.
@@ -151,11 +152,13 @@ contains
           npts=npts+nmax
 !
           if(equat(6:7).eq.'ke') then
+!$OMP SIMD
              do m=1,7
                 dumy2g(m)=dumy2g(m)+nmax*dumy2(m)**2
                 dumaxg(m)=max(dumaxg(m),abs(dumax(m)))
              enddo
           else
+!$OMP SIMD
              do m=1,5
                 dumy2g(m)=dumy2g(m)+nmax*dumy2(m)**2
                 dumaxg(m)=max(dumaxg(m),abs(dumax(m)))
@@ -167,6 +170,7 @@ contains
 !
     if(img.eq.1) then
        if(equat(6:7).eq.'ke') then
+!$OMP SIMD
           do m=1,7
              dumy2g(m)=sqrt(dumy2g(m)/npts)
           enddo
@@ -174,6 +178,7 @@ contains
 !        write(imp,form) icyc,(dumy2g(m),m=1,7)
 !        write(imp,form) icyc,(dumaxg(m),m=1,7)
        else
+!$OMP SIMD
           do m=1,5
              dumy2g(m)=sqrt(dumy2g(m)/npts)
           enddo

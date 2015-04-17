@@ -48,6 +48,7 @@ contains
        mt=mmb(mfb)
        tper=protat*real(mper(mfb))
 !
+!$OMP SIMD
        do m=1,mt
           mc=mpc(mfb)+m
           nc=mnc(mc)

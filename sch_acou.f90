@@ -66,6 +66,7 @@ contains
     rcga2=1./cga**2
     rgam1=1./(gam-1.)
     if(ityprk.eq.0) then
+!$OMP SIMD
        do m=ind1,ind2
           nc=m+n0c
 !       coordonnees centre facette
@@ -89,6 +90,7 @@ contains
 !
     else
 !
+!$OMP SIMD
        do m=ind1,ind2
           nc=m+n0c
 !       coordonnees centre facette

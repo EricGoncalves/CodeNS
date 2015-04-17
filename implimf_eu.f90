@@ -98,11 +98,15 @@ contains
              d2w3(ind1-n0c:ind2-n0c),d2w4(ind1-n0c:ind2-n0c),&
              d2w5(ind1-n0c:ind2-n0c))
 
+!!$OMP PARALLEL default(SHARED)
     do k=1,5
+!!$OMP DO SIMD
       do n=ind1,ind2
          d(n,k)=0.
       enddo
+!!$OMP END DO SIMD
     enddo
+!!$OMP DO SIMD
     do n=ind1,ind2
        m=n-n0c
        dfxx(m)=0.
@@ -123,18 +127,22 @@ contains
        coefe(m,2)=0.
        coefe(m,3)=0.
     enddo
+!!$OMP END DO SIMD
 !
 !------coef diagonal ------------------------------------------------
 !
     do k=k1,k2m1
+!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              coefdiag(m)=vol(n)*(fact+1./dt(n))
           enddo
        enddo
+!!$OMP END DO
     enddo
 !
 !-----remplissage du coefficient diagonal par direction---------------
@@ -143,9 +151,11 @@ do kdir=1,numdir
    ninc=inc_dir(4,kdir)
 !
     do k=k1,inc_dir(1,kdir)
+!!$OMP DO PRIVATE(j,n,m,ind1,ind2,cnds,uu,vv,ww,cc)
        do j=j1,inc_dir(2,kdir)
           ind1 = indc(i1,j,k)
           ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
@@ -161,17 +171,21 @@ do kdir=1,numdir
                   + ww*sn(m,kdir,3))) + sqrt(cnds)*cc
           enddo
        enddo
+!!$OMP END DO
     enddo
 !
     do k=k1,inc_dir(1,kdir)
+!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
        do j=j1,inc_dir(2,kdir)
           ind1 = indc(i1  ,j,k)
-             ind2 = indc(inc_dir(3,kdir),j,k)
+          ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
                coefdiag(m)=coefdiag(m) + coefe(m,kdir) + coefe(m+ninc,kdir)
           enddo
        enddo
+!!$OMP END DO
     enddo
 enddo
 !
@@ -184,9 +198,11 @@ enddo
 !-----residu explicite------------------------------------------
 !
         do k=k1,k2m1
+!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
            do j=j1,j2m1
               ind1 = indc(i1  ,j,k)
               ind2 = indc(i2m1,j,k)
+!$OMP SIMD
               do n=ind1,ind2
                  m=n-n0c
                  d2w1(m)=-u(n,1)
@@ -200,9 +216,11 @@ enddo
 
        if(ityprk.ne.0) then
           do k=k1,k2m1
+!!$OMP DO PRIVATE(j,n,m,ind1,ind2)
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
                 ind2 = indc(i2m1,j,k)
+!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
                    d2w1(m)=d2w1(m)-ff(n,1)
@@ -220,10 +238,12 @@ enddo
 !
     do kdir=1,numdir
        do k=k1,inc_dir(1,kdir)
+!!$OMP DO PRIVATE(j,n,m,ind1,ind2,tn1,tn2,tn3,tn5)
           do j=j1,inc_dir(2,kdir)
              ninc=inc_dir(4,kdir)
              ind1 = indc(i1,j,k)
              ind2 = indc(inc_dir(3,kdir),j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*((d(n,2)+d(n-ninc,2))*sn(m,kdir,1)    &
@@ -263,6 +283,7 @@ enddo
                 d2w5(m-ninc)=d2w5(m-ninc) - tn5
              enddo
           enddo
+!!$OMP END DO
        enddo
 enddo
 
@@ -274,9 +295,13 @@ enddo
 !c    calcul des increments de flux
 !
        do k=k1,k2m1
+!!$OMP DO PRIVATE(j,n,m,ind1,ind2,wi1,wi2,wi3,wi4,wi5,ui,vi,wi,pres,&
+!!$OMP fixx,fixy,fixz,fiyy,fiyz,fizz,fiex,fiey,fiez,&
+!!$OMP fxx,fxy,fxz,fyy,fyz,fzz,fex,fey,fez)
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 d(n,1)=d2w1(m)/coefdiag(m)
@@ -326,6 +351,7 @@ enddo
                 dfez(m)=fiez-fez
              enddo
           enddo
+!!$OMP END DO
        enddo
 !
     enddo  !fin boucle sous-iterations
@@ -336,6 +362,7 @@ enddo
 !
 !
     do k=k1,k2m1
+!!$OMP DO PRIVATE(j,n,ind1,ind2)
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
@@ -343,7 +370,11 @@ enddo
              v(n,:)=v(n,:)+d(n,:)
           enddo
        enddo
+!!$OMP END DO
     enddo
+
+!!$OMP END PARALLEL
+
     DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
 
     return

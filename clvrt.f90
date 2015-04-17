@@ -81,6 +81,7 @@ contains
        vrtbet=sqrt(1.-vrtmac*vrtmac)
     endif
 !
+!$OMP SIMD
     do m=1,mt
 !
        qxd0=roud(m)/rod(m)

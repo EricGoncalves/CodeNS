@@ -109,6 +109,7 @@ contains
 !
     do k=k1,k2m1
        do j=j1,j2m1
+!$OMP SIMD
           do i=i1,i2m1
              n=ind(i,j,k)
              ym = 0.125*( y (n     )+y (n+nci  ) &
@@ -132,6 +133,7 @@ contains
     if(equat(1:2).eq.'ns') then
        do k=k1,k2m1
           do j=j1,j2m1
+!$OMP SIMD
              do i=i1,i2m1
                 n=ind(i,j,k)
                 mut(n)=0.
@@ -143,6 +145,7 @@ contains
     if(kfmg.eq.3) then
        do k=k1,k2m1
           do j=j1,j2m1
+!$OMP SIMD
              do i=i1,i2m1
                 n = ind(i,j,k)
                 vdual(n,1) = v(n,1)

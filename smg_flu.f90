@@ -131,6 +131,7 @@ contains
 !-------calcul de la dissipation artificielle Jameson----------------------
 !
     if(ischema.le.4) then
+!$OMP SIMD
        do mfn=1,mtnx
           lbd(mfn)=nfbn(mfn)+(img-1)*mtb
        enddo
@@ -139,6 +140,7 @@ contains
             v,pression,ztemp,cson, &
             ncbd,ncin)
 !
+!$OMP SIMD
        do mfc=1,mtcx
           lbd(mfc)=nfbc(mfc)+(img-1)*mtb
        enddo

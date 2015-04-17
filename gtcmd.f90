@@ -52,6 +52,7 @@ contains
        if(lglin.eq.0) return
        lgt=lgcmd+lglin
        if(lgt.gt.lgcmdx) stop ' commande trop longue '
+!$OMP SIMD
        do ilin=1,lglin
           icmd=lgcmd+ilin
           command(icmd:icmd)=line(ilin:ilin)

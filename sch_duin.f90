@@ -57,6 +57,7 @@ contains
        ind1 = indc(i1  ,j1  ,k1  )
        ind2 = indc(i2m1,j2m1,k2m1)
 !
+!$OMP SIMD
        do m=ind1,ind2
           nc=m+n0c
 !

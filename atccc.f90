@@ -62,6 +62,7 @@ contains
     do k=k1,k2
        do j=j1,j2-1
           indjk=ind(j,k)
+!$OMP SIMD
           do i=i1,i2-1
              n=indjk+(i-id1(l))
              m=n-n0
@@ -76,6 +77,7 @@ contains
     do k=k1,k2-1
        do j=j1,j2-1
           indjk=ind(j,k)
+!$OMP SIMD
           do i=i1,i2-1
              n=indjk+(i-id1(l))
              m=n-n0

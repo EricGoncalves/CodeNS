@@ -30,6 +30,7 @@ contains
     character(len=32) ::  mot(nmx)
     character(len=32) ::  typdat
 !
+!$OMP SIMD
     do icmt=1,32
        comment(icmt:icmt)=' '
     enddo
@@ -49,6 +50,7 @@ contains
        call synterr(mot,imot,nmot,comment)
     else
        typdat(1:32)='                                '
+!$OMP SIMD
        do im=1,imot(nm)
           typdat(im:im)=mot(nm)(im:im)
        enddo

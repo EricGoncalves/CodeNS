@@ -95,6 +95,7 @@ contains
     n0c=npc(l)
 !
 !     mise a zero des tableaux
+!$OMP SIMD
     do in=1,ntab
        alfaa(in)=0.
        betaa(in)=0.
@@ -221,6 +222,7 @@ contains
 !          viscosite a la paroi
              mup=mu(ni)
 !          balayage pour calculet muti
+!$OMP SIMD
              do nn=2,ndis
                 yi=(nn-1)*dy
                 mui(nn)=mu(ni)
@@ -257,6 +259,7 @@ contains
                 betaa(ij)=-(dpdt*(ij-1)*dy-ctmu*betaa(ij+1))/ctmu
              end do
              vit(2)=(dy*dpdt-ctmu2*betaa(3))/(-ctmu2+ctk+ctmu2*alfaa(3))
+!$OMP SIMD
              do j=3,ndis-1
                 vit(j)=alfaa(j)*vit(2)+betaa(j)
              end do
@@ -287,6 +290,7 @@ contains
           som2=0.
           som3=0.
           ff(1)=0.
+!$OMP SIMD
           do kk=1,ndis-1
              som1=som1+(ff(kk)+ff(kk+1))*0.5*dy
              som2=som2+(ff(kk)*(kk-1)+ff(kk+1)*kk)*0.5*dy**2

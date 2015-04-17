@@ -104,6 +104,7 @@ contains
     roe=p/gam1+pinfl+0.5*ro*q**2
 !
     mt=mmb(mfl)
+!$OMP SIMD
     do m=1,mt
        ml=mpb(mfl)+m
        nc=ncbd(ml)

@@ -144,6 +144,7 @@ contains
        do j=jmin,jmax
           ind1=indc(imin,j,k)
           ind2=indc(imax,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              t(m)=v(n,1)
@@ -176,6 +177,7 @@ contains
        do j=j1,j2m1
           ind1=indc(i1  ,j,k)
           ind2=indc(i2m1,j,k)
+!$OMP SIMD
           do n=ind1,ind2
              m=n-n0c
              vort=sqrt((dvzy(m)-dvyz(m))**2+(dvxz(m)-dvzx(m))**2 &
