@@ -283,21 +283,25 @@ contains
 !
           if(icyc.ge.icytur0) then
 !
+!$OMP SINGLE
 !$OMP SIMD
              do mfn=1,mtnx
                 lbd(mfn)=nfbn(mfn)+(img-1)*mtb
              enddo
              nbd=mtnx
+!$OMP END SINGLE
              call rfve( &
                   v,pression,ztemp,cson, &
                   ncbd,ncin)
 !$OMP BARRIER
 !
+!$OMP SINGLE
 !$OMP SIMD
              do mfc=1,mtcx
                 lbd(mfc)=nfbc(mfc)+(img-1)*mtb
              enddo
              nbd=mtcx
+!$OMP END SINGLE
              call rfvc( &
                   v,ncbd,mnc, &
                   pression,ztemp,cson)
@@ -436,19 +440,23 @@ contains
 !
 !-------prolongement des variables aux bords-------------------------------
 !
+!$OMP SINGLE
 !$OMP SIMD
     do mfn=1,mtnx
        lbd(mfn)=nfbn(mfn)+(img-1)*mtb
     enddo
     nbd=mtnx
+!$OMP END SINGLE
 !        call rfve( &
 !                 v,pression,ztemp,cson, &
 !                 ncbd,ncin)
+!$OMP SINGLE
 !$OMP SIMD
     do mfc=1,mtcx
        lbd(mfc)=nfbc(mfc)+(img-1)*mtb
     enddo
     nbd=mtcx
+!$OMP END SINGLE
     call rfvc( &
          v,ncbd,mnc, &
          pression,ztemp,cson)
@@ -488,19 +496,23 @@ contains
 !
 !       champ turbulent
     if((kditur.eq.1).or.(kditur.eq.3)) then
+!$OMP SINGLE
 !$OMP SIMD
        do mfn=1,mtnx
           lbd(mfn)=nfbn(mfn)+(img-1)*mtb
        enddo
        nbd=mtnx
+!$OMP END SINGLE
        call met_rfve(v,ncbd,ncin)
 !$OMP BARRIER
 !
+!$OMP SINGLE
 !$OMP SIMD
        do mfc=1,mtcx
           lbd(mfc)=nfbc(mfc)+(img-1)*mtb
        enddo
        nbd=mtcx
+!$OMP END SINGLE
        call met_rfvc(v,ncbd,mnc)
 !$OMP BARRIER
 !
@@ -1142,7 +1154,9 @@ contains
        endif
 !
     enddo      !fin boucle sur domaines
+!$OMP SINGLE
     deallocate(m2tb,nfrtb,m1tb)
+!$OMP END SINGLE
     return
   end subroutine atsch_num
 end module mod_atsch_num

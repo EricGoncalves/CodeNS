@@ -106,7 +106,7 @@ contains
     ind1=indc(i1m1,j1m1,k1m1)
     ind2=indc(i2+1,j2+1,k2+1)
 !$OMP PARALLEL
-!$OMP DO SIMD
+!$OMP DO !SIMD
     do n=ind1,ind2
        m=n-n0c
        dwi6(m)=0.
@@ -122,7 +122,7 @@ contains
        beta6(m)=0.
        beta7(m)=0.
     enddo
-!$OMP END DO SIMD
+!$OMP END DO !SIMD
 !
 !----calculs du rayon spectral visqueux-------------------------
 !
@@ -282,13 +282,13 @@ contains
 !
     ind1=indc(i1m1,j1m1,k1m1)-n0c
     ind2=indc(i2+1,j2+1,k2+1)-n0c
-!$OMP DO SIMD
+!$OMP DO !SIMD
     do m=ind1,ind2
        alpha(m)=0.
        beta6(m)=0.
        beta7(m)=0.
     enddo
-!$OMP END DO SIMD
+!$OMP END DO !SIMD
 !
     do lj=1,ibalai
 !

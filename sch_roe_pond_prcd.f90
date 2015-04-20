@@ -243,7 +243,7 @@ contains
              rr=v4-vn*beta2
              ss=v5-vn*beta2
              tt=0.5*(v5-v4)
-!        calcul des coefficients des matrices de passage à gauche et a droite
+!        calcul des coefficients des matrices de passage Ã  gauche et a droite
              q11=(1.-gam1*vitm2*am2i)*nx-(vm*nz-wm*ny)*rhomi
              q12=gam1*um*nx*am2i
              q13=gam1*vm*nx*am2i+nz*rhomi

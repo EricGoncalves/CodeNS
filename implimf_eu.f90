@@ -512,7 +512,10 @@ enddo
        enddo
     enddo
 !$OMP END DO nowait
+
+!$OMP SINGLE
     DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
+!$OMP END SINGLE
 
     return
   contains

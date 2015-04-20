@@ -175,7 +175,7 @@ contains
     npsn  =ndir*npfb(l)+1
     lgsnlt=nnn(l)
 !      calcul du laplacien de la vitesse
-!       première composante
+!       premiÃ¨re composante
     call met_laplaciens( &
          l, &
          equat, &
@@ -185,7 +185,7 @@ contains
          dvxx,dvxy,dvxz, &
          tn1,tn2,tn3, &
          cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-!       deuxième composante
+!       deuxiÃ¨me composante
     call met_laplaciens( &
          l, &
          equat, &
@@ -195,7 +195,7 @@ contains
          dvyx,dvyy,dvyz, &
          tn2,tn3,tn10, &
          cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-!       troisième composante
+!       troisiÃ¨me composante
     if(equat(3:4).eq.'3d') then
        call met_laplaciens( &
             l, &
@@ -218,7 +218,7 @@ contains
     cb2sig=cb2/sigma
     cc43=4./3.
 !
-    csas=1.   ! constante modèle SAS
+    csas=1.   ! constante modÃ¨le SAS
 !
     do k=k1,k2m1
        do j=j1,j2m1

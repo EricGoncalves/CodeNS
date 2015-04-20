@@ -20,10 +20,10 @@ contains
 !       dsx      (ip 00)       composante suivant x du gradient de la vitesse
 !       dsy      (ip 00)       composante suivant y du gradient de la vitesse
 !       dsz      (ip 00)       composante suivant z du gradient de la vitesse
-!       dsd2x    (ip 00)       dérivée de ds/x
-!       dsd2y    (ip 00)       dérivéé de ds/y
-!       dsd2z    (ip 00)       dérivée de ds/z
-!       v        (ip 11 ip 60) variables à l'instant n
+!       dsd2x    (ip 00)       dÃ©rivÃ©e de ds/x
+!       dsd2y    (ip 00)       dÃ©rivÃ©Ã© de ds/y
+!       dsd2z    (ip 00)       dÃ©rivÃ©e de ds/z
+!       v        (ip 11 ip 60) variables Ã  l'instant n
 !
 !-----parameters figes--------------------------------------------------
 !

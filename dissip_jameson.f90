@@ -150,6 +150,39 @@ contains
              d(n,3)=d(n,3)-ds3
              d(n,4)=d(n,4)-ds4
              d(n,5)=d(n,5)-ds5
+          enddo
+       enddo
+    enddo
+!$OMP END DO
+!
+!$OMP DO COLLAPSE(2)
+    do k=k1,k2m1
+       do j=j1,j2m1
+          ind1 = indc(i1p1,j,k)
+          ind2 = indc(i2m1,j,k)
+!$OMP SIMD
+          do n=ind1,ind2
+             m=n-n0c
+             eps2=ck2*max(snu(m-ninc),snu(m))
+             eps4=max(0.,ck4-eps2)
+             cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
+                  sn(m,kdir,2)*sn(m,kdir,2)+ &
+                  sn(m,kdir,3)*sn(m,kdir,3)
+             uu=0.5*(v(n,2)/v(n,1)+v(n-ninc,2)/v(n-ninc,1))
+             vv=0.5*(v(n,3)/v(n,1)+v(n-ninc,3)/v(n-ninc,1))
+             ww=0.5*(v(n,4)/v(n,1)+v(n-ninc,4)/v(n-ninc,1))
+             cc=0.5*(cson(n)+cson(n-ninc))
+             rl=abs(uu*sn(m,kdir,1)+vv*sn(m,kdir,2)+ww*sn(m,kdir,3))+sqrt(cnds)*cc
+             ds1=eps2*rl*(v(n,1)-v(n-ninc,1)) &
+                  -eps4*rl*(v(n+ninc,1)+3.*(v(n-ninc,1)-v(n,1))-v(n-2*ninc,1))
+             ds2=eps2*rl*(v(n,2)-v(n-ninc,2)) &
+                  -eps4*rl*(v(n+ninc,2)+3.*(v(n-ninc,2)-v(n,2))-v(n-2*ninc,2))
+             ds3=eps2*rl*(v(n,3)-v(n-ninc,3)) &
+                  -eps4*rl*(v(n+ninc,3)+3.*(v(n-ninc,3)-v(n,3))-v(n-2*ninc,3))
+             ds4=eps2*rl*(v(n,4)-v(n-ninc,4)) &
+                  -eps4*rl*(v(n+ninc,4)+3.*(v(n-ninc,4)-v(n,4))-v(n-2*ninc,4))
+             ds5=eps2*rl*(v(n,5)-v(n-ninc,5)) &
+                  -eps4*rl*(v(n+ninc,5)+3.*(v(n-ninc,5)-v(n,5))-v(n-2*ninc,5))
              d(n-ninc,1)=d(n-ninc,1)+ds1
              d(n-ninc,2)=d(n-ninc,2)+ds2
              d(n-ninc,3)=d(n-ninc,3)+ds3
@@ -272,6 +305,39 @@ contains
              d(n,3)=d(n,3)-ds3
              d(n,4)=d(n,4)-ds4
              d(n,5)=d(n,5)-ds5
+          enddo
+       enddo
+    enddo
+!$OMP END DO
+!
+!$OMP DO COLLAPSE(2)
+    do k=k1,k2m1
+       do j=j1p1,j2m1
+          ind1 = indc(i1  ,j,k)
+          ind2 = indc(i2m1,j,k)
+!$OMP SIMD
+          do n=ind1,ind2
+             m=n-n0c
+             eps2=ck2*max(snu(m-ninc),snu(m))
+             eps4=max(0.,ck4-eps2)
+             cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
+                  sn(m,kdir,2)*sn(m,kdir,2)+ &
+                  sn(m,kdir,3)*sn(m,kdir,3)
+             uu=0.5*(v(n,2)/v(n,1)+v(n-ninc,2)/v(n-ninc,1))
+             vv=0.5*(v(n,3)/v(n,1)+v(n-ninc,3)/v(n-ninc,1))
+             ww=0.5*(v(n,4)/v(n,1)+v(n-ninc,4)/v(n-ninc,1))
+             cc=0.5*(cson(n)+cson(n-ninc))
+             rl=abs(uu*sn(m,kdir,1)+vv*sn(m,kdir,2)+ww*sn(m,kdir,3))+sqrt(cnds)*cc
+             ds1=eps2*rl*(v(n,1)-v(n-ninc,1)) &
+                  -eps4*rl*(v(n+ninc,1)+3.*(v(n-ninc,1)-v(n,1))-v(n-2*ninc,1))
+             ds2=eps2*rl*(v(n,2)-v(n-ninc,2)) &
+                  -eps4*rl*(v(n+ninc,2)+3.*(v(n-ninc,2)-v(n,2))-v(n-2*ninc,2))
+             ds3=eps2*rl*(v(n,3)-v(n-ninc,3)) &
+                  -eps4*rl*(v(n+ninc,3)+3.*(v(n-ninc,3)-v(n,3))-v(n-2*ninc,3))
+             ds4=eps2*rl*(v(n,4)-v(n-ninc,4)) &
+                  -eps4*rl*(v(n+ninc,4)+3.*(v(n-ninc,4)-v(n,4))-v(n-2*ninc,4))
+             ds5=eps2*rl*(v(n,5)-v(n-ninc,5)) &
+                  -eps4*rl*(v(n+ninc,5)+3.*(v(n-ninc,5)-v(n,5))-v(n-2*ninc,5))
              d(n-ninc,1)=d(n-ninc,1)+ds1
              d(n-ninc,2)=d(n-ninc,2)+ds2
              d(n-ninc,3)=d(n-ninc,3)+ds3
@@ -397,6 +463,39 @@ contains
                 d(n,3)=d(n,3)-ds3
                 d(n,4)=d(n,4)-ds4
                 d(n,5)=d(n,5)-ds5
+             enddo
+          enddo
+       enddo
+!$OMP END DO
+!
+!$OMP DO COLLAPSE(2)
+       do k=k1p1,k2m1
+          do j=j1,j2m1
+             ind1 = indc(i1  ,j,k)
+             ind2 = indc(i2m1,j,k)
+!$OMP SIMD
+             do n=ind1,ind2
+                m=n-n0c
+                eps2=ck2*max(snu(m-ninc),snu(m))
+                eps4=max(0.,ck4-eps2)
+                cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
+                     sn(m,kdir,2)*sn(m,kdir,2)+ &
+                     sn(m,kdir,3)*sn(m,kdir,3)
+                uu=0.5*(v(n,2)/v(n,1)+v(n-ninc,2)/v(n-ninc,1))
+                vv=0.5*(v(n,3)/v(n,1)+v(n-ninc,3)/v(n-ninc,1))
+                ww=0.5*(v(n,4)/v(n,1)+v(n-ninc,4)/v(n-ninc,1))
+                cc=0.5*(cson(n)+cson(n-ninc))
+                rl=abs(uu*sn(m,kdir,1)+vv*sn(m,kdir,2)+ww*sn(m,kdir,3))+sqrt(cnds)*cc
+                ds1=eps2*rl*(v(n,1)-v(n-ninc,1)) &
+                     -eps4*rl*(v(n+ninc,1)+3.*(v(n-ninc,1)-v(n,1))-v(n-2*ninc,1))
+                ds2=eps2*rl*(v(n,2)-v(n-ninc,2)) &
+                     -eps4*rl*(v(n+ninc,2)+3.*(v(n-ninc,2)-v(n,2))-v(n-2*ninc,2))
+                ds3=eps2*rl*(v(n,3)-v(n-ninc,3)) &
+                     -eps4*rl*(v(n+ninc,3)+3.*(v(n-ninc,3)-v(n,3))-v(n-2*ninc,3))
+                ds4=eps2*rl*(v(n,4)-v(n-ninc,4)) &
+                     -eps4*rl*(v(n+ninc,4)+3.*(v(n-ninc,4)-v(n,4))-v(n-2*ninc,4))
+                ds5=eps2*rl*(v(n,5)-v(n-ninc,5)) &
+                     -eps4*rl*(v(n+ninc,5)+3.*(v(n-ninc,5)-v(n,5))-v(n-2*ninc,5))
                 d(n-ninc,1)=d(n-ninc,1)+ds1
                 d(n-ninc,2)=d(n-ninc,2)+ds2
                 d(n-ninc,3)=d(n-ninc,3)+ds3
