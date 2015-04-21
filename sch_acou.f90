@@ -35,7 +35,7 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-
+!$OMP MASTER
 !
     n0c=npc(lm)
     i1=ii1(lm)
@@ -61,7 +61,7 @@ contains
     omeg=4.*pis2*freq
     log2=log(2.)
     temps=real(idcyc)*dtpas
-    puls=cos(omeg*temps)
+    puls=cos(omeg*temps)*0.5
 !
     rcga2=1./cga**2
     rgam1=1./(gam-1.)
@@ -70,20 +70,19 @@ contains
        do m=ind1,ind2
           nc=m+n0c
 !       coordonnees centre facette
-          xcc=(x(nc)     +x(nc     +1)+x(nc     +nid)+x(nc     +nid+1) &
+          xcc =(x(nc)     +x(nc     +1)+x(nc     +nid)+x(nc     +nid+1) &
                +x(nc+nijd)+x(nc+nijd+1)+x(nc+nijd+nid)+x(nc+nijd+nid+1))* &
                0.125
-          ycc=(y(nc)     +y(nc     +1)+y(nc     +nid)+y(nc     +nid+1) &
+          ycc =(y(nc)     +y(nc     +1)+y(nc     +nid)+y(nc     +nid+1) &
                +y(nc+nijd)+y(nc+nijd+1)+y(nc+nijd+nid)+y(nc+nijd+nid+1))* &
                0.125
-          zcc=(z(nc)     +z(nc     +1)+z(nc     +nid)+z(nc     +nid+1) &
+          zcc =(z(nc)     +z(nc     +1)+z(nc     +nid)+z(nc     +nid+1) &
                +z(nc+nijd)+z(nc+nijd+1)+z(nc+nijd+nid)+z(nc+nijd+nid+1))* &
                0.125
 !
 !        ts1=0.5*exp(-log2*((xcc-x0)**2 + (ycc-y0)**2
 !     &           +  (zcc-z0)**2)*rcga2)*puls
-          ts1=0.5*exp(-log2*((xcc-x0)**2+(ycc-y0)**2)*rcga2) &
-               *puls
+          ts1=puls*exp(-log2*((xcc-x0)**2+(ycc-y0)**2)*rcga2) 
           u(nc,1) = u(nc,1) - ts1*vol(nc)
           u(nc,5) = u(nc,5) - ts1*vol(nc)*rgam1
        enddo
@@ -107,13 +106,14 @@ contains
 !
 !        ts1=1.*exp(-log2*((xcc-x0)**2 + (ycc-y0)**2
 !     &           +  (zcc-z0)**2)*rcga2)*puls
-          ts1=0.5*exp(-log2*((xcc-x0)**2+(ycc-y0)**2)*rcga2) *puls
+          ts1=puls*exp(-log2*((xcc-x0)**2+(ycc-y0)**2)*rcga2)
           u(nc,1) = u(nc,1) + ff(nc,1) - ts1*vol(nc)
           u(nc,5) = u(nc,5) + ff(nc,5) - ts1*vol(nc)*rgam1
        enddo
 !$OMP END DO !SIMD
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

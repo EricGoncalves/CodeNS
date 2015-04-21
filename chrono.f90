@@ -76,7 +76,7 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-
+!$OMP MASTER
 
 
 !-----calcul du pas de temps local en stationnaire--------------------
@@ -158,6 +158,7 @@ contains
 !
     endif
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

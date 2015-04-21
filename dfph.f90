@@ -28,11 +28,13 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     gam1=gam-1.
     gam2=.5*gam1
     gam3=1./gam
     gam4=1./gam1
     gam5=gam*gam1
+!$OMP END MASTER
 !
     return
   end subroutine dfph

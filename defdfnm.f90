@@ -24,6 +24,7 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     nfi=1
     knfi=1
 !
@@ -57,6 +58,7 @@ contains
     kql=1
     pinfl=1.
     kpinfl=1
+!$OMP END MASTER
 !
     return
   end subroutine defdfnm

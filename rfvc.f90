@@ -41,7 +41,8 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!$OMP BARRIER
+!$OMP MASTER
+!!$OMP BARRIER
     do mf=1,nbd
        mfb=lbd(mf)
        mt =mmb(mfb)
@@ -64,6 +65,7 @@ contains
        enddo
 !$OMP END DO !SIMD
     enddo
+!$OMP END MASTER
 !
     return
   end subroutine rfvc

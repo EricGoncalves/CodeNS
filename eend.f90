@@ -11,7 +11,9 @@ contains
 !
 !***********************************************************************
 !
+!$OMP MASTER
     stop
+!$OMP END MASTER
 !
     return
   end subroutine eend

@@ -41,7 +41,7 @@ contains
 !
     character(len=7 ) :: equat
 !
-
+!$OMP MASTER
 
 
     n0c=npc(lm)
@@ -567,7 +567,7 @@ contains
 !$OMP END DO
 !
     endif
-
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

@@ -23,7 +23,9 @@ contains
     character(len=32) ::  mot(nmx)
 !$OMP MASTER
 !
+!$OMP MASTER
     call gtcmd(command,lgcmd)
+!$OMP END MASTER
     call splcmd(command,lgcmd,mot,imot,nmot)
 !
 !$OMP END MASTER

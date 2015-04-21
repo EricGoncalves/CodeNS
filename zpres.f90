@@ -41,7 +41,7 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-
+!$OMP MASTER
 !
     n0c=npc(l)
     i1=ii1(l)
@@ -98,6 +98,7 @@ contains
     endif
 !$OMP END MASTER
 !
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

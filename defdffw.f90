@@ -18,6 +18,7 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     equat='eu3d '
     kequat=1
 !
@@ -26,6 +27,7 @@ contains
 !
     omg=0.
     komg=1
+!$OMP END MASTER
 !
     return
   end subroutine defdffw

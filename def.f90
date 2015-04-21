@@ -3,35 +3,20 @@ module mod_def
 contains
   subroutine def
     use mod_defcpbd
-
     use mod_defdftl1
-
     use mod_defdfgm
-
     use mod_defintn
-
     use mod_defdfnzst
-
     use mod_defdfph
-
     use mod_defdffw
-
     use mod_defdfst
-
     use mod_defdfpmimd
-
     use mod_defsecpfw
-
     use mod_defdfpmdsd
-
     use mod_defdfpmdtg
-
     use mod_defdfpmtbn
-
     use mod_defdfpmcfg
-
     use mod_defdfnm
-
     use mod_defdfpmdtd
 
     implicit none
@@ -43,6 +28,7 @@ contains
 !
 !***********************************************************************
 !
+!$OMP MASTER
     call defcpbd
     call defdffw
     call defdfgm
@@ -59,6 +45,7 @@ contains
     call defdftl1
     call defintn
     call defsecpfw
+!$OMP END MASTER
 !
     return
   end subroutine def

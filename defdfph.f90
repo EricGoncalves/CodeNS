@@ -28,6 +28,7 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     gam=1.01
     kgam=1
 !
@@ -42,6 +43,7 @@ contains
 !
     reynz=reelmx
     kreynz=0
+!$OMP END MASTER
 !
     return
   end subroutine defdfph

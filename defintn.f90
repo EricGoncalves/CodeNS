@@ -21,8 +21,10 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     numt   =0
     knumt  =1
+!$OMP END MASTER
 !
     return
   end subroutine defintn

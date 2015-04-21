@@ -26,6 +26,7 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     kdtl   =intmx
     icychr0=10
     ncychro=intmx
@@ -35,6 +36,7 @@ contains
     kicychr0=1
     kncychro=0
     kdt1min =0
+!$OMP END MASTER
 !
     return
   end subroutine defdfpmdtg

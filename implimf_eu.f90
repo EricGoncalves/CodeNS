@@ -53,7 +53,7 @@ contains
 !
     character(len=7 ) :: equat
 !
-
+!$OMP MASTER
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)
@@ -92,12 +92,12 @@ contains
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
-!$OMP SINGLE
+!!$OMP SINGLE
     ALLOCATE(coefe(ind1-n0c:ind2-n0c,ndir))
     ALLOCATE(d2w1(ind1-n0c:ind2-n0c),d2w2(ind1-n0c:ind2-n0c),&
              d2w3(ind1-n0c:ind2-n0c),d2w4(ind1-n0c:ind2-n0c),&
              d2w5(ind1-n0c:ind2-n0c))
-!$OMP END SINGLE
+!!$OMP END SINGLE
 
     do k=1,5
 !$OMP DO !SIMD
@@ -513,10 +513,10 @@ enddo
     enddo
 !$OMP END DO nowait
 
-!$OMP SINGLE
+!!$OMP SINGLE
     DEALLOCATE(coefe,d2w1,d2w2,d2w3,d2w4,d2w5)
-!$OMP END SINGLE
-
+!!$OMP END SINGLE
+!$OMP END MASTER
     return
   contains
     function    indc(i,j,k)

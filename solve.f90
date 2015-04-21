@@ -336,6 +336,7 @@ program solve
 !
   character(len=32) :: comment,mot(nmx)
   integer :: Time_1,clock_rate,Time_2,m
+!$OMP MASTER
   call allocdata()
   temp_array=0.
 !
@@ -378,7 +379,9 @@ program solve
 !      open(kres ,file='fres',form='unformatted')
 !
 !     lecture fichier "fatdon" des donnees des modeles 2 equations
+!$OMP MASTER
   call atlecdon
+!$OMP END MASTER
 !
 !     initialisations
 !
@@ -418,24 +421,29 @@ program solve
 !--   CALL UTSOR
         elseif((imot(2).eq.5).and.(mot(2)(1:5).eq.'utsor')) then
            if(equat(1:2).eq.'ns') then
+!$OMP MASTER
               call utsorfr( &
                    ncbd,ncin,v,mu,mut, &
                    toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
                    x,y,z,nxn,nyn,nzn, &
                    pression,ztemp,cson)
+!$OMP END MASTER
 !
 !           calcul et ecriture de y+ pour la premiere maille
 !            hauteur demi-maille adjacente aux parois
               iyplus=1
               if(iyplus.eq.1) then
+!$OMP MASTER
                  call  met_yplus( &
                       ncbd,ncin,v,mu,dist, &
                       toxx,toxy,toxz,toyy,toyz,tozz, &
                       x,y,z,nxn,nyn,nzn)
+!$OMP END MASTER
               endif
 !
 !           integration des epaisseurs de couche limite
 !
+!$OMP MASTER
               call met_intep3( &
                    ncbd,ncin,v, &
                    sn,vol, &
@@ -445,6 +453,7 @@ program solve
                    x,y,z,nxn,nyn,nzn, &
                    pression,cson,ztemp, &
                    cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+!$OMP END MASTER
            else
 !           calcul Euler
 !
@@ -776,6 +785,7 @@ program solve
      endif
 !
   enddo
+!$OMP END MASTER
 !
 contains
 

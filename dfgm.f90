@@ -31,6 +31,7 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     if ((config(1:3).eq.'gan').or.(config(1:3).eq.'hel')) then
        ptrans= 0.
        protat= 4.*pis2/perio
@@ -44,6 +45,7 @@ contains
        perio=ptrans
     endif
 !
+!$OMP END MASTER
     return
   end subroutine dfgm
 end module mod_dfgm

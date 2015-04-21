@@ -23,11 +23,13 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     icytur0=100
     ncyturb=5
 !
     kicytur0=1
     kncyturb=1
+!$OMP END MASTER
 !
     return
   end subroutine defdfpmtbn

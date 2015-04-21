@@ -22,11 +22,13 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     config='tuy '
     kconfig=1
 !
     perio=0.
     kperio=1
+!$OMP END MASTER
 !
     return
   end subroutine defdfgm

@@ -21,8 +21,10 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     kexl=1
     kkexl=1
+!$OMP END MASTER
 !
     return
   end subroutine defcpbd

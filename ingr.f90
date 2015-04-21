@@ -46,7 +46,9 @@ contains
 !        call utinig(l,x,y,z)
     elseif(king.eq.0) then
 !     remplissage des tableaux x , y , z par lecture d' un fichier de reprise
+!$OMP MASTER
        call readdg(l,kdgv,x,y,z)
+!$OMP END MASTER
     endif
 !
     if(lgx.gt.1) then

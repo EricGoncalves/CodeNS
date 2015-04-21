@@ -18,6 +18,7 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     ronz=reelmx
     kronz=0
 !
@@ -35,6 +36,7 @@ contains
 !
     rnz=reelmx
     krnz=0
+!$OMP END MASTER
 !
     return
   end subroutine defdfnzst

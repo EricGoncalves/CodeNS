@@ -213,8 +213,10 @@ contains
     end if
 !
 !     lecture des informations pour calcul des distances
+!$OMP MASTER
     call at_lecopt( &
          igr,jgr,kgr,raptat,idefaut)
+!$OMP END MASTER
 !
 !     initialisation de la liste des frontieres a explorer pour chaque domaine
 !

@@ -27,6 +27,7 @@ contains
 !
 !-----------------------------------------------------------------------
 !
+!$OMP MASTER
     omg=4.*pis2/60.* omg
     omg=omg*dnz/anz
 !
@@ -34,6 +35,7 @@ contains
     if (equat(6:7).eq.'ke') then
        neqtx=7
     endif
+!$OMP END MASTER
 !
     return
   end subroutine dffw

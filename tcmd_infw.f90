@@ -29,6 +29,7 @@ contains
     character(len=32) ::  comment
     character(len=32) ::  mot(nmx)
 !
+!$OMP MASTER
 !$OMP SIMD
     do icmt=1,32
        comment(icmt:icmt)=' '
@@ -68,6 +69,7 @@ contains
        call synterr(mot,imot,nm,comment)
     endif
 !
+!$OMP END MASTER
     return
   end subroutine tcmd_infw
 end module mod_tcmd_infw

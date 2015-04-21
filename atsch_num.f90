@@ -142,12 +142,12 @@ contains
     double precision ::           x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44),          z(ip21)
     double precision ::         znr(ip44),      ztemp(ip11)
     logical          :: gfetke
-
-!$OMP SINGLE
+!$OMP MASTER
+!!$OMP SINGLE
     allocate(m2tb(ip00))
     allocate(nfrtb(ip00))
     allocate(m1tb(ip00))
-!$OMP END SINGLE
+!!$OMP END SINGLE
 
 !
 !-----------------------------------------------------------------------
@@ -222,19 +222,19 @@ contains
           write(imp,'(/,''!atsch_num calcul distance non prevu STOP'')')
           stop
        END SELECT
-!$OMP BARRIER
+!!$OMP BARRIER
        if(kecrdis.eq.1) then
 !          ecriture "fdist" des distances pour tous les domaines
           call at_ecrdist( &
                0, &
                dist,mnpar)
-!$OMP BARRIER
+!!$OMP BARRIER
        endif
 !
 !--------initialisation fonction "fgam" pour transition. Lecture "fatdon"
 !
        call atintrans(ncin,fgam)
-!$OMP BARRIER
+!!$OMP BARRIER
     endif
 !
 !-------------------------------------------------------------------
@@ -262,7 +262,7 @@ contains
           do l=1,lzx
              lm = l+(img-1)*lz
              call zvismo(lm,mu,v,ztemp)
-!$OMP BARRIER
+!!$OMP BARRIER
 !
              ndeb=npc(lm)+1
              nfin=npc(lm)+nnc(lm)
@@ -278,30 +278,30 @@ contains
              do l=1,lzx
                 call met_inmut(l,mu,mut)
              enddo
-!$OMP BARRIER
+!!$OMP BARRIER
           endif
 !
           if(icyc.ge.icytur0) then
 !
-!$OMP SINGLE
+!!$OMP SINGLE
 !$OMP SIMD
              do mfn=1,mtnx
                 lbd(mfn)=nfbn(mfn)+(img-1)*mtb
              enddo
              nbd=mtnx
-!$OMP END SINGLE
+!!$OMP END SINGLE
              call rfve( &
                   v,pression,ztemp,cson, &
                   ncbd,ncin)
-!$OMP BARRIER
+!!$OMP BARRIER
 !
-!$OMP SINGLE
+!!$OMP SINGLE
 !$OMP SIMD
              do mfc=1,mtcx
                 lbd(mfc)=nfbc(mfc)+(img-1)*mtb
              enddo
              nbd=mtcx
-!$OMP END SINGLE
+!!$OMP END SINGLE
              call rfvc( &
                   v,ncbd,mnc, &
                   pression,ztemp,cson)
@@ -391,7 +391,7 @@ contains
                    write(imp,'(/,"!!!atsch_num: kinke=",i4,4x,"non prevue-STOP")')kinke
                    stop
                 END SELECT
-!$OMP BARRIER
+!!$OMP BARRIER
              enddo   ! fin boucle domaine
 !
              if(kutau.eq.1) then
@@ -404,7 +404,7 @@ contains
                      nxn,nyn,nzn, &
                      toxx,toxy,toxz,toyy,toyz,tozz, &
                      v,utau)
-!$OMP BARRIER
+!!$OMP BARRIER
 !
              endif
              if((kfmg.ne.2).or.(img.eq.1))  keinit=0
@@ -423,7 +423,7 @@ contains
 !
        if (equat(1:2).eq.'ns') then
           call zvismo(lm,mu,v,ztemp)
-!$OMP BARRIER
+!!$OMP BARRIER
        endif
     enddo
 !
@@ -440,23 +440,23 @@ contains
 !
 !-------prolongement des variables aux bords-------------------------------
 !
-!$OMP SINGLE
+!!$OMP SINGLE
 !$OMP SIMD
     do mfn=1,mtnx
        lbd(mfn)=nfbn(mfn)+(img-1)*mtb
     enddo
     nbd=mtnx
-!$OMP END SINGLE
+!!$OMP END SINGLE
 !        call rfve( &
 !                 v,pression,ztemp,cson, &
 !                 ncbd,ncin)
-!$OMP SINGLE
+!!$OMP SINGLE
 !$OMP SIMD
     do mfc=1,mtcx
        lbd(mfc)=nfbc(mfc)+(img-1)*mtb
     enddo
     nbd=mtcx
-!$OMP END SINGLE
+!!$OMP END SINGLE
     call rfvc( &
          v,ncbd,mnc, &
          pression,ztemp,cson)
@@ -489,32 +489,32 @@ contains
                   equat, &
                   sn(npsn),lgsnlt, &
                   tn1,pression,cson)
-!$OMP BARRIER
+!!$OMP BARRIER
           END SELECT
        enddo
     endif
 !
 !       champ turbulent
     if((kditur.eq.1).or.(kditur.eq.3)) then
-!$OMP SINGLE
+!!$OMP SINGLE
 !$OMP SIMD
        do mfn=1,mtnx
           lbd(mfn)=nfbn(mfn)+(img-1)*mtb
        enddo
        nbd=mtnx
-!$OMP END SINGLE
+!!$OMP END SINGLE
        call met_rfve(v,ncbd,ncin)
-!$OMP BARRIER
+!!$OMP BARRIER
 !
-!$OMP SINGLE
+!!$OMP SINGLE
 !$OMP SIMD
        do mfc=1,mtcx
           lbd(mfc)=nfbc(mfc)+(img-1)*mtb
        enddo
        nbd=mtcx
-!$OMP END SINGLE
+!!$OMP END SINGLE
        call met_rfvc(v,ncbd,mnc)
-!$OMP BARRIER
+!!$OMP BARRIER
 !
        do l=1,lzx
           lm=l+(img-1)*lz
@@ -526,7 +526,7 @@ contains
                sn(npsn),lgsnlt, &
                tn1,pression)
        enddo
-!$OMP BARRIER
+!!$OMP BARRIER
     endif
 !
 !-------------------------------------------------------------------------------
@@ -545,7 +545,7 @@ contains
          tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10,tm11, &
          tm12,tm13, &
          pression,ztemp,cson)
-!$OMP BARRIER
+!!$OMP BARRIER
 !
 !--------------------------------------------------------------------------
 !         integration du systeme turbulent
@@ -567,7 +567,7 @@ contains
             tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
             tp,cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
             pression,ztemp,cson)
-!$OMP BARRIER
+!!$OMP BARRIER
     endif
 !
 !-------calcul du tenseur des contraintes et du flux de chaleur------ ------
@@ -584,7 +584,7 @@ contains
             tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
             cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
             ztemp)
-!$OMP BARRIER
+!!$OMP BARRIER
     endif
 !
 !-------application de la condition aux limites lois de paroi----------------
@@ -615,7 +615,7 @@ contains
                mnpar,fgam,tp, &
                ztemp)
        endif
-!$OMP BARRIER
+!!$OMP BARRIER
     elseif(lparoi.eq.2) then
 !         approche de Smith
        call cllparoi2( &
@@ -626,7 +626,7 @@ contains
             toxx,toxy,toxz,toyy,toyz,tozz, &
             qcx,qcy,qcz, &
             ztemp,utau,r)
-!$OMP BARRIER
+!!$OMP BARRIER
     endif
 !
 !----------------------------------------------------------------------
@@ -992,7 +992,7 @@ contains
                   pression)
           endif
        END SELECT
-!$OMP BARRIER
+!!$OMP BARRIER
 !
 !--------Preconditionnement basse vitesse de Turkel--------------------
 !        calcul des residus preconditionnes pour calcul tout explicite
@@ -1002,7 +1002,7 @@ contains
                lm,u,v, &
                sn(npsn),lgsnlt, &
                ztemp,cson)
-!$OMP BARRIER
+!!$OMP BARRIER
        endif
 !
 !--------calcul du residu instationnaire------------------------------
@@ -1017,7 +1017,7 @@ contains
                   lm,u,v,icycle, &
                   vol,ptdual)
           endif
-!$OMP BARRIER
+!!$OMP BARRIER
        endif
 !
 !--------contribution acoustique ----------------------------------------
@@ -1037,7 +1037,7 @@ contains
        if(kmf(lm).eq.0) then
 !        calcul tout explicite
           call sch_expli(lm,u,v,dt,vol)
-!$OMP BARRIER
+!!$OMP BARRIER
 !
        elseif(kmf(lm).eq.1) then
 !-------------------------------------------------------------------------
@@ -1109,7 +1109,7 @@ contains
 !
 !-------Equations d'Euler------------------------------------------
 !
-!$OMP BARRIER
+!!$OMP BARRIER
           elseif(equat(1:2).eq.'eu') then
 !          if(kprec.eq.0) then
              call implimf_eu( &
@@ -1154,9 +1154,10 @@ contains
        endif
 !
     enddo      !fin boucle sur domaines
-!$OMP SINGLE
+!!$OMP SINGLE
     deallocate(m2tb,nfrtb,m1tb)
-!$OMP END SINGLE
+!!$OMP END SINGLE
+!$OMP END MASTER
     return
   end subroutine atsch_num
 end module mod_atsch_num
