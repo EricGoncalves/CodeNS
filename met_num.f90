@@ -258,13 +258,13 @@ contains
                      ztemp)
              case default
                 if(equatt(5:5).eq.'R') then    !realisabilite durbin
-                  call lpkomegar( &
-                       v,mu,mut,dist, &
-                       nxn,nyn,nzn, &
-                       ncin,ncbd,l, &
-                       mnpar,fgam,tprod,tp, &
-                       dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                       ztemp)
+                   call lpkomegar( &
+                        v,mu,mut,dist, &
+                        nxn,nyn,nzn, &
+                        ncin,ncbd,l, &
+                        mnpar,fgam,tprod,tp, &
+                        dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                        ztemp)
                 endif
              end select
 !
@@ -833,23 +833,23 @@ contains
                   dist,v,mu,mut, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
           case default
-               if(equatt(5:5).eq.'R') then
+             if(equatt(5:5).eq.'R') then
 !         Modeles k-omega de Menter avec realisabilite de Durbin
-                 call met_komutr( &
-                      l, &
-                      sn,vol,t, &
-                      dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                      dist,v,mu,mut, &
-                      cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-               else
+                call met_komutr( &
+                     l, &
+                     sn,vol,t, &
+                     dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                     dist,v,mu,mut, &
+                     cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+             else
 !         Modeles k-omega de Wilcox et Menter
-                 call met_komut( &
-                      l, &
-                      sn,vol,t, &
-                      dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                      dist,v,mu,mut, &
-                      cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-               endif
+                call met_komut( &
+                     l, &
+                     sn,vol,t, &
+                     dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                     dist,v,mu,mut, &
+                     cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+             endif
           end select
 !
 !------------------------------------------------------------------

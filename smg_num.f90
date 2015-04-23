@@ -95,8 +95,8 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-kfin=5
-if (equat(6:7).eq.'ke') kfin=7
+    kfin=5
+    if (equat(6:7).eq.'ke') kfin=7
 !
 !
 !     niveau de grille courant --> mg
@@ -217,9 +217,9 @@ if (equat(6:7).eq.'ke') kfin=7
                 nfin=npc(lm)+nnc(lm)
 !
                 do k=1,kfin
-                  do nc=ndeb,nfin
-                   u0(nc,k)=v(nc,k)
-                  enddo
+                   do nc=ndeb,nfin
+                      u0(nc,k)=v(nc,k)
+                   enddo
                 enddo
              enddo
 !

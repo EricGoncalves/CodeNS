@@ -130,7 +130,7 @@ contains
     enddo
 !
     do i=1,ip60
-      do n=1,ip11
+       do n=1,ip11
           vdual(n,i)  = reelmx
           vdual1(n,i) = reelmx
           vdual2(n,i) = reelmx

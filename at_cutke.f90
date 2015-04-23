@@ -29,13 +29,13 @@ contains
     select case(kcutke)
     case(0)
        call met_cut(l,v)
-    case(1) 
+    case(1)
 !     les limiteurs sur k et epsilon lies ensembles
        call met_cutke(l,v)
-    case(2) 
+    case(2)
 !      Modele de Spalart Allmaras. Une seule equation (v[n,6])
        call met_cutsa(l,v)
-    case(3) 
+    case(3)
 !     les limiteurs sur k et epsilon sont decouples (famille k-omega)
        call met_cutked(l,v)
     case default

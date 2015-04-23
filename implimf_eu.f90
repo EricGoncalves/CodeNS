@@ -1,7 +1,7 @@
 module mod_implimf_eu
   implicit none
-    double precision,allocatable :: coefe(:,:),   d2w1(:),   d2w2(:),   d2w3(:),   d2w4(:)
-    double precision,allocatable ::    d2w5(:)
+  double precision,allocatable :: coefe(:,:),   d2w1(:),   d2w2(:),   d2w3(:),   d2w4(:)
+  double precision,allocatable ::    d2w5(:)
 contains
   subroutine implimf_eu( &
        lm,u,dt,v,d,ff, &
@@ -95,13 +95,13 @@ contains
 
     ALLOCATE(coefe(ind1-n0c:ind2-n0c,ndir))
     ALLOCATE(d2w1(ind1-n0c:ind2-n0c),d2w2(ind1-n0c:ind2-n0c),&
-             d2w3(ind1-n0c:ind2-n0c),d2w4(ind1-n0c:ind2-n0c),&
-             d2w5(ind1-n0c:ind2-n0c))
+         d2w3(ind1-n0c:ind2-n0c),d2w4(ind1-n0c:ind2-n0c),&
+         d2w5(ind1-n0c:ind2-n0c))
 
     do k=1,5
-      do n=ind1,ind2
-         d(n,k)=0.
-      enddo
+       do n=ind1,ind2
+          d(n,k)=0.
+       enddo
     enddo
     do n=ind1,ind2
        m=n-n0c
@@ -139,41 +139,41 @@ contains
 !
 !-----remplissage du coefficient diagonal par direction---------------
 !
-do kdir=1,numdir
-   ninc=inc_dir(4,kdir)
+    do kdir=1,numdir
+       ninc=inc_dir(4,kdir)
 !
-    do k=k1,inc_dir(1,kdir)
-       do j=j1,inc_dir(2,kdir)
-          ind1 = indc(i1,j,k)
-          ind2 = indc(inc_dir(3,kdir),j,k)
-          do n=ind1,ind2
-             m=n-n0c
-             cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
-                  sn(m,kdir,2)*sn(m,kdir,2)+ &
-                  sn(m,kdir,3)*sn(m,kdir,3)
-             norm=1./v(n,1) ; norm1=1./v(n-ninc,1)
-             uu=0.5*(v(n,2)*norm+v(n-ninc,2)*norm1)
-             vv=0.5*(v(n,3)*norm+v(n-ninc,3)*norm1)
-             ww=0.5*(v(n,4)*norm+v(n-ninc,4)*norm1)
-             cc=0.5*(cson(n)+cson(n-ninc))
-             coefe(m,kdir)=0.5*(abs(  uu*sn(m,kdir,1) &
-                                    + vv*sn(m,kdir,2) &
-                  + ww*sn(m,kdir,3))) + sqrt(cnds)*cc
-          enddo
-       enddo
-    enddo
-!
-    do k=k1,inc_dir(1,kdir)
-       do j=j1,inc_dir(2,kdir)
-          ind1 = indc(i1  ,j,k)
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ind1 = indc(i1,j,k)
              ind2 = indc(inc_dir(3,kdir),j,k)
-          do n=ind1,ind2
-             m=n-n0c
-               coefdiag(m)=coefdiag(m) + coefe(m,kdir) + coefe(m+ninc,kdir)
+             do n=ind1,ind2
+                m=n-n0c
+                cnds=sn(m,kdir,1)*sn(m,kdir,1)+ &
+                     sn(m,kdir,2)*sn(m,kdir,2)+ &
+                     sn(m,kdir,3)*sn(m,kdir,3)
+                norm=1./v(n,1) ; norm1=1./v(n-ninc,1)
+                uu=0.5*(v(n,2)*norm+v(n-ninc,2)*norm1)
+                vv=0.5*(v(n,3)*norm+v(n-ninc,3)*norm1)
+                ww=0.5*(v(n,4)*norm+v(n-ninc,4)*norm1)
+                cc=0.5*(cson(n)+cson(n-ninc))
+                coefe(m,kdir)=0.5*(abs(  uu*sn(m,kdir,1) &
+                     + vv*sn(m,kdir,2) &
+                     + ww*sn(m,kdir,3))) + sqrt(cnds)*cc
+             enddo
+          enddo
+       enddo
+!
+       do k=k1,inc_dir(1,kdir)
+          do j=j1,inc_dir(2,kdir)
+             ind1 = indc(i1  ,j,k)
+             ind2 = indc(inc_dir(3,kdir),j,k)
+             do n=ind1,ind2
+                m=n-n0c
+                coefdiag(m)=coefdiag(m) + coefe(m,kdir) + coefe(m+ninc,kdir)
+             enddo
           enddo
        enddo
     enddo
-enddo
 !
 !*************************************************************************
 !c    boucle sur les sous-iterations
@@ -183,20 +183,20 @@ enddo
 !
 !-----residu explicite------------------------------------------
 !
-        do k=k1,k2m1
-           do j=j1,j2m1
-              ind1 = indc(i1  ,j,k)
-              ind2 = indc(i2m1,j,k)
-              do n=ind1,ind2
-                 m=n-n0c
-                 d2w1(m)=-u(n,1)
-                 d2w2(m)=-u(n,2)
-                 d2w3(m)=-u(n,3)
-                 d2w4(m)=-u(n,4)
-                 d2w5(m)=-u(n,5)
-              enddo
-           enddo
-        enddo
+       do k=k1,k2m1
+          do j=j1,j2m1
+             ind1 = indc(i1  ,j,k)
+             ind2 = indc(i2m1,j,k)
+             do n=ind1,ind2
+                m=n-n0c
+                d2w1(m)=-u(n,1)
+                d2w2(m)=-u(n,2)
+                d2w3(m)=-u(n,3)
+                d2w4(m)=-u(n,4)
+                d2w5(m)=-u(n,5)
+             enddo
+          enddo
+       enddo
 
        if(ityprk.ne.0) then
           do k=k1,k2m1
@@ -218,53 +218,53 @@ enddo
 !------direction i------------------------------------------
 !
 !
-    do kdir=1,numdir
-       do k=k1,inc_dir(1,kdir)
-          do j=j1,inc_dir(2,kdir)
-             ninc=inc_dir(4,kdir)
-             ind1 = indc(i1,j,k)
-             ind2 = indc(inc_dir(3,kdir),j,k)
-             do n=ind1,ind2
-                m=n-n0c
-                tn1=0.5*((d(n,2)+d(n-ninc,2))*sn(m,kdir,1)    &
-                     +   (d(n,3)+d(n-ninc,3))*sn(m,kdir,2)    &
-                     +   (d(n,4)+d(n-ninc,4))*sn(m,kdir,3))
-                tn2=0.5*((dfxx(m)+dfxx(m-ninc))*sn(m,kdir,1)  &
-                     +   (dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2)  &
-                     +   (dfxz(m)+dfxz(m-ninc))*sn(m,kdir,3))
-                tn3=0.5*((dfxy(m)+dfxy(m-ninc))*sn(m,kdir,1)  &
-                     +   (dfyy(m)+dfyy(m-ninc))*sn(m,kdir,2)  &
-                     +   (dfyz(m)+dfyz(m-ninc))*sn(m,kdir,3))
-                tn4=0.5*((dfxz(m)+dfxz(m-ninc))*sn(m,kdir,1)  &
-                     +   (dfyz(m)+dfyz(m-ninc))*sn(m,kdir,2)  &
-                     +   (dfzz(m)+dfzz(m-ninc))*sn(m,kdir,3))
-                tn5=0.5*((dfex(m)+dfex(m-ninc))*sn(m,kdir,1)  &
-                     +   (dfey(m)+dfey(m-ninc))*sn(m,kdir,2)  &
-                     +   (dfez(m)+dfez(m-ninc))*sn(m,kdir,3))
-                d2w1(m)=d2w1(m) + tn1 &
-                     + coefe(m,kdir)*d(n-ninc,1) &
-                     + coefe(m+ninc,kdir)*d(n+ninc,1)
-                d2w2(m)=d2w2(m) + tn2 &
-                     + coefe(m,kdir)*d(n-ninc,2) &
-                     + coefe(m+ninc,kdir)*d(n+ninc,2)
-                d2w3(m)=d2w3(m) + tn3 &
-                     + coefe(m,kdir)*d(n-ninc,3) &
-                     + coefe(m+ninc,kdir)*d(n+ninc,3)
-                d2w4(m)=d2w4(m) + tn4 &
-                     + coefe(m,kdir)*d(n-ninc,4) &
-                     + coefe(m+ninc,kdir)*d(n+ninc,4)
-                d2w5(m)=d2w5(m) + tn5 &
-                     + coefe(m,kdir)*d(n-ninc,5) &
-                     + coefe(m+ninc,kdir)*d(n+ninc,5)
-                d2w1(m-ninc)=d2w1(m-ninc) - tn1
-                d2w2(m-ninc)=d2w2(m-ninc) - tn2
-                d2w3(m-ninc)=d2w3(m-ninc) - tn3
-                d2w4(m-ninc)=d2w4(m-ninc) - tn4
-                d2w5(m-ninc)=d2w5(m-ninc) - tn5
+       do kdir=1,numdir
+          do k=k1,inc_dir(1,kdir)
+             do j=j1,inc_dir(2,kdir)
+                ninc=inc_dir(4,kdir)
+                ind1 = indc(i1,j,k)
+                ind2 = indc(inc_dir(3,kdir),j,k)
+                do n=ind1,ind2
+                   m=n-n0c
+                   tn1=0.5*((d(n,2)+d(n-ninc,2))*sn(m,kdir,1)    &
+                        +   (d(n,3)+d(n-ninc,3))*sn(m,kdir,2)    &
+                        +   (d(n,4)+d(n-ninc,4))*sn(m,kdir,3))
+                   tn2=0.5*((dfxx(m)+dfxx(m-ninc))*sn(m,kdir,1)  &
+                        +   (dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2)  &
+                        +   (dfxz(m)+dfxz(m-ninc))*sn(m,kdir,3))
+                   tn3=0.5*((dfxy(m)+dfxy(m-ninc))*sn(m,kdir,1)  &
+                        +   (dfyy(m)+dfyy(m-ninc))*sn(m,kdir,2)  &
+                        +   (dfyz(m)+dfyz(m-ninc))*sn(m,kdir,3))
+                   tn4=0.5*((dfxz(m)+dfxz(m-ninc))*sn(m,kdir,1)  &
+                        +   (dfyz(m)+dfyz(m-ninc))*sn(m,kdir,2)  &
+                        +   (dfzz(m)+dfzz(m-ninc))*sn(m,kdir,3))
+                   tn5=0.5*((dfex(m)+dfex(m-ninc))*sn(m,kdir,1)  &
+                        +   (dfey(m)+dfey(m-ninc))*sn(m,kdir,2)  &
+                        +   (dfez(m)+dfez(m-ninc))*sn(m,kdir,3))
+                   d2w1(m)=d2w1(m) + tn1 &
+                        + coefe(m,kdir)*d(n-ninc,1) &
+                        + coefe(m+ninc,kdir)*d(n+ninc,1)
+                   d2w2(m)=d2w2(m) + tn2 &
+                        + coefe(m,kdir)*d(n-ninc,2) &
+                        + coefe(m+ninc,kdir)*d(n+ninc,2)
+                   d2w3(m)=d2w3(m) + tn3 &
+                        + coefe(m,kdir)*d(n-ninc,3) &
+                        + coefe(m+ninc,kdir)*d(n+ninc,3)
+                   d2w4(m)=d2w4(m) + tn4 &
+                        + coefe(m,kdir)*d(n-ninc,4) &
+                        + coefe(m+ninc,kdir)*d(n+ninc,4)
+                   d2w5(m)=d2w5(m) + tn5 &
+                        + coefe(m,kdir)*d(n-ninc,5) &
+                        + coefe(m+ninc,kdir)*d(n+ninc,5)
+                   d2w1(m-ninc)=d2w1(m-ninc) - tn1
+                   d2w2(m-ninc)=d2w2(m-ninc) - tn2
+                   d2w3(m-ninc)=d2w3(m-ninc) - tn3
+                   d2w4(m-ninc)=d2w4(m-ninc) - tn4
+                   d2w5(m-ninc)=d2w5(m-ninc) - tn5
+                enddo
              enddo
           enddo
        enddo
-enddo
 
 !
 !*******************************************************************************

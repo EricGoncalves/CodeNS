@@ -489,7 +489,7 @@ program solve
                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
            CALL system_clock(Time_2)
            do m=1,neqt
-             write(*,*) m,temp_array(m,:)
+              write(*,*) m,temp_array(m,:)
            enddo
            print*,'TEMPS DE CALCUL ',(Time_2-Time_1)*1./clock_rate
 !
@@ -728,46 +728,46 @@ program solve
               enddo
            else
 !--   SAVE BOUNDARY BASIC
-           select case(mot(3)(1:imot(3)))
-           case('basic')
-              do mfbi=1,mtbx
-                 call c_svbdb( &
-                      mot,imot,nmot, &
-                      mfbi, &
-                      ncin)
-              enddo
+              select case(mot(3)(1:imot(3)))
+              case('basic')
+                 do mfbi=1,mtbx
+                    call c_svbdb( &
+                         mot,imot,nmot, &
+                         mfbi, &
+                         ncin)
+                 enddo
 !--   SAVE BOUNDARY NORM
-           case('norm')
-              do mfn=1,mtnx
-                 mfbi=nfbn(mfn)
-                 call c_svbdn( &
-                      mot,imot,nmot, &
-                      mfbi, &
-                      nxn,nyn,nzn)
-              enddo
+              case('norm')
+                 do mfn=1,mtnx
+                    mfbi=nfbn(mfn)
+                    call c_svbdn( &
+                         mot,imot,nmot, &
+                         mfbi, &
+                         nxn,nyn,nzn)
+                 enddo
 !--   SAVE BOUNDARY COIN
-           case('coin')
-              do mfc=1,mtcx
-                 mfbi=nfbc(mfc)
-                 call c_svbdc( &
-                      mot,imot,nmot, &
-                      mfbi, &
-                      mnc)
-              enddo
+              case('coin')
+                 do mfc=1,mtcx
+                    mfbi=nfbc(mfc)
+                    call c_svbdc( &
+                         mot,imot,nmot, &
+                         mfbi, &
+                         mnc)
+                 enddo
 !--   SAVE BOUNDARY NONCOIN
-           case('noncoin')
-              do mfr=1,mtrx
-                 mfbi=nfbr(mfr)
-                 do img=1,lgx
+              case('noncoin')
+                 do mfr=1,mtrx
+                    mfbi=nfbr(mfr)
+                    do img=1,lgx
 !             call c_svbdr( &
 !                 mot,imot,nmot, &
 !                 mfbi,img, &
 !                 mnr,xnr,ynr,znr)
+                    enddo
                  enddo
-              enddo
-           case default
-              call synterr(mot,imot,3,cb)
-           end select
+              case default
+                 call synterr(mot,imot,3,cb)
+              end select
            endif
         case default
            call synterr(mot,imot,2,cb)

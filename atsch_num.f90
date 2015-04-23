@@ -212,11 +212,11 @@ contains
        CASE(0)
           if(klecdis.eq.1) then
 !          lecture des distances
-          call at_lecdist( &
-               ldismx,dist,mnpar)
+             call at_lecdist( &
+                  ldismx,dist,mnpar)
 
           endif
-      case DEFAULT
+       case DEFAULT
           write(imp,'(/,''!atsch_num calcul distance non prevu STOP'')')
           stop
        END SELECT
