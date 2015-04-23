@@ -64,7 +64,8 @@ contains
 !
     m=m0
 !
-    if (indfl.eq.'i1') then
+    select case(indfl)
+    case('i1')
        ii=imin-1
        do k=kmin,kmax-1
           do j=jmin,jmax-1
@@ -74,7 +75,7 @@ contains
        enddo
        mt=(kmax-kmin)*(jmax-jmin)
 !
-    else if (indfl.eq.'i2') then
+    case('i2')
        ii=imax
        do k=kmin,kmax-1
           do j=jmin,jmax-1
@@ -84,7 +85,7 @@ contains
        enddo
        mt=(kmax-kmin)*(jmax-jmin)
 !
-    elseif (indfl.eq.'j1') then
+    case('j1')
        jj=jmin-1
        do k=kmin,kmax-1
           do i=imin,imax-1
@@ -94,7 +95,7 @@ contains
        enddo
        mt=(kmax-kmin)*(imax-imin)
 !
-    elseif (indfl.eq.'j2') then
+    case('j2')
        jj=jmax
        do k=kmin,kmax-1
           do i=imin,imax-1
@@ -104,7 +105,7 @@ contains
        enddo
        mt=(kmax-kmin)*(imax-imin)
 !
-    elseif (indfl.eq.'k1') then
+    case('k1')
        kk=kmin-1
        do j=jmin,jmax-1
           do i=imin,imax-1
@@ -114,7 +115,7 @@ contains
        enddo
        mt=(jmax-jmin)*(imax-imin)
 !
-    elseif (indfl.eq.'k2') then
+    case('k2')
        kk=kmax
        do j=jmin,jmax-1
           do i=imin,imax-1
@@ -124,7 +125,7 @@ contains
        enddo
        mt=(jmax-jmin)*(imax-imin)
 !
-    end if
+    end select
 !
     return
   contains

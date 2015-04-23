@@ -231,7 +231,8 @@ contains
        lgsnlt=nnn(lm)
 !
 !********JAMESON**************************************************
-       if(ischema.eq.1) then
+       select case(ischema)
+       case(1)
           call sch_jameson( &
                lm,0, &
                u,v,d,ff, &
@@ -241,7 +242,7 @@ contains
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression)
 !
-       elseif(ischema.eq.2) then
+       case(2)
           call sch_jameson_pond( &
                lm,0, &
                u,v,d,ff, &
@@ -252,7 +253,7 @@ contains
                pression, &
                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-       elseif(ischema.eq.3) then
+       case(3)
           call sch_jameson3( &
                lm,0, &
                u,v,d,ff, &
@@ -262,7 +263,7 @@ contains
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression)
 !
-       elseif(ischema.eq.4) then
+       case(4)
           call sch_jameson3pond( &
                lm,0, &
                u,v,d,ff, &
@@ -275,7 +276,7 @@ contains
                cvi,cvj,cvk)
 !
 !********AUSM+ de LIOU**************************************************
-       elseif(ischema.eq.5) then
+       case(5)
 !
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
@@ -300,7 +301,7 @@ contains
           endif
 !
 !********AUSM+ pondere *************************************************
-       elseif(ischema.eq.6) then
+       case(6)
 !
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
@@ -318,7 +319,7 @@ contains
           endif
 !
 !********ROE**************************************************
-       elseif(ischema.eq.7) then
+       case(7)
 !
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
@@ -354,7 +355,7 @@ contains
 !
 !--------Schema de Roe pondere------------------------------------
 !
-       elseif(ischema.eq.8) then
+       case(8)
           if(kprec.eq.0) then
              call sch_roe_pond( &
                   lm,0, &
@@ -381,7 +382,7 @@ contains
 !
 !--------Schema de Rusanov------------------------------------
 !
-       elseif(ischema.eq.9) then
+       case(9)
           if(kprec.eq.0) then
              call sch_rusanov( &
                   lm,0, &
@@ -404,7 +405,7 @@ contains
 !
 !--------Schema de Jiang&Chu WENO ordre 3-----------------------------------
 !
-       elseif(ischema.eq.10) then
+       case(10)
           if(equat(3:4).eq.'2d') then
              call sch_weno3( &
                   lm,0, &
@@ -427,7 +428,7 @@ contains
 !
 !-------------- WENO 3 pondere-----------------------------------------
 !
-       elseif(ischema.eq.11) then
+       case(11)
           if(equat(3:4).eq.'2d') then
              call sch_weno3pond( &
                   lm,0, &
@@ -453,7 +454,7 @@ contains
 !
 !--------Schema WENO ordre 5-----------------------------------
 !
-       elseif(ischema.eq.12) then
+       case(12)
           if(equat(3:4).eq.'2d') then
              call sch_weno5( &
                   lm,0, &
@@ -476,7 +477,7 @@ contains
 !
 !--------Schema WENO ordre 5 pondere----------------------------
 !
-       elseif(ischema.eq.13) then
+       case(13)
           if(equat(3:4).eq.'2d') then
              call sch_weno5pond( &
                   lm,0, &
@@ -502,7 +503,7 @@ contains
 !
 !*********Schema HLLC avec extrapolation MUSCL*******************
 !
-       elseif(ischema.eq.15) then
+       case(15)
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
                 call sch_hllc( &
@@ -532,7 +533,7 @@ contains
                   tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                   pression)
           endif
-       endif
+       end select
 !
 !------calcul du residu instationnaire------------------------------------
 !

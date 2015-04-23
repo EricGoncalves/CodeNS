@@ -26,21 +26,22 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-    if(kcutke.eq.0) then
+    select case(kcutke)
+    case(0)
        call met_cut(l,v)
-    elseif(kcutke.eq.1) then
+    case(1) 
 !     les limiteurs sur k et epsilon lies ensembles
        call met_cutke(l,v)
-    else if(kcutke.eq.2) then
+    case(2) 
 !      Modele de Spalart Allmaras. Une seule equation (v[n,6])
        call met_cutsa(l,v)
-    else if(kcutke.eq.3) then
+    case(3) 
 !     les limiteurs sur k et epsilon sont decouples (famille k-omega)
        call met_cutked(l,v)
-    else
+    case default
        write(imp,'(/,''!!!met_num: kcutke non prevu'')')
        stop
-    endif
+    end select
 !
     return
   end subroutine at_cutke

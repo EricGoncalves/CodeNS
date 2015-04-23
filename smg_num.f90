@@ -131,19 +131,20 @@ if (equat(6:7).eq.'ke') kfin=7
 !*************************************************************************
 !
     do icycle=1,ncycl
-       if(kfmg.eq.3) then
+       select case(kfmg)
+       case(3)
           icyc=0
           ncyc=0
           ngx=lgx
-       elseif(kfmg.eq.2) then
+       case(2)
           icyc=idcyc
           ncyc=ndcyc
           ngx=mg
-       elseif(kfmg.lt.2) then
+       case(:1)
           icyc=idcyc
           ncyc=ndcyc
           ngx=lgx
-       endif
+       end select
        idcyc = idcyc + 1
        ndcyc = icycle
        kdualto = 0
@@ -445,7 +446,8 @@ if (equat(6:7).eq.'ke') kfin=7
 !      Mise a jour tableaux vdual, vdual1, vdual2, ptdual
 !-------------------------------------------------------------------------
        if(kfmg.eq.3) then
-          if((kdualns.eq.0).or.(kdualns.eq.1)) then
+          select case(kdualns)
+          case(0,1)
 !         if(kdualns.eq.1) then
              call sch_duup( &
                   sn,vol,tn3, &
@@ -454,7 +456,7 @@ if (equat(6:7).eq.'ke') kfin=7
                   ncyc,1, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
              icyc = 0
-          elseif(kdualns.eq.2) then
+          case(2)
 !         elseif((kdualns.eq.0).or.(kdualns.eq.2)) then
              call sch_duup2( &
                   sn,vol,tn3, &
@@ -463,7 +465,7 @@ if (equat(6:7).eq.'ke') kfin=7
                   ncyc,1, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
              icyc = 0
-          endif
+          end select
        endif
 !
     enddo    ! fin boucle icycle sur temps physique

@@ -86,19 +86,20 @@ contains
 !     fact=11./6.  !ordre 3
 
 !     constante du modele
-    if(equatt(1:3).eq.'2JL') then
+    select case(equatt(1:3))
+    case('2JL')
        cmt=1.
-    elseif(equatt(1:3).eq.'2Sm') then
+    case('2Sm')
        cmt=1.43
-    elseif(equatt(1:3).eq.'2WL') then
+    case('2WL')
        cmt=2.
-    elseif(equatt(1:3).eq.'2MT') then
+    case('2MT')
        cmt=1.17
-    elseif(equatt(1:3).eq.'1SA') then
+    case('1SA')
        cmt=1.
-    elseif(equatt(1:3).eq.'2KO') then
+    case('2KO')
        cmt=2.
-    endif
+    end select
 !
 !-----initialisation-----------------------------------------------
 !

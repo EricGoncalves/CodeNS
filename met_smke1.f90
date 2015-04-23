@@ -111,28 +111,29 @@ contains
 !     ----------------------------------------------------------
 !com  met_sour --> calcul des termes sources
 !
-    if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
+    select case(equatt(4:4))
+    case(' ','S')
 !       modele de base et avec correction SST
        call met_smkes( &
             l, &
             mu,v,cfke, &
             tprod,bark,bare,qcxts5,qcyts6)
 !
-    elseif(equatt(4:4).eq.'R') then
+    case('R')
 !      terme source pour JL realisable
        call met_smker( &
             l, &
             v,cfke, &
             tprod,qcxts5,qcyts6, &
             dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz)
-    elseif(equatt(4:4).eq.'C') then      ! Jean Decaix 06/2010
+    case('C')      ! Jean Decaix 06/2010
 !      terme source pour k-e compressible
        call met_smkec( &
             l, &
             mu,v,cfke, &
             cson, &
             tprod,bark,bare,qcxts5,qcyts6)
-    elseif(equatt(4:4).eq.'L') then      ! Jean Decaix 06/2010
+    case('L')      ! Jean Decaix 06/2010
 !      terme source pour k-e SAS
        call met_smkesas( &
             l, &
@@ -142,7 +143,7 @@ contains
             dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
             t,dtdx,tn1,tn2,tn3, &
             cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-    endif
+    end select
 !
     return
   end subroutine met_smke

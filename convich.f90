@@ -16,15 +16,16 @@ contains
     integer          :: kvar
     character(len=24) ::  cvar
 !
-    if(kvar.eq.0) then
+    select case(kvar)
+    case(0)
        cvar=c0
-    else if (kvar.eq.1) then
+    case(1)
        cvar=c1
-    else if (kvar.eq.2) then
+    case(2)
        cvar=c2
-    else if (kvar.eq.3) then
+    case(3)
        cvar=c3
-    endif
+    end select
 !
     return
   end subroutine convich

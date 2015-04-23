@@ -404,19 +404,20 @@ program solve
      call rdcmd(mot,imot,nmot)
 !
 !--   #
-     if((imot(1).eq.1).and.(mot(1)(1:1).eq.'#')) then
+     select case(mot(1)(1:imot(1)))
+     case('#')
         continue
 !--   CALL
-     elseif((imot(1).eq.4).and.(mot(1)(1:4).eq.'call')) then
+     case('call')
 !--   CALL UTDON
-        if((imot(2).eq.9).and.(mot(2)(1:9).eq.'utdon_gen')) then
+        if(mot(2)(1:imot(2)).eq.'utdon_gen') then
            call utdon_gen( &
                 config,cl,x,y,z,omg, &
                 ncbd,v, &
                 nxn,nyn,nzn)
 !
 !--   CALL UTSOR
-        elseif((imot(2).eq.5).and.(mot(2)(1:5).eq.'utsor')) then
+        elseif(mot(2)(1:imot(2)).eq.'utsor') then
            if(equat(1:2).eq.'ns') then
               call utsorfr( &
                    ncbd,ncin,v,mu,mut, &
@@ -457,9 +458,9 @@ program solve
            call synterr(mot,imot,2,cb)
         endif
 !--   COMPUTE
-     elseif  ((imot(1).eq.7).and.(mot(1)(1:7).eq.'compute')) then
+     case('compute')
 !--   COMPUTE FLOW
-        if((imot(2).eq.4).and.(mot(2)(1:4).eq.'flow')) then
+        if(mot(2)(1:imot(2)).eq.'flow') then
 !
            call system_clock(Time_1,clock_rate)
            call c_cpfw( &
@@ -493,7 +494,7 @@ program solve
            print*,'TEMPS DE CALCUL ',(Time_2-Time_1)*1./clock_rate
 !
 !--   COMPUTE BOUNDARY
-        else if((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
+        else if(mot(2)(1:imot(2)).eq.'boundary') then
            call c_cpbd( &
                 mot,imot,nmot, &
                 ncin,nxn,nyn,nzn,ncbd, &
@@ -509,19 +510,19 @@ program solve
            call synterr(mot,imot,2,cb)
         endif
 !--   CREATE
-     elseif((imot(1).eq.6).and.(mot(1)(1:6).eq.'create')) then
+     case('create')
 !--   CREATE DOM
-        if((imot(2).eq.3).and.(mot(2)(1:3).eq.'dom')) then
+        if(mot(2)(1:imot(2)).eq.'dom') then
 !--   CREATE DOM ST
-           if((imot(3).eq.2).and.(mot(3)(1:2).eq.'st')) then
+           if(mot(3)(1:imot(3)).eq.'st') then
               call c_crdms(mot,imot,nmot)
            else
               call synterr(mot,imot,3,cb)
            endif
 !--   CREATE BOUNDARY
-        elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
+        elseif(mot(2)(1:imot(2)).eq.'boundary') then
 !--   CREATE BOUNDARY ST
-           if((imot(3).eq.2).and.(mot(3)(1:2).eq.'st')) then
+           if(mot(3)(1:imot(3)).eq.'st') then
               call c_crbds(mot,imot,nmot,ncbd)
            else
               call synterr(mot,imot,3,cb)
@@ -530,27 +531,28 @@ program solve
            call synterr(mot,imot,2,cb)
         endif
 !--   DEFINE
-     elseif((imot(1).eq.6).and.(mot(1)(1:6).eq.'define')) then
+     case('define')
 !--   DEFINE TITLE
-        if((imot(2).eq.5).and.(mot(2)(1:5).eq.'title')) then
+        select case(mot(2)(1:imot(2)))
+        case('title')
            call c_dftl1(mot,imot,nmot)
 !--   DEFINE GEOMETRY
-        elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'geometry')) then
+        case('geometry')
            call c_dfgm(mot,imot,nmot)
 !--   DEFINE FLOW
-        elseif((imot(2).eq.4).and.(mot(2)(1:4).eq.'flow')) then
+        case('flow')
            call c_dffw(mot,imot,nmot)
 !--   DEFINE PHYSICS
-        elseif((imot(2).eq.7).and.(mot(2)(1:7).eq.'physics')) then
+        case('physics')
            call c_dfph(mot,imot,nmot)
 !--   DEFINE NUMERICS
-        elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'numerics')) then
+        case('numerics')
            call c_dfnm(mot,imot,nmot)
 !--   DEFINE STATE
-        elseif((imot(2).eq.5).and.(mot(2)(1:5).eq.'state')) then
+        case('state')
            call c_dfst(mot,imot,nmot)
 !--   DEFINE NORMALIZ
-        elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'normaliz')) then
+        case('normaliz')
            call c_dfnzst(mot,imot,nmot)
 !
 !     definition d'un etat amont
@@ -565,20 +567,20 @@ program solve
            call c_nzst(roam,aam,tam)
 !
 !--   DEFINE PM_DTD
-        elseif((imot(2).eq.6).and.(mot(2)(1:6).eq.'pm_dtd')) then
+        case('pm_dtd')
            call c_dfpmdtd(mot,imot,nmot)
 !--   DEFINE PM_DTG
-        elseif((imot(2).eq.6).and.(mot(2)(1:6).eq.'pm_dtg')) then
+        case('pm_dtg')
            call c_dfpmdtg(mot,imot,nmot)
 !--   DEFINE PM_TURBN
-        elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'pm_turbn')) then
+        case('pm_turbn')
            call c_dfpmtbn(mot,imot,nmot)
 !--   DEFINE PM_TURBP
-        elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'pm_turbp')) then
+        case('pm_turbp')
 !--   DEFINE PM_TURBP KEPS
-           if((imot(3).eq.4).and.(mot(3)(1:4).eq.'keps')) then
+           if(mot(3)(1:imot(3)).eq.'keps') then
 !--   DEFINE PM_TURBP KEPS GENERAL
-              if((imot(4).eq.7).and.(mot(4)(1:7).eq.'general')) then
+              if(mot(4)(1:imot(4)).eq.'general') then
                  call c_dfpmtbkeg(mot,imot,nmot)
               else
                  call synterr(mot,imot,4,cb)
@@ -587,21 +589,21 @@ program solve
               call synterr(mot,imot,3,cb)
            endif
 !--   DEFINE PM_NUMD
-        elseif((imot(2).eq.7).and.(mot(2)(1:7).eq.'pm_numd')) then
+        case('pm_numd')
            call c_dfpmdsd(mot,imot,nmot)
 !--   DEFINE PM_NUMI
-        elseif((imot(2).eq.7).and.(mot(2)(1:7).eq.'pm_numi')) then
+        case('pm_numi')
            call c_dfpmimd(mot,imot,nmot)
 !--   DEFINE PM_CFG
-        elseif((imot(2).eq.6).and.(mot(2)(1:6).eq.'pm_cfg')) then
+        case('pm_cfg')
            call c_dfpmcfg(mot,imot,nmot)
-        else
+        case default
            call synterr(mot,imot,2,cb)
-        endif
+        end select
 !--   DISPLAY
-     elseif((imot(1).eq.7).and.(mot(1)(1:7).eq.'display')) then
+     case('display')
 !--   DISPLAY BOUNDARY
-        if((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
+        if(mot(2)(1:imot(2)).eq.'boundary') then
            call c_dpbd( &
                 mot,imot,nmot, &
                 ncbd,ncin, &
@@ -611,43 +613,45 @@ program solve
                 tm1,tm2,tm3, &
                 tm4,tm5,tm6)
 !--   DISPLAY DIMENSION
-        elseif((imot(2).eq.9).and.(mot(2)(1:9).eq.'dimension')) then
+        elseif(mot(2)(1:imot(2)).eq.'dimension') then
            call c_dpdim(mot,imot,nmot)
         endif
 !--   END
-     elseif((imot(1).eq.3).and.(mot(1)(1:3).eq.'end')) then
+     case('end')
         call deallocdata
         call c_end(mot,imot,nmot)
 !--   INIT
-     elseif((imot(1).eq.4).and.(mot(1)(1:4).eq.'init')) then
+     case('init')
 !--   INIT DOM
-        if((imot(2).eq.3).and.(mot(2)(1:3).eq.'dom')) then
+        if(mot(2)(1:imot(2)).eq.'dom') then
 !--   INIT DOM XYZ
-           if((imot(3).eq.3).and.(mot(3)(1:3).eq.'xyz')) then
+           select case(mot(3)(1:imot(3)))
+           case('xyz')
               call c_ingr( &
                    mot,imot,nmot, &
                    x,y,z)
 !--   INIT DOM CSVMUT
-           elseif((imot(3).eq.6).and.(mot(3)(1:6).eq.'csvmut')) then
+           case('csvmut')
               call c_infw( &
                    mot,imot,nmot, &
                    x,y,z,v,mut,tnte1,utau, &
                    vdual,vdual1,vdual2)
 !--   INIT DOM NUMT
-           else if((imot(3).eq.4).and.(mot(3)(1:4).eq.'numt')) then
+           case('numt')
               call c_intn(mot,imot,nmot)
-           else
+           case default
               call synterr(mot,imot,3,cb)
-           endif
+           end select
 !--   INIT BOUNDARY
-        elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
+        elseif(mot(2)(1:imot(2)).eq.'boundary') then
 !--   INIT BOUNDARY BASIC
-           if((imot(3).eq.5).and.(mot(3)(1:5).eq.'basic')) then
+           select case(mot(3)(1:imot(3)))
+           case('basic')
               call c_inbdb( &
                    mot,imot,nmot, &
                    ncbd,ncin,bceqt)
 !--   INIT BOUNDARY NORM
-           elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'norm')) then
+           case('norm')
               call c_inbdn( &
                    mot,imot,nmot, &
                    x,y,z, &
@@ -656,14 +660,14 @@ program solve
                    tn1,tn2,tn3,tn4,tn5,tn6, &
                    tn7,tn8,tn9)
 !--   INIT BOUNDARY COIN
-           elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'coin')) then
+           case('coin')
               call c_inbdc( &
                    mot,imot,nmot, &
                    exs1,exs2, &
                    x,y,z, &
                    ncbd,ncin,mnc)
 !--   INIT BOUNDARY NONCOIN
-           elseif((imot(3).eq.7).and.(mot(3)(1:7).eq.'noncoin')) then
+           case('noncoin')
 !            call c_inbdr( &
 !                 mot,imot,nmot, &
 !                 exr1,exr2,exs1,exs2, &
@@ -675,18 +679,20 @@ program solve
 !                 tm31,tm32,tm33,tm34,tm35,tm36,tm37,tm38,tm39,tm40, &
 !                 tm41,tm42,tm43,tm44, &
 !                 tn1,tn2,tn3)
-           else
+           case default
               call synterr(mot,imot,3,cb)
-           endif
+           end select
         else
            call synterr(mot,imot,2,cb)
         endif
 !--   SAVE
-     elseif((imot(1).eq.4).and.(mot(1)(1:4).eq.'save')) then
+     case('save')
 !--   SAVE DOM
-        if((imot(2).eq.3).and.(mot(2)(1:3).eq.'dom')) then
+        select case(mot(2)(1:imot(2)))
+        case('dom')
 !--   SAVE DOM XYZ
-           if((imot(3).eq.3).and.(mot(3)(1:3).eq.'xyz')) then
+           select case(mot(3)(1:imot(3)))
+           case('xyz')
               do l=1,lzx
                  call c_svgr( &
                       mot,imot,nmot, &
@@ -694,7 +700,7 @@ program solve
                       tn1,tn2,tn3)
               enddo
 !--   SAVE DOM CSVMUT
-           elseif((imot(3).eq.6).and.(mot(3)(1:6).eq.'csvmut')) then
+           case('csvmut')
               do l=1,lzx
                  call c_svfw( &
                       mot,imot,nmot, &
@@ -702,16 +708,16 @@ program solve
                       ncin,ncbd, &
                       tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
               enddo
-           else
+           case default
               call synterr(mot,imot,3,cb)
-           endif
+           end select
 !--   SAVE DUAL
-        elseif((imot(2).eq.4).and.(mot(2)(1:4).eq.'dual')) then
+        case('dual')
            do l=1,lzx
               call svdual(l,vdual,vdual1,vdual2)
            enddo
 !--   SAVE BOUNDARY
-        elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
+        case('boundary')
 !--   SAVE BOUNDARY 'CREATION'
            if(nmot.eq.2) then
               do mfbi=1,mtbx
@@ -720,8 +726,10 @@ program solve
                       mfbi, &
                       ncbd)
               enddo
+           else
 !--   SAVE BOUNDARY BASIC
-           else if((imot(3).eq.5).and.(mot(3)(1:5).eq.'basic')) then
+           select case(mot(3)(1:imot(3)))
+           case('basic')
               do mfbi=1,mtbx
                  call c_svbdb( &
                       mot,imot,nmot, &
@@ -729,7 +737,7 @@ program solve
                       ncin)
               enddo
 !--   SAVE BOUNDARY NORM
-           elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'norm')) then
+           case('norm')
               do mfn=1,mtnx
                  mfbi=nfbn(mfn)
                  call c_svbdn( &
@@ -738,7 +746,7 @@ program solve
                       nxn,nyn,nzn)
               enddo
 !--   SAVE BOUNDARY COIN
-           elseif((imot(3).eq.4).and.(mot(3)(1:4).eq.'coin')) then
+           case('coin')
               do mfc=1,mtcx
                  mfbi=nfbc(mfc)
                  call c_svbdc( &
@@ -747,7 +755,7 @@ program solve
                       mnc)
               enddo
 !--   SAVE BOUNDARY NONCOIN
-           elseif((imot(3).eq.7).and.(mot(3)(1:7).eq.'noncoin')) then
+           case('noncoin')
               do mfr=1,mtrx
                  mfbi=nfbr(mfr)
                  do img=1,lgx
@@ -757,23 +765,24 @@ program solve
 !                 mnr,xnr,ynr,znr)
                  enddo
               enddo
-           else
+           case default
               call synterr(mot,imot,3,cb)
+           end select
            endif
-        else
+        case default
            call synterr(mot,imot,2,cb)
-        endif
+        end select
 !--   SET
-     elseif((imot(1).eq.3).and.(mot(1)(1:3).eq.'set')) then
+     case('set')
 !--   SET ENV_CPFW
-        if((imot(2).eq.8).and.(mot(2)(1:8).eq.'env_cpfw')) then
+        if(mot(2)(1:imot(2)).eq.'env_cpfw') then
            call c_secpfw(mot,imot,nmot)
         else
            call synterr(mot,imot,2,cb)
         endif
-     else
+     case default
         call synterr(mot,imot,1,cb)
-     endif
+     end select
 !
   enddo
 !

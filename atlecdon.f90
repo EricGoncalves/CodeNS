@@ -103,7 +103,8 @@ contains
 !       2JLC -> compressible   ;  2JLL -> SAS
 !---------------------------------------------------------------------------
 !
-    if(equatt(1:3).eq.'2JL') then
+    select case(equatt(1:3))
+    case('2JL')
 !
        kcutke =1
        kfludis=1
@@ -144,7 +145,7 @@ contains
 !       Modele k-eps de  Launder Sharma
 !---------------------------------------------------------------------------
 !
-    elseif(equatt(1:3).eq.'2LS') then
+    case('2LS')
 !
        kcutke =1
 !       decouplage limiteur sur k et epsilon pres paroi
@@ -173,7 +174,7 @@ contains
 !       1SAD -> DES Spalart  ; 1SAL -> SAS
 !---------------------------------------------------------------------------
 !
-    elseif(equatt(1:3).eq.'1SA') then
+    case('1SA')
 !
        kcutke =2
        kfludis=2
@@ -207,7 +208,7 @@ contains
 !       2SmS -> SST  ; 2SmR -> realisable ; 2SmL -> SAS
 !--------------------------------------------------------------------
 !
-    elseif(equatt(1:3).eq.'2Sm') then
+    case('2Sm')
 !
        kinke  =3
        kcutke =3
@@ -236,7 +237,7 @@ contains
 !       Modele k-w de Wilcox et Menter (BSL et SST)
 !--------------------------------------------------------------------
 !
-    elseif(equatt(1:3).eq.'2MT' .or. equatt(1:3).eq.'2WL') then
+    case('2MT','2WL')
 !
        kinke  =4
        kcutke =3
@@ -279,7 +280,7 @@ contains
 !       Modele k-eps de Chieng
 !--------------------------------------------------------------------
 !
-    else if(equatt(1:3).eq.'2CH') then
+    case('2CH')
 !
        kcutke =1
        kfludis=1
@@ -300,7 +301,7 @@ contains
 !       Modele k-eps RNG de Yakhot, Orzag, Thangam, Gatski et Speziale
 !----------------------------------------------------------------------------
 !
-    else if(equatt(1:3).eq.'2RN') then
+    case('2RN')
 !
 !       kinke  =6         ! pour interdire l'initialisation
        kinke  =3         ! initialisation comme Smith
@@ -333,7 +334,7 @@ contains
 !       Modele longueur de melange de Michel
 !----------------------------------------------------------------------------
 !
-    elseif(equatt(1:3).eq.'0LM') then
+    case('0LM')
 !
 !      rapvisq: valeur de tau/tau_max pour definir la frontiere de la couche limite
 !      rapvisq=0.02
@@ -343,7 +344,7 @@ contains
 !       Modele k-w de Wilcox compressible
 !----------------------------------------------------------------------------
 !
-    elseif(equatt(1:3).eq.'2KO') then
+    case('2KO')
 !
        kinke  =4
        kcutke =3
@@ -375,7 +376,7 @@ contains
 !       Modele k-e-v2 de Durbin
 !----------------------------------------------------------------------------
 !
-    elseif(equatt(1:3).eq.'3KEV') then
+    case('3KE') !4 character c'est pas possible
 !
        kinke  =4
        kcutke =3
@@ -397,12 +398,12 @@ contains
 !       CALCUL EULER
 !----------------------------------------------------------------------------
 !
-    else if(equatt(1:3).eq.'EU') then
+    case('EU ') !2 character c'est pas possible
 !
-    else
+    case default
        write(imp,'(/,''!!!atlecdon: modele'',a7,'' non prevu'')')equatt
        stop
-    endif
+    end select
 !
     if(klecdis.eq.1 .and. (kcaldis.eq.1 .or. kcaldis.eq.2) ) then
        write(imp,'(/,''!!!atlecdon: lecture et calcul distance '',''incompatible sauf si kcaldis=3'')')

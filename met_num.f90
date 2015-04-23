@@ -192,11 +192,12 @@ contains
 !com        application de la condition aux limites lois de paroi
 !
        if(lparoi.eq.1) then
-          if((equatt(1:3).eq.'2JL').or.(equatt(1:3).eq.'2LS')) then
+          select case(equatt(1:3))
+          case('2JL','2LS')
 !              Modele k-epsilon de Jones Launder
 !              production de k et epsilon dans cellule adjacente aux parois
-             if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S').or. &
-                  (equatt(4:4).eq.'C').or.(equatt(4:4).eq.'L')) then
+             select case(equatt(4:4))
+             case(' ','S','C','L')
                 call lpke( &
                      v,mu,mut,dist, &
                      nxn,nyn,nzn, &
@@ -205,7 +206,7 @@ contains
                      tprod,tp, &
                      ztemp)
 !
-             elseif (equatt(4:4).eq.'R') then
+             case('R')
                 call lpker( &
                      v,mu,mut,dist, &
                      nxn,nyn,nzn, &
@@ -213,9 +214,9 @@ contains
                      mnpar,fgam,tprod, &
                      dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                      ztemp)
-             endif
+             end select
 !
-          else if(equatt(1:3).eq.'2Sm') then
+          case('2Sm')
 !              Modele k-l de Smith
 !              production de k et l imposee dans cellule adjacente aux parois
              call lpkl( &
@@ -226,11 +227,11 @@ contains
                   tprod,ncyc,tp, &
                   ztemp)
 !
-          else if((equatt(1:3).eq.'2WL').or.(equatt(1:3).eq.'2KO') &
-               .or.(equatt(1:3).eq.'2MT')) then
+          case('2WL','2KO','2MT')
 !             Modele k-omega de Wilcox et Menter
 !             production de k et omega dans cellule adjacente aux parois
-             if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
+             select case(equatt(4:4))
+             case(' ','S')
                 call lpkomega( &
                      v,mu,mut,dist, &
                      nxn,nyn,nzn, &
@@ -239,7 +240,7 @@ contains
                      tprod,ncyc,tp, &
                      ztemp)
 !
-             elseif(equatt(4:4).eq.'G') then  !earsm gatski
+             case('G')  !earsm gatski
 !                 call lpkomegag( &
 !                 v,mu,mut,dist, &
 !                 nxn,nyn,nzn, &
@@ -247,8 +248,7 @@ contains
 !                 mnpar,fgam,tprod,tp, &
 !                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz)
 !
-             elseif((equatt(4:4).eq.'R').or. &
-                  (equatt(5:5).eq.'R')) then    !realisabilite durbin
+             case('R')    !realisabilite durbin
                 call lpkomegar( &
                      v,mu,mut,dist, &
                      nxn,nyn,nzn, &
@@ -256,9 +256,19 @@ contains
                      mnpar,fgam,tprod,tp, &
                      dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                      ztemp)
-             endif
+             case default
+                if(equatt(5:5).eq.'R') then    !realisabilite durbin
+                  call lpkomegar( &
+                       v,mu,mut,dist, &
+                       nxn,nyn,nzn, &
+                       ncin,ncbd,l, &
+                       mnpar,fgam,tprod,tp, &
+                       dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                       ztemp)
+                endif
+             end select
 !
-          else if(equatt(1:3).eq.'1SA') then
+          case('1SA')
 !              Modele de Spalart-Allmaras
 !              nutilde imposee dans cellule adjacente aux parois
              call lpsa( &
@@ -267,7 +277,7 @@ contains
                   ncin,ncbd,l, &
                   mnpar,fgam,ncyc,tp, &
                   ztemp)
-          endif
+          end select
 !
        elseif(lparoi.eq.2) then
           if(ncyc.ne.1) then
@@ -277,7 +287,8 @@ contains
                   txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                   v,utau)
           endif
-          if(equatt(1:3).eq.'2Sm') then
+          select case(equatt(1:3))
+          case('2Sm')
 !              Modele k-l de Smith
              call lp2kl( &
                   v,mu,mut,dist, &
@@ -288,7 +299,7 @@ contains
                   tprod,tp,utau,topz, &
                   tn1,tn2,tn3, &
                   pression,ztemp)
-          elseif((equatt(1:3).eq.'2JL').or.(equatt(1:3).eq.'2LS')) then
+          case('2JL','2LS')
 !              Modele k-eps de Jones-Launder ou de Launder-Sharma
              call lp2ke( &
                   v,mu,mut,dist, &
@@ -299,8 +310,7 @@ contains
                   tprod,tp,utau, &
                   tn1,tn2,tn3, &
                   pression,ztemp)
-          elseif((equatt(1:3).eq.'2WL').or.(equatt(1:3).eq.'2KO') &
-               .or.(equatt(1:3).eq.'2MT')) then
+          case('2WL','2KO','2MT')
 !              Modele k-omega de Wilcox ou Menter
              call lp2kw( &
                   v,mu,mut,dist, &
@@ -311,7 +321,7 @@ contains
                   tprod,tp,utau, &
                   tn1,tn2,tn3, &
                   pression,ztemp)
-          elseif(equatt(1:3).eq.'1SA') then
+          case('1SA')
 !              Modele de Spalart-Allmaras
              call lp2sa( &
                   v,mu,mut,dist, &
@@ -322,7 +332,7 @@ contains
                   tp,utau,     &
                   tn1,tn2,tn3, &
                   pression,ztemp)
-          endif
+          end select
        endif
 !           ----------------------------------------------------------
 !com        grad(k)=>txxf5x,txyf5y,txzf5z points interieurs au domaine
@@ -340,7 +350,8 @@ contains
 !
 !com        calcul terme source des equations de transport
 !
-       if(ksecmb.le.1) then
+       select case(ksecmb)
+       case(:1)
 !
 !              modele de Jones Launder
 !
@@ -355,9 +366,10 @@ contains
                cson, &
                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-       else if(ksecmb.eq.2) then
+       case(2)
 !
-          if(equatt(1:4).eq.'1SA ') then
+          select case(equatt(1:4))
+          case('1SA ')
 !
 !              modele de Spalart-Allmaras
 !
@@ -371,7 +383,7 @@ contains
                   qcxts5,qcyts6, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-          elseif(equatt(1:4).eq.'1SAL') then
+          case('1SAL')
 !
 !              modele de Spalart-Allmaras SAS
 !
@@ -386,7 +398,7 @@ contains
                   tn1,tn2,tn3,tn10, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-          elseif(equatt(1:4).eq.'1SAD') then
+          case('1SAD')
 !
 !              DES de Spalart
 !
@@ -399,9 +411,9 @@ contains
                   t,dtdx,dtdy,dtdz,tn10, &
                   qcxts5,qcyts6, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-          endif
+          end select
 !
-       else if(ksecmb.eq.3) then
+       case(3)
 !
 !              modele k-l de Smith
 !              modele k-l de Smith Scale-Adaptative
@@ -431,12 +443,13 @@ contains
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
           endif
 !
-       else if(ksecmb.eq.4) then
+       case(4)
 !
 !              modeles k-omega de Wilcox, Menter, Menter SST
 !              modeles k-omega de Menter + realisabilite de Durbin
 !
-          if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
+          select case(equatt(4:4))
+          case(' ','S')
              call met_smmt( &
                   l,ncyc, &
                   v,mu,mut,dist,mnpar,ncin, &
@@ -445,7 +458,7 @@ contains
                   tn9,qcz000, &
                   qcxts5,qcyts6)
 !
-          elseif(equatt(4:4).eq.'R') then
+          case('R')
              call met_smmtr( &
                   l, &
                   v,mu,mut,dist,mnpar,ncin, &
@@ -453,9 +466,9 @@ contains
                   dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                   tprod,cfke,fracmod, &
                   qcxts5,qcyts6)
-          endif
+          end select
 !
-       else if(ksecmb.eq.5) then
+       case(5)
 !
 !              modele de Chien
 !
@@ -465,7 +478,7 @@ contains
                tprod, &
                qcxts5,qcyts6)
 !
-       else if(ksecmb.eq.6) then
+       case(6)
 !
 !             modele RNG de Yakhot, Orzag, Thangam, Gatski et Speziale
 !
@@ -481,30 +494,31 @@ contains
 !                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
 !
-       else if(ksecmb.eq.8) then
+       case(8)
 !
 !             modele k-omega de Wilcox compressible
 !
-          if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
+          select case(equatt(4:4))
+          case(' ','S')
              call met_smko( &
                   l,v, &
                   txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                   tprod,cfke, &
                   qcxts5,qcyts6,cson)
 !
-          elseif(equatt(4:4).eq.'R') then  !Kok realisable
+          case('R')  !Kok realisable
              call met_smkor( &
                   l,v, &
                   txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                   dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                   tprod,cfke, &
                   qcxts5,qcyts6)
-          endif
+          end select
 !
-       else
+       case default
           write(imp,'(/,''!!!met_num: modele non prevu'')')
           stop
-       endif
+       end select
 !
 ! -----------------------------------------------------------------
 !        calcul des densites de flux dissipatifs
@@ -512,42 +526,43 @@ contains
 !           (txxf5x,txyf5y,txzf5z)<=grad(k) devient (mu+mut/.)grad(k)
 !           (tyyf6x,tyzf6y,tzzf6z)<=grad(e) devient (mu+mut/.)grad(e)
 !
-       if(kfludis.eq.1) then !sigma_k et sigma_e constants
+       select case(kfludis)
+       case(1) !sigma_k et sigma_e constants
           call met_fludc( &
                l, &
                v,mu,mut, &
                t,dtdx,dtdy,dtdz, &
                txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
 !
-       else if(kfludis.eq.2) then !modele Spalart Allmaras
+       case(2) !modele Spalart Allmaras
           call met_fludcsa( &
                l, &
                v,mu, &
                txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
 !
-       else if(kfludis.eq.4) then ! modele de Menter avec fonction de raccordement
+       case(4) ! modele de Menter avec fonction de raccordement
           call met_fludmt( &
                l, &
                v,mu,mut, &
                qcz000, &
                txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
 !
-       else if(kfludis.eq.5) then !modele kw de Kok et Wilcox compressible
+       case(5) !modele kw de Kok et Wilcox compressible
           call met_fludko( &
                l,mu,mut, &
                txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
 !
-       else if(kfludis.eq.6) then ! modele RNG de Yakhot et al
+       case(6) ! modele RNG de Yakhot et al
 !              call met_fludrng( &
 !                 l, &
 !                 v,mu,mut, &
 !                 fracmod, &
 !                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z)
 
-       else
+       case default
           write(imp,'(/,''!!!met_num: kfludis non prevu'')')
           stop
-       endif
+       end select
 !
 !           fin de boucle sur les domaines
     enddo
@@ -722,10 +737,11 @@ contains
 !       Modele k-eps de Jones Launder ou Launder Sharma
 !--------------------------------------------------------------------
 !
-       if(kcmut.eq.1) then
+       select case(kcmut)
+       case(1)
 !
-          if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S').or. &
-               (equatt(4:4).eq.'C').or.(equatt(4:4).eq.'L')) then
+          select case(equatt(4:4))
+          case(' ','S','C','L')
 !            modele de base ou avec correction SST
              call met_kemut( &
                   l, &
@@ -734,7 +750,7 @@ contains
                   dist,v,mu,mut, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-          else if(equatt(4:4).eq.'R') then
+          case('R')
 !            modele de Jones Launder realisable
              call met_kemutr( &
                   l,ncyc, &
@@ -742,7 +758,7 @@ contains
                   dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                   v,mu,mut, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-          else if(equatt(4:4).eq.'M') then
+          case('M')
 !            modele de Jones Launder modifie avec C_mu variable
              call met_kemutm( &
                   l, &
@@ -750,13 +766,13 @@ contains
                   dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                   v,mu,mut, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-          endif
+          end select
 !
 !------------------------------------------------------------------
 !       Modele de Spalart-Allmaras
 !------------------------------------------------------------------
 !
-       else if(kcmut.eq.2) then
+       case(2)
 !
           call met_samut(l,v,mu,mut)
 !
@@ -764,13 +780,14 @@ contains
 !       Modele k-l de Smith
 !------------------------------------------------------------------
 !
-       else if(kcmut.eq.3) then
+       case(3)
 !
-          if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'L')) then
+          select case(equatt(4:4))
+          case(' ','L')
 !            modele k-l de base et SAS
              call met_klmut(l,v,mu,mut,dist)
 !
-          elseif(equatt(4:4).eq.'S') then
+          case('S')
 !            modele k-l avec correction SST
              call met_klsmut( &
                   l, &
@@ -778,7 +795,7 @@ contains
                   dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                   dist,v,mu,mut, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-          elseif(equatt(4:4).eq.'R') then
+          case('R')
 !            modele k-l realisable
              call met_klrmut( &
                   l, &
@@ -787,18 +804,19 @@ contains
                   dist,v,mu,mut, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-          else
+          case default
              write(imp,'(/,''!!!met_num: modele k-l de Smith '',''non prevu'')')
              stop
-          endif
+          end select
 !
 !-------------------------------------------------------------
 !       Modele k-w de Wilcox et de Menter
 !-------------------------------------------------------------
 !
-       else if(kcmut.eq.4) then
+       case(4)
 !
-          if(equatt(4:4).eq.'G') then
+          select case(equatt(4:4))
+          case('G')
 !         modele EASM de Gatski et Speziale
 !            call met_komutg( &
 !                 l, &
@@ -806,8 +824,7 @@ contains
 !                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
 !                 v,mu,mut, &
 !                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-          elseif((equatt(4:4).eq.'R').or. &
-               (equatt(5:5).eq.'R')) then
+          case('R')
 !         Modeles k-omega de Menter avec realisabilite de Durbin
              call met_komutr( &
                   l, &
@@ -815,21 +832,31 @@ contains
                   dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                   dist,v,mu,mut, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-          else
+          case default
+               if(equatt(5:5).eq.'R') then
+!         Modeles k-omega de Menter avec realisabilite de Durbin
+                 call met_komutr( &
+                      l, &
+                      sn,vol,t, &
+                      dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                      dist,v,mu,mut, &
+                      cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+               else
 !         Modeles k-omega de Wilcox et Menter
-             call met_komut( &
-                  l, &
-                  sn,vol,t, &
-                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                  dist,v,mu,mut, &
-                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-          endif
+                 call met_komut( &
+                      l, &
+                      sn,vol,t, &
+                      dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                      dist,v,mu,mut, &
+                      cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+               endif
+          end select
 !
 !------------------------------------------------------------------
 !       Modele k-eps de Chieng
 !------------------------------------------------------------------
 !
-       else if(kcmut.eq.5) then
+       case(5)
 !
           call met_chmut( &
                l, &
@@ -841,7 +868,7 @@ contains
 !       et les sillages
 !------------------------------------------------------------------
 !
-       else if(kcmut.eq.6) then
+       case(6)
 !
           call met_mutke2( &
                l,ncyc, &
@@ -853,7 +880,7 @@ contains
 !       Modele bicouche k-eps RNG avec k-l a la paroi
 !------------------------------------------------------------------
 !
-       else if(kcmut.eq.7) then
+       case(7)
 !
 !            call met_rngmut( &
 !                 l, &
@@ -863,9 +890,10 @@ contains
 !       Modele k-omega de Kok et Wilcox compressible
 !------------------------------------------------------------------
 !
-       else if(kcmut.eq.8) then
+       case(8)
 !
-          if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S')) then
+          select case(equatt(4:4))
+          case(' ','S')
 !           modele standard ou SST
              call met_kocmut( &
                   l, &
@@ -880,7 +908,7 @@ contains
 !     &           dist,v,mu,mut,
 !     &           cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-          else if(equatt(4:4).eq.'R') then
+          case('R')
 !           modele avec realisabilite de Durbin
 !            call met_kokmutr( &
 !                 l, &
@@ -889,11 +917,11 @@ contains
 !                 v,mu,mut, &
 !                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
-          else
+          case default
              write(imp,'(/,''!!!met_num:  non prevu'')')
              stop
-          endif
-       endif
+          end select
+       end select
 !
 !------------------------------------------------------------------
 !       Transition fixee
