@@ -42,7 +42,8 @@ contains
     double precision ::                  si4,                 sj0,                 sj1,                 sj2,                 sj3
     double precision ::                  sj4,                 sk0,                 sk1,                 sk2,                 sk3
     double precision ::                  sk4,sn(lgsnlt,nind,ndir),          toxx(ip12),          toxy(ip12),          toxz(ip12)
-    double precision ::           toyy(ip12),          toyz(ip12),          tozz(ip12),        u(ip11,ip60),        v(ip11,ip60),norm
+    double precision ::           toyy(ip12),          toyz(ip12),          tozz(ip12),        u(ip11,ip60),        v(ip11,ip60)
+    double precision ::                 norm
 !
 !-----------------------------------------------------------------------
 !

@@ -26,7 +26,7 @@ option(lto     "Enable link-time optimizations" ON)
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
   set(CMAKE_Fortran_FLAGS         "-fPIC -g  -traceback -u -override-limits")
   set(CMAKE_Fortran_FLAGS_RELEASE "-xHOST -O3 -no-prec-div -fp-model fast=2 -fno-alias -fno-fnalias -opt-subscript-in-range ") #  -init=zero -prof-use -prof-dir=prof_dir/  -prof-gen
-  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -C -debug all -warn all,nounused -fpe0 -ftrapuv -fstack-protector-all  -init=snan -WB -fp-stack-check -u -gen-interfaces ") # -stand f08 -warn nodeclarations
+  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -C -debug all -warn all,nounused -fpe0 -ftrapuv -fstack-protector-all  -init=snan -WB -fp-stack-check -u -gen-interfaces -stand f08") #  -warn nodeclarations
   set(DOUBLE_FLAGS "-r8")
   set(OPTRPT_FLAGS "-qopt-report=5 -guide -diag-enable=openmp,vec,par")
   set(LTO_FLAGS    "-ipo -ipo-jobs=8")
@@ -37,10 +37,10 @@ endif ()
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_Fortran_FLAGS         "-fPIC -ffree-line-length-none -g -fbacktrace  -fimplicit-none ")
   set(CMAKE_Fortran_FLAGS_RELEASE "-O3 -march=native -ffast-math -funsafe-math-optimizations -finit-local-zero -ftree-loop-distribution -ftree-loop-im") #
-  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra  -Wimplicit-interface -Wno-unused-parameter -Wno-unused -Wno-unused-dummy-argument -finit-real=snan -fcheck=all") #    -pedantic -std=f2008 
+  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra  -Wimplicit-interface -Wno-unused-parameter -Wno-unused -Wno-unused-dummy-argument -finit-real=snan -fcheck=all -pedantic -std=f2008ts")
   set(DOUBLE_FLAGS "-fdefault-real-8 -fdefault-double-8")
   set(OPTRPT_FLAGS "-ftree-vectorizer-verbose")
-  set(LTO_FLAGS    "-fwhole-program ") # -combine -flto=jobserver
+  set(LTO_FLAGS    "-flto ") # -combine -flto=jobserver
   set(OPENMP_FLAGS "-fopenmp")
 endif ()
 

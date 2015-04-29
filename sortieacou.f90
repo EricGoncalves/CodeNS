@@ -27,7 +27,7 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-    character*40 nom
+    character(len=40) :: nom
     character(len=1 ) :: c
 !
     n0c=npc(l)
