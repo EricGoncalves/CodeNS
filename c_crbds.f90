@@ -23,7 +23,8 @@ contains
     implicit none
     integer          ::       imax,      imin, imot(nmx),      jmax,      jmin
     integer          ::       kini,      kmax,      kmin,         l,      mfbe
-    integer          :: ncbd(ip41),      nmot
+    integer          ::       nmot
+    integer,allocatable :: ncbd(:)
 !
 !-----------------------------------------------------------------------
 !

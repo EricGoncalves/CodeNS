@@ -63,7 +63,8 @@ contains
     integer          ::       imax,       img,      imgi,      imgj,      imgk
     integer          ::       imin,      jmax,      jmin,      kini,      kmax
     integer          ::       kmin,         l,        lm,        m0,      mfbe
-    integer          ::       mfbi,     mfbim,        mt,ncbd(ip41)
+    integer          ::       mfbi,     mfbim,        mt
+    integer, allocatable :: ncbd(:)
 !
 !-----------------------------------------------------------------------
 !

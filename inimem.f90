@@ -1,19 +1,7 @@
 module mod_inimem
   implicit none
 contains
-  subroutine inimem( &
-       dt,v,mu,mut, &
-       toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-       sn, &
-       vol, &
-       ptdual,vdual,vdual1,vdual2, &
-       cvi,cvj,cvk, &
-       cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
-       pression,ztemp,cson, &
-       tnte1,tnte3,tnte4, &
-       ncyc, &
-       tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-       comment)
+  subroutine inimem(ncyc)
 !
 !***********************************************************************
 !
@@ -80,15 +68,6 @@ contains
     use mod_inivec
     implicit none
     integer          :: icmt,ncyc
-    double precision ::       cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21),      cmuk1(ip21)
-    double precision ::       cmuk2(ip21),       cson(ip11),        cvi(ip21),        cvj(ip21),        cvk(ip21)
-    double precision ::          dt(ip11),         mu(ip12),        mut(ip12),   pression(ip11),ptdual(ip11,ip60)
-    double precision ::         qcx(ip12),        qcy(ip12),        qcz(ip12),    sn(ip31*ndir),        tn1(ip00)
-    double precision ::        tn10(ip00),        tn2(ip00),        tn3(ip00),        tn4(ip00),        tn5(ip00)
-    double precision ::         tn6(ip00),        tn7(ip00),        tn8(ip00),        tn9(ip00), tnte1(ip11,ip60)
-    double precision ::  tnte3(ip11,ip60), tnte4(ip11,ip60),       toxx(ip12),       toxy(ip12),       toxz(ip12)
-    double precision ::        toyy(ip12),       toyz(ip12),       tozz(ip12),     v(ip11,ip60), vdual(ip11,ip60)
-    double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),        vol(ip11),      ztemp(ip11)
 !
 !-----------------------------------------------------------------------
 !
@@ -167,19 +146,6 @@ contains
     kvisq=0
     ql=0.
     pinfl=1.
-!
-!     initialisation des tableaux
-    call inivec( &
-         dt,v,mu,mut, &
-         toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-         sn, &
-         vol, &
-         ptdual,vdual,vdual1,vdual2, &
-         cvi,cvj,cvk, &
-         cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
-         pression,ztemp,cson, &
-         tnte1,tnte3,tnte4, &
-         tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10)
 !
     return
   end subroutine inimem

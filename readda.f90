@@ -48,8 +48,9 @@ contains
     integer          ::       k2,    k2m1,     kda,       l,       m
     integer          :: mdimtnxl,       n,      n0,     nid,    nijd
     integer          ::      njd,    resu
-    double precision ::         mut(ip12),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
+    double precision ::         mut(ip12),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
     double precision :: vdual2(ip11,ip60)
+    double precision,allocatable :: utau(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -101,6 +102,8 @@ contains
 !         modeles de Chien ou k-omega bas Reynolds ou
 !         k-omega de Wilcox ou Menter avec rugosite
           read(kda,iostat=resu)mdimtnxl
+          deallocate(utau)
+          allocate(utau(mdimtnxl))
           if(resu .EQ. 0) then
              read(kda) utau(1:mdimtnxl)
           else

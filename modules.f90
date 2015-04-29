@@ -19,52 +19,6 @@ module para_fige
   parameter(lgcmdx=1316  )
 end module para_fige
 !
-module para_var
-implicit none
-  integer          ::    ccg2,   cfg2,   cng2,   ip00,   ip11
-  integer          ::    ip12,   ip13,   ip21,   ip31,   ip40
-  integer          ::    ip41,   ip42,   ip43,   ip44,   ip60
-  integer          ::   kdimg,  kdimk,  kdimv,mdimtbf,mdimtcf
-  integer          :: mdimtnf,mdimtrf, mdimub,ndimctf,ndimnts
-  integer          :: ndimntu, ndimub,   nvar
-  double precision :: ccg,cfg,cng
-  parameter(ndimub =120000)
-  parameter(ndimctf=100000)
-  parameter(ndimnts=100000)
-  parameter(ndimntu=1)
-  parameter(kdimg  =1)
-  parameter(kdimv  =1)
-  parameter(kdimk  =1)
-  parameter(mdimub =400)
-  parameter(mdimtbf=900)
-  parameter(mdimtnf=900)
-  parameter(mdimtcf=160)
-  parameter(mdimtrf=1)
-  parameter(nvar   =7)
-!  parameter(    ccg=1./3.) !3D
-!  parameter(    cng=1./3.) !3D
-  parameter(    ccg=1./2.)
-  parameter(    cng=1./2.)
-  parameter(    cfg=1.)
-!parameter(     ccg2=3) !3D
-!parameter(     cng2=3) !3D
-  parameter(   ccg2=2)
-  parameter(   cng2=2)
-  parameter(   cfg2=1)
-  parameter(ip00=ndimub)
-  parameter(ip11=ndimctf+kdimg*ndimctf/ccg2)
-  parameter(ip12=kdimv*(ip11-1)+1)
-  parameter(ip13=kdimk*(ip11-1)+1)
-  parameter(ip21=ndimnts+kdimg*ndimnts/cng2+ndimntu)
-  parameter(ip31=1+3*(ndimnts+kdimg*ndimnts/cng2))
-  parameter(ip40=mdimub)
-  parameter(ip41=mdimtbf+kdimg*mdimtbf/cfg2)
-  parameter(ip42=mdimtbf+kdimg*mdimtbf/cfg2)
-  parameter(ip43=mdimtbf+kdimg*mdimtbf/cfg2)
-  parameter(ip44=mdimtbf+kdimg*mdimtbf/cfg2)
-  parameter(ip60=nvar)
-end module para_var
-!
 module boundary
   use para_fige
 implicit none
@@ -92,6 +46,41 @@ implicit none
   integer          ::    nnfb(lt),    nnn(lt), npbrat(lz),    npc(lt),   npfb(lt)
   integer          ::     npn(lt),      nptot
 end module maillage
+!
+module para_var
+    use maillage
+implicit none
+  integer          ::    ccg2,   cfg2,   cng2,   ip00,   ip11
+  integer          ::    ip12,   ip13,   ip21,   ip31,   ip40
+  integer          ::    ip41,   ip42,   ip43,   ip44,   ip60
+  integer          ::   kdimg,  kdimk,  kdimv,mdimtbf,mdimtcf
+  integer          :: mdimtnf,mdimtrf, mdimub,ndimctf,ndimnts
+  integer          :: ndimntu, ndimub,   nvar
+  double precision :: ccg,cfg,cng
+  parameter(ndimub =1200000)
+  parameter(ndimctf=1000000)
+  parameter(ndimnts=1000000)
+  parameter(ndimntu=1)
+  parameter(kdimg  =1)
+  parameter(kdimv  =1)
+  parameter(kdimk  =1)
+  parameter(mdimub =4000)
+  parameter(mdimtbf=9000)
+  parameter(mdimtnf=9000)
+  parameter(mdimtcf=1600)
+  parameter(mdimtrf=1)
+  parameter(nvar   =7)
+!  parameter(    ccg=1./3.) !3D
+!  parameter(    cng=1./3.) !3D
+  parameter(    ccg=1./2.)
+  parameter(    cng=1./2.)
+  parameter(    cfg=1.)
+!parameter(     ccg2=3) !3D
+!parameter(     cng2=3) !3D
+  parameter(   ccg2=2)
+  parameter(   cng2=2)
+  parameter(   cfg2=1)
+end module para_var
 !
 module definition
   use para_fige
