@@ -312,6 +312,7 @@ program solve
   use mod_c_ingr
   use mod_c_inbdb
   use mod_c_dfst
+  use mod_partitionnement
   implicit none
   integer          ::     Time_1,    Time_2,clock_rate,       img,    iyplus
   integer          ::          l,         m,      mfbi,       mfc,       mfn
@@ -524,6 +525,9 @@ program solve
         else
            call synterr(mot,imot,2,cb)
         endif
+     case('partition')
+!--   PARTITION
+       call partitionnement(lt)
 !--   ALLOC
      case('alloc')
 !--   ALLOC DOM
