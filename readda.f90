@@ -103,6 +103,7 @@ contains
 !         k-omega de Wilcox ou Menter avec rugosite
           read(kda,iostat=resu)mdimtnxl
           deallocate(utau)
+          ip42=mdimtnxl
           allocate(utau(mdimtnxl))
           if(resu .EQ. 0) then
              read(kda) utau(1:mdimtnxl)

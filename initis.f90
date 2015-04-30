@@ -55,7 +55,7 @@ contains
 !
     character(len=2 ) :: indfl
 !
-   allocate(ncbd1(size(ncbd)))
+   allocate(ncbd1(ip41))
    ncbd1=ncbd
    deallocate(ncbd)
    
@@ -72,7 +72,8 @@ contains
     case('i1')
        ii=imin-1
        mt=(kmax-kmin)*(jmax-jmin)
-       allocate(ncbd(size(ncbd1)+mt))
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
        ncbd(:size(ncbd1))=ncbd1
        do k=kmin,kmax-1
           do j=jmin,jmax-1
@@ -85,7 +86,8 @@ contains
     case('i2')
        ii=imax
        mt=(kmax-kmin)*(jmax-jmin)
-       allocate(ncbd(size(ncbd1)+mt))
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
        ncbd(:size(ncbd1))=ncbd1
        do k=kmin,kmax-1
           do j=jmin,jmax-1
@@ -98,7 +100,8 @@ contains
     case('j1')
        jj=jmin-1
        mt=(kmax-kmin)*(imax-imin)
-       allocate(ncbd(size(ncbd1)+mt))
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
        ncbd(:size(ncbd1))=ncbd1
        do k=kmin,kmax-1
           do i=imin,imax-1
@@ -110,7 +113,8 @@ contains
     case('j2')
        jj=jmax
        mt=(kmax-kmin)*(imax-imin)
-       allocate(ncbd(size(ncbd1)+mt))
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
        ncbd(:size(ncbd1))=ncbd1
        do k=kmin,kmax-1
           do i=imin,imax-1
@@ -122,7 +126,8 @@ contains
     case('k1')
        kk=kmin-1
        mt=(jmax-jmin)*(imax-imin)
-       allocate(ncbd(size(ncbd1)+mt))
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
        ncbd(:size(ncbd1))=ncbd1
        do j=jmin,jmax-1
           do i=imin,imax-1
@@ -134,7 +139,8 @@ contains
     case('k2')
        kk=kmax
        mt=(jmax-jmin)*(imax-imin)
-       allocate(ncbd(size(ncbd1)+mt))
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
        ncbd(:size(ncbd1))=ncbd1
        do j=jmin,jmax-1
           do i=imin,imax-1

@@ -293,6 +293,7 @@ program solve
   use mod_c_cpbd
   use mod_c_dfpmdtg
   use mod_c_dfpmdtd
+  use mod_defdfpmcfg
   use mod_c_dfnzst
   use mod_c_dfgm
   use mod_c_infw
@@ -309,10 +310,11 @@ program solve
   use mod_c_inbdb
   use mod_c_dfst
   implicit none
-  integer          ::    img,iyplus,     l,  mfbi,   mfc
-  integer          ::    mfn,   mfr,  ncyc,  nmot,imot(nmx)
+  integer          ::     Time_1,    Time_2,clock_rate,       img,    iyplus
+  integer          ::          l,         m,      mfbi,       mfc,       mfn
+  integer          ::        mfr,      ncyc,      nmot, imot(nmx)
   double precision ::  aam,exs1,exs2,roam, tam
-  integer         ,allocatable ::  mnc(:),mnpar(:),  mnr(:), ncbd(:)
+  integer         ,allocatable ::   mnc(:),mnpar(:),  mnr(:), ncbd(:)
   integer         ,allocatable ::  ncin(:)
   double precision,allocatable ::  bceqt(:,:),    cfke(:),   cmui1(:),   cmui2(:),   cmuj1(:)
   double precision,allocatable ::    cmuj2(:),   cmuk1(:),   cmuk2(:),    cson(:),     cvi(:)
@@ -336,21 +338,27 @@ program solve
 !-----------------------------------------------------------------------
 !
   character(len=32) :: comment,mot(nmx)
-  integer :: Time_1,clock_rate,Time_2,m
 
 
-  ip00=ndimub                            ! Nb de cellules
-  ip11=ndimctf+kdimg*ndimctf/ccg2        ! Nb de cellules
-  ip12=kdimv*(ip11-1)+1                  ! Nb de cellules ?
-  ip13=kdimk*(ip11-1)+1                  ! Nb de cellules ?
-  ip21=ndimnts+kdimg*ndimnts/cng2+ndimntu! Nb de noeuds
-  ip31=1+3*(ndimnts+kdimg*ndimnts/cng2)  ! ?
-  ip40=mdimub                            ! Nb max point front
-  ip41=mdimtbf+kdimg*mdimtbf/cfg2        ! Nb frontiere
-  ip42=mdimtbf+kdimg*mdimtbf/cfg2        ! Nb frontiere
-  ip43=mdimtbf+kdimg*mdimtbf/cfg2        ! Nb frontiere
-  ip44=mdimtbf+kdimg*mdimtbf/cfg2        ! Nb frontiere
-  ip60=nvar
+  ip00=0!ndimub                            ! Nb de cellules
+  ip11=0!ndimctf+kdimg*ndimctf/ccg2        ! Nb de cellules
+  ip12=0!kdimv*(ip11-1)+1                  ! Nb de cellules ?
+  ip13=0!kdimk*(ip11-1)+1                  ! Nb de cellules ?
+  ip21=0!ndimnts+kdimg*ndimnts/cng2+ndimntu! Nb de noeuds
+  ip31=0!1+3*(ndimnts+kdimg*ndimnts/cng2)  ! ?
+  ip40=0!mdimub                            ! Nb max point front
+  ip41=0!mdimtbf+kdimg*mdimtbf/cfg2        ! Nb point frontiere
+  ip42=0!mdimtbf+kdimg*mdimtbf/cfg2        ! Nb point frontiere
+  ip43=0!mdimtbf+kdimg*mdimtbf/cfg2        ! Nb point frontiere
+  ip44=0!mdimtbf+kdimg*mdimtbf/cfg2        ! Nb point frontiere
+  ip60=0!nvar
+
+  lz=50      ! Nb zone !TODO ?
+  lg=0!6       ! ?
+  mtb=0!600    ! Nb front
+  lt=0!lz*lg   ! ? 
+  mtt=0!mtb*lg ! Nb front total
+
 
   call allocdata()
   temp_array=0.
@@ -518,18 +526,18 @@ program solve
 !--   ALLOC DOM
         if((imot(2).eq.3).and.(mot(2)(1:3).eq.'dom')) then
            call allocdata2()
-        !     initialisation des tableaux
-            call inivec( &
-                 dt,v,mu,mut, &
-                 toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-                 sn, &
-                 vol, &
-                 ptdual,vdual,vdual1,vdual2, &
-                 cvi,cvj,cvk, &
-                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
-                 pression,ztemp,cson, &
-                 tnte1,tnte3,tnte4, &
-                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10)
+!     initialisation des tableaux
+           call inivec( &
+                dt,v,mu,mut, &
+                toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                sn, &
+                vol, &
+                ptdual,vdual,vdual1,vdual2, &
+                cvi,cvj,cvk, &
+                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
+                pression,ztemp,cson, &
+                tnte1,tnte3,tnte4, &
+                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10)
         elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
 !--   ALLOC BOUNDARY
            call allocdata3()
@@ -814,14 +822,63 @@ program solve
 contains
 
   subroutine allocdata
+    use kcle
+    use schemanum
+    use modeleturb
     implicit none
+
+    lg=1 ! FIXME ?
+    allocate(ncycle(lg))
+    allocate(kncycle(lg))
+
+!    lz=1 ! FIXME ?
+!    allocate(nbdrat(lz))
+!    allocate(npbrat(lz))
+
+    ! will be reallocated
+    ip41=0
+    allocate(utau(ip41)) ! if necessary (readda)
+    ip42=0
+    allocate(ncbd(ip42)) ! initis
+    mtb=0
+    allocate(indfl(mtb))  !crbds
+    allocate(nfei(mtb))   !crbds
+    allocate(ndlb(mtb))   !crbds
+    mtt=0
+    allocate(kmaxb(mtt))   !crbds
+    allocate(iminb(mtt))   !crbds
+    allocate(jmaxb(mtt))   !crbds
+    allocate(jminb(mtt))   !crbds
+    allocate(mpb(mtt))     !crbds
+    allocate(mmb(mtt))     !crbds
+    allocate(kminb(mtt))   !crbds
+    allocate(imaxb(mtt))   !crbds
+    lt=0
+    allocate(ii1(lt))   !crbms
+    allocate(jj1(lt))   !crbms
+    allocate(kk1(lt))   !crbms
+    allocate(ii2(lt))   !crbms
+    allocate(jj2(lt))   !crbms
+    allocate(kk2(lt))   !crbms
+    allocate(id1(lt))   !crbms
+    allocate(jd1(lt))   !crbms
+    allocate(kd1(lt))   !crbms
+    allocate(id2(lt))   !crbms
+    allocate(jd2(lt))   !crbms
+    allocate(kd2(lt))   !crbms
+    allocate(nnn(lt))   !crbms
+    allocate(nnc(lt))   !crbms
+    allocate(nnfb(lt))  !crbms
+    allocate(npn(lt))   !crbms
+    allocate(npfb(lt))  !crbms
+    allocate(npc(lt))   !crbms
 
   end subroutine allocdata
 
   subroutine allocdata2
     implicit none
 
-    ip00 = ndimctbx        ! Nb de cellules
+    ip00 = ndimubx        ! nbr de cellules du plus grd domaine (strict)
     allocate(tn1(ip00))
     allocate(tn2(ip00))
     allocate(tn3(ip00))
@@ -833,7 +890,8 @@ contains
     allocate(tn9(ip00))
     allocate(tn10(ip00))
 
-    ip11 = ndimctbx        ! Nb de cellules
+    ip11 = ndimctbx        ! nbr de cellules de tts les domaines (strict)
+    ip60 = nvar
     allocate(tnte1(ip11,ip60))
     allocate(tnte2(ip11,ip60))
     allocate(tnte3(ip11,ip60))
@@ -850,7 +908,7 @@ contains
     allocate(r(ip11))
     allocate(vol(ip11))
 
-    ip12 = ndimctbx        ! Nb de cellules
+    ip12 = ndimctbx        ! nbr de cellules de tts les domaines (strict)
     allocate(toxx(ip12))
     allocate(toxy(ip12))
     allocate(toxz(ip12))
@@ -868,7 +926,7 @@ contains
     ip13 = 0!ndimctbx ! TODO ?
     allocate(cfke(ip13))
 
-    ip21 = ndimntbx          ! Nb de cellules
+    ip21 = ndimntbx        ! nbr de cellules de tts les domaines (strict)
     allocate(x(ip21))
     allocate(y(ip21))
     allocate(z(ip21))
@@ -882,18 +940,58 @@ contains
     allocate(cmuk1(ip21))
     allocate(cmuk2(ip21))
 
+    ip31=1+3*(ndimnts+kdimg*ndimnts/cng2)  ! ?
+!print*,ip31,ndir
     allocate(sn(ip31*ndir)) ! TODO ?
-
-    ! will be reallocated 
-    allocate(utau(0)) ! if necessary (readda)
-    allocate(ncbd(0)) ! initis
 
   end subroutine allocdata2
 
   subroutine allocdata3
+    use kcle
+    use schemanum
+    use modeleturb
     implicit none
     integer,allocatable          :: itmp(:)
     double precision,allocatable :: rtmp(:)
+
+    mtb=mtbx              ! nb front
+    allocate(cl(mtb))
+    allocate(nfbr(mtb))
+    allocate(nba(mtb))
+    allocate(ndcc(mtb))
+    allocate(ndrr(mtb))
+    allocate(nbdc(mtb))
+    allocate(srotr(mtb))
+    allocate(nfbc(mtb))
+    allocate(nfba(mtb))
+    allocate(nfbn(mtb))
+    allocate(crotr(mtb))
+    allocate(lbdrat(mtb))
+    allocate(nmfint(mtb))
+    allocate(bc(mtb,ista*lsta))
+    call defdfpmcfg
+
+    mtt=mtbx*lgx
+    allocate(lbd(mtt))
+    allocate(mdnc(mtt))
+    allocate(mper(mtt))
+    allocate(mpc(mtt))
+    allocate(mpn(mtt))
+    allocate(lbdko(mtt))
+    allocate(mpr(mtt))
+
+    lt=lgx*lzx
+    allocate(klmax(lt))
+    allocate(kkmf(lt))
+    allocate(keta(lt))
+    allocate(kki2(lt))
+    allocate(kki4(lt))
+    allocate(kmf(lt))
+    allocate(lmax(lt))
+    allocate(ki2(lt))
+    allocate(ki4(lt))
+    allocate(eta(lt))
+    allocate(pctvort(lt))
 
     ip40=mdimubx            ! Nb point frontiere
     allocate(rod(ip40))

@@ -49,11 +49,11 @@ contains
     call defdfnm
     call defdfnzst
     call defdfph
-    call defdfpmcfg
-    call defdfpmdtd
+!    call defdfpmcfg
+!    call defdfpmdtd
     call defdfpmdtg
-    call defdfpmdsd
-    call defdfpmimd
+!    call defdfpmdsd
+!    call defdfpmimd
     call defdfpmtbn
     call defdfst
     call defdftl1

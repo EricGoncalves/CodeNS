@@ -65,6 +65,27 @@ contains
 !
     lzx=lzx+1
     klzx=2
+
+!    lz=lzx
+    lt=lgx*lzx
+    call i_reallocate(ii1,lt)
+    call i_reallocate(jj1,lt)
+    call i_reallocate(kk1,lt)
+    call i_reallocate(ii2,lt)
+    call i_reallocate(jj2,lt)
+    call i_reallocate(kk2,lt)
+    call i_reallocate(id1,lt)
+    call i_reallocate(jd1,lt)
+    call i_reallocate(kd1,lt)
+    call i_reallocate(id2,lt)
+    call i_reallocate(jd2,lt)
+    call i_reallocate(kd2,lt)
+    call i_reallocate(nnn,lt)
+    call i_reallocate(nnc,lt)
+    call i_reallocate(nnfb,lt)
+    call i_reallocate(npn,lt)
+    call i_reallocate(npc,lt)
+    call i_reallocate(npfb,lt)
 !
     do img=1,lgx
 !
@@ -111,5 +132,16 @@ contains
     enddo
 !
     return
+  contains
+    subroutine i_reallocate(tab,newsize)
+      implicit none
+      integer,allocatable::tab(:),tab1(:)
+      integer :: newsize
+      allocate(tab1(size(tab)))
+      tab1=tab
+      deallocate(tab)
+      allocate(tab(newsize))
+      tab(1:size(tab1))=tab1
+    end subroutine i_reallocate
   end subroutine crdms
 end module mod_crdms

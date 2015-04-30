@@ -191,7 +191,7 @@ contains
                      dist,v,mu,mut, &
                      cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
              else if(equatt(4:4).eq.'R') then
-!            modele k-l avec correction de réalisabilité
+!            modele k-l avec correction de rÃ©alisabilitÃ©
                 call met_klrmut( &
                      lm, &
                      sn,vol,t, &

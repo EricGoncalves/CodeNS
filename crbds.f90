@@ -69,9 +69,24 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indmf
+    
 !
     mtbx=mtbx+1
     kmtbx=2
+    mtb=mtbx
+    call i_reallocate(ndlb,mtb)
+    call i_reallocate(nfei,mtb)
+    call c_reallocate(indfl,mtb)
+    mtt=mtbx*lgx
+    call i_reallocate(iminb,mtt)
+    call i_reallocate(imaxb,mtt)
+    call i_reallocate(jminb,mtt)
+    call i_reallocate(jmaxb,mtt)
+    call i_reallocate(kminb,mtt)
+    call i_reallocate(kmaxb,mtt)
+    call i_reallocate(mpb,mtt)
+    call i_reallocate(mmb,mtt)
+
 !
     mfbi=mtbx
     nfei(mfbe)=mfbi
@@ -82,6 +97,7 @@ contains
 !
        lm=l+(img-1)*lz
        mfbim=mfbi+(img-1)*mtb
+
 !
        imgi=img
        imgj=img
@@ -124,5 +140,26 @@ contains
     enddo
 !
     return
+  contains
+    subroutine i_reallocate(tab,newsize)
+      implicit none
+      integer,allocatable::tab(:),tab1(:)
+      integer :: newsize
+      allocate(tab1(size(tab)))
+      tab1=tab
+      deallocate(tab)
+      allocate(tab(newsize))
+      tab(1:size(tab1))=tab1
+    end subroutine i_reallocate
+    subroutine c_reallocate(tab,newsize)
+      implicit none
+      character(len=2),allocatable::tab(:),tab1(:)
+      integer :: newsize
+      allocate(tab1(size(tab)))
+      tab1=tab
+      deallocate(tab)
+      allocate(tab(newsize))
+      tab(1:size(tab1))=tab1
+    end subroutine c_reallocate
   end subroutine crbds
 end module mod_crbds
