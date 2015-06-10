@@ -3,109 +3,308 @@ module mod_partitionnement
   interface reallocate
      module procedure reallocate_1r,reallocate_1i, &
                       reallocate_2r,reallocate_2i, &
-                      reallocate_3r,reallocate_3i
+                      reallocate_3r,reallocate_3i, &
+                      reallocate_4r,reallocate_4i
   end interface reallocate
 contains
-  subroutine partitionnement(lt)
+  subroutine partitionnement(x,y,z,mot,imot,nmot)
+  use mod_c_end
+  use mod_valenti
+  use para_fige
+  use chainecarac
+  use maillage, only : ii1,ii2,jj1,jj2,kk1,kk2,id1,jd1,kd1,id2,jd2,kd2
+  use maillage, only : npn,  ndimctbx,  ndimntbx,   ndimubx,nind,nnn,nnc
+  use schemanum,only : nfi
 !
 !***********************************************************************
 !
 !     act
 !_a    realisation du partitionnement
-!      importé depuis oracle_400 (philipe traore)
-!      ecrit par alexandre poux (dans oracle et ici)
+!      ecrit par Alexandre Poux
+!
+!    ! will be reallocated
+!    allocate(ii1(lt))   !crbms
+!    allocate(jj1(lt))   !crbms
+!    allocate(kk1(lt))   !crbms
+!    allocate(ii2(lt))   !crbms
+!    allocate(jj2(lt))   !crbms
+!    allocate(kk2(lt))   !crbms
+!    allocate(id1(lt))   !crbms
+!    allocate(jd1(lt))   !crbms
+!    allocate(kd1(lt))   !crbms
+!    allocate(id2(lt))   !crbms
+!    allocate(jd2(lt))   !crbms
+!    allocate(kd2(lt))   !crbms
+!    allocate(nnn(lt))   !crbms
+!    allocate(nnc(lt))   !crbms
+!    allocate(nnfb(lt))  !crbms
+!    allocate(npn(lt))   !crbms
+!    allocate(npfb(lt))  !crbms
+!    allocate(npc(lt))   !crbms
 
+
+
+! nicv->ii2
+! nicv2->new_ii2
 !
 !***********************************************************************
 !-----parameters figes--------------------------------------------------
 !
     implicit none
-    integer,intent(in)  :: lt
-    integer,allocatable :: nblock2(:),nicv(:),njcv(:),nkcv(:)
-    integer,allocatable :: nblockd(:),nicv2(:,:,:),njcv2(:,:,:),nkcv2(:,:,:),num_cf2(:,:,:)
-    integer :: nblockt,nprocs,l,nxyza,sblock
+    integer,allocatable :: nblock2(:),njcv(:),nkcv(:)
+    integer,allocatable :: num_cf2(:,:,:),nblockd(:,:)
+    integer,allocatable :: tmp_ii2(:,:,:),tmp_jj2(:,:,:),tmp_kk2(:,:,:)
+    integer,allocatable :: tmp2_ii2(:,:,:,:),tmp2_jj2(:,:,:,:),tmp2_kk2(:,:,:,:)
+    integer :: nblockt,nprocs,l,nxyza,sblock,nid,nijd,njd
+    integer,allocatable :: new_ii1(:,:,:,:),new_jj1(:,:,:,:),new_kk1(:,:,:,:)
+    integer,allocatable :: new_ii2(:,:,:,:),new_jj2(:,:,:,:),new_kk2(:,:,:,:)
+    integer,allocatable :: new_id1(:,:,:,:),new_jd1(:,:,:,:),new_kd1(:,:,:,:)
+    integer,allocatable :: new_id2(:,:,:,:),new_jd2(:,:,:,:),new_kd2(:,:,:,:)
+    integer,allocatable :: new_nnn(:,:,:,:),new_nnc(:,:,:,:),new_nnfb(:,:,:,:)
+    integer,allocatable :: new_npn(:,:,:,:),new_npfb(:,:,:,:),new_npc(:,:,:,:)
+    double precision,allocatable :: new_x(:),new_y(:),new_z(:),x(:),y(:),z(:)
+    integer :: i,j,k,  new_ndimctbx,  new_ndimntbx,   new_ndimubx,l2
+    integer :: xi,yi,zi,xi2,yi2,zi2,xyz,xyz2,new_nid,new_njd,new_nijd
+    integer          ::       imot(nmx),nmot,icmt,kval,nm
+    character(len=50)::fich
+    character(len=32) ::  mot(nmx)
+    character(len=32) ::  comment
 
-    allocate(nblock2(lt))
-    allocate(nicv(lt),njcv(lt),nkcv(lt))
-
-    nblockt=lt   ! total number of block at the start
-    nprocs=lt+1  ! total number of block at the end
-    nblock2=1    ! number of splitting for each existing block
-    do l=1,lt
-      nicv(l)= 0 !   number of points in the i direction todo
-      njcv(l)= 0 !   number of points in the j direction todo
-      nkcv(l)= 0 !   number of points in the k direction todo
+    do icmt=1,32
+       comment(icmt:icmt)=' '
     enddo
-    nxyza=sum(nicv*njcv*nkcv)  ! total number of points
+    kval=0
+!
+    nm=2
+    if(nmot.lt.nm) then ! read number of block at the end  TODO : replace valenti by mpi
+       comment=ci
+       call synterr(mot,imot,nmot,comment)
+    else
+       call valenti(mot,imot,nm,nprocs,kval)
+    endif
+
+    nxyza=sum(ii2*jj2*kk2)  ! total number of points
+
+    allocate(nblock2(lt),nblockd(3,lt),new_ii2(1,1,1,nprocs),new_jj2(1,1,1,nprocs),new_kk2(1,1,1,nprocs))
+    nblock2=1    ! initial number of splitting for each existing block
+    nblockd=1    ! initial number of splitting for each existing block
 
     ! routine calculant combiens de fois splitter chaque block
     ! sortie : nblock2
     ! entrée : tout le reste
-    call num_split(nblock2,nblockt,nxyza,nprocs,nicv,njcv,nkcv)
+    call num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
 
     do l=1,lt
-      ! calcule le split, c'est à dire 
+      ! calcule le split pour un block, c'est à dire 
       ! le nombre de découpe par direction            (nblockd)
       ! le nombre de points dans chaque nouveau block (nicv2,njcv2,nkcv2)
       ! une estimation des communications             (num_cf2)
-      call triv_split(nblock2(l),l,nxyza,nicv ,njcv ,nkcv, &
-                             nblockd,num_cf2,nicv2,njcv2,nkcv2)
+      call triv_split(nblock2(l),l,nxyza,ii2 ,jj2 ,kk2, &
+                      nblockd(:,l),num_cf2,tmp_ii2,tmp_jj2,tmp_kk2)
+
+      ! ajoute le split avec les splits des autres blocks
+      tmp2_ii2=new_ii2
+      call reallocate(new_ii2,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nprocs)
+      new_ii2=0
+      new_ii2(:size(tmp2_ii2,1),:size(tmp2_ii2,2),:size(tmp2_ii2,3),:)=tmp2_ii2
+      new_ii2(:size(tmp_ii2,1),:size(tmp_ii2,2),:size(tmp_ii2,3),l)=tmp_ii2
+
+      tmp2_ii2=new_jj2
+      call reallocate(new_jj2,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nprocs)
+      new_jj2=0
+      new_jj2(:size(tmp2_ii2,1),:size(tmp2_ii2,2),:size(tmp2_ii2,3),:)=tmp2_ii2
+      new_jj2(:size(tmp_jj2,1),:size(tmp_jj2,2),:size(tmp_jj2,3),l)=tmp_jj2
+
+      tmp2_ii2=new_kk2
+      call reallocate(new_kk2,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nprocs)
+      new_kk2=0
+      new_kk2(:size(tmp2_ii2,1),:size(tmp2_ii2,2),:size(tmp2_ii2,3),:)=tmp2_ii2
+      new_kk2(:size(tmp_kk2,1),:size(tmp_kk2,2),:size(tmp_kk2,3),l)=tmp_kk2
     enddo
 
-!     splitting is done
-    sblock=nblockd(1)*nblockd(2)*nblockd(3)
+    sblock=sum(nblockd(1,:)*nblockd(2,:)*nblockd(3,:))
     if(sblock/=nprocs) then
       stop 'partitionnement impossible'
+    else
+      print*,'découpage réussis : '
+      do l=1,lt
+        print*, l,nblockd(:,l)
+      enddo
+!      do l=1,lt
+!        do k=1,nblockd(3,l)
+!          do j=1,nblockd(2,l)
+!              print*, l,k,j,new_ii2(:nblockd(1,l),j,k,l)*new_jj2(:nblockd(1,l),j,k,l)*new_kk2(:nblockd(1,l),j,k,l)
+!          enddo
+!        enddo
+!      enddo
     end if
 
-!    do l=1,lt  !     now we have to fill all arrays
-!      allocate(  nibl2(nblockd(1),nblockd(2),nblockd(3)), &
-!                 njbl2(nblockd(1),nblockd(2),nblockd(3)), &
-!                 nkbl2(nblockd(1),nblockd(2),nblockd(3)), &
-!               nijkbl2(nblockd(1),nblockd(2),nblockd(3)), &
-!               num_bf2(nblockd(1),nblockd(2),nblockd(3)))
-!      allocate(num_sbf2(nblock2(nbl)+1),num_scf2(nblock2(nbl)+1),&
-!                num_dr2(nblock2(nbl)+1),num_sdr2(nblock2(nbl)+1))
+!     preparation des tableaux d'indices
+     allocate(new_ii1(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_jj1(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_kk1(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_id1(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_jd1(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_kd1(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_id2(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_jd2(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_kd2(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_nnn(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_nnc(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_npn(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_npc(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_nnfb(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs),&
+              new_npfb(size(new_ii2,1),size(new_ii2,2),size(new_ii2,3),nprocs))
+       new_ii1=1
+       new_jj1=1
+       new_kk1=1
+       new_id1 = new_ii1 - nfi
+       new_jd1 = new_jj1 - nfi
+       new_kd1 = new_kk1 - nfi
+       new_id2 = new_ii2 + nfi
+       new_jd2 = new_jj2 + nfi
+       new_kd2 = new_kk2 + nfi
 
-!      njbl2=njcv2+2 ; nibl2=nicv2+2 ; nkbl2=nkcv2+2
-!      num_bf2=2*(nicv2*njcv2 + nicv2*nkcv2 + njcv2*nkcv2)
+       new_nnn  = (new_id2-new_id1+1)*(new_jd2-new_jd1+1)*(new_kd2-new_kd1+1)
+       new_nnc  = (new_id2-new_id1+1)*(new_jd2-new_jd1+1)*(new_kd2-new_kd1+1)
+       new_nnfb = (new_id2-new_id1+1)*(new_jd2-new_jd1+1)*(new_kd2-new_kd1+1)*nind
 
-!      num_bf_all2=sum(num_bf2)
-!      num_cf_all2=sum(num_cf2)
-!      num_dr_all2=sum(num_dr)*(nprocs+1) ! overestimated
-!      allocate(num_cfi2(num_cf_all2,8))
-!      allocate(num_ind2(num_bf_all2,2))
-!      allocate(num_spr2(num_dr_all2))
-!      allocate( num_pr2(num_dr_all2))
-!      allocate(num_typ2(num_dr_all2))
-!      allocate(num_num2(num_dr_all2))
+!
+new_ndimntbx=0
+new_ndimctbx=0
+new_ndimubx=0
+    do l=1,lt
+      do k=1,nblockd(3,l)
+        do j=1,nblockd(2,l)
+          do i=1,nblockd(1,l)
 
-!      allocate(x1(njbl(nbl),nibl(nbl),nkbl(nbl))) ; x1=reshape(x,shape(x1))
-!      allocate(y1(njbl(nbl),nibl(nbl),nkbl(nbl))) ; y1=reshape(y,shape(y1))
-!      allocate(z1(njbl(nbl),nibl(nbl),nkbl(nbl))) ; z1=reshape(z,shape(z1))
-!      allocate(x2(maxval(njbl2),maxval(nibl2),maxval(nkbl2),nblock2(nbl)))
-!      allocate(y2(maxval(njbl2),maxval(nibl2),maxval(nkbl2),nblock2(nbl)))
-!      allocate(z2(maxval(njbl2),maxval(nibl2),maxval(nkbl2),nblock2(nbl)))
+       new_npn(i,j,k,l)=new_ndimntbx
+       new_npc(i,j,k,l)=new_ndimctbx
+       new_npfb(i,j,k,l)=nind*new_ndimntbx
+!
+       new_ndimubx =max(new_ndimubx,new_nnn(i,j,k,l))
+       new_ndimubx =max(new_ndimubx,new_nnc(i,j,k,l))
+       new_ndimctbx=new_ndimctbx+new_nnc(i,j,k,l)
+       new_ndimntbx=new_ndimntbx+new_nnn(i,j,k,l)
+enddo
+enddo
+enddo
+enddo
 
-!       num_dr2=0 ;  num_pr2=0 ;  num_cf2=0
-!      num_sdr2=0 ; num_spr2=0 ; num_scf2=0
-!      num_cfi2=0 ; inr=1
-!      ine=0 ; inf=0
-!      do k=1,nblockd(3)
-!        do i=1,nblockd(2)
-!          do j=1,nblockd(1)
-!            inb=j+(i-1)*nblockd(1)+(k-1)*nblockd(2)*nblockd(1)
+allocate(new_x(new_ndimntbx),new_y(new_ndimntbx),new_z(new_ndimntbx))
 
-!!           i is also the number of boundaries in the left direction
-!!           the last mesh point in each direction is useless (thus n?cv2(j,i,k)+1 and not n?cv2(j,i,k)+2)
-!            j1=sum(njcv2(1:j-1,i,k)-1)+j ; j2=j1+njcv2(j,i,k) ; j3=njcv2(j,i,k)+1
-!            i1=sum(nicv2(j,1:i-1,k)-1)+i ; i2=i1+nicv2(j,i,k) ; i3=nicv2(j,i,k)+1
-!            k1=sum(nkcv2(j,i,1:k-1)-1)+k ; k2=k1+nkcv2(j,i,k) ; k3=nkcv2(j,i,k)+1
+    do l=1,lt  !     now we have to fill all arrays
 
-!!           fill x,y,z
-!            x2(1:j3,1:i3,1:k3,inb)=x1(j1:j2,i1:i2,k1:k2)
-!            y2(1:j3,1:i3,1:k3,inb)=y1(j1:j2,i1:i2,k1:k2)
-!            z2(1:j3,1:i3,1:k3,inb)=z1(j1:j2,i1:i2,k1:k2)
+!write(fich,'(A,I0.2,A)') "origmesh_",l,".dat"
+!open(42,file=fich,status="replace")
+
+!            do k=kk1(l),kk2(l)
+!              do j=jj1(l),jj2(l)
+!                do i=ii1(l),ii2(l)
+
+!                  nid = id2(l)-id1(l)+1
+!                  njd = jd2(l)-jd1(l)+1
+!                  nijd = nid*njd
+
+!                  xyz=    npn(l)      +1+(i-    id1(l)      )+(j-    jd1(l)      )*    nid+(k-    kd1(l)      )*    nijd
+
+!                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),l
+
+!                enddo
+!                write(42,*) ""
+!              enddo
+!            enddo
+! close(42)
+
+
+
+      do k=1,nblockd(3,l)
+        do j=1,nblockd(2,l)
+          do i=1,nblockd(1,l)
+
+!            l2=i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)+l*30
+!write(fich,'(A,4(I0.2,A))') "testmesh_",l,"_",k,"_",j,"_",i,".dat"
+!open(42,file=fich,status="replace")
+
+            do zi=new_kk1(i,j,k,l),new_kk2(i,j,k,l)
+              zi2=zi+sum(new_kk2(i,j,:k-1,l))
+              do yi=new_jj1(i,j,k,l),new_jj2(i,j,k,l)
+                yi2=yi+sum(new_jj2(i,:j-1,k,l))
+                do xi=new_ii1(i,j,k,l),new_ii2(i,j,k,l)
+                  xi2=xi+sum(new_ii2(:i-1,j,k,l))
+
+                  new_nid = new_id2(i,j,k,l)-new_id1(i,j,k,l)+1
+                  new_njd = new_jd2(i,j,k,l)-new_jd1(i,j,k,l)+1
+                  new_nijd = new_nid*new_njd
+
+                  nid = id2(l)-id1(l)+1
+                  njd = jd2(l)-jd1(l)+1
+                  nijd = nid*njd
+
+                  xyz =new_npn(i,j,k,l)+1+(xi -new_id1(i,j,k,l))+(yi -new_jd1(i,j,k,l))*new_nid+(zi -new_kd1(i,j,k,l))*new_nijd
+                  xyz2=    npn(l)      +1+(xi2-    id1(l)      )+(yi2-    jd1(l)      )*    nid+(zi2-    kd1(l)      )*    nijd
+
+                  new_x(xyz)=x(xyz2)
+                  new_y(xyz)=y(xyz2)
+                  new_z(xyz)=z(xyz2)
+
+!                  write(42,'(3e11.3,i8)') new_x(xyz),new_y(xyz),new_z(xyz),l2
+
+                enddo
+                write(42,*) ""
+              enddo
+            enddo
+! close(42)
+
+
+
+!    mtbx=mtbx+1
+!    kmtbx=2
+!    mtb=mtbx
+!    call i_reallocate(ndlb,mtb)
+!    call i_reallocate(nfei,mtb)
+!    call c_reallocate(indfl,mtb)
+!    mtt=mtbx*lgx
+!    call i_reallocate(iminb,mtt)
+!    call i_reallocate(imaxb,mtt)
+!    call i_reallocate(jminb,mtt)
+!    call i_reallocate(jmaxb,mtt)
+!    call i_reallocate(kminb,mtt)
+!    call i_reallocate(kmaxb,mtt)
+!    call i_reallocate(mpb,mtt)
+!    call i_reallocate(mmb,mtt)
+
+!!
+!    mfbi=mtbx
+!    nfei(mfbe)=mfbi
+!    ndlb(mfbi)=l
+!    indfl(mfbi)=indmf
+!!
+!    do img=1,lgx
+!!
+!       lm=l+(img-1)*lz
+!       mfbim=mfbi+(img-1)*mtb
+
+!!
+!       iminb(mfbim)=(imin-ii1(lm))/2**(imgi-1)+ii1(lm)
+!       imaxb(mfbim)=(imax-ii1(lm))/2**(imgi-1)+ii1(lm)
+!       jminb(mfbim)=(jmin-jj1(lm))/2**(imgj-1)+jj1(lm)
+!       jmaxb(mfbim)=(jmax-jj1(lm))/2**(imgj-1)+jj1(lm)
+!       kminb(mfbim)=(kmin-kk1(lm))/2**(imgk-1)+kk1(lm)
+!       kmaxb(mfbim)=(kmax-kk1(lm))/2**(imgk-1)+kk1(lm)
+!!
+!       mpb(mfbim)=mdimtbx
+!       m0=mpb(mfbim)
+!!
+!!     remplissage des tableaux  ncbd, mmb
+!!
+!!      ncbd=...
+!!
+!       mmb(mfbim)=mt
+!       mdimubx=max(mdimubx,mmb(mfbim))
+!       mdimtbx=mdimtbx+mmb(mfbim)
+
+
 
 !!           fill temporary arrays
 !            do k3=k1+1,k2
@@ -212,21 +411,35 @@ contains
 !                               i,j,k,inb,nblock2,nblockd, &
 !                               inf,num_cf2,num_scf2,num_cfi2)
 
-!          end do
-!        end do
-!      end do
-!!print*,'filling done'
-!    enddo
+          end do
+        end do
+      end do
+print*,l,' : filling done'
+    enddo
 
+!        stop
     return
+contains
+    function    indn(i,j,k)
+      implicit none
+      integer          ::    i,indn,   j,   k
+      indn=npn(l)+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indn
+
+!    function    new_indn(i,j,k)
+!      implicit none
+!      integer          ::    i,new_indn,   j,   k
+!      new_indn=new_npn(l)+1+(i-new_id1(l))+(j-new_jd1(l))*new_nid+(k-new_kd1(l))*new_nijd
+!    end function new_indn
+
   end subroutine partitionnement
 
-subroutine num_split(nblock2,nblockt,nxyza,nprocs,nicv,njcv,nkcv)
+subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
   implicit none
-    integer,intent(in)  :: nblockt,nxyza,nprocs
-    integer,intent(in)  :: nicv(nblockt),njcv(nblockt),nkcv(nblockt)
-    integer,intent(out) :: nblock2(nblockt)
-    integer             :: rsize,sblock(nblockt),i,j,k
+    integer,intent(in)  :: lt,nxyza,nprocs
+    integer,intent(in)  :: ii2(lt),jj2(lt),kk2(lt)
+    integer,intent(out) :: nblock2(lt)
+    integer             :: rsize,sblock(lt),i,j,k
 
 ! todo
 ! switch to the alternative version which permit to have ideal blocks size
@@ -234,10 +447,10 @@ subroutine num_split(nblock2,nblockt,nxyza,nprocs,nicv,njcv,nkcv)
 ! todo
 
 !   compute number of spliting of each blocks with the best equilibrium
-    do i=nblockt,nprocs-1                       ! split until nblockt>=nprocs
-      sblock=ceiling(nicv*njcv*nkcv*1./nblock2) ! compute the current size of blocks
+    do i=lt,nprocs-1                       ! split until lt>=nprocs
+      sblock=ceiling(ii2*jj2*kk2*1./nblock2) ! compute the current size of blocks
       j=maxloc(sblock,1)                        ! split the first bigest block
-      do k=j+1,nblockt
+      do k=j+1,lt
         if(sblock(k)==sblock(j) &          ! if more than one bigest block
         .and.nblock2(k)>nblock2(j)) &      ! split the most splitted
            j=k
@@ -248,59 +461,59 @@ subroutine num_split(nblock2,nblockt,nxyza,nprocs,nicv,njcv,nkcv)
 
 !   compute number of spliting of each blocks with the ideal equilibrium
 !    rsize=nint(nxyza*1./nprocs)              ! ideal size of a block
-!    nblock2=ceiling(nicv*njcv*nkcv*1./rsize) ! number of split needed
-!    sblock=mod(nicv*njcv*nkcv,rsize)         ! size of the smallest block
-!    do i=1,nblockt
+!    nblock2=ceiling(ii2*jj2*kk2*1./rsize) ! number of split needed
+!    sblock=mod(ii2*jj2*kk2,rsize)         ! size of the smallest block
+!    do i=1,lt
 !      if (sblock(i) <= something) &          ! allow for small imbalance in order to avoid too small blocks
 !           nblock2(i)=nblock2(i)-1
 !    end do
 
 end subroutine num_split
 
-subroutine triv_split(nblock2,nbl,nxyza,nicv,njcv,nkcv, &
-                      nblockd,num_cf2,nicv2,njcv2,nkcv2)
+subroutine triv_split(nblock2,nbl,nxyza,ii2,jj2,kk2, &
+                      nblockd,num_cf2,new_ii2,new_jj2,new_kk2)
   implicit none
-    integer,allocatable,intent(in)  :: nicv(:),njcv(:),nkcv(:)
+    integer,allocatable,intent(in)  :: ii2(:),jj2(:),kk2(:)
     integer,intent(in)              :: nxyza,nbl,nblock2
 
-    integer,allocatable,intent(out) :: nicv2(:,:,:),njcv2(:,:,:),nkcv2(:,:,:), num_cf2(:,:,:)
+    integer,allocatable,intent(out) :: new_ii2(:,:,:),new_jj2(:,:,:),new_kk2(:,:,:), num_cf2(:,:,:)
     integer,intent(out)             :: nblockd(3)
 
     integer             :: i,j,k,i1,j1,k1
-    integer,allocatable :: nibl2(:,:,:),njbl2(:,:,:),nkbl2(:,:,:),num_cft(:,:,:)
+    integer,allocatable :: tmp_ii2(:,:,:),tmp_jj2(:,:,:),tmp_kk2(:,:,:),num_cft(:,:,:)
 
 !   trivial spliting : divide my block in nblock2 subblock
 !                      test all possiblities constisting in dividing
 !                      i times in the x direction, j times in the y direction and k times in the z direction
     allocate(num_cf2(1,1,1)) ; num_cf2=nxyza*nblock2 ! useless initial big value
     do k=1,nblock2
-    do i=1,nblock2
     do j=1,nblock2
+    do i=1,nblock2
       if(i*j*k==nblock2) then !           if we get the right number of blocks
-        allocate(njbl2(j,i,k),nibl2(j,i,k),nkbl2(j,i,k), num_cft(j,i,k))
+        allocate(tmp_jj2(i,j,k),tmp_ii2(i,j,k),tmp_kk2(i,j,k), num_cft(i,j,k))
 !       compute sizes of sub-blocks
         do k1=1,k
-        do i1=1,i
         do j1=1,j
-          njbl2(j1,i1,k1)=nint(j1*njcv(nbl)*1./j) - nint((j1-1.)*njcv(nbl)*1./j)
-          nibl2(j1,i1,k1)=nint(i1*nicv(nbl)*1./i) - nint((i1-1.)*nicv(nbl)*1./i)
-          nkbl2(j1,i1,k1)=nint(k1*nkcv(nbl)*1./k) - nint((k1-1.)*nkcv(nbl)*1./k)
+        do i1=1,i
+          tmp_ii2(i1,j1,k1)=nint(i1*ii2(nbl)*1./i) - nint((i1-1.)*ii2(nbl)*1./i)
+          tmp_jj2(i1,j1,k1)=nint(j1*jj2(nbl)*1./j) - nint((j1-1.)*jj2(nbl)*1./j)
+          tmp_kk2(i1,j1,k1)=nint(k1*kk2(nbl)*1./k) - nint((k1-1.)*kk2(nbl)*1./k)
         end do
         end do
         end do
-        if (min(minval(nibl2),minval(njbl2),minval(nkbl2))>3) then ! if the splitting is acceptable   !  todo : criteria may be different elsewhere
+        if (min(minval(tmp_ii2),minval(tmp_jj2),minval(tmp_kk2))>1) then ! if the splitting is acceptable   !  todo : criteria may be different elsewhere
 !             compute sizes of new communication, must be over evaluated (including boundary condition)
-          num_cft=2*(njbl2*nibl2 + nibl2*nkbl2 + njbl2*nkbl2)
+          num_cft=2*(tmp_jj2*tmp_ii2 + tmp_ii2*tmp_kk2 + tmp_jj2*tmp_kk2)
 !             choose the best splitting (less comm)
           if(sum(num_cft)<sum(num_cf2)) then  !  todo : is sum better than maxval ?
-            nblockd=(/j,i,k/)
-            call reallocate(  njcv2,j,i,k) ;   njcv2=njbl2
-            call reallocate(  nicv2,j,i,k) ;   nicv2=nibl2
-            call reallocate(  nkcv2,j,i,k) ;   nkcv2=nkbl2
-            call reallocate(num_cf2,j,i,k) ; num_cf2=num_cft
+            nblockd=(/i,j,k/)
+            call reallocate(  new_jj2,i,j,k) ;   new_jj2=tmp_jj2
+            call reallocate(  new_ii2,i,j,k) ;   new_ii2=tmp_ii2
+            call reallocate(  new_kk2,i,j,k) ;   new_kk2=tmp_kk2
+            call reallocate(num_cf2,i,j,k) ; num_cf2=num_cft
           end if
         end if
-        deallocate(njbl2,nibl2,nkbl2,num_cft)
+        deallocate(tmp_jj2,tmp_ii2,tmp_kk2,num_cft)
       end if
     end do
     end do
@@ -339,6 +552,15 @@ subroutine reallocate_3r(in,size1,size2,size3)
   
 end subroutine reallocate_3r
 
+subroutine reallocate_4r(in,size1,size2,size3,size4)
+  implicit none
+  double precision,allocatable,intent(inout) :: in(:,:,:,:)
+  integer,intent(in)                :: size1,size2,size3,size4
+
+  if(allocated(in)) deallocate(in)
+  allocate(in(size1,size2,size3,size4))
+  
+end subroutine reallocate_4r
 
 subroutine reallocate_1i(in,size)
   implicit none
@@ -369,6 +591,16 @@ subroutine reallocate_3i(in,size1,size2,size3)
   allocate(in(size1,size2,size3))
   
 end subroutine reallocate_3i
+
+subroutine reallocate_4i(in,size1,size2,size3,size4)
+  implicit none
+  integer,allocatable,intent(inout) :: in(:,:,:,:)
+  integer,intent(in)                :: size1,size2,size3,size4
+
+  if(allocated(in)) deallocate(in)
+  allocate(in(size1,size2,size3,size4))
+  
+end subroutine reallocate_4i
 
 end module mod_partitionnement
 
