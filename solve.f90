@@ -527,7 +527,7 @@ program solve
         endif
      case('partition')
 !--   PARTITION
-       call partitionnement(x,y,z,mot,imot,nmot)
+       call partitionnement(x,y,z,mot,imot,nmot,ncbd,mnc,ncin,bceqt)
 !--   ALLOC
      case('alloc')
 !--   ALLOC DOM
@@ -896,6 +896,110 @@ contains
 
   end subroutine allocdom
 
+
+  subroutine allocbnd
+    use kcle
+    use schemanum
+    use modeleturb
+    implicit none
+    integer,allocatable          :: itmp(:)
+    double precision,allocatable :: rtmp(:)
+
+    mtb=mtbx              ! nb front
+    allocate(cl(mtb))
+    allocate(ndcc(mtb))
+    allocate(nbdc(mtb))
+    allocate(nfbc(mtb))
+    allocate(bc(mtb,ista*lsta))
+ndcc=0
+bc=0
+!    allocate(nfbr(mtb))
+!    allocate(ndrr(mtb))
+!    allocate(srotr(mtb))
+!    allocate(nfba(mtb))
+!    allocate(nfbn(mtb))
+!    allocate(crotr(mtb))
+!    allocate(lbdrat(mtb))
+!    allocate(nmfint(mtb))
+!    allocate(nba(mtb))
+!    call defdfpmcfg
+
+    mtt=mtbx*lgx
+    allocate(mdnc(mtt))
+    allocate(mper(mtt))
+    allocate(mpc(mtt))
+mdnc=0
+mper=0
+mpc=0
+!    allocate(lbd(mtt))
+!    allocate(mpn(mtt))
+!    allocate(lbdko(mtt))
+!    allocate(mpr(mtt))
+
+    lt=lgx*lzx
+!    allocate(klmax(lt))
+!    allocate(kkmf(lt))
+!    allocate(keta(lt))
+!    allocate(kki2(lt))
+!    allocate(kki4(lt))
+!    allocate(kmf(lt))
+!    allocate(lmax(lt))
+!    allocate(ki2(lt))
+!    allocate(ki4(lt))
+!    allocate(eta(lt))
+!    allocate(pctvort(lt))
+
+    ip40=mdimubx            ! Nb point frontiere
+!    allocate(rod(ip40))
+!    allocate(qtx(ip40))
+!    allocate(qty(ip40))
+!    allocate(qtz(ip40))
+!    allocate(res(ip40))
+!    allocate(tm1(ip40))
+!    allocate(tm2(ip40))
+!    allocate(tm3(ip40))
+!    allocate(tm4(ip40))
+!    allocate(tm5(ip40))
+!    allocate(tm6(ip40))
+!    allocate(tm7(ip40))
+!    allocate(tm8(ip40))
+!    allocate(tm9(ip40))
+!    allocate(tm10(ip40))
+!    allocate(tm11(ip40))
+!    allocate(tm12(ip40))
+!    allocate(tm13(ip40))
+!    allocate(tp(ip40))
+!    allocate(rpi(ip40))
+!    allocate(d0y(ip40))
+!    allocate(d0x(ip40))
+!    allocate(d0z(ip40))
+!    allocate(pres(ip40))
+!    allocate(roud(ip40))
+!    allocate(rovd(ip40))
+!    allocate(rowd(ip40))
+!    allocate(roed(ip40))
+
+    ip41=mdimtbx            ! Nb point frontiere
+    allocate(ncin(ip41))
+    allocate(bceqt(ip41,neqt))
+
+    ip42=mdimtbx            ! Nb point frontiere
+!    allocate(fgam(ip42))
+!    allocate(nxn(ip42))
+!    allocate(nyn(ip42))
+!    allocate(nzn(ip42))
+
+    ip43=mdimtbx            ! Nb point frontiere
+    allocate(mnc(ip43))
+mnc=0
+    ip44=0!mdimubx            !TODO
+!    allocate(mnr(ip44))
+!    allocate(xnr(ip44))
+!    allocate(ynr(ip44))
+!    allocate(znr(ip44))
+
+  end subroutine allocbnd
+
   subroutine allocarray
     use kcle
     use schemanum
@@ -964,42 +1068,26 @@ contains
 !print*,ip31,ndir
     allocate(sn(ip31*ndir)) ! TODO ?
 
-  end subroutine allocarray
 
-  subroutine allocbnd
-    use kcle
-    use schemanum
-    use modeleturb
-    implicit none
-    integer,allocatable          :: itmp(:)
-    double precision,allocatable :: rtmp(:)
+lz=lt
 
-    mtb=mtbx              ! nb front
-    allocate(cl(mtb))
+    allocate(rti(ip40))
+
     allocate(nfbr(mtb))
-    allocate(nba(mtb))
-    allocate(ndcc(mtb))
     allocate(ndrr(mtb))
-    allocate(nbdc(mtb))
     allocate(srotr(mtb))
-    allocate(nfbc(mtb))
     allocate(nfba(mtb))
     allocate(nfbn(mtb))
     allocate(crotr(mtb))
     allocate(lbdrat(mtb))
     allocate(nmfint(mtb))
-    allocate(bc(mtb,ista*lsta))
+    allocate(nba(mtb))
 
-    mtt=mtbx*lgx
     allocate(lbd(mtt))
-    allocate(mdnc(mtt))
-    allocate(mper(mtt))
-    allocate(mpc(mtt))
     allocate(mpn(mtt))
     allocate(lbdko(mtt))
     allocate(mpr(mtt))
 
-    lt=lgx*lzx
     allocate(klmax(lt))
     allocate(kkmf(lt))
     allocate(keta(lt))
@@ -1012,9 +1100,7 @@ contains
     allocate(eta(lt))
     allocate(pctvort(lt))
 
-    ip40=mdimubx            ! Nb point frontiere
     allocate(rod(ip40))
-    allocate(rti(ip40))
     allocate(qtx(ip40))
     allocate(qty(ip40))
     allocate(qtz(ip40))
@@ -1043,31 +1129,23 @@ contains
     allocate(rowd(ip40))
     allocate(roed(ip40))
 
-    ip41=mdimtbx            ! Nb point frontiere
-    allocate(ncin(ip41))
-    allocate(bceqt(ip41,neqt))
-
-    ip42=mdimtbx            ! Nb point frontiere
     allocate(fgam(ip42))
     allocate(nxn(ip42))
     allocate(nyn(ip42))
     allocate(nzn(ip42))
 
-    ip43=mdimtbx            ! Nb point frontiere
-    allocate(mnc(ip43))
-
-    ip44=0!mdimubx            !TODO
     allocate(mnr(ip44))
     allocate(xnr(ip44))
     allocate(ynr(ip44))
     allocate(znr(ip44))
+
 
     call defdfpmcfg ! (fill nba)
     call defdfpmdtd ! (fill eta keta)
     call defdfpmdsd ! (fill ki2 ki4 kki2 kki4)
     call defdfpmimd ! (fill kmf lmax kkmf klmax)
 
-  end subroutine allocbnd
+  end subroutine allocarray
 
   subroutine deallocdata
     use kcle

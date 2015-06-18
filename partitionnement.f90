@@ -7,14 +7,16 @@ module mod_partitionnement
                       reallocate_4r,reallocate_4i
   end interface reallocate
 contains
-  subroutine partitionnement(x,y,z,mot,imot,nmot)
+  subroutine partitionnement(x,y,z,mot,imot,nmot,ncbd,mnc,ncin,bceqt)
   use mod_c_end
   use mod_valenti
-  use para_fige
+  use boundary
   use chainecarac
-  use maillage, only : ii1,ii2,jj1,jj2,kk1,kk2,id1,jd1,kd1,id2,jd2,kd2
-  use maillage, only : npn,  ndimctbx,  ndimntbx,   ndimubx,nind,nnn,nnc
-  use schemanum,only : nfi
+  use para_var
+  use schemanum
+  use kcle
+  use modeleturb
+  use sortiefichier
 !
 !***********************************************************************
 !
@@ -51,17 +53,18 @@ contains
 !-----parameters figes--------------------------------------------------
 !
     implicit none
-    integer,allocatable :: nblock2(:),njcv(:),nkcv(:)
+    integer,allocatable :: nblock2(:)
     integer,allocatable :: num_cf2(:,:,:),nblockd(:,:)
     integer,allocatable :: tmp_ii2(:,:,:),tmp_jj2(:,:,:),tmp_kk2(:,:,:)
-    integer,allocatable :: tmp2_ii2(:,:,:,:),tmp2_jj2(:,:,:,:),tmp2_kk2(:,:,:,:)
-    integer :: nblockt,nprocs,l,nxyza,sblock,nid,nijd,njd
+    integer,allocatable :: tmp2_ii2(:,:,:,:)
+    integer :: nprocs,l,nxyza,sblock,nid,nijd,njd
+    integer         ,allocatable ::   ncbd(:)
     integer,allocatable :: new_ii1(:,:,:,:),new_jj1(:,:,:,:),new_kk1(:,:,:,:)
     integer,allocatable :: new_ii2(:,:,:,:),new_jj2(:,:,:,:),new_kk2(:,:,:,:)
     integer,allocatable :: new_id1(:,:,:,:),new_jd1(:,:,:,:),new_kd1(:,:,:,:)
     integer,allocatable :: new_id2(:,:,:,:),new_jd2(:,:,:,:),new_kd2(:,:,:,:)
     integer,allocatable :: new_nnn(:,:,:,:),new_nnc(:,:,:,:),new_nnfb(:,:,:,:)
-    integer,allocatable :: new_npn(:,:,:,:),new_npfb(:,:,:,:),new_npc(:,:,:,:)
+    integer,allocatable :: new_npn(:,:,:,:),new_npfb(:,:,:,:),new_npc(:,:,:,:),new2old(:),old2new(:)
     double precision,allocatable :: new_x(:),new_y(:),new_z(:),x(:),y(:),z(:)
     integer :: i,j,k,  new_ndimctbx,  new_ndimntbx,   new_ndimubx,l2
     integer :: xi,yi,zi,xi2,yi2,zi2,xyz,xyz2,new_nid,new_njd,new_nijd
@@ -69,6 +72,12 @@ contains
     character(len=50)::fich
     character(len=32) ::  mot(nmx)
     character(len=32) ::  comment
+
+  integer         ,allocatable ::   mnc(:),ncin(:)
+  double precision,allocatable ::  bceqt(:,:)
+
+
+
 
     do icmt=1,32
        comment(icmt:icmt)=' '
@@ -192,7 +201,7 @@ enddo
 enddo
 
 allocate(new_x(new_ndimntbx),new_y(new_ndimntbx),new_z(new_ndimntbx))
-
+allocate(old2new(ndimntbx),new2old(new_ndimntbx))
     do l=1,lt  !     now we have to fill all arrays
 
 !write(fich,'(A,I0.2,A)') "origmesh_",l,".dat"
@@ -247,14 +256,16 @@ allocate(new_x(new_ndimntbx),new_y(new_ndimntbx),new_z(new_ndimntbx))
                   new_x(xyz)=x(xyz2)
                   new_y(xyz)=y(xyz2)
                   new_z(xyz)=z(xyz2)
-
+                  old2new(xyz2)=xyz
+                  new2old(xyz)=xyz2
 !                  write(42,'(3e11.3,i8)') new_x(xyz),new_y(xyz),new_z(xyz),l2
 
                 enddo
-                write(42,*) ""
+!                write(42,*) ""
               enddo
             enddo
 ! close(42)
+
 
 
 
@@ -417,7 +428,69 @@ allocate(new_x(new_ndimntbx),new_y(new_ndimntbx),new_z(new_ndimntbx))
 print*,l,' : filling done'
     enddo
 
-!        stop
+! 
+print*,""
+print*,"ncbd : pour l dans numerotation cl, ncbd(l) est cellule fictive",ip42
+print*,"ncin : pour l dans numerotation cl, ncin(l) est cellule interieure",ip41
+!print*,(x(ncbd(l)),l=1,ip42) ,ip42
+!print*,""
+print*,"bceqt : pour l dans numerotation cl, valeure condition limite",ip41,neqt
+!print*,bceqt
+!print*,""
+print*,"indfl : pour l dans nb de frontiere, donne plan (i2 => dernier plan i)",mtb
+!print*,indfl
+!print*,""
+print*,"nfei : pour l dans nb de frontieres, donne numero de la frontiere ? nfei(l)=l ...",mtb
+!print*,nfei
+!print*,""
+print*,"ndlb : pour l dans nb de frontieres, donne numero du bloc concerné par frontiere",mtb
+!print*,ndlb
+!print*,""
+print*,"iminb et co : pour l dans nb de frontieres, donne bornes plan frontiere",mtt
+!print*,"iminb",iminb
+!print*,""
+!print*,"imaxb",imaxb
+!print*,""
+!print*,"jminb",jminb
+!print*,""
+!print*,"jmaxb",jmaxb
+!print*,""
+!print*,"kminb",kminb
+!print*,""
+!print*,"kmaxb",kmaxb
+!print*,""
+print*,"cl : pour l dans nb de frontieres, donne type cl de frontiere",mtb
+!print*,cl
+!print*,""
+print*,"ndcc : pour l dans nb de frontieres, donne autre bloc si raccord",mtb
+!print*,ndcc
+!print*,""
+print*,"nfbc : pour l dans nb de raccord, donne numero frontiere",mtb
+!print*,nfbc
+!print*,""
+print*,"nbdc : nombre parametre cl ",mtb
+!print*,nbdc
+!print*,""
+print*,"bc : valeure parametre cl",mtb,ista*lsta
+!do l=1,mtb
+!write(*,'(14e9.2)') bc(L,:)
+!enddo
+print*,"mper : ? mper=0",mtt
+!print*,mper
+!print*,""
+print*,"mnc : pour l dans numerotation ?, mnc(l) est cellule autre bloc",ip43
+print*,mnc
+print*,""
+print*,""
+print*,"mdnc = ncin-ncbd pour chaque frontiere",mtt
+print*,mdnc
+print*,""
+print*,"mpc :",mtt
+print*,mpc
+print*,""
+
+
+
     return
 contains
     function    indn(i,j,k)
