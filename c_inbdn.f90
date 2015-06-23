@@ -18,14 +18,14 @@ contains
 !-----parameters figes--------------------------------------------------
 !
     use para_var
-    use para_fige
+    use boundary
     use sortiefichier
     use mod_b1_inbdn
     use mod_inbdn
     use mod_tcmd_inbdn
     implicit none
     integer          ::  imot(nmx),     kibdn,         l,     lmfbd,ncbd(ip41)
-    integer          ::       nmot
+    integer          ::       nmot,l1
     double precision ::     nxn(ip42),    nyn(ip42),    nzn(ip42),sn(ip31*ndir),    tn1(ip00)
     double precision ::     tn2(ip00),    tn3(ip00),    tn4(ip00),    tn5(ip00),    tn6(ip00)
     double precision ::     tn7(ip00),    tn8(ip00),    tn9(ip00),      x(ip21),      y(ip21)
@@ -51,13 +51,16 @@ contains
 !
     do l=1,lmfbd
 !
+       do l1=1,mtb
+        if (new2old_f(l1)==lmfb(l)) &
        call inbdn( &
-            lmfb(l),kibdn, &
+            l1,kibdn, &
             x,y,z, &
             sn, &
             ncbd,nxn,nyn,nzn, &
             tn1,tn2,tn3,tn4,tn5,tn6, &
             tn7,tn8,tn9)
+   enddo
 !
     enddo
 !

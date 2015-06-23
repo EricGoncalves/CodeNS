@@ -527,7 +527,7 @@ program solve
         endif
      case('partition')
 !--   PARTITION
-       call partitionnement(x,y,z,mot,imot,nmot,ncbd,mnc,ncin,bceqt)
+       call partitionnement(x,y,z,mot,imot,nmot,ncbd,mnc,ncin,bceqt,exs1,exs2)
 !--   ALLOC
      case('alloc')
 !--   ALLOC DOM
@@ -666,8 +666,12 @@ program solve
         call c_end(mot,imot,nmot)
 !--   INIT
      case('init')
+!--   INIT raccord
+        if(mot(2)(1:imot(2)).eq.'raccord') then
+          call iniraccord(&
+                   mot,imot,nmot)
 !--   INIT DOM
-        if(mot(2)(1:imot(2)).eq.'dom') then
+        elseif(mot(2)(1:imot(2)).eq.'dom') then
 !--   INIT DOM XYZ
            select case(mot(3)(1:imot(3)))
            case('xyz')
@@ -905,14 +909,15 @@ contains
     integer,allocatable          :: itmp(:)
     double precision,allocatable :: rtmp(:)
 
-    mtb=mtbx              ! nb front
     allocate(cl(mtb))
+    allocate(tab_raccord(mtb))
     allocate(ndcc(mtb))
     allocate(nbdc(mtb))
     allocate(nfbc(mtb))
     allocate(bc(mtb,ista*lsta))
 ndcc=0
 bc=0
+tab_raccord=0
 !    allocate(nfbr(mtb))
 !    allocate(ndrr(mtb))
 !    allocate(srotr(mtb))

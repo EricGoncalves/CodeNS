@@ -14,7 +14,7 @@ contains
 !-----parameters figes--------------------------------------------------
 !
     use para_var
-    use para_fige
+    use boundary
     use sortiefichier
     use mod_tcmd_inbdb
     use mod_b1_inbdb
@@ -22,7 +22,7 @@ contains
     implicit none
     integer          ::     ibdcfl,    ibdcst,    ibddim, imot(nmx),     kibdb
     integer          ::          l,     lmfbd,ncbd(ip41),ncin(ip41),      nmot
-    integer          ::       nvbc
+    integer          ::       nvbc,l1
     double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
     integer         ,allocatable :: lmfb(:)
 !
@@ -47,11 +47,14 @@ contains
 !
     do l=1,lmfbd
 !
+       do l1=1,mtb
+        if (new2old_f(l1)==lmfb(l)) &
        call inbdb( &
             ncbd,ncin, &
-            lmfb(l),clmf,kibdb, &
+            l1,clmf,kibdb, &
             ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
 !
+    enddo
     enddo
 !
     deallocate(lmfb)
