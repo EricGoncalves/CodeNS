@@ -929,6 +929,7 @@ tab_raccord=0
 !    allocate(nba(mtb))
 !    call defdfpmcfg
 
+save_mtbx=mtbx
     mtt=mtbx*lgx
     allocate(mdnc(mtt))
     allocate(mper(mtt))

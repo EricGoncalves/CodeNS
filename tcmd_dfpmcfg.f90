@@ -38,7 +38,7 @@ contains
 !
     if(nmot.gt.2) then
        nm=2
-       do no=1,mtbx
+       do no=1,save_mtbx
           nm=nm+1
           if(nmot.lt.nm) then
              comment=ci

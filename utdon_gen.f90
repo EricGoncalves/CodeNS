@@ -54,6 +54,7 @@ contains
 !
     use para_var
     use para_fige
+    use boundary,only :new2old_f
     use sortiefichier
     use maillage
     use constantes
@@ -62,7 +63,7 @@ contains
     use definition
     implicit none
     integer          ::   idefconf,  idefxref,      ierr,     ligne,      mflu
-    integer          ::         nb,ncbd(ip41)
+    integer          ::         nb,ncbd(ip41),l1
     double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),        omg1,          p2
     double precision ::          rpi,         rti,        tpar,v(ip11,ip60),     x(ip21)
     double precision ::      y(ip21),     z(ip21)
@@ -206,18 +207,22 @@ contains
              if(cmtlec(1:3).ne.'fin' .and. cmtlec(1:3).ne.'FIN') then
                 backspace(don1)
                 read(don1,*,err=99) mflu
-                if(mflu.ge.1 .and. mflu.le.mtbx) then
-                   if(nbfll.lt.mtb) then
-                      nbfll=nbfll+1
-                      nmfint(nbfll)=mflu
-                   else
-!                 suite de la liste non prise en compte
-                      write(imp,'(/,"!!!utdon_gen: trop de surfaces ")')
-                   endif
-                else
-!               mauvais numero de surface
-                   write(imp,'(/,"!!!utdon_gen: numero de surface incorrect: mf=",i4)')mflu
-                endif
+               do l1=1,mtb
+                if (new2old_f(l1)==mflu) then
+                  if(l1.ge.1 .and. l1.le.mtbx) then
+                     if(nbfll.lt.mtb) then
+                        nbfll=nbfll+1
+                        nmfint(nbfll)=l1
+                     else
+  !                 suite de la liste non prise en compte
+                        write(imp,'(/,"!!!utdon_gen: trop de surfaces ")')
+                     endif
+                  else
+  !               mauvais numero de surface
+                     write(imp,'(/,"!!!utdon_gen: numero de surface incorrect: mf=",i4)')mflu
+                  endif
+               endif
+               enddo
              else !fin sequence, continuer la lecture generale des mots-c
                 if(kimp.gt.1) then
                    write(imp,'( (20i4) )')(nmfint(nb),nb=1,nbfll)

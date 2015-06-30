@@ -49,7 +49,7 @@ contains
     integer             :: save_lt,save_ndimntbx,l
     integer             :: save_nid,save_njd,save_nijd,save_klzx
     integer             :: save_kmtbx,save_lzx,save_mdimtbx,save_mdimubx
-    integer             :: save_mtb,save_mtbx,save_mtt,save_ndimctbx
+    integer             :: save_mtb,save_mtt,save_ndimctbx
     integer             :: save_ndimubx,save_xi,save_xyz,save_yi,save_zi
     double precision,allocatable :: save_x(:),save_y(:),save_z(:)
     integer,allocatable :: save_ii1(:),save_jj1(:),save_kk1(:)
@@ -686,7 +686,7 @@ contains
     ip40=mdimubx            ! Nb point frontiere
     ip41=mdimtbx            ! Nb point frontiere
     ip42=mdimtbx            ! Nb point frontiere
-    ip43=2*mdimtbx            ! Nb point frontiere
+    ip43=mdimtbx            ! Nb point frontiere
     ip44=0!mdimubx            !TODO
     call reallocate(cl,mtb)
     call reallocate(ndcc,mtb)
@@ -706,95 +706,101 @@ contains
              do i=1,nblockd(1,l)
                 l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
                 do fr=1,mfbe
-                   test=fr>old_mtb ! new boundary
-                   if (new2old_f(fr)/=0) test=test.or.tab_raccord(new2old_f(fr))/=0   ! old raccord boundary
-                   if (test) then   ! raccord boundary
-                      select case(indfl(fr))
-                      case("i1")
-                         call inbdb( &
-                              ncbd,ncin, &
-                              fr,"rc  ",1, &
-                              0,0,0,0,vbc,bceqt)
+                   if(ndlb(fr)==l2) then
+                     test=fr>old_mtb ! new boundary
+                     if (new2old_f(fr)/=0) test=test.or.tab_raccord(new2old_f(fr))/=0   ! old raccord boundary
+                     if (test) then   ! raccord boundary
+                        select case(indfl(fr))
+                        case("i1")
+                           call inbdb( &
+                                ncbd,ncin, &
+                                fr,"rc  ",1, &
+                                0,0,0,0,vbc,bceqt)
 
-                         call inbdc( &
-                              exs1,exs2, &
-                              x,y,z, &
-                              ncbd,ncin,mnc, &
-                              0,fr,fr+1,1,0., &
-                              ii1(l2),jj1(l2),kk1(l2),'fa','+j','+k')
+                           call inbdc( &
+                                exs1,exs2, &
+                                x,y,z, &
+                                ncbd,ncin,mnc, &
+                                0,fr,fr+1,1,0., &
+                                ii1(l2),jj1(l2),kk1(l2),'fa','+j','+k')
 
-                      case("i2")
-                         call inbdb( &
-                              ncbd,ncin, &
-                              fr,"rc  ",1, &
-                              0,0,0,0,vbc,bceqt)
+                        case("i2")
+                           call inbdb( &
+                                ncbd,ncin, &
+                                fr,"rc  ",1, &
+                                0,0,0,0,vbc,bceqt)
 
-                         call inbdc( &
-                              exs1,exs2, &
-                              x,y,z, &
-                              ncbd,ncin,mnc, &
-                              0,fr,fr-1,1,0., &
-                              ii2(l3),jj1(l2),kk1(l2),'fa','+j','+k')
+                           call inbdc( &
+                                exs1,exs2, &
+                                x,y,z, &
+                                ncbd,ncin,mnc, &
+                                0,fr,fr-1,1,0., &
+                                ii2(l3),jj1(l2),kk1(l2),'fa','+j','+k')
 
-                      case("j1")
-                         call inbdb( &
-                              ncbd,ncin, &
-                              fr,"rc  ",1, &
-                              0,0,0,0,vbc,bceqt)
+                        case("j1")
+                           call inbdb( &
+                                ncbd,ncin, &
+                                fr,"rc  ",1, &
+                                0,0,0,0,vbc,bceqt)
 
-                         call inbdc( &
-                              exs1,exs2, &
-                              x,y,z, &
-                              ncbd,ncin,mnc, &
-                              0,fr,fr+1,1,0., &
-                              ii1(l2),jj1(l2),kk1(l2),'+i','fa','+k')
+                           call inbdc( &
+                                exs1,exs2, &
+                                x,y,z, &
+                                ncbd,ncin,mnc, &
+                                0,fr,fr+1,1,0., &
+                                ii1(l2),jj1(l2),kk1(l2),'+i','fa','+k')
 
-                      case("j2")
-                         call inbdb( &
-                              ncbd,ncin, &
-                              fr,"rc  ",1, &
-                              0,0,0,0,vbc,bceqt)
+                        case("j2")
+                           call inbdb( &
+                                ncbd,ncin, &
+                                fr,"rc  ",1, &
+                                0,0,0,0,vbc,bceqt)
 
-                         call inbdc( &
-                              exs1,exs2, &
-                              x,y,z, &
-                              ncbd,ncin,mnc, &
-                              0,fr,fr-1,1,0., &
-                              ii1(l2),jj2(l2),kk1(l2),'+i','fa','+k')
+                           call inbdc( &
+                                exs1,exs2, &
+                                x,y,z, &
+                                ncbd,ncin,mnc, &
+                                0,fr,fr-1,1,0., &
+                                ii1(l2),jj2(l2),kk1(l2),'+i','fa','+k')
 
-                      case("k1")
-                         call inbdb( &
-                              ncbd,ncin, &
-                              fr,"rc  ",1, &
-                              0,0,0,0,vbc,bceqt)
+                        case("k1")
+                           call inbdb( &
+                                ncbd,ncin, &
+                                fr,"rc  ",1, &
+                                0,0,0,0,vbc,bceqt)
 
-                         call inbdc( &
-                              exs1,exs2, &
-                              x,y,z, &
-                              ncbd,ncin,mnc, &
-                              0,fr,fr+1,1,0., &
-                              ii1(l2),jj1(l2),kk1(l2),'+i','+j','fa')
+                           call inbdc( &
+                                exs1,exs2, &
+                                x,y,z, &
+                                ncbd,ncin,mnc, &
+                                0,fr,fr+1,1,0., &
+                                ii1(l2),jj1(l2),kk1(l2),'+i','+j','fa')
 
-                      case("k2")
-                         call inbdb( &
-                              ncbd,ncin, &
-                              fr,"rc  ",1, &
-                              0,0,0,0,vbc,bceqt)
+                        case("k2")
+                           call inbdb( &
+                                ncbd,ncin, &
+                                fr,"rc  ",1, &
+                                0,0,0,0,vbc,bceqt)
 
-                         call inbdc( &
-                              exs1,exs2, &
-                              x,y,z, &
-                              ncbd,ncin,mnc, &
-                              0,fr,fr-1,1,0., &
-                              ii1(l2),jj1(l2),kk2(l2),'+i','+j','fa')
-                      end select
-                   endif
+                           call inbdc( &
+                                exs1,exs2, &
+                                x,y,z, &
+                                ncbd,ncin,mnc, &
+                                0,fr,fr-1,1,0., &
+                                ii1(l2),jj1(l2),kk2(l2),'+i','+j','fa')
+                        end select
+                     endif
+                  endif
                 enddo
              enddo
           enddo
        enddo
        print*,l,' : filling done'
     enddo
+
+    deallocate(x,y,z,ndlb,nfei,indfl,mpb,mmb,ncbd,ii1)
+    deallocate(jj1,kk1,ii2,jj2,kk2,id1,jd1,kd1,id2,jd2)
+    deallocate(kd2,nnn,nnc,nnfb,npn,npc,npfb)
 
     return
   contains
@@ -1019,6 +1025,7 @@ contains
     call reallocate(in,newsize)
     in=0
     in(1:size(tmp))=tmp
+    deallocate(tmp)
   end subroutine reallocate_s_1i
 
   subroutine reallocate_s_4i(in,size1,size2,size3,size4)
@@ -1030,6 +1037,7 @@ contains
     call reallocate(in,size1,size2,size3,size4)
     in=0
     in(:size(tmp,1),:size(tmp,2),:size(tmp,3),:size(tmp,4))=tmp
+    deallocate(tmp)
   end subroutine reallocate_s_4i
 
   subroutine reallocate_s_1r(in,newsize)
@@ -1041,6 +1049,7 @@ contains
     call reallocate(in,newsize)
     in=0.
     in(1:size(tmp))=tmp
+    deallocate(tmp)
   end subroutine reallocate_s_1r
 
 end module mod_partitionnement
