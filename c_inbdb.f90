@@ -3,7 +3,7 @@ module mod_c_inbdb
 contains
   subroutine c_inbdb( &
        mot,imot,nmot, &
-       ncbd,ncin,bceqt)
+       ncbd,ncin,bceqt,partition)
 !
 !***********************************************************************
 !
@@ -25,6 +25,7 @@ contains
     integer          ::       nvbc,l1
     double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
     integer         ,allocatable :: lmfb(:)
+    logical,optional :: partition
 !
 !-----------------------------------------------------------------------
 !
@@ -47,6 +48,12 @@ contains
 !
     do l=1,lmfbd
 !
+      if (present(partition)) then
+       call inbdb( &
+            ncbd,ncin, &
+            lmfb(l),clmf,kibdb, &
+            ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
+    else
        do l1=1,mtb
         if (new2old_f(l1)==lmfb(l)) &
        call inbdb( &
@@ -55,6 +62,7 @@ contains
             ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
 !
     enddo
+    endif
     enddo
 !
     deallocate(lmfb)
