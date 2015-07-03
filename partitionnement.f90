@@ -50,7 +50,7 @@ contains
     integer,allocatable :: old2new_p(:),new2old_p(:),new2old_b(:),num_cf2(:,:,:)
     integer,allocatable :: ni1(:,:,:),nj1(:,:,:),nk1(:,:,:),ncbd(:)
 
-    integer             :: save_lt,save_ndimntbx,l
+    integer             :: save_lt,save_ndimntbx,l,verbosity
     integer             :: save_nid,save_njd,save_nijd,save_klzx
     integer             :: save_kmtbx,save_lzx,save_mdimtbx,save_mdimubx
     integer             :: save_mtb,save_mtt,save_ndimctbx
@@ -85,47 +85,38 @@ contains
     !############################## GET PARAMETERS ##############################################
     !############################################################################################
 
-    ! get number of block we want from flec TODO : replace valenti by mpi
-    do icmt=1,32
-       comment(icmt:icmt)=' '
-    enddo
-    kval=0
-    !
-    nm=2
-    if(nmot.lt.nm) then ! read number of block at the end  TODO : replace valenti by mpi
-       comment=ci
-       call synterr(mot,imot,nmot,comment)
-    else
-       call valenti(mot,imot,nm,nprocs,kval)
-    endif
+    verbosity=2 ! from 0 to 3
+    call get_param(mot,nmot,imot,nprocs) ! nprocs is the minimum number of blocks we want
 
     !############################################################################################
     !############################# SAVE OLD MESH FOR CHECKING PURPOSE ###########################
     !############################################################################################
 
-!! write old grid
-!    do l=1,lt
-!       write(fich,'(A,I0.2,A)') "origmesh_",l,".dat"
-!       open(42,file=fich,status="replace")
+    if(verbosity>=3) then
+      ! write old grid
+      do l=1,lt
+         write(fich,'(A,I0.2,A)') "origmesh_",l,".dat"
+         open(42,file=fich,status="replace")
 
-!       do k=kk1(l),kk2(l)
-!          do j=jj1(l),jj2(l)
-!             do i=ii1(l),ii2(l)
+         do k=kk1(l),kk2(l)
+            do j=jj1(l),jj2(l)
+               do i=ii1(l),ii2(l)
 
-!                nid = id2(l)-id1(l)+1
-!                njd = jd2(l)-jd1(l)+1
-!                nijd = nid*njd
+                  nid = id2(l)-id1(l)+1
+                  njd = jd2(l)-jd1(l)+1
+                  nijd = nid*njd
 
-!                xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+                  xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-!                write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),l
+                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),l
 
-!             enddo
-!             write(42,*) ""
-!          enddo
-!       enddo
-!       close(42)
-!    enddo
+               enddo
+               write(42,*) ""
+            enddo
+         enddo
+         close(42)
+      enddo
+    endif
 
 
     !############################################################################################
@@ -351,29 +342,37 @@ contains
     if(sblock/=nprocs) then
        stop 'partitionnement impossible'
     else
-       print*,'découpage réussis : '
-       do l=1,save_lt
-          print*, l,nblockd(:,l)
-       enddo
-!      do l=1,save_lt
-!        do k=1,nblockd(3,l)
-!          do j=1,nblockd(2,l)
-!              print*, l,k,j,ni(:nblockd(1,l),j,k,l)*nj(:nblockd(1,l),j,k,l)*nk(:nblockd(1,l),j,k,l)
-!          enddo
-!        enddo
-!      enddo
+       if(verbosity>=1) then
+         print*,'découpage réussis : '
+         do l=1,save_lt
+            print*, l,nblockd(:,l)
+         enddo
+       endif
+       if(verbosity>=2) then
+          do l=1,save_lt
+            do k=1,nblockd(3,l)
+              do j=1,nblockd(2,l)
+                  print*, l,k,j,ni(:nblockd(1,l),j,k,l)*nj(:nblockd(1,l),j,k,l)*nk(:nblockd(1,l),j,k,l)
+              enddo
+            enddo
+          enddo
+       endif
     end if
 
 
     !############################################################################################
     !######################### RECREATE GRID ####################################################
     !############################################################################################
-
-
     allocate(old2new_p(save_ndimntbx),new2old_p(0)) 
     allocate(new2old_b(nprocs))
 
-    print*,'recreate grid '
+    if(verbosity>=2) then
+      mot="" ; nmot=7 ; imot=0
+      mot(1)="create" ; imot(1)=6
+      mot(2)="dom"    ; imot(2)=3
+      mot(3)="st"     ; imot(3)=2
+    endif
+!    print*,'recreate grid '
     do l=1,save_lt  
        do k=1,nblockd(3,l)
           do j=1,nblockd(2,l)
@@ -381,52 +380,37 @@ contains
 
                 l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
 
-                ! duplicate interface
-
+                ! +1 for duplicate interface
                 if(i>1) ni(i,j,k,l)=ni(i,j,k,l)+1 
-                if(j>1) nj(i,j,k,l)=nj(i,j,k,l)+1 
+                if(j>1) nj(i,j,k,l)=nj(i,j,k,l)+1 ! TODO put this in triv_split
                 if(k>1) nk(i,j,k,l)=nk(i,j,k,l)+1 
 
-                call crdms( l2,ni(i,j,k,l),nj(i,j,k,l),nk(i,j,k,l))
+                if(verbosity>=2) then
+                  call str(mot,imot,nmx,4 ,l2)
+                  call str(mot,imot,nmx,5 ,ni(i,j,k,l))
+                  call str(mot,imot,nmx,6 ,nj(i,j,k,l))
+                  call str(mot,imot,nmx,7 ,nk(i,j,k,l))
+                  call c_crdms( mot,imot,nmot)
+                else
+                  call crdms( l2,ni(i,j,k,l),nj(i,j,k,l),nk(i,j,k,l))
+                endif
 
                 call reallocate_s(new2old_p,ndimntbx)
                 call reallocate_s(x,ndimntbx)
                 call reallocate_s(y,ndimntbx)
                 call reallocate_s(z,ndimntbx)
 
-                do zi=kk1(l2),kk2(l2)
-                   do yi=jj1(l2),jj2(l2)
-                      do xi=ii1(l2),ii2(l2)
+                ! offset, don't forget to count the interface twice
+                xs=sum(ni(:i-1,j,k,l))-i+1
+                ys=sum(nj(i,:j-1,k,l))-j+1
+                zs=sum(nk(i,j,:k-1,l))-k+1
 
-                         ! don't forget to count the interface twice
-                         save_xi=xi+sum(ni(:i-1,j,k,l))-i+1
-                         save_yi=yi+sum(nj(i,:j-1,k,l))-j+1
-                         save_zi=zi+sum(nk(i,j,:k-1,l))-k+1
+                call copy_grid(l,l2,xs,ys,zs,x,y,z,save_x,save_y,save_z,              &
+                     save_id1,save_id2,save_jd1,save_jd2,save_kd1,save_kd2,save_npn,  &
+                     old2new_p,new2old_p)
 
-                         nid = id2(l2)-id1(l2)+1
-                         njd = jd2(l2)-jd1(l2)+1
-                         nijd = nid*njd
+                new2old_b(l2)= l
 
-                         save_nid = save_id2(l)-save_id1(l)+1
-                         save_njd = save_jd2(l)-save_jd1(l)+1
-                         save_nijd = save_nid*save_njd
-
-                         xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                         save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-
-                         !           fill grid
-                         x(xyz)=save_x(save_xyz)
-                         y(xyz)=save_y(save_xyz)
-                         z(xyz)=save_z(save_xyz)
-
-                         !           fill temporary arrays
-                         old2new_p(save_xyz)=    xyz
-                         new2old_p(    xyz)=save_xyz
-                         new2old_b(l2)= l
-
-                      enddo
-                   enddo
-                enddo
              enddo
           enddo
        enddo
@@ -435,238 +419,242 @@ contains
     !############################################################################################
     !######################### RECREATE OLD BOUNDARIES ##########################################
     !############################################################################################
-    mot="" ; nmot=13  ; imot=0
-    mot(1)="create"   ; imot(1)=6
-    mot(2)="boundary" ; imot(2)=8
-    mot(3)="st"       ; imot(3)=2
     allocate(new2old_f(0))
-    print*,'recreate old boundaries '
-    do l=1,save_lt  
+
+    if(verbosity>=2) then
+      mot="" ; nmot=13  ; imot=0
+      mot(1)="create"   ; imot(1)=6
+      mot(2)="boundary" ; imot(2)=8
+      mot(3)="st"       ; imot(3)=2
+    endif
+
+!    print*,'recreate old boundaries ' ! TODO there might be something simpler with old2new_p and new2old_p
+    do fr=1,save_mtb
+       l=save_ndlb(fr)
        do k=1,nblockd(3,l)
           do j=1,nblockd(2,l)
              do i=1,nblockd(1,l)
-                do fr=1,save_mtb
-                   if(save_ndlb(fr)==l) then
-                      l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
-                      nid = id2(l2)-id1(l2)+1
-                      njd = jd2(l2)-jd1(l2)+1
-                      nijd = nid*njd
+                l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
 
-                      save_nid = save_id2(l)-save_id1(l)+1
-                      save_njd = save_jd2(l)-save_jd1(l)+1
-                      save_nijd = save_nid*save_njd
+                call get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,             &
+                      ii1(l2),ii2(l2),jj1(l2),jj2(l2),kk1(l2),kk2(l2),         &
+                      id1(l2),id2(l2),jd1(l2),jd2(l2),kd1(l2),kd2(l2),npn(l2), &
+                      x,y,z)
 
-                      xmin=x( npn(l2)+1+(ii1(l2)-     id1(l2))+(jj1(l2)-     jd1(l2))*     nid+(kk1(l2)-     kd1(l2))*     nijd )
-                      xmax=x( npn(l2)+1+(ii2(l2)-     id1(l2))+(jj1(l2)-     jd1(l2))*     nid+(kk1(l2)-     kd1(l2))*     nijd )
-                      ymin=y( npn(l2)+1+(ii1(l2)-     id1(l2))+(jj1(l2)-     jd1(l2))*     nid+(kk1(l2)-     kd1(l2))*     nijd )
-                      ymax=y( npn(l2)+1+(ii1(l2)-     id1(l2))+(jj2(l2)-     jd1(l2))*     nid+(kk1(l2)-     kd1(l2))*     nijd )
-                      zmin=z( npn(l2)+1+(ii1(l2)-     id1(l2))+(jj1(l2)-     jd1(l2))*     nid+(kk1(l2)-     kd1(l2))*     nijd )
-                      zmax=z( npn(l2)+1+(ii1(l2)-     id1(l2))+(jj1(l2)-     jd1(l2))*     nid+(kk2(l2)-     kd1(l2))*     nijd )
+                call get_coords_box(save_xmin,save_xmax,save_ymin,save_ymax,save_zmin,save_zmax,                 &
+                      save_iminb(fr),save_imaxb(fr),save_jminb(fr),save_jmaxb(fr),save_kminb(fr),save_kmaxb(fr), &
+                      save_id1(l),save_id2(l),save_jd1(l),save_jd2(l),save_kd1(l),save_kd2(l),save_npn(l),       &
+                      save_x,save_y,save_z)
 
-                      save_xmin=save_x( save_npn(l)+1+(save_iminb(fr)-save_id1(l))+(save_jminb(fr)-save_jd1(l))*save_nid+(save_kminb(fr)-save_kd1(l))*save_nijd )-1d-10
-                      save_xmax=save_x( save_npn(l)+1+(save_imaxb(fr)-save_id1(l))+(save_jminb(fr)-save_jd1(l))*save_nid+(save_kminb(fr)-save_kd1(l))*save_nijd )+1d-10
-                      save_ymin=save_y( save_npn(l)+1+(save_iminb(fr)-save_id1(l))+(save_jminb(fr)-save_jd1(l))*save_nid+(save_kminb(fr)-save_kd1(l))*save_nijd )-1d-10
-                      save_ymax=save_y( save_npn(l)+1+(save_iminb(fr)-save_id1(l))+(save_jmaxb(fr)-save_jd1(l))*save_nid+(save_kminb(fr)-save_kd1(l))*save_nijd )+1d-10
-                      save_zmin=save_z( save_npn(l)+1+(save_iminb(fr)-save_id1(l))+(save_jminb(fr)-save_jd1(l))*save_nid+(save_kminb(fr)-save_kd1(l))*save_nijd )-1d-10
-                      save_zmax=save_z( save_npn(l)+1+(save_iminb(fr)-save_id1(l))+(save_jminb(fr)-save_jd1(l))*save_nid+(save_kmaxb(fr)-save_kd1(l))*save_nijd )+1d-10
+                if ( save_xmin-1d-10<=xmax .and. &
+                     save_xmax+1d-10>=xmin .and. &
+                     save_ymin-1d-10<=ymax .and. & ! there is a part of the boundary in this block
+                     save_ymax+1d-10>=ymin .and. &
+                     save_zmin-1d-10<=zmax .and. &
+                     save_zmax+1d-10>=zmin) then
 
-                      if (save_xmin<=xmax .and. &
-                           save_xmax>=xmin .and. &
-                           save_ymin<=ymax .and. & ! there is a part of the boundary in this block
-                           save_ymax>=ymin .and. &
-                           save_zmin<=zmax .and. &
-                           save_zmax>=zmin) then
+                   ! search the part of the boundary which concern this block
 
-                         ! search indexs
+                    nid = id2(l2)-id1(l2)+1
+                    njd = jd2(l2)-jd1(l2)+1
+                    nijd = nid*njd
 
-                         xi=ii1(l2)
-                         yi=jj1(l2)
-                         zi=kk1(l2)
-                         save_xi=save_iminb(fr)
-                         save_yi=save_jminb(fr)
-                         save_zi=save_kminb(fr)
+                    save_nid = save_id2(l)-save_id1(l)+1
+                    save_njd = save_jd2(l)-save_jd1(l)+1
+                    save_nijd = save_nid*save_njd
 
-                         do imin=ii1(l2)+1,ii2(l2)
-                            xi=imin ; save_xi=save_iminb(fr)
-                            xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                            save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                            if(x(xyz)>save_x(save_xyz)+1d-10) exit
-                         enddo
-                         do imax=imin,ii2(l2)
-                            xi=imax ; save_xi=save_imaxb(fr)
-                            xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                            save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                            if(x(xyz)>save_x(save_xyz)+1d-10) exit
-                         enddo
-                         do jmin=jj1(l2)+1,jj2(l2)
-                            yi=jmin ; save_yi=save_jminb(fr)
-                            xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                            save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                            if(y(xyz)>save_y(save_xyz)+1d-10) exit
-                         enddo
-                         do jmax=jmin,jj2(l2)
-                            yi=jmax ; save_yi=save_jmaxb(fr)
-                            xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                            save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                            if(y(xyz)>save_y(save_xyz)+1d-10) exit
-                         enddo
-                         do kmin=kk1(l2)+1,kk2(l2)
-                            zi=kmin ; save_zi=save_kminb(fr)
-                            xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                            save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                            if(z(xyz)>save_z(save_xyz)+1d-10) exit
-                         enddo
-                         do kmax=kmin,kk2(l2)
-                            zi=kmax ; save_zi=save_kmaxb(fr)
-                            xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                            save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                            if(z(xyz)>save_z(save_xyz)+1d-10) exit
-                         enddo
 
-                         imin=imin-1 ; jmin=jmin-1 ; kmin=kmin-1
-                         imax=imax-1 ; jmax=jmax-1 ; kmax=kmax-1
+                   xi=ii1(l2)
+                   yi=jj1(l2)
+                   zi=kk1(l2)
+                   save_xi=save_iminb(fr)
+                   save_yi=save_jminb(fr)
+                   save_zi=save_kminb(fr)
 
-                         if(tab_raccord(fr)/=0) then ! if boundary shared with another block
-                            fr2=tab_raccord(fr)      ! a split on the other side induce split here
-                            l3=save_ndlb(fr2) 
+                   ! walk on the block boundaries to find limits 
+                   do imin=ii1(l2)+1,ii2(l2)
+                      xi=imin ; save_xi=save_iminb(fr)
+                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
+                      if(x(xyz)>save_x(save_xyz)+1d-10) exit
+                   enddo
+                   do imax=imin,ii2(l2)
+                      xi=imax ; save_xi=save_imaxb(fr)
+                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
+                      if(x(xyz)>save_x(save_xyz)+1d-10) exit
+                   enddo
+                   do jmin=jj1(l2)+1,jj2(l2)
+                      yi=jmin ; save_yi=save_jminb(fr)
+                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
+                      if(y(xyz)>save_y(save_xyz)+1d-10) exit
+                   enddo
+                   do jmax=jmin,jj2(l2)
+                      yi=jmax ; save_yi=save_jmaxb(fr)
+                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
+                      if(y(xyz)>save_y(save_xyz)+1d-10) exit
+                   enddo
+                   do kmin=kk1(l2)+1,kk2(l2)
+                      zi=kmin ; save_zi=save_kminb(fr)
+                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
+                      if(z(xyz)>save_z(save_xyz)+1d-10) exit
+                   enddo
+                   do kmax=kmin,kk2(l2)
+                      zi=kmax ; save_zi=save_kmaxb(fr)
+                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
+                      if(z(xyz)>save_z(save_xyz)+1d-10) exit
+                   enddo
 
-                            xmin=x( npn(l2)+1+(imin-     id1(l2))+(jmin-     jd1(l2))*     nid+(kmin-     kd1(l2))*     nijd )
-                            xmax=x( npn(l2)+1+(imax-     id1(l2))+(jmin-     jd1(l2))*     nid+(kmin-     kd1(l2))*     nijd )
-                            ymin=y( npn(l2)+1+(imin-     id1(l2))+(jmin-     jd1(l2))*     nid+(kmin-     kd1(l2))*     nijd )
-                            ymax=y( npn(l2)+1+(imin-     id1(l2))+(jmax-     jd1(l2))*     nid+(kmin-     kd1(l2))*     nijd )
-                            zmin=z( npn(l2)+1+(imin-     id1(l2))+(jmin-     jd1(l2))*     nid+(kmin-     kd1(l2))*     nijd )
-                            zmax=z( npn(l2)+1+(imin-     id1(l2))+(jmin-     jd1(l2))*     nid+(kmax-     kd1(l2))*     nijd )
+                   ! we got out one point after the aim
+                   imin=imin-1 ; jmin=jmin-1 ; kmin=kmin-1
+                   imax=imax-1 ; jmax=jmax-1 ; kmax=kmax-1
 
-                            do k2=1,nblockd(3,l3)
-                               do j2=1,nblockd(2,l3)
-                                  do i2=1,nblockd(1,l3)
-                                     l4=sum(nblock2(1:l3-1))+i2+(j2-1)*nblockd(1,l3)+(k2-1)*nblockd(2,l3)*nblockd(1,l3)
+                   if(tab_raccord(fr)/=0) then ! if boundary shared with another block
+                      fr2=tab_raccord(fr)      ! a split on the other side induce split here
+                      l3=save_ndlb(fr2) 
 
-                                     save_nid = id2(l4)-id1(l4)+1
-                                     save_njd = jd2(l4)-jd1(l4)+1
-                                     save_nijd = save_nid*save_njd
+                      call get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,             &
+                            imin,imax,jmin,jmax,kmin,kmax,         &
+                            id1(l2),id2(l2),jd1(l2),jd2(l2),kd1(l2),kd2(l2),npn(l2), &
+                            x,y,z)
 
-                                     save_xmin=x( npn(l4)+1+(ii1(l4)-     id1(l4))+(jj1(l4)-     jd1(l4))*save_nid+(kk1(l4)-     kd1(l4))*save_nijd )-1d-10
-                                     save_xmax=x( npn(l4)+1+(ii2(l4)-     id1(l4))+(jj1(l4)-     jd1(l4))*save_nid+(kk1(l4)-     kd1(l4))*save_nijd )+1d-10
-                                     save_ymin=y( npn(l4)+1+(ii1(l4)-     id1(l4))+(jj1(l4)-     jd1(l4))*save_nid+(kk1(l4)-     kd1(l4))*save_nijd )-1d-10
-                                     save_ymax=y( npn(l4)+1+(ii1(l4)-     id1(l4))+(jj2(l4)-     jd1(l4))*save_nid+(kk1(l4)-     kd1(l4))*save_nijd )+1d-10
-                                     save_zmin=z( npn(l4)+1+(ii1(l4)-     id1(l4))+(jj1(l4)-     jd1(l4))*save_nid+(kk1(l4)-     kd1(l4))*save_nijd )-1d-10
-                                     save_zmax=z( npn(l4)+1+(ii1(l4)-     id1(l4))+(jj1(l4)-     jd1(l4))*save_nid+(kk2(l4)-     kd1(l4))*save_nijd )+1d-10
+                      do k2=1,nblockd(3,l3)
+                         do j2=1,nblockd(2,l3)
+                            do i2=1,nblockd(1,l3)
+                               l4=sum(nblock2(1:l3-1))+i2+(j2-1)*nblockd(1,l3)+(k2-1)*nblockd(2,l3)*nblockd(1,l3)
 
-                                     if (save_xmin<=xmax .and. &
-                                          save_xmax>=xmin .and. &
-                                          save_ymin<=ymax .and. & ! there is a part of the boundary in this block
-                                          save_ymax>=ymin .and. &
-                                          save_zmin<=zmax .and. &
-                                          save_zmax>=zmin) then
+                              call get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,             &
+                                    ii1(l4),ii2(l4),jj1(l4),jj2(l4),kk1(l4),kk2(l4),         &
+                                    id1(l4),id2(l4),jd1(l4),jd2(l4),kd1(l4),kd2(l4),npn(l4), &
+                                    x,y,z)
 
-                                        ! search indexs
+                                  if ( save_xmin-1d-10<=xmax .and. &
+                                       save_xmax+1d-10>=xmin .and. &
+                                       save_ymin-1d-10<=ymax .and. & ! there is a part of the boundary in this block
+                                       save_ymax+1d-10>=ymin .and. &
+                                       save_zmin-1d-10<=zmax .and. &
+                                       save_zmax+1d-10>=zmin) then
 
-                                        xi=imin
-                                        yi=jmin
-                                        zi=kmin
-                                        save_xi=ii1(l4)
-                                        save_yi=jj1(l4)
-                                        save_zi=kk1(l4)
+                                  ! search indexs
 
-                                        do imin2=imin+1,imax
-                                           xi=imin2 ; save_xi=ii1(l4)
-                                           xyz =     npn(l2)+1+(     xi-id1(l2))+(     yi-jd1(l2))*     nid+(     zi-kd1(l2))*     nijd
-                                           save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                           if(x(xyz)>x(save_xyz)+1d-10) exit
-                                        enddo
-                                        do imax2=imin2,imax
-                                           xi=imax2 ; save_xi=ii2(l4)
-                                           xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                                           save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                           if(x(xyz)>x(save_xyz)+1d-10) exit
-                                        enddo
-                                        do jmin2=jmin+1,jmax
-                                           yi=jmin2 ; save_yi=jj1(l4)
-                                           xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                                           save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                           if(y(xyz)>y(save_xyz)+1d-10) exit
-                                        enddo
-                                        do jmax2=jmin2,jmax
-                                           yi=jmax2 ; save_yi=jj2(l4)
-                                           xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                                           save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                           if(y(xyz)>y(save_xyz)+1d-10) exit
-                                        enddo
-                                        do kmin2=kmin+1,kmax
-                                           zi=kmin2 ; save_zi=kk1(l4)
-                                           xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                                           save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                           if(z(xyz)>z(save_xyz)+1d-10) exit
-                                        enddo
-                                        do kmax2=kmin2,kmax
-                                           zi=kmax2 ; save_zi=kk2(l4)
-                                           xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                                           save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                           if(z(xyz)>z(save_xyz)+1d-10) exit
-                                        enddo
+                               save_nid = id2(l4)-id1(l4)+1
+                               save_njd = jd2(l4)-jd1(l4)+1
+                               save_nijd = save_nid*save_njd
 
-                                        imin2=imin2-1 ; jmin2=jmin2-1 ; kmin2=kmin2-1
-                                        imax2=imax2-1 ; jmax2=jmax2-1 ; kmax2=kmax2-1
+                                  xi=imin
+                                  yi=jmin
+                                  zi=kmin
+                                  save_xi=ii1(l4)
+                                  save_yi=jj1(l4)
+                                  save_zi=kk1(l4)
 
-                                        mfbe=mfbe+1
-                                        call str(mot,imot,nmx,4 ,mfbe)
-                                        call str(mot,imot,nmx,5 ,1)
-                                        call str(mot,imot,nmx,6 ,l2)
-                                        call str(mot,imot,nmx,7 ,imin2)
-                                        call str(mot,imot,nmx,8 ,imax2)
-                                        call str(mot,imot,nmx,9 ,jmin2)
-                                        call str(mot,imot,nmx,10,jmax2)
-                                        call str(mot,imot,nmx,11,kmin2)
-                                        call str(mot,imot,nmx,12,kmax2)
-                                        mot(13)=save_indfl(fr) ; imot(13)=2
-                                        call c_crbds( mot,imot,nmot, ncbd)
-!                                        call crbds( &
-!                                             mfbe,1,l2, &
-!                                             imin2,imax2,jmin2,jmax2,kmin2,kmax2, &
-!                                             save_indfl(fr), &
-!                                             ncbd)
-                                        call reallocate_s(new2old_f,mtb)
-                                        new2old_f(mfbe)= fr
-                                     endif
+                                   ! walk on the block boundaries to find limits
+                                  do imin2=imin+1,imax
+                                     xi=imin2 ; save_xi=ii1(l4)
+                                     xyz =     npn(l2)+1+(     xi-id1(l2))+(     yi-jd1(l2))*     nid+(     zi-kd1(l2))*     nijd
+                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
+                                     if(x(xyz)>x(save_xyz)+1d-10) exit
                                   enddo
-                               enddo
+                                  do imax2=imin2,imax
+                                     xi=imax2 ; save_xi=ii2(l4)
+                                     xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
+                                     if(x(xyz)>x(save_xyz)+1d-10) exit
+                                  enddo
+                                  do jmin2=jmin+1,jmax
+                                     yi=jmin2 ; save_yi=jj1(l4)
+                                     xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
+                                     if(y(xyz)>y(save_xyz)+1d-10) exit
+                                  enddo
+                                  do jmax2=jmin2,jmax
+                                     yi=jmax2 ; save_yi=jj2(l4)
+                                     xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
+                                     if(y(xyz)>y(save_xyz)+1d-10) exit
+                                  enddo
+                                  do kmin2=kmin+1,kmax
+                                     zi=kmin2 ; save_zi=kk1(l4)
+                                     xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
+                                     if(z(xyz)>z(save_xyz)+1d-10) exit
+                                  enddo
+                                  do kmax2=kmin2,kmax
+                                     zi=kmax2 ; save_zi=kk2(l4)
+                                     xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
+                                     if(z(xyz)>z(save_xyz)+1d-10) exit
+                                  enddo
+
+                                 ! we got out one point after the aim
+                                  imin2=imin2-1 ; jmin2=jmin2-1 ; kmin2=kmin2-1
+                                  imax2=imax2-1 ; jmax2=jmax2-1 ; kmax2=kmax2-1
+
+                                  mfbe=mfbe+1
+                                  if(verbosity>=2) then
+                                    call str(mot,imot,nmx,4 ,mfbe)
+                                    call str(mot,imot,nmx,5 ,1)
+                                    call str(mot,imot,nmx,6 ,l2)
+                                    call str(mot,imot,nmx,7 ,imin2)
+                                    call str(mot,imot,nmx,8 ,imax2)
+                                    call str(mot,imot,nmx,9 ,jmin2)
+                                    call str(mot,imot,nmx,10,jmax2)
+                                    call str(mot,imot,nmx,11,kmin2)
+                                    call str(mot,imot,nmx,12,kmax2)
+                                    mot(13)=save_indfl(fr) ; imot(13)=2
+                                    call c_crbds( mot,imot,nmot, ncbd)
+                                  else
+                                    call crbds( &
+                                         mfbe,1,l2, &
+                                         imin2,imax2,jmin2,jmax2,kmin2,kmax2, &
+                                         save_indfl(fr), &
+                                         ncbd)
+                                  endif
+                                  call reallocate_s(new2old_f,mtb)
+                                  new2old_f(mfbe)= fr
+                               endif
                             enddo
-                         else
-                            mfbe=mfbe+1
-                            call str(mot,imot,nmx,4 ,mfbe)
-                            call str(mot,imot,nmx,5 ,1)
-                            call str(mot,imot,nmx,6 ,l2)
-                            call str(mot,imot,nmx,7 ,imin)
-                            call str(mot,imot,nmx,8 ,imax)
-                            call str(mot,imot,nmx,9 ,jmin)
-                            call str(mot,imot,nmx,10,jmax)
-                            call str(mot,imot,nmx,11,kmin)
-                            call str(mot,imot,nmx,12,kmax)
-                            mot(13)=save_indfl(fr) ; imot(13)=2
-                            call c_crbds( mot,imot,nmot, ncbd)
-!                            call crbds( &
-!                                 mfbe,1,l2, &
-!                                 imin,imax,jmin,jmax,kmin,kmax, &
-!                                 save_indfl(fr), &
-!                                 ncbd)
-                            call reallocate_s(new2old_f,mtb)
-                            new2old_f(mfbe)= fr
-                         endif
+                         enddo
+                      enddo
+                   else
+                      mfbe=mfbe+1
+                      if(verbosity>=2) then
+                        call str(mot,imot,nmx,4 ,mfbe)
+                        call str(mot,imot,nmx,5 ,1)
+                        call str(mot,imot,nmx,6 ,l2)
+                        call str(mot,imot,nmx,7 ,imin)
+                        call str(mot,imot,nmx,8 ,imax)
+                        call str(mot,imot,nmx,9 ,jmin)
+                        call str(mot,imot,nmx,10,jmax)
+                        call str(mot,imot,nmx,11,kmin)
+                        call str(mot,imot,nmx,12,kmax)
+                        mot(13)=save_indfl(fr) ; imot(13)=2
+                        call c_crbds( mot,imot,nmot, ncbd)
+                      else
+                        call crbds( &
+                             mfbe,1,l2, &
+                             imin,imax,jmin,jmax,kmin,kmax, &
+                             save_indfl(fr), &
+                             ncbd)
                       endif
+                      call reallocate_s(new2old_f,mtb)
+                      new2old_f(mfbe)= fr
                    endif
-                enddo
-             enddo
-          enddo
-       enddo
+               endif
+            enddo
+         enddo
+      enddo
     enddo
-    old_mtb=mfbe    ! the first mfbe boundaries are old ones
 
     !############################################################################################
     !########################### CREATE NEW BOUNDARIES ##########################################
     !############################################################################################
 
-    print*,'create new boundaries '
+!    print*,'create new boundaries '
     do l=1,save_lt  !           New coincident boundaries
        do k=1,nblockd(3,l)
           do j=1,nblockd(2,l)
@@ -676,40 +664,46 @@ contains
                 if (i>1) then
                    l3=sum(nblock2(1:l-1))+i-1+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
                    mfbe=mfbe+1
-                   call str(mot,imot,nmx,4 ,mfbe)
-                   call str(mot,imot,nmx,5 ,1)
-                   call str(mot,imot,nmx,6 ,l2)
-                   call str(mot,imot,nmx,7 ,ii1(l2))
-                   call str(mot,imot,nmx,8 ,ii1(l2))
-                   call str(mot,imot,nmx,9 ,jj1(l2))
-                   call str(mot,imot,nmx,10,jj2(l2))
-                   call str(mot,imot,nmx,11,kk1(l2))
-                   call str(mot,imot,nmx,12,kk2(l2))
-                   mot(13)="i1" ; imot(13)=2
-                   call c_crbds( mot,imot,nmot, ncbd)
-!                   call crbds( &
-!                        mfbe-1,1,l2, &
-!                        ii1(l2),ii1(l2),jj1(l2),jj2(l2),kk1(l2),kk2(l2), &
-!                        'i1', &
-!                        ncbd)
+                   if(verbosity>=2) then
+                     call str(mot,imot,nmx,4 ,mfbe)
+                     call str(mot,imot,nmx,5 ,1)
+                     call str(mot,imot,nmx,6 ,l2)
+                     call str(mot,imot,nmx,7 ,ii1(l2))
+                     call str(mot,imot,nmx,8 ,ii1(l2))
+                     call str(mot,imot,nmx,9 ,jj1(l2))
+                     call str(mot,imot,nmx,10,jj2(l2))
+                     call str(mot,imot,nmx,11,kk1(l2))
+                     call str(mot,imot,nmx,12,kk2(l2))
+                     mot(13)="i1" ; imot(13)=2
+                     call c_crbds( mot,imot,nmot, ncbd)
+                   else
+                     call crbds( &
+                          mfbe,1,l2, &
+                          ii1(l2),ii1(l2),jj1(l2),jj2(l2),kk1(l2),kk2(l2), &
+                          'i1', &
+                          ncbd)
+                    endif
 
                    mfbe=mfbe+1
-                   call str(mot,imot,nmx,4 ,mfbe)
-                   call str(mot,imot,nmx,5 ,1)
-                   call str(mot,imot,nmx,6 ,l3)
-                   call str(mot,imot,nmx,7 ,ii2(l3))
-                   call str(mot,imot,nmx,8 ,ii2(l3))
-                   call str(mot,imot,nmx,9 ,jj1(l3))
-                   call str(mot,imot,nmx,10,jj2(l3))
-                   call str(mot,imot,nmx,11,kk1(l3))
-                   call str(mot,imot,nmx,12,kk2(l3))
-                   mot(13)="i2" ; imot(13)=2
-                   call c_crbds( mot,imot,nmot, ncbd)
-!                   call crbds( &
-!                        mfbe,1,l3, &
-!                        ii2(l3),ii2(l3),jj1(l3),jj2(l3),kk1(l3),kk2(l3), &
-!                        'i2', &
-!                        ncbd)
+                   if(verbosity>=2) then
+                     call str(mot,imot,nmx,4 ,mfbe)
+                     call str(mot,imot,nmx,5 ,1)
+                     call str(mot,imot,nmx,6 ,l3)
+                     call str(mot,imot,nmx,7 ,ii2(l3))
+                     call str(mot,imot,nmx,8 ,ii2(l3))
+                     call str(mot,imot,nmx,9 ,jj1(l3))
+                     call str(mot,imot,nmx,10,jj2(l3))
+                     call str(mot,imot,nmx,11,kk1(l3))
+                     call str(mot,imot,nmx,12,kk2(l3))
+                     mot(13)="i2" ; imot(13)=2
+                     call c_crbds( mot,imot,nmot, ncbd)
+                   else
+                     call crbds( &
+                          mfbe,1,l3, &
+                          ii2(l3),ii2(l3),jj1(l3),jj2(l3),kk1(l3),kk2(l3), &
+                          'i2', &
+                          ncbd)
+                    endif
 
                    call reallocate_s(new2old_f,mtb)
                    new2old_f(mfbe-1)= 0
@@ -718,40 +712,46 @@ contains
                 if (j>1) then
                    l3=sum(nblock2(1:l-1))+i+(j-2)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
                    mfbe=mfbe+1
-                   call str(mot,imot,nmx,4 ,mfbe)
-                   call str(mot,imot,nmx,5 ,1)
-                   call str(mot,imot,nmx,6 ,l2)
-                   call str(mot,imot,nmx,7 ,ii1(l2))
-                   call str(mot,imot,nmx,8 ,ii2(l2))
-                   call str(mot,imot,nmx,9 ,jj1(l2))
-                   call str(mot,imot,nmx,10,jj1(l2))
-                   call str(mot,imot,nmx,11,kk1(l2))
-                   call str(mot,imot,nmx,12,kk2(l2))
-                   mot(13)="j1" ; imot(13)=2
-                   call c_crbds( mot,imot,nmot, ncbd)
-!                   call crbds( &
-!                        mfbe-1,1,l2, &
-!                        ii1(l2),ii2(l2),jj1(l2),jj1(l2),kk1(l2),kk2(l2), &
-!                        'j1', &
-!                        ncbd)
+                   if(verbosity>=2) then
+                     call str(mot,imot,nmx,4 ,mfbe)
+                     call str(mot,imot,nmx,5 ,1)
+                     call str(mot,imot,nmx,6 ,l2)
+                     call str(mot,imot,nmx,7 ,ii1(l2))
+                     call str(mot,imot,nmx,8 ,ii2(l2))
+                     call str(mot,imot,nmx,9 ,jj1(l2))
+                     call str(mot,imot,nmx,10,jj1(l2))
+                     call str(mot,imot,nmx,11,kk1(l2))
+                     call str(mot,imot,nmx,12,kk2(l2))
+                     mot(13)="j1" ; imot(13)=2
+                     call c_crbds( mot,imot,nmot, ncbd)
+                   else
+                     call crbds( &
+                          mfbe,1,l2, &
+                          ii1(l2),ii2(l2),jj1(l2),jj1(l2),kk1(l2),kk2(l2), &
+                          'j1', &
+                          ncbd)
+                    endif
 
                    mfbe=mfbe+1
-                   call str(mot,imot,nmx,4 ,mfbe)
-                   call str(mot,imot,nmx,5 ,1)
-                   call str(mot,imot,nmx,6 ,l3)
-                   call str(mot,imot,nmx,7 ,ii1(l3))
-                   call str(mot,imot,nmx,8 ,ii2(l3))
-                   call str(mot,imot,nmx,9 ,jj2(l3))
-                   call str(mot,imot,nmx,10,jj2(l3))
-                   call str(mot,imot,nmx,11,kk1(l3))
-                   call str(mot,imot,nmx,12,kk2(l3))
-                   mot(13)="j2" ; imot(13)=2
-                   call c_crbds( mot,imot,nmot, ncbd)
-!                   call crbds( &
-!                        mfbe,1,l3, &
-!                        ii1(l3),ii2(l3),jj2(l3),jj2(l3),kk1(l3),kk2(l3), &
-!                        'j2', &
-!                        ncbd)
+                   if(verbosity>=2) then
+                     call str(mot,imot,nmx,4 ,mfbe)
+                     call str(mot,imot,nmx,5 ,1)
+                     call str(mot,imot,nmx,6 ,l3)
+                     call str(mot,imot,nmx,7 ,ii1(l3))
+                     call str(mot,imot,nmx,8 ,ii2(l3))
+                     call str(mot,imot,nmx,9 ,jj2(l3))
+                     call str(mot,imot,nmx,10,jj2(l3))
+                     call str(mot,imot,nmx,11,kk1(l3))
+                     call str(mot,imot,nmx,12,kk2(l3))
+                     mot(13)="j2" ; imot(13)=2
+                     call c_crbds( mot,imot,nmot, ncbd)
+                   else
+                     call crbds( &
+                          mfbe,1,l3, &
+                          ii1(l3),ii2(l3),jj2(l3),jj2(l3),kk1(l3),kk2(l3), &
+                          'j2', &
+                          ncbd)
+                    endif
 
                    call reallocate_s(new2old_f,mtb)
                    new2old_f(mfbe-1)= 0
@@ -760,40 +760,46 @@ contains
                 if (k>1) then
                    l3=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-2)*nblockd(2,l)*nblockd(1,l)
                    mfbe=mfbe+1
-                   call str(mot,imot,nmx,4 ,mfbe)
-                   call str(mot,imot,nmx,5 ,1)
-                   call str(mot,imot,nmx,6 ,l2)
-                   call str(mot,imot,nmx,7 ,ii1(l2))
-                   call str(mot,imot,nmx,8 ,ii2(l2))
-                   call str(mot,imot,nmx,9 ,jj1(l2))
-                   call str(mot,imot,nmx,10,jj2(l2))
-                   call str(mot,imot,nmx,11,kk1(l2))
-                   call str(mot,imot,nmx,12,kk1(l2))
-                   mot(13)="k1" ; imot(13)=2
-                   call c_crbds( mot,imot,nmot, ncbd)
-!                   call crbds( &
-!                        mfbe-1,1,l2, &
-!                        ii1(l2),ii2(l2),jj1(l2),jj2(l2),kk1(l2),kk1(l2), &
-!                        'k1', &
-!                        ncbd)
+                   if(verbosity>=2) then
+                     call str(mot,imot,nmx,4 ,mfbe)
+                     call str(mot,imot,nmx,5 ,1)
+                     call str(mot,imot,nmx,6 ,l2)
+                     call str(mot,imot,nmx,7 ,ii1(l2))
+                     call str(mot,imot,nmx,8 ,ii2(l2))
+                     call str(mot,imot,nmx,9 ,jj1(l2))
+                     call str(mot,imot,nmx,10,jj2(l2))
+                     call str(mot,imot,nmx,11,kk1(l2))
+                     call str(mot,imot,nmx,12,kk1(l2))
+                     mot(13)="k1" ; imot(13)=2
+                     call c_crbds( mot,imot,nmot, ncbd)
+                   else
+                     call crbds( &
+                          mfbe,1,l2, &
+                          ii1(l2),ii2(l2),jj1(l2),jj2(l2),kk1(l2),kk1(l2), &
+                          'k1', &
+                          ncbd)
+                    endif
 
                    mfbe=mfbe+1
-                   call str(mot,imot,nmx,4 ,mfbe)
-                   call str(mot,imot,nmx,5 ,1)
-                   call str(mot,imot,nmx,6 ,l3)
-                   call str(mot,imot,nmx,7 ,ii1(l3))
-                   call str(mot,imot,nmx,8 ,ii2(l3))
-                   call str(mot,imot,nmx,9 ,jj1(l3))
-                   call str(mot,imot,nmx,10,jj2(l3))
-                   call str(mot,imot,nmx,11,kk2(l3))
-                   call str(mot,imot,nmx,12,kk2(l3))
-                   mot(13)="k2" ; imot(13)=2
-                   call c_crbds( mot,imot,nmot, ncbd)
-!                   call crbds( &
-!                        mfbe,1,l3, &
-!                        ii1(l3),ii2(l3),jj1(l2),jj2(l2),kk2(l2),kk2(l2), &
-!                        'k2', &
-!                        ncbd)
+                   if(verbosity>=2) then
+                     call str(mot,imot,nmx,4 ,mfbe)
+                     call str(mot,imot,nmx,5 ,1)
+                     call str(mot,imot,nmx,6 ,l3)
+                     call str(mot,imot,nmx,7 ,ii1(l3))
+                     call str(mot,imot,nmx,8 ,ii2(l3))
+                     call str(mot,imot,nmx,9 ,jj1(l3))
+                     call str(mot,imot,nmx,10,jj2(l3))
+                     call str(mot,imot,nmx,11,kk2(l3))
+                     call str(mot,imot,nmx,12,kk2(l3))
+                     mot(13)="k2" ; imot(13)=2
+                     call c_crbds( mot,imot,nmot, ncbd)
+                   else
+                     call crbds( &
+                          mfbe,1,l3, &
+                          ii1(l3),ii2(l3),jj1(l2),jj2(l2),kk2(l2),kk2(l2), &
+                          'k2', &
+                          ncbd)
+                    endif
 
                    call reallocate_s(new2old_f,mtb)
                    new2old_f(mfbe-1)= 0
@@ -810,56 +816,58 @@ contains
     !############################# SAVE NEW MESH FOR CHECKING PURPOSE ###########################
     !############################################################################################
 
-! write new grid
-!    do l=1,lt
-!       write(fich,'(A,I0.2,A)') "testmesh_",l,".dat"
-!       open(42,file=fich,status="replace")
+   if(verbosity>=3) then
+    ! write new grid
+      do l=1,lt
+         write(fich,'(A,I0.2,A)') "testmesh_",l,".dat"
+         open(42,file=fich,status="replace")
 
-!       do k=kk1(l),kk2(l)
-!          do j=jj1(l),jj2(l)
-!             do i=ii1(l),ii2(l)
+         do k=kk1(l),kk2(l)
+            do j=jj1(l),jj2(l)
+               do i=ii1(l),ii2(l)
 
-!                nid = id2(l)-id1(l)+1
-!                njd = jd2(l)-jd1(l)+1
-!                nijd = nid*njd
+                  nid = id2(l)-id1(l)+1
+                  njd = jd2(l)-jd1(l)+1
+                  nijd = nid*njd
 
-!                xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+                  xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-!                write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),l
+                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),l
 
-!             enddo
-!             write(42,*) ""
-!          enddo
-!       enddo
-!       close(42)
-!    enddo
-!    write(fich,'(A,I0.2,A)') "testbnd.dat"
-!    open(42,file=fich,status="replace")
-!    do fr=1,mfbe
-!       do k=kminb(fr),kmaxb(fr)
-!          do j=jminb(fr),jmaxb(fr)
-!             do i=iminb(fr),imaxb(fr)
-!                l=ndlb(fr)
-!                nid = id2(l)-id1(l)+1
-!                njd = jd2(l)-jd1(l)+1
-!                nijd = nid*njd
+               enddo
+               write(42,*) ""
+            enddo
+         enddo
+         close(42)
+      enddo
+      write(fich,'(A,I0.2,A)') "testbnd.dat"
+      open(42,file=fich,status="replace")
+    ! write new boundaries
+      do fr=1,mfbe
+         do k=kminb(fr),kmaxb(fr)
+            do j=jminb(fr),jmaxb(fr)
+               do i=iminb(fr),imaxb(fr)
+                  l=ndlb(fr)
+                  nid = id2(l)-id1(l)+1
+                  njd = jd2(l)-jd1(l)+1
+                  nijd = nid*njd
 
-!                xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+                  xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-!                write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),fr
+                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),fr
 
-!             enddo
-!             if(indfl(fr)(1:1)/="i") write(42,*) ""
-!          enddo
-!          if(indfl(fr)(1:1)=="i") write(42,*) ""
-!       enddo
-!    enddo
-!    close(42)
+               enddo
+               if(indfl(fr)(1:1)/="i") write(42,*) ""
+            enddo
+            if(indfl(fr)(1:1)=="i") write(42,*) ""
+         enddo
+      enddo
+      close(42)
+    endif
 
     !############################################################################################
     !################### INITIALIZE COINCIDENT BOUNDARIES #######################################
     !############################################################################################
-
 
     ip21=ndimntbx
     ip40=mdimubx            ! Nb point frontiere
@@ -879,7 +887,7 @@ contains
     call reallocate(bceqt,ip41,neqt)
     call reallocate(mnc,ip43)
 
-    print*,'initialization '
+!    print*,'initialization '
     do l=1,save_lt
        do k=1,nblockd(3,l)
           do j=1,nblockd(2,l)
@@ -898,6 +906,11 @@ contains
                             fr2=tab_raccord(new2old_f(fr)) ! old other boundary number
                             l3=save_ndlb(fr2)              ! old other block number
 
+                            call get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,                 &
+                                  iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr), &
+                                  id1(l2),id2(l2),jd1(l2),jd2(l2),kd1(l2),kd2(l2),npn(l2),       &
+                                  x,y,z)
+
                             find_otherblock:&
                                  do k2=1,nblockd(3,l3)
                             do j2=1,nblockd(2,l3)
@@ -906,28 +919,10 @@ contains
                                   do fr3=1,mfbe
                                      if(ndlb(fr3)==l4) then  ! potential new boundary number
 
-                                        nid = id2(l2)-id1(l2)+1
-                                        njd = jd2(l2)-jd1(l2)+1
-                                        nijd = nid*njd
-
-                                        xmin=x( npn(l2)+1+(iminb(fr)-     id1(l2))+(jminb(fr)-     jd1(l2))*     nid+(kminb(fr)-     kd1(l2))*     nijd )
-                                        xmax=x( npn(l2)+1+(imaxb(fr)-     id1(l2))+(jminb(fr)-     jd1(l2))*     nid+(kminb(fr)-     kd1(l2))*     nijd )
-                                        ymin=y( npn(l2)+1+(iminb(fr)-     id1(l2))+(jminb(fr)-     jd1(l2))*     nid+(kminb(fr)-     kd1(l2))*     nijd )
-                                        ymax=y( npn(l2)+1+(iminb(fr)-     id1(l2))+(jmaxb(fr)-     jd1(l2))*     nid+(kminb(fr)-     kd1(l2))*     nijd )
-                                        zmin=z( npn(l2)+1+(iminb(fr)-     id1(l2))+(jminb(fr)-     jd1(l2))*     nid+(kminb(fr)-     kd1(l2))*     nijd )
-                                        zmax=z( npn(l2)+1+(iminb(fr)-     id1(l2))+(jminb(fr)-     jd1(l2))*     nid+(kmaxb(fr)-     kd1(l2))*     nijd )
-
-
-                                        save_nid = id2(l4)-id1(l4)+1
-                                        save_njd = jd2(l4)-jd1(l4)+1
-                                        save_nijd = save_nid*save_njd
-
-                                        save_xmin=x( npn(l4)+1+(iminb(fr3)-     id1(l4))+(jminb(fr3)-     jd1(l4))*save_nid+(kminb(fr3)-     kd1(l4))*save_nijd )
-                                        save_xmax=x( npn(l4)+1+(imaxb(fr3)-     id1(l4))+(jminb(fr3)-     jd1(l4))*save_nid+(kminb(fr3)-     kd1(l4))*save_nijd )
-                                        save_ymin=y( npn(l4)+1+(iminb(fr3)-     id1(l4))+(jminb(fr3)-     jd1(l4))*save_nid+(kminb(fr3)-     kd1(l4))*save_nijd )
-                                        save_ymax=y( npn(l4)+1+(iminb(fr3)-     id1(l4))+(jmaxb(fr3)-     jd1(l4))*save_nid+(kminb(fr3)-     kd1(l4))*save_nijd )
-                                        save_zmin=z( npn(l4)+1+(iminb(fr3)-     id1(l4))+(jminb(fr3)-     jd1(l4))*save_nid+(kminb(fr3)-     kd1(l4))*save_nijd )
-                                        save_zmax=z( npn(l4)+1+(iminb(fr3)-     id1(l4))+(jminb(fr3)-     jd1(l4))*save_nid+(kmaxb(fr3)-     kd1(l4))*save_nijd )
+                                    call get_coords_box(save_xmin,save_xmax,save_ymin,save_ymax,save_zmin,save_zmax,                 &
+                                          iminb(fr3),imaxb(fr3),jminb(fr3),jmaxb(fr3),kminb(fr3),kmaxb(fr3), &
+                                          id1(l4),id2(l4),jd1(l4),jd2(l4),kd1(l4),kd2(l4),npn(l4),       &
+                                          x,y,z)
 
                                         if (abs(save_xmin-xmin)<=1d-10 .and. &
                                              abs(save_xmax-xmax)<=1d-10 .and. &
@@ -947,9 +942,7 @@ contains
                       endif
                    endif
                    if (test) then   ! raccord boundary
-                      select case(indfl(fr))
-                      case("i1")
-
+                       if(verbosity>=2) then
                          mot="" ; nmot=6   ; imot=0
                          mot(1)="init"     ; imot(1)=4
                          mot(2)="boundary" ; imot(2)=8
@@ -958,251 +951,61 @@ contains
                          mot(5)="rc"       ; imot(5)=2
                          call str(mot,imot,nmx,6 ,1)
                          call c_inbdb( mot,imot,nmot,ncbd,ncin,bceqt,partition=.true.)
-!                         call inbdb( &
-!                              ncbd,ncin, &
-!                              fr,"rc  ",1, &
-!                              0,0,0,0,vbc,bceqt)
+                       else
+                        call inbdb( &
+                             ncbd,ncin, &
+                             fr,"rc  ",1, &
+                             0,0,0,0,vbc,bceqt)
+                        endif
 
-                         mot="" ; nmot=18  ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="coin"     ; imot(3)=4
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="frc"      ; imot(5)=3
-                         call str(mot,imot,nmx,6 ,fr2)
-                         mot(7)="kibdc"    ; imot(7)=5
-                         call str(mot,imot,nmx,8 ,1)
-                         mot(9)="krr"      ; imot(9)=3
-                         call str(mot,imot,nmx,10 ,0)
-                         mot(11)="ptc"     ; imot(11)=3
-                         call str(mot,imot,nmx,12 ,iminb(fr2))
-                         call str(mot,imot,nmx,13 ,jminb(fr2))
-                         call str(mot,imot,nmx,14 ,kminb(fr2))
-                         mot(15)="dir"     ; imot(15)=3
-                         mot(16)="fa"      ; imot(16)=2
-                         mot(17)="+j"      ; imot(17)=2
-                         mot(18)="+k"      ; imot(18)=2
-                         call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
-!                         call inbdc( &
-!                              exs1,exs2, &
-!                              x,y,z, &
-!                              ncbd,ncin,mnc, &
-!                              0,fr,fr+1,1,0., &
-!                              ii1(l2),jj1(l2),kk1(l2),'fa','+j','+k')
-
-                      case("i2")
-                         mot="" ; nmot=6   ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="basic"    ; imot(3)=5
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="rc"       ; imot(5)=2
-                         call str(mot,imot,nmx,6 ,1)
-                         call c_inbdb( mot,imot,nmot,ncbd,ncin,bceqt,partition=.true.)
-!                         call inbdb( &
-!                              ncbd,ncin, &
-!                              fr,"rc  ",1, &
-!                              0,0,0,0,vbc,bceqt)
-
-
-                         mot="" ; nmot=18  ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="coin"     ; imot(3)=4
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="frc"      ; imot(5)=3
-                         call str(mot,imot,nmx,6 ,fr2)
-                         mot(7)="kibdc"    ; imot(7)=5
-                         call str(mot,imot,nmx,8 ,1)
-                         mot(9)="krr"      ; imot(9)=3
-                         call str(mot,imot,nmx,10 ,0)
-                         mot(11)="ptc"     ; imot(11)=3
-                         call str(mot,imot,nmx,12 ,iminb(fr2))
-                         call str(mot,imot,nmx,13 ,jminb(fr2))
-                         call str(mot,imot,nmx,14 ,kminb(fr2))
-                         mot(15)="dir"     ; imot(15)=3
-                         mot(16)="fa"      ; imot(16)=2
-                         mot(17)="+j"      ; imot(17)=2
-                         mot(18)="+k"      ; imot(18)=2
-                         call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
-!                         call inbdc( &
-!                              exs1,exs2, &
-!                              x,y,z, &
-!                              ncbd,ncin,mnc, &
-!                              0,fr,fr-1,1,0., &
-!                              ii2(l2),jj1(l2),kk1(l2),'fa','+j','+k')
-
-                      case("j1")
-                         mot="" ; nmot=6   ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="basic"    ; imot(3)=5
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="rc"       ; imot(5)=2
-                         call str(mot,imot,nmx,6 ,1)
-                         call c_inbdb( mot,imot,nmot,ncbd,ncin,bceqt,partition=.true.)
-!                         call inbdb( &
-!                              ncbd,ncin, &
-!                              fr,"rc  ",1, &
-!                              0,0,0,0,vbc,bceqt)
-
-                         mot="" ; nmot=18  ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="coin"     ; imot(3)=4
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="frc"      ; imot(5)=3
-                         call str(mot,imot,nmx,6 ,fr2)
-                         mot(7)="kibdc"    ; imot(7)=5
-                         call str(mot,imot,nmx,8 ,1)
-                         mot(9)="krr"      ; imot(9)=3
-                         call str(mot,imot,nmx,10 ,0)
-                         mot(11)="ptc"     ; imot(11)=3
-                         call str(mot,imot,nmx,12 ,iminb(fr2))
-                         call str(mot,imot,nmx,13 ,jminb(fr2))
-                         call str(mot,imot,nmx,14 ,kminb(fr2))
-                         mot(15)="dir"     ; imot(15)=3
+                      select case(indfl(fr)(1:1))
+                      case("i")
+                           mot(16)="fa"      ; imot(16)=2
+                           mot(17)="+j"      ; imot(17)=2
+                           mot(18)="+k"      ; imot(18)=2
+                      case("j")
                          mot(16)="+i"      ; imot(16)=2
                          mot(17)="fa"      ; imot(17)=2
                          mot(18)="+k"      ; imot(18)=2
-                         call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
-!                         call inbdc( &
-!                              exs1,exs2, &
-!                              x,y,z, &
-!                              ncbd,ncin,mnc, &
-!                              0,fr,fr+1,1,0., &
-!                              ii1(l2),jj1(l2),kk1(l2),'+i','fa','+k')
-
-                      case("j2")
-                         mot="" ; nmot=6   ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="basic"    ; imot(3)=5
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="rc"       ; imot(5)=2
-                         call str(mot,imot,nmx,6 ,1)
-                         call c_inbdb( mot,imot,nmot,ncbd,ncin,bceqt,partition=.true.)
-!                         call inbdb( &
-!                              ncbd,ncin, &
-!                              fr,"rc  ",1, &
-!                              0,0,0,0,vbc,bceqt)
-
-                         mot="" ; nmot=18  ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="coin"     ; imot(3)=4
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="frc"      ; imot(5)=3
-                         call str(mot,imot,nmx,6 ,fr2)
-                         mot(7)="kibdc"    ; imot(7)=5
-                         call str(mot,imot,nmx,8 ,1)
-                         mot(9)="krr"      ; imot(9)=3
-                         call str(mot,imot,nmx,10 ,0)
-                         mot(11)="ptc"     ; imot(11)=3
-                         call str(mot,imot,nmx,12 ,iminb(fr2))
-                         call str(mot,imot,nmx,13 ,jminb(fr2))
-                         call str(mot,imot,nmx,14 ,kminb(fr2))
-                         mot(15)="dir"     ; imot(15)=3
-                         mot(16)="+i"      ; imot(16)=2
-                         mot(17)="fa"      ; imot(17)=2
-                         mot(18)="+k"      ; imot(18)=2
-                         call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
-!                         call inbdc( &
-!                              exs1,exs2, &
-!                              x,y,z, &
-!                              ncbd,ncin,mnc, &
-!                              0,fr,fr-1,1,0., &
-!                              ii1(l2),jj2(l2),kk1(l2),'+i','fa','+k')
-
-                      case("k1")
-                         mot="" ; nmot=6   ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="basic"    ; imot(3)=5
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="rc"       ; imot(5)=2
-                         call str(mot,imot,nmx,6 ,1)
-                         call c_inbdb( mot,imot,nmot,ncbd,ncin,bceqt,partition=.true.)
-!                         call inbdb( &
-!                              ncbd,ncin, &
-!                              fr,"rc  ",1, &
-!                              0,0,0,0,vbc,bceqt)
-
-                         mot="" ; nmot=18  ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="coin"     ; imot(3)=4
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="frc"      ; imot(5)=3
-                         call str(mot,imot,nmx,6 ,fr2)
-                         mot(7)="kibdc"    ; imot(7)=5
-                         call str(mot,imot,nmx,8 ,1)
-                         mot(9)="krr"      ; imot(9)=3
-                         call str(mot,imot,nmx,10 ,0)
-                         mot(11)="ptc"     ; imot(11)=3
-                         call str(mot,imot,nmx,12 ,iminb(fr2))
-                         call str(mot,imot,nmx,13 ,jminb(fr2))
-                         call str(mot,imot,nmx,14 ,kminb(fr2))
-                         mot(15)="dir"     ; imot(15)=3
+                      case("k")
                          mot(16)="+i"      ; imot(16)=2
                          mot(17)="+j"      ; imot(17)=2
                          mot(18)="fa"      ; imot(18)=2
-                         call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
-!                         call inbdc( &
-!                              exs1,exs2, &
-!                              x,y,z, &
-!                              ncbd,ncin,mnc, &
-!                              0,fr,fr+1,1,0., &
-!                              ii1(l2),jj1(l2),kk1(l2),'+i','+j','fa')
-
-                      case("k2")
-                         mot="" ; nmot=6   ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="basic"    ; imot(3)=5
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="rc"       ; imot(5)=2
-                         call str(mot,imot,nmx,6 ,1)
-                         call c_inbdb( mot,imot,nmot,ncbd,ncin,bceqt,partition=.true.)
-!                         call inbdb( &
-!                              ncbd,ncin, &
-!                              fr,"rc  ",1, &
-!                              0,0,0,0,vbc,bceqt)
-
-                         mot="" ; nmot=18  ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="coin"     ; imot(3)=4
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="frc"      ; imot(5)=3
-                         call str(mot,imot,nmx,6 ,fr2)
-                         mot(7)="kibdc"    ; imot(7)=5
-                         call str(mot,imot,nmx,8 ,1)
-                         mot(9)="krr"      ; imot(9)=3
-                         call str(mot,imot,nmx,10 ,0)
-                         mot(11)="ptc"     ; imot(11)=3
-                         call str(mot,imot,nmx,12 ,iminb(fr2))
-                         call str(mot,imot,nmx,13 ,jminb(fr2))
-                         call str(mot,imot,nmx,14 ,kminb(fr2))
-                         mot(15)="dir"     ; imot(15)=3
-                         mot(16)="+i"      ; imot(16)=2
-                         mot(17)="+j"      ; imot(17)=2
-                         mot(18)="fa"      ; imot(18)=2
-                         call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
-!                         call inbdc( &
-!                              exs1,exs2, &
-!                              x,y,z, &
-!                              ncbd,ncin,mnc, &
-!                              0,fr,fr-1,1,0., &
-!                              ii1(l2),jj1(l2),kk2(l2),'+i','+j','fa')
                       end select
+
+                       if(verbosity>=2) then
+                         nmot=18  
+                         mot(1)="init"     ; imot(1)=4
+                         mot(2)="boundary" ; imot(2)=8
+                         mot(3)="coin"     ; imot(3)=4
+                         call str(mot,imot,nmx,4 ,fr)
+                         mot(5)="frc"      ; imot(5)=3
+                         call str(mot,imot,nmx,6 ,fr2)
+                         mot(7)="kibdc"    ; imot(7)=5
+                         call str(mot,imot,nmx,8 ,1)
+                         mot(9)="krr"      ; imot(9)=3
+                         call str(mot,imot,nmx,10 ,0)
+                         mot(11)="ptc"     ; imot(11)=3
+                         call str(mot,imot,nmx,12 ,iminb(fr2))
+                         call str(mot,imot,nmx,13 ,jminb(fr2))
+                         call str(mot,imot,nmx,14 ,kminb(fr2))
+                         mot(15)="dir"     ; imot(15)=3
+                         call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
+                       else
+                        call inbdc( &
+                             exs1,exs2, &
+                             x,y,z, &
+                             ncbd,ncin,mnc, &
+                             0,fr,fr2,1,0., &
+                             iminb(fr2),jminb(fr2),kminb(fr2),mot(16)(1:2),mot(17)(1:2),mot(18)(1:2))
+                       endif
                    endif
                 endif
              enddo
           enddo
        enddo
     enddo
-    print*,l,' : filling done'
+!    print*,l,' : filling done'
  enddo
 
  deallocate(save_x,save_y,save_z,save_ndlb,save_nfei,save_indfl,save_mpb,save_mmb,save_ncbd,save_ii1)
@@ -1210,8 +1013,6 @@ contains
  deallocate(save_kd2,save_nnn,save_nnc,save_nnfb,save_npn,save_npc,save_npfb)
 
  return
-contains
-
 end subroutine partitionnement
 
 subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
@@ -1221,7 +1022,7 @@ subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
  integer,intent(out) :: nblock2(lt)
  integer             :: rsize,sblock(lt),i,j,k
 
- ! todo
+ ! TODO
  ! switch to the alternative version which permit to have ideal blocks size
  ! need a criteria to avoid too small block, and need to manage the residual block
  ! todo
@@ -1276,7 +1077,7 @@ subroutine triv_split(nblock2,nbl,nxyza,ii2,jj2,kk2, &
                 do j1=1,j
                    do i1=1,i
                       tmp_ii2(i1,j1,k1)=nint(i1*ii2(nbl)*1./i) - nint((i1-1.)*ii2(nbl)*1./i)
-                      tmp_jj2(i1,j1,k1)=nint(j1*jj2(nbl)*1./j) - nint((j1-1.)*jj2(nbl)*1./j)
+                      tmp_jj2(i1,j1,k1)=nint(j1*jj2(nbl)*1./j) - nint((j1-1.)*jj2(nbl)*1./j) ! TODO count interface twice
                       tmp_kk2(i1,j1,k1)=nint(k1*kk2(nbl)*1./k) - nint((k1-1.)*kk2(nbl)*1./k)
                    end do
                 end do
@@ -1285,7 +1086,7 @@ subroutine triv_split(nblock2,nbl,nxyza,ii2,jj2,kk2, &
                 !             compute sizes of new communication, must be over evaluated (including boundary condition)
                 num_cft=2*(tmp_jj2*tmp_ii2 + tmp_ii2*tmp_kk2 + tmp_jj2*tmp_kk2)
                 !             choose the best splitting (less comm)
-                if(sum(num_cft)<sum(num_cf2)) then  !  todo : is sum better than maxval ?
+                if(sum(num_cft)<sum(num_cf2)) then  !  TODO : is sum better than maxval ?
                    nblockd=(/i,j,k/)
                    call reallocate(  new_jj2,i,j,k) ;   new_jj2=tmp_jj2
                    call reallocate(  new_ii2,i,j,k) ;   new_ii2=tmp_ii2
@@ -1300,9 +1101,78 @@ subroutine triv_split(nblock2,nbl,nxyza,ii2,jj2,kk2, &
  end do
 end subroutine triv_split
 
+subroutine copy_grid(l,l2,xs,ys,zs,x,y,z,save_x,save_y,save_z,       &
+    save_id1,save_id2,save_jd1,save_jd2,save_kd1,save_kd2,save_npn,  &
+    old2new_p,new2old_p)
+ use maillage,only : kk1,kk2,jj1,jj2,ii1,ii2,kd1,kd2,jd1,jd2,id1,id2,npn
+ implicit none
+ integer,intent(in)             :: l,l2,xs,ys,zs,save_npn(:)
+ integer,intent(in)             :: save_id1(:),save_id2(:),save_jd1(:),save_jd2(:),save_kd1(:),save_kd2(:)
+ integer,intent(inout)          :: old2new_p(:),new2old_p(:)
+ double precision,intent(in)    :: save_x(:),save_y(:),save_z(:)
+ double precision,intent(inout) :: x(:),y(:),z(:)
+
+ integer :: xi,yi,zi,nid,njd,nijd,xyz
+ integer :: save_xi,save_yi,save_zi,save_nid,save_njd,save_nijd,save_xyz
+
+ do zi=kk1(l2),kk2(l2)
+    do yi=jj1(l2),jj2(l2)
+       do xi=ii1(l2),ii2(l2)
+
+          save_xi=xi+xs
+          save_yi=yi+ys
+          save_zi=zi+zs
+
+          nid = id2(l2)-id1(l2)+1
+          njd = jd2(l2)-jd1(l2)+1
+          nijd = nid*njd
+
+          save_nid = save_id2(l)-save_id1(l)+1
+          save_njd = save_jd2(l)-save_jd1(l)+1
+          save_nijd = save_nid*save_njd
+
+          xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
+          save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
+
+          ! fill grid
+          x(xyz)=save_x(save_xyz)
+          y(xyz)=save_y(save_xyz)
+          z(xyz)=save_z(save_xyz)
+
+          ! fill temporary arrays
+          old2new_p(save_xyz)=     xyz ! incomplete on interfaces
+          new2old_p(     xyz)=save_xyz
+       enddo
+    enddo
+ enddo
+end subroutine copy_grid
+
+subroutine get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,  &
+      a,b,c,d,e,f,id1,id2,jd1,jd2,kd1,kd2,npn,x,y,z)
+implicit none
+  double precision,intent(out) :: xmin,xmax,ymin,ymax,zmin,zmax
+  integer,intent(in)           :: a,b,c,d,e,f,id1,id2,jd1,jd2,kd1,kd2,npn
+  double precision,intent(in)  :: x(:),y(:),z(:)
+
+  integer nid,njd,nijd
+
+  nid = id2-id1+1
+  njd = jd2-jd1+1
+  nijd = nid*njd
+
+  xmin=x( npn+1+(a - id1)+(c - jd1)*nid+(e - kd1)*nijd )
+  xmax=x( npn+1+(b - id1)+(c - jd1)*nid+(e - kd1)*nijd )
+  ymin=y( npn+1+(a - id1)+(c - jd1)*nid+(e - kd1)*nijd )
+  ymax=y( npn+1+(a - id1)+(d - jd1)*nid+(e - kd1)*nijd )
+  zmin=z( npn+1+(a - id1)+(c - jd1)*nid+(e - kd1)*nijd )
+  zmax=z( npn+1+(a - id1)+(c - jd1)*nid+(f - kd1)*nijd )
+
+end subroutine get_coords_box
+
 subroutine iniraccord(mot,imot,nmot)
- use chainecarac
- use boundary
+ use chainecarac,only : ci
+ use para_fige,only : nmx
+ use boundary,only : tab_raccord
  use mod_valenti
  implicit none
  character(len=32) ::  mot(nmx),comment
@@ -1470,4 +1340,31 @@ subroutine str(mot,imot,nmx,lmot,val)
  mot(lmot)=adjustl(mot(lmot))
  imot(lmot) =len_trim(adjustl(mot(lmot)))
 end subroutine str
+
+subroutine get_param(mot,nmot,imot,nprocs)
+ use chainecarac,only : ci
+ use para_fige,only : nmx
+ use mod_valenti
+ implicit none
+ integer,intent(in)  :: nmot,imot(nmx)
+ integer,intent(out) :: nprocs
+ character(len=32),intent(in) ::  mot(nmx)
+ integer :: icmt,kval,nm
+ character(len=32) ::  comment
+
+ ! get number of block we want from flec TODO : replace valenti by mpi
+ do icmt=1,32
+    comment(icmt:icmt)=' '
+ enddo
+ kval=0
+ !
+ nm=2
+ if(nmot.lt.nm) then ! read number of block at the end  TODO : replace valenti by mpi
+    comment=ci
+    call synterr(mot,imot,nmot,comment)
+ else
+    call valenti(mot,imot,nm,nprocs,kval)
+ endif
+end subroutine get_param
+
 end module mod_partitionnement
