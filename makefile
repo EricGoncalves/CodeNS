@@ -145,7 +145,8 @@ c_end.f90                c_inbdc.f90             c_inbdn.f90          \
 c_infw.f90               c_ingr.f90              c_intn.f90           \
 c_nzst.f90               c_secpfw.f90            c_svbd.f90           \
 c_svbdb.f90              c_svbdc.f90             c_svbdn.f90          \
-c_svfw.f90               c_svgr.f90              solve.f90 
+c_svfw.f90               c_svgr.f90              partition.f90        \
+solve.f90 
 
 OBJS =  ${SRCS:.f90=.o}
 

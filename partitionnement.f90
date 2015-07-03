@@ -39,7 +39,7 @@ contains
     !-----parameters figes--------------------------------------------------
     !
     implicit none
-    integer             :: icmt,nprocs,nxyza,i,j,k,xyz,nm,xs,ys,zs
+    integer             :: icmt,nprocs,nxyza,i,j,k,xyz,nm,xs,ys,zs,nmin,nmax,nmin1,nmax1
     integer             :: imot(nmx),nmot,fr,imax,imin,jmax,jmin,kmax,kmin,kval
     integer             :: l2,mfbe,nid,njd,nijd,xi,yi,zi,sblock,l3,old_mtb
     integer             :: imax2,imin2,jmax2,jmin2,kmax2,kmin2,fr2,i2,j2,k2,l4,fr3
@@ -344,9 +344,20 @@ contains
     else
        if(verbosity>=1) then
          print*,'découpage réussis : '
+         nmax=0
+         nmin=nxyza
          do l=1,save_lt
-            print*, l,nblockd(:,l)
+            nmax1=maxval(ni(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l)* &
+                          nj(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l)* &
+                          nk(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l))
+            nmin1=minval(ni(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l)* &
+                          nj(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l)* &
+                          nk(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l))
+            print*, l,nblockd(:,l),( nmax1- nmin1 )*100./ nmin1,"%"
+            nmax=max(nmax,nmax1)
+            nmin=min(nmin,nmin1)
          enddo
+         print*, "Total : ",sblock,( nmax- nmin )*100./ nmin,"%"
        endif
        if(verbosity>=2) then
           do l=1,save_lt
@@ -380,10 +391,10 @@ contains
 
                 l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
 
-                ! +1 for duplicate interface
-                if(i>1) ni(i,j,k,l)=ni(i,j,k,l)+1 
-                if(j>1) nj(i,j,k,l)=nj(i,j,k,l)+1 ! TODO put this in triv_split
-                if(k>1) nk(i,j,k,l)=nk(i,j,k,l)+1 
+!                ! +1 for duplicate interface
+!                if(i>1) ni(i,j,k,l)=ni(i,j,k,l)+1 
+!                if(j>1) nj(i,j,k,l)=nj(i,j,k,l)+1 ! TODO put this in triv_split
+!                if(k>1) nk(i,j,k,l)=nk(i,j,k,l)+1 
 
                 if(verbosity>=2) then
                   call str(mot,imot,nmx,4 ,l2)
@@ -1020,7 +1031,8 @@ subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
  integer,intent(in)  :: lt,nxyza,nprocs
  integer,intent(in)  :: ii2(lt),jj2(lt),kk2(lt)
  integer,intent(out) :: nblock2(lt)
- integer             :: rsize,sblock(lt),i,j,k
+ integer             :: rsize,sblock(lt),i,j,k,nblock(lt)
+ double precision    :: unbalance,unbalance1
 
  ! TODO
  ! switch to the alternative version which permit to have ideal blocks size
@@ -1029,25 +1041,61 @@ subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
 
  !   compute number of spliting of each blocks with the best equilibrium
  do i=lt,nprocs-1                       ! split until lt>=nprocs
-    sblock=ceiling(ii2*jj2*kk2*1./nblock2) ! compute the current size of blocks
-    j=maxloc(sblock,1)                        ! split the first bigest block
-    do k=j+1,lt
-       if(sblock(k)==sblock(j) &          ! if more than one bigest block
-            .and.nblock2(k)>nblock2(j)) &      ! split the most splitted
-            j=k
+    unbalance=10000 ! a lot
+    do j=1,lt
+      nblock=nblock2                    ! try every split
+      nblock(j)=nblock(j)+1
+      sblock=ceiling(ii2*jj2*kk2*1./nblock) ! compute the current size of blocks (approx.)
+      unbalance1=(maxval(sblock)-minval(sblock))*1./maxval(sblock) ! and unbalance
+      if (unbalance1< unbalance) then ! if better remember it
+        unbalance = unbalance1
+        k=j
+      endif
     end do
-    nblock2(j)=nblock2(j)+1
+    nblock2(k)=nblock2(k)+1
  end do
 
 
- !   compute number of spliting of each blocks with the ideal equilibrium
- !    rsize=nint(nxyza*1./nprocs)              ! ideal size of a block
- !    nblock2=ceiling(ii2*jj2*kk2*1./rsize) ! number of split needed
- !    sblock=mod(ii2*jj2*kk2,rsize)         ! size of the smallest block
- !    do i=1,lt
- !      if (sblock(i) <= something) &          ! allow for small imbalance in order to avoid too small blocks
- !           nblock2(i)=nblock2(i)-1
- !    end do
+! !   compute number of spliting of each blocks with the best equilibrium
+! do i=lt,nprocs-1                       ! split until lt>=nprocs
+!    sblock=ceiling(ii2*jj2*kk2*1./nblock2) ! compute the current size of blocks
+!    j=maxloc(sblock,1)                        ! split the first bigest block
+!    do k=j+1,lt
+!       if(sblock(k)==sblock(j) &          ! if more than one bigest block
+!            .and.nblock2(k)>nblock2(j)) &      ! split the most splitted
+!            j=k
+!    end do
+!    nblock2(j)=nblock2(j)+1
+! end do
+
+
+!    compute number of spliting of each blocks with the ideal equilibrium
+!     rsize=nint(nxyza*1./nprocs)              ! ideal size of a block
+!     nblock2=ceiling(ii2*jj2*kk2*1./rsize) ! number of split needed
+!!     sblock=mod(ii2*jj2*kk2,rsize)         ! size of the smallest block
+!!     do i=1,lt
+!!       if (sblock(i) <= 3*3*3) &          ! allow for small imbalance in order to avoid too small blocks
+!!            nblock2(i)=nblock2(i)-1
+!!     end do
+! do i=sum(nblock2),nprocs-1,-1
+!    sblock=ceiling(ii2*jj2*kk2*1./nblock2) ! compute the current size of blocks (approx.)
+!    unbalance=(maxval(sblock)-minval(sblock))*1./maxval(sblock) ! and unbalance
+!    k=0
+!    do j=1,lt
+!      nblock=nblock2                    ! try every split
+!      nblock(j)=nblock(j)-1
+!      sblock=ceiling(ii2*jj2*kk2*1./nblock) ! compute the current size of blocks (approx.)
+!      unbalance1=(maxval(sblock)-minval(sblock))*1./maxval(sblock) ! and unbalance
+!      if (unbalance1< unbalance) then ! if better remember it
+!        unbalance = unbalance1
+!        k=j
+!      endif
+!    end do
+!    print*,sum(nblock2),unbalance
+!    if (k==0) exit
+!    nblock2(k)=nblock2(k)-1
+! end do
+
 
 end subroutine num_split
 
@@ -1076,9 +1124,9 @@ subroutine triv_split(nblock2,nbl,nxyza,ii2,jj2,kk2, &
              do k1=1,k
                 do j1=1,j
                    do i1=1,i
-                      tmp_ii2(i1,j1,k1)=nint(i1*ii2(nbl)*1./i) - nint((i1-1.)*ii2(nbl)*1./i)
-                      tmp_jj2(i1,j1,k1)=nint(j1*jj2(nbl)*1./j) - nint((j1-1.)*jj2(nbl)*1./j) ! TODO count interface twice
-                      tmp_kk2(i1,j1,k1)=nint(k1*kk2(nbl)*1./k) - nint((k1-1.)*kk2(nbl)*1./k)
+                      tmp_ii2(i1,j1,k1)=nint(i1*(ii2(nbl)+i-1)*1./i) - nint((i1-1.)*(ii2(nbl)+i-1)*1./i)
+                      tmp_jj2(i1,j1,k1)=nint(j1*(jj2(nbl)+j-1)*1./j) - nint((j1-1.)*(jj2(nbl)+j-1)*1./j)    ! count interface twice
+                      tmp_kk2(i1,j1,k1)=nint(k1*(kk2(nbl)+k-1)*1./k) - nint((k1-1.)*(kk2(nbl)+k-1)*1./k)
                    end do
                 end do
              end do
