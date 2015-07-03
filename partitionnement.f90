@@ -22,11 +22,12 @@ contains
     use sortiefichier
     use mod_crbds
     use mod_c_crbds
-    use mod_crdms
     use mod_inbdc
-    use mod_inbdb
     use mod_c_inbdc
+    use mod_inbdb
     use mod_c_inbdb
+    use mod_crdms
+    use mod_c_crdms
     !
     !***********************************************************************
     !
@@ -38,7 +39,7 @@ contains
     !-----parameters figes--------------------------------------------------
     !
     implicit none
-    integer             :: icmt,nprocs,nxyza,i,j,k,xyz,nm
+    integer             :: icmt,nprocs,nxyza,i,j,k,xyz,nm,xs,ys,zs
     integer             :: imot(nmx),nmot,fr,imax,imin,jmax,jmin,kmax,kmin,kval
     integer             :: l2,mfbe,nid,njd,nijd,xi,yi,zi,sblock,l3,old_mtb
     integer             :: imax2,imin2,jmax2,jmin2,kmax2,kmin2,fr2,i2,j2,k2,l4,fr3
@@ -129,15 +130,59 @@ contains
 
     !############################################################################################
     !################# SAVE ALL MESH AND BOUNDARIES VARIABLES ###################################
-    !############################ AND CLEAR EVERYTHING ##########################################
-    !####################### WE WILL RECREATE EVERYTHING ########################################
+    !#################            AND CLEAR EVERYTHING        ###################################
+    !#################       WE WILL RECREATE EVERYTHING      ###################################
     !############################################################################################
+
+    ! allocate statments are non necessary with newer fortran norm, but ifort don't support it yet
+    allocate(save_x(size(x)))
+    allocate(save_y(size(y)))
+    allocate(save_z(size(z)))
+    allocate(save_ndlb(size(ndlb)))
+    allocate(save_nfei(size(nfei)))
+    allocate(save_indfl(size(indfl)))
+    allocate(save_iminb(size(iminb)))
+    allocate(save_imaxb(size(imaxb)))
+    allocate(save_jminb(size(jminb)))
+    allocate(save_jmaxb(size(jmaxb)))
+    allocate(save_kminb(size(kminb)))
+    allocate(save_kmaxb(size(kmaxb)))
+    allocate(save_mpb(size(mpb)))
+    allocate(save_mmb(size(mmb)))
+    allocate(save_ncbd(size(ncbd)))
+    allocate(save_ii1(size(ii1)))
+    allocate(save_jj1(size(jj1)))
+    allocate(save_kk1(size(kk1)))
+    allocate(save_ii2(size(ii2)))
+    allocate(save_jj2(size(jj2)))
+    allocate(save_kk2(size(kk2)))
+    allocate(save_id1(size(id1)))
+    allocate(save_jd1(size(jd1)))
+    allocate(save_kd1(size(kd1)))
+    allocate(save_id2(size(id2)))
+    allocate(save_jd2(size(jd2)))
+    allocate(save_kd2(size(kd2)))
+    allocate(save_nnn(size(nnn)))
+    allocate(save_nnc(size(nnc)))
+    allocate(save_nnfb(size(nnfb)))
+    allocate(save_npn(size(npn)))
+    allocate(save_npc(size(npc)))
+    allocate(save_npfb(size(npfb)))
+    allocate(save_cl(size(cl)))
+    allocate(save_ndcc(size(ndcc)))
+    allocate(save_nbdc(size(nbdc)))
+    allocate(save_nfbc(size(nfbc)))
+    allocate(save_bc(size(bc,1),size(bc,2)))
+    allocate(save_mdnc(size(mdnc)))
+    allocate(save_mper(size(mper)))
+    allocate(save_mpc(size(mpc)))
+    allocate(save_ncin(size(ncin)))
+    allocate(save_bceqt(size(bceqt,1),size(bceqt,2)))
+    allocate(save_mnc(size(mnc)))
 
     ! Save old split
     save_lzx=lzx
     save_klzx=klzx
-
-    ! lz=lzx
     save_lt=lt
 
     ! Save old grid
@@ -192,7 +237,6 @@ contains
     save_ncin=ncin
     save_bceqt=bceqt
     save_mnc=mnc
-
 
     save_mtbx=mtbx
     save_kmtbx=kmtbx
@@ -846,7 +890,8 @@ contains
                       test=.false.
                       if (new2old_f(fr)==0) then  ! new boundary 
                          test=.true.
-                         fr2=fr+1
+                         if (indfl(fr)(2:2)=="1") fr2=fr+1
+                         if (indfl(fr)(2:2)=="2") fr2=fr-1
                       else                        ! old raccord boundary
                          if(tab_raccord(new2old_f(fr))/=0) then
                             test=.true.
