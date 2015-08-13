@@ -967,33 +967,33 @@ subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
  ! todo
 
  !   compute number of spliting of each blocks with the best equilibrium
- do i=lt,nprocs-1                       ! split until lt>=nprocs
-    unbalance=10000 ! a lot
-    do j=1,lt
-      nblock=nblock2                    ! try every split
-      nblock(j)=nblock(j)+1
-      sblock=ceiling(ii2*jj2*kk2*1./nblock) ! compute the current size of blocks (approx.)
-      unbalance1=(maxval(sblock)-minval(sblock))*1./maxval(sblock) ! and unbalance
-      if (unbalance1< unbalance) then ! if better remember it
-        unbalance = unbalance1
-        k=j
-      endif
-    end do
-    nblock2(k)=nblock2(k)+1
- end do
-
-
-! !   compute number of spliting of each blocks with the best equilibrium
 ! do i=lt,nprocs-1                       ! split until lt>=nprocs
-!    sblock=ceiling(ii2*jj2*kk2*1./nblock2) ! compute the current size of blocks
-!    j=maxloc(sblock,1)                        ! split the first bigest block
-!    do k=j+1,lt
-!       if(sblock(k)==sblock(j) &          ! if more than one bigest block
-!            .and.nblock2(k)>nblock2(j)) &      ! split the most splitted
-!            j=k
+!    unbalance=10000 ! a lot
+!    do j=1,lt
+!      nblock=nblock2                    ! try every split
+!      nblock(j)=nblock(j)+1
+!      sblock=ceiling(ii2*jj2*kk2*1./nblock) ! compute the current size of blocks (approx.)
+!      unbalance1=(maxval(sblock)-minval(sblock))*1./maxval(sblock) ! and unbalance
+!      if (unbalance1< unbalance) then ! if better remember it
+!        unbalance = unbalance1
+!        k=j
+!      endif
 !    end do
-!    nblock2(j)=nblock2(j)+1
+!    nblock2(k)=nblock2(k)+1
 ! end do
+
+
+ !   compute number of spliting of each blocks with the best equilibrium
+ do i=lt,nprocs-1                       ! split until lt>=nprocs
+    sblock=ceiling(ii2*jj2*kk2*1./nblock2) ! compute the current size of blocks
+    j=maxloc(sblock,1)                        ! split the first bigest block
+    do k=j+1,lt
+       if(sblock(k)==sblock(j) &          ! if more than one bigest block
+            .and.nblock2(k)>nblock2(j)) &      ! split the most splitted
+            j=k
+    end do
+    nblock2(j)=nblock2(j)+1
+ end do
 
 
 !    compute number of spliting of each blocks with the ideal equilibrium
