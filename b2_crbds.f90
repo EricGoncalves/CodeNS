@@ -21,14 +21,17 @@ contains
     use sortiefichier
     use maillage
     use boundary
+    use mod_mpi
     implicit none
-    integer          ::   img, mfbe, mfbi,mfbim
+    integer          ::   img, mfbe, mfbi,mfbim,mfbe_l
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
 !
-    mfbi=nfei(mfbe)
+    mfbe_l=bcg_to_bcl(mfbe)
+
+    mfbi=nfei(mfbe_l)
 !
     form='(/ 2x,''numero de la grille      : '',11x,i5/' &
          //'2x,''nb de pts de la frontiere: '',11x,i5/' &

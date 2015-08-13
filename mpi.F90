@@ -9,7 +9,7 @@ module mod_mpi
       implicit none
       integer :: rank
       integer :: NPROCS
-!      integer,allocatable :: block2proc(:)
+      integer,allocatable :: bc_to_proc(:),bcg_to_bcl(:),bcl_to_bcg(:)
 INTERFACE SUM_MPI
 !      SUM_MPI(A,B)
 ! COMPUTE THE SUM OF A IN B
@@ -58,6 +58,7 @@ END INTERFACE MPI_TRANS
       NPROCS=1
 #endif
 
+    allocate(bc_to_proc(0),bcg_to_bcl(0),bcl_to_bcg(0))
   END SUBROUTINE  INIMPI
 
   subroutine endmpi
@@ -250,11 +251,16 @@ IF(REQ/=MPI_REQUEST_NULL)   CALL MPI_WAIT(REQ, STATUS, IERR)
 
   SUBROUTINE BARRIER()
 ! SYNC POINT FOR ALL PROCESS
+  use sortiefichier
     IMPLICIT NONE
   integer :: ierr
 #ifdef WITH_MPI
   CALL MPI_Barrier(MPI_COMM_WORLD,IERR )
 #endif
+
+!#ifdef __GFORTRAN__
+  flush(0)
+  flush(imp)
 
   END SUBROUTINE BARRIER
 

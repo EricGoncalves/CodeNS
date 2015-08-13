@@ -26,17 +26,22 @@ contains
 !
     character(len=32) ::  mot(nmx)
 !
+    call tcmd_crdms( &
+         mot,imot,nmot, &
+         l,ni,nj,nk)
+
+    print*,l,rank
+
     if(l==rank+1) then
-      call tcmd_crdms( &
-           mot,imot,nmot, &
-           l,ni,nj,nk)
   !
       if (kimp.ge.1) then
          call b1_crdms(l,ni,nj,nk)
       endif
+    endif
   !
       call crdms(l,ni,nj,nk)
   !
+    if(l==rank+1) then
       if(kimp.ge.2) then
          call b2_crdms(l)
       endif

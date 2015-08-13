@@ -826,6 +826,7 @@ program solve
         call synterr(mot,imot,1,cb)
      end select
 !
+    call barrier
   enddo
 !
 contains

@@ -53,7 +53,7 @@ contains
          //'2x,5h kd1=,i5,6h  kk1=,i5,6h  kk2=,i5,6h  kd2=,i5)'
 !
     do img=1,lgx
-       lm=l+(img-1)*lz
+       lm=1+(img-1)*lz
        write(imp,form) img, &
             nnn(lm),npn(lm),nnc(lm),npc(lm),nnfb(lm),npfb(lm), &
             id1(lm),ii1(lm),ii2(lm),id2(lm), &

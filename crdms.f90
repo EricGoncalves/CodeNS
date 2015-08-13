@@ -56,6 +56,7 @@ contains
     use kcle
     use chainecarac
     use schemanum
+    use tools
     use mod_mpi,only : rank
     implicit none
     integer          ::   img, imgi, imgj, imgk,    l
@@ -71,28 +72,28 @@ contains
 
   !    lz=lzx
       lt=lgx*lzx
-      call i_reallocate(ii1,lt)
-      call i_reallocate(jj1,lt)
-      call i_reallocate(kk1,lt)
-      call i_reallocate(ii2,lt)
-      call i_reallocate(jj2,lt)
-      call i_reallocate(kk2,lt)
-      call i_reallocate(id1,lt)
-      call i_reallocate(jd1,lt)
-      call i_reallocate(kd1,lt)
-      call i_reallocate(id2,lt)
-      call i_reallocate(jd2,lt)
-      call i_reallocate(kd2,lt)
-      call i_reallocate(nnn,lt)
-      call i_reallocate(nnc,lt)
-      call i_reallocate(nnfb,lt)
-      call i_reallocate(npn,lt)
-      call i_reallocate(npc,lt)
-      call i_reallocate(npfb,lt)
+      call reallocate_s(ii1,lt)
+      call reallocate_s(jj1,lt)
+      call reallocate_s(kk1,lt)
+      call reallocate_s(ii2,lt)
+      call reallocate_s(jj2,lt)
+      call reallocate_s(kk2,lt)
+      call reallocate_s(id1,lt)
+      call reallocate_s(jd1,lt)
+      call reallocate_s(kd1,lt)
+      call reallocate_s(id2,lt)
+      call reallocate_s(jd2,lt)
+      call reallocate_s(kd2,lt)
+      call reallocate_s(nnn,lt)
+      call reallocate_s(nnc,lt)
+      call reallocate_s(nnfb,lt)
+      call reallocate_s(npn,lt)
+      call reallocate_s(npc,lt)
+      call reallocate_s(npfb,lt)
   !
       do img=1,lgx
   !
-         lm=l+(img-1)*lz
+         lm=1+(img-1)*lz
   !
          imgi = img
          imgj = img
@@ -137,16 +138,5 @@ contains
     endif
 !
     return
-  contains
-    subroutine i_reallocate(tab,newsize)
-      implicit none
-      integer,allocatable::tab(:),tab1(:)
-      integer :: newsize
-      allocate(tab1(size(tab)))
-      tab1=tab
-      deallocate(tab)
-      allocate(tab(newsize))
-      tab(1:size(tab1))=tab1
-    end subroutine i_reallocate
   end subroutine crdms
 end module mod_crdms
