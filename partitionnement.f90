@@ -43,11 +43,12 @@ contains
     integer             :: imot(nmx),nmot,fr,imax,imin,jmax,jmin,kmax,kmin,kval
     integer             :: l2,mfbe,nid,njd,nijd,xi,yi,zi,sblock,l3,old_mtb
     integer             :: imax2,imin2,jmax2,jmin2,kmax2,kmin2,fr2,i2,j2,k2,l4,fr3
+    integer             :: imax3,imin3,jmax3,jmin3,kmax3,kmin3
     double precision    :: exs1,exs2,vbc(ista*lsta),xmin,xmax,ymin,ymax,zmin,zmax
     double precision    :: save_xmin,save_xmax,save_ymin,save_ymax,save_zmin,save_zmax
     double precision,allocatable :: x(:),y(:),z(:)
     integer,allocatable :: nblock2(:),nblockd(:,:),ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:),tmp(:,:,:,:)
-    integer,allocatable :: old2new_p(:),new2old_p(:),new2old_b(:),num_cf2(:,:,:)
+    integer,allocatable :: new2old_b(:),num_cf2(:,:,:)
     integer,allocatable :: ni1(:,:,:),nj1(:,:,:),nk1(:,:,:),ncbd(:)
 
     integer             :: save_lt,save_ndimntbx,l,verbosity
@@ -374,7 +375,6 @@ contains
     !############################################################################################
     !######################### RECREATE GRID ####################################################
     !############################################################################################
-    allocate(old2new_p(save_ndimntbx),new2old_p(0)) 
     allocate(new2old_b(nprocs))
 
     if(verbosity>=2) then
@@ -391,11 +391,6 @@ contains
 
                 l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
 
-!                ! +1 for duplicate interface
-!                if(i>1) ni(i,j,k,l)=ni(i,j,k,l)+1 
-!                if(j>1) nj(i,j,k,l)=nj(i,j,k,l)+1 ! TODO put this in triv_split
-!                if(k>1) nk(i,j,k,l)=nk(i,j,k,l)+1 
-
                 if(verbosity>=2) then
                   call str(mot,imot,nmx,4 ,l2)
                   call str(mot,imot,nmx,5 ,ni(i,j,k,l))
@@ -406,7 +401,6 @@ contains
                   call crdms( l2,ni(i,j,k,l),nj(i,j,k,l),nk(i,j,k,l))
                 endif
 
-                call reallocate_s(new2old_p,ndimntbx)
                 call reallocate_s(x,ndimntbx)
                 call reallocate_s(y,ndimntbx)
                 call reallocate_s(z,ndimntbx)
@@ -417,8 +411,7 @@ contains
                 zs=sum(nk(i,j,:k-1,l))-k+1
 
                 call copy_grid(l,l2,xs,ys,zs,x,y,z,save_x,save_y,save_z,              &
-                     save_id1,save_id2,save_jd1,save_jd2,save_kd1,save_kd2,save_npn,  &
-                     old2new_p,new2old_p)
+                     save_id1,save_id2,save_jd1,save_jd2,save_kd1,save_kd2,save_npn)
 
                 new2old_b(l2)= l
 
@@ -447,163 +440,74 @@ contains
              do i=1,nblockd(1,l)
                 l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
 
-                call get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,             &
-                      ii1(l2),ii2(l2),jj1(l2),jj2(l2),kk1(l2),kk2(l2),         &
-                      id1(l2),id2(l2),jd1(l2),jd2(l2),kd1(l2),kd2(l2),npn(l2), &
-                      x,y,z)
+                call old2new_p(save_iminb(fr),save_jminb(fr),save_kminb(fr),imin,jmin,kmin,i,j,k,l)
+                call old2new_p(save_imaxb(fr),save_jmaxb(fr),save_kmaxb(fr),imax,jmax,kmax,i,j,k,l)
 
-                call get_coords_box(save_xmin,save_xmax,save_ymin,save_ymax,save_zmin,save_zmax,                 &
-                      save_iminb(fr),save_imaxb(fr),save_jminb(fr),save_jmaxb(fr),save_kminb(fr),save_kmaxb(fr), &
-                      save_id1(l),save_id2(l),save_jd1(l),save_jd2(l),save_kd1(l),save_kd2(l),save_npn(l),       &
-                      save_x,save_y,save_z)
+                if ( imin<=ii2(l2) .and. &
+                     imax>=ii1(l2) .and. &
+                     jmin<=jj2(l2) .and. &
+                     jmax>=jj1(l2) .and. & ! there is a part of the boundary in this block
+                     kmin<=kk2(l2) .and. &
+                     kmax>=kk1(l2) ) then
 
-                if ( save_xmin-1d-10<=xmax .and. &
-                     save_xmax+1d-10>=xmin .and. &
-                     save_ymin-1d-10<=ymax .and. & ! there is a part of the boundary in this block
-                     save_ymax+1d-10>=ymin .and. &
-                     save_zmin-1d-10<=zmax .and. &
-                     save_zmax+1d-10>=zmin) then
+                   ! part of the boundary which concern this block
 
-                   ! search the part of the boundary which concern this block
-
-                    nid = id2(l2)-id1(l2)+1
-                    njd = jd2(l2)-jd1(l2)+1
-                    nijd = nid*njd
-
-                    save_nid = save_id2(l)-save_id1(l)+1
-                    save_njd = save_jd2(l)-save_jd1(l)+1
-                    save_nijd = save_nid*save_njd
-
-
-                   xi=ii1(l2)
-                   yi=jj1(l2)
-                   zi=kk1(l2)
-                   save_xi=save_iminb(fr)
-                   save_yi=save_jminb(fr)
-                   save_zi=save_kminb(fr)
-
-                   ! walk on the block boundaries to find limits 
-                   do imin=ii1(l2)+1,ii2(l2)
-                      xi=imin ; save_xi=save_iminb(fr)
-                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                      if(x(xyz)>save_x(save_xyz)+1d-10) exit
-                   enddo
-                   do imax=imin,ii2(l2)
-                      xi=imax ; save_xi=save_imaxb(fr)
-                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                      if(x(xyz)>save_x(save_xyz)+1d-10) exit
-                   enddo
-                   do jmin=jj1(l2)+1,jj2(l2)
-                      yi=jmin ; save_yi=save_jminb(fr)
-                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                      if(y(xyz)>save_y(save_xyz)+1d-10) exit
-                   enddo
-                   do jmax=jmin,jj2(l2)
-                      yi=jmax ; save_yi=save_jmaxb(fr)
-                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                      if(y(xyz)>save_y(save_xyz)+1d-10) exit
-                   enddo
-                   do kmin=kk1(l2)+1,kk2(l2)
-                      zi=kmin ; save_zi=save_kminb(fr)
-                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                      if(z(xyz)>save_z(save_xyz)+1d-10) exit
-                   enddo
-                   do kmax=kmin,kk2(l2)
-                      zi=kmax ; save_zi=save_kmaxb(fr)
-                      xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                      save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
-                      if(z(xyz)>save_z(save_xyz)+1d-10) exit
-                   enddo
-
-                   ! we got out one point after the aim
-                   imin=imin-1 ; jmin=jmin-1 ; kmin=kmin-1
-                   imax=imax-1 ; jmax=jmax-1 ; kmax=kmax-1
+                    imin=min(ii2(l2),max(ii1(l2),imin))
+                    imax=min(ii2(l2),max(ii1(l2),imax))
+                    jmin=min(jj2(l2),max(jj1(l2),jmin))
+                    jmax=min(jj2(l2),max(jj1(l2),jmax))
+                    kmin=min(kk2(l2),max(kk1(l2),kmin))
+                    kmax=min(kk2(l2),max(kk1(l2),kmax))
 
                    if(tab_raccord(fr)/=0) then ! if boundary shared with another block
                       fr2=tab_raccord(fr)      ! a split on the other side induce split here
                       l3=save_ndlb(fr2) 
-
-                      call get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,             &
-                            imin,imax,jmin,jmax,kmin,kmax,         &
-                            id1(l2),id2(l2),jd1(l2),jd2(l2),kd1(l2),kd2(l2),npn(l2), &
-                            x,y,z)
 
                       do k2=1,nblockd(3,l3)
                          do j2=1,nblockd(2,l3)
                             do i2=1,nblockd(1,l3)
                                l4=sum(nblock2(1:l3-1))+i2+(j2-1)*nblockd(1,l3)+(k2-1)*nblockd(2,l3)*nblockd(1,l3)
 
-                              call get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,             &
-                                    ii1(l4),ii2(l4),jj1(l4),jj2(l4),kk1(l4),kk2(l4),         &
-                                    id1(l4),id2(l4),jd1(l4),jd2(l4),kd1(l4),kd2(l4),npn(l4), &
-                                    x,y,z)
+                                call old2new_p(save_iminb(fr2),save_jminb(fr2),save_kminb(fr2),imin2,jmin2,kmin2,i2,j2,k2,l3)
+                                call old2new_p(save_imaxb(fr2),save_jmaxb(fr2),save_kmaxb(fr2),imax2,jmax2,kmax2,i2,j2,k2,l3)
 
-                                  if ( save_xmin-1d-10<=xmax .and. &
-                                       save_xmax+1d-10>=xmin .and. &
-                                       save_ymin-1d-10<=ymax .and. & ! there is a part of the boundary in this block
-                                       save_ymax+1d-10>=ymin .and. &
-                                       save_zmin-1d-10<=zmax .and. &
-                                       save_zmax+1d-10>=zmin) then
+                                if ( imin2<=ii2(l4) .and. &
+                                     imax2>=ii1(l4) .and. &
+                                     jmin2<=jj2(l4) .and. &
+                                     jmax2>=jj1(l4) .and. & ! there is a part of the boundary in this block
+                                     kmin2<=kk2(l4) .and. &
+                                     kmax2>=kk1(l4) ) then
 
-                                  ! search indexs
+                                   ! part of the boundary which concern this block
 
-                               save_nid = id2(l4)-id1(l4)+1
-                               save_njd = jd2(l4)-jd1(l4)+1
-                               save_nijd = save_nid*save_njd
+                                    imin2=min(ii2(l4),max(ii1(l4),imin2))
+                                    imax2=min(ii2(l4),max(ii1(l4),imax2))
+                                    jmin2=min(jj2(l4),max(jj1(l4),jmin2))
+                                    jmax2=min(jj2(l4),max(jj1(l4),jmax2))
+                                    kmin2=min(kk2(l4),max(kk1(l4),kmin2))
+                                    kmax2=min(kk2(l4),max(kk1(l4),kmax2))
 
-                                  xi=imin
-                                  yi=jmin
-                                  zi=kmin
-                                  save_xi=ii1(l4)
-                                  save_yi=jj1(l4)
-                                  save_zi=kk1(l4)
+                                call new2old_p(imin2,jmin2,kmin2,imin3,jmin3,kmin3,i2,j2,k2,l3)
+                                call new2old_p(imax2,jmin2,kmax2,imax3,jmax3,kmax3,i2,j2,k2,l3)
 
-                                   ! walk on the block boundaries to find limits
-                                  do imin2=imin+1,imax
-                                     xi=imin2 ; save_xi=ii1(l4)
-                                     xyz =     npn(l2)+1+(     xi-id1(l2))+(     yi-jd1(l2))*     nid+(     zi-kd1(l2))*     nijd
-                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                     if(x(xyz)>x(save_xyz)+1d-10) exit
-                                  enddo
-                                  do imax2=imin2,imax
-                                     xi=imax2 ; save_xi=ii2(l4)
-                                     xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                     if(x(xyz)>x(save_xyz)+1d-10) exit
-                                  enddo
-                                  do jmin2=jmin+1,jmax
-                                     yi=jmin2 ; save_yi=jj1(l4)
-                                     xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                     if(y(xyz)>y(save_xyz)+1d-10) exit
-                                  enddo
-                                  do jmax2=jmin2,jmax
-                                     yi=jmax2 ; save_yi=jj2(l4)
-                                     xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                     if(y(xyz)>y(save_xyz)+1d-10) exit
-                                  enddo
-                                  do kmin2=kmin+1,kmax
-                                     zi=kmin2 ; save_zi=kk1(l4)
-                                     xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                     if(z(xyz)>z(save_xyz)+1d-10) exit
-                                  enddo
-                                  do kmax2=kmin2,kmax
-                                     zi=kmax2 ; save_zi=kk2(l4)
-                                     xyz =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
-                                     save_xyz =npn(l4)+1+(save_xi-id1(l4))+(save_yi-jd1(l4))*save_nid+(save_zi-kd1(l4))*save_nijd
-                                     if(z(xyz)>z(save_xyz)+1d-10) exit
-                                  enddo
+                                  imin3=imin3-save_iminb(fr2)+save_iminb(fr)
+                                  imax3=imax3-save_iminb(fr2)+save_iminb(fr)
+                                  jmin3=jmin3-save_jminb(fr2)+save_jminb(fr)
+                                  jmax3=jmax3-save_jminb(fr2)+save_jminb(fr)
+                                  kmin3=kmin3-save_kminb(fr2)+save_kminb(fr)
+                                  kmax3=kmax3-save_kminb(fr2)+save_kminb(fr)
 
-                                 ! we got out one point after the aim
-                                  imin2=imin2-1 ; jmin2=jmin2-1 ; kmin2=kmin2-1
-                                  imax2=imax2-1 ; jmax2=jmax2-1 ; kmax2=kmax2-1
+
+                                  call old2new_p(imin3,jmin3,kmin3,imin2,jmin2,kmin2,i,j,k,l)
+                                  call old2new_p(imax3,jmax3,kmax3,imax2,jmax2,kmax2,i,j,k,l)
+
+                                  imin2=min(imax,max(imin,imin2))
+                                  imax2=min(imax,max(imin,imax2))
+                                  jmin2=min(jmax,max(jmin,jmin2))
+                                  jmax2=min(jmax,max(jmin,jmax2))
+                                  kmin2=min(kmax,max(kmin,kmin2))
+                                  kmax2=min(kmax,max(kmin,kmax2))
+
 
                                   mfbe=mfbe+1
                                   if(verbosity>=2) then
@@ -1024,6 +928,29 @@ contains
  deallocate(save_kd2,save_nnn,save_nnc,save_nnfb,save_npn,save_npc,save_npfb)
 
  return
+
+
+contains
+
+subroutine old2new_p(old_i,old_j,old_k,new_i,new_j,new_k,i,j,k,l)
+implicit none
+integer,intent(in) :: old_i,old_j,old_k,i,j,k,l
+integer,intent(out)  :: new_i,new_j,new_k
+new_i=old_i-sum(ni(:i-1,j,k,l))+i-1
+new_j=old_j-sum(nj(i,:j-1,k,l))+j-1
+new_k=old_k-sum(nk(i,j,:k-1,l))+k-1
+end subroutine old2new_p
+
+subroutine new2old_p(new_i,new_j,new_k,old_i,old_j,old_k,i,j,k,l)
+implicit none
+integer,intent(out) :: old_i,old_j,old_k
+integer,intent(in)  :: new_i,new_j,new_k,i,j,k,l
+old_i=new_i+sum(ni(:i-1,j,k,l))-i+1
+old_j=new_j+sum(nj(i,:j-1,k,l))-j+1
+old_k=new_k+sum(nk(i,j,:k-1,l))-k+1
+end subroutine new2old_p
+
+
 end subroutine partitionnement
 
 subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
@@ -1150,13 +1077,11 @@ subroutine triv_split(nblock2,nbl,nxyza,ii2,jj2,kk2, &
 end subroutine triv_split
 
 subroutine copy_grid(l,l2,xs,ys,zs,x,y,z,save_x,save_y,save_z,       &
-    save_id1,save_id2,save_jd1,save_jd2,save_kd1,save_kd2,save_npn,  &
-    old2new_p,new2old_p)
+    save_id1,save_id2,save_jd1,save_jd2,save_kd1,save_kd2,save_npn)
  use maillage,only : kk1,kk2,jj1,jj2,ii1,ii2,kd1,kd2,jd1,jd2,id1,id2,npn
  implicit none
  integer,intent(in)             :: l,l2,xs,ys,zs,save_npn(:)
  integer,intent(in)             :: save_id1(:),save_id2(:),save_jd1(:),save_jd2(:),save_kd1(:),save_kd2(:)
- integer,intent(inout)          :: old2new_p(:),new2old_p(:)
  double precision,intent(in)    :: save_x(:),save_y(:),save_z(:)
  double precision,intent(inout) :: x(:),y(:),z(:)
 
@@ -1186,10 +1111,6 @@ subroutine copy_grid(l,l2,xs,ys,zs,x,y,z,save_x,save_y,save_z,       &
           x(xyz)=save_x(save_xyz)
           y(xyz)=save_y(save_xyz)
           z(xyz)=save_z(save_xyz)
-
-          ! fill temporary arrays
-          old2new_p(save_xyz)=     xyz ! incomplete on interfaces
-          new2old_p(     xyz)=save_xyz
        enddo
     enddo
  enddo
