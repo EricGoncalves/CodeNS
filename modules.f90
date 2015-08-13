@@ -63,7 +63,7 @@ implicit none
   parameter(mdimub =4000)
   parameter(mdimtbf=9000)
   parameter(mdimtnf=9000)
-  parameter(mdimtcf=1600)
+  parameter(mdimtcf=16000)
   parameter(mdimtrf=1)
   parameter(nvar   =7)
 !  parameter(    ccg=1./3.) !3D

@@ -78,21 +78,21 @@ contains
           form='(2x,''realisation'',/' &
                //'2x,''niveau de grille         : '',11x,i5,' &
                //nrr//'(''       puis'',i5)/' &
-               //'2x,''ncycle                   : '',11x,i0,2x,a)'
+               //'2x,''ncycle                   : '',11x,i5,2x,a)'
        endif
     else if (nm.eq.0) then
        form='(2x,''realisation'',/' &
             //'2x,''niveau de grille         : '',11x,i5,' &
             //nlm//'(''       puis'',i5),/' &
             //'29x,'//nrr//'(''       puis'',i5)/' &
-            //'2x,''ncycle                   : '',11x,i0,2x,a)'
+            //'2x,''ncycle                   : '',11x,i5,2x,a)'
     else
        form='(2x,''realisation'',/' &
             //'2x,''niveau de grille         : '',11x,i5,' &
             //nlm//'(''       puis'',i5),/' &
             //nrm//'(29x,'//nlg//'(''       puis'',i5)/)' &
             //'29x,'//nrr//'(''       puis'',i5)/' &
-            //'2x,''ncycle                   : '',11x,i0,2x,a)'
+            //'2x,''ncycle                   : '',11x,i5,2x,a)'
     endif
 !
     write(imp,form) lgr,ncycle(lgr(1)),cncycl

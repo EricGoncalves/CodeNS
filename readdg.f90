@@ -65,23 +65,19 @@ contains
     njd = jd2(l)-jd1(l)+1
     nijd = nid*njd
 !
-    read(kdg,err=10) &
+    coord='x'
+    read(kdg,err=13) &
          (((x(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
-    read(kdg,err=11) &
+    coord='y'
+    read(kdg,err=13) &
          (((y(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
-    read(kdg,err=12) &
+    coord='z'
+    read(kdg,err=13) &
          (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
 !
     return
 !
-10  continue
-    coord='x'
-    write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
-11  continue
-    coord='y'
-    write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
-12  continue
-    coord='z'
+13  continue
     write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
     write(imp,'(10x,"i2=",i5,3x,"j2=",i5,3x,"k2=",i5)')i2,j2,k2
     stop

@@ -46,6 +46,12 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=80) ::  ligne
+
+       cke1   =0.
+       cke2   =0.
+       alfak  =0.
+       alfae  =0.
+
 !
 !      write(imp,'(/,''==>atlecdon: lecture atlecdon et '',
 !     &''initialisation modeles de turbulence'')')
