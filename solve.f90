@@ -312,6 +312,7 @@ program solve
   use mod_c_ingr
   use mod_c_inbdb
   use mod_c_dfst
+  use mod_mpi
   implicit none
   integer          ::     Time_1,    Time_2,clock_rate,       img,    iyplus
   integer          ::          l,         m,      mfbi,       mfc,       mfn
@@ -410,6 +411,7 @@ program solve
 !     initialisations
 !
   call inimem(ncyc)
+  call inimpi
 !
 !  lecture et interpretation des donnees  ******************************
 !

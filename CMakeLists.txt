@@ -124,7 +124,7 @@ if( static )
   set(LINK_SEARCH_END_STATIC ON)
 endif()
 
-FILE(GLOB SRC_FILES "*.f90")
+FILE(GLOB SRC_FILES "*.[fF]90" )
 add_executable(solver_air ${SRC_FILES})
 
 
