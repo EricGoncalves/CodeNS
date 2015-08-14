@@ -32,12 +32,11 @@ contains
     use para_var
     use para_fige
     use maillage
-    use mod_mpi,only:mpi_open
     implicit none
     integer          ::    i,  i1,  i2,i2m1,   j
     integer          ::   j1,  j2,j2m1,   k,  k1
     integer          ::   k2,k2m1,   l,   n,  n0
-    integer          ::  nid,nijd, njd,err
+    integer          ::  nid,nijd, njd
     double precision :: v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
@@ -61,7 +60,7 @@ contains
     nijd = nid*njd
 !
 !
-    call mpi_open(unit=77,file='sortieacou',form='formatted',status='unknown')
+    open(unit=77,file='sortieacou',form='formatted',status='unknown')
 !
     do j=j1,j2m1
        do i=i1,i2m1

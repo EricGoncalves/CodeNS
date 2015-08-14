@@ -49,7 +49,7 @@ contains
     integer          ::     i, imax, imin,    j, jmax
     integer          ::  jmin,    k,  kda, kmax, kmin
     integer          ::     l,    m,ndmut,  nid, nijd
-    integer          ::   njd,err
+    integer          ::   njd
     double precision :: mut(ndmut),utau(ip42),  v1(ip00),  v2(ip00),  v3(ip00)
     double precision ::   v4(ip00),  v5(ip00),  v6(ip00),  v7(ip00)
 !
@@ -95,7 +95,7 @@ contains
        endif
     endif
 
-!     call mpi_open(100,file='testecri.tec',form='formatted',status='unknown')
+!     open(100,file='testecri.tec',form='formatted',status='unknown')
 !     do j=1,jmax
 !      do i=1,imax
 !       do k=1,1
@@ -105,7 +105,7 @@ contains
 !        enddo
 !       enddo
 !      enddo
-!      call mpi_close(100)
+!      close(100)
 !
     return
   contains

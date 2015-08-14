@@ -20,7 +20,7 @@ contains
     integer          ::           i,         i1,         i2,       i2m1,        iwd
     integer          ::           j,         j1,         j2,       j2m1,          k
     integer          ::          k1,         k2,       k2m1,          l,         l0
-    integer          :: mnpar(ip12),         n0,        nid,       nijd,        njd,err
+    integer          :: mnpar(ip12),         n0,        nid,       nijd,        njd
     double precision :: dist(ip12)
 !
 !-----------------------------------------------------------------------
@@ -34,8 +34,7 @@ contains
 !       ecriture tous les domaines dans "fdist"
 !
        nomfich='fdist   '
-       call mpi_open(iwd,file=nomfich,form='unformatted',err=err)
-       if(err/=0) goto 50
+       open(iwd,file=nomfich,form='unformatted',err=50)
 !
        write(imp,'("===>at_ecrdist: distance tous domaines   fichier=",a8)')nomfich
 !
@@ -74,8 +73,7 @@ contains
 !
        write(imp,'("===>at_ecrdist: ecriture distance domaine",i2,"   fichier=",a8)')l,nomfich
 !
-       call mpi_open(iwd,file=nomfich,form='unformatted',err=err)
-       if(err/=0) goto 50
+       open(iwd,file=nomfich,form='unformatted',err=50)
 !
        n0=npc(l)
        i1=ii1(l)
@@ -95,14 +93,13 @@ contains
        write(iwd)(((mnpar(ind(i,j,k)),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
     end if
 !
-    call mpi_close(iwd)
+    close(iwd)
     write(imp,'("===>at_ecrdist: fin ecriture fichier=",a8)')nomfich
 !
     if(l.eq.1) then
 !       ecriture fichier auxiliaire des donnees necessaires a la relecture
 !
-       call mpi_open(iwd,file='fdist-aux',form='formatted',err=err)
-       if(err/=0) goto 60
+       open(iwd,file='fdist-aux',form='formatted',err=60)
        write(imp,'("===>at_ecrdist: ecriture fichier= fdist-aux")')
        write(imp,'(16x,"ip12=",i8)') ip12
        do l=1,lzx
@@ -111,7 +108,7 @@ contains
           write(iwd,'(i3,i8,6i5)') &
                l,npc(l),id1(l),id2(l),jd1(l),jd2(l),kd1(l),kd2(l)
        end do
-       call mpi_close(iwd)
+       close(iwd)
     end if
     return
 !

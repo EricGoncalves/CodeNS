@@ -16,12 +16,11 @@ contains
     use para_fige
     use sortiefichier
     use maillage
-    use mod_mpi
     implicit none
     integer          ::           i,         i1,         i2,       i2m1,        ird
     integer          ::           j,         j1,         j2,       j2m1,          k
     integer          ::          k1,         k2,       k2m1,          l,     ldismx
-    integer          :: mnpar(ip12),         n0,        nid,       nijd,        njd,err
+    integer          :: mnpar(ip12),         n0,        nid,       nijd,        njd
     double precision :: dist(ip12)
 !
 !-----------------------------------------------------------------------
@@ -30,8 +29,7 @@ contains
 
 !
     ird=98
-    call mpi_open(ird,file='fdist',form='unformatted',status='old',err=err)
-    if(err/=0) goto 50
+    open(ird,file='fdist',form='unformatted',status='old',err=50)
 !
     ldismx=0
     do l=1,lzx
@@ -59,7 +57,7 @@ contains
     end do
 !
 10  continue
-    call mpi_close(ird)
+    close(ird)
     write(imp,'("===>at_lecdist: fin lecture fichier= fdist  nb domaines lus=",i3)')ldismx
     return
 !

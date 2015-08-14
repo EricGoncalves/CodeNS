@@ -47,7 +47,7 @@ contains
     integer          ::       j1,      j2,    j2m1,       k,      k1
     integer          ::       k2,    k2m1,     kda,       l,       m
     integer          :: mdimtnxl,       n,      n0,     nid,    nijd
-    integer          ::      njd,    resu,err
+    integer          ::      njd,    resu
     double precision ::         mut(ip12),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
     double precision :: vdual2(ip11,ip60)
     double precision,allocatable :: utau(:)
@@ -126,7 +126,7 @@ contains
     endif         !fin test keinit
 !cEG d     mise en commentaire du test pour reprise en multi-domaine
 
-!     call mpi_open(200,file='testlec.tec',form='formatted',status='unknown')
+!     open(200,file='testlec.tec',form='formatted',status='unknown')
 !     do j=1,j2m1
 !      do i=1,i2m1
 !       do k=1,1
@@ -136,7 +136,7 @@ contains
 !        enddo
 !       enddo
 !     enddo
-!     call mpi_close(200)
+!     close(200)
 
     if(kfmg.eq.3) then
        do k=k1,k2m1
@@ -172,7 +172,7 @@ contains
 
 !   initialisation pour calcul ordre 3 en temps
 !       write(*,*)'Readda'
-!       call mpi_open(UNIT=98,FILE='facdual',FORM='unformatted',STATUS='unknown')
+!       open(UNIT=98,FILE='facdual',FORM='unformatted',STATUS='unknown')
 !       read(98) &
 !           (((vdual(ind(i,j,k),1),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
 !       read(98) &
@@ -217,7 +217,7 @@ contains
 !            (((vdual2(ind(i,j,k),6),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
 !       READ(98) &
 !            (((vdual2(ind(i,j,k),7),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
-!       call mpi_close(98)
+!       close(98)
     endif
 !
     return

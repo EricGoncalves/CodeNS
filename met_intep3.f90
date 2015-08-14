@@ -142,7 +142,7 @@ contains
     integer          ::         n0n,        nc0, ncbd(ip41),        nci, ncin(ip41)
     integer          ::         ncj,        nck,       ndel,      ndel2,      ndelp
     integer          ::       ndelt,      ndelv,      nfac1,      nfac2,      nfac3
-    integer          ::       nfac4,      nfacf,        nid,       nijd,        njd,err
+    integer          ::       nfac4,      nfacf,        nid,       nijd,        njd
     double precision ::           am2,  cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21)
     double precision ::   cmuk1(ip21),  cmuk2(ip21),          csc,   cson(ip11),        ddist
     double precision ::          del1,        del1i,          dev,   dist(ip12),       distm1
@@ -216,8 +216,7 @@ contains
 !     &  sor3,nomfic
 !        return
 !      end if
-!      call mpi_open(sor3,file='fateps3',form='formatted',err=err)
-!      if (err/=0) goto 100
+!      open(sor3,file='fateps3',form='formatted',err=100)
 !
 !     &    c,'Hi',c, c,'rhoe',c, c,'ue_s',c, c,'|Ue|',c, c,'Me',c,
 !     &    c,'R_L',c, c,'i',c, c,'j',c, c,'k',c
@@ -902,7 +901,7 @@ contains
        enddo      !fin de boucle sur les bandes
     enddo  !fin de boucle sur les parois
 !
-    call mpi_close(sor3)
+    close(sor3)
 !
     DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,vort)
 

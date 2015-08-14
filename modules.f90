@@ -196,7 +196,6 @@ end module modeleturb
 !
 module sortiefichier
   use para_fige
-  use mod_mpi,only : mpi_open,mpi_close
 implicit none
     integer          ::    don1,    imp,  inia1,  inig1,   kdac
     integer          ::   kdacf,   kdav,   kdgc,  kdgcf,   kdgv

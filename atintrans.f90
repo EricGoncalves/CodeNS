@@ -80,15 +80,14 @@ contains
     integer          ::      m2deb,     m2fin,     m2max,   m2maxm1,     m2min
     integer          ::      mfacn,       mfe,       mfl,         n,       nci
     integer          :: ncin(ip41),       ncj,       nck,       nfr,     nfrmx
-    integer          ::        nid,      nijd,       njd,err
+    integer          ::        nid,      nijd,       njd
     double precision :: fgam(ip42)
 !
 !-----------------------------------------------------------------------
 
     character(len=80) ::  ligne
 !
-    call mpi_open(99,file='fatdon',status='old',err=err)
-    if(err/=0) goto 100
+    open(99,file='fatdon',status='old',err=100)
 !
 !     recherche de la ligne "TRANSITION"
 !
@@ -211,7 +210,7 @@ contains
        enddo
 !     fin boucle sur frontieres laminaires
     enddo
-    call mpi_close(99)
+    close(99)
 !
 300 format(a80)
 !
@@ -221,7 +220,7 @@ contains
 !     fin de fichier. Pas de transition
     ktransi=0
     write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ou tout turbulent")')
-    call mpi_close(99)
+    close(99)
     return
 !
 100 continue
