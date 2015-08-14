@@ -36,7 +36,7 @@ contains
     integer          ::     k,   k1,   k2, k2m1,   kd
     integer          ::  kina,    l,    n,   n0,  nci
     integer          ::  ncij,ncijk, ncik,  ncj, ncjk
-    integer          ::   nck,  nid, nijd,  njd
+    integer          ::   nck,  nid, nijd,  njd,err
     double precision ::                 a,            alpha,           alphar,             beta,            betar
     double precision ::            degrad,        mut(ip12),                p,             pis2,                q
     double precision ::             rmach,               ro,              rou,              rov,              row
@@ -79,11 +79,11 @@ contains
 !----------if en commentaire pour cas multidomaines
 !     if(l.eq.1) then
     write(imp,'(/,"===>utinia: ouverture et lecture inia1")')
-    close(inia1)
-    open(inia1,file='finia1')
+    call mpi_close(inia1)
+    call mpi_open(inia1,file='finia1')
 !
     read(inia1,*) rmach,alpha,beta
-    close(inia1)
+    call mpi_close(inia1)
     write(imp,'(12x,"rmach=",f10.3,4x,"alpha=",f10.3,4x,"beta=",f10.4)')rmach,alpha,beta
     vrtmac=rmach
     vrtalp=alpha

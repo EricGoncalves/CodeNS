@@ -22,11 +22,12 @@ contains
     use para_fige
     use schemanum
     use maillage
+    use mod_mpi,only:mpi_open,mpi_close
     implicit none
     integer          ::    i,  i1,  i2,i2m1,   j
     integer          ::   j1,  j2,j2m1,   k,  k1
     integer          ::   k2,k2m1,   l,  n0, nid
-    integer          :: nijd, njd
+    integer          :: nijd, njd,err
     double precision ::  vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
 !
 !-----------------------------------------------------------------------
@@ -36,7 +37,7 @@ contains
 !
 !            Fichier sauvegarde
 !
-    open(UNIT=98,FILE='facdual',FORM='unformatted',STATUS='unknown')
+    call mpi_open(UNIT=98,FILE='facdual',FORM='unformatted',STATUS='unknown')
 !
     n0   = npc(l)
     i1   = ii1(l)
@@ -97,7 +98,7 @@ contains
     write(98) &
          (((vdual2(ind(i,j,k),7),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
 !
-    close(98)
+    call mpi_close(98)
 !
     return
   contains

@@ -62,7 +62,7 @@ contains
     use definition
     implicit none
     integer          ::   idefconf,  idefxref,      ierr,     ligne,      mflu
-    integer          ::         nb,ncbd(ip41)
+    integer          ::         nb,ncbd(ip41),err
     double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),        omg1,          p2
     double precision ::          rpi,         rti,        tpar,v(ip11,ip60),     x(ip21)
     double precision ::      y(ip21),     z(ip21)
@@ -73,7 +73,8 @@ contains
     character(len=80) ::  cmtlec
 !
 !
-    open(don1,file='fdon1',err=101)
+    call mpi_open(don1,file='fdon1',err=err)
+    if (err/=0) goto 101
 !
 !     initialisation des cles globales de controles
 !

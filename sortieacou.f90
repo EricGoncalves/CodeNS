@@ -1,5 +1,6 @@
 module mod_sortieacou
   implicit none
+  logical :: ouvert=.false.
 contains
   subroutine sortieacou(l,t)
 !
@@ -16,12 +17,13 @@ contains
     use para_fige
     use chainecarac
     use maillage
+    use mod_mpi,only:mpi_open
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
     integer          ::    j,  j1,j1m1,  j2
     integer          :: j2m1,   k,  k1,k1m1,  k2
     integer          :: k2m1,   l,   m,   n, n0c
-    integer          ::  nft, nid, njd,nijd
+    integer          ::  nft, nid, njd,nijd,err
     double precision :: t(ip11,ip60)
     logical          :: ouvert
 !
@@ -52,15 +54,16 @@ contains
     c=char(34)
 !
     nft=80
-    inquire(nft,opened=ouvert,name=nom)
+    !inquire(nft,opened=ouvert,name=nom)
     if(.not. ouvert) then
 !        Premier appel. Ouverture fichier et ecriture entete.
-       open(nft,file='sortieacou',form='formatted')
+       call mpi_open(nft,file='sortieacou',form='formatted')
 !
        write(nft,'(''TITLE='',a1,a80,a1)')c,titrt1,c
        write(nft,'(''VARIABLES = '',a1,3(a,a1,'', '',a1),a,a1)') &
             c,'rho',c, c,'rho_u',c, c,'rho_w',c, c,'rho_E',c
        write(nft,'("ZONE F=POINT, I=",i3," J=",i3)')i2m1,j2m1
+       ouvert=.true.
     endif
 !
     k=1

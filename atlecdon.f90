@@ -40,7 +40,7 @@ contains
     use sortiefichier
     use schemanum
     implicit none
-    integer          :: ierrdis, kamort,    lig,muttrav
+    integer          :: ierrdis, kamort,    lig,muttrav,err
     double precision :: rap_h0
 !
 !-----------------------------------------------------------------------
@@ -56,7 +56,8 @@ contains
 !      write(imp,'(/,''==>atlecdon: lecture atlecdon et '',
 !     &''initialisation modeles de turbulence'')')
 !
-    open(99,file='fatdon',form='formatted',err=100)
+    call mpi_open(99,file='fatdon',form='formatted',err=err)
+    if (err/=0) goto 100
 !
     lig=1
     read(99,  300,err=200)ligne
@@ -470,7 +471,7 @@ contains
 !
 51  continue
 !
-    close(99)
+    call mpi_close(99)
 !
     return
 !

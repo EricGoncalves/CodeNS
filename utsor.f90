@@ -161,7 +161,7 @@ contains
     integer          ::    m2maxm1,     m2min,        mf,      mfac,     mfacn
     integer          ::        mfl,       n0c,       n0n,ncbd(ip41),       nci
     integer          ::        ncj,       nck,     nfac1,     nfac2,     nfac3
-    integer          ::      nfac4,     nfacf,       nid,      nijd,       njd
+    integer          ::      nfac4,     nfacf,       nid,      nijd,       njd,err
     double precision ::          akp,       alfar,       betar,      claero,     claerob
     double precision ::         clav,       clavb,     clavtot,      cmaero,     cmaerob
     double precision ::         cmav,       cmavb,     cmavtot,      cnaero,     cnaerob
@@ -185,7 +185,7 @@ contains
 !
 !     SORTIES POUR EXPLOITATION
 !
-    open(sorf1,file='fsor1')
+    call mpi_open(sorf1,file='fsor1')
 !
     write(sorf1,1000) equat
 !
@@ -207,7 +207,7 @@ contains
     if(kvglo.eq.0) return
     if(nbfll.eq.0) return
 !
-    open(sorf2,file='fsor2')
+    call mpi_open(sorf2,file='fsor2')
 !
     pis2=atan2(1.,0.)
     raddeg=90./pis2

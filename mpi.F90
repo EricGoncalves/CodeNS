@@ -582,5 +582,51 @@ SUBROUTINE GATHER_R(IN,OUT,SIZE)
 #endif
 END SUBROUTINE GATHER_R
 
+subroutine MPI_OPEN(unit,file,form,status,err)
+  implicit none
+  Character(*),intent(in)          :: file
+  Character(*),intent(in),optional :: form,status
+  Integer,intent(in)               :: unit
+  Integer,intent(out),optional     :: err
+  Character(len=255)               :: form_,status_
+  Integer                          :: comm, info
+
+  if(present(form)) then
+    form_=form
+  else
+    form_="formatted"
+  endif
+  if(present(status)) then
+    status_=status
+  else
+    status_="unknown"
+  endif
+  if(present(err)) err=0
+
+  !#ifdef WITH_MPI
+  !  call MPI_File_open(comm, file, status, info, unit, err)	
+  !#else
+    open(UNIT=unit,FILE=file,FORM=trim(form_),STATUS=trim(status_),err=10)
+  !#endif
+
+  return
+
+  10 if(present(err)) err=1
+
+end  subroutine MPI_OPEN
+
+subroutine MPI_close(unit)
+  implicit none
+  Integer,intent(in)               :: unit
+  integer :: ierr
+
+  !#ifdef WITH_MPI
+  !  call MPI_File_close(unit,ierr)
+  !#else
+    close(unit)
+  !#endif
+
+end  subroutine MPI_close
+
 end module mod_mpi
 	  

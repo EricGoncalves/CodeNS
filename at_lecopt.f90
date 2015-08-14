@@ -29,7 +29,7 @@ contains
     implicit none
     integer          :: idefaut,   ierr,igr(lz),   igrl,jgr(lz)
     integer          ::    jgrl,kgr(lz),   kgrl,      l,    lig
-    integer          ::     llu,     nf
+    integer          ::     llu,     nf,err
     double precision :: raptat(mtb),    raptatl
 !
 !-----------------------------------------------------------------------
@@ -38,7 +38,8 @@ contains
 !
     write(imp,'(/,"==>at_lecopt: lecture relations domaines-paroi pour calcul optimise de la distance",/)')
 !
-    open(99,file='fatdon',form='formatted',err=100)
+    call mpi_open(99,file='fatdon',form='formatted',err=err)
+    if (err/=0) goto 100
 !
     lig=0
     do
@@ -119,7 +120,7 @@ contains
     enddo
 !
 31  continue
-    close(99)
+    call mpi_close(99)
     return
 !
 20  continue
