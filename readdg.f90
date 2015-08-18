@@ -38,6 +38,7 @@ contains
     use para_fige
     use sortiefichier
     use maillage
+    use mod_mpi, only: rank
     implicit none
     integer          ::    i,  i1,  i2,   j,  j1
     integer          ::   j2,   k,  k1,  k2, kdg
@@ -82,8 +83,9 @@ contains
     write(imp,'(10x,"i2=",i5,3x,"j2=",i5,3x,"k2=",i5)')i2,j2,k2
     stop
 !
-    if(ecri) then
+    if(ecri.and.rank+1==l) then
 !       ecriture plaque plane 1 domaine
+       open(out  ,file='fout')
        k=1
        do k=1,2
           do i=1,i2,50
@@ -96,6 +98,7 @@ contains
              enddo
           enddo
        enddo
+       close(out)
     endif
 !
     return

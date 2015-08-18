@@ -134,8 +134,10 @@ contains
        kminf=kminb(mfl)
        kmaxf=kmaxb(mfl)
 !
+       open(sor2 ,file='pres')
        if(kcaldis.eq.0) then
           write(sor2,'("!!!!met_yplus: kcaldis=0. Il faut 1 ou 2 ==>return")')
+          close(sor2)
           return
        endif
 !
@@ -263,6 +265,7 @@ contains
           enddo
 !        fin de boucle sur les bandes
        enddo
+       close(sor2)
 !      fin de boucle sur les parois
     enddo
 !

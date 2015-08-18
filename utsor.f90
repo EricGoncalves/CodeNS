@@ -152,6 +152,7 @@ contains
     use proprieteflu
     use definition
     use chainecarac
+    use mod_mpi,only:rank,nprocs,barrier
     implicit none
     integer          ::         i1,        i2,      idf1,      idf2,     idfac
     integer          ::        idm,     imaxf,     iminf,        j1,        j2
@@ -161,7 +162,7 @@ contains
     integer          ::    m2maxm1,     m2min,        mf,      mfac,     mfacn
     integer          ::        mfl,       n0c,       n0n,ncbd(ip41),       nci
     integer          ::        ncj,       nck,     nfac1,     nfac2,     nfac3
-    integer          ::      nfac4,     nfacf,       nid,      nijd,       njd
+    integer          ::      nfac4,     nfacf,       nid,      nijd,       njd,proc
     double precision ::          akp,       alfar,       betar,      claero,     claerob
     double precision ::         clav,       clavb,     clavtot,      cmaero,     cmaerob
     double precision ::         cmav,       cmavb,     cmavtot,      cnaero,     cnaerob
@@ -185,6 +186,7 @@ contains
 !
 !     SORTIES POUR EXPLOITATION
 !
+  if(rank==0) then
     open(sorf1,file='fsor1')
 !
     write(sorf1,1000) equat
@@ -198,6 +200,8 @@ contains
     write(sorf1,2000) tnz,ronz,anz,dnz
     write(sorf1,2000) roa1,aa1,ta1,pa1,ha1
     write(sorf1,2000) omg,perio
+  close(sorf1)
+  endif
 !
 1000 format(a)
 2000 format(5e14.7)
@@ -207,6 +211,8 @@ contains
     if(kvglo.eq.0) return
     if(nbfll.eq.0) return
 !
+    do proc=0,nprocs-1
+      if (rank==proc) then
     open(sorf2,file='fsor2')
 !
     pis2=atan2(1.,0.)
@@ -471,6 +477,10 @@ contains
             /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
             ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
     enddo
+    close(sorf2)
+    endif
+    call barrier
+    enddo 
 !
     cxaero=cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
     cyaero=cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe

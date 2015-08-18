@@ -21,6 +21,7 @@ contains
     use para_fige
     use sortiefichier
     use maillage
+    use mod_mpi
     implicit none
     integer          ::  l,ni,nj,nk
 !
@@ -32,7 +33,7 @@ contains
 !       nptot=nptot+ni*nj*nk
 !    endif
 !
-    if(1.eq.lzx) write(imp,999) nptot
+    write(imp,999) nptot
 !
 999 format(   /2x,'Nb tot de pts (hors fic.):',9x,i8, &
          /2x,'-------------------------')

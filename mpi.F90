@@ -253,15 +253,28 @@ IF(REQ/=MPI_REQUEST_NULL)   CALL MPI_WAIT(REQ, STATUS, IERR)
 ! SYNC POINT FOR ALL PROCESS
   use sortiefichier
     IMPLICIT NONE
-  integer :: ierr
+
+  interface
+    function fsync (fd) bind(c,name="fsync")
+    use iso_c_binding, only: c_int
+      integer(c_int), value :: fd
+      integer(c_int) :: fsync
+    end function fsync
+  end interface
+
+  integer :: ierr,i
+do i =1,1000
 #ifdef WITH_MPI
   CALL MPI_Barrier(MPI_COMM_WORLD,IERR )
 #endif
 
-!#ifdef __GFORTRAN__
-  flush(0)
   flush(imp)
+  ierr = fsync(fnum(imp))
 
+#ifdef WITH_MPI
+  CALL MPI_Barrier(MPI_COMM_WORLD,IERR )
+#endif
+enddo
   END SUBROUTINE BARRIER
 
 SUBROUTINE GATHER_P(IN,OUT)

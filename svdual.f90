@@ -22,6 +22,7 @@ contains
     use para_fige
     use schemanum
     use maillage
+    use mod_mpi,only:rank
     implicit none
     integer          ::    i,  i1,  i2,i2m1,   j
     integer          ::   j1,  j2,j2m1,   k,  k1
@@ -32,7 +33,7 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-
+if (rank+1==l) then
 !
 !            Fichier sauvegarde
 !
@@ -98,6 +99,7 @@ contains
          (((vdual2(ind(i,j,k),7),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
 !
     close(98)
+    endif
 !
     return
   contains

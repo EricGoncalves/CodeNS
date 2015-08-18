@@ -21,6 +21,7 @@ contains
     use kcle
     use chainecarac
     use mod_convich
+    use mod_mpi,only:rank
     implicit none
 !
 !-----------------------------------------------------------------------
@@ -31,6 +32,7 @@ contains
     call convich(kconfig,cconfig)
     call convich(kperio,cperio)
 !
+    if (rank==0) then
     if (config(1:3).eq.'gan') then
        form='(/,2x,''definition de la geometrie'',/' &
             //'2x,''--------------------------'',/' &
@@ -52,6 +54,7 @@ contains
             //'2x,''pas                      : '',4x,e12.6,2x,a)'
        write(imp,form) config,cconfig, &
             perio,cperio
+    endif
     endif
 !
     return

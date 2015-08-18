@@ -404,12 +404,14 @@ contains
 !
     if(icyexpl.eq.0) then
 !       repere avion
+       open(out  ,file='fout')
        write(out,3801) icyc,cxavtot,cyavtot,czavtot, &
             clavtot,cmavtot,cnavtot
 3801   format('=>utitfr p: ',i6,1x,6(1pe11.3))
        write(out,3802) icyc,cxavtfr,cyavtfr,czavtfr,clavtfr, &
             cmavtfr,cnavtfr
 3802   format('=>utitfr f: ',i6,1x,6(1pe11.3))
+       close(out)
     endif
 !
 !      vrtcz=czaero

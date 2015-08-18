@@ -19,6 +19,7 @@ contains
     use kcle
     use mod_valenti
     use mod_vallent
+    use mod_mpi
     implicit none
     integer          ::       icmt, imot(nmx),      king,      kval,ldom(nobj)
     integer          ::      ldomd,        nm,      nmot
@@ -39,7 +40,7 @@ contains
        comment=cm
        call synterr(mot,imot,nmot,comment)
     else
-       call vallent(mot,imot,nm,ldom,ldomd,lzx,klzx)
+       call vallent(mot,imot,nm,ldom,ldomd,nprocs,klzx)
     endif
 !
     nm=nm+1

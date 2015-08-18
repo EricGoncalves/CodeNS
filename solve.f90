@@ -342,7 +342,7 @@ program solve
 !-----------------------------------------------------------------------
 !
   character(len=32) :: comment,mot(nmx)
-
+  call inimpi
 
   ip00=0!ndimub                            ! Nb de cellules
   ip11=0!ndimctf+kdimg*ndimctf/ccg2        ! Nb de cellules
@@ -385,12 +385,8 @@ program solve
 !     reservation des unites logiques generales
 !
   open(lec  ,file='flec')
-  open(imp  ,file='fimp')
-  open(out  ,file='fout')
-  open(sec  ,file='fsec')
-  open(sor1 ,file='smoy')
-  open(sor2 ,file='pres')
-  open(sor3 ,file='resro')
+  imp=stdout
+!  open(imp  ,file='fimp')
   open(kfa  ,file='fcla',form='formatted')
   open(kdgv ,file='fgv' ,form='unformatted')
   open(kdgc ,file='fgc' ,form='unformatted')
@@ -411,7 +407,6 @@ program solve
 !     initialisations
 !
   call inimem(ncyc)
-  call inimpi
 !
 !  lecture et interpretation des donnees  ******************************
 !
@@ -506,9 +501,9 @@ program solve
                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
            CALL system_clock(Time_2)
            do m=1,neqt
-              write(*,*) m,temp_array(m,:)
+              if (rank==0) write(*,*) m,temp_array(m,:)
            enddo
-           print*,'TEMPS DE CALCUL ',(Time_2-Time_1)*1./clock_rate
+           if (rank==0) print*,'TEMPS DE CALCUL ',(Time_2-Time_1)*1./clock_rate
 !
 !--   COMPUTE BOUNDARY
         else if(mot(2)(1:imot(2)).eq.'boundary') then
@@ -1063,7 +1058,6 @@ mnc=0
     allocate(cmuk2(ip21))
 
     ip31=1+3*(ndimnts+kdimg*ndimnts/cng2)  ! ?
-!print*,ip31,ndir
     allocate(sn(ip31*ndir)) ! TODO ?
 
 

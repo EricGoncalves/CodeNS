@@ -155,6 +155,7 @@ contains
     use chainecarac
     use sortiefichier
     use schemanum
+    use mod_mpi,only:rank,nprocs,barrier
     implicit none
     integer          ::         i1,        i2,      idf1,      idf2,     idfac
     integer          ::        idm,     imaxf,     iminf,        j1,        j2
@@ -254,6 +255,8 @@ contains
 !     -------------------------------------------------------
 !     SORTIES RELATIVES A DES VALEURS SUR LES PAROIS
 !
+    if(rank==0)then
+    open(sor2 ,file='pres')
     write(sor2,'(''TITLE='',a1,a80,a1)')c,titrt1,c
     if(ecrcom) then
 !        write(sor2,'("#==>utsorfr: adimensionnement du frottement ",
@@ -278,6 +281,8 @@ contains
             //'t78,"Kp",t89,"P/Pi",t99,"Mp_isen",t114,"qx",t125,"qy",t136,' &
             //'"qz",t144,"i   j",t164,"L Utau/nu",t175,' &
             //'"Utau/a_i")')
+    close(sor2)
+    end if
     end if
 !
     pis2=atan2(1.,0.)
@@ -327,6 +332,7 @@ contains
     do mf=1,nbfll
 !       boucle sur les parois
 !
+       open(sor2 ,file='pres')
        mfl=nmfint(mf)
        l=ndlb(mfl)
 !
@@ -683,6 +689,7 @@ contains
 !
 !         fin de boucle sur les bandes
        enddo
+       close(sor2)
 !
 !       pression
        cxav   =cxav/(q0spi0*sref)

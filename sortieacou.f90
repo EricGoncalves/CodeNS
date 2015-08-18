@@ -1,5 +1,6 @@
 module mod_sortieacou
   implicit none
+  logical :: ouvert=.false.
 contains
   subroutine sortieacou(l,t)
 !
@@ -16,6 +17,7 @@ contains
     use para_fige
     use chainecarac
     use maillage
+    use mod_mpi,only : rank
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
     integer          ::    j,  j1,j1m1,  j2
@@ -52,8 +54,7 @@ contains
     c=char(34)
 !
     nft=80
-    inquire(nft,opened=ouvert,name=nom)
-    if(.not. ouvert) then
+    if(.not. ouvert.and.rank==0) then
 !        Premier appel. Ouverture fichier et ecriture entete.
        open(nft,file='sortieacou',form='formatted')
 !
@@ -61,16 +62,20 @@ contains
        write(nft,'(''VARIABLES = '',a1,3(a,a1,'', '',a1),a,a1)') &
             c,'rho',c, c,'rho_u',c, c,'rho_w',c, c,'rho_E',c
        write(nft,'("ZONE F=POINT, I=",i3," J=",i3)')i2m1,j2m1
+       close(nft)
     endif
+    ouvert=.true.
 !
     k=1
     j=32
+    if(rank+1==l) then
     do i=i1,i2m1
        n=indc(i,j,k)
        m=n-n0c
        write(nft,'(4(1pe15.6))') &
             t(n,1),t(n,2),t(n,4),t(n,5)
     enddo
+    endif
 
 !
     return

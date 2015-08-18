@@ -43,6 +43,7 @@ contains
 !
 
 !
+    open(sec  ,file='fsec')
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -100,6 +101,7 @@ contains
           enddo
        enddo
     enddo
+    close(sec)
 !
     return
   contains

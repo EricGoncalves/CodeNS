@@ -96,6 +96,7 @@ contains
       call reallocate_s(mmb,mtt)
 
   !
+      l=1
       mfbi=mtb
       nfei(mtb)=mfbi
       ndlb(mfbi)=l
@@ -105,7 +106,7 @@ contains
   !
       do img=1,lgx
   !
-         lm=1+(img-1)*lz
+         lm=l+(img-1)*lz
          mfbim=mfbi+(img-1)*mtb
 
   !

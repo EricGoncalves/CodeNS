@@ -28,6 +28,7 @@ contains
     use proprieteflu
     use definition
     use schemanum
+    use mod_mpi, only: rank
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
     integer          :: icycle, idcyc,     j,    j1,  j1m1
@@ -69,6 +70,11 @@ contains
     c=char(34)
 !
     qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
+    if(rank+1==l) then
+      open(sor2 ,file='pres')
+      open(out  ,file='fout')
+      open(sor1 ,file='smoy')
+    endif
 !
 !-----initialisation des grandeurs--------------------------------
 !
@@ -87,17 +93,19 @@ contains
           enddo
        enddo
 !
+        if(rank+1==l) then
 !       fichier de sortie du sigma entree
-       write(out,'(''TITLE='',a1,a80,a1)')c,titrt1,c
-       write(out,'(''VARIABLES = '',a1,4(a,a1,'', '',a1),a,a1)') &
-            c,'ite',c, c,'sigmae',c, c,'volvap',c, c,'vit',c
-       write(out,'("ZONE F=POINT, I=",i3," J=",i5)')i1,ncycl
+         write(out,'(''TITLE='',a1,a80,a1)')c,titrt1,c
+         write(out,'(''VARIABLES = '',a1,4(a,a1,'', '',a1),a,a1)') &
+              c,'ite',c, c,'sigmae',c, c,'volvap',c, c,'vit',c
+         write(out,'("ZONE F=POINT, I=",i3," J=",i5)')i1,ncycl
 !
 !       fichier de sortie de la pression
-       write(sor2,'(''TITLE='',a1,a80,a1)')c,titrt1,c
-       write(sor2,'(''VARIABLES = '',a1,3(a,a1,'', '',a1),a,a1)') &
-            c,'x',c, c,'y',c, c,'ps',c
-       write(sor2,'("ZONE F=POINT, I=",i3," J=",i3)')i2m1,j2m1
+         write(sor2,'(''TITLE='',a1,a80,a1)')c,titrt1,c
+         write(sor2,'(''VARIABLES = '',a1,3(a,a1,'', '',a1),a,a1)') &
+              c,'x',c, c,'y',c, c,'ps',c
+         write(sor2,'("ZONE F=POINT, I=",i3," J=",i3)')i2m1,j2m1
+        endif
     endif
 !
 !-----Calculs des moyennes temporelles---------------------------------
@@ -115,6 +123,7 @@ contains
           enddo
        enddo
     enddo
+    if(rank+1==l) then
 !
 !-----Ecriture a la derniere iteration--------------------------------
 !
@@ -145,7 +154,7 @@ contains
              enddo
           enddo
        enddo
-    endif
+     endif
 !
 !------sortie de la pression au plancher
 !
@@ -166,6 +175,10 @@ contains
                xcc,ycc,ps(n)
        enddo
     enddo
+    close(sor1)
+    close(sor2)
+    close(out)
+    endif
 !
     return
   contains

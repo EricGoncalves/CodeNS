@@ -20,6 +20,7 @@ contains
     use maillage
     use schemanum
     use sortiefichier
+    use mod_mpi,only:rank
     implicit none
     integer          ::    i,  i1,  i2,i2m1,icyc
     integer          ::  img,   j,  j1,  j2,j2m1
@@ -68,7 +69,10 @@ contains
 !      endif
 !      resite=sqrt(durmy2)/resno1
     resite=sqrt(durmy2)
-    write(sor3,'(1x,i6,1x,i6,1x,e13.6)') ncyc,icyc,resite
+    if (rank==0) then
+      open(sor3 ,file='resro')
+      write(sor3,'(1x,i6,1x,i6,1x,e13.6)') ncyc,icyc,resite
+    endif
 !
     return
   contains

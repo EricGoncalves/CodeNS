@@ -19,6 +19,7 @@ contains
     use mod_tcmd_inbdb
     use mod_b1_inbdb
     use mod_inbdb
+    use mod_mpi
     implicit none
     integer          ::     ibdcfl,    ibdcst,    ibddim, imot(nmx),     kibdb
     integer          ::          l,     lmfbd,ncbd(ip41),ncin(ip41),      nmot
@@ -40,7 +41,7 @@ contains
          ibdcst,ibdcfl,ibddim,nvbc,vbc)
 !
     if (kimp.ge.1) then
-       call b1_inbdb( &
+       if (rank==0) call b1_inbdb( &
             lmfb,lmfbd,clmf,kibdb, &
             ibdcst,ibdcfl,ibddim,nvbc,vbc)
     endif

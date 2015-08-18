@@ -16,6 +16,7 @@ contains
     use para_fige
     use sortiefichier
     use maillage
+    use mod_mpi,only:rank
     implicit none
     integer          ::           i,         i1,         i2,       i2m1,        iwd
     integer          ::           j,         j1,         j2,       j2m1,          k
@@ -34,11 +35,12 @@ contains
 !       ecriture tous les domaines dans "fdist"
 !
        nomfich='fdist   '
-       open(iwd,file=nomfich,form='unformatted',err=50)
 !
        write(imp,'("===>at_ecrdist: distance tous domaines   fichier=",a8)')nomfich
 !
        do l=1,lzx
+        if(rank+1==l)then
+         open(iwd,file=nomfich,form='unformatted',err=50)
           n0=npc(l)
           i1=ii1(l)
           i2=ii2(l)
@@ -57,6 +59,8 @@ contains
                k=k1,k2m1)
           write(iwd)(((mnpar(ind(i,j,k)),i=i1,i2m1),j=j1,j2m1), &
                k=k1,k2m1)
+       close(iwd)
+       endif
        end do
     else
 !       ecriture un seul domaine par fichier
@@ -91,12 +95,12 @@ contains
 !
        write(iwd)(((dist (ind(i,j,k)),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
        write(iwd)(((mnpar(ind(i,j,k)),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
+       close(iwd)
     end if
 !
-    close(iwd)
     write(imp,'("===>at_ecrdist: fin ecriture fichier=",a8)')nomfich
 !
-    if(l.eq.1) then
+    if(l.eq.1.and.rank==0) then
 !       ecriture fichier auxiliaire des donnees necessaires a la relecture
 !
        open(iwd,file='fdist-aux',form='formatted',err=60)

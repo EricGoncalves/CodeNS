@@ -19,6 +19,7 @@ contains
     use mod_tcmd_ingr
     use mod_ingr
     use mod_b1_ingr
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     king,        l,    ldomd,     nmot
     double precision :: x(ip21),y(ip21),z(ip21)
@@ -34,12 +35,12 @@ contains
          mot,imot,nmot, &
          ldom,ldomd,king)
 !
-    if(kimp.ge.1) then
+    if(kimp.ge.1.and.rank==0) then
        call b1_ingr(ldom,ldomd,king)
     endif
 !
     do l=1,ldomd
-       call ingr(ldom(l),x,y,z,king)
+       if (rank+1==l) call ingr(1,x,y,z,king)
     enddo
 !
     deallocate(ldom)

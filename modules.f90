@@ -196,6 +196,9 @@ end module modeleturb
 !
 module sortiefichier
   use para_fige
+  use, intrinsic :: iso_fortran_env, only : stdin=>input_unit, &
+                                            stdout=>output_unit, &
+                                            stderr=>error_unit
 implicit none
     integer          ::    don1,    imp,  inia1,  inig1,   kdac
     integer          ::   kdacf,   kdav,   kdgc,  kdgcf,   kdgv
@@ -208,6 +211,7 @@ implicit none
     double precision ::               zref
     integer         ,allocatable :: nmfint(:)
   data kimp/3/
+!  data lec,imp,out,sec,sor1,sor2,kfa,sor3/11,12,13,14,15,16,17,18/
   data lec,imp,out,sec,sor1,sor2,kfa,sor3/11,12,13,14,15,16,17,18/
   data kdgv,kdav,kdgc,kdac/21,22,23,24/
 !  data inig1,kfi,kfb,kfn,kfc,kfr,kdgcf,kdacf,kres/31,32,33,34,35,36,37,38,39/

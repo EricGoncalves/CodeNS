@@ -17,6 +17,7 @@ contains
 !***********************************************************************
 !
     use sortiefichier
+    use mod_mpi,only:rank
     implicit none
     integer          ::        king,      ldomd,ldom(ldomd),       long,     longm1
     integer          ::          nm,      nmult,         nr,      nrest

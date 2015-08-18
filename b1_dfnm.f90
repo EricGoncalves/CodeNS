@@ -19,6 +19,7 @@ contains
     use kcle
     use proprieteflu
     use mod_convich
+    use mod_mpi,only:rank
     implicit none
 !
 !-----------------------------------------------------------------------
@@ -46,6 +47,7 @@ contains
     call convich(ktolke,ctolke)
     call convich(knitur,cnitur)
 !
+    if(rank==0) then
     form='(/,2x,''definition du schema numerique'',/' &
          //'2x,''------------------------------'',/' &
          //'2x,''nb de pts fictifs [nfi]  : '',11x,i5,2x,a)'
@@ -77,6 +79,7 @@ contains
             //'2x,''             [nitur   ]  : '',4x,i5,2x,a)'
        write(imp,form) kdualns,ckdualns,tol,ctol,niter,cniter, &
             tolke,ctolke,nitur,cnitur
+    endif
     endif
 !
     return

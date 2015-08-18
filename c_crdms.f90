@@ -30,8 +30,6 @@ contains
          mot,imot,nmot, &
          l,ni,nj,nk)
 
-    print*,l,rank
-
     if(l==rank+1) then
   !
       if (kimp.ge.1) then

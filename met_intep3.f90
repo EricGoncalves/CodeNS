@@ -225,6 +225,7 @@ contains
 !
     lbgr=0
     do mf=1,nbfll
+        open(sor3 ,file='resro')
 !       boucle sur les parois
 !
        mfl=nmfint(mf)
@@ -899,9 +900,10 @@ contains
 !     &      uex,sqrt(qq),xme,reyl,min(999,ii),min(999,jj),min(999,kk)
           enddo   !fin de boucle sur les cellules de la bande
        enddo      !fin de boucle sur les bandes
+    close(sor3)
     enddo  !fin de boucle sur les parois
 !
-    close(sor3)
+
 !
     DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,vort)
 
