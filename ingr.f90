@@ -52,7 +52,7 @@ contains
        do img = 2,lgx
           call smg_fcm( &
                img-1,img, &
-               1, &
+               l, &
                x,y,z)
        enddo
     end if

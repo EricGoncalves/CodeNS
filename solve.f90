@@ -391,7 +391,7 @@ program solve
   open(kdgv ,file='fgv' ,form='unformatted')
   open(kdgc ,file='fgc' ,form='unformatted')
   open(kdac ,file='fac' ,form='unformatted')
-  open(kdav ,file='fav' ,form='unformatted')
+  open(kdav ,file='fav' ) !,form='unformatted')
 !      open(kdgcf,file='fgcf',form='unformatted')
 !      open(kdacf,file='facf',form='unformatted')
 !      open(kfi  ,file='fi'  ,form='unformatted')

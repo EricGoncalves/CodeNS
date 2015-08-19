@@ -28,7 +28,7 @@ contains
     use proprieteflu
     use definition
     use schemanum
-    use mod_mpi, only: rank
+    use mod_mpi
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
     integer          :: icycle, idcyc,     j,    j1,  j1m1
@@ -47,6 +47,7 @@ contains
 !
 
 !
+call START_KEEP_ORDER
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -71,7 +72,7 @@ contains
 !
     qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
     if(rank+1==l) then
-      open(sor2 ,file='pres')
+      open(sor2 ,file='pres',position="append")
       open(out  ,file='fout')
       open(sor1 ,file='smoy')
     endif
@@ -180,6 +181,7 @@ contains
     close(out)
     endif
 !
+call END_KEEP_ORDER
     return
   contains
     function    indc(i,j,k)

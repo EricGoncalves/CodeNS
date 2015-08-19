@@ -40,7 +40,7 @@ contains
     endif
 !
     do l=1,ldomd
-       call ingr(l,x,y,z,king)
+       if (rank+1==l) call ingr(1,x,y,z,king)
     enddo
 !
     deallocate(ldom)

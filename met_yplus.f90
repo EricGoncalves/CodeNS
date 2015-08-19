@@ -75,6 +75,7 @@ contains
     use maillage
     use boundary
     use sortiefichier
+    use mod_mpi
     implicit none
     integer          ::        dnc,        i1,        i2,      idf1,      idf2
     integer          ::      idfac,       idm,     imaxf,     iminf,        j1
@@ -101,6 +102,8 @@ contains
 !
 !     -------------------------------------------------------
 !     SORTIES RELATIVES A DES VALEURS SUR LES PAROIS
+!
+call START_KEEP_ORDER
 !
     do mf=1,nbdko
 !       boucle sur les parois
@@ -134,7 +137,7 @@ contains
        kminf=kminb(mfl)
        kmaxf=kmaxb(mfl)
 !
-       open(sor2 ,file='pres')
+       open(sor2 ,file='pres',position="append")
        if(kcaldis.eq.0) then
           write(sor2,'("!!!!met_yplus: kcaldis=0. Il faut 1 ou 2 ==>return")')
           close(sor2)
@@ -269,6 +272,7 @@ contains
 !      fin de boucle sur les parois
     enddo
 !
+call END_KEEP_ORDER
     return
   end subroutine met_yplus
 end module mod_met_yplus

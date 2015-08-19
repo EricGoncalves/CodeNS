@@ -155,7 +155,7 @@ contains
     use chainecarac
     use sortiefichier
     use schemanum
-    use mod_mpi,only:rank,nprocs,barrier
+    use mod_mpi
     implicit none
     integer          ::         i1,        i2,      idf1,      idf2,     idfac
     integer          ::        idm,     imaxf,     iminf,        j1,        j2
@@ -255,6 +255,7 @@ contains
 !     -------------------------------------------------------
 !     SORTIES RELATIVES A DES VALEURS SUR LES PAROIS
 !
+call START_KEEP_ORDER
     if(rank==0)then
     open(sor2 ,file='pres')
     write(sor2,'(''TITLE='',a1,a80,a1)')c,titrt1,c
@@ -332,7 +333,7 @@ contains
     do mf=1,nbfll
 !       boucle sur les parois
 !
-       open(sor2 ,file='pres')
+       open(sor2 ,file='pres',position="append")
        mfl=nmfint(mf)
        l=ndlb(mfl)
 !
@@ -690,6 +691,7 @@ contains
 !         fin de boucle sur les bandes
        enddo
        close(sor2)
+call END_KEEP_ORDER
 !
 !       pression
        cxav   =cxav/(q0spi0*sref)

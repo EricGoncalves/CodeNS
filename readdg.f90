@@ -2,7 +2,7 @@ module mod_readdg
   implicit none
 contains
   subroutine readdg( &
-       l1,kdg,x,y,z)
+       l,kdg,x,y,z)
 !
 !***********************************************************************
 !
@@ -42,7 +42,7 @@ contains
     implicit none
     integer          ::    i,  i1,  i2,   j,  j1
     integer          ::   j2,   k,  k1,  k2, kdg,pos
-    integer          ::    l,   n, nid,nijd, njd,l1
+    integer          ::    l,   n, nid,nijd, njd
     double precision :: x(ip21),y(ip21),z(ip21)
     logical          :: ecri
 !
@@ -54,11 +54,9 @@ contains
 !
     ecri=.false.
 !      ecri=.true.
-l=1
 CALL FTELL(kdg, pos) 
-if (rank+1==l1)then
 !
-    if(rank/=0) call mpi_trans(pos,pos,rank-1,rank)
+    call START_KEEP_ORDER(pos)
     CALL FSEEK(kdg, pos, 0)
 !
     i1=ii1(l)
@@ -83,8 +81,7 @@ if (rank+1==l1)then
          (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
 !
     CALL FTELL(kdg, pos)
-    if(rank/=nprocs-1) call mpi_trans(pos,pos,rank,rank+1)
-    endif
+    call END_KEEP_ORDER(pos)
 
     return
 !

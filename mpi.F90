@@ -648,5 +648,29 @@ SUBROUTINE GATHER_R(IN,OUT,SIZE)
 #endif
 END SUBROUTINE GATHER_R
 
+
+SUBROUTINE START_KEEP_ORDER(relais_in)
+  IMPLICIT NONE
+  integer,intent(inout),optional :: relais_in
+  integer :: relais
+  relais=0
+  if (present(relais_in)) relais=relais_in
+#ifdef WITH_MPI
+    if(rank>0) call mpi_trans(relais,relais,rank-1,rank)
+#endif
+  if (present(relais_in)) relais_in=relais
+END SUBROUTINE START_KEEP_ORDER
+
+
+SUBROUTINE END_KEEP_ORDER(relais_in)
+  IMPLICIT NONE
+  integer,intent(inout),optional :: relais_in
+  integer :: relais
+  if (present(relais_in)) relais=relais_in
+#ifdef WITH_MPI
+    if(rank<nprocs-1) call mpi_trans(relais,relais,rank,rank+1)
+#endif
+  if (present(relais_in)) relais_in=relais
+END SUBROUTINE END_KEEP_ORDER
 end module mod_mpi
 	  

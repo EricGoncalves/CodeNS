@@ -35,10 +35,11 @@ contains
     use para_var
     use para_fige
     use maillage
+    use mod_mpi
     implicit none
     integer          ::    i,imax,imin,   j,jmax
     integer          :: jmin,   k, kdg,kmax,kmin
-    integer          ::    l, nid,nijd, njd
+    integer          ::    l, nid,nijd, njd,pos
     double precision :: x(ip00),y(ip00),z(ip00)
 !
 !-----------------------------------------------------------------------
@@ -47,6 +48,10 @@ contains
 
 !
     if (l.eq.1) rewind kdg
+CALL FTELL(kdg, pos) 
+!
+    call START_KEEP_ORDER(pos)
+    CALL FSEEK(kdg, pos, 0)
 !
     nid = id2(l)-id1(l)+1
     njd = jd2(l)-jd1(l)+1
@@ -56,6 +61,8 @@ contains
     write(kdg)(((y(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
     write(kdg)(((z(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
 !
+    CALL FTELL(kdg, pos)
+    call END_KEEP_ORDER(pos)
     return
   contains
     function    ind(i,j,k)

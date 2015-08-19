@@ -2,7 +2,7 @@ module mod_readda
   implicit none
 contains
   subroutine readda( &
-       l1,kda, &
+       l,kda, &
        v,mut,utau, &
        vdual,vdual1,vdual2)
 !
@@ -48,7 +48,7 @@ contains
     integer          ::       j1,      j2,    j2m1,       k,      k1
     integer          ::       k2,    k2m1,     kda,       l,       m
     integer          :: mdimtnxl,       n,      n0,     nid,    nijd
-    integer          ::      njd,    resu,l1,pos
+    integer          ::      njd,    resu,pos
     double precision ::         mut(ip12),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
     double precision :: vdual2(ip11,ip60)
     double precision,allocatable :: utau(:)
@@ -57,11 +57,10 @@ contains
 !
 !
 !
-l=1
+    if(l.eq.1) rewind kda
 CALL FTELL(kda, pos) 
-if (rank+1==l1)then
 !
-    if(rank/=0) call mpi_trans(pos,pos,rank-1,rank)
+call START_KEEP_ORDER(pos)
     CALL FSEEK(kda, pos, 0)
     n0=npc(l)
     i1=ii1(l)
@@ -143,7 +142,7 @@ if (rank+1==l1)then
 !     enddo
 !     close(200)
     CALL FTELL(kda, pos)
-    if(rank/=nprocs-1) call mpi_trans(pos,pos,rank,rank+1)
+    call END_KEEP_ORDER(pos)
 
     if(kfmg.eq.3) then
        do k=k1,k2m1
@@ -226,7 +225,6 @@ if (rank+1==l1)then
 !       READ(98) &
 !            (((vdual2(ind(i,j,k),7),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
 !       close(98)
-    endif
 !
     return
   contains
