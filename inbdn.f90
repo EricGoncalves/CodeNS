@@ -145,8 +145,8 @@ contains
        endif
 
     enddo
-    call barrier
     endif
+    call barrier
 !
     return
   end subroutine inbdn

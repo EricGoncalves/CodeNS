@@ -20,6 +20,7 @@ contains
     use schemanum
     use maillage
     use mod_convich
+    use mod_mpi
     implicit none
     integer          ::    kncycl,     lgrd,lgr(lgrd),     long,   longm1
     integer          ::        nm,    nmult,       nr,    nrest
@@ -45,7 +46,7 @@ contains
          //'2x,''frequence exploitation ut: '', 8x,i8,2x,a/' &
          //'2x,''frequence sauvegarde     : '', 8x,i8,2x,a/' &
          //'2x,''discretisation sauvegarde: '',12x,a,2x,a)'
-    write(imp,form) kvn,ckvn, &
+    if (rank==0) write(imp,form) kvn,ckvn, &
          ncyresi,cncyresi, &
          ncyexpl,cncyexpl, &
          ncysave,cncysave, &
@@ -95,7 +96,7 @@ contains
             //'2x,''ncycle                   : '',11x,i5,2x,a)'
     endif
 !
-    write(imp,form) lgr,ncycle(lgr(1)),cncycl
+    if (rank==0) write(imp,form) lgr,ncycle(lgr(1)),cncycl
 !
     return
   end subroutine b1_secpfw

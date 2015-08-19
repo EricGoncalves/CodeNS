@@ -22,6 +22,7 @@ contains
     use sortiefichier
     use modeleturb
     use schemanum
+    use mod_mpi
     implicit none
 !
 !-----------------------------------------------------------------------
@@ -40,7 +41,7 @@ contains
          //'2x,''alfae                    : '',4x,e12.6/' &
          //'2x,''rki2t                    : '',4x,e12.6/' &
          //'2x,''rki4t                    : '',4x,e12.6)'
-    write(imp,form) rokinf, &
+    if (rank==0)write(imp,form) rokinf, &
          roeinf, &
          epsk, &
          epse, &

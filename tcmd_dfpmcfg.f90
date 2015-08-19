@@ -17,8 +17,9 @@ contains
     use maillage
     use boundary
     use mod_valenti
+    use mod_mpi
     implicit none
-    integer          ::      icmt,imot(nmx),       nm,     nmot,       no
+    integer          ::      icmt,imot(nmx),       nm,     nmot,       no,tmp,n1
 !
 !-----------------------------------------------------------------------
 !
@@ -38,13 +39,18 @@ contains
 !
     if(nmot.gt.2) then
        nm=2
-       do no=1,mtbx
+       n1=0
+       do no=1,size(bcg_to_bcl)
           nm=nm+1
           if(nmot.lt.nm) then
              comment=ci
              call synterr(mot,imot,nmot,comment)
           else
-             call valenti(mot,imot,nm,nba(no),knba)
+             call valenti(mot,imot,nm,tmp,knba)
+             if(bcg_to_bcl(tmp)/=0) then
+               n1=n1+1
+               nba(n1)=tmp
+             endif
           endif
        enddo
     else

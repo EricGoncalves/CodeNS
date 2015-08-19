@@ -2,7 +2,7 @@ module mod_readda
   implicit none
 contains
   subroutine readda( &
-       l,kda, &
+       l1,kda, &
        v,mut,utau, &
        vdual,vdual1,vdual2)
 !
@@ -42,12 +42,13 @@ contains
     use schemanum
     use chainecarac
     use modeleturb
+    use mod_mpi
     implicit none
     integer          ::        i,      i1,      i2,    i2m1,       j
     integer          ::       j1,      j2,    j2m1,       k,      k1
     integer          ::       k2,    k2m1,     kda,       l,       m
     integer          :: mdimtnxl,       n,      n0,     nid,    nijd
-    integer          ::      njd,    resu
+    integer          ::      njd,    resu,l1,pos
     double precision ::         mut(ip12),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
     double precision :: vdual2(ip11,ip60)
     double precision,allocatable :: utau(:)
@@ -56,8 +57,12 @@ contains
 !
 !
 !
-
+l=1
+CALL FTELL(kda, pos) 
+if (rank+1==l1)then
 !
+    if(rank/=0) call mpi_trans(pos,pos,rank-1,rank)
+    CALL FSEEK(kda, pos, 0)
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -137,6 +142,8 @@ contains
 !       enddo
 !     enddo
 !     close(200)
+    CALL FTELL(kda, pos)
+    if(rank/=nprocs-1) call mpi_trans(pos,pos,rank,rank+1)
 
     if(kfmg.eq.3) then
        do k=k1,k2m1
@@ -170,6 +177,7 @@ contains
           enddo
        enddo
 
+    endif
 !   initialisation pour calcul ordre 3 en temps
 !       write(*,*)'Readda'
 !       open(UNIT=98,FILE='facdual',FORM='unformatted',STATUS='unknown')

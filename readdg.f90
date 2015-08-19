@@ -2,7 +2,7 @@ module mod_readdg
   implicit none
 contains
   subroutine readdg( &
-       l,kdg,x,y,z)
+       l1,kdg,x,y,z)
 !
 !***********************************************************************
 !
@@ -38,11 +38,11 @@ contains
     use para_fige
     use sortiefichier
     use maillage
-    use mod_mpi, only: rank
+    use mod_mpi
     implicit none
     integer          ::    i,  i1,  i2,   j,  j1
-    integer          ::   j2,   k,  k1,  k2, kdg
-    integer          ::    l,   n, nid,nijd, njd
+    integer          ::   j2,   k,  k1,  k2, kdg,pos
+    integer          ::    l,   n, nid,nijd, njd,l1
     double precision :: x(ip21),y(ip21),z(ip21)
     logical          :: ecri
 !
@@ -54,6 +54,12 @@ contains
 !
     ecri=.false.
 !      ecri=.true.
+l=1
+CALL FTELL(kdg, pos) 
+if (rank+1==l1)then
+!
+    if(rank/=0) call mpi_trans(pos,pos,rank-1,rank)
+    CALL FSEEK(kdg, pos, 0)
 !
     i1=ii1(l)
     i2=ii2(l)
@@ -76,6 +82,10 @@ contains
     read(kdg,err=13) &
          (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
 !
+    CALL FTELL(kdg, pos)
+    if(rank/=nprocs-1) call mpi_trans(pos,pos,rank,rank+1)
+    endif
+
     return
 !
 13  continue

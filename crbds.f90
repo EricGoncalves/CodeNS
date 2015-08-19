@@ -65,7 +65,7 @@ contains
     integer          ::       imax,       img,      imgi,      imgj,      imgk
     integer          ::       imin,      jmax,      jmin,      kini,      kmax
     integer          ::       kmin,         l,        lm,        m0,      mfbe
-    integer          ::       mfbi,     mfbim,        mt
+    integer          ::       mfbi,     mfbim,        mt,ll
     integer, allocatable :: ncbd(:)
 !
 !-----------------------------------------------------------------------
@@ -96,17 +96,17 @@ contains
       call reallocate_s(mmb,mtt)
 
   !
-      l=1
+      ll=1
       mfbi=mtb
       nfei(mtb)=mfbi
-      ndlb(mfbi)=l
+      ndlb(mfbi)=ll
       indfl(mfbi)=indmf
       bcl_to_bcg(mtb)=mfbe
       bcg_to_bcl(mfbe)=mtb
   !
       do img=1,lgx
   !
-         lm=l+(img-1)*lz
+         lm=ll+(img-1)*lz
          mfbim=mfbi+(img-1)*mtb
 
   !

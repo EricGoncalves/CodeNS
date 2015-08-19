@@ -114,8 +114,8 @@ contains
 !                 mt,m0)
        endif
     enddo
-    call barrier
     endif
+    call barrier
 !
     return
   end subroutine inbdb
