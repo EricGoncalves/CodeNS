@@ -14,6 +14,7 @@ contains
     use para_var
     use para_fige
     use boundary
+    use mod_mpi
     implicit none
     integer          ::          m,        mb,        mc,        mf,       mfb
     integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),ncin(ip41)
@@ -29,6 +30,7 @@ contains
        mfb=lbd(mf)
        mt=mmb(mfb)
 !
+      print*,"met_rbsc",rank,mfb,mt
        do m=1,mt
           mc=mpc(mfb)+m
           nc=mnc(mc)

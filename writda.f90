@@ -69,33 +69,33 @@ contains
     njd = jd2(l)-jd1(l)+1
     nijd = nid*njd
 !
-    write(kda,*) &
+    write(kda) &
          ((( v1(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-    write(kda,*) &
+    write(kda) &
          ((( v2(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-    write(kda,*) &
+    write(kda) &
          ((( v3(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-    write(kda,*) &
+    write(kda) &
          ((( v4(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-    write(kda,*) &
+    write(kda) &
          ((( v5(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
     if(eqt(1:2).eq.'ns') then
-       write(kda,*) &
+       write(kda) &
             (((mut(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
     endif
 !
     if(eqt(6:7).eq.'ke') then
 !      if (eqt(6:7).eq.'ke' .or. &
 !         (eqt(2:4).eq.'res' .and. ip60.eq.7) ) then
-       write(kda,*) &
+       write(kda) &
             ((( v6(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
-       write(kda,*) &
+       write(kda) &
             ((( v7(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
        if (eqt(6:7).eq.'ke'.and. (kutau.eq.1)) then
 !          modeles de Chien ou k-omega bas Reynolds de Wilcox
 !          ou modeles de Wilcox, Menter avec rugosite
-          write(kda,*)mdimtnx
-          write(kda,*)(utau(m),m=1,mdimtnx)
+          write(kda)mdimtnx
+          write(kda)(utau(m),m=1,mdimtnx)
        endif
     endif
 

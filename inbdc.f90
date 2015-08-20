@@ -196,7 +196,7 @@ contains
 !
        mdimtcx=mdimtcx+mt
 !
-       ndcc(mfbia)=lb
+       ndcc(mfbia)=mfbeb
 !
        kinitc=0
 !
