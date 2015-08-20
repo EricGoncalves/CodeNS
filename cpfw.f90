@@ -231,7 +231,7 @@ contains
             sn,vol, &
             ncbd,mnc, &
             mnr,xnr,ynr,znr, &
-            tn1,tn2,tn3)
+            tn1,tn2,tn3,ncin)
 
        if((ischema.eq.2).or.(ischema.eq.3).or.(ischema.eq.4).or.(ischema.eq.6).or. &
             (ischema.eq.8).or.(ischema.eq.11).or.(ischema.eq.13).or.(ischema.eq.15)) then
@@ -334,7 +334,7 @@ contains
        nbd=mtcx
        call rfvc( &
             v,ncbd,mnc, &
-            pression,ztemp,cson)
+            pression,ztemp,cson,ncin)
 !            call rfvc(v,ncbd,mnc)
 !
        do mfr=1,mtrx

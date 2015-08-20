@@ -87,8 +87,8 @@ contains
        cr= cos(real(mper(mfb))*protat)
 !
        do m=1,mt
-          mc =mpc(mfb)+m
-          nc =mnc(mc)
+          mb=mpb(mfb)+m
+          nc=ncin(mb)
 !
 !     definition des variables aux bords (centre des facettes frontieres)
 !

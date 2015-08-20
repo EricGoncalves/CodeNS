@@ -309,7 +309,7 @@ contains
 !           call rfvc(ff_du,ncbd,mnc)
                       call rfvc( &
                            ff_du,ncbd,mnc, &
-                           pression,ztemp,cson)
+                           pression,ztemp,cson,ncin)
                    endif
 !
                    if (mtrx.gt.0) then

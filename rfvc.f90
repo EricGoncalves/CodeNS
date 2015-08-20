@@ -3,7 +3,7 @@ module mod_rfvc
 contains
   subroutine rfvc( &
        t,ncbd,mnc, &
-       ps,temp,cson)
+       ps,temp,cson,ncin)
 !
 !***********************************************************************
 !
@@ -36,7 +36,7 @@ contains
     use mod_mpi
     implicit none
     integer          ::          m,        mb,        mc,        mf,       mfb
-    integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd
+    integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd,ncin(ip41)
     double precision ::   cson(ip11),    ps(ip11),t(ip11,ip60),  temp(ip11),        tper
     double precision,allocatable :: buff(:,:,:,:)
     integer :: req(nbd,2),other,me
@@ -61,8 +61,8 @@ contains
 !
        tper=protat*real(mper(mfb))
        do m=1,mt
-          mc=mpc(mfb)+m
-          nc=mnc(mc)
+          mb=mpb(mfb)+m
+          nc=ncin(mb)
 
 !       definition des variables aux points fictifs
 
@@ -92,6 +92,7 @@ contains
 
 !       definition des variables aux points fictifs
 
+          write(500+rank,*) bcl_to_bcg(mfb),t(nd,1:5),ps(nd),temp(nd),cson(nd),buff(:,m,mf,2)
           t(nd,1)= buff(1,m,mf,2)
           t(nd,2)= buff(2,m,mf,2)
           t(nd,3)= buff(3,m,mf,2)

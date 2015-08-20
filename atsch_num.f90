@@ -289,7 +289,7 @@ contains
              nbd=mtcx
              call rfvc( &
                   v,ncbd,mnc, &
-                  pression,ztemp,cson)
+                  pression,ztemp,cson,ncin)
 !
              do l=1,lzx
                 SELECT CASE(kinke)
@@ -435,7 +435,7 @@ contains
     nbd=mtcx
     call rfvc( &
          v,ncbd,mnc, &
-         pression,ztemp,cson)
+         pression,ztemp,cson,ncin)
 !
 !-------calcul dissipation artificielle du schema de Jameson--------------
 !
