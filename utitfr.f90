@@ -101,6 +101,7 @@ contains
     use sortiefichier
     use schemanum
     use constantes
+    use mod_mpi
     implicit none
     integer          ::         i1,        i2,      icyc,   icyexpl,      idf1
     integer          ::       idf2,     idfac,       idm,     imaxf,     iminf
@@ -385,6 +386,14 @@ contains
        cmavtfr=cmavtfr+cmavfr
        cnavtfr=cnavtfr+cnavfr
     enddo !fin boucle sur les parois
+
+    call SUM_MPI(cxavtfr,cxavtfr)
+    call SUM_MPI(cyavtfr,cyavtfr)
+    call SUM_MPI(czavtfr,czavtfr)
+    call SUM_MPI(clavtfr,clavtfr)
+    call SUM_MPI(cmavtfr,cmavtfr)
+    call SUM_MPI(cnavtfr,cnavtfr)
+
 !
 !     pression
     cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
@@ -402,7 +411,7 @@ contains
     cmaefr=-clavtfr*csal*snbe+cmavtfr*csbe-cnavtfr*snal*snbe
     cnaefr=-clavtfr*snal+cnavtfr*csal
 !
-    if(icyexpl.eq.0) then
+    if(icyexpl.eq.0.and.rank==0) then
 !       repere avion
        open(out  ,file='fout')
        write(out,3801) icyc,cxavtot,cyavtot,czavtot, &

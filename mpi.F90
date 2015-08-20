@@ -521,13 +521,15 @@ END SUBROUTINE REALLOCATE_3I
 !RETURN WHEN EVERYTHING IS DONE
     IMPLICIT NONE
     double precision   ,INTENT(IN)    :: A
-    double precision   ,INTENT(INOUT) :: B
+    double precision   ,INTENT(OUT) :: B
+    double precision ::C
   integer :: ierr
 #ifdef WITH_MPI
-    CALL MPI_ALLREDUCE(A, B, 1, MPI_REAL8,MPI_SUM, MPI_COMM_WORLD,IERR)
+    CALL MPI_ALLREDUCE(A, C, 1, MPI_REAL8,MPI_SUM, MPI_COMM_WORLD,IERR)
 #else
-    B=A
+    C=A
 #endif
+  B=C
 
   END SUBROUTINE SUM_MPI_0R
 
@@ -536,13 +538,16 @@ END SUBROUTINE REALLOCATE_3I
 !RETURN WHEN EVERYTHING IS DONE
     IMPLICIT NONE
     double precision   ,INTENT(IN)    :: A(:)
-    double precision   ,INTENT(INOUT) :: B(:)
+    double precision   ,INTENT(OUT) :: B(:)
+    double precision,allocatable ::C(:)
   integer :: ierr
+  allocate(c(size(A)))
 #ifdef WITH_MPI
-    CALL MPI_ALLREDUCE(A, B, SIZE(A), MPI_REAL8,MPI_SUM, MPI_COMM_WORLD,IERR)
+    CALL MPI_ALLREDUCE(A, C, SIZE(A), MPI_REAL8,MPI_SUM, MPI_COMM_WORLD,IERR)
 #else
-    B=A
+    C=A
 #endif
+  B=C
 
   END SUBROUTINE SUM_MPI_1R
 
@@ -552,14 +557,16 @@ END SUBROUTINE REALLOCATE_3I
 !RETURN WHEN EVERYTHING IS DONE
     IMPLICIT NONE
     integer   ,INTENT(IN)    :: A
-    integer   ,INTENT(INOUT) :: B
+    integer   ,INTENT(OUT) :: B
+    integer ::C
   integer :: ierr
 #ifdef WITH_MPI
-    CALL MPI_ALLREDUCE(A, B, 1, MPI_INTEGER,MPI_SUM, MPI_COMM_WORLD,IERR)
+    CALL MPI_ALLREDUCE(A, C, 1, MPI_INTEGER,MPI_SUM, MPI_COMM_WORLD,IERR)
 #else
-    B=A
+    C=A
 #endif
-
+    B=C
+  
   END SUBROUTINE SUM_MPI_0I
 
   SUBROUTINE MAX_MPI_0I(A,B)
@@ -567,14 +574,15 @@ END SUBROUTINE REALLOCATE_3I
 !RETURN WHEN EVERYTHING IS DONE
     IMPLICIT NONE
     integer   ,INTENT(IN)    :: A
-    integer   ,INTENT(INOUT) :: B
+    integer   ,INTENT(OUT) :: B
+    integer ::C
   integer :: ierr
 #ifdef WITH_MPI
-    CALL MPI_ALLREDUCE(A, B, 1, MPI_INTEGER,MPI_MAX, MPI_COMM_WORLD,IERR)
+    CALL MPI_ALLREDUCE(A, C, 1, MPI_INTEGER,MPI_MAX, MPI_COMM_WORLD,IERR)
 #else
-    B=A
+    C=A
 #endif
-
+   B=C
   END SUBROUTINE MAX_MPI_0I
 
   SUBROUTINE SUM_MPI_1I(A,B)
@@ -583,13 +591,15 @@ END SUBROUTINE REALLOCATE_3I
     IMPLICIT NONE
     integer   ,INTENT(IN)    :: A(:)
     integer   ,INTENT(INOUT) :: B(:)
+    integer,allocatable ::C(:)
   integer :: ierr
+  allocate(c(size(a)))
 #ifdef WITH_MPI
-    CALL MPI_ALLREDUCE(A, B, SIZE(A), MPI_INTEGER,MPI_SUM, MPI_COMM_WORLD,IERR)
+    CALL MPI_ALLREDUCE(A, C, SIZE(A), MPI_INTEGER,MPI_SUM, MPI_COMM_WORLD,IERR)
 #else
-    B=A
+    C=A
 #endif
-
+    B=C
   END SUBROUTINE SUM_MPI_1I
 
   SUBROUTINE BCAST_0I(IN,ORIG)

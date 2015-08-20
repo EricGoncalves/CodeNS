@@ -152,7 +152,7 @@ contains
     use proprieteflu
     use definition
     use chainecarac
-    use mod_mpi,only:rank,nprocs,barrier
+    use mod_mpi
     implicit none
     integer          ::         i1,        i2,      idf1,      idf2,     idfac
     integer          ::        idm,     imaxf,     iminf,        j1,        j2
@@ -481,6 +481,14 @@ contains
     endif
     call barrier
     enddo 
+
+    call SUM_MPI(cxavtot,cxavtot)
+    call SUM_MPI(cyavtot,cyavtot)
+    call SUM_MPI(czavtot,czavtot)
+    call SUM_MPI(clavtot,clavtot)
+    call SUM_MPI(cmavtot,cmavtot)
+    call SUM_MPI(cnavtot,cnavtot)
+
 !
     cxaero=cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
     cyaero=cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe

@@ -762,6 +762,12 @@ call END_KEEP_ORDER
 !       fin de boucle sur les parois
     enddo
 !
+    call SUM_MPI(cxavtot,cxavtot)
+    call SUM_MPI(cyavtot,cyavtot)
+    call SUM_MPI(czavtot,czavtot)
+    call SUM_MPI(clavtot,clavtot)
+    call SUM_MPI(cmavtot,cmavtot)
+    call SUM_MPI(cnavtot,cnavtot)
 !     pression
     cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
     cyaero= cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
@@ -770,6 +776,12 @@ call END_KEEP_ORDER
     cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
     cnaero=-clavtot*snal+cnavtot*csal
 !
+    call SUM_MPI(cxavtfr,cxavtfr)
+    call SUM_MPI(cyavtfr,cyavtfr)
+    call SUM_MPI(czavtfr,czavtfr)
+    call SUM_MPI(clavtfr,clavtfr)
+    call SUM_MPI(cmavtfr,cmavtfr)
+    call SUM_MPI(cnavtfr,cnavtfr)
 !     frottement
     cxaetfr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
     cyaetfr= cxavtfr*csal*snbe+cyavtfr*csbe+czavtfr*snal*snbe
