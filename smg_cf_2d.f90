@@ -91,7 +91,7 @@ contains
           cc4 = 3./sss
        else if (ktrans.eq.1) then
 ! ----- Interpolation distance Centre aux 4 Noeuds
-          sss  = (4*sqrt(5.)+6)/(3*sqrt(5.))
+          sss  = (4.*sqrt(5.)+6.)/(3.*sqrt(5.))
           cc1 = 1./sss
           cc2 = 1./(sqrt(5.)*sss)
           cc3 = 1./(3.*sss)

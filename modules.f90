@@ -18,13 +18,13 @@ module boundary
   use para_fige
 implicit none
   integer          ::  kexl,  nbd,nbdko
-  integer         ,allocatable :: crotr(:),imaxb(:),iminb(:),jmaxb(:),jminb(:)
+  integer         ,allocatable :: imaxb(:),iminb(:),jmaxb(:),jminb(:)
   integer         ,allocatable :: kmaxb(:),kminb(:),  lbd(:),lbdko(:), mdnc(:)
   integer         ,allocatable ::   mmb(:),  mpb(:),  mpc(:), mper(:),  mpn(:)
   integer         ,allocatable ::   mpr(:),  nba(:), nbdc(:), ndcc(:), ndlb(:)
   integer         ,allocatable ::  ndrr(:), nfba(:), nfbc(:), nfbn(:), nfbr(:)
-  integer         ,allocatable ::  nfei(:),srotr(:)
-  double precision,allocatable :: bc(:,:)
+  integer         ,allocatable ::  nfei(:)
+  double precision,allocatable :: bc(:,:),srotr(:),crotr(:)
   character(len=4),allocatable :: cl(:)
   character(len=2),allocatable :: indfl(:)
 end module boundary

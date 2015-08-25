@@ -25,7 +25,6 @@ contains
     integer          :: k2m1,   l,   m,   n, n0c
     integer          ::  nft, nid, njd,nijd
     double precision :: t(ip11,ip60)
-    logical          :: ouvert
 !
 !-----------------------------------------------------------------------
 !

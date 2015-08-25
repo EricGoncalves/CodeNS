@@ -92,7 +92,6 @@ contains
 
 !       definition des variables aux points fictifs
 
-          write(500+rank,*) bcl_to_bcg(mfb),t(nd,1:5),ps(nd),temp(nd),cson(nd),buff(:,m,mf,2)
           t(nd,1)= buff(1,m,mf,2)
           t(nd,2)= buff(2,m,mf,2)
           t(nd,3)= buff(3,m,mf,2)

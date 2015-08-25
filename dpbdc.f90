@@ -82,9 +82,9 @@ contains
        nn=(nn-(ii-id1(lcm)))/nid
        jj=jd1(lcm)+mod(nn,njd)
        kk=kd1(lcm)+(nn-(jj-jd1(lcm)))/njd
-       pi(m)=ii
-       pj(m)=jj
-       pk(m)=kk
+       pi(m)=real(ii)
+       pj(m)=real(jj)
+       pk(m)=real(kk)
        if (mod(m,50).eq.1) write(imp,1910)
        write(imp,1920) m,nc,nint(pi(m)),nint(pj(m)),nint(pk(m))
     enddo
