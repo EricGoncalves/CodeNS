@@ -61,9 +61,9 @@ contains
 
 !
     if(l.eq.1) rewind kda
-    CALL FTELL(kda, pos) 
+    pos=FTELL(kda) 
     call START_KEEP_ORDER(pos)
-    CALL FSEEK(kda, pos, 0)
+    CALL my_FSEEK(kda, pos)
 !
     nid = id2(l)-id1(l)+1
     njd = jd2(l)-jd1(l)+1
@@ -112,7 +112,7 @@ contains
 !      close(100)
 !
 
-    CALL FTELL(kda, pos) 
+    pos=FTELL(kda) 
     call END_KEEP_ORDER(pos)
     return
   contains

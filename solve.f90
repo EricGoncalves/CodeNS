@@ -360,13 +360,13 @@ program solve
   lz=50      ! Nb zone !TODO ?
   lg=0!6       ! ?
   mtb=0!600    ! Nb front
-  lt=0!lz*lg   ! ? 
+  lt=0!lz*lg   ! ?
   mtt=0!mtb*lg ! Nb front total
 
   if (.false..and.rank==1) then ! wait for gdb
     l=0
     write(stderr,*) "I'm waiting for gdb ", getpid()
-    do while(l==0) 
+    do while(l==0)
        call sleep(1)
        enddo
   endif
@@ -1065,6 +1065,7 @@ mnc=0
     allocate(cmuk2(ip21))
 
     ip31=1+3*(ndimnts+kdimg*ndimnts/cng2)  ! ?
+!print*,ip31,ndir
     allocate(sn(ip31*ndir)) ! TODO ?
 
 

@@ -72,6 +72,7 @@ contains
     if (rank==0) then
       open(sor3 ,file='resro')
       write(sor3,'(1x,i6,1x,i6,1x,e13.6)') ncyc,icyc,resite
+      close(sor3)
     endif
 !
     return

@@ -118,6 +118,7 @@ contains
     use mod_sch_rusanov
     use mod_sch_ausmp_pond
     use mod_sch_rusanov_prcd
+    use mod_mpi
     implicit none
     integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
     integer          ::           l,     ldismx,     lgsnlt,         lm,    mcychro
@@ -448,11 +449,13 @@ contains
 !
           SELECT CASE(kprec)
           CASE(0)
+!write(stderr,*) 'avant dissip_jameson',rank+1,d(point_ref(rank+1),1)
              call dissip_jameson( &
                   lm,v,d, &
                   equat, &
                   sn(npsn),lgsnlt, &
                   tn1,pression,cson)
+!write(stderr,*) 'après dissip_jameson',rank+1,d(point_ref(rank+1),1)
           CASE(1)  !(P,u,S)
 !            call dissip_jameson_prcd( &
 !                 lm,v,d, &
@@ -460,11 +463,13 @@ contains
 !                 sn(npsn),lgsnlt, &
 !                 tn2,tn3,pression,ztemp,cson)
           CASE(2)  !(P,u,e)
+!write(stderr,*) 'avant dissip_jameson_prcd2',rank+1,d(point_ref(rank+1),1)
              call dissip_jameson_prcd2( &
                   lm,v,d, &
                   equat, &
                   sn(npsn),lgsnlt, &
                   tn1,pression,cson)
+!write(stderr,*) 'après dissip_jameson_prcd2',rank+1,d(point_ref(rank+1),1)
           END SELECT
        enddo
     endif
@@ -487,11 +492,13 @@ contains
           lm=l+(img-1)*lz
           npsn  =ndir*npfb(lm)+1
           lgsnlt=nnn(lm)
+!write(stderr,*) 'avant dissip_jameson_turb',rank+1,d(point_ref(rank+1),1)
           call dissip_jameson_turb( &
                lm,v,d, &
                equat, &
                sn(npsn),lgsnlt, &
                tn1,pression)
+!write(stderr,*) 'après dissip_jameson_turb',rank+1,d(point_ref(rank+1),1)
        enddo
     endif
 !
@@ -518,6 +525,7 @@ contains
 !
     if (gfetke .and. keinit.eq.0 .and. ncyc.ge.icytur0) then
 !
+!write(stderr,*) 'avant met_num',rank+1,d(point_ref(rank+1),1)
        call met_num( &
             ncbd,ncin,mnc,ncyc, &
             mnr,xnr,ynr,znr, &
@@ -532,6 +540,7 @@ contains
             tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
             tp,cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
             pression,ztemp,cson)
+!write(stderr,*) 'après met_num',rank+1,d(point_ref(rank+1),1)
     endif
 !
 !-------calcul du tenseur des contraintes et du flux de chaleur------ ------
@@ -603,6 +612,7 @@ contains
 !
        SELECT CASE(ischema)
        CASE(1)
+!write(stderr,*) 'avant sch_jameson',rank+1,d(point_ref(rank+1),1)
           call sch_jameson( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -611,9 +621,11 @@ contains
                sn(npsn),lgsnlt, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression)
+!write(stderr,*) 'après sch_jameson',rank+1,d(point_ref(rank+1),1)
 !
        CASE(2)
 !         version ponderee
+!write(stderr,*) 'avant sch_jameson_pond',rank+1,d(point_ref(rank+1),1)
           call sch_jameson_pond( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -623,9 +635,11 @@ contains
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression, &
                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+!write(stderr,*) 'après sch_jameson_pond',rank+1,d(point_ref(rank+1),1)
 !
        CASE(3)
 !         version ordre 3 avec correction de l'erreur dispersive
+!write(stderr,*) 'avant sch_jameson3',rank+1,d(point_ref(rank+1),1)
           call sch_jameson3( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -634,9 +648,11 @@ contains
                sn(npsn),lgsnlt, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9, &
                pression)
+!write(stderr,*) 'après sch_jameson3',rank+1,d(point_ref(rank+1),1)
 !
        CASE(4)
 !         version ordre 3 avec correction de l'erreur dispersive + ponderation
+!write(stderr,*) 'avant sch_jameson3pond',rank+1,d(point_ref(rank+1),1)
           call sch_jameson3pond( &
                lm,ityprk, &
                u,v,d,ff, &
@@ -647,12 +663,14 @@ contains
                pression, &
                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
                cvi,cvj,cvk)
+!write(stderr,*) 'après sch_jameson3pond',rank+1,d(point_ref(rank+1),1)
 !
 !--------Schema AUSM+ de Liou--------------------------------------------
 !
        CASE(5)
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
+!write(stderr,*) 'avant sch_ausmp',rank+1,d(point_ref(rank+1),1)
                 call sch_ausmp( &
                      lm,ityprk, &
                      u,v,d,ff, &
@@ -661,7 +679,9 @@ contains
                      sn(npsn),lgsnlt, &
                      tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                      pression)
+!write(stderr,*) 'après sch_ausmp',rank+1,d(point_ref(rank+1),1)
              elseif(kprec.ge.1) then
+!write(stderr,*) 'avant sch_ausmp_prcd',rank+1,d(point_ref(rank+1),1)
                 call sch_ausmp_prcd( &
                      lm,ityprk, &
                      u,v,d,ff, &
@@ -670,6 +690,7 @@ contains
                      sn(npsn),lgsnlt, &
                      tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                      pression)
+!write(stderr,*) 'après sch_ausmp_prcdd',rank+1,d(point_ref(rank+1),1)
              endif
           endif
 !
@@ -678,6 +699,7 @@ contains
        CASE(6)
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
+!write(stderr,*) 'avant sch_ausmp_pond',rank+1,d(point_ref(rank+1),1)
                 call sch_ausmp_pond( &
                      lm,ityprk, &
                      u,v,d,ff, &
@@ -688,6 +710,7 @@ contains
                      pression, &
                      cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
                      cvi,cvj,cvk)
+!write(stderr,*) 'après sch_ausmp_pond',rank+1,d(point_ref(rank+1),1)
              endif
           endif
 !
@@ -1004,6 +1027,7 @@ contains
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
                 if(equat(3:4).eq.'2d') then
+!!!write(stderr,*) 'avant implimf',rank+1,d(point_ref(rank+1),1)
                    call implimf( &
                         lm,u,dt,v,d,ff, &
                         mu,mut, &
@@ -1012,7 +1036,9 @@ contains
                         vol,dtpas,ityprk, &
                         tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                         pression,cson)
+!!!write(stderr,*) 'après implimf',rank+1,d(point_ref(rank+1),1)
                 elseif(equat(3:4).eq.'3d') then
+!write(stderr,*) 'avant implimf_3d',rank+1,d(point_ref(rank+1),1)
                    call implimf_3d( &
                         lm,u,dt,v,d,ff, &
                         mu,mut, &
@@ -1021,6 +1047,7 @@ contains
                         vol,dtpas,ityprk, &
                         tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                         pression,cson)
+!write(stderr,*) 'après implimf_3d',rank+1,d(point_ref(rank+1),1)
                 endif
 !          elseif(kprec.eq.1) then
 !         preconditionnement basse vitesse de Turkel (P,u,S)
@@ -1034,6 +1061,7 @@ contains
              elseif(kprec.eq.2) then
 !         preconditionnement basse vitesse de Turkel (P,u,e)
 !            if(equat(3:4).eq.'2d') then
+!write(stderr,*) 'avant implimf_prcd2',rank+1,d(point_ref(rank+1),1)
                 call implimf_prcd2( &
                      lm,u,dt,v,d,ff, &
                      mu,mut, &
@@ -1042,6 +1070,7 @@ contains
                      vol,dtpas,ityprk, &
                      tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                      pression,cson)
+!write(stderr,*) 'après implimf_prcd2',rank+1,d(point_ref(rank+1),1)
 !             elseif(equat(3:4).eq.'3d') then
 !              call implimf_prcd2_3d( &
 !                 lm,u,dt,v,d,ff, &
@@ -1068,6 +1097,7 @@ contains
 !
           elseif(equat(1:2).eq.'eu') then
 !          if(kprec.eq.0) then
+!write(stderr,*) 'avant implimf_eu',rank+1,d(point_ref(rank+1),1)
              call implimf_eu( &
                   lm,u,dt,v,d,ff, &
                   equat,lmax(lm), &
@@ -1075,6 +1105,7 @@ contains
                   vol,dtpas,ityprk, &
                   tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                   pression,cson)
+!write(stderr,*) 'après implimf_eud',rank+1,d(point_ref(rank+1),1)
 !
 !          elseif(kprec.eq.1) then
 !         preconditionnement basse vitesse de Turkel (P,u,s)

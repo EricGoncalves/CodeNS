@@ -30,7 +30,6 @@ contains
     character(len=1316) :: form
 !
     mfbe_l=bcg_to_bcl(mfbe)
-
     mfbi=nfei(mfbe_l)
 !
     form='(/ 2x,''numero de la grille      : '',11x,i5/' &

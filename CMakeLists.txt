@@ -62,7 +62,7 @@ if(openmp AND CMAKE_Fortran_COMPILER_ID STREQUAL "GNU" AND COMPILER_VERSION VERS
     set(OPENMP_FLAGS "")
 endif()
 if (static AND hostname STREQUAL "hulk")
-    message(STATUS "Static build impossible on Hulk with IForn\n   Deactivating it for you")
+    message(STATUS "Static build impossible on Hulk with IFort\n   Deactivating it for you")
     set(static OFF)
 endif()
 
@@ -74,7 +74,7 @@ message( STATUS "")
 message( STATUS "=======================================================================================")
 message( STATUS "")
 message( STATUS "Compilation de CodeNS sur : " ${hostname})
-message( STATUS "Fortran compiler: " ${CMAKE_Fortran_COMPILER} " - " ${COMPILER_VERSION})
+message( STATUS "Fortran compiler: " ${CMAKE_Fortran_COMPILER} " - " ${CMAKE_Fortran_COMPILER_ID} " - " ${COMPILER_VERSION})
 
 set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${DOUBLE_FLAGS}")
 

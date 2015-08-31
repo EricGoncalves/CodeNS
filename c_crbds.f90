@@ -20,7 +20,7 @@ contains
     use mod_b1_crbds
     use mod_tcmd_crbds
     use mod_crbds
-    use mod_mpi,only : rank
+    use mod_mpi
     implicit none
     integer          ::       imax,      imin, imot(nmx),      jmax,      jmin
     integer          ::       kini,      kmax,      kmin,         l,      mfbe
@@ -38,14 +38,14 @@ contains
          mfbe,kini,l, &
          imin,imax,jmin,jmax,kmin,kmax, &
          indmf)
-
-    if(l==rank+1) then
 !
-      if (kimp.ge.1) then
+    if (kimp.ge.1) then
+      if(rank==0) then
          call b1_crbds( &
               mfbe,kini,l,imin,imax,jmin,jmax,kmin,kmax, &
               indmf)
       endif
+      call barrier
     endif
 !
       call crbds( &

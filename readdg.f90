@@ -54,10 +54,10 @@ contains
 !
     ecri=.false.
 !      ecri=.true.
-CALL FTELL(kdg, pos) 
+    pos=FTELL(kdg) 
 !
     call START_KEEP_ORDER(pos)
-    CALL FSEEK(kdg, pos, 0)
+    call my_FSEEK(kdg, pos)
 !
     i1=ii1(l)
     i2=ii2(l)
@@ -80,7 +80,7 @@ CALL FTELL(kdg, pos)
     read(kdg,err=13) &
          (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
 !
-    CALL FTELL(kdg, pos)
+    pos=FTELL(kdg)
     call END_KEEP_ORDER(pos)
 
     return

@@ -63,7 +63,7 @@ contains
     use mod_mpi
     implicit none
     integer          ::   idefconf,  idefxref,      ierr,     ligne,      mflu,mflu1
-    integer          ::         nb,ncbd(ip41)
+    integer          ::         nb,ncbd(ip41),l
     double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),        omg1,          p2
     double precision ::          rpi,         rti,        tpar,v(ip11,ip60),     x(ip21)
     double precision ::      y(ip21),     z(ip21)
@@ -223,7 +223,12 @@ contains
                 endif
              else !fin sequence, continuer la lecture generale des mots-c
                 if(kimp.gt.1) then
-                   write(imp,'( (20i4) )')rank,(nmfint(nb),nb=1,nbfll)
+                   do l=1,nprocs
+                     if (rank+1==l) then
+                       write(imp,'( (20i4) )')rank,(bcl_to_bcg(nmfint(nb)),nb=1,nbfll)
+                     endif
+                     call barrier
+                   enddo
                 endif
                 exit
              endif

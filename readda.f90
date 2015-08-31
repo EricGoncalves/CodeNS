@@ -58,10 +58,10 @@ contains
 !
 !
     if(l.eq.1) rewind kda
-CALL FTELL(kda, pos) 
+    pos=FTELL(kda)
 !
-call START_KEEP_ORDER(pos)
-    CALL FSEEK(kda, pos, 0)
+    call START_KEEP_ORDER(pos)
+    CALL my_FSEEK(kda, pos)
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -141,7 +141,8 @@ call START_KEEP_ORDER(pos)
 !       enddo
 !     enddo
 !     close(200)
-    CALL FTELL(kda, pos)
+    pos=FTELL(kda)
+
     call END_KEEP_ORDER(pos)
 
     if(kfmg.eq.3) then
@@ -176,7 +177,6 @@ call START_KEEP_ORDER(pos)
           enddo
        enddo
 
-    endif
 !   initialisation pour calcul ordre 3 en temps
 !       write(*,*)'Readda'
 !       open(UNIT=98,FILE='facdual',FORM='unformatted',STATUS='unknown')
@@ -225,6 +225,7 @@ call START_KEEP_ORDER(pos)
 !       READ(98) &
 !            (((vdual2(ind(i,j,k),7),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
 !       close(98)
+    endif
 !
     return
   contains

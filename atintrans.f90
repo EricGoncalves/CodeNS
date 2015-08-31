@@ -113,7 +113,7 @@ contains
     read(99,*,err=302)nfrmx
     if(nfrmx.le.0) then
 !       le nombre de zones laminaires doit etre positif
-       write(imp,'(/,"!!!atintrans: domaine laminaire mal defini",14x,"nfrmx=",i5)')nfrmx
+        if (rank==0) write(imp,'(/,"!!!atintrans: domaine laminaire mal defini",14x,"nfrmx=",i5)')nfrmx
        stop
     endif
 !
@@ -123,7 +123,7 @@ contains
 !       calcul numero facette de la frontiere
 !
        mfbe=bcg_to_bcl(mfe)
-       if (mfe>0) then
+       if (mfbe>0) then
          mfl=nfei(mfbe)
          l =ndlb(mfl)
   !
@@ -223,24 +223,24 @@ contains
 301 continue
 !     fin de fichier. Pas de transition
     ktransi=0
-    write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ou tout turbulent")')
+    if (rank==0) write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ou tout turbulent")')
     close(99)
     return
 !
 100 continue
-    write(imp,'(/,"!!!atintrans: erreur ouverture fichier fatdon")')
+    if (rank==0) write(imp,'(/,"!!!atintrans: erreur ouverture fichier fatdon")')
     stop
 !
 302 continue
-    write(imp,'(/,"!!!atintrans: erreur nombre de frontieres laminaires ")')
+    if (rank==0) write(imp,'(/,"!!!atintrans: erreur nombre de frontieres laminaires ")')
     stop
 !
 303 continue
-    write(imp,'(/,"!!!atintrans: erreur lecture frontiere ligne",i4)')lig
+    if (rank==0) write(imp,'(/,"!!!atintrans: erreur lecture frontiere ligne",i4)')lig
     stop
 !
 304 continue
-    write(imp,'(/,"!!!atintrans: erreur positionnement dans fatdon")')
+    if (rank==0) write(imp,'(/,"!!!atintrans: erreur positionnement dans fatdon")')
     stop
 !
     return

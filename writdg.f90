@@ -48,10 +48,10 @@ contains
 
 !
     if (l.eq.1) rewind kdg
-CALL FTELL(kdg, pos) 
+    pos=FTELL(kdg) 
 !
     call START_KEEP_ORDER(pos)
-    CALL FSEEK(kdg, pos, 0)
+    CALL my_FSEEK(kdg, pos)
 !
     nid = id2(l)-id1(l)+1
     njd = jd2(l)-jd1(l)+1
@@ -61,7 +61,7 @@ CALL FTELL(kdg, pos)
     write(kdg)(((y(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
     write(kdg)(((z(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
 !
-    CALL FTELL(kdg, pos)
+    pos=FTELL(kdg)
     call END_KEEP_ORDER(pos)
     return
   contains

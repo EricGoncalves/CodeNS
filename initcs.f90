@@ -289,7 +289,7 @@ contains
             //'''le domaine a'',/,' &
             //'19x,''tvi ='',4x,a,4x,''tvj ='',4x,a,4x,''tvk ='',4x,a,/' &
             //'19x,''rotation de frt b (nb de pas)  ='',i3)'
-       write(imp,form) rank,iba,jba,kba,tvi,tvj,tvk,lper
+       write(imp,form) rank+1,iba,jba,kba,tvi,tvj,tvk,lper
     endif
 !
 !-----------------------------------------------------------------------------

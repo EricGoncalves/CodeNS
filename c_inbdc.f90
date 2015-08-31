@@ -41,9 +41,12 @@ contains
          iba,jba,kba,tvi,tvj,tvk)
 !
     if (kimp.ge.1) then
-       if (rank==0) call b1_inbdc( &
+       if (rank==0) then
+         call b1_inbdc( &
             krr,mfbea,mfbeb,kibdc,epsmsh, &
             iba,jba,kba,tvi,tvj,tvk)
+        endif
+        call barrier
     endif
 !
     call inbdc( &

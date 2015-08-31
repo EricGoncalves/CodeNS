@@ -194,6 +194,7 @@ contains
     use mod_smg_num
     use mod_metric
     use mod_metric3
+    use mod_mpi
     implicit none
     integer          ::         img,          l,        lev,         lm,        mfb
     integer          ::         mfc,        mfn,        mfr,  mnc(ip43),mnpar(ip12)
@@ -292,9 +293,9 @@ contains
     do lev=1,ngx
        img = ngx - lev + 1
        mgl = img
-       write(imp,*)' '
-       write(imp,*)' ITERATION POUR LA GRILLE =',img
-       write(imp,*)' Nombre de cycles requis =',ncycle(img)
+       if (rank==0) write(imp,*)' '
+       if (rank==0) write(imp,*)' ITERATION POUR LA GRILLE =',img
+       if (rank==0) write(imp,*)' Nombre de cycles requis =',ncycle(img)
 !
        if(ncycle(img).ne.0)then
 !

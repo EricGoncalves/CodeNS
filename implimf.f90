@@ -25,6 +25,8 @@ contains
     use maillage
     use proprieteflu
     use schemanum
+    use mod_mpi
+    use sortiefichier
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
     integer          ::     id,  ind1,  ind2,ityprk,     j
@@ -62,6 +64,15 @@ contains
     j2=jj2(lm)
 
 
+!call barrier
+!if(rank==0) write(stderr,*) "-----"
+!call barrier
+!write(stderr,*) 'dans implimf',rank+1,&
+!    d(point_ref(rank+1),:),'-',ff(point_ref(rank+1),:),'-',sn(point_ref(rank+1)-n0c,:,:),'-',&
+!    u(point_ref(rank+1),:),'-',v(point_ref(rank+1),:),'--',dtpas,lgsnlt,ityprk,equat
+!call barrier
+!if(rank==0) write(stderr,*) "-----"
+!call barrier
 
 
     k1=kk1(lm)

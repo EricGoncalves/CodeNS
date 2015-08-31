@@ -4,6 +4,9 @@ module mod_mpi
 #if defined(WITH_MPI)
   USE MPI
 #endif
+#if defined(__INTEL_COMPILER)
+  use ifport,only : fseek,ftell,getpid
+#endif
   implicit none
   integer             :: rank
   integer             :: NPROCS
@@ -347,25 +350,25 @@ contains
       IMPLICIT NONE
 
       interface
-        function fsync (fd) bind(c,name="fsync")
-            use iso_c_binding, only: c_int
-            integer(c_int), value :: fd
-            integer(c_int) :: fsync
-        end function fsync
+        !function fsync (fd) bind(c,name="fsync")
+            !use iso_c_binding, only: c_int
+            !integer(c_int), value :: fd
+            !integer(c_int) :: fsync
+        !end function fsync
       end interface
 
       integer :: ierr,i
       !do i =1,10000
-      !#ifdef WITH_MPI
-      !  CALL MPI_Barrier(MPI_COMM_WORLD,IERR )
-      !#endif
+#ifdef WITH_MPI
+      CALL MPI_Barrier(MPI_COMM_WORLD,IERR )
+#endif
 
-      !  flush(imp)
-      !  ierr = fsync(fnum(imp))
+        flush(imp)
+        !ierr = fsync(fnum(imp)) ! not supported on ifort
 
-      !#ifdef WITH_MPI
-      !  CALL MPI_Barrier(MPI_COMM_WORLD,IERR )
-      !#endif
+#ifdef WITH_MPI
+        CALL MPI_Barrier(MPI_COMM_WORLD,IERR )
+#endif
       !enddo
   END SUBROUTINE BARRIER
 
@@ -736,5 +739,16 @@ contains
 #endif
       if (present(relais_in)) relais_in=relais
   END SUBROUTINE END_KEEP_ORDER
+
+  subroutine my_fseek(unit,pos)
+      implicit none
+      integer :: unit,pos
+#if defined(__INTEL_COMPILER)
+      integer :: i
+      i=fseek(unit,pos,0)
+#else
+      call fseek(unit,pos,0)
+#endif
+  end subroutine my_fseek
 end module mod_mpi
 
