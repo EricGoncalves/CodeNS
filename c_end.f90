@@ -23,7 +23,7 @@ contains
 !
     character(len=32) ::  mot(nmx)
 !
-    call b1_end
+    if(rank==0)    call b1_end
     call endmpi
     call eend
 !

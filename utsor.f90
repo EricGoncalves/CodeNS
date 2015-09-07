@@ -264,7 +264,7 @@ contains
        kmaxf=kmaxb(mfl)
 !
        if(kimp.eq.1) then
-          write(imp,987) l,mfl,iminf,imaxf,jminf,jmaxf,kminf,kmaxf
+          write(imp,987) l,bcl_to_bcg(mfl),iminf,imaxf,jminf,jmaxf,kminf,kmaxf
        endif
 987    format("integration des pressions par frontiere : ",39("-") &
             //1x,"zone ",i3,"   - frontiere ",i3/1x,26("-"), &
@@ -497,7 +497,7 @@ contains
     cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
     cnaero=-clavtot*snal+cnavtot*csal
 !
-    if(kimp.eq.1) then
+    if(kimp.eq.1.and.rank==0) then
        write(imp,990) cxavtot,cyavtot,czavtot,clavtot,cmavtot,cnavtot, &
             cxaero,cyaero,czaero,claero,cmaero,cnaero
     endif

@@ -67,7 +67,6 @@ contains
     use mod_rbc
     use mod_rscpsv
     use mod_atsch_num
-    use mod_mpi
     implicit none
     integer          ::        icyc,     icycle,    icyexpl,      idcyc,        img
     integer          ::        iter,     itypdf,     ityprk,          l,         lm
@@ -231,12 +230,6 @@ contains
 !       application du schema - avance d'un pas de temps
 !-------------------------------------------------------------------------
 !
-!write(stderr,*) 'avant atsch_num',rank+1,&
-!    cson(point_ref(rank+1)),d_volt(point_ref(rank+1),1),dt(point_ref(rank+1)),ff_du(point_ref(rank+1),1),&      
-!    pression(point_ref(rank+1)),ptdual(point_ref(rank+1),1),r(point_ref(rank+1)),u0(point_ref(rank+1),1),&
-!    u_duv(point_ref(rank+1),1),v(point_ref(rank+1),1),vdual(point_ref(rank+1),1),vdual1(point_ref(rank+1),1),&    
-!    vdual2(point_ref(rank+1),1),vol(point_ref(rank+1)),ztemp(point_ref(rank+1))
-
              call atsch_num( &
                   img,ityprk, &
                   icyc,ncyc,idcyc,icycle, &
@@ -262,11 +255,6 @@ contains
                   pression,ztemp,cson, &
                   cvi,cvj,cvk, &
                   cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
-!write(stderr,*) 'après atsch_num',rank+1,&
-!    cson(point_ref(rank+1)),d_volt(point_ref(rank+1),1),dt(point_ref(rank+1)),ff_du(point_ref(rank+1),1),&      
-!    pression(point_ref(rank+1)),ptdual(point_ref(rank+1),1),r(point_ref(rank+1)),u0(point_ref(rank+1),1),&
-!    u_duv(point_ref(rank+1),1),v(point_ref(rank+1),1),vdual(point_ref(rank+1),1),vdual1(point_ref(rank+1),1),&    
-!    vdual2(point_ref(rank+1),1),vol(point_ref(rank+1)),ztemp(point_ref(rank+1))
 !
           enddo                       ! Fin boucle sur img (descente)
 !

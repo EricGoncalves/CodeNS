@@ -61,6 +61,7 @@ contains
     use mod_cvccg
     use mod_writdg
     use mod_residu
+    use mod_mpi
     implicit none
     integer          ::   icyc,  imax,   img,  imin,  jmax
     integer          ::   jmin,  kmax,  kmin,     l,    lm
@@ -87,7 +88,7 @@ contains
        dumaxg(m)=0.
     enddo
 !
-    if (kimp.ge.1) then
+    if (kimp.ge.1.and.rank==0) then
        form='(/1x,2h--,1x,i7,13h ieme cycle :,3x,' &
             //'20hnb total de cycles =,i6)'
        write(imp,form) icyc,ncycle
@@ -96,9 +97,10 @@ contains
     npts=0
     do l=1,lzx
        lm=l+(img-1)*lz
+       call START_KEEP_ORDER
        if (kimp.ge.1) then
           form='(/10x,10hzone no : ,i5,5x,12hgrille no : ,i3/)'
-          write(imp,form) l,img
+          write(imp,form) rank+1,img
        endif
 !
        call residu( &
@@ -109,6 +111,7 @@ contains
             icyc, &
             dumy1,dumy2,dumax, &
             idumx,jdumx,kdumx)
+       call END_KEEP_ORDER
 !
        temp_array(:,1)=dumy1
        temp_array(:,2)=dumy2

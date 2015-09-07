@@ -36,12 +36,11 @@ implicit none
   integer          ::        lzx,   mdimtbx,   mdimtcx,   mdimtnx,   mdimtrx
   integer          ::    mdimubx,      mtax,      mtbx,      mtcx,      mtnx
   integer          ::       mtrx,  ndimctbx,  ndimntbx,   ndimubx
-  integer          ::      neqtx,     nptot,point_ref(4)
+  integer          ::      neqtx,     nptot
   integer         ,allocatable ::    id1(:),   id2(:),   ii1(:),   ii2(:),   jd1(:)
   integer         ,allocatable ::    jd2(:),   jj1(:),   jj2(:),   kd1(:),   kd2(:)
   integer         ,allocatable ::    kk1(:),   kk2(:),lbdrat(:),   nnc(:),  nnfb(:)
   integer         ,allocatable ::    nnn(:),   npc(:),  npfb(:),   npn(:),npbrat(:),nbdrat(:)
-  parameter(point_ref=(/68250,11780,7905,68250/) )
 end module maillage
 !
 module para_var
@@ -212,6 +211,7 @@ implicit none
     double precision ::               zref
     integer         ,allocatable :: nmfint(:)
   data kimp/3/
+!  data lec,imp,out,sec,sor1,sor2,kfa,sor3/11,12,13,14,15,16,17,18/
   data lec,imp,out,sec,sor1,sor2,kfa,sor3/11,12,13,14,15,16,17,18/
   data kdgv,kdav,kdgc,kdac/21,22,23,24/
 !  data inig1,kfi,kfb,kfn,kfc,kfr,kdgcf,kdacf,kres/31,32,33,34,35,36,37,38,39/
