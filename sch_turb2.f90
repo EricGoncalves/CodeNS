@@ -120,12 +120,12 @@ contains
           ind2 = indc(i2m1,j,k)
           do n=ind1,ind2
              m=n-n0c
-             si6= (cmui1(m)*f6x(m)+cmui2(m)*f6x(m-ninc))*sn(m,kdir,1) &
-                  +(cmui1(m)*f6y(m)+cmui2(m)*f6y(m-ninc))*sn(m,kdir,2) &
-                  +(cmui1(m)*f6z(m)+cmui2(m)*f6z(m-ninc))*sn(m,kdir,3)
-             si7= (cmui1(m)*f7x(m)+cmui2(m)*f7x(m-ninc))*sn(m,kdir,1) &
-                  +(cmui1(m)*f7y(m)+cmui2(m)*f7y(m-ninc))*sn(m,kdir,2) &
-                  +(cmui1(m)*f7z(m)+cmui2(m)*f7z(m-ninc))*sn(m,kdir,3)
+             si6= (cmui1(n)*f6x(m)+cmui2(n)*f6x(m-ninc))*sn(m,kdir,1) &
+                  +(cmui1(n)*f6y(m)+cmui2(n)*f6y(m-ninc))*sn(m,kdir,2) &
+                  +(cmui1(n)*f6z(m)+cmui2(n)*f6z(m-ninc))*sn(m,kdir,3)
+             si7= (cmui1(n)*f7x(m)+cmui2(n)*f7x(m-ninc))*sn(m,kdir,1) &
+                  +(cmui1(n)*f7y(m)+cmui2(n)*f7y(m-ninc))*sn(m,kdir,2) &
+                  +(cmui1(n)*f7z(m)+cmui2(n)*f7z(m-ninc))*sn(m,kdir,3)
              u(n,6)=u(n,6)-si6
              u(n,7)=u(n,7)-si7
              u(n-ninc,6)=u(n-ninc,6)+si6
@@ -177,12 +177,12 @@ contains
           ind2 = indc(i2m1,j,k)
           do n=ind1,ind2
              m=n-n0c
-             sj6= (cmuj1(m)*f6x(m)+cmuj2(m)*f6x(m-ninc))*sn(m,kdir,1) &
-                  +(cmuj1(m)*f6y(m)+cmuj2(m)*f6y(m-ninc))*sn(m,kdir,2) &
-                  +(cmuj1(m)*f6z(m)+cmuj2(m)*f6z(m-ninc))*sn(m,kdir,3)
-             sj7= (cmuj1(m)*f7x(m)+cmuj2(m)*f7x(m-ninc))*sn(m,kdir,1) &
-                  +(cmuj1(m)*f7y(m)+cmuj2(m)*f7y(m-ninc))*sn(m,kdir,2) &
-                  +(cmuj1(m)*f7z(m)+cmuj2(m)*f7z(m-ninc))*sn(m,kdir,3)
+             sj6= (cmuj1(n)*f6x(m)+cmuj2(n)*f6x(m-ninc))*sn(m,kdir,1) &
+                  +(cmuj1(n)*f6y(m)+cmuj2(n)*f6y(m-ninc))*sn(m,kdir,2) &
+                  +(cmuj1(n)*f6z(m)+cmuj2(n)*f6z(m-ninc))*sn(m,kdir,3)
+             sj7= (cmuj1(n)*f7x(m)+cmuj2(n)*f7x(m-ninc))*sn(m,kdir,1) &
+                  +(cmuj1(n)*f7y(m)+cmuj2(n)*f7y(m-ninc))*sn(m,kdir,2) &
+                  +(cmuj1(n)*f7z(m)+cmuj2(n)*f7z(m-ninc))*sn(m,kdir,3)
              u(n,6)=u(n,6)-sj6
              u(n,7)=u(n,7)-sj7
              u(n-ninc,6)=u(n-ninc,6)+sj6
@@ -235,12 +235,12 @@ contains
              ind2 = indc(i2m1,j,k)
              do n=ind1,ind2
                 m=n-n0c
-                sk6= (cmuk1(m)*f6x(m)+cmuk2(m)*f6x(m-ninc))*sn(m,kdir,1) &
-                     +(cmuk1(m)*f6y(m)+cmuk2(m)*f6y(m-ninc))*sn(m,kdir,2) &
-                     +(cmuk1(m)*f6z(m)+cmuk2(m)*f6z(m-ninc))*sn(m,kdir,3)
-                sk7= (cmuk1(m)*f7x(m)+cmuk2(m)*f7x(m-ninc))*sn(m,kdir,1) &
-                     +(cmuk1(m)*f7y(m)+cmuk2(m)*f7y(m-ninc))*sn(m,kdir,2) &
-                     +(cmuk1(m)*f7z(m)+cmuk2(m)*f7z(m-ninc))*sn(m,kdir,3)
+                sk6= (cmuk1(n)*f6x(m)+cmuk2(n)*f6x(m-ninc))*sn(m,kdir,1) &
+                     +(cmuk1(n)*f6y(m)+cmuk2(n)*f6y(m-ninc))*sn(m,kdir,2) &
+                     +(cmuk1(n)*f6z(m)+cmuk2(n)*f6z(m-ninc))*sn(m,kdir,3)
+                sk7= (cmuk1(n)*f7x(m)+cmuk2(n)*f7x(m-ninc))*sn(m,kdir,1) &
+                     +(cmuk1(n)*f7y(m)+cmuk2(n)*f7y(m-ninc))*sn(m,kdir,2) &
+                     +(cmuk1(n)*f7z(m)+cmuk2(n)*f7z(m-ninc))*sn(m,kdir,3)
                 u(n,6)=u(n,6)-sk6
                 u(n,7)=u(n,7)-sk7
                 u(n-ninc,6)=u(n-ninc,6)+sk6

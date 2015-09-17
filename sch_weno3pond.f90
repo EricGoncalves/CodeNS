@@ -322,11 +322,11 @@ contains
                 q5f2p=q51*v(n+2*ninc,2)+q52*fxx(m+2*ninc)+q53*fxy(m+2*ninc) &
                      +q54*fxz(m+2*ninc)+q55*fex(m+2*ninc)
 !        coefficients Crj en maillage irregulier
-                c00=cmui2(m1)*0.5
-                c01=cmui1(m1)*0.5
-                c10=-cmui2(m)*0.5
+                c00=cmui2(n1)*0.5
+                c01=cmui1(n1)*0.5
+                c10=-cmui2(n)*0.5
                 c11=1.-c10
-                c21=-cmui1(m+2*ninc)*0.5
+                c21=-cmui1(n+2*ninc)*0.5
                 c20=1.-c21
 !        calcul des flux d'ordre 2 sur les 2 stencils
                 f11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
@@ -399,9 +399,9 @@ contains
                 beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
                      +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
 !        coefficients gamma en maillage irregulier
-                g1p=cmui2(m1)*cvi(m1)/(cmui1(m)*cvi(m)+cmui2(m)*cvi(m)+cmui2(m1)*cvi(m1))
+                g1p=cmui2(n1)*cvi(n1)/(cmui1(n)*cvi(n)+cmui2(n)*cvi(n)+cmui2(n1)*cvi(n1))
                 g2p=1.-g1p
-                g2m=cmui1(m1)*cvi(m1)/(cmui1(m1)*cvi(m1)+cmui2(m1)*cvi(m1)+cmui2(m+2*ninc)*cvi(m+2*ninc))
+                g2m=cmui1(n1)*cvi(n1)/(cmui1(n1)*cvi(n1)+cmui2(n1)*cvi(n1)+cmui2(n+2*ninc)*cvi(n+2*ninc))
                 g1m=1.-g2m
 !        calculs des poids wi
                 ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
@@ -609,14 +609,14 @@ contains
                 df3=f3*sn(m1,kdir,1)+g3*sn(m1,kdir,2)
                 df5=f5*sn(m1,kdir,1)+g5*sn(m1,kdir,2)
 !        calcul des flux visqueux (multiplies par -2)
-                fv2=(cmui2(m1)*toxx(n)+cmui1(m1)*toxx(n1))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,2)
-                fv3=(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*toyy(n)+cmui1(m1)*toyy(n1))*sn(m1,kdir,2)
-                fv5=(cmui2(m1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
-                     +cmui1(m1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
-                     +cmui1(m1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
+                fv2=(cmui2(n1)*toxx(n)+cmui1(n1)*toxx(n1))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*toxy(n)+cmui1(n1)*toxy(n1))*sn(m1,kdir,2)
+                fv3=(cmui2(n1)*toxy(n)+cmui1(n1)*toxy(n1))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*toyy(n)+cmui1(n1)*toyy(n1))*sn(m1,kdir,2)
+                fv5=(cmui2(n1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
+                     +cmui1(n1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
+                     +cmui1(n1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
                 u(n1,1)=u(n1,1)-df1
                 u(n1,2)=u(n1,2)-df2+0.5*fv2
                 u(n1,3)=u(n1,3)-df3+0.5*fv3
@@ -778,11 +778,11 @@ contains
                 q5f2p=q51*v(n+2*ninc,2)+q52*fxx(m+2*ninc)+q53*fxy(m+2*ninc) &
                      +q54*fxz(m+2*ninc)+q55*fex(m+2*ninc)
 !        coefficients Crj en maillage irregulier
-                c00=cmuj2(m1)*0.5
-                c01=cmuj1(m1)*0.5
-                c10=-cmuj2(m)*0.5
+                c00=cmuj2(n1)*0.5
+                c01=cmuj1(n1)*0.5
+                c10=-cmuj2(n)*0.5
                 c11=1.-c10
-                c21=-cmuj1(m+2*ninc)*0.5
+                c21=-cmuj1(n+2*ninc)*0.5
                 c20=1.-c21
 !        calcul des flux d'ordre 2 sur les 2 stencils
                 f11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
@@ -855,9 +855,9 @@ contains
                 beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
                      +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
 !        coefficients gamma en maillage irregulier
-                g1p=cmuj2(m1)*cvj(m1)/(cmuj1(m)*cvj(m)+cmuj2(m)*cvj(m)+cmuj2(m1)*cvj(m1))
+                g1p=cmuj2(n1)*cvj(n1)/(cmuj1(n)*cvj(n)+cmuj2(n)*cvj(n)+cmuj2(n1)*cvj(n1))
                 g2p=1.-g1p
-                g2m=cmuj1(m1)*cvj(m1)/(cmuj1(m1)*cvj(m1)+cmuj2(m1)*cvj(m1)+cmuj2(m+2*ninc)*cvj(m+2*ninc))
+                g2m=cmuj1(n1)*cvj(n1)/(cmuj1(n1)*cvj(n1)+cmuj2(n1)*cvj(n1)+cmuj2(n+2*ninc)*cvj(n+2*ninc))
                 g1m=1.-g2m
 !        calculs des poids wi
                 ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
@@ -1065,14 +1065,14 @@ contains
                 dg3=f3*sn(m1,kdir,1)+g3*sn(m1,kdir,2)
                 dg5=f5*sn(m1,kdir,1)+g5*sn(m1,kdir,2)
 !        calcul des flux visqueux (multiplies par -2)
-                gv2=(cmuj2(m1)*toxx(n)+cmuj1(m1)*toxx(n1))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*toxy(n)+cmuj1(m1)*toxy(n1))*sn(m1,kdir,2)
-                gv3=(cmuj2(m1)*toxy(n)+cmuj1(m1)*toxy(n1))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*toyy(n)+cmuj1(m1)*toyy(n1))*sn(m1,kdir,2)
-                gv5=(cmuj2(m1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
-                     +cmuj1(m1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
-                     +cmuj1(m1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
+                gv2=(cmuj2(n1)*toxx(n)+cmuj1(n1)*toxx(n1))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*toxy(n)+cmuj1(n1)*toxy(n1))*sn(m1,kdir,2)
+                gv3=(cmuj2(n1)*toxy(n)+cmuj1(n1)*toxy(n1))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*toyy(n)+cmuj1(n1)*toyy(n1))*sn(m1,kdir,2)
+                gv5=(cmuj2(n1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
+                     +cmuj1(n1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
+                     +cmuj1(n1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
                 u(n1,1)=u(n1,1)-dg1
                 u(n1,2)=u(n1,2)-dg2+0.5*gv2
                 u(n1,3)=u(n1,3)-dg3+0.5*gv3
@@ -1236,11 +1236,11 @@ contains
                 q5f2p=q51*v(n+2*ninc,2)+q52*fxx(m+2*ninc)+q53*fxy(m+2*ninc) &
                      +q54*fxz(m+2*ninc)+q55*fex(m+2*ninc)
 !        coefficients Crj en maillage irregulier
-                c00=cmui2(m1)*0.5
-                c01=cmui1(m1)*0.5
-                c10=-cmui2(m)*0.5
+                c00=cmui2(n1)*0.5
+                c01=cmui1(n1)*0.5
+                c10=-cmui2(n)*0.5
                 c11=1.-c10
-                c21=-cmui1(m+2*ninc)*0.5
+                c21=-cmui1(n+2*ninc)*0.5
                 c20=1.-c21
 !        calcul des flux d'ordre 2 sur les 2 stencils
                 f11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
@@ -1313,9 +1313,9 @@ contains
                 beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
                      +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
 !        coefficients gamma en maillage irregulier
-                g1p=cmui2(m1)*cvi(m1)/(cmui1(m)*cvi(m)+cmui2(m)*cvi(m)+cmui2(m1)*cvi(m1))
+                g1p=cmui2(n1)*cvi(n1)/(cmui1(n)*cvi(n)+cmui2(n)*cvi(n)+cmui2(n1)*cvi(n1))
                 g2p=1.-g1p
-                g2m=cmui1(m1)*cvi(m1)/(cmui1(m1)*cvi(m1)+cmui2(m1)*cvi(m1)+cmui2(m+2*ninc)*cvi(m+2*ninc))
+                g2m=cmui1(n1)*cvi(n1)/(cmui1(n1)*cvi(n1)+cmui2(n1)*cvi(n1)+cmui2(n+2*ninc)*cvi(n+2*ninc))
                 g1m=1.-g2m
 !        calculs des poids wi
                 ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
@@ -1610,21 +1610,21 @@ contains
 !!             +(p51*v1*q13+p52*v1*q23+p53*v1*q33+p54*v4*q43+p55*v5*q53)*dw3 &
 !!             +(p51*v1*q14+p52*v1*q24+p53*v1*q34+p54*v4*q44+p55*v5*q54)*dw4 &
 !!             +(p51*v1*q15+p52*v1*q25+p53*v1*q35+p54*v4*q45+p55*v5*q55)*dw5
-!          dfex=cmui1(m)*(rhoer+ps(n1)-pinfl)*ur  &
-!              +cmui2(m)*(rhoel+ps(n )-pinfl)*ul
-!          dfey=cmui1(m)*(rhoer+ps(n1)-pinfl)*vr  &
-!              +cmui2(m)*(rhoel+ps(n )-pinfl)*vl
+!          dfex=cmui1(n)*(rhoer+ps(n1)-pinfl)*ur  &
+!              +cmui2(n)*(rhoel+ps(n )-pinfl)*ul
+!          dfey=cmui1(n)*(rhoer+ps(n1)-pinfl)*vr  &
+!              +cmui2(n)*(rhoel+ps(n )-pinfl)*vl
 !          df5=0.5*(dfex*sn(m,kdir,1)+dfey*sn(m,kdir,2)-di5)
 !         endif
 !        calcul des flux visqueux (multiplies par -2)
-                fv2=(cmui2(m1)*toxx(n)+cmui1(m1)*toxx(n1))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,2)
-                fv3=(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*toyy(n)+cmui1(m1)*toyy(n1))*sn(m1,kdir,2)
-                fv5=(cmui2(m1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
-                     +cmui1(m1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
-                     +cmui1(m1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
+                fv2=(cmui2(n1)*toxx(n)+cmui1(n1)*toxx(n1))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*toxy(n)+cmui1(n1)*toxy(n1))*sn(m1,kdir,2)
+                fv3=(cmui2(n1)*toxy(n)+cmui1(n1)*toxy(n1))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*toyy(n)+cmui1(n1)*toyy(n1))*sn(m1,kdir,2)
+                fv5=(cmui2(n1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
+                     +cmui1(n1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
+                     +cmui1(n1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
                 u(n1,1)=u(n1,1)-df1
                 u(n1,2)=u(n1,2)-df2+0.5*fv2
                 u(n1,3)=u(n1,3)-df3+0.5*fv3
@@ -1786,11 +1786,11 @@ contains
                 q5f2p=q51*v(n+2*ninc,2)+q52*fxx(m+2*ninc)+q53*fxy(m+2*ninc) &
                      +q54*fxz(m+2*ninc)+q55*fex(m+2*ninc)
 !        coefficients Crj en maillage irregulier
-                c00=cmuj2(m1)*0.5
-                c01=cmuj1(m1)*0.5
-                c10=-cmuj2(m)*0.5
+                c00=cmuj2(n1)*0.5
+                c01=cmuj1(n1)*0.5
+                c10=-cmuj2(n)*0.5
                 c11=1.-c10
-                c21=-cmuj1(m+2*ninc)*0.5
+                c21=-cmuj1(n+2*ninc)*0.5
                 c20=1.-c21
 !        calcul des flux d'ordre 2 sur les 2 stencils
                 f11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
@@ -1863,9 +1863,9 @@ contains
                 beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
                      +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
 !        coefficients gamma en maillage irregulier
-                g1p=cmuj2(m1)*cvj(m1)/(cmuj1(m)*cvj(m)+cmuj2(m)*cvj(m)+cmuj2(m1)*cvj(m1))
+                g1p=cmuj2(n1)*cvj(n1)/(cmuj1(n)*cvj(n)+cmuj2(n)*cvj(n)+cmuj2(n1)*cvj(n1))
                 g2p=1.-g1p
-                g2m=cmuj1(m1)*cvj(m1)/(cmuj1(m1)*cvj(m1)+cmuj2(m1)*cvj(m1)+cmuj2(m+2*ninc)*cvj(m+2*ninc))
+                g2m=cmuj1(n1)*cvj(n1)/(cmuj1(n1)*cvj(n1)+cmuj2(n1)*cvj(n1)+cmuj2(n+2*ninc)*cvj(n+2*ninc))
                 g1m=1.-g2m
 !        calculs des poids wi
                 ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
@@ -2160,21 +2160,21 @@ contains
 !!             +(p51*v1*q13+p52*v1*q23+p53*v1*q33+p54*v4*q43+p55*v5*q53)*dw3 &
 !!             +(p51*v1*q14+p52*v1*q24+p53*v1*q34+p54*v4*q44+p55*v5*q54)*dw4 &
 !!             +(p51*v1*q15+p52*v1*q25+p53*v1*q35+p54*v4*q45+p55*v5*q55)*dw5
-!          dfex=cmuj1(m)*(rhoer+ps(n1)-pinfl)*ur  &
-!              +cmuj2(m)*(rhoel+ps(n )-pinfl)*ul
-!          dfey=cmuj1(m)*(rhoer+ps(n1)-pinfl)*vr  &
-!              +cmuj2(m)*(rhoel+ps(n )-pinfl)*vl
+!          dfex=cmuj1(n)*(rhoer+ps(n1)-pinfl)*ur  &
+!              +cmuj2(n)*(rhoel+ps(n )-pinfl)*ul
+!          dfey=cmuj1(n)*(rhoer+ps(n1)-pinfl)*vr  &
+!              +cmuj2(n)*(rhoel+ps(n )-pinfl)*vl
 !          dg5=0.5*(dfex*sn(m,kdir,1)+dfey*sn(m,kdir,2)-dj5)
 !         endif
 !        calcul des flux visqueux (multiplies par -2)
-                gv2=(cmuj2(m1)*toxx(n)+cmuj1(m1)*toxx(n1))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*toxy(n)+cmuj1(m1)*toxy(n1))*sn(m1,kdir,2)
-                gv3=(cmuj2(m1)*toxy(n)+cmuj1(m1)*toxy(n1))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*toyy(n)+cmuj1(m1)*toyy(n1))*sn(m1,kdir,2)
-                gv5=(cmuj2(m1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
-                     +cmuj1(m1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
-                     +cmuj1(m1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
+                gv2=(cmuj2(n1)*toxx(n)+cmuj1(n1)*toxx(n1))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*toxy(n)+cmuj1(n1)*toxy(n1))*sn(m1,kdir,2)
+                gv3=(cmuj2(n1)*toxy(n)+cmuj1(n1)*toxy(n1))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*toyy(n)+cmuj1(n1)*toyy(n1))*sn(m1,kdir,2)
+                gv5=(cmuj2(n1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
+                     +cmuj1(n1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
+                     +cmuj1(n1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
                 u(n1,1)=u(n1,1)-dg1
                 u(n1,2)=u(n1,2)-dg2+0.5*gv2
                 u(n1,3)=u(n1,3)-dg3+0.5*gv3

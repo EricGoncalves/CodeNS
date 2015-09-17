@@ -196,8 +196,8 @@ contains
        ind2 = indc(i1,j2m1,k)
        do n=ind1,ind2,ncj
           m=n-n0c
-          cvi(m-ninc)=cvi(m)
-          cvi(m-2*ninc)=cvi(m)
+          cvi(n-ninc)=cvi(n)
+          cvi(n-2*ninc)=cvi(n)
        enddo
     enddo
 
@@ -206,7 +206,7 @@ contains
        ind2 = indc(i2m1,j2m1,k)
        do n=ind1,ind2,ncj
           m=n-n0c
-          cvi(m+2*ninc)=cvi(m+ninc)
+          cvi(n+2*ninc)=cvi(n+ninc)
        enddo
     enddo
 
@@ -374,12 +374,12 @@ contains
              q5f3p=q51*v(n+3*ninc,2)+q52*fxx(m+3*ninc)+q53*fxy(m+3*ninc)    &
                   +q54*fxz(m+3*ninc)+q55*fex(m+3*ninc)
 !        coefficients Crj en maillage irregulier
-             afg=cmui2(m1)*cvi(m1)
-             afh=afg+cmui2(m+2*ninc)*cvi(m+2*ninc)
-             afi=afh+cmui2(m+3*ninc)*cvi(m+3*ninc)
-             afe=cmui2(m)*cvi(m)
-             afd=afe+cmui2(m-ninc)*cvi(m-ninc)
-             afc=afd+cmui2(m-2*ninc)*cvi(m-2*ninc)
+             afg=cmui2(n1)*cvi(n1)
+             afh=afg+cmui2(n+2*ninc)*cvi(n+2*ninc)
+             afi=afh+cmui2(n+3*ninc)*cvi(n+3*ninc)
+             afe=cmui2(n)*cvi(n)
+             afd=afe+cmui2(n-ninc)*cvi(n-ninc)
+             afc=afd+cmui2(n-2*ninc)*cvi(n-2*ninc)
              c00=afg*afh/((afg+afe)*(afh+afe))
              c02=-afe*afg/((afh+afe)*afh)
              c01=1.-c00-c02
@@ -965,14 +965,14 @@ contains
              df3=f3*sn(m1,kdir,1)+g3*sn(m1,kdir,2)
              df5=f5*sn(m1,kdir,1)+g5*sn(m1,kdir,2)
 !        calcul des flux visqueux (multiplies par -2)
-             fv2=(cmui2(m1)*toxx(n)+cmui1(m1)*toxx(n1))*sn(m1,kdir,1) &
-                  +(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,2)
-             fv3=(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,1) &
-                  +(cmui2(m1)*toyy(n)+cmui1(m1)*toyy(n1))*sn(m1,kdir,2)
-             fv5=(cmui2(m1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
-                  +cmui1(m1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
-                  +(cmui2(m1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
-                  +cmui1(m1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
+             fv2=(cmui2(n1)*toxx(n)+cmui1(n1)*toxx(n1))*sn(m1,kdir,1) &
+                  +(cmui2(n1)*toxy(n)+cmui1(n1)*toxy(n1))*sn(m1,kdir,2)
+             fv3=(cmui2(n1)*toxy(n)+cmui1(n1)*toxy(n1))*sn(m1,kdir,1) &
+                  +(cmui2(n1)*toyy(n)+cmui1(n1)*toyy(n1))*sn(m1,kdir,2)
+             fv5=(cmui2(n1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
+                  +cmui1(n1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
+                  +(cmui2(n1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
+                  +cmui1(n1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
              u(n1,1)=u(n1,1)-df1
              u(n1,2)=u(n1,2)-df2+0.5*fv2
              u(n1,3)=u(n1,3)-df3+0.5*fv3
@@ -995,8 +995,8 @@ contains
        ind2 = indc(i2m1,j1,k)
        do n=ind1,ind2
           m=n-n0c
-          cvj(m-ninc)=cvj(m)
-          cvj(m-2*ninc)=cvj(m)
+          cvj(n-ninc)=cvj(n)
+          cvj(n-2*ninc)=cvj(n)
        enddo
     enddo
 !
@@ -1005,7 +1005,7 @@ contains
        ind2 = indc(i2m1,j2m1,k)
        do n=ind1,ind2
           m=n-n0c
-          cvj(m+2*ninc)=cvj(m+ninc)
+          cvj(n+2*ninc)=cvj(n+ninc)
        enddo
     enddo
 
@@ -1173,12 +1173,12 @@ contains
              q5f3p=q51*v(n+3*ninc,2)+q52*fxx(m+3*ninc)+q53*fxy(m+3*ninc)    &
                   +q54*fxz(m+3*ninc)+q55*fex(m+3*ninc)
 !        coefficients Crj en maillage irregulier
-             bfg=cmuj2(m1)*cvj(m1)
-             bfh=bfg+cmuj2(m+2*ninc)*cvj(m+2*ninc)
-             bfi=bfh+cmuj2(m+3*ninc)*cvj(m+3*ninc)
-             bfe=cmuj2(m)*cvj(m)
-             bfd=bfe+cmuj2(m-ninc)*cvj(m-ninc)
-             bfc=bfd+cmuj2(m-2*ninc)*cvj(m-2*ninc)
+             bfg=cmuj2(n1)*cvj(n1)
+             bfh=bfg+cmuj2(n+2*ninc)*cvj(n+2*ninc)
+             bfi=bfh+cmuj2(n+3*ninc)*cvj(n+3*ninc)
+             bfe=cmuj2(n)*cvj(n)
+             bfd=bfe+cmuj2(n-ninc)*cvj(n-ninc)
+             bfc=bfd+cmuj2(n-2*ninc)*cvj(n-2*ninc)
              c00=bfg*bfh/((bfg+bfe)*(bfh+bfe))
              c02=-bfe*bfg/((bfh+bfe)*bfh)
              c01=1.-c00-c02
@@ -1764,14 +1764,14 @@ contains
              dg3=f3*sn(m1,kdir,1)+g3*sn(m1,kdir,2)
              dg5=f5*sn(m1,kdir,1)+g5*sn(m1,kdir,2)
 !        calcul des flux visqueux (multiplies par -2)
-             gv2=(cmuj2(m1)*toxx(n)+cmuj1(m1)*toxx(n1))*sn(m1,kdir,1) &
-                  +(cmuj2(m1)*toxy(n)+cmuj1(m1)*toxy(n1))*sn(m1,kdir,2)
-             gv3=(cmuj2(m1)*toxy(n)+cmuj1(m1)*toxy(n1))*sn(m1,kdir,1) &
-                  +(cmuj2(m1)*toyy(n)+cmuj1(m1)*toyy(n1))*sn(m1,kdir,2)
-             gv5=(cmuj2(m1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
-                  +cmuj1(m1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
-                  +(cmuj2(m1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
-                  +cmuj1(m1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
+             gv2=(cmuj2(n1)*toxx(n)+cmuj1(n1)*toxx(n1))*sn(m1,kdir,1) &
+                  +(cmuj2(n1)*toxy(n)+cmuj1(n1)*toxy(n1))*sn(m1,kdir,2)
+             gv3=(cmuj2(n1)*toxy(n)+cmuj1(n1)*toxy(n1))*sn(m1,kdir,1) &
+                  +(cmuj2(n1)*toyy(n)+cmuj1(n1)*toyy(n1))*sn(m1,kdir,2)
+             gv5=(cmuj2(n1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
+                  +cmuj1(n1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
+                  +(cmuj2(n1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
+                  +cmuj1(n1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
              u(n1,1)=u(n1,1)-dg1
              u(n1,2)=u(n1,2)-dg2+0.5*gv2
              u(n1,3)=u(n1,3)-dg3+0.5*gv3

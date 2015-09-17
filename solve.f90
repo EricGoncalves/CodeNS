@@ -1013,7 +1013,7 @@ mnc=0
     allocate(tn9(ip00))
     allocate(tn10(ip00))
 
-    ip11 = ndimctbx        ! nbr de cellules de tts les domaines (strict)
+    ip11 = ndimntbx        ! nbr de cellules de tts les domaines (strict)
     ip60 = nvar
     allocate(tnte1(ip11,ip60))
     allocate(tnte2(ip11,ip60))
@@ -1031,7 +1031,7 @@ mnc=0
     allocate(r(ip11))
     allocate(vol(ip11))
 
-    ip12 = ndimctbx        ! nbr de cellules de tts les domaines (strict)
+    ip12 = ndimntbx        ! nbr de cellules de tts les domaines (strict)
     allocate(toxx(ip12))
     allocate(toxy(ip12))
     allocate(toxz(ip12))

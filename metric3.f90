@@ -40,8 +40,8 @@ contains
     integer          ::     i,   i1, i1p1,   i2, i2m1
     integer          ::    id,    j,   j1, j1p1,   j2
     integer          ::  j2m1,   jd,    k,   k1, k1p1
-    integer          ::    k2, k2m1,   kd,    l,    m
-    integer          ::    mc,    n,  n0c,  nci, ncij
+    integer          ::    k2, k2m1,   kd,    l    
+    integer          ::    nc,    n,  n0c,  nci, ncij
     integer          :: ncijk, ncik,  ncj, ncjk,  nck
     integer          ::   nid,  njd
     double precision :: cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21)
@@ -93,7 +93,6 @@ contains
        do j=j1p1,j2m1
           do i=i1p1,i2m1
              n=indn(i,j,k1)
-             m=n-n0c
 !-----------------------------------------------------------------------
 !             pour le flux calcule dans la direction i
 !-----------------------------------------------------------------------
@@ -147,10 +146,10 @@ contains
 !         d2=d2/d3
              dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-             cmui1(m)=2.*dpi/(dpi+dmi)
-             cmui2(m)=2.*dmi/(dpi+dmi)
-             cvi(m)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
-             cvi(m+nci)=cvi(m)*cmui2(m)
+             cmui1(n)=2.*dpi/(dpi+dmi)
+             cmui2(n)=2.*dmi/(dpi+dmi)
+             cvi(n)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
+             cvi(n+nci)=cvi(n)*cmui2(n)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction j
 !------------------------------------------------------------------------
@@ -187,34 +186,34 @@ contains
 !         d2=d2/d3
              dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-             cmuj1(m)=2.*dpj/(dpj+dmj)
-             cmuj2(m)=2.*dmj/(dpj+dmj)
-             cvj(m)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
-             cvj(m+ncj)=cvj(m)*cmuj2(m)
+             cmuj1(n)=2.*dpj/(dpj+dmj)
+             cmuj2(n)=2.*dmj/(dpj+dmj)
+             cvj(n)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
+             cvj(n+ncj)=cvj(n)*cmuj2(n)
           enddo
        enddo
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2
-          m=indn(i1,j,k1)-n0c
-          cmuj1(m)=cmuj1(m+nci)
-          cmuj2(m)=cmuj2(m+nci)
-          cvi(m)=cvi(m+nci)*cmui1(m+nci)
-          cvj(m)=cvj(m+nci)
+          n=indn(i1,j,k1)
+          cmuj1(n)=cmuj1(n+nci)
+          cmuj2(n)=cmuj2(n+nci)
+          cvi(n)=cvi(n+nci)*cmui1(n+nci)
+          cvj(n)=cvj(n+nci)
        enddo
 !
        do i=i1p1,i2
-          m=indn(i,j1,k1)-n0c
-          cmui1(m)=cmui1(m+ncj)
-          cmui2(m)=cmui2(m+ncj)
-          cvj(m)=cvj(m+ncj)*cmuj1(m+ncj)
-          cvi(m)=cvi(m+ncj)
+          n=indn(i,j1,k1)
+          cmui1(n)=cmui1(n+ncj)
+          cmui2(n)=cmui2(n+ncj)
+          cvj(n)=cvj(n+ncj)*cmuj1(n+ncj)
+          cvi(n)=cvi(n+ncj)
        enddo
 !
-       mc=indn(i1,j1,k1)-n0c
-       cvi(mc)=cvi(mc+ncj)
-       cvj(mc)=cvj(mc+nci)
+       nc=indn(i1,j1,k1)
+       cvi(nc)=cvi(nc+ncj)
+       cvj(nc)=cvj(nc+nci)
 !
 !******************************************************************************
     elseif(equat(3:5).eq.'2dj') then
@@ -223,7 +222,6 @@ contains
        do k=k1p1,k2m1
           do i=i1p1,i2m1
              n=indn(i,j1,k)
-             m=n-n0c
 !-----------------------------------------------------------------------
 !             pour le flux calcule dans la direction i
 !-----------------------------------------------------------------------
@@ -267,10 +265,10 @@ contains
 !         d2=d2/d3
              dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-             cmui1(m)=2.*dpi/(dpi+dmi)
-             cmui2(m)=2.*dmi/(dpi+dmi)
-             cvi(m)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
-             cvi(m+nci)=cvi(m)*cmui2(m)
+             cmui1(n)=2.*dpi/(dpi+dmi)
+             cmui2(n)=2.*dmi/(dpi+dmi)
+             cvi(n)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
+             cvi(n+nci)=cvi(n)*cmui2(n)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction k
 !------------------------------------------------------------------------
@@ -307,34 +305,34 @@ contains
 !         d2=d2/d3
              dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-             cmuk1(m)=2.*dpk/(dpk+dmk)
-             cmuk2(m)=2.*dmk/(dpk+dmk)
-             cvk(m)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
-             cvk(m+nck)=cvk(m)*cmuk2(m)
+             cmuk1(n)=2.*dpk/(dpk+dmk)
+             cmuk2(n)=2.*dmk/(dpk+dmk)
+             cvk(n)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
+             cvk(n+nck)=cvk(n)*cmuk2(n)
           enddo
        enddo
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
        do k=k1p1,k2
-          m=indn(i1,j1,k)-n0c
-          cmuk1(m)=cmuk1(m+nci)
-          cmuk2(m)=cmuk2(m+nci)
-          cvi(m)=cvi(m+nci)*cmui1(m+nci)
-          cvk(m)=cvk(m+nci)
+          n=indn(i1,j1,k)
+          cmuk1(n)=cmuk1(n+nci)
+          cmuk2(n)=cmuk2(n+nci)
+          cvi(n)=cvi(n+nci)*cmui1(n+nci)
+          cvk(n)=cvk(n+nci)
        enddo
 !
        do i=i1p1,i2
-          m=indn(i,j1,k1)-n0c
-          cmui1(m)=cmui1(m+nck)
-          cmui2(m)=cmui2(m+nck)
-          cvk(m)=cvk(m+nck)*cmuk1(m+nck)
-          cvi(m)=cvi(m+nck)
+          n=indn(i,j1,k1)
+          cmui1(n)=cmui1(n+nck)
+          cmui2(n)=cmui2(n+nck)
+          cvk(n)=cvk(n+nck)*cmuk1(n+nck)
+          cvi(n)=cvi(n+nck)
        enddo
 !
-       mc=indn(i1,j1,k1)-n0c
-       cvi(mc)=cvi(mc+nck)
-       cvk(mc)=cvk(mc+nci)
+       nc=indn(i1,j1,k1)
+       cvi(nc)=cvi(nc+nck)
+       cvk(nc)=cvk(nc+nci)
 !
 !******************************************************************************
     elseif(equat(3:5).eq.'2di') then
@@ -343,7 +341,6 @@ contains
        do k=k1p1,k2m1
           do j=j1p1,j2m1
              n=indn(i1,j,k)
-             m=n-n0c
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction j
 !------------------------------------------------------------------------
@@ -386,10 +383,10 @@ contains
 !         d2=d2/d3
              dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-             cmuj1(m)=2.*dpj/(dpj+dmj)
-             cmuj2(m)=2.*dmj/(dpj+dmj)
-             cvj(m)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
-             cvj(m+ncj)=cvj(m)*cmuj2(m)
+             cmuj1(n)=2.*dpj/(dpj+dmj)
+             cmuj2(n)=2.*dmj/(dpj+dmj)
+             cvj(n)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
+             cvj(n+ncj)=cvj(n)*cmuj2(n)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction k
 !------------------------------------------------------------------------
@@ -426,34 +423,34 @@ contains
 !         d2=d2/d3
              dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-             cmuk1(m)=2.*dpk/(dpk+dmk)
-             cmuk2(m)=2.*dmk/(dpk+dmk)
-             cvk(m)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
-             cvk(m+nck)=cvk(m)*cmuk2(m)
+             cmuk1(n)=2.*dpk/(dpk+dmk)
+             cmuk2(n)=2.*dmk/(dpk+dmk)
+             cvk(n)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
+             cvk(n+nck)=cvk(n)*cmuk2(n)
           enddo
        enddo
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2
-          m=indn(i1,j,k1)-n0c
-          cmuj1(m)=cmuj1(m+nck)
-          cmuj2(m)=cmuj2(m+nck)
-          cvk(m)=cvk(m+nck)*cmuk1(m+nck)
-          cvj(m)=cvj(m+nck)
+          n=indn(i1,j,k1)
+          cmuj1(n)=cmuj1(n+nck)
+          cmuj2(n)=cmuj2(n+nck)
+          cvk(n)=cvk(n+nck)*cmuk1(n+nck)
+          cvj(n)=cvj(n+nck)
        enddo
 !
        do k=k1p1,k2
-          m=indn(i1,j1,k)-n0c
-          cmuk1(m)=cmuk1(m+ncj)
-          cmuk2(m)=cmuk2(m+ncj)
-          cvj(m)=cvj(m+ncj)*cmuj1(m+ncj)
-          cvk(m)=cvk(m+ncj)
+          n=indn(i1,j1,k)
+          cmuk1(n)=cmuk1(n+ncj)
+          cmuk2(n)=cmuk2(n+ncj)
+          cvj(n)=cvj(n+ncj)*cmuj1(n+ncj)
+          cvk(n)=cvk(n+ncj)
        enddo
 !
-       mc=indn(i1,j1,k1)-n0c
-       cvj(mc)=cvj(mc+nck)
-       cvk(mc)=cvk(mc+ncj)
+       nc=indn(i1,j1,k1)
+       cvj(nc)=cvj(nc+nck)
+       cvk(nc)=cvk(nc+ncj)
 !
 !******************************************************************************
     elseif(equat(3:4).eq.'3d') then
@@ -463,7 +460,6 @@ contains
           do j=j1p1,j2m1
              do i=i1p1,i2m1
                 n=indn(i,j,k)
-                m=n-n0c
 !-----------------------------------------------------------------------
 !             pour le flux calcule dans la direction i
 !-----------------------------------------------------------------------
@@ -517,10 +513,10 @@ contains
 !         d2=d2/d3
                 dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
                 dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-                cmui1(m)=2.*dpi/(dpi+dmi)
-                cmui2(m)=2.*dmi/(dpi+dmi)
-                cvi(m)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
-                cvi(m+nci)=cvi(m)*cmui2(m)
+                cmui1(n)=2.*dpi/(dpi+dmi)
+                cmui2(n)=2.*dmi/(dpi+dmi)
+                cvi(n)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
+                cvi(n+nci)=cvi(n)*cmui2(n)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction j
 !------------------------------------------------------------------------
@@ -557,10 +553,10 @@ contains
 !         d2=d2/d3
                 dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
                 dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-                cmuj1(m)=2.*dpj/(dpj+dmj)
-                cmuj2(m)=2.*dmj/(dpj+dmj)
-                cvj(m)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
-                cvj(m+ncj)=cvj(m)*cmuj2(m)
+                cmuj1(n)=2.*dpj/(dpj+dmj)
+                cmuj2(n)=2.*dmj/(dpj+dmj)
+                cvj(n)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
+                cvj(n+ncj)=cvj(n)*cmuj2(n)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction k
 !------------------------------------------------------------------------
@@ -597,10 +593,10 @@ contains
 !         d2=d2/d3
                 dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
                 dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-                cmuk1(m)=2.*dpk/(dpk+dmk)
-                cmuk2(m)=2.*dmk/(dpk+dmk)
-                cvk(m)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
-                cvk(m+nck)=cvk(m)*cmuk2(m)
+                cmuk1(n)=2.*dpk/(dpk+dmk)
+                cmuk2(n)=2.*dmk/(dpk+dmk)
+                cvk(n)=sqrt((xr-xp)**2+(yr-yp)**2+(zr-zp)**2)
+                cvk(n+nck)=cvk(n)*cmuk2(n)
              enddo
           enddo
        enddo
@@ -609,74 +605,74 @@ contains
 !------------------------------------------------------------------------
        do j=j1p1,j2
           do k=k1p1,k2
-             m=indn(i1,j,k)-n0c
-             cmuj1(m)=cmuj1(m+nci)
-             cmuj2(m)=cmuj2(m+nci)
-             cmuk1(m)=cmuk1(m+nci)
-             cmuk2(m)=cmuk2(m+nci)
-             cvi(m)=cvi(m+nci)*cmui1(m+nci)
-             cvj(m)=cvj(m+nci)
-             cvk(m)=cvk(m+nci)
+             n=indn(i1,j,k)
+             cmuj1(n)=cmuj1(n+nci)
+             cmuj2(n)=cmuj2(n+nci)
+             cmuk1(n)=cmuk1(n+nci)
+             cmuk2(n)=cmuk2(n+nci)
+             cvi(n)=cvi(n+nci)*cmui1(n+nci)
+             cvj(n)=cvj(n+nci)
+             cvk(n)=cvk(n+nci)
           enddo
        enddo
 !
        do i=i1p1,i2
           do j=j1p1,j2
-             m=indn(i,j,k1)-n0c
-             cmui1(m)=cmui1(m+nck)
-             cmui2(m)=cmui2(m+nck)
-             cmuj1(m)=cmuj1(m+nck)
-             cmuj2(m)=cmuj2(m+nck)
-             cvk(m)=cvk(m+nck)*cmuk1(m+nck)
-             cvi(m)=cvi(m+nck)
-             cvj(m)=cvi(m+nck)
+             n=indn(i,j,k1)
+             cmui1(n)=cmui1(n+nck)
+             cmui2(n)=cmui2(n+nck)
+             cmuj1(n)=cmuj1(n+nck)
+             cmuj2(n)=cmuj2(n+nck)
+             cvk(n)=cvk(n+nck)*cmuk1(n+nck)
+             cvi(n)=cvi(n+nck)
+             cvj(n)=cvi(n+nck)
           enddo
        enddo
 !
        do i=i1p1,i2
           do k=k1p1,k2
-             m=indn(i,j1,k)-n0c
-             cmui1(m)=cmui1(m+ncj)
-             cmui2(m)=cmui2(m+ncj)
-             cmuk1(m)=cmuk1(m+ncj)
-             cmuk2(m)=cmuk2(m+ncj)
-             cvj(m)=cvj(m+ncj)*cmuj1(m+ncj)
-             cvi(m)=cvi(m+ncj)
-             cvk(m)=cvk(m+ncj)
+             n=indn(i,j1,k)
+             cmui1(n)=cmui1(n+ncj)
+             cmui2(n)=cmui2(n+ncj)
+             cmuk1(n)=cmuk1(n+ncj)
+             cmuk2(n)=cmuk2(n+ncj)
+             cvj(n)=cvj(n+ncj)*cmuj1(n+ncj)
+             cvi(n)=cvi(n+ncj)
+             cvk(n)=cvk(n+ncj)
           enddo
        enddo
 !
        do i=i1p1,i2
-          m=indn(i,j1,k1)-n0c
-          cmui1(m)=cmui1(m+ncj)
-          cmui2(m)=cmui2(m+ncj)
-          cvj(m)=cvj(m+ncj)*cmuj1(m+ncj)
-          cvk(m)=cvk(m+nck)*cmuk1(m+nck)
-          cvi(m)=cvi(m+ncj)
+          n=indn(i,j1,k1)
+          cmui1(n)=cmui1(n+ncj)
+          cmui2(n)=cmui2(n+ncj)
+          cvj(n)=cvj(n+ncj)*cmuj1(n+ncj)
+          cvk(n)=cvk(n+nck)*cmuk1(n+nck)
+          cvi(n)=cvi(n+ncj)
        enddo
 !
        do j=j1p1,j2
-          m=indn(i1,j,k1)-n0c
-          cmuj1(m)=cmuj1(m+nci)
-          cmuj2(m)=cmuj2(m+nci)
-          cvi(m)=cvi(m+nci)*cmui1(m+nci)
-          cvk(m)=cvk(m+nck)*cmuk1(m+nck)
-          cvj(m)=cvj(m+nci)
+          n=indn(i1,j,k1)
+          cmuj1(n)=cmuj1(n+nci)
+          cmuj2(n)=cmuj2(n+nci)
+          cvi(n)=cvi(n+nci)*cmui1(n+nci)
+          cvk(n)=cvk(n+nck)*cmuk1(n+nck)
+          cvj(n)=cvj(n+nci)
        enddo
 !
        do k=k1p1,k2
-          m=indn(i1,j1,k)-n0c
-          cmuk1(m)=cmuk1(m+ncj)
-          cmuk2(m)=cmuk2(m+ncj)
-          cvi(m)=cvi(m+nci)*cmui1(m+nci)
-          cvj(m)=cvj(m+ncj)*cmuj1(m+ncj)
-          cvk(m)=cvk(m+ncj)
+          n=indn(i1,j1,k)
+          cmuk1(n)=cmuk1(n+ncj)
+          cmuk2(n)=cmuk2(n+ncj)
+          cvi(n)=cvi(n+nci)*cmui1(n+nci)
+          cvj(n)=cvj(n+ncj)*cmuj1(n+ncj)
+          cvk(n)=cvk(n+ncj)
        enddo
 !
-       mc=indn(i1,j1,k1)-n0c
-       cvi(mc)=cvi(mc+ncj)
-       cvj(mc)=cvj(mc+nci)
-       cvk(mc)=cvk(mc+ncj)
+       nc=indn(i1,j1,k1)
+       cvi(nc)=cvi(nc+ncj)
+       cvj(nc)=cvj(nc+nci)
+       cvk(nc)=cvk(nc+ncj)
 !******************************************************************
     endif
 !

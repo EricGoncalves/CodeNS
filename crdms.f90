@@ -118,6 +118,7 @@ contains
        nkd=kd2(lm)-kd1(lm)+1
        nptfs =nid*njd*nkd
        nnn(lm)=nptfs
+!       nptfs =(nid-1)*(njd-1)*(nkd-1)
        nnc(lm)=nptfs
        nnfb(lm)=nind*nptfs
 !
@@ -126,7 +127,7 @@ contains
        npfb(lm)=nind*ndimntbx
 !
        ndimubx =max(ndimubx,nnn(lm))
-       ndimubx =max(ndimubx,nnc(lm))
+!       ndimubx =max(ndimubx,nnc(lm))
        ndimctbx=ndimctbx+nnc(lm)
        ndimntbx=ndimntbx+nnn(lm)
     enddo
