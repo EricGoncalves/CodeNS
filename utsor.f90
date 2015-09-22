@@ -162,7 +162,7 @@ contains
     integer          ::    m2maxm1,     m2min,        mf,      mfac,     mfacn
     integer          ::        mfl,       n0c,       n0n,ncbd(ip41),       nci
     integer          ::        ncj,       nck,     nfac1,     nfac2,     nfac3
-    integer          ::      nfac4,     nfacf,       nid,      nijd,       njd,proc
+    integer          ::      nfac4,     nfacf,       nid,      nijd,       njd
     double precision ::          akp,       alfar,       betar,      claero,     claerob
     double precision ::         clav,       clavb,     clavtot,      cmaero,     cmaerob
     double precision ::         cmav,       cmavb,     cmavtot,      cnaero,     cnaerob
@@ -211,8 +211,7 @@ contains
     if(kvglo.eq.0) return
     if(nbfll.eq.0) return
 !
-    do proc=0,nprocs-1
-      if (rank==proc) then
+    call START_KEEP_ORDER
     open(sorf2,file='fsor2')
 !
     pis2=atan2(1.,0.)
@@ -478,9 +477,7 @@ contains
             ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
     enddo
     close(sorf2)
-    endif
-    call barrier
-    enddo 
+    call END_KEEP_ORDER
 
     call SUM_MPI(cxavtot,cxavtot)
     call SUM_MPI(cyavtot,cyavtot)

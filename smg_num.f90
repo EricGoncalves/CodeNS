@@ -67,6 +67,7 @@ contains
     use mod_rbc
     use mod_rscpsv
     use mod_atsch_num
+    use mod_mpi
     implicit none
     integer          ::        icyc,     icycle,    icyexpl,      idcyc,        img
     integer          ::        iter,     itypdf,     ityprk,          l,         lm
@@ -394,10 +395,12 @@ contains
 !
 !          sortie instationnaire densite-pression
                 if(mod(idcyc,nfreq).eq.0) then
+                  call start_keep_order
                    do l=1,lzx
                       call sortieplot(x,y,z,l,v,pression,cson)
 !              call sortieplot(x,y,z,l,v,pression,dist,mu,mut)
                    enddo
+                   call end_keep_order
                 endif
              endif
 !
@@ -408,9 +411,11 @@ contains
              if((kfmg.eq.3).and.(lsortie.eq.1)) then
 !          sortie instationnaire densite-pression
                 if(mod(idcyc,nfreq).eq.0) then
+                  call start_keep_order
                    do l=1,lzx
                       call sortieplot(x,y,z,l,v,pression,cson)
                    enddo
+                   call end_keep_order
                 endif
              endif
 
@@ -431,6 +436,7 @@ contains
 !
              if(kfmg.lt.3) then
 !         sorties tecplot
+                  call start_keep_order
                 call sortieplot2(    &
                      x,y,z,l,v,dist, &
                      mu,mut,toxy, &
@@ -439,6 +445,7 @@ contains
 !               x,y,z,l,v,dist, &
 !               mu,mut,toxy, &
 !               pression,cson,ztemp)
+                   call end_keep_order
              endif
           enddo
        endif

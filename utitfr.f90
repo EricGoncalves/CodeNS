@@ -387,12 +387,12 @@ contains
        cnavtfr=cnavtfr+cnavfr
     enddo !fin boucle sur les parois
 
-    call SUM_MPI(cxavtfr,cxavtfr)
-    call SUM_MPI(cyavtfr,cyavtfr)
-    call SUM_MPI(czavtfr,czavtfr)
-    call SUM_MPI(clavtfr,clavtfr)
-    call SUM_MPI(cmavtfr,cmavtfr)
-    call SUM_MPI(cnavtfr,cnavtfr)
+    call SUM_MPI(cxavtot,cxavtot)
+    call SUM_MPI(cyavtot,cyavtot)
+    call SUM_MPI(czavtot,czavtot)
+    call SUM_MPI(clavtot,clavtot)
+    call SUM_MPI(cmavtot,cmavtot)
+    call SUM_MPI(cnavtot,cnavtot)
 
 !
 !     pression
@@ -402,6 +402,13 @@ contains
     claero= clavtot*csal*csbe+cmavtot*snbe+cnavtot*snal*csbe
     cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
     cnaero=-clavtot*snal+cnavtot*csal
+
+    call SUM_MPI(cxavtfr,cxavtfr)
+    call SUM_MPI(cyavtfr,cyavtfr)
+    call SUM_MPI(czavtfr,czavtfr)
+    call SUM_MPI(clavtfr,clavtfr)
+    call SUM_MPI(cmavtfr,cmavtfr)
+    call SUM_MPI(cnavtfr,cnavtfr)
 !
 !     frottement
     cxaefr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
