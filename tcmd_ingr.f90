@@ -22,7 +22,7 @@ contains
     use mod_mpi
     implicit none
     integer          ::       icmt, imot(nmx),      king,      kval,ldom(nobj)
-    integer          ::      ldomd,        nm,      nmot
+    integer          ::      ldomd,        nm,      nmot,lzx2
 !
 !-----------------------------------------------------------------------
 !
@@ -40,7 +40,8 @@ contains
        comment=cm
        call synterr(mot,imot,nmot,comment)
     else
-       call vallent(mot,imot,nm,ldom,ldomd,nprocs,klzx)
+       call sum_mpi(lzx,lzx2)
+       call vallent(mot,imot,nm,ldom,ldomd,lzx2,klzx)
     endif
 !
     nm=nm+1

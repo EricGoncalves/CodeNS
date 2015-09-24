@@ -394,6 +394,12 @@ program solve
   open(lec  ,file='flec')
   imp=stdout
 !  open(imp  ,file='fimp')
+  if (rank==0) then! clear files
+      open(out  ,file='fout',status="replace") ; close(out)
+      open(sec  ,file='fsec',status="replace") ; close(sec)
+      open(sor1 ,file='smoy',status="replace") ; close(sor1)
+      open(sor3 ,file='resro',status="replace") ; close(sor3)
+  endif
   open(kfa  ,file='fcla',form='formatted')
   open(kdgv ,file='fgv' ,form='unformatted')
   open(kdgc ,file='fgc' ,form='unformatted')
@@ -481,6 +487,7 @@ program solve
 !--   COMPUTE FLOW
         if(mot(2)(1:imot(2)).eq.'flow') then
 !
+           call barrier
            call system_clock(Time_1,clock_rate)
            call c_cpfw( &
                 mot,imot,nmot, &
@@ -506,6 +513,7 @@ program solve
                 pression,ztemp,cson, &
                 cvi,cvj,cvk, &
                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+           call barrier
            CALL system_clock(Time_2)
            do m=1,neqt
               if (rank==0) write(*,*) m,temp_array(m,:)

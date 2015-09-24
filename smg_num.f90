@@ -386,12 +386,14 @@ contains
                   pression)
 
              if((kfmg.eq.3).and.(lsortie.eq.1)) then
+                  call start_keep_order
                 do l=1,lzx  !sigma / moyenne temporelle / pression
                    call sortietest(   &
                         icycle,ncycl,idcyc, &
                         vdual2,dist,vol,mut,mu, &
                         x,y,z,l,v,pression,ztemp)
                 enddo
+                   call end_keep_order
 !
 !          sortie instationnaire densite-pression
                 if(mod(idcyc,nfreq).eq.0) then

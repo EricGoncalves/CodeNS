@@ -25,7 +25,6 @@ contains
     use schemanum
     use kcle
     use mod_convich
-    use mod_mpi
     implicit none
 !
 !-----------------------------------------------------------------------
@@ -45,7 +44,7 @@ contains
          //'2x,''ncychro                  : '',11x,i5,2x,a/' &
          //'2x,''dt1min                   : '',4x,e12.6,2x,a)'
 !
-    if (rank==0) write(imp,form) kdtl,ckdtl, &
+    write(imp,form) kdtl,ckdtl, &
          icychr0,cicychr0, &
          ncychro,cncychro, &
          dt1min,cdt1min

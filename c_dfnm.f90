@@ -15,7 +15,7 @@ contains
     use sortiefichier
     use mod_tcmd_dfnm
     use mod_b1_dfnm
-
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     nmot
 !
@@ -26,7 +26,8 @@ contains
     call tcmd_dfnm(mot,imot,nmot)
 !
     if (kimp.ge.1) then
-       call b1_dfnm
+       if(rank==0) call b1_dfnm
+       call barrier
     endif
 !
     return

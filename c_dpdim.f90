@@ -39,7 +39,7 @@ contains
     use boundary
     use sortiefichier
     use mod_b2_dpdim
-
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),       kl,        l,   mdimtb,   mdimtc
     integer          ::    mdimtn,   mdimtr,  ndimctb,  ndimctc,  ndimctk
@@ -65,7 +65,10 @@ contains
     enddo
 !
     if (kimp.ge.2) then
+       call start_keep_order
+       write(imp,*) "rank :",rank
        call b2_dpdim
+       call end_keep_order
     endif
 !
     if (lt     .lt.lzx     ) stop 'dimensionnement incorrect lt'

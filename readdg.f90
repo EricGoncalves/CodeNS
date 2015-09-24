@@ -54,7 +54,7 @@ contains
 !
     ecri=.false.
 !      ecri=.true.
-    pos=FTELL(kdg) 
+    pos=int(FTELL(kdg))
 !
     call START_KEEP_ORDER(pos)
     call my_FSEEK(kdg, pos)
@@ -80,7 +80,7 @@ contains
     read(kdg,err=13) &
          (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
 !
-    pos=FTELL(kdg)
+    pos=int(FTELL(kdg))
     call END_KEEP_ORDER(pos)
 
     return
@@ -90,9 +90,9 @@ contains
     write(imp,'(10x,"i2=",i5,3x,"j2=",i5,3x,"k2=",i5)')i2,j2,k2
     stop
 !
-    if(ecri.and.rank+1==l) then
+    if(ecri) then
 !       ecriture plaque plane 1 domaine
-       open(out  ,file='fout')
+       open(out  ,file='fout',position="append")
        k=1
        do k=1,2
           do i=1,i2,50

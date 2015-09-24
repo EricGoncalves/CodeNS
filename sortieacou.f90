@@ -17,7 +17,7 @@ contains
     use para_fige
     use chainecarac
     use maillage
-    use mod_mpi,only : rank
+    use mod_mpi
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
     integer          ::    j,  j1,j1m1,  j2
@@ -65,16 +65,16 @@ contains
     endif
     ouvert=.true.
 !
+    open(nft,file='sortieacou',form='formatted',position="append")
     k=1
     j=32
-    if(rank+1==l) then
     do i=i1,i2m1
        n=indc(i,j,k)
        m=n-n0c
        write(nft,'(4(1pe15.6))') &
             t(n,1),t(n,2),t(n,4),t(n,5)
     enddo
-    endif
+    close(nft)
 
 !
     return

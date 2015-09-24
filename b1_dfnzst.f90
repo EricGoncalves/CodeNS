@@ -18,7 +18,6 @@ contains
 !***********************************************************************
 !
     use sortiefichier
-    use mod_mpi,only:rank
     implicit none
     integer          :: nonzst
 !
@@ -26,12 +25,10 @@ contains
 !
     character(len=1316) :: form
 !
-    if(rank==0) then
     form='(//,2x,''definition de la normalisation''/' &
          //'2x,''------------------------------'',/' &
          //'2x,''numero de l''''etat         : '',9x,i2)'
     write(imp,form)nonzst
-    endif
 !
     return
   end subroutine b1_dfnzst

@@ -22,7 +22,6 @@ contains
     use modeleturb
     use kcle
     use mod_convich
-    use mod_mpi
     implicit none
 !
 !-----------------------------------------------------------------------
@@ -37,7 +36,7 @@ contains
          //'2x,''---------------------------------------------'',/' &
          //'2x,''icytur0                  : '',11x,i6,2x,a/' &
          //'2x,''ncyturb                  : '',11x,i6,2x,a)'
-    if (rank==0) write(imp,form) icytur0,cicytur0, &
+    write(imp,form) icytur0,cicytur0, &
          ncyturb,cncyturb
 !
     return

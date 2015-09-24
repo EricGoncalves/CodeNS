@@ -24,7 +24,6 @@ contains
     use kcle
     use chainecarac
     use mod_convich
-    use mod_mpi
     implicit none
     integer          ::       ldomd,       lgrd,ldom(ldomd),  lgr(lgrd),         lm
     integer          ::        long,     longm1,         nm,      nmult,         nr
@@ -86,9 +85,7 @@ contains
             //'29x,'//nrr//'(''       puis'',i5))'
     endif
 !
-    if (rank==0) then
     write(imp,form) ldom
-    endif
 !
     long=6
     longm1=long-1
@@ -130,9 +127,7 @@ contains
             //'2x,''kmf                     : '',11x,i5,2x,a)'
     endif
 !
-    if (rank==0) then
     write(imp,form) lgr,kmf(lm),ckmf
-    endif
 !
     return
   end subroutine b1_dfpmimd

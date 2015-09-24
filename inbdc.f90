@@ -135,8 +135,8 @@ contains
 !
     mfbea1=bcg_to_bcl(mfbea)
     mfbeb1=bcg_to_bcl(mfbeb)
-    lag=bc_to_proc(mfbea)
-    lbg=bc_to_proc(mfbeb)
+    lag=bcg_to_proc(mfbea)
+    lbg=bcg_to_proc(mfbeb)
 
     if(mfbeb1/=0) then
 

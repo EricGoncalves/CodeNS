@@ -54,9 +54,9 @@ contains
            indmf, &
            ncbd)
 !
-    if(l==rank+1) then
+    if(bcg_to_proc(mfbe)==rank) then
       if(kimp.ge.2) then
-         call b2_crbds(mfbe)
+         call b2_crbds(bcg_to_bcl(mfbe))
       endif
     endif
 !

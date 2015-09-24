@@ -8,9 +8,19 @@ module mod_mpi
   use ifport,only : fseek,ftell,getpid
 #endif
   implicit none
-  integer             :: rank
-  integer             :: NPROCS
-  integer,allocatable :: bc_to_proc(:),bcg_to_bcl(:),bcl_to_bcg(:)
+  integer             :: rank,NPROCS
+  integer             :: num_bcg=0,num_bci=0,num_bcl=0
+  integer             :: num_bg=0,num_bi=0,num_bl=0
+  integer,allocatable :: bcg_to_proc(:),bcg_to_bcl(:),bcl_to_bcg(:),bcg_to_bci(:)
+  integer,allocatable :: bg_to_proc(:),bg_to_bl(:),bl_to_bg(:),bg_to_bi(:)
+  !ab_to_ab where a is :
+  ! bc : boundary condition
+  ! b  : block
+  !and b is :
+  ! i : initial numerotation
+  ! g : global numerotation
+  ! l : local numerotation
+  !ab can be proc to have the rank of the process that own the object
 
   INTERFACE SUM_MPI
     !      SUM_MPI(A,B)
@@ -71,7 +81,8 @@ contains
       NPROCS=1
 #endif
 
-      allocate(bc_to_proc(0),bcg_to_bcl(0),bcl_to_bcg(0))
+      allocate(bcg_to_proc(0),bcg_to_bcl(0),bcl_to_bcg(0),bcg_to_bci(0))
+      allocate(bg_to_proc(0),bg_to_bl(0),bl_to_bg(0),bg_to_bi(0))
   END SUBROUTINE  INIMPI
 
   subroutine endmpi
@@ -501,16 +512,20 @@ contains
       !COMPUTE THE SUM OF A IN B
       !RETURN WHEN EVERYTHING IS DONE
       IMPLICIT NONE
-      double precision   ,INTENT(IN)    :: A
-      double precision   ,INTENT(OUT) :: B
+      double precision   ,INTENT(INOUT)    :: A
+      double precision   ,INTENT(OUT),optional :: B
+#ifdef WITH_MPI
       double precision ::C
       integer :: ierr
-#ifdef WITH_MPI
       CALL MPI_ALLREDUCE(A, C, 1, MPI_REAL8,MPI_SUM, MPI_COMM_WORLD,IERR)
+      if (present(B)) then
+        B=C
+      else
+        A=C
+      endif
 #else
-      C=A
+      if (present(B))  B=A
 #endif
-      B=C
 
   END SUBROUTINE SUM_MPI_0R
 
@@ -518,17 +533,21 @@ contains
       !COMPUTE THE SUM OF A IN B
       !RETURN WHEN EVERYTHING IS DONE
       IMPLICIT NONE
-      double precision   ,INTENT(IN)    :: A(:)
-      double precision   ,INTENT(OUT) :: B(:)
+      double precision   ,INTENT(INOUT)    :: A(:)
+      double precision   ,INTENT(OUT),optional :: B(:)
+#ifdef WITH_MPI
       double precision,allocatable ::C(:)
       integer :: ierr
       allocate(c(size(A)))
-#ifdef WITH_MPI
       CALL MPI_ALLREDUCE(A(1), C(1), SIZE(A), MPI_REAL8,MPI_SUM, MPI_COMM_WORLD,IERR)
+      if (present(B)) then
+        B=C
+      else
+        A=C
+      endif
 #else
-      C=A
+      if (present(B))  B=A
 #endif
-      B=C
 
   END SUBROUTINE SUM_MPI_1R
 
@@ -537,16 +556,20 @@ contains
       !COMPUTE THE SUM OF A IN B
       !RETURN WHEN EVERYTHING IS DONE
       IMPLICIT NONE
-      integer   ,INTENT(IN)    :: A
-      integer   ,INTENT(OUT) :: B
+      integer   ,INTENT(INOUT)    :: A
+      integer   ,INTENT(OUT),optional :: B
+#ifdef WITH_MPI
       integer ::C
       integer :: ierr
-#ifdef WITH_MPI
       CALL MPI_ALLREDUCE(A, C, 1, MPI_INTEGER,MPI_SUM, MPI_COMM_WORLD,IERR)
+      if (present(B)) then
+        B=C
+      else
+        A=C
+      endif
 #else
-      C=A
+      if (present(B))  B=A
 #endif
-      B=C
 
   END SUBROUTINE SUM_MPI_0I
 
@@ -554,33 +577,41 @@ contains
       !COMPUTE THE SUM OF A IN B
       !RETURN WHEN EVERYTHING IS DONE
       IMPLICIT NONE
-      integer   ,INTENT(IN)    :: A
-      integer   ,INTENT(OUT) :: B
+      integer   ,INTENT(INOUT)    :: A
+      integer   ,INTENT(OUT),optional :: B
+#ifdef WITH_MPI
       integer ::C
       integer :: ierr
-#ifdef WITH_MPI
       CALL MPI_ALLREDUCE(A, C, 1, MPI_INTEGER,MPI_MAX, MPI_COMM_WORLD,IERR)
+      if (present(B)) then
+        B=C
+      else
+        A=C
+      endif
 #else
-      C=A
+      if (present(B))  B=A
 #endif
-      B=C
   END SUBROUTINE MAX_MPI_0I
 
   SUBROUTINE SUM_MPI_1I(A,B)
       !COMPUTE THE SUM OF A IN B
       !RETURN WHEN EVERYTHING IS DONE
       IMPLICIT NONE
-      integer   ,INTENT(IN)    :: A(:)
-      integer   ,INTENT(INOUT) :: B(:)
+      integer   ,INTENT(INOUT)    :: A(:)
+      integer   ,INTENT(OUT),optional :: B(:)
+#ifdef WITH_MPI
       integer,allocatable ::C(:)
       integer :: ierr
       allocate(c(size(a)))
-#ifdef WITH_MPI
       CALL MPI_ALLREDUCE(A(1), C(1), SIZE(A), MPI_INTEGER,MPI_SUM, MPI_COMM_WORLD,IERR)
+      if (present(B)) then
+        B=C
+      else
+        A=C
+      endif
 #else
-      C=A
+      if (present(B))  B=A
 #endif
-      B=C
   END SUBROUTINE SUM_MPI_1I
 
   SUBROUTINE BCAST_0I(IN,ORIG)

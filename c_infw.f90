@@ -44,10 +44,12 @@ contains
     endif
 !
     do l=1,ldomd
-      if (rank+1==l)  call infw( &
-                          1,x,y,z,v,mut,tnte1, &
-                          kina,utau, &
-                          vdual,vdual1,vdual2)
+    if(bg_to_proc(ldom(l))==rank) then
+       call infw( &
+          bg_to_bl(ldom(l)),x,y,z,v,mut,tnte1, &
+          kina,utau, &
+          vdual,vdual1,vdual2)
+    endif
       call barrier
 !
     enddo

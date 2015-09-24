@@ -40,7 +40,10 @@ contains
     endif
 !
     do l=1,ldomd
-       if (rank+1==l) call ingr(1,x,y,z,king)
+     if(bg_to_proc(ldom(l))==rank) then
+        call ingr(bg_to_bl(ldom(l)),x,y,z,king)
+     endif
+     call barrier
     enddo
 !
     deallocate(ldom)

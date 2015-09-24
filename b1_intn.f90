@@ -16,7 +16,6 @@ contains
     use kcle
     use schemanum
     use mod_convich
-    use mod_mpi,only : rank
     implicit none
 !
 !-----------------------------------------------------------------------
@@ -29,7 +28,7 @@ contains
     form='(/,2x,''initialisation du temps "numerique"'',/' &
          //'2x,''-----------------------------------'',/' &
          //'2x,''numt                     : '',11x,i5,2x,a)'
-    if (rank==0) write(imp,form) numt,cnumt
+    write(imp,form) numt,cnumt
 !
     return
   end subroutine b1_intn

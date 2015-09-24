@@ -123,7 +123,7 @@ contains
 !       calcul numero facette de la frontiere
 !
        mfbe=bcg_to_bcl(mfe)
-       if (mfbe>0) then
+       if (mfbe/=0) then ! I own part of this boundary
          mfl=nfei(mfbe)
          l =ndlb(mfl)
   !

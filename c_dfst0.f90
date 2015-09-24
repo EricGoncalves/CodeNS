@@ -26,13 +26,15 @@ contains
 !
     use sortiefichier
     use mod_b1_dfst0
+    use mod_mpi
     implicit none
     double precision ::  aam,roam, tam
 !
 !-----------------------------------------------------------------------
 !
     if (kimp.ge.1) then
-       call b1_dfst0(roam,aam,tam)
+       if (rank==0) call b1_dfst0(roam,aam,tam)
+       call barrier
     endif
 !
     return

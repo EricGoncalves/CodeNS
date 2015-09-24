@@ -23,7 +23,6 @@ contains
     use kcle
     use definition
     use mod_convich
-    use mod_mpi,only:rank
     implicit none
     integer          :: nst
 !
@@ -41,7 +40,6 @@ contains
     call convich(kvarst(nst,2),ca)
     call convich(kvarst(nst,3),ct)
 !
-    if(rank==0) then
     form='(//,2x,''definition d''''un etat de type 1''/' &
          //'2x,''------------------------------'',/' &
          //'2x,''numero                   : '',9x,i2/' &
@@ -67,7 +65,6 @@ contains
          varst(nst,5),cm, &
          varst(nst,6),cal, &
          varst(nst,7),cbe
-    endif
 !
     return
   end subroutine b1_dfst

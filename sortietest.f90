@@ -28,7 +28,6 @@ contains
     use proprieteflu
     use definition
     use schemanum
-    use mod_mpi
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
     integer          :: icycle, idcyc,     j,    j1,  j1m1
@@ -47,7 +46,6 @@ contains
 !
 
 !
-call START_KEEP_ORDER
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -71,11 +69,10 @@ call START_KEEP_ORDER
     c=char(34)
 !
     qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
-    if(rank+1==l) then
-      open(sor2 ,file='pres',position="append")
-      open(out  ,file='fout')
-      open(sor1 ,file='smoy')
-    endif
+
+    open(sor2 ,file='pres',position="append")
+    open(out  ,file='fout',position="append")
+    open(sor1 ,file='smoy',position="append")
 !
 !-----initialisation des grandeurs--------------------------------
 !
@@ -94,7 +91,6 @@ call START_KEEP_ORDER
           enddo
        enddo
 !
-        if(rank+1==l) then
 !       fichier de sortie du sigma entree
          write(out,'(''TITLE='',a1,a80,a1)')c,titrt1,c
          write(out,'(''VARIABLES = '',a1,4(a,a1,'', '',a1),a,a1)') &
@@ -107,7 +103,6 @@ call START_KEEP_ORDER
               c,'x',c, c,'y',c, c,'ps',c
          write(sor2,'("ZONE F=POINT, I=",i3," J=",i3)')i2m1,j2m1
         endif
-    endif
 !
 !-----Calculs des moyennes temporelles---------------------------------
 !
@@ -124,7 +119,6 @@ call START_KEEP_ORDER
           enddo
        enddo
     enddo
-    if(rank+1==l) then
 !
 !-----Ecriture a la derniere iteration--------------------------------
 !
@@ -179,9 +173,7 @@ call START_KEEP_ORDER
     close(sor1)
     close(sor2)
     close(out)
-    endif
 !
-call END_KEEP_ORDER
     return
   contains
     function    indc(i,j,k)

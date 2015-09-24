@@ -20,8 +20,8 @@ contains
     use para_fige
     use sortiefichier
     use mod_b1_dfpmtbkeg
-
     use mod_tcmd_dfpmtbkeg
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     nmot
 !
@@ -32,7 +32,7 @@ contains
     call tcmd_dfpmtbkeg(mot,imot,nmot)
 !
     if(kimp.ge.1) then
-       call b1_dfpmtbkeg
+       if (rank==0) call b1_dfpmtbkeg
     endif
 !
     return

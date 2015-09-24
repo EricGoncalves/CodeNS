@@ -100,7 +100,7 @@ contains
        call START_KEEP_ORDER
        if (kimp.ge.1) then
           form='(/10x,10hzone no : ,i5,5x,12hgrille no : ,i3/)'
-          write(imp,form) rank+1,img
+          write(imp,form) bl_to_bg(l),img
        endif
 !
        call residu( &

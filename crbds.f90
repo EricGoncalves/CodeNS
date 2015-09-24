@@ -72,12 +72,17 @@ contains
 !
     character(len=2 ) :: indmf
 
-    call reallocate_s(bc_to_proc,mfbe)
-    call reallocate_s(bcg_to_bcl,mfbe)
-    bc_to_proc(mfbe)=l-1
+    num_bcg=num_bcg+1
+    num_bci=num_bci+1
+    call reallocate_s(bcg_to_proc,num_bcg)
+    call reallocate_s(bcg_to_bcl,num_bcg)
+    call reallocate_s(bcg_to_bci,num_bcg)
+    bcg_to_proc(mfbe)=bg_to_proc(l)
     bcg_to_bcl(mfbe)=0
+    bcg_to_bci(mfbe)=mfbe
 !
-    if(l==rank+1) then
+    if(bg_to_proc(l)==rank) then
+      num_bcl=num_bcl+1
       mtbx=mtbx+1
       kmtbx=2
       mtb=mtbx
@@ -96,17 +101,16 @@ contains
       call reallocate_s(mmb,mtt)
 
   !
-      ll=1
-      mfbi=mtb
+      mfbi=mtbx
       nfei(mtb)=mfbi
-      ndlb(mfbi)=ll
+      ndlb(mfbi)=bg_to_bl(l)
       indfl(mfbi)=indmf
       bcl_to_bcg(mtb)=mfbe
       bcg_to_bcl(mfbe)=mtb
   !
       do img=1,lgx
   !
-         lm=ll+(img-1)*lz
+         lm=bg_to_bl(l)+(img-1)*lz
          mfbim=mfbi+(img-1)*mtb
 
   !

@@ -403,12 +403,12 @@ contains
     cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
     cnaero=-clavtot*snal+cnavtot*csal
 
-    call SUM_MPI(cxavtfr,cxavtfr)
-    call SUM_MPI(cyavtfr,cyavtfr)
-    call SUM_MPI(czavtfr,czavtfr)
-    call SUM_MPI(clavtfr,clavtfr)
-    call SUM_MPI(cmavtfr,cmavtfr)
-    call SUM_MPI(cnavtfr,cnavtfr)
+    call SUM_MPI(cxavtfr)
+    call SUM_MPI(cyavtfr)
+    call SUM_MPI(czavtfr)
+    call SUM_MPI(clavtfr)
+    call SUM_MPI(cmavtfr)
+    call SUM_MPI(cnavtfr)
 !
 !     frottement
     cxaefr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
@@ -420,7 +420,7 @@ contains
 !
     if(icyexpl.eq.0.and.rank==0) then
 !       repere avion
-       open(out  ,file='fout')
+       open(out  ,file='fout',position="append")
        write(out,3801) icyc,cxavtot,cyavtot,czavtot, &
             clavtot,cmavtot,cnavtot
 3801   format('=>utitfr p: ',i6,1x,6(1pe11.3))

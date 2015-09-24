@@ -57,13 +57,23 @@ contains
     use chainecarac
     use schemanum
     use tools
-    use mod_mpi,only : rank
+    use mod_mpi
     implicit none
     integer          ::   img, imgi, imgj, imgk,    l
     integer          ::    lm,   ni,  nid,   nj,  njd
     integer          ::    nk,  nkd,nptfs
 
-    if (rank+1==l) then
+    num_bg=num_bg+1
+    num_bi=num_bi+1
+    call reallocate_s(bg_to_proc,num_bg)
+    call reallocate_s(bg_to_bl,num_bg)
+    call reallocate_s(bg_to_bi,num_bg)
+    bg_to_proc(l)=modulo((l-1),nprocs)
+    bg_to_bl(l)=0
+    bg_to_bi(l)=l
+!
+    if(bg_to_proc(l)==rank) then
+      num_bl=num_bl+1
   !
   !-----------------------------------------------------------------------
   !
@@ -90,10 +100,14 @@ contains
       call reallocate_s(npn,lt)
       call reallocate_s(npc,lt)
       call reallocate_s(npfb,lt)
+      call reallocate_s(bl_to_bg,lt)
+
+      bl_to_bg(lzx)=l
+      bg_to_bl(l)=lzx
   !
       do img=1,lgx
   !
-         lm=1+(img-1)*lz
+         lm=lzx+(img-1)*lz
   !
          imgi = img
          imgj = img

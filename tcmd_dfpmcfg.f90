@@ -40,7 +40,7 @@ contains
     if(nmot.gt.2) then
        nm=2
        n1=0
-       do no=1,size(bcg_to_bcl)
+       do no=1,num_bcg
           nm=nm+1
           if(nmot.lt.nm) then
              comment=ci
@@ -49,7 +49,7 @@ contains
              call valenti(mot,imot,nm,tmp,knba)
              if(bcg_to_bcl(tmp)/=0) then
                n1=n1+1
-               nba(n1)=tmp
+               nba(n1)=bcg_to_bcl(tmp)
              endif
           endif
        enddo

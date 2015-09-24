@@ -20,7 +20,6 @@ contains
 !***********************************************************************
 !
     use sortiefichier
-    use mod_mpi,only:rank
     implicit none
     double precision ::  aam,roam, tam
 !
@@ -28,14 +27,12 @@ contains
 !
     character(len=1316) :: form
 !
-    if(rank==0) then
     form='(/4x ,''grandeurs d''''arret amont :''/' &
          //'4x ,''~~~~~~~~~~~~~~~~~~~~~~~  ''/,' &
          //'4x ,''roam   ='',e12.5,'' kg/m3'',/,' &
          //'4x ,''aam    ='',e12.5,'' m/s  '',/,' &
          //'4x ,''tam    ='',e12.5,'' K    '')'
     write(imp,form) roam,aam,tam
-    endif
 !
     return
   end subroutine b1_dfst0

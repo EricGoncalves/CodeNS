@@ -255,7 +255,6 @@ contains
 !     -------------------------------------------------------
 !     SORTIES RELATIVES A DES VALEURS SUR LES PAROIS
 !
-call START_KEEP_ORDER
     if(rank==0)then
     open(sor2 ,file='pres')
     write(sor2,'(''TITLE='',a1,a80,a1)')c,titrt1,c
@@ -330,10 +329,11 @@ call START_KEEP_ORDER
        return
     endif
 !
+    call START_KEEP_ORDER
+    open(sor2 ,file='pres',position="append")
     do mf=1,nbfll
 !       boucle sur les parois
 !
-       open(sor2 ,file='pres',position="append")
        mfl=nmfint(mf)
        l=ndlb(mfl)
 !
@@ -364,7 +364,7 @@ call START_KEEP_ORDER
        kmaxf=kmaxb(mfl)
 !
        if(kimpl.eq.1) then
-          write(imp,987) l,mfl,iminf,imaxf,jminf,jmaxf,kminf,kmaxf
+          write(imp,987) bl_to_bg(l),bcl_to_bcg(mfl),iminf,imaxf,jminf,jmaxf,kminf,kmaxf
 987       format('integration des pressions par frontiere :', &
                /1x,39('-') &
                //1x,'zone ',i3,'  - frontiere ',i3/1x,26('-'), &
@@ -691,7 +691,7 @@ call START_KEEP_ORDER
 !         fin de boucle sur les bandes
        enddo
        close(sor2)
-call END_KEEP_ORDER
+       call END_KEEP_ORDER
 !
 !       pression
        cxav   =cxav/(q0spi0*sref)
@@ -762,12 +762,12 @@ call END_KEEP_ORDER
 !       fin de boucle sur les parois
     enddo
 !
-    call SUM_MPI(cxavtot,cxavtot)
-    call SUM_MPI(cyavtot,cyavtot)
-    call SUM_MPI(czavtot,czavtot)
-    call SUM_MPI(clavtot,clavtot)
-    call SUM_MPI(cmavtot,cmavtot)
-    call SUM_MPI(cnavtot,cnavtot)
+    call SUM_MPI(cxavtot)
+    call SUM_MPI(cyavtot)
+    call SUM_MPI(czavtot)
+    call SUM_MPI(clavtot)
+    call SUM_MPI(cmavtot)
+    call SUM_MPI(cnavtot)
 !     pression
     cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
     cyaero= cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
@@ -776,12 +776,12 @@ call END_KEEP_ORDER
     cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
     cnaero=-clavtot*snal+cnavtot*csal
 !
-    call SUM_MPI(cxavtfr,cxavtfr)
-    call SUM_MPI(cyavtfr,cyavtfr)
-    call SUM_MPI(czavtfr,czavtfr)
-    call SUM_MPI(clavtfr,clavtfr)
-    call SUM_MPI(cmavtfr,cmavtfr)
-    call SUM_MPI(cnavtfr,cnavtfr)
+    call SUM_MPI(cxavtfr)
+    call SUM_MPI(cyavtfr)
+    call SUM_MPI(czavtfr)
+    call SUM_MPI(clavtfr)
+    call SUM_MPI(cmavtfr)
+    call SUM_MPI(cnavtfr)
 !     frottement
     cxaetfr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
     cyaetfr= cxavtfr*csal*snbe+cyavtfr*csbe+czavtfr*snal*snbe
@@ -790,7 +790,7 @@ call END_KEEP_ORDER
     cmaetfr=-clavtfr*csal*snbe+cmavtfr*csbe-cnavtfr*snal*snbe
     cnaetfr=-clavtfr*snal+cnavtfr*csal
 !
-    if(kimpl.eq.1) then
+    if(kimpl.eq.1.and.rank==0) then
        write(imp,890) cxavtot,cyavtot,czavtot,clavtot,cmavtot,cnavtot, &
             cxaero,cyaero,czaero,claero,cmaero,cnaero
 890    format('efforts globaux pression - configuration ', &

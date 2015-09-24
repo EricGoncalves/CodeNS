@@ -31,20 +31,18 @@ contains
          l,ni,nj,nk)
 !
     if (kimp.ge.1) then
-      if(rank==0) then
-         call b1_crdms(l,ni,nj,nk)
-      endif
+      if(rank==0) call b1_crdms(l,ni,nj,nk)
       call barrier
     endif
 !
     call crdms(l,ni,nj,nk)
 !
-    if(l==rank+1) then
+    if(bg_to_proc(l)==rank) then
       if(kimp.ge.2) then
-         call b2_crdms(l)
+         call b2_crdms(bg_to_bl(l))
       endif
       if(kimp.ge.1) then
-         call b3_crdms(l,ni,nj,nk)
+         call b3_crdms(bg_to_bl(l),ni,nj,nk)
       endif
     endif
 !

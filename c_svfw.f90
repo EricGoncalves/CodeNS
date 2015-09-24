@@ -59,7 +59,7 @@ contains
          mot,imot,nmot, &
          disc)
 !
-    if ((kimp.ge.1).and.(rank==0)) then
+    if ((kimp.ge.1).and.(bl_to_bg(l).eq.1)) then
        call b1_svfw(disc)
     endif
 !

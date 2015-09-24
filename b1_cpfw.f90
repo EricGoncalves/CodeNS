@@ -14,7 +14,6 @@ contains
 !***********************************************************************
 !
     use sortiefichier
-    use mod_mpi
     implicit none
 !
 !-----------------------------------------------------------------------
@@ -23,7 +22,7 @@ contains
 !
     form='(/,2x,''realisation du calcul'',/' &
          //'2x,''---------------------'')'
-    if (rank==0) write(imp,form)
+    write(imp,form)
 !
     return
   end subroutine b1_cpfw

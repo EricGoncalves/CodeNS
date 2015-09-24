@@ -14,6 +14,7 @@ contains
     use sortiefichier
     use mod_tcmd_secpfw
     use mod_b1_secpfw
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     lgrd,     nmot
     integer         ,allocatable :: lgr(:)
@@ -29,7 +30,8 @@ contains
          lgr,lgrd)
 !
     if(kimp.ge.1) then
-       call b1_secpfw(lgr,lgrd)
+       if (rank==0) call b1_secpfw(lgr,lgrd)
+       call barrier
     endif
 !
     deallocate(lgr)

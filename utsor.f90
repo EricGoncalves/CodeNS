@@ -212,7 +212,8 @@ contains
     if(nbfll.eq.0) return
 !
     call START_KEEP_ORDER
-    open(sorf2,file='fsor2')
+    open(sorf2,file='fsor2',position="append")
+    if (rank==0) rewind(sorf2)
 !
     pis2=atan2(1.,0.)
     raddeg=90./pis2
@@ -263,7 +264,7 @@ contains
        kmaxf=kmaxb(mfl)
 !
        if(kimp.eq.1) then
-          write(imp,987) l,bcl_to_bcg(mfl),iminf,imaxf,jminf,jmaxf,kminf,kmaxf
+          write(imp,987) bl_to_bg(l),bcl_to_bcg(mfl),iminf,imaxf,jminf,jmaxf,kminf,kmaxf
        endif
 987    format("integration des pressions par frontiere : ",39("-") &
             //1x,"zone ",i3,"   - frontiere ",i3/1x,26("-"), &
@@ -479,12 +480,12 @@ contains
     close(sorf2)
     call END_KEEP_ORDER
 
-    call SUM_MPI(cxavtot,cxavtot)
-    call SUM_MPI(cyavtot,cyavtot)
-    call SUM_MPI(czavtot,czavtot)
-    call SUM_MPI(clavtot,clavtot)
-    call SUM_MPI(cmavtot,cmavtot)
-    call SUM_MPI(cnavtot,cnavtot)
+    call SUM_MPI(cxavtot)
+    call SUM_MPI(cyavtot)
+    call SUM_MPI(czavtot)
+    call SUM_MPI(clavtot)
+    call SUM_MPI(cmavtot)
+    call SUM_MPI(cnavtot)
 
 !
     cxaero=cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe

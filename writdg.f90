@@ -47,8 +47,8 @@ contains
 !
 
 !
-    if (l.eq.1) rewind kdg
-    pos=FTELL(kdg) 
+    if (bl_to_bg(l).eq.1) rewind kdg
+    pos=int(FTELL(kdg))
 !
     call START_KEEP_ORDER(pos)
     CALL my_FSEEK(kdg, pos)
@@ -61,7 +61,7 @@ contains
     write(kdg)(((y(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
     write(kdg)(((z(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
 !
-    pos=FTELL(kdg)
+    pos=int(FTELL(kdg))
     call END_KEEP_ORDER(pos)
     return
   contains

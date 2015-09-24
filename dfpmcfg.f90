@@ -22,14 +22,14 @@ contains
     use sortiefichier
     use maillage
     use boundary
-    use mod_mpi
     implicit none
-    integer          :: no
+    integer          :: mfbe,  no
 !
 !-----------------------------------------------------------------------
 !
     do no=1,mtbx
-       nba(no)=bcg_to_bcl(nba(no))
+       mfbe=nba(no)
+       nba(no)=nfei(mfbe)
     enddo
 !
     return

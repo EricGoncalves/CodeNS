@@ -60,8 +60,8 @@ contains
 !
 
 !
-    if(l.eq.1) rewind kda
-    pos=FTELL(kda) 
+    if(bl_to_bg(l).eq.1) rewind kda
+    pos=int(FTELL(kda))
     call START_KEEP_ORDER(pos)
     CALL my_FSEEK(kda, pos)
 !
@@ -112,7 +112,7 @@ contains
 !      close(100)
 !
 
-    pos=FTELL(kda) 
+    pos=int(FTELL(kda))
     call END_KEEP_ORDER(pos)
     return
   contains

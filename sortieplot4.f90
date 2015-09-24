@@ -38,7 +38,7 @@ contains
 !
     character(len=1 ) :: c
 !
-  open(sec  ,file='fsec')
+  open(sec  ,file='fsec',position="append")
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)

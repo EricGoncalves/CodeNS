@@ -25,7 +25,6 @@ contains
     use kcle
     use proprieteflu
     use mod_convich
-    use mod_mpi,only:rank
     implicit none
 !
 !-----------------------------------------------------------------------
@@ -41,7 +40,6 @@ contains
     call convich(kprt,cprt)
     call convich(kreynz,creynz)
 !
-    if(rank==0) then
     form='(/,2x,''definition de la physique''/' &
          //'2x,''-------------------------'',/' &
          //'2x,''gamma liquide            : '',4x,e12.6,2x,a/' &
@@ -60,8 +58,6 @@ contains
             prt,cprt, &
             reynz,creynz
     endif
-    endif
-
 !
     return
   end subroutine b1_dfph

@@ -23,7 +23,6 @@ contains
     use schemanum
     use kcle
     use mod_convich
-    use mod_mpi
     implicit none
     integer          ::       ldomd,       lgrd,ldom(ldomd),  lgr(lgrd),         lm
     integer          ::        long,     longm1,         nm,      nmult,         nr
@@ -84,7 +83,7 @@ contains
             //'29x,'//nrr//'(''       puis'',i5))'
     endif
 !
-    if (rank==0) write(imp,form) ldom
+    write(imp,form) ldom
 !
     long=6
     longm1=long-1
@@ -126,7 +125,7 @@ contains
             //'2x,''eta                      : '',4x,e12.5,2x,a)'
     endif
 !
-    if (rank==0) write(imp,form) lgr,eta(lm),ceta
+    write(imp,form) lgr,eta(lm),ceta
 !
     return
   end subroutine b1_dfpmdtd

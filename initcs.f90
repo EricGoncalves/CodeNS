@@ -277,8 +277,8 @@ contains
 !
     if(kimp.ge.2) then
 !
-!       l=mod(la,lz)
-!       img=(la-l)/lz+1
+       l=mod(la,lz)+1
+       img=(la-l+1)/lz+1
 !
        form='(/3x,''numero de grille  : '',i3,/,' &
             //'3x,''indices du point du domaine b coincident '',' &
@@ -289,7 +289,7 @@ contains
             //'''le domaine a'',/,' &
             //'19x,''tvi ='',4x,a,4x,''tvj ='',4x,a,4x,''tvk ='',4x,a,/' &
             //'19x,''rotation de frt b (nb de pas)  ='',i3)'
-       write(imp,form) rank+1,iba,jba,kba,tvi,tvj,tvk,lper
+       write(imp,form) bl_to_bg(l),iba,jba,kba,tvi,tvj,tvk,lper
     endif
 !
 !-----------------------------------------------------------------------------

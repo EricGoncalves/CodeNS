@@ -77,7 +77,7 @@ contains
     degrad=pis2/90.
 !
 !----------if en commentaire pour cas multidomaines
-!     if(l.eq.1) then
+!     if(bl_to_bg(l).eq.1) then
     write(imp,'(/,"===>utinia: ouverture et lecture inia1")')
     close(inia1)
     open(inia1,file='finia1')

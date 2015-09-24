@@ -37,11 +37,10 @@ contains
     use schemanum
     use maillage
     use chainecarac
-    use mod_mpi
     implicit none
     integer          ::      kl,      l, mdimtb, mdimtc, mdimtn
     integer          ::  mdimtr,ndimctb,ndimctc,ndimctk,ndimctv
-    integer          :: ndimntb,buff(6)
+    integer          :: ndimntb
 !
 !-----------------------------------------------------------------------
 !
@@ -62,44 +61,31 @@ contains
        kl=max(kl,kmf(l))
     enddo
 !
-    call SUM_MPI(lzx,BUFF(1))
-    call MAX_MPI(ndimubx,BUFF(2))
-    call MAX_MPI(ndimctbx,BUFF(3))
-    call MAX_MPI(ndimntbx,BUFF(4))
-
     form='(''Verification du dimensionnement du code:'',/,' &
          //'1x,39(1h-),                             //,' &
          //'1x,''code     '',  11x,''calcul           '',7x/,' &
          //'1x,''----     '',  11x,''------           '',7x//,' &
-         //'1x,''lz     = '',i7,4x,''sum of lzx     = '',i7//,' &
-         //'1x,''ndimub = '',i7,4x,''max of ndimubx = '',i7//,' &
-         //'1x,''ndimctb= '',i7,4x,''max of ndimctbx= '',i7//,' &
-         //'1x,''ndimntb= '',i7,4x,''max of ndimntbx= '',i7//,' &
+         //'1x,''lz     = '',i7,4x,''lzx     = '',i7//,' &
+         //'1x,''ndimub = '',i7,4x,''ndimubx = '',i7//,' &
+         //'1x,''ndimctb= '',i7,4x,''ndimctbx= '',i7//,' &
+         //'1x,''ndimntb= '',i7,4x,''ndimntbx= '',i7//,' &
          //'1x,''nvar   = '',i7,4x,''equat          = '',2x,a//,' &
          //'1x,''kdimv  = '',i7,//,' &
          //'1x,''kdimk  = '',i7,//,' &
          //'1x,''kdimg  = '',i7,4x,''lgx            = '',i7/)'
-    if (rank==0)write(imp,form)lz,BUFF(1),ndimub,BUFF(2),ndimctb,BUFF(3), &
-         ndimntb,BUFF(4), &
+    write(imp,form)lz,lzx,ndimub,ndimubx,ndimctb,ndimctbx, &
+         ndimntb,ndimntbx, &
          nvar,equat,kdimv,kdimk,kdimg,lgx
-
-    call MAX_MPI(mtbx,BUFF(1))
-    call MAX_MPI(mdimubx,BUFF(2))
-    call MAX_MPI(mdimtbx,BUFF(3))
-    call MAX_MPI(mdimtnx,BUFF(4))
-    call MAX_MPI(mdimtcx,BUFF(5))
-    call MAX_MPI(mdimtrx,BUFF(6))
-
     form='(' &
-         //'1x,''mtb     = '',i7,4x,''max of mtbx    = '',i7//,' &
-         //'1x,''mdimub  = '',i7,4x,''max of mdimubx = '',i7//,' &
-         //'1x,''mdimtb  = '',i7,4x,''max of mdimtbx = '',i7//,' &
-         //'1x,''mdimtn  = '',i7,4x,''max of mdimtnx = '',i7//,' &
-         //'1x,''mdimtc  = '',i7,4x,''max of mdimtcx = '',i7//,' &
-         //'1x,''mdimtr  = '',i7,4x,''max of mdimtrx = '',i7//)'
-    if (rank==0)write(imp,form)mtb,BUFF(1), &
-         mdimub,BUFF(2),mdimtb,BUFF(3),mdimtn,BUFF(4), &
-         mdimtc,BUFF(5),mdimtr,BUFF(6)
+         //'1x,''mtb     = '',i7,4x,''mtbx    = '',i7//,' &
+         //'1x,''mdimub  = '',i7,4x,''mdimubx = '',i7//,' &
+         //'1x,''mdimtb  = '',i7,4x,''mdimtbx = '',i7//,' &
+         //'1x,''mdimtn  = '',i7,4x,''mdimtnx = '',i7//,' &
+         //'1x,''mdimtc  = '',i7,4x,''mdimtcx = '',i7//,' &
+         //'1x,''mdimtr  = '',i7,4x,''mdimtrx = '',i7//)'
+    write(imp,form)mtb,mtbx, &
+         mdimub,mdimubx,mdimtb,mdimtbx,mdimtn,mdimtnx, &
+         mdimtc,mdimtcx,mdimtr,mdimtrx
 !
     return
   end subroutine b2_dpdim

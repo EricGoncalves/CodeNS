@@ -124,6 +124,7 @@ contains
     use constantes
     use modeleturb
     use mod_teq_gradv
+    use mod_mpi
     implicit none
     integer          ::          i1,         i2,       idd1,       idd2,       idd3
     integer          ::        ideb,       idf1,       idf2,      idfac,        idm
@@ -224,8 +225,10 @@ contains
 !     ---------------------------------------------------------
 !
     lbgr=0
+    call start_keep_order
+    open(sor3 ,file='resro',position="append")
+    if (rank==0) rewind(sor3)
     do mf=1,nbfll
-        open(sor3 ,file='resro')
 !       boucle sur les parois
 !
        mfl=nmfint(mf)
@@ -900,10 +903,10 @@ contains
 !     &      uex,sqrt(qq),xme,reyl,min(999,ii),min(999,jj),min(999,kk)
           enddo   !fin de boucle sur les cellules de la bande
        enddo      !fin de boucle sur les bandes
-    close(sor3)
     enddo  !fin de boucle sur les parois
 !
-
+    close(sor3)
+    call end_keep_order
 !
     DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,vort)
 
