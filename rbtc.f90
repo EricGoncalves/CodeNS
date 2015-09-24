@@ -66,6 +66,7 @@ contains
 !-----------------------------------------------------------------------
 !
 !
+    req=MPI_REQUEST_NULL
     mt=0
     do mf=1,nbd
        mfb=lbd(mf)
@@ -80,6 +81,7 @@ contains
        mt=mmb(mfb)
        other=ndcc(mfb)
        me=bcl_to_bcg(mfb)
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) then
 !
 !     we have to exchange the globally numbered me boundary with the owner of the globally numbered other boundary
 !
@@ -103,14 +105,19 @@ contains
           buff(9,m,mf,1)=cr*qcz(nc)+sr*qcy(nc)
 !
        enddo
+
        call MPI_itrans2(buff(:,1:mt,mf,1),bcg_to_proc(me),bcg_to_proc(other),req(mf,1)) ! send
        call MPI_itrans2(buff(:,1:mt,mf,2),bcg_to_proc(other),bcg_to_proc(me),req(mf,2)) ! recv
+        endif
     enddo
 
     do mf=1,nbd
 !
        mfb=lbd(mf)
        mt=mmb(mfb)
+       other=ndcc(mfb)
+       me=bcl_to_bcg(mfb)
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) then
 
        call WAIT_MPI(req(mf,2))  ! waiting for the message to be received
 !       buff(:,1:mt,mf,2)=buff(:,1:mt,mf,1)!
@@ -133,10 +140,49 @@ contains
           qcz(nd) = 0.5*(  qcz(ndm)+ buff(9,m,mf,2))
 !
        enddo
+       else
+       sr=-sin(real(mper(mfb))*protat)
+       cr= cos(real(mper(mfb))*protat)
+!
+       do m=1,mt
+          mc =mpc(mfb)+m
+          nc =mnc(mc)
+          mb =mpb(mfb)+m
+          nd =ncbd(mb)
+          ndm=ncin(mb)
+!
+          txxr=toxx(nc)
+          txyr=cr*toxy(nc)-sr*toxz(nc)
+          txzr=cr*toxz(nc)+sr*toxy(nc)
+          tyyr=cr*cr*toyy(nc)-2.*cr*sr*toyz(nc)+sr*sr*tozz(nc)
+          tyzr=-cr*sr*(tozz(nc)-toyy(nc))+(2.*cr*cr-1.)*toyz(nc)
+          tzzr=sr*sr*toyy(nc)+2.*cr*sr*toyz(nc)+cr*cr*tozz(nc)
+          qcxr=qcx(nc)
+          qcyr=cr*qcy(nc)-sr*qcz(nc)
+          qczr=cr*qcz(nc)+sr*qcy(nc)
+!
+!     definition des variables aux bords (centre des facettes frontieres)
+!
+          toxx(nd) = 0.5*( toxx(ndm)+txxr )
+          toxy(nd) = 0.5*( toxy(ndm)+txyr )
+          toxz(nd) = 0.5*( toxz(ndm)+txzr )
+          toyy(nd) = 0.5*( toyy(ndm)+tyyr )
+          toyz(nd) = 0.5*( toyz(ndm)+tyzr )
+          tozz(nd) = 0.5*( tozz(ndm)+tzzr )
+          qcx(nd) = 0.5*(  qcx(ndm)+ qcxr )
+          qcy(nd) = 0.5*(  qcy(ndm)+ qcyr )
+          qcz(nd) = 0.5*(  qcz(ndm)+ qczr )
+!
+       enddo
+       endif
     enddo
 
     do mf=1,nbd
-       call WAIT_MPI(req(mf,1))  ! waiting for all the messages to be sent
+       mfb=lbd(mf)
+       other=ndcc(mfb)
+       me=bcl_to_bcg(mfb)
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) &
+           call WAIT_MPI(req(mf,1))  ! waiting for all the messages to be sent
     enddo
     deallocate(buff)
 !

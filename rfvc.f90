@@ -44,6 +44,7 @@ contains
 !-----------------------------------------------------------------------
 !
 !
+    req=MPI_REQUEST_NULL
     mt=0
     do mf=1,nbd
        mfb=lbd(mf)
@@ -56,6 +57,7 @@ contains
        mt =mmb(mfb)
        other=ndcc(mfb)
        me=bcl_to_bcg(mfb)
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) then
 !
 !     we have to exchange the globally numbered me boundary with the owner of the globally numbered other boundary
 !
@@ -77,11 +79,15 @@ contains
        enddo
        call MPI_itrans2(buff(:,1:mt,mf,1),bcg_to_proc(me),bcg_to_proc(other),req(mf,1)) ! send
        call MPI_itrans2(buff(:,1:mt,mf,2),bcg_to_proc(other),bcg_to_proc(me),req(mf,2)) ! recv
+        endif
     enddo
 
     do mf=1,nbd
        mfb=lbd(mf)
        mt =mmb(mfb)
+       other=ndcc(mfb)
+       me=bcl_to_bcg(mfb)
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) then
 !
        call WAIT_MPI(req(mf,2))  ! waiting for the message to be received
 !       buff(:,1:mt,mf,2)=buff(:,1:mt,mf,1)
@@ -102,10 +108,32 @@ contains
           cson(nd)=buff(8,m,mf,2)
 
        enddo
+        else
+       tper=protat*real(mper(mfb))
+       do m=1,mt
+          mc=mpc(mfb)+m
+          nc=mnc(mc)
+          mb=mpb(mfb)+m
+          nd=ncbd(mb)
+!       definition des variables aux points fictifs
+          t(nd,1)= t(nc,1)
+          t(nd,2)= t(nc,2)
+          t(nd,3)= t(nc,3)*cos(tper)+t(nc,4)*sin(tper)
+          t(nd,4)= t(nc,4)*cos(tper)-t(nc,3)*sin(tper)
+          t(nd,5)= t(nc,5)
+          ps(nd) = ps(nc)
+          temp(nd)=temp(nc)
+          cson(nd)=cson(nc)
+       enddo
+        endif
     enddo
 
     do mf=1,nbd
-       call WAIT_MPI(req(mf,1))  ! waiting for all the messages to be sent
+       mfb=lbd(mf)
+       other=ndcc(mfb)
+       me=bcl_to_bcg(mfb)
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) &
+           call WAIT_MPI(req(mf,1))  ! waiting for all the messages to be sent
     enddo
     deallocate(buff)
 !
