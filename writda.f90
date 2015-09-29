@@ -50,7 +50,7 @@ contains
     integer          ::     i, imax, imin,    j, jmax
     integer          ::  jmin,    k,  kda, kmax, kmin
     integer          ::     l,    m,ndmut,  nid, nijd
-    integer          ::   njd,pos
+    integer          ::   njd,pos,ll
     double precision :: mut(ndmut),utau(ip42),  v1(ip00),  v2(ip00),  v3(ip00)
     double precision ::   v4(ip00),  v5(ip00),  v6(ip00),  v7(ip00)
 !
@@ -60,9 +60,10 @@ contains
 !
 
 !
-    if(bl_to_bg(l).eq.1) rewind kda
+    ll=bl_to_bg(l)
+    if(ll.eq.1) rewind kda
     pos=int(FTELL(kda))
-    call START_KEEP_ORDER(pos)
+    call start_keep_order(ll,bg_to_proc,pos)
     CALL my_FSEEK(kda, pos)
 !
     nid = id2(l)-id1(l)+1
@@ -113,7 +114,7 @@ contains
 !
 
     pos=int(FTELL(kda))
-    call END_KEEP_ORDER(pos)
+    call END_KEEP_ORDER(ll,bg_to_proc,pos)
     return
   contains
     function    ind(i,j,k)

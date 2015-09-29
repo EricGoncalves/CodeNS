@@ -38,10 +38,11 @@ contains
 !
        if(rank==0) write(imp,'("===>at_ecrdist: distance tous domaines   fichier=",a8)')nomfich
 !
-       call start_keep_order
-       open(iwd,file=nomfich,form='unformatted',err=50,position="append")
-       if(rank==0) rewind(iwd)
        do l=1,lzx
+         ll=bl_to_bg(l)
+         call start_keep_order(ll,bg_to_proc)
+         open(iwd,file=nomfich,form='unformatted',err=50,position="append")
+         if(ll==1) rewind(iwd)
           n0=npc(l)
           i1=ii1(l)
           i2=ii2(l)
@@ -60,9 +61,9 @@ contains
                k=k1,k2m1)
           write(iwd)(((mnpar(ind(i,j,k)),i=i1,i2m1),j=j1,j2m1), &
                k=k1,k2m1)
+         close(iwd)
+         call end_keep_order(ll,bg_to_proc)
        end do
-       close(iwd)
-       call end_keep_order
     else
 !       ecriture un seul domaine par fichier
 !
@@ -109,18 +110,18 @@ contains
          write(imp,'("===>at_ecrdist: ecriture fichier= fdist-aux")')
          write(imp,'(16x,"ip12=",i8)') ip12
        endif
-       call start_keep_order
-       open(iwd,file='fdist-aux',form='formatted',err=60,position="append")
-       if(rank==0) rewind(iwd)
        do l=1,lzx
           ll=bl_to_bg(l)
+         call start_keep_order(ll,bg_to_proc)
+         open(iwd,file='fdist-aux',form='formatted',err=60,position="append")
+         if(ll==1) rewind(iwd)
           write(iwd,'(i3,i8,6i5)') &
                ll,npc(l),ii1(l),ii2(l),jj1(l),jj2(l),kk1(l),kk2(l)
           write(iwd,'(i3,i8,6i5)') &
                ll,npc(l),id1(l),id2(l),jd1(l),jd2(l),kd1(l),kd2(l)
-       end do
        close(iwd)
-        call end_keep_order
+        call end_keep_order(ll,bg_to_proc)
+       end do
     end if
     return
 !

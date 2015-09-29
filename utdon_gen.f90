@@ -226,7 +226,7 @@ contains
              else !fin sequence, continuer la lecture generale des mots-c
                 if(kimp.gt.1) then
                    call start_keep_order
-                       write(imp,'( (20i4) )')rank,(bcl_to_bcg(nmfint(nb)),nb=1,nbfll)
+                       write(imp,'( (A,i4,A,20i4) )') "Rank : ",rank," - Surfaces d'integration : ",(bcl_to_bcg(nmfint(nb)),nb=1,nbfll)
                    call end_keep_order
                 endif
                 exit

@@ -162,7 +162,7 @@ contains
     integer          ::    m2maxm1,     m2min,        mf,      mfac,     mfacn
     integer          ::        mfl,       n0c,       n0n,ncbd(ip41),       nci
     integer          ::        ncj,       nck,     nfac1,     nfac2,     nfac3
-    integer          ::      nfac4,     nfacf,       nid,      nijd,       njd
+    integer          ::      nfac4,     nfacf,       nid,      nijd,       njd,mfg
     double precision ::          akp,       alfar,       betar,      claero,     claerob
     double precision ::         clav,       clavb,     clavtot,      cmaero,     cmaerob
     double precision ::         cmav,       cmavb,     cmavtot,      cnaero,     cnaerob
@@ -211,9 +211,6 @@ contains
     if(kvglo.eq.0) return
     if(nbfll.eq.0) return
 !
-    call START_KEEP_ORDER
-    open(sorf2,file='fsor2',position="append")
-    if (rank==0) rewind(sorf2)
 !
     pis2=atan2(1.,0.)
     raddeg=90./pis2
@@ -235,6 +232,10 @@ contains
     do mf=1,nbfll
 !
        mfl=nmfint(mf)
+       mfg=bcl_to_bcg(l)
+       call start_keep_order(mfg,bcg_to_proc)
+       open(sorf2,file='fsor2',position="append")
+       if(mfg==1) rewind(sorf2)
        l=ndlb(mfl)
 !
        i1=ii1(l)
@@ -476,9 +477,9 @@ contains
             /,1x,"efforts dans le repere aerodynamique : ",/ &
             /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
             ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
+      close(sorf2)
+      call END_KEEP_ORDER(mfg,bcg_to_proc)
     enddo
-    close(sorf2)
-    call END_KEEP_ORDER
 
     call SUM_MPI(cxavtot)
     call SUM_MPI(cyavtot)

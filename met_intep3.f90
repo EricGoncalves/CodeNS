@@ -143,7 +143,7 @@ contains
     integer          ::         n0n,        nc0, ncbd(ip41),        nci, ncin(ip41)
     integer          ::         ncj,        nck,       ndel,      ndel2,      ndelp
     integer          ::       ndelt,      ndelv,      nfac1,      nfac2,      nfac3
-    integer          ::       nfac4,      nfacf,        nid,       nijd,        njd
+    integer          ::       nfac4,      nfacf,        nid,       nijd,        njd,mfg
     double precision ::           am2,  cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21)
     double precision ::   cmuk1(ip21),  cmuk2(ip21),          csc,   cson(ip11),        ddist
     double precision ::          del1,        del1i,          dev,   dist(ip12),       distm1
@@ -225,13 +225,14 @@ contains
 !     ---------------------------------------------------------
 !
     lbgr=0
-    call start_keep_order
-    open(sor3 ,file='resro',position="append")
-    if (rank==0) rewind(sor3)
     do mf=1,nbfll
 !       boucle sur les parois
 !
        mfl=nmfint(mf)
+        mfg=bcl_to_bcg(mfl)
+        call start_keep_order(mfg,bcg_to_proc)
+        open(sor3 ,file='resro',position="append")
+        if (mfg==1) rewind(sor3)
        l=ndlb(mfl)
        if(l.ne.lbgr) then
 !         le gradient de la vitesse ne correspond pas au domaine en cours
@@ -903,10 +904,10 @@ contains
 !     &      uex,sqrt(qq),xme,reyl,min(999,ii),min(999,jj),min(999,kk)
           enddo   !fin de boucle sur les cellules de la bande
        enddo      !fin de boucle sur les bandes
-    enddo  !fin de boucle sur les parois
-!
     close(sor3)
-    call end_keep_order
+    call end_keep_order(mfg,bcg_to_proc) 
+   enddo  !fin de boucle sur les parois
+!
 !
     DEALLOCATE(dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz,vort)
 

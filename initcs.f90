@@ -8,7 +8,7 @@ contains
        lb,typb,ib1,ib2,jb1,jb2,kb1,kb2, &
        iba,jba,kba,tvi,tvj,tvk, &
        equat, &
-       mnc)
+       mnc,id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb)
 !
 !***********************************************************************
 !
@@ -102,6 +102,7 @@ contains
     integer          ::       nbv,    ncilb,    ncjlb,    ncklb,    nidla
     integer          ::     nidlb,   nijdla,   nijdlb,    njdla,    njdlb
     integer          ::       nvi,      nvj,      nvk
+    integer          ::  id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb
     double precision ::  cnrota,   dist,    eps, snrota,x(ip21)
     double precision :: y(ip21),    ynb,z(ip21),    znb
 !
@@ -115,8 +116,8 @@ contains
     nidla = id2(la)-id1(la)+1
     njdla = jd2(la)-jd1(la)+1
     nijdla = nidla*njdla
-    nidlb = id2(lb)-id1(lb)+1
-    njdlb = jd2(lb)-jd1(lb)+1
+    nidlb = id2b-id1b+1
+    njdlb = jd2b-jd1b+1
     nijdlb = nidlb*njdlb
 !
     ncilb = 1
@@ -124,7 +125,7 @@ contains
     ncklb = nijdlb
 !
     lper=0
-    if(krr.eq.1) then
+    if(krr.eq.1) then ! TODO DO NOT WORK if nprocs > 1
        na=npn(la)+1+(ia1-id1(la)) &
             +(ja1-jd1(la))*nidla &
             +(ka1-kd1(la))*nijdla
@@ -148,9 +149,9 @@ contains
                    iba=i
                    jba=j
                    kba=k
-                   nb=npn(lb)+1+(i-id1(lb)) &
-                        +(j-jd1(lb))*nidlb &
-                        +(k-kd1(lb))*nijdlb
+                   nb=npnb+1+(i-id1b) &
+                        +(j-jd1b)*nidlb &
+                        +(k-kd1b)*nijdlb
 !
                    ynb=y(nb)*cnrota+z(nb)*snrota
                    znb=z(nb)*cnrota-y(nb)*snrota
@@ -169,9 +170,9 @@ contains
                 ii=i
                 jj=j
                 kk=k
-                nb=npn(lb)+1+(i-id1(lb)) &
-                     +(j-jd1(lb))*nidlb &
-                     +(k-kd1(lb))*nijdlb
+                nb=npnb+1+(i-id1b) &
+                     +(j-jd1b)*nidlb &
+                     +(k-kd1b)*nijdlb
 !
                 ynb=y(nb)*cnrota+z(nb)*snrota
                 znb=z(nb)*cnrota-y(nb)*snrota
@@ -206,9 +207,9 @@ contains
                 ii=i
                 jj=j
                 kk=k
-                nb=npn(lb)+1+(i-id1(lb)) &
-                     +(j-jd1(lb))*nidlb &
-                     +(k-kd1(lb))*nijdlb
+                nb=npnb+1+(i-id1b) &
+                     +(j-jd1b)*nidlb &
+                     +(k-kd1b)*nijdlb
 !
                 ynb=y(nb)*cnrota+z(nb)*snrota
                 znb=z(nb)*cnrota-y(nb)*snrota
@@ -243,9 +244,9 @@ contains
                 ii=i
                 jj=j
                 kk=k
-                nb=npn(lb)+1+(i-id1(lb)) &
-                     +(j-jd1(lb))*nidlb &
-                     +(k-kd1(lb))*nijdlb
+                nb=npnb+1+(i-id1b) &
+                     +(j-jd1b)*nidlb &
+                     +(k-kd1b)*nijdlb
 !
                 ynb=y(nb)*cnrota+z(nb)*snrota
                 znb=z(nb)*cnrota-y(nb)*snrota
@@ -355,9 +356,9 @@ contains
              m=m+1
              mc=m0c+m
 !
-             nb = npc(lb)+1+(iba-id1(lb)) &
-                  +(jba-jd1(lb))*nidlb &
-                  +(kba-kd1(lb))*nijdlb &
+             nb = npcb+1+(iba-id1b) &
+                  +(jba-jd1b)*nidlb &
+                  +(kba-kd1b)*nijdlb &
                   +(i-ia1)*nvi &
                   +(j-ja1)*nvj &
                   +(k-ka1)*nvk

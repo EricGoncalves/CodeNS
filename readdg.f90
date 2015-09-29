@@ -42,7 +42,7 @@ contains
     implicit none
     integer          ::    i,  i1,  i2,   j,  j1
     integer          ::   j2,   k,  k1,  k2, kdg,pos
-    integer          ::    l,   n, nid,nijd, njd
+    integer          ::    l,   n, nid,nijd, njd,ll
     double precision :: x(ip21),y(ip21),z(ip21)
     logical          :: ecri
 !
@@ -56,7 +56,8 @@ contains
 !      ecri=.true.
     pos=int(FTELL(kdg))
 !
-    call START_KEEP_ORDER(pos)
+    ll=bl_to_bg(l)
+    call START_KEEP_ORDER(ll,bg_to_proc,pos)
     call my_FSEEK(kdg, pos)
 !
     i1=ii1(l)
@@ -81,7 +82,7 @@ contains
          (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
 !
     pos=int(FTELL(kdg))
-    call END_KEEP_ORDER(pos)
+    call END_KEEP_ORDER(ll,bg_to_proc,pos)
 
     return
 !

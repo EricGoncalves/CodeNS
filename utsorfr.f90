@@ -166,7 +166,7 @@ contains
     integer          ::      mfacn,       mfl,       n0c,       n0n,ncbd(ip41)
     integer          ::        nci,ncin(ip41),       ncj,       nck,     nfac1
     integer          ::      nfac2,     nfac3,     nfac4,     nfacf,     nfaci
-    integer          ::      nfacm,       nid,      nijd,       njd,        nn
+    integer          ::      nfacm,       nid,      nijd,       njd,        nn,mfg
     double precision ::          akp,       alfar,       betar,      cfinf0,      claefr
     double precision ::      claerfr,      claero,     claerob,     claetfr,        clav
     double precision ::        clavb,     clavbfr,      clavfr,     clavtfr,     clavtot
@@ -329,12 +329,13 @@ contains
        return
     endif
 !
-    call START_KEEP_ORDER
-    open(sor2 ,file='pres',position="append")
     do mf=1,nbfll
 !       boucle sur les parois
 !
        mfl=nmfint(mf)
+       mfg=bcl_to_bcg(mfl)
+       call start_keep_order(mfg,bcg_to_proc)
+       open(sor2 ,file='pres',position="append")
        l=ndlb(mfl)
 !
        i1=ii1(l)
@@ -690,8 +691,7 @@ contains
 !
 !         fin de boucle sur les bandes
        enddo
-       close(sor2)
-       call END_KEEP_ORDER
+
 !
 !       pression
        cxav   =cxav/(q0spi0*sref)
@@ -759,6 +759,8 @@ contains
                /,5x,'cx = ',f8.4,5x,'cy = ',f8.4,5x,'cz = ',f8.4 &
                ,5x,'cl = ',f8.4,5x,'cm = ',f8.4,5x,'cn = ',f8.4)
        endif
+       close(sor2)
+      call END_KEEP_ORDER(mfg,bcg_to_proc)
 !       fin de boucle sur les parois
     enddo
 !

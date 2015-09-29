@@ -74,7 +74,7 @@ contains
     integer          ::     mcyresi,    mcysave,        mfc,        mfr,         mg
     integer          ::        mglp,  mnc(ip43),mnpar(ip12),  mnr(ip44),         nc
     integer          ::  ncbd(ip41), ncin(ip41),       ncyc,      ncycl,      ndcyc
-    integer          ::        ndeb,       nfin,        ngx,kfin,k
+    integer          ::        ndeb,       nfin,        ngx,kfin,k,ll
     double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
     double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
     double precision ::         cvj(ip21),        cvk(ip21),        d0x(ip40),        d0y(ip40),        d0z(ip40)
@@ -386,23 +386,25 @@ contains
                   pression)
 
              if((kfmg.eq.3).and.(lsortie.eq.1)) then
-                  call start_keep_order
                 do l=1,lzx  !sigma / moyenne temporelle / pression
+                   ll=bl_to_bg(l)
+                   call START_KEEP_ORDER(ll,bg_to_proc)
                    call sortietest(   &
                         icycle,ncycl,idcyc, &
                         vdual2,dist,vol,mut,mu, &
                         x,y,z,l,v,pression,ztemp)
+                   call END_KEEP_ORDER(ll,bg_to_proc)
                 enddo
-                   call end_keep_order
 !
 !          sortie instationnaire densite-pression
                 if(mod(idcyc,nfreq).eq.0) then
-                  call start_keep_order
                    do l=1,lzx
-                      call sortieplot(x,y,z,l,v,pression,cson)
+                     ll=bl_to_bg(l)
+                     call START_KEEP_ORDER(ll,bg_to_proc)
+                     call sortieplot(x,y,z,l,v,pression,cson)
 !              call sortieplot(x,y,z,l,v,pression,dist,mu,mut)
+                     call END_KEEP_ORDER(ll,bg_to_proc)
                    enddo
-                   call end_keep_order
                 endif
              endif
 !
@@ -413,11 +415,12 @@ contains
              if((kfmg.eq.3).and.(lsortie.eq.1)) then
 !          sortie instationnaire densite-pression
                 if(mod(idcyc,nfreq).eq.0) then
-                  call start_keep_order
                    do l=1,lzx
+                      ll=bl_to_bg(l)
+                      call START_KEEP_ORDER(ll,bg_to_proc)
                       call sortieplot(x,y,z,l,v,pression,cson)
+                      call END_KEEP_ORDER(ll,bg_to_proc)
                    enddo
-                   call end_keep_order
                 endif
              endif
 
@@ -438,7 +441,8 @@ contains
 !
              if(kfmg.lt.3) then
 !         sorties tecplot
-                  call start_keep_order
+                   ll=bl_to_bg(l)
+                   call START_KEEP_ORDER(ll,bg_to_proc)
                 call sortieplot2(    &
                      x,y,z,l,v,dist, &
                      mu,mut,toxy, &
@@ -447,7 +451,7 @@ contains
 !               x,y,z,l,v,dist, &
 !               mu,mut,toxy, &
 !               pression,cson,ztemp)
-                   call end_keep_order
+                   call END_KEEP_ORDER(ll,bg_to_proc)
              endif
           enddo
        endif

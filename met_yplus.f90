@@ -86,7 +86,7 @@ contains
     integer          ::       mfac,     mfacn,       mfl,       n0c,       n0n
     integer          ::         nc,ncbd(ip41),       nci,ncin(ip41),       ncj
     integer          ::        nck,     nfac1,     nfac2,     nfac3,     nfac4
-    integer          ::      nfacf,       nid,      nijd,       njd
+    integer          ::      nfacf,       nid,      nijd,       njd,mfg
     double precision ::   dist(ip12),       distp,    mu(ip12),   nxn(ip42),   nyn(ip42)
     double precision ::    nzn(ip42),s(ip11,ip60),        sxyb,     taunorm,       taupe
     double precision ::   toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12),  toyz(ip12)
@@ -103,12 +103,13 @@ contains
 !     -------------------------------------------------------
 !     SORTIES RELATIVES A DES VALEURS SUR LES PAROIS
 !
-call START_KEEP_ORDER
 !
     do mf=1,nbdko
 !       boucle sur les parois
 !
        mfl=lbdko(mf)
+        mfg=bcl_to_bcg(mfl)
+        call start_keep_order(mfg,bcg_to_proc)
        l=ndlb(mfl)
 !
        i1=ii1(l)
@@ -269,10 +270,11 @@ call START_KEEP_ORDER
 !        fin de boucle sur les bandes
        enddo
        close(sor2)
+       call END_KEEP_ORDER(mfg,bcg_to_proc)
 !      fin de boucle sur les parois
     enddo
 !
-call END_KEEP_ORDER
+
     return
   end subroutine met_yplus
 end module mod_met_yplus

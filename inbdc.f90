@@ -122,7 +122,8 @@ contains
     integer          ::         la,       lam,        lb,       lbm,       m0c
     integer          ::      mdncb,     mfbea,     mfbeb,     mfbia,    mfbiam
     integer          ::      mfbib,    mfbibm,       mfc,       mlb, mnc(ip43)
-    integer          ::         mt,ncbd(ip41),ncin(ip41),buff(8),lag,lbg,mfbea1,mfbeb1
+    integer          ::         mt,ncbd(ip41),ncin(ip41),buff(16),lag,lbg,mfbea1,mfbeb1
+    integer          ::  id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb
     double precision ::  epsmsh,   exs1,   exs2,x(ip21),y(ip21)
     double precision :: z(ip21)
 !
@@ -167,7 +168,8 @@ contains
              call extmhg(lbm,x,y,z,exs1,exs2)
           endif
 !
-      call MPI_TRANS(BUFF,(/mdncb,lbm,ib1,ib2,jb1,jb2,kb1,kb2/),lbg,lag)
+      call MPI_TRANS(BUFF,(/mdncb,lbm,ib1,ib2,jb1,jb2,kb1,kb2,&
+          id1(lbm),id2(lbm),jd1(lbm),jd2(lbm),kd1(lbm),kd2(lbm),npn(lbm),npc(lbm)/),lbg,lag)
       call MPI_TRANS(typb,typb,lbg,lag)
       endif
       enddo
@@ -239,6 +241,14 @@ contains
           jb2  =BUFF(6)
           kb1  =BUFF(7)
           kb2  =BUFF(8)
+          id1b  =BUFF(9)
+          id2b  =BUFF(10)
+          jd1b  =BUFF(11)
+          jd2b  =BUFF(12)
+          kd1b  =BUFF(13)
+          kd2b  =BUFF(14)
+          npnb  =BUFF(15)
+          npcb  =BUFF(16)
 
           mdnc(mfbiam)=mdncb
           call initcs( &
@@ -248,7 +258,7 @@ contains
                lbm,typb,ib1,ib2,jb1,jb2,kb1,kb2, &
                ibam,jbam,kbam,tvi,tvj,tvk, &
                eqt, &
-               mnc)
+               mnc,id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb)
 !
 !     arret en cas de probleme dans les raccords coincidents
           if (kinitc.eq.1) stop 'initc'

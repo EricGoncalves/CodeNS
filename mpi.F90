@@ -747,26 +747,36 @@ contains
   END SUBROUTINE GATHER_R
 
 
-  SUBROUTINE START_KEEP_ORDER(relais_in)
+  SUBROUTINE START_KEEP_ORDER(index,queue,relais_in)
       IMPLICIT NONE
       integer,intent(inout),optional :: relais_in
+      integer,intent(in),optional :: index,queue(:)
       integer :: relais
       relais=0
       if (present(relais_in)) relais=relais_in
 #ifdef WITH_MPI
-      if(rank>0) call mpi_trans(relais,relais,rank-1,rank)
+      if(present(index)) then
+        if(index>1) call mpi_trans(relais,relais,queue(index-1),rank)
+      else
+        if(rank>0) call mpi_trans(relais,relais,rank-1,rank)
+      endif
 #endif
       if (present(relais_in)) relais_in=relais
   END SUBROUTINE START_KEEP_ORDER
 
 
-  SUBROUTINE END_KEEP_ORDER(relais_in)
+  SUBROUTINE END_KEEP_ORDER(index,queue,relais_in)
       IMPLICIT NONE
       integer,intent(inout),optional :: relais_in
+      integer,intent(in),optional :: index,queue(:)
       integer :: relais
       if (present(relais_in)) relais=relais_in
 #ifdef WITH_MPI
-      if(rank<nprocs-1) call mpi_trans(relais,relais,rank,rank+1)
+      if(present(index)) then
+        if(index<size(queue)) call mpi_trans(relais,relais,rank,queue(index+1))
+      else
+        if(rank<nprocs-1) call mpi_trans(relais,relais,rank,rank+1)
+      endif
 #endif
       if (present(relais_in)) relais_in=relais
   END SUBROUTINE END_KEEP_ORDER
