@@ -232,8 +232,8 @@ contains
     do mf=1,nbfll
 !
        mfl=nmfint(mf)
-       mfg=bcl_to_bcg(l)
-       call start_keep_order(mfg,bcg_to_proc)
+       mfg=bcint_to_bcintg(mf)
+       call start_keep_order(mfg,bcintg_to_proc)
        open(sorf2,file='fsor2',position="append")
        if(mfg==1) rewind(sorf2)
        l=ndlb(mfl)
@@ -478,7 +478,7 @@ contains
             /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
             ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
       close(sorf2)
-      call END_KEEP_ORDER(mfg,bcg_to_proc)
+       call end_keep_order(mfg,bcintg_to_proc)
     enddo
 
     call SUM_MPI(cxavtot)

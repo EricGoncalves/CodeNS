@@ -63,7 +63,8 @@ contains
     use mod_mpi
     implicit none
     integer          ::   idefconf,  idefxref,      ierr,     ligne,      mflu,mflu1
-    integer          ::         nb,ncbd(ip41),l
+    integer          ::         nb,ncbd(ip41),l,proc,nbfllg,mf
+    integer,allocatable :: nbfll_proc(:)
     double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),        omg1,          p2
     double precision ::          rpi,         rti,        tpar,v(ip11,ip60),     x(ip21)
     double precision ::      y(ip21),     z(ip21)
@@ -224,6 +225,24 @@ contains
                    if (rank==0) write(imp,'(/,"!!!utdon_gen: numero de surface incorrect: mf=",i4)')mflu
                 endif
              else !fin sequence, continuer la lecture generale des mots-c
+                allocate(nbfll_proc(nprocs))
+                call gather((/nbfll/),nbfll_proc,1)
+                nbfllg=sum(nbfll_proc)
+                allocate(bcint_to_bcintg(nbfll))
+                allocate(bcintg_to_proc(nbfllg))
+                proc=0
+                do mf=1,nbfllg
+                  if(mf>sum(nbfll_proc(1:proc+1))) then
+                    do l=proc,nprocs
+                       proc=proc+1
+                       if(mf<=sum(nbfll_proc(1:proc+1))) exit
+                    enddo
+                  endif
+                  bcintg_to_proc(mf)=proc
+                enddo
+                do mf=1,nbfll
+                  bcint_to_bcintg(mf)=mf+sum(nbfll_proc(1:rank))
+                enddo
                 if(kimp.gt.1) then
                    call start_keep_order
                        write(imp,'( (A,i4,A,20i4) )') "Rank : ",rank," - Surfaces d'integration : ",(bcl_to_bcg(nmfint(nb)),nb=1,nbfll)

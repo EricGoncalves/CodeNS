@@ -229,8 +229,8 @@ contains
 !       boucle sur les parois
 !
        mfl=nmfint(mf)
-        mfg=bcl_to_bcg(mfl)
-        call start_keep_order(mfg,bcg_to_proc)
+       mfg=bcint_to_bcintg(mf)
+       call start_keep_order(mfg,bcintg_to_proc)
         open(sor3 ,file='resro',position="append")
         if (mfg==1) rewind(sor3)
        l=ndlb(mfl)
@@ -905,7 +905,7 @@ contains
           enddo   !fin de boucle sur les cellules de la bande
        enddo      !fin de boucle sur les bandes
     close(sor3)
-    call end_keep_order(mfg,bcg_to_proc) 
+    call end_keep_order(mfg,bcintg_to_proc)
    enddo  !fin de boucle sur les parois
 !
 !

@@ -108,8 +108,8 @@ contains
 !       boucle sur les parois
 !
        mfl=lbdko(mf)
-        mfg=bcl_to_bcg(mfl)
-        call start_keep_order(mfg,bcg_to_proc)
+        mfg=lbdko_to_lbdkog(mf)
+        call start_keep_order(mfg,lbdkog_to_proc)
        l=ndlb(mfl)
 !
        i1=ii1(l)
@@ -142,6 +142,7 @@ contains
        if(kcaldis.eq.0) then
           write(sor2,'("!!!!met_yplus: kcaldis=0. Il faut 1 ou 2 ==>return")')
           close(sor2)
+          call END_KEEP_ORDER(mfg,lbdkog_to_proc)
           return
        endif
 !
@@ -270,7 +271,7 @@ contains
 !        fin de boucle sur les bandes
        enddo
        close(sor2)
-       call END_KEEP_ORDER(mfg,bcg_to_proc)
+       call END_KEEP_ORDER(mfg,lbdkog_to_proc)
 !      fin de boucle sur les parois
     enddo
 !

@@ -13,6 +13,8 @@ module mod_mpi
   integer             :: num_bg=0,num_bi=0,num_bl=0
   integer,allocatable :: bcg_to_proc(:),bcg_to_bcl(:),bcl_to_bcg(:),bcg_to_bci(:)
   integer,allocatable :: bg_to_proc(:),bg_to_bl(:),bl_to_bg(:),bg_to_bi(:)
+  integer,allocatable :: bcint_to_bcintg(:),bcintg_to_proc(:)
+  integer,allocatable :: lbdko_to_lbdkog(:),lbdkog_to_proc(:)
   !ab_to_ab where a is :
   ! bc : boundary condition
   ! b  : block

@@ -333,8 +333,8 @@ contains
 !       boucle sur les parois
 !
        mfl=nmfint(mf)
-       mfg=bcl_to_bcg(mfl)
-       call start_keep_order(mfg,bcg_to_proc)
+       mfg=bcint_to_bcintg(mf)
+       call start_keep_order(mfg,bcintg_to_proc)
        open(sor2 ,file='pres',position="append")
        l=ndlb(mfl)
 !
@@ -760,7 +760,7 @@ contains
                ,5x,'cl = ',f8.4,5x,'cm = ',f8.4,5x,'cn = ',f8.4)
        endif
        close(sor2)
-      call END_KEEP_ORDER(mfg,bcg_to_proc)
+      call END_KEEP_ORDER(mfg,bcintg_to_proc)
 !       fin de boucle sur les parois
     enddo
 !
