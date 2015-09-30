@@ -11,8 +11,8 @@ module mod_mpi
   integer             :: rank,NPROCS
   integer             :: num_bcg=0,num_bci=0,num_bcl=0
   integer             :: num_bg=0,num_bi=0,num_bl=0
-  integer,allocatable :: bcg_to_proc(:),bcg_to_bcl(:),bcl_to_bcg(:),bcg_to_bci(:)
-  integer,allocatable :: bg_to_proc(:),bg_to_bl(:),bl_to_bg(:),bg_to_bi(:)
+  integer,allocatable :: bcg_to_proc(:),bcg_to_bcl(:),bcl_to_bcg(:)
+  integer,allocatable :: bg_to_proc(:),bg_to_bl(:),bl_to_bg(:)
   integer,allocatable :: bcint_to_bcintg(:),bcintg_to_proc(:)
   integer,allocatable :: lbdko_to_lbdkog(:),lbdkog_to_proc(:)
   !ab_to_ab where a is :
@@ -83,8 +83,8 @@ contains
       NPROCS=1
 #endif
 
-      allocate(bcg_to_proc(0),bcg_to_bcl(0),bcl_to_bcg(0),bcg_to_bci(0))
-      allocate(bg_to_proc(0),bg_to_bl(0),bl_to_bg(0),bg_to_bi(0))
+      allocate(bcg_to_proc(0),bcg_to_bcl(0),bcl_to_bcg(0))
+      allocate(bg_to_proc(0),bg_to_bl(0),bl_to_bg(0))
   END SUBROUTINE  INIMPI
 
   subroutine endmpi

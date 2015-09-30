@@ -53,7 +53,7 @@ contains
     do l=1,lmfbd
 !
        do l1=1,mtb
-        if (new2old_f(l1)==lmfb(l)) &
+        if (bcg_to_bci(bcl_to_bcg(l1))==lmfb(l)) &
        call inbdn( &
             l1,kibdn, &
             x,y,z, &

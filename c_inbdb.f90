@@ -56,7 +56,7 @@ contains
             ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
     else
        do l1=1,mtb
-        if (new2old_f(l1)==lmfb(l)) &
+        if (bcg_to_bci(bcl_to_bcg(l1))==lmfb(l)) &
        call inbdb( &
             ncbd,ncin, &
             l1,clmf,kibdb, &

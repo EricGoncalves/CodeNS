@@ -423,7 +423,7 @@ contains
     !############################################################################################
     !######################### RECREATE OLD BOUNDARIES ##########################################
     !############################################################################################
-    allocate(new2old_f(0))
+    allocate(bcg_to_bci(0))
 
     if(verbosity>=2) then
       mot="" ; nmot=13  ; imot=0
@@ -529,8 +529,8 @@ contains
                                          save_indfl(fr), &
                                          ncbd)
                                   endif
-                                  call reallocate_s(new2old_f,mtb)
-                                  new2old_f(mfbe)= fr
+                                  call reallocate_s(bcg_to_bci,mtb)
+                                  bcg_to_bci(mfbe)= fr
                                endif
                             enddo
                          enddo
@@ -556,8 +556,8 @@ contains
                              save_indfl(fr), &
                              ncbd)
                       endif
-                      call reallocate_s(new2old_f,mtb)
-                      new2old_f(mfbe)= fr
+                      call reallocate_s(bcg_to_bci,mtb)
+                      bcg_to_bci(mfbe)= fr
                    endif
                endif
             enddo
@@ -620,9 +620,9 @@ contains
                           ncbd)
                     endif
 
-                   call reallocate_s(new2old_f,mtb)
-                   new2old_f(mfbe-1)= 0
-                   new2old_f(mfbe  )= 0
+                   call reallocate_s(bcg_to_bci,mtb)
+                   bcg_to_bci(mfbe-1)= 0
+                   bcg_to_bci(mfbe  )= 0
                 endif
                 if (j>1) then
                    l3=sum(nblock2(1:l-1))+i+(j-2)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
@@ -668,9 +668,9 @@ contains
                           ncbd)
                     endif
 
-                   call reallocate_s(new2old_f,mtb)
-                   new2old_f(mfbe-1)= 0
-                   new2old_f(mfbe  )= 0
+                   call reallocate_s(bcg_to_bci,mtb)
+                   bcg_to_bci(mfbe-1)= 0
+                   bcg_to_bci(mfbe  )= 0
                 endif
                 if (k>1) then
                    l3=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-2)*nblockd(2,l)*nblockd(1,l)
@@ -716,9 +716,9 @@ contains
                           ncbd)
                     endif
 
-                   call reallocate_s(new2old_f,mtb)
-                   new2old_f(mfbe-1)= 0
-                   new2old_f(mfbe  )= 0
+                   call reallocate_s(bcg_to_bci,mtb)
+                   bcg_to_bci(mfbe-1)= 0
+                   bcg_to_bci(mfbe  )= 0
                 endif
              enddo
           enddo
@@ -811,14 +811,14 @@ contains
                 do fr=1,mfbe
                    if(ndlb(fr)==l2) then
                       test=.false.
-                      if (new2old_f(fr)==0) then  ! new boundary 
+                      if (bcg_to_bci(fr)==0) then  ! new boundary 
                          test=.true.
                          if (indfl(fr)(2:2)=="1") fr2=fr+1
                          if (indfl(fr)(2:2)=="2") fr2=fr-1
                       else                        ! old raccord boundary
-                         if(tab_raccord(new2old_f(fr))/=0) then
+                         if(tab_raccord(bcg_to_bci(fr))/=0) then
                             test=.true.
-                            fr2=tab_raccord(new2old_f(fr)) ! old other boundary number
+                            fr2=tab_raccord(bcg_to_bci(fr)) ! old other boundary number
                             l3=save_ndlb(fr2)              ! old other block number
 
                             call get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,                 &

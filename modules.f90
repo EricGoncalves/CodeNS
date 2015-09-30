@@ -23,7 +23,7 @@ implicit none
   integer         ,allocatable ::   mmb(:),  mpb(:),  mpc(:), mper(:),  mpn(:)
   integer         ,allocatable ::   mpr(:),  nba(:), nbdc(:), ndcc(:), ndlb(:)
   integer         ,allocatable ::  ndrr(:), nfba(:), nfbc(:), nfbn(:), nfbr(:)
-  integer         ,allocatable ::  nfei(:),new2old_f(:),tab_raccord(:)
+  integer         ,allocatable ::  nfei(:),bcg_to_bci(:),tab_raccord(:)
   double precision,allocatable :: bc(:,:),srotr(:),crotr(:)
   character(len=4),allocatable :: cl(:)
   character(len=2),allocatable :: indfl(:)
@@ -39,7 +39,7 @@ implicit none
   integer          ::      neqtx,     nptot
   integer         ,allocatable ::    id1(:),   id2(:),   ii1(:),   ii2(:),   jd1(:)
   integer         ,allocatable ::    jd2(:),   jj1(:),   jj2(:),   kd1(:),   kd2(:)
-  integer         ,allocatable ::    kk1(:),   kk2(:),lbdrat(:),   nnc(:),  nnfb(:)
+  integer         ,allocatable ::    kk1(:),   kk2(:),lbdrat(:),   nnc(:),  nnfb(:),bg_to_bi(:)
   integer         ,allocatable ::    nnn(:),   npc(:),  npfb(:),   npn(:),npbrat(:),nbdrat(:)
 end module maillage
 !

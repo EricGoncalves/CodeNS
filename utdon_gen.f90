@@ -54,7 +54,7 @@ contains
 !
     use para_var
     use para_fige
-    use boundary,only :new2old_f
+    use boundary,only :bcg_to_bci
     use sortiefichier
     use maillage
     use constantes
@@ -212,7 +212,7 @@ contains
                 backspace(don1)
                 read(don1,*,err=99) mflu
                 do mflu1=1,mtb
-                if (new2old_f(bcl_to_bcg(mflu1))==mflu) then
+                if (bcg_to_bci(bcl_to_bcg(mflu1))==mflu) then
                   if (mflu1==0) cycle
                   if(mflu1.ge.1 .and. mflu1.le.mtbx) then
                     if(nbfll.lt.mtb) then
