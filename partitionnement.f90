@@ -28,6 +28,7 @@ contains
     use mod_c_inbdb
     use mod_crdms
     use mod_c_crdms
+    use mod_mpi
     !
     !***********************************************************************
     !
@@ -39,7 +40,7 @@ contains
     !-----parameters figes--------------------------------------------------
     !
     implicit none
-    integer             :: icmt,nprocs,nxyza,i,j,k,xyz,nm,xs,ys,zs,nmin,nmax,nmin1,nmax1
+    integer             :: icmt,nblocks,nxyza,i,j,k,xyz,nm,xs,ys,zs,nmin,nmax,nmin1,nmax1
     integer             :: imot(nmx),nmot,fr,imax,imin,jmax,jmin,kmax,kmin,kval
     integer             :: l2,mfbe,nid,njd,nijd,xi,yi,zi,sblock,l3,old_mtb
     integer             :: imax2,imin2,jmax2,jmin2,kmax2,kmin2,fr2,i2,j2,k2,l4,fr3
@@ -70,6 +71,8 @@ contains
     integer,allocatable :: save_ndcc(:),save_nbdc(:),save_nfbc(:)
     integer,allocatable :: save_mdnc(:),save_mper(:),save_mpc(:)
     integer,allocatable :: save_ncin(:),save_mnc(:)
+    integer,allocatable :: save_bcg_to_proc(:),save_bcg_to_bcl(:),save_bcg_to_bci(:),save_bcl_to_bcg(:)
+    integer,allocatable :: save_bg_to_proc(:),save_bg_to_bl(:),save_bg_to_bi(:),save_bl_to_bg(:)
     character(len=2),allocatable :: save_indfl(:)
     character(len=4),allocatable :: save_cl(:)
 
@@ -87,7 +90,7 @@ contains
     !############################################################################################
 
     verbosity=2 ! from 0 to 3
-    call get_param(mot,nmot,imot,nprocs) ! nprocs is the minimum number of blocks we want
+    call get_param(mot,nmot,imot,nblocks) ! nblocks is the minimum number of blocks we want
 
     !############################################################################################
     !############################# SAVE OLD MESH FOR CHECKING PURPOSE ###########################
@@ -171,6 +174,14 @@ contains
     allocate(save_ncin(size(ncin)))
     allocate(save_bceqt(size(bceqt,1),size(bceqt,2)))
     allocate(save_mnc(size(mnc)))
+    allocate(save_bcg_to_proc(size(bcg_to_proc)))
+    allocate(save_bcg_to_bcl(size(bcg_to_bcl)))
+    allocate(save_bcg_to_bci(size(bcg_to_bci)))
+    allocate(save_bcl_to_bcg(size(bcl_to_bcg)))
+    allocate(save_bg_to_proc(size(bg_to_proc)))
+    allocate(save_bg_to_bl(size(bg_to_bl)))
+    allocate(save_bg_to_bi(size(bg_to_bi)))
+    allocate(save_bl_to_bg(size(bl_to_bg)))
 
     ! Save old split
     save_lzx=lzx
@@ -237,6 +248,14 @@ contains
     save_mdimubx=mdimubx
     save_mdimtbx=mdimtbx
 
+    save_bcg_to_proc=bcg_to_proc
+    save_bcg_to_bcl=bcg_to_bcl
+    save_bcg_to_bci=bcg_to_bci
+    save_bcl_to_bcg=bcl_to_bcg
+    save_bg_to_proc=bg_to_proc
+    save_bg_to_bl=bg_to_bl
+    save_bg_to_bi=bg_to_bi
+    save_bl_to_bg=bl_to_bg
 
     !   reinitialisation
 
@@ -285,6 +304,15 @@ contains
     call reallocate(bceqt,0,0)
     call reallocate(mnc,0)
 
+    call reallocate(bcg_to_proc,0)
+    call reallocate(bcg_to_bcl,0)
+    call reallocate(bcg_to_bci,0)
+    call reallocate(bcl_to_bcg,0)
+    call reallocate(bg_to_proc,0)
+    call reallocate(bg_to_bl,0)
+    call reallocate(bg_to_bi,0)
+    call reallocate(bl_to_bg,0)
+
     ndimubx = 0
     ndimctbx=0
     ndimntbx=0
@@ -301,6 +329,12 @@ contains
     mfbe=0
     ip41=0
     vbc=0.
+    num_bcg=0
+    num_bci=0
+    num_bcl=0
+    num_bg=0
+    num_bi=0
+    num_bl=0
 
     !############################################################################################
     !####################### COMPUTE SPLITTING ##################################################
@@ -309,7 +343,7 @@ contains
     nxyza=sum(save_ii2*save_jj2*save_kk2)  ! total number of points
 
     ! nouveaux tableaux
-    allocate(nblock2(save_lt),nblockd(3,save_lt),ni(1,1,1,nprocs),nj(1,1,1,nprocs),nk(1,1,1,nprocs))
+    allocate(nblock2(save_lt),nblockd(3,save_lt),ni(1,1,1,nblocks),nj(1,1,1,nblocks),nk(1,1,1,nblocks))
     nblock2=1    ! initial number of splitting for each existing block
     nblockd=1    ! initial number of splitting for each existing block
 
@@ -317,7 +351,7 @@ contains
     ! routine calculant combiens de fois splitter chaque block
     ! sortie : nblock2
     ! entrée : tout le reste
-    call num_split(nblock2,save_lt,nxyza,nprocs,save_ii2,save_jj2,save_kk2)
+    call num_split(nblock2,save_lt,nxyza,nblocks,save_ii2,save_jj2,save_kk2)
 
     do l=1,save_lt
 
@@ -329,18 +363,18 @@ contains
             nblockd(:,l),num_cf2,ni1,nj1,nk1)
 
        ! ajoute le split avec les splits des autres blocks
-       call reallocate_s(ni,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nprocs)
+       call reallocate_s(ni,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nblocks)
        ni(:size(ni1,1),:size(ni1,2),:size(ni1,3),l)=ni1
 
-       call reallocate_s(nj,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nprocs)
+       call reallocate_s(nj,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nblocks)
        nj(:size(nj1,1),:size(nj1,2),:size(nj1,3),l)=nj1
 
-       call reallocate_s(nk,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nprocs)
+       call reallocate_s(nk,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nblocks)
        nk(:size(nk1,1),:size(nk1,2),:size(nk1,3),l)=nk1
     enddo
 
     sblock=sum(nblockd(1,:)*nblockd(2,:)*nblockd(3,:))
-    if(sblock/=nprocs) then
+    if(sblock/=nblocks) then
        stop 'partitionnement impossible'
     else
        if(verbosity>=1) then
@@ -375,7 +409,7 @@ contains
     !############################################################################################
     !######################### RECREATE GRID ####################################################
     !############################################################################################
-    allocate(new2old_b(nprocs))
+    allocate(new2old_b(nblocks))
 
     if(verbosity>=2) then
       mot="" ; nmot=7 ; imot=0
@@ -423,8 +457,6 @@ contains
     !############################################################################################
     !######################### RECREATE OLD BOUNDARIES ##########################################
     !############################################################################################
-    allocate(bcg_to_bci(0))
-
     if(verbosity>=2) then
       mot="" ; nmot=13  ; imot=0
       mot(1)="create"   ; imot(1)=6
@@ -953,9 +985,9 @@ end subroutine new2old_p
 
 end subroutine partitionnement
 
-subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
+subroutine num_split(nblock2,lt,nxyza,nblocks,ii2,jj2,kk2)
  implicit none
- integer,intent(in)  :: lt,nxyza,nprocs
+ integer,intent(in)  :: lt,nxyza,nblocks
  integer,intent(in)  :: ii2(lt),jj2(lt),kk2(lt)
  integer,intent(out) :: nblock2(lt)
  integer             :: rsize,sblock(lt),i,j,k,nblock(lt)
@@ -967,7 +999,7 @@ subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
  ! todo
 
  !   compute number of spliting of each blocks with the best equilibrium
-! do i=lt,nprocs-1                       ! split until lt>=nprocs
+! do i=lt,nblocks-1                       ! split until lt>=nblocks
 !    unbalance=10000 ! a lot
 !    do j=1,lt
 !      nblock=nblock2                    ! try every split
@@ -984,7 +1016,7 @@ subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
 
 
  !   compute number of spliting of each blocks with the best equilibrium
- do i=lt,nprocs-1                       ! split until lt>=nprocs
+ do i=lt,nblocks-1                       ! split until lt>=nblocks
     sblock=ceiling(ii2*jj2*kk2*1./nblock2) ! compute the current size of blocks
     j=maxloc(sblock,1)                        ! split the first bigest block
     do k=j+1,lt
@@ -997,14 +1029,14 @@ subroutine num_split(nblock2,lt,nxyza,nprocs,ii2,jj2,kk2)
 
 
 !    compute number of spliting of each blocks with the ideal equilibrium
-!     rsize=nint(nxyza*1./nprocs)              ! ideal size of a block
+!     rsize=nint(nxyza*1./nblocks)              ! ideal size of a block
 !     nblock2=ceiling(ii2*jj2*kk2*1./rsize) ! number of split needed
 !!     sblock=mod(ii2*jj2*kk2,rsize)         ! size of the smallest block
 !!     do i=1,lt
 !!       if (sblock(i) <= 3*3*3) &          ! allow for small imbalance in order to avoid too small blocks
 !!            nblock2(i)=nblock2(i)-1
 !!     end do
-! do i=sum(nblock2),nprocs-1,-1
+! do i=sum(nblock2),nblocks-1,-1
 !    sblock=ceiling(ii2*jj2*kk2*1./nblock2) ! compute the current size of blocks (approx.)
 !    unbalance=(maxval(sblock)-minval(sblock))*1./maxval(sblock) ! and unbalance
 !    k=0
@@ -1310,13 +1342,13 @@ subroutine str(mot,imot,nmx,lmot,val)
  imot(lmot) =len_trim(adjustl(mot(lmot)))
 end subroutine str
 
-subroutine get_param(mot,nmot,imot,nprocs)
+subroutine get_param(mot,nmot,imot,nblocks)
  use chainecarac,only : ci
  use para_fige,only : nmx
  use mod_valenti
  implicit none
  integer,intent(in)  :: nmot,imot(nmx)
- integer,intent(out) :: nprocs
+ integer,intent(out) :: nblocks
  character(len=32),intent(in) ::  mot(nmx)
  integer :: icmt,kval,nm
  character(len=32) ::  comment
@@ -1332,7 +1364,7 @@ subroutine get_param(mot,nmot,imot,nprocs)
     comment=ci
     call synterr(mot,imot,nmot,comment)
  else
-    call valenti(mot,imot,nm,nprocs,kval)
+    call valenti(mot,imot,nm,nblocks,kval)
  endif
 end subroutine get_param
 

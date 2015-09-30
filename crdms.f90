@@ -67,10 +67,10 @@ contains
     num_bi=num_bi+1
     call reallocate_s(bg_to_proc,num_bg)
     call reallocate_s(bg_to_bl,num_bg)
-!    call reallocate_s(bg_to_bi,num_bg)
+    call reallocate_s(bg_to_bi,num_bg)
     bg_to_proc(l)=modulo((l-1),nprocs)
     bg_to_bl(l)=0
-!    bg_to_bi(l)=l
+    bg_to_bi(l)=l
 !
     if(bg_to_proc(l)==rank) then
       num_bl=num_bl+1

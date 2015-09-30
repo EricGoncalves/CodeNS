@@ -886,11 +886,13 @@ contains
     allocate(npn(lt))   !crbms
     allocate(npfb(lt))  !crbms
     allocate(npc(lt))   !crbms
+    allocate(bg_to_bi(mtb))   !crbds
     allocate(ncbd(ip41)) ! initis
     mtb=0
     allocate(indfl(mtb))  !crbds
     allocate(nfei(mtb))   !crbds
     allocate(ndlb(mtb))   !crbds
+    allocate(bcg_to_bci(mtb))   !crbds
     mtt=0
     allocate(kmaxb(mtt))   !crbds
     allocate(iminb(mtt))   !crbds
@@ -923,7 +925,7 @@ contains
     double precision,allocatable :: rtmp(:)
 
     allocate(cl(mtb))
-    allocate(tab_raccord(mtb))
+    allocate(tab_raccord(num_bci))
     allocate(ndcc(mtb))
     allocate(nbdc(mtb))
     allocate(nfbc(mtb))
