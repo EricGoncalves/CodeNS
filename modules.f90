@@ -23,7 +23,7 @@ implicit none
   integer         ,allocatable ::   mmb(:),  mpb(:),  mpc(:), mper(:),  mpn(:)
   integer         ,allocatable ::   mpr(:),  nba(:), nbdc(:), ndcc(:), ndlb(:)
   integer         ,allocatable ::  ndrr(:), nfba(:), nfbc(:), nfbn(:), nfbr(:)
-  integer         ,allocatable ::  nfei(:),srotr(:),mesh2part(:),new2old_f(:),tab_raccord(:)
+  integer         ,allocatable ::  nfei(:),srotr(:),new2old_f(:),tab_raccord(:)
   double precision,allocatable :: bc(:,:)
   character(len=4),allocatable :: cl(:)
   character(len=2),allocatable :: indfl(:)

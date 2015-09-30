@@ -916,7 +916,7 @@ contains
     allocate(nfbc(mtb))
     allocate(bc(mtb,ista*lsta))
 ndcc=0
-bc=0
+bc=0.
 tab_raccord=0
 !    allocate(nfbr(mtb))
 !    allocate(ndrr(mtb))

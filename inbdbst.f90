@@ -124,7 +124,7 @@ contains
     else if (clmf(1:4).eq.'acou') then
        nvbc=0
     else if (clmf(1:4).eq.'debi') then
-       vbc(1)=1
+       vbc(1)=1.
        nvbc=1
 !
     else

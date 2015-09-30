@@ -42,7 +42,7 @@ contains
     ibdcfl=0
     ibddim=0
     nvbc=0
-    vbc=0
+    vbc=0.
 !
     nm=3
     nm=nm+1

@@ -16,7 +16,7 @@ contains
 !-----parameters figes--------------------------------------------------
 !
     use para_var
-    use boundary
+    use para_fige
     use sortiefichier
     use mod_b1_inbdc
     use mod_tcmd_inbdc
@@ -24,7 +24,7 @@ contains
     implicit none
     integer          ::        iba, imot(nmx),       jba,       kba,     kibdc
     integer          ::        krr,     mfbea,     mfbeb, mnc(ip43),ncbd(ip41)
-    integer          :: ncin(ip41),      nmot,l1,l2,mfbea1,mfbeb1
+    integer          :: ncin(ip41),      nmot
     double precision ::  epsmsh,   exs1,   exs2,x(ip21),y(ip21)
     double precision :: z(ip21)
 !
