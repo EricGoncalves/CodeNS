@@ -38,10 +38,11 @@ contains
     use para_fige
     use sortiefichier
     use maillage
+    use mod_mpi
     implicit none
     integer          ::    i,  i1,  i2,   j,  j1
-    integer          ::   j2,   k,  k1,  k2, kdg
-    integer          ::    l,   n, nid,nijd, njd
+    integer          ::   j2,   k,  k1,  k2, kdg,pos
+    integer          ::    l,   n, nid,nijd, njd,ll
     double precision :: x(ip21),y(ip21),z(ip21)
     logical          :: ecri
 !
@@ -53,6 +54,11 @@ contains
 !
     ecri=.false.
 !      ecri=.true.
+    pos=int(FTELL(kdg))
+!
+    ll=bl_to_bg(l)
+    call START_KEEP_ORDER(ll,bg_to_proc,pos)
+    call my_FSEEK(kdg, pos)
 !
     i1=ii1(l)
     i2=ii2(l)
@@ -75,6 +81,9 @@ contains
     read(kdg,err=13) &
          (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
 !
+    pos=int(FTELL(kdg))
+    call END_KEEP_ORDER(ll,bg_to_proc,pos)
+
     return
 !
 13  continue
@@ -84,6 +93,7 @@ contains
 !
     if(ecri) then
 !       ecriture plaque plane 1 domaine
+       open(out  ,file='fout',position="append")
        k=1
        do k=1,2
           do i=1,i2,50
@@ -96,6 +106,7 @@ contains
              enddo
           enddo
        enddo
+       close(out)
     endif
 !
     return

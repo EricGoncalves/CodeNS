@@ -1,7 +1,7 @@
 module mod_rfsc
   implicit none
 contains
-  subroutine rfsc(t,ncbd,mnc)
+  subroutine rfsc(t,ncbd,mnc,ncin)
 !
 !***********************************************************************
 !
@@ -30,19 +30,71 @@ contains
     use para_var
     use para_fige
     use boundary
+    use mod_mpi
     implicit none
     integer          ::          m,        mb,        mc,        mf,       mfb
-    integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd
+    integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd,ncin(ip41)
     double precision :: t(ip11)
+    double precision,allocatable :: buff(:,:,:)
+    integer :: req(nbd,2),other,me
 !
 !-----------------------------------------------------------------------
 !
 !
+    req=MPI_REQUEST_NULL
+    mt=0
+    do mf=1,nbd
+       mfb=lbd(mf)
+       mt=max(mt,mmb(mfb))
+    enddo
+    allocate(buff(mt,nbd,2))
+
+
     do mf=1,nbd
 !
        mfb=lbd(mf)
        mt=mmb(mfb)
+       other=ndcc(mfb)
+       me=bcl_to_bcg(mfb)
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) then
 !
+!     we have to exchange the globally numbered me boundary with the owner of the globally numbered other boundary
+!
+       do m=1,mt
+          mb=mpb(mfb)+m
+          nc=ncin(mb)
+!
+!     definition d'un scalaire aux points fictifs
+!
+           buff(m,mf,1)=t(nc) ! we fill a buffer, so we can send bigger messages simultaneously
+!
+       enddo
+       call MPI_itrans2(buff(1:mt,mf,1),bcg_to_proc(me),bcg_to_proc(other),req(mf,1)) ! send
+       call MPI_itrans2(buff(1:mt,mf,2),bcg_to_proc(other),bcg_to_proc(me),req(mf,2)) ! recv
+        endif
+    enddo
+
+    do mf=1,nbd
+!
+       mfb=lbd(mf)
+       mt=mmb(mfb)
+       other=ndcc(mfb)
+       me=bcl_to_bcg(mfb)
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) then
+!
+       call WAIT_MPI(req(mf,2))  ! waiting for the message to be received
+!       buff(1:mt,mf,2)=buff(1:mt,mf,1)
+
+       do m=1,mt
+          mb=mpb(mfb)+m
+          nd=ncbd(mb)
+!
+!     definition d'un scalaire aux points fictifs
+!
+          t(nd)=buff(m,mf,2)
+!
+       enddo
+       else
        do m=1,mt
           mc=mpc(mfb)+m
           nc=mnc(mc)
@@ -54,7 +106,17 @@ contains
           t(nd)=t(nc)
 !
        enddo
+       endif
     enddo
+
+    do mf=1,nbd
+       mfb=lbd(mf)
+       other=ndcc(mfb)
+       me=bcl_to_bcg(mfb)
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) &
+           call WAIT_MPI(req(mf,1))  ! waiting for all the messages to be sent
+    enddo
+    deallocate(buff)
 !
     return
   end subroutine rfsc

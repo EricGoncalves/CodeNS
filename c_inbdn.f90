@@ -23,6 +23,7 @@ contains
     use mod_b1_inbdn
     use mod_inbdn
     use mod_tcmd_inbdn
+    use mod_mpi
     implicit none
     integer          ::  imot(nmx),     kibdn,         l,     lmfbd,ncbd(ip41)
     integer          ::       nmot,l1
@@ -46,7 +47,7 @@ contains
          lmfb,lmfbd,kibdn)
 !
     if (kimp.ge.1) then
-       call b1_inbdn(lmfb,lmfbd,kibdn)
+       if (rank==0) call b1_inbdn(lmfb,lmfbd,kibdn)
     endif
 !
     do l=1,lmfbd

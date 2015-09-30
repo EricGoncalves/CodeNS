@@ -6,7 +6,7 @@ contains
        sn,vol, &
        ncbd,mnc, &
        mnr,xnr,ynr,znr, &
-       tn1,tn2,tn3)
+       tn1,tn2,tn3,ncin)
 !
 !***********************************************************************
 !
@@ -41,7 +41,7 @@ contains
     use mod_rfsr
     implicit none
     integer          ::        img,         l,        lm,       mfc,       mfr
-    integer          ::  mnc(ip43), mnr(ip44),ncbd(ip41)
+    integer          ::  mnc(ip43), mnr(ip44),ncbd(ip41),ncin(ip41)
     double precision ::          exs1,         exs2,      r(ip11),sn(ip31*ndir),    tn1(ip00)
     double precision ::     tn2(ip00),    tn3(ip00),    vol(ip11),      x(ip21),    xnr(ip44)
     double precision ::       y(ip21),    ynr(ip44),      z(ip21),    znr(ip44)
@@ -71,7 +71,7 @@ contains
              lbd(mfc)=nfbc(mfc)+(img-1)*mtb
           enddo
           nbd=mtcx
-          call rfsc(vol,ncbd,mnc)
+          call rfsc(vol,ncbd,mnc,ncin)
 !
        enddo
     endif

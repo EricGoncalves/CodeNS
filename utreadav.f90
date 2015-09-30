@@ -39,6 +39,7 @@ contains
     use para_var
     use para_fige
     use maillage
+    use mod_mpi
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
     integer          ::  inia1,     j,    j1,  j1m1,    j2
@@ -77,7 +78,7 @@ contains
     ncj=nid
     nck=nijd
 !
-    if(l.eq.1) then
+    if(bl_to_bg(l).eq.1) then
        print*,'INITIALISATION A PARTIR CHAMP C.V'
     endif
 !

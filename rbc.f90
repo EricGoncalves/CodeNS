@@ -147,7 +147,7 @@ contains
     nbd=mtcx
     call rfvc( &
          v,ncbd,mnc, &
-         pression,ztemp,cson)
+         pression,ztemp,cson,ncin)
 !
     do mfr=1,mtrx
        lbd(mfr)=nfbr(mfr)

@@ -70,6 +70,7 @@ contains
     use boundary
     use sortiefichier
     use modeleturb
+    use mod_mpi
     implicit none
     integer          ::         i1,        i2,       idm,     ilmax,     ilmin
     integer          ::      imaxf,     iminf,        j1,        j2,     jlmax
@@ -80,7 +81,7 @@ contains
     integer          ::      m2deb,     m2fin,     m2max,   m2maxm1,     m2min
     integer          ::      mfacn,       mfe,       mfl,         n,       nci
     integer          :: ncin(ip41),       ncj,       nck,       nfr,     nfrmx
-    integer          ::        nid,      nijd,       njd
+    integer          ::        nid,      nijd,       njd,mfbe
     double precision :: fgam(ip42)
 !
 !-----------------------------------------------------------------------
@@ -112,7 +113,7 @@ contains
     read(99,*,err=302)nfrmx
     if(nfrmx.le.0) then
 !       le nombre de zones laminaires doit etre positif
-       write(imp,'(/,"!!!atintrans: domaine laminaire mal defini",14x,"nfrmx=",i5)')nfrmx
+        if (rank==0) write(imp,'(/,"!!!atintrans: domaine laminaire mal defini",14x,"nfrmx=",i5)')nfrmx
        stop
     endif
 !
@@ -121,94 +122,97 @@ contains
 !
 !       calcul numero facette de la frontiere
 !
-       mfl=nfei(mfe)
-       l =ndlb(mfl)
-!
-       i1=ii1(l)
-       i2=ii2(l)
-       j1=jj1(l)
-       j2=jj2(l)
-       k1=kk1(l)
-       k2=kk2(l)
-!
-       nid = id2(l)-id1(l)+1
-       njd = jd2(l)-jd1(l)+1
-       nijd = nid*njd
-!
-       nci=1
-       ncj=nid
-       nck=nijd
-!
-       m0b=mpb(mfl)
-       m0n=mpn(mfl)
-       iminf=iminb(mfl)
-       imaxf=imaxb(mfl)
-       jminf=jminb(mfl)
-       jmaxf=jmaxb(mfl)
-       kminf=kminb(mfl)
-       kmaxf=kmaxb(mfl)
-       m1min=1
-       m2min=1
-!
-!           m1deb m1fin : limites de variation des facettes parois laminaires
-!           m2deb m2fin : dans numerotation des frontieres a normale stockee
-!
+       mfbe=bcg_to_bcl(mfe)
+       if (mfbe/=0) then ! I own part of this boundary
+         mfl=nfei(mfbe)
+         l =ndlb(mfl)
+  !
+         i1=ii1(l)
+         i2=ii2(l)
+         j1=jj1(l)
+         j2=jj2(l)
+         k1=kk1(l)
+         k2=kk2(l)
+  !
+         nid = id2(l)-id1(l)+1
+         njd = jd2(l)-jd1(l)+1
+         nijd = nid*njd
+  !
+         nci=1
+         ncj=nid
+         nck=nijd
+  !
+         m0b=mpb(mfl)
+         m0n=mpn(mfl)
+         iminf=iminb(mfl)
+         imaxf=imaxb(mfl)
+         jminf=jminb(mfl)
+         jmaxf=jmaxb(mfl)
+         kminf=kminb(mfl)
+         kmaxf=kmaxb(mfl)
+         m1min=1
+         m2min=1
+  !
+  !           m1deb m1fin : limites de variation des facettes parois laminaires
+  !           m2deb m2fin : dans numerotation des frontieres a normale stockee
+  !
 
-!                     ilmin           ilmax
-!                       |               |
-!                       |   laminaire   |
-!                       |===============|
-!       ..........x-----------------------------x.............
-!               iminf   frontiere "mfl"       imaxf  indice en "i" domaine l
-!                |
-!            m0n=mpn(mfl)                            pointeur normales stockees
-!
-!
-       if (iminf.eq.imaxf) then
-!         frontiere i=cste
-          m1max=jmaxf-jminf+1
-          m1maxm1=m1max-1
-          m2max=kmaxf-kminf+1
-          m2maxm1=m2max-1
-          m1deb=jlmin-jminf+1
-          m1fin=jlmax-jminf
-          m2deb=klmin-kminf+1
-          m2fin=klmax-kminf
-!
-       elseif (jminf.eq.jmaxf) then
-!         frontiere j=cste
-          m1max=imaxf-iminf+1
-          m1maxm1=m1max-1
-          m2max=kmaxf-kminf+1
-          m2maxm1=m2max-1
-          m1deb=ilmin-iminf+1
-          m1fin=ilmax-iminf
-          m2deb=klmin-kminf+1
-          m2fin=klmax-kminf
-!
-       elseif (kminf.eq.kmaxf) then
-!         frontiere k=cste
-          m1max=imaxf-iminf+1
-          m1maxm1=m1max-1
-          m2max=jmaxf-jminf+1
-          m2maxm1=m2max-1
-          m1deb=ilmin-iminf+1
-          m1fin=ilmax-iminf
-          m2deb=jlmin-jminf+1
-          m2fin=jlmax-jminf
-       endif
-!
-!
-       idm=m1max-m1min
-       do m2=m2deb,m2fin
-!         boucle sur les bandes
-          do m1=m1deb,m1fin
-!           boucle sur les cellules de la bande
-             mfacn=m0n+m1+(m2-1)*idm
-             fgam(mfacn)=0.
-          enddo
-       enddo
+  !                     ilmin           ilmax
+  !                       |               |
+  !                       |   laminaire   |
+  !                       |===============|
+  !       ..........x-----------------------------x.............
+  !               iminf   frontiere "mfl"       imaxf  indice en "i" domaine l
+  !                |
+  !            m0n=mpn(mfl)                            pointeur normales stockees
+  !
+  !
+         if (iminf.eq.imaxf) then
+  !         frontiere i=cste
+            m1max=jmaxf-jminf+1
+            m1maxm1=m1max-1
+            m2max=kmaxf-kminf+1
+            m2maxm1=m2max-1
+            m1deb=jlmin-jminf+1
+            m1fin=jlmax-jminf
+            m2deb=klmin-kminf+1
+            m2fin=klmax-kminf
+  !
+         elseif (jminf.eq.jmaxf) then
+  !         frontiere j=cste
+            m1max=imaxf-iminf+1
+            m1maxm1=m1max-1
+            m2max=kmaxf-kminf+1
+            m2maxm1=m2max-1
+            m1deb=ilmin-iminf+1
+            m1fin=ilmax-iminf
+            m2deb=klmin-kminf+1
+            m2fin=klmax-kminf
+  !
+         elseif (kminf.eq.kmaxf) then
+  !         frontiere k=cste
+            m1max=imaxf-iminf+1
+            m1maxm1=m1max-1
+            m2max=jmaxf-jminf+1
+            m2maxm1=m2max-1
+            m1deb=ilmin-iminf+1
+            m1fin=ilmax-iminf
+            m2deb=jlmin-jminf+1
+            m2fin=jlmax-jminf
+         endif
+  !
+  !
+         idm=m1max-m1min
+         do m2=m2deb,m2fin
+  !         boucle sur les bandes
+            do m1=m1deb,m1fin
+  !           boucle sur les cellules de la bande
+               mfacn=m0n+m1+(m2-1)*idm
+               fgam(mfacn)=0.
+            enddo
+         enddo
 !     fin boucle sur frontieres laminaires
+      endif
     enddo
     close(99)
 !
@@ -219,24 +223,24 @@ contains
 301 continue
 !     fin de fichier. Pas de transition
     ktransi=0
-    write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ou tout turbulent")')
+    if (rank==0) write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ou tout turbulent")')
     close(99)
     return
 !
 100 continue
-    write(imp,'(/,"!!!atintrans: erreur ouverture fichier fatdon")')
+    if (rank==0) write(imp,'(/,"!!!atintrans: erreur ouverture fichier fatdon")')
     stop
 !
 302 continue
-    write(imp,'(/,"!!!atintrans: erreur nombre de frontieres laminaires ")')
+    if (rank==0) write(imp,'(/,"!!!atintrans: erreur nombre de frontieres laminaires ")')
     stop
 !
 303 continue
-    write(imp,'(/,"!!!atintrans: erreur lecture frontiere ligne",i4)')lig
+    if (rank==0) write(imp,'(/,"!!!atintrans: erreur lecture frontiere ligne",i4)')lig
     stop
 !
 304 continue
-    write(imp,'(/,"!!!atintrans: erreur positionnement dans fatdon")')
+    if (rank==0) write(imp,'(/,"!!!atintrans: erreur positionnement dans fatdon")')
     stop
 !
     return

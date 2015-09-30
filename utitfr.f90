@@ -101,6 +101,7 @@ contains
     use sortiefichier
     use schemanum
     use constantes
+    use mod_mpi
     implicit none
     integer          ::         i1,        i2,      icyc,   icyexpl,      idf1
     integer          ::       idf2,     idfac,       idm,     imaxf,     iminf
@@ -385,6 +386,14 @@ contains
        cmavtfr=cmavtfr+cmavfr
        cnavtfr=cnavtfr+cnavfr
     enddo !fin boucle sur les parois
+
+    call SUM_MPI(cxavtot,cxavtot)
+    call SUM_MPI(cyavtot,cyavtot)
+    call SUM_MPI(czavtot,czavtot)
+    call SUM_MPI(clavtot,clavtot)
+    call SUM_MPI(cmavtot,cmavtot)
+    call SUM_MPI(cnavtot,cnavtot)
+
 !
 !     pression
     cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
@@ -393,6 +402,13 @@ contains
     claero= clavtot*csal*csbe+cmavtot*snbe+cnavtot*snal*csbe
     cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
     cnaero=-clavtot*snal+cnavtot*csal
+
+    call SUM_MPI(cxavtfr)
+    call SUM_MPI(cyavtfr)
+    call SUM_MPI(czavtfr)
+    call SUM_MPI(clavtfr)
+    call SUM_MPI(cmavtfr)
+    call SUM_MPI(cnavtfr)
 !
 !     frottement
     cxaefr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
@@ -402,14 +418,16 @@ contains
     cmaefr=-clavtfr*csal*snbe+cmavtfr*csbe-cnavtfr*snal*snbe
     cnaefr=-clavtfr*snal+cnavtfr*csal
 !
-    if(icyexpl.eq.0) then
+    if(icyexpl.eq.0.and.rank==0) then
 !       repere avion
+       open(out  ,file='fout',position="append")
        write(out,3801) icyc,cxavtot,cyavtot,czavtot, &
             clavtot,cmavtot,cnavtot
 3801   format('=>utitfr p: ',i6,1x,6(1pe11.3))
        write(out,3802) icyc,cxavtfr,cyavtfr,czavtfr,clavtfr, &
             cmavtfr,cnavtfr
 3802   format('=>utitfr f: ',i6,1x,6(1pe11.3))
+       close(out)
     endif
 !
 !      vrtcz=czaero

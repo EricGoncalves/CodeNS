@@ -112,6 +112,7 @@ contains
     use chainecarac
     use mod_initcs
     use mod_extmhg
+    use mod_mpi
     implicit none
     integer          ::        ia1,       ia2,       ib1,       ib2,       iba
     integer          ::       ibam,       img,      imgi,      imgj,      imgk
@@ -121,7 +122,8 @@ contains
     integer          ::         la,       lam,        lb,       lbm,       m0c
     integer          ::      mdncb,     mfbea,     mfbeb,     mfbia,    mfbiam
     integer          ::      mfbib,    mfbibm,       mfc,       mlb, mnc(ip43)
-    integer          ::         mt,ncbd(ip41),ncin(ip41)
+    integer          ::         mt,ncbd(ip41),ncin(ip41),buff(16),lag,lbg,mfbea1,mfbeb1
+    integer          ::  id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb
     double precision ::  epsmsh,   exs1,   exs2,x(ip21),y(ip21)
     double precision :: z(ip21)
 !
@@ -132,11 +134,51 @@ contains
     character(len=6 ) :: typa,typb
 !
 !
-    mfbia=nfei(mfbea)
-    mfbib=nfei(mfbeb)
+    mfbea1=bcg_to_bcl(mfbea)
+    mfbeb1=bcg_to_bcl(mfbeb)
+    lag=bcg_to_proc(mfbea)
+    lbg=bcg_to_proc(mfbeb)
+
+    if(mfbeb1/=0) then
+
+    mfbib=nfei(mfbeb1)
+!
+    lb=ndlb(mfbib)
+!
+    do img=1,lgx
+!
+       mfbibm=mfbib+(img-1)*mtb
+!
+       mlb=mpb(mfbibm)+1
+       mdncb=ncin(mlb)-ncbd(mlb)
+!
+       if(kibdc.eq.1) then
+!
+          typb=indfl(mfbib)
+          ib1=iminb(mfbibm)
+          ib2=imaxb(mfbibm)
+          jb1=jminb(mfbibm)
+          jb2=jmaxb(mfbibm)
+          kb1=kminb(mfbibm)
+          kb2=kmaxb(mfbibm)
+!
+          lbm=lb+(img-1)*lz
+!
+          if(krr.eq.1) then
+             call extmhg(lbm,x,y,z,exs1,exs2)
+          endif
+!
+      call MPI_TRANS(BUFF,(/mdncb,lbm,ib1,ib2,jb1,jb2,kb1,kb2,&
+          id1(lbm),id2(lbm),jd1(lbm),jd2(lbm),kd1(lbm),kd2(lbm),npn(lbm),npc(lbm)/),lbg,lag)
+      call MPI_TRANS(typb,typb,lbg,lag)
+      endif
+      enddo
+    endif
+    if(mfbea1/=0) then
+
+    mfbia=nfei(mfbea1)
 !
     la=ndlb(mfbia)
-    lb=ndlb(mfbib)
 !
     if (cl(mfbia)(1:2).ne.'rh') then
        mtcx=mtcx+1
@@ -146,12 +188,8 @@ contains
 !
     do img=1,lgx
 !
-       mfbibm=mfbib+(img-1)*mtb
        mfbiam=mfbia+(img-1)*mtb
 !
-       mlb=mpb(mfbibm)+1
-       mdncb=ncin(mlb)-ncbd(mlb)
-       mdnc(mfbiam)=mdncb
 !
        mt=mmb(mfbiam)
 !
@@ -160,7 +198,7 @@ contains
 !
        mdimtcx=mdimtcx+mt
 !
-       ndcc(mfbia)=lb
+       ndcc(mfbia)=mfbeb
 !
        kinitc=0
 !
@@ -173,21 +211,12 @@ contains
           ja2=jmaxb(mfbiam)
           ka1=kminb(mfbiam)
           ka2=kmaxb(mfbiam)
-          typb=indfl(mfbib)
-          ib1=iminb(mfbibm)
-          ib2=imaxb(mfbibm)
-          jb1=jminb(mfbibm)
-          jb2=jmaxb(mfbibm)
-          kb1=kminb(mfbibm)
-          kb2=kmaxb(mfbibm)
           eqt=equat
 !
           lam=la+(img-1)*lz
-          lbm=lb+(img-1)*lz
 !
           if(krr.eq.1) then
              call extmhg(lam,x,y,z,exs1,exs2)
-             call extmhg(lbm,x,y,z,exs1,exs2)
           endif
 !
           imgi=img
@@ -202,6 +231,26 @@ contains
           jbam=(jba-jj1(lam))/2**(imgj-1)+jj1(lam)
           kbam=(kba-kk1(lam))/2**(imgk-1)+kk1(lam)
 !
+          call MPI_TRANS(BUFF,BUFF,lbg,lag)
+          call MPI_TRANS(typb,typb,lbg,lag)
+          mdncb=BUFF(1)
+          lbm  =BUFF(2)
+          ib1  =BUFF(3)
+          ib2  =BUFF(4)
+          jb1  =BUFF(5)
+          jb2  =BUFF(6)
+          kb1  =BUFF(7)
+          kb2  =BUFF(8)
+          id1b  =BUFF(9)
+          id2b  =BUFF(10)
+          jd1b  =BUFF(11)
+          jd2b  =BUFF(12)
+          kd1b  =BUFF(13)
+          kd2b  =BUFF(14)
+          npnb  =BUFF(15)
+          npcb  =BUFF(16)
+
+          mdnc(mfbiam)=mdncb
           call initcs( &
                x,y,z,krr,epsmsh,kinitc, &
                mfbiam, &
@@ -209,7 +258,7 @@ contains
                lbm,typb,ib1,ib2,jb1,jb2,kb1,kb2, &
                ibam,jbam,kbam,tvi,tvj,tvk, &
                eqt, &
-               mnc)
+               mnc,id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb)
 !
 !     arret en cas de probleme dans les raccords coincidents
           if (kinitc.eq.1) stop 'initc'
@@ -220,6 +269,8 @@ contains
 !                mt,m0c)
        end if
     enddo
+    end if
+    call barrier
 !
     return
   end subroutine inbdc

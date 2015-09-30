@@ -312,6 +312,7 @@ program solve
   use mod_c_ingr
   use mod_c_inbdb
   use mod_c_dfst
+  use mod_mpi
   use mod_partitionnement
   implicit none
   integer          ::     Time_1,    Time_2,clock_rate,       img,    iyplus
@@ -342,7 +343,7 @@ program solve
 !-----------------------------------------------------------------------
 !
   character(len=32) :: comment,mot(nmx)
-
+  call inimpi
 
   ip00=0!ndimub                            ! Nb de cellules
   ip11=0!ndimctf+kdimg*ndimctf/ccg2        ! Nb de cellules
@@ -360,9 +361,16 @@ program solve
   lz=50        ! Nb zone !TODO ?
   lg=0!6       ! ?
   mtb=0!600    ! Nb front
-  lt=0!lz*lg   ! ? 
+  lt=0!lz*lg   ! ?
   mtt=0!mtb*lg ! Nb front total
 
+  if (.false..and.rank==1) then ! wait for gdb
+    l=0
+    write(stderr,*) "I'm waiting for gdb ", getpid()
+    do while(l==0)
+       call sleep(1)
+       enddo
+  endif
 
   call allocdata
   temp_array=0.
@@ -385,12 +393,14 @@ program solve
 !     reservation des unites logiques generales
 !
   open(lec  ,file='flec')
-  open(imp  ,file='fimp')
-  open(out  ,file='fout')
-  open(sec  ,file='fsec')
-  open(sor1 ,file='smoy')
-  open(sor2 ,file='pres')
-  open(sor3 ,file='resro')
+  imp=stdout
+!  open(imp  ,file='fimp')
+  if (rank==0) then! clear files
+      open(out  ,file='fout',status="replace") ; close(out)
+      open(sec  ,file='fsec',status="replace") ; close(sec)
+      open(sor1 ,file='smoy',status="replace") ; close(sor1)
+      open(sor3 ,file='resro',status="replace") ; close(sor3)
+  endif
   open(kfa  ,file='fcla',form='formatted')
   open(kdgv ,file='fgv' ,form='unformatted')
   open(kdgc ,file='fgc' ,form='unformatted')
@@ -478,6 +488,7 @@ program solve
 !--   COMPUTE FLOW
         if(mot(2)(1:imot(2)).eq.'flow') then
 !
+           call barrier
            call system_clock(Time_1,clock_rate)
            call c_cpfw( &
                 mot,imot,nmot, &
@@ -503,11 +514,12 @@ program solve
                 pression,ztemp,cson, &
                 cvi,cvj,cvk, &
                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+           call barrier
            CALL system_clock(Time_2)
            do m=1,neqt
-              write(*,*) m,temp_array(m,:)
+              if (rank==0) write(*,*) m,temp_array(m,:)
            enddo
-           print*,'TEMPS DE CALCUL ',(Time_2-Time_1)*1./clock_rate
+           if (rank==0) print*,'TEMPS DE CALCUL ',(Time_2-Time_1)*1./clock_rate
 !
 !--   COMPUTE BOUNDARY
         else if(mot(2)(1:imot(2)).eq.'boundary') then
@@ -832,6 +844,7 @@ program solve
         call synterr(mot,imot,1,cb)
      end select
 !
+    call barrier
   enddo
 !
 contains

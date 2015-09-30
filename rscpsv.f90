@@ -61,12 +61,13 @@ contains
     use mod_cvccg
     use mod_writdg
     use mod_residu
+    use mod_mpi
     implicit none
     integer          ::   icyc,  imax,   img,  imin,  jmax
     integer          ::   jmin,  kmax,  kmin,     l,    lm
     integer          ::      m,    n0,  ncyc,ncycle,    ni
     integer          ::    nid,  nijd,    nj,   njd,    nk
-    integer          ::   nmax,  npts
+    integer          ::   nmax,  npts,ll
     double precision ::     dt(ip11),res1xx(ip00),res2yy(ip00),res3zz(ip00),  res4(ip00)
     double precision ::   res5(ip00),  res6(ip00),  res7(ip00),   tn8(ip00),u(ip11,ip60)
     double precision ::   utau(ip42),v(ip11,ip60),     x(ip21),     y(ip21),     z(ip21)
@@ -87,7 +88,7 @@ contains
        dumaxg(m)=0.
     enddo
 !
-    if (kimp.ge.1) then
+    if (kimp.ge.1.and.rank==0) then
        form='(/1x,2h--,1x,i7,13h ieme cycle :,3x,' &
             //'20hnb total de cycles =,i6)'
        write(imp,form) icyc,ncycle
@@ -96,9 +97,11 @@ contains
     npts=0
     do l=1,lzx
        lm=l+(img-1)*lz
+       ll=bl_to_bg(l)
+       call START_KEEP_ORDER(ll,bg_to_proc)
        if (kimp.ge.1) then
           form='(/10x,10hzone no : ,i5,5x,12hgrille no : ,i3/)'
-          write(imp,form) l,img
+          write(imp,form) ll,img
        endif
 !
        call residu( &
@@ -109,6 +112,7 @@ contains
             icyc, &
             dumy1,dumy2,dumax, &
             idumx,jdumx,kdumx)
+       call END_KEEP_ORDER(ll,bg_to_proc)
 !
        temp_array(:,1)=dumy1
        temp_array(:,2)=dumy2

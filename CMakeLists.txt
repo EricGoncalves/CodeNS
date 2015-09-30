@@ -37,7 +37,7 @@ endif ()
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_Fortran_FLAGS         "-fPIC -ffree-line-length-none -g -fbacktrace  -fimplicit-none ")
   set(CMAKE_Fortran_FLAGS_RELEASE "-O3 -march=native -ffast-math -funsafe-math-optimizations -finit-local-zero -ftree-loop-distribution -ftree-loop-im") #
-  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra  -Wimplicit-interface -Wno-unused-parameter -Wno-unused -Wno-unused-dummy-argument -finit-real=snan -fcheck=all -pedantic -std=f2008ts")
+  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra  -Wimplicit-interface -Wno-unused-parameter -Wno-unused -Wno-unused-dummy-argument -finit-real=snan -fcheck=all -Warray-temporaries -Wconversion-extra -Wimplicit-interface -Wimplicit-procedure")
 #  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra  -Wimplicit-interface -finit-real=snan -fcheck=all -pedantic -std=f2008ts")
   set(DOUBLE_FLAGS "-fdefault-real-8 -fdefault-double-8")
   set(OPTRPT_FLAGS "-ftree-vectorizer-verbose")
@@ -62,7 +62,7 @@ if(openmp AND CMAKE_Fortran_COMPILER_ID STREQUAL "GNU" AND COMPILER_VERSION VERS
     set(OPENMP_FLAGS "")
 endif()
 if (static AND hostname STREQUAL "hulk")
-    message(STATUS "Static build impossible on Hulk with IForn\n   Deactivating it for you")
+    message(STATUS "Static build impossible on Hulk with IFort\n   Deactivating it for you")
     set(static OFF)
 endif()
 
@@ -74,7 +74,7 @@ message( STATUS "")
 message( STATUS "=======================================================================================")
 message( STATUS "")
 message( STATUS "Compilation de CodeNS sur : " ${hostname})
-message( STATUS "Fortran compiler: " ${CMAKE_Fortran_COMPILER} " - " ${COMPILER_VERSION})
+message( STATUS "Fortran compiler: " ${CMAKE_Fortran_COMPILER} " - " ${CMAKE_Fortran_COMPILER_ID} " - " ${COMPILER_VERSION})
 
 set(CMAKE_Fortran_FLAGS "${CMAKE_Fortran_FLAGS} ${DOUBLE_FLAGS}")
 
@@ -124,7 +124,7 @@ if( static )
   set(LINK_SEARCH_END_STATIC ON)
 endif()
 
-FILE(GLOB SRC_FILES "*.f90")
+FILE(GLOB SRC_FILES "*.[fF]90" )
 add_executable(solver_air ${SRC_FILES})
 
 

@@ -300,7 +300,7 @@ contains
     mdimtbx=0
     mfbe=0
     ip41=0
-    vbc=0
+    vbc=0.
 
     !############################################################################################
     !####################### COMPUTE SPLITTING ##################################################
@@ -834,7 +834,7 @@ contains
                                   do fr3=1,mfbe
                                      if(ndlb(fr3)==l4) then  ! potential new boundary number
 
-                                    call get_coords_box(save_xmin,save_xmax,save_ymin,save_ymax,save_zmin,save_zmax,                 &
+                                    call get_coords_box(save_xmin,save_xmax,save_ymin,save_ymax,save_zmin,save_zmax, &
                                           iminb(fr3),imaxb(fr3),jminb(fr3),jmaxb(fr3),kminb(fr3),kmaxb(fr3), &
                                           id1(l4),id2(l4),jd1(l4),jd2(l4),kd1(l4),kd2(l4),npn(l4),       &
                                           x,y,z)

@@ -69,6 +69,10 @@ contains
     c=char(34)
 !
     qinf=rm0*aa1/(1.+gam2*rm0**2)**0.5
+
+    open(sor2 ,file='pres',position="append")
+    open(out  ,file='fout',position="append")
+    open(sor1 ,file='smoy',position="append")
 !
 !-----initialisation des grandeurs--------------------------------
 !
@@ -88,17 +92,17 @@ contains
        enddo
 !
 !       fichier de sortie du sigma entree
-       write(out,'(''TITLE='',a1,a80,a1)')c,titrt1,c
-       write(out,'(''VARIABLES = '',a1,4(a,a1,'', '',a1),a,a1)') &
-            c,'ite',c, c,'sigmae',c, c,'volvap',c, c,'vit',c
-       write(out,'("ZONE F=POINT, I=",i3," J=",i5)')i1,ncycl
+         write(out,'(''TITLE='',a1,a80,a1)')c,titrt1,c
+         write(out,'(''VARIABLES = '',a1,4(a,a1,'', '',a1),a,a1)') &
+              c,'ite',c, c,'sigmae',c, c,'volvap',c, c,'vit',c
+         write(out,'("ZONE F=POINT, I=",i3," J=",i5)')i1,ncycl
 !
 !       fichier de sortie de la pression
-       write(sor2,'(''TITLE='',a1,a80,a1)')c,titrt1,c
-       write(sor2,'(''VARIABLES = '',a1,3(a,a1,'', '',a1),a,a1)') &
-            c,'x',c, c,'y',c, c,'ps',c
-       write(sor2,'("ZONE F=POINT, I=",i3," J=",i3)')i2m1,j2m1
-    endif
+         write(sor2,'(''TITLE='',a1,a80,a1)')c,titrt1,c
+         write(sor2,'(''VARIABLES = '',a1,3(a,a1,'', '',a1),a,a1)') &
+              c,'x',c, c,'y',c, c,'ps',c
+         write(sor2,'("ZONE F=POINT, I=",i3," J=",i3)')i2m1,j2m1
+        endif
 !
 !-----Calculs des moyennes temporelles---------------------------------
 !
@@ -145,7 +149,7 @@ contains
              enddo
           enddo
        enddo
-    endif
+     endif
 !
 !------sortie de la pression au plancher
 !
@@ -166,6 +170,9 @@ contains
                xcc,ycc,ps(n)
        enddo
     enddo
+    close(sor1)
+    close(sor2)
+    close(out)
 !
     return
   contains

@@ -50,7 +50,7 @@ contains
        if(nr.eq.0) then
           form='(/,2x,''initialisation aerodynamique'',/' &
                //'2x,''----------------------------'',/' &
-               //'2x,''numero du domaine        : '',11x,i5/' &
+               //'2x,''numero du domaine           : '',11x,i5/' &
                //'2x,''cle d''''initialisation     : '',11x,i5)'
        else
           form='(/,2x,''initialisation aerodynamique'',/' &

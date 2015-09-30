@@ -26,9 +26,8 @@ contains
     use sortiefichier
     use mod_tcmd_dfgm
     use mod_b1_dfgm
-
     use mod_dfgm
-
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     nmot
 !
@@ -39,7 +38,8 @@ contains
     call tcmd_dfgm(mot,imot,nmot)
 !
     if (kimp.ge.1) then
-       call b1_dfgm
+       if (rank==0) call b1_dfgm
+       call barrier
     endif
 !
     call dfgm

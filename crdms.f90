@@ -56,93 +56,101 @@ contains
     use kcle
     use chainecarac
     use schemanum
+    use tools
+    use mod_mpi
     implicit none
     integer          ::   img, imgi, imgj, imgk,    l
     integer          ::    lm,   ni,  nid,   nj,  njd
     integer          ::    nk,  nkd,nptfs
-!
-!-----------------------------------------------------------------------
-!
-    lzx=lzx+1
-    klzx=2
 
-!    lz=lzx
-    lt=lgx*lzx
-    call i_reallocate(ii1,lt)
-    call i_reallocate(jj1,lt)
-    call i_reallocate(kk1,lt)
-    call i_reallocate(ii2,lt)
-    call i_reallocate(jj2,lt)
-    call i_reallocate(kk2,lt)
-    call i_reallocate(id1,lt)
-    call i_reallocate(jd1,lt)
-    call i_reallocate(kd1,lt)
-    call i_reallocate(id2,lt)
-    call i_reallocate(jd2,lt)
-    call i_reallocate(kd2,lt)
-    call i_reallocate(nnn,lt)
-    call i_reallocate(nnc,lt)
-    call i_reallocate(nnfb,lt)
-    call i_reallocate(npn,lt)
-    call i_reallocate(npc,lt)
-    call i_reallocate(npfb,lt)
+    num_bg=num_bg+1
+    num_bi=num_bi+1
+    call reallocate_s(bg_to_proc,num_bg)
+    call reallocate_s(bg_to_bl,num_bg)
+    call reallocate_s(bg_to_bi,num_bg)
+    bg_to_proc(l)=modulo((l-1),nprocs)
+    bg_to_bl(l)=0
+    bg_to_bi(l)=l
 !
-    do img=1,lgx
-!
-       lm=l+(img-1)*lz
-!
-       imgi = img
-       imgj = img
-       imgk = img
-       if (equat(3:5).eq.'2di') imgi = 1
-       if (equat(3:5).eq.'2dj') imgj = 1
-       if (equat(3:5).eq.'2dk') imgk = 1
-!
-       ii1(lm)=1
-       jj1(lm)=1
-       kk1(lm)=1
-!
-       ii2(lm)= (ni-1)/2**(imgi-1)+1
-       jj2(lm)= (nj-1)/2**(imgj-1)+1
-       kk2(lm)= (nk-1)/2**(imgk-1)+1
-!
-       id1(lm)=ii1(lm)-nfi
-       jd1(lm)=jj1(lm)-nfi
-       kd1(lm)=kk1(lm)-nfi
-       id2(lm)=ii2(lm)+nfi
-       jd2(lm)=jj2(lm)+nfi
-       kd2(lm)=kk2(lm)+nfi
-!
-       nid=id2(lm)-id1(lm)+1
-       njd=jd2(lm)-jd1(lm)+1
-       nkd=kd2(lm)-kd1(lm)+1
-       nptfs =nid*njd*nkd
-       nnn(lm)=nptfs
-!       nptfs =(nid-1)*(njd-1)*(nkd-1)
-       nnc(lm)=nptfs
-       nnfb(lm)=nind*nptfs
-!
-       npn(lm)=ndimntbx
-       npc(lm)=ndimctbx
-       npfb(lm)=nind*ndimntbx
-!
-       ndimubx =max(ndimubx,nnn(lm))
-!       ndimubx =max(ndimubx,nnc(lm))
-       ndimctbx=ndimctbx+nnc(lm)
-       ndimntbx=ndimntbx+nnn(lm)
-    enddo
+    if(bg_to_proc(l)==rank) then
+      num_bl=num_bl+1
+  !
+  !-----------------------------------------------------------------------
+  !
+      lzx=lzx+1
+      klzx=2
+
+  !    lz=lzx
+      lt=lgx*lzx
+      call reallocate_s(ii1,lt)
+      call reallocate_s(jj1,lt)
+      call reallocate_s(kk1,lt)
+      call reallocate_s(ii2,lt)
+      call reallocate_s(jj2,lt)
+      call reallocate_s(kk2,lt)
+      call reallocate_s(id1,lt)
+      call reallocate_s(jd1,lt)
+      call reallocate_s(kd1,lt)
+      call reallocate_s(id2,lt)
+      call reallocate_s(jd2,lt)
+      call reallocate_s(kd2,lt)
+      call reallocate_s(nnn,lt)
+      call reallocate_s(nnc,lt)
+      call reallocate_s(nnfb,lt)
+      call reallocate_s(npn,lt)
+      call reallocate_s(npc,lt)
+      call reallocate_s(npfb,lt)
+      call reallocate_s(bl_to_bg,lt)
+
+      bl_to_bg(lzx)=l
+      bg_to_bl(l)=lzx
+  !
+      do img=1,lgx
+  !
+         lm=lzx+(img-1)*lz
+  !
+         imgi = img
+         imgj = img
+         imgk = img
+         if (equat(3:5).eq.'2di') imgi = 1
+         if (equat(3:5).eq.'2dj') imgj = 1
+         if (equat(3:5).eq.'2dk') imgk = 1
+  !
+         ii1(lm)=1
+         jj1(lm)=1
+         kk1(lm)=1
+  !
+         ii2(lm)= (ni-1)/2**(imgi-1)+1
+         jj2(lm)= (nj-1)/2**(imgj-1)+1
+         kk2(lm)= (nk-1)/2**(imgk-1)+1
+  !
+         id1(lm)=ii1(lm)-nfi
+         jd1(lm)=jj1(lm)-nfi
+         kd1(lm)=kk1(lm)-nfi
+         id2(lm)=ii2(lm)+nfi
+         jd2(lm)=jj2(lm)+nfi
+         kd2(lm)=kk2(lm)+nfi
+  !
+         nid=id2(lm)-id1(lm)+1
+         njd=jd2(lm)-jd1(lm)+1
+         nkd=kd2(lm)-kd1(lm)+1
+         nptfs =nid*njd*nkd
+         nnn(lm)=nptfs
+!         nptfs =(nid-1)*(njd-1)*(nkd-1)
+         nnc(lm)=nptfs
+         nnfb(lm)=nind*nptfs
+  !
+         npn(lm)=ndimntbx
+         npc(lm)=ndimctbx
+         npfb(lm)=nind*ndimntbx
+  !
+         ndimubx =max(ndimubx,nnn(lm))
+!         ndimubx =max(ndimubx,nnc(lm))
+         ndimctbx=ndimctbx+nnc(lm)
+         ndimntbx=ndimntbx+nnn(lm)
+      enddo
+    endif
 !
     return
-  contains
-    subroutine i_reallocate(tab,newsize)
-      implicit none
-      integer,allocatable::tab(:),tab1(:)
-      integer :: newsize
-      allocate(tab1(size(tab)))
-      tab1=tab
-      deallocate(tab)
-      allocate(tab(newsize))
-      tab(1:size(tab1))=tab1
-    end subroutine i_reallocate
   end subroutine crdms
 end module mod_crdms

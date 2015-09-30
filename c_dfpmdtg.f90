@@ -20,8 +20,8 @@ contains
     use para_fige
     use sortiefichier
     use mod_b1_dfpmdtg
-
     use mod_tcmd_dfpmdtg
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     nmot
 !
@@ -32,7 +32,8 @@ contains
     call tcmd_dfpmdtg(mot,imot,nmot)
 !
     if(kimp.ge.1) then
-       call b1_dfpmdtg
+       if (rank==0) call b1_dfpmdtg
+       call barrier
     endif
 !
     return

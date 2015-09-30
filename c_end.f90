@@ -13,8 +13,8 @@ contains
 !
     use para_fige
     use mod_eend
-
     use mod_b1_end
+    use mod_mpi
 
     implicit none
     integer          :: imot(nmx),     nmot
@@ -23,7 +23,8 @@ contains
 !
     character(len=32) ::  mot(nmx)
 !
-    call b1_end
+    if(rank==0)    call b1_end
+    call endmpi
     call eend
 !
     return

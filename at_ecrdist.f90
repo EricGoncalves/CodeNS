@@ -16,11 +16,12 @@ contains
     use para_fige
     use sortiefichier
     use maillage
+    use mod_mpi
     implicit none
     integer          ::           i,         i1,         i2,       i2m1,        iwd
     integer          ::           j,         j1,         j2,       j2m1,          k
     integer          ::          k1,         k2,       k2m1,          l,         l0
-    integer          :: mnpar(ip12),         n0,        nid,       nijd,        njd
+    integer          :: mnpar(ip12),         n0,        nid,       nijd,        njd,ll
     double precision :: dist(ip12)
 !
 !-----------------------------------------------------------------------
@@ -34,11 +35,14 @@ contains
 !       ecriture tous les domaines dans "fdist"
 !
        nomfich='fdist   '
-       open(iwd,file=nomfich,form='unformatted',err=50)
 !
-       write(imp,'("===>at_ecrdist: distance tous domaines   fichier=",a8)')nomfich
+       if(rank==0) write(imp,'("===>at_ecrdist: distance tous domaines   fichier=",a8)')nomfich
 !
        do l=1,lzx
+         ll=bl_to_bg(l)
+         call start_keep_order(ll,bg_to_proc)
+         open(iwd,file=nomfich,form='unformatted',err=50,position="append")
+         if(ll==1) rewind(iwd)
           n0=npc(l)
           i1=ii1(l)
           i2=ii2(l)
@@ -57,21 +61,24 @@ contains
                k=k1,k2m1)
           write(iwd)(((mnpar(ind(i,j,k)),i=i1,i2m1),j=j1,j2m1), &
                k=k1,k2m1)
+         close(iwd)
+         call end_keep_order(ll,bg_to_proc)
        end do
     else
 !       ecriture un seul domaine par fichier
 !
        l=l0
-       if(l.le.9 ) then
-          write(nomfich,'("fdist_",i1," ")')l
-       else if(l.le.99) then
-          write(nomfich,'("fdist_",i2)')l
+       ll=bl_to_bg(l)
+       if(ll.le.9 ) then
+          write(nomfich,'("fdist_",i1," ")')ll
+       else if(ll.le.99) then
+          write(nomfich,'("fdist_",i2)')ll
        else
           write(imp,'("!!!at_ecrdist: plus de 99 domaines. Non prevu")')
           stop
        end if
 !
-       write(imp,'("===>at_ecrdist: ecriture distance domaine",i2,"   fichier=",a8)')l,nomfich
+       write(imp,'("===>at_ecrdist: ecriture distance domaine",i2,"   fichier=",a8)')ll,nomfich
 !
        open(iwd,file=nomfich,form='unformatted',err=50)
 !
@@ -91,24 +98,30 @@ contains
 !
        write(iwd)(((dist (ind(i,j,k)),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
        write(iwd)(((mnpar(ind(i,j,k)),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
+       close(iwd)
     end if
 !
-    close(iwd)
     write(imp,'("===>at_ecrdist: fin ecriture fichier=",a8)')nomfich
 !
-    if(l.eq.1) then
+    if(bl_to_bg(l).eq.1) then ! TODO : WHAT IS THAT
 !       ecriture fichier auxiliaire des donnees necessaires a la relecture
 !
-       open(iwd,file='fdist-aux',form='formatted',err=60)
-       write(imp,'("===>at_ecrdist: ecriture fichier= fdist-aux")')
-       write(imp,'(16x,"ip12=",i8)') ip12
+       if(rank==0) then
+         write(imp,'("===>at_ecrdist: ecriture fichier= fdist-aux")')
+         write(imp,'(16x,"ip12=",i8)') ip12
+       endif
        do l=1,lzx
+          ll=bl_to_bg(l)
+         call start_keep_order(ll,bg_to_proc)
+         open(iwd,file='fdist-aux',form='formatted',err=60,position="append")
+         if(ll==1) rewind(iwd)
           write(iwd,'(i3,i8,6i5)') &
-               l,npc(l),ii1(l),ii2(l),jj1(l),jj2(l),kk1(l),kk2(l)
+               ll,npc(l),ii1(l),ii2(l),jj1(l),jj2(l),kk1(l),kk2(l)
           write(iwd,'(i3,i8,6i5)') &
-               l,npc(l),id1(l),id2(l),jd1(l),jd2(l),kd1(l),kd2(l)
-       end do
+               ll,npc(l),id1(l),id2(l),jd1(l),jd2(l),kd1(l),kd2(l)
        close(iwd)
+        call end_keep_order(ll,bg_to_proc)
+       end do
     end if
     return
 !

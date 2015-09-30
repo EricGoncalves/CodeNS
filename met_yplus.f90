@@ -75,6 +75,7 @@ contains
     use maillage
     use boundary
     use sortiefichier
+    use mod_mpi
     implicit none
     integer          ::        dnc,        i1,        i2,      idf1,      idf2
     integer          ::      idfac,       idm,     imaxf,     iminf,        j1
@@ -85,7 +86,7 @@ contains
     integer          ::       mfac,     mfacn,       mfl,       n0c,       n0n
     integer          ::         nc,ncbd(ip41),       nci,ncin(ip41),       ncj
     integer          ::        nck,     nfac1,     nfac2,     nfac3,     nfac4
-    integer          ::      nfacf,       nid,      nijd,       njd
+    integer          ::      nfacf,       nid,      nijd,       njd,mfg
     double precision ::   dist(ip12),       distp,    mu(ip12),   nxn(ip42),   nyn(ip42)
     double precision ::    nzn(ip42),s(ip11,ip60),        sxyb,     taunorm,       taupe
     double precision ::   toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12),  toyz(ip12)
@@ -102,10 +103,13 @@ contains
 !     -------------------------------------------------------
 !     SORTIES RELATIVES A DES VALEURS SUR LES PAROIS
 !
+!
     do mf=1,nbdko
 !       boucle sur les parois
 !
        mfl=lbdko(mf)
+        mfg=lbdko_to_lbdkog(mf)
+        call start_keep_order(mfg,lbdkog_to_proc)
        l=ndlb(mfl)
 !
        i1=ii1(l)
@@ -134,8 +138,11 @@ contains
        kminf=kminb(mfl)
        kmaxf=kmaxb(mfl)
 !
+       open(sor2 ,file='pres',position="append")
        if(kcaldis.eq.0) then
           write(sor2,'("!!!!met_yplus: kcaldis=0. Il faut 1 ou 2 ==>return")')
+          close(sor2)
+          call END_KEEP_ORDER(mfg,lbdkog_to_proc)
           return
        endif
 !
@@ -263,9 +270,12 @@ contains
           enddo
 !        fin de boucle sur les bandes
        enddo
+       close(sor2)
+       call END_KEEP_ORDER(mfg,lbdkog_to_proc)
 !      fin de boucle sur les parois
     enddo
 !
+
     return
   end subroutine met_yplus
 end module mod_met_yplus

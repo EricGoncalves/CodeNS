@@ -82,11 +82,12 @@ contains
     use chainecarac
     use sortiefichier
     use mod_initns
+    use mod_mpi
     implicit none
     integer          ::       imax,       img,      imin,      jmax,      jmin
     integer          ::      kibdn,      kmax,      kmin,         l,        lm
     integer          ::        m0n,      mfbe,      mfbi,     mfbim,       mfn
-    integer          ::         mt,ncbd(ip41)
+    integer          ::         mt,ncbd(ip41),      mfbe1
     double precision ::     nxn(ip42),    nyn(ip42),    nzn(ip42),sn(ip31*ndir),    tn1(ip00)
     double precision ::     tn2(ip00),    tn3(ip00),    tn4(ip00),    tn5(ip00),    tn6(ip00)
     double precision ::     tn7(ip00),    tn8(ip00),    tn9(ip00),      x(ip21),      y(ip21)
@@ -97,7 +98,9 @@ contains
     character(len=2 ) :: indfb
     character(len=7 ) :: eqt
 !
-    mfbi=nfei(mfbe)
+    mfbe1=bcg_to_bcl(mfbe)
+    if(mfbe1/=0) then
+    mfbi=nfei(mfbe1)
 !
     mtnx=mtnx+1
     mfn =mtnx
@@ -142,6 +145,8 @@ contains
        endif
 
     enddo
+    endif
+    call barrier
 !
     return
   end subroutine inbdn
