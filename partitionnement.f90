@@ -52,12 +52,13 @@ contains
     integer,allocatable :: new2old_b(:),num_cf2(:,:,:)
     integer,allocatable :: ni1(:,:,:),nj1(:,:,:),nk1(:,:,:),ncbd(:)
 
-    integer             :: save_lt,save_ndimntbx,l,verbosity
+    integer             :: save_lt,save_ndimntbx,l,verbosity,l1
     integer             :: save_nid,save_njd,save_nijd,save_klzx
     integer             :: save_kmtbx,save_lzx,save_mdimtbx,save_mdimubx
     integer             :: save_mtb,save_mtt,save_ndimctbx
     integer             :: save_ndimubx,save_xi,save_xyz,save_yi,save_zi
-    double precision,allocatable :: save_x(:),save_y(:),save_z(:),save_bc(:,:),save_bceqt(:,:)
+    integer             :: val(3),l5
+    double precision,allocatable :: save_x(:),save_y(:),save_z(:),save_bc(:,:),save_bceqt(:,:),save_vbc(:)
     integer,allocatable :: save_ii1(:),save_jj1(:),save_kk1(:)
     integer,allocatable :: save_ii2(:),save_jj2(:),save_kk2(:)
     integer,allocatable :: save_id1(:),save_jd1(:),save_kd1(:)
@@ -73,6 +74,9 @@ contains
     integer,allocatable :: save_ncin(:),save_mnc(:)
     integer,allocatable :: save_bcg_to_proc(:),save_bcg_to_bcl(:),save_bcg_to_bci(:),save_bcl_to_bcg(:)
     integer,allocatable :: save_bg_to_proc(:),save_bg_to_bl(:),save_bg_to_bi(:),save_bl_to_bg(:)
+    integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),nblockdg(:,:)
+    integer             :: save_ip41,save_num_bcg,save_num_bci,save_num_bcl,save_num_bg
+    integer             :: save_num_bl,save_num_bi,proc,orig,dest,xe,ye,ze
     character(len=2),allocatable :: save_indfl(:)
     character(len=4),allocatable :: save_cl(:)
 
@@ -90,7 +94,8 @@ contains
     !############################################################################################
 
     verbosity=2 ! from 0 to 3
-    call get_param(mot,nmot,imot,nblocks) ! nblocks is the minimum number of blocks we want
+!    call get_param(mot,nmot,imot,nblocks) ! nblocks is the minimum number of blocks we want
+    nblocks=nprocs
 
     !############################################################################################
     !############################# SAVE OLD MESH FOR CHECKING PURPOSE ###########################
@@ -248,6 +253,15 @@ contains
     save_mdimubx=mdimubx
     save_mdimtbx=mdimtbx
 
+    save_ip41=ip41
+    save_vbc=vbc
+    save_num_bcg=num_bcg
+    save_num_bci=num_bci
+    save_num_bcl=num_bcl
+    save_num_bg=num_bg
+    save_num_bi=num_bi
+    save_num_bl=num_bl
+
     save_bcg_to_proc=bcg_to_proc
     save_bcg_to_bcl=bcg_to_bcl
     save_bcg_to_bci=bcg_to_bci
@@ -340,65 +354,94 @@ contains
     !####################### COMPUTE SPLITTING ##################################################
     !############################################################################################
 
-    nxyza=sum(save_ii2*save_jj2*save_kk2)  ! total number of points
 
     ! nouveaux tableaux
-    allocate(nblock2(save_lt),nblockd(3,save_lt),ni(1,1,1,nblocks),nj(1,1,1,nblocks),nk(1,1,1,nblocks))
+    allocate(nblock2(save_num_bg),nblockd(3,save_lt),ni(1,1,1,nblocks),nj(1,1,1,nblocks),nk(1,1,1,nblocks))
+    allocate(ii2g(save_num_bg),jj2g(save_num_bg),kk2g(save_num_bg),nblockdg(3,save_num_bg))
+
     nblock2=1    ! initial number of splitting for each existing block
     nblockd=1    ! initial number of splitting for each existing block
+    nblockdg=0
 
+    do l=1,save_num_bg
+      l1=save_bg_to_bl(l)
+      if (l1/=0) then 
+        val(1)=save_ii2(l1)
+        val(2)=save_jj2(l1)
+        val(3)=save_kk2(l1)
+      endif
+      call bcast(val,save_bg_to_proc(l))
+      ii2g(l)=val(1)
+      jj2g(l)=val(2)
+      kk2g(l)=val(3)
+    enddo
+    nxyza=sum(ii2g*jj2g*kk2g)  ! total number of points
 
     ! routine calculant combiens de fois splitter chaque block
     ! sortie : nblock2
     ! entrée : tout le reste
-    call num_split(nblock2,save_lt,nxyza,nblocks,save_ii2,save_jj2,save_kk2)
+    call num_split(nblock2,save_num_bg,nxyza,nblocks,ii2g,jj2g,kk2g)
 
     do l=1,save_lt
+      l1=save_bl_to_bg(l)
 
        ! calcule le split pour un block, c'est à dire 
        ! le nombre de découpe par direction            (nblockd)
        ! le nombre de points dans chaque nouveau block (nicv2,njcv2,nkcv2)
        ! une estimation des communications             (num_cf2)
-       call triv_split(nblock2(l),l,nxyza,save_ii2 ,save_jj2 ,save_kk2, &
+       call triv_split(nblock2(l1),l,nxyza,save_ii2 ,save_jj2 ,save_kk2, &
             nblockd(:,l),num_cf2,ni1,nj1,nk1)
 
        ! ajoute le split avec les splits des autres blocks
        call reallocate_s(ni,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nblocks)
-       ni(:size(ni1,1),:size(ni1,2),:size(ni1,3),l)=ni1
+       ni(:size(ni1,1),:size(ni1,2),:size(ni1,3),l1)=ni1
 
        call reallocate_s(nj,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nblocks)
-       nj(:size(nj1,1),:size(nj1,2),:size(nj1,3),l)=nj1
+       nj(:size(nj1,1),:size(nj1,2),:size(nj1,3),l1)=nj1
 
        call reallocate_s(nk,maxval(nblockd(1,:)),maxval(nblockd(2,:)),maxval(nblockd(3,:)),nblocks)
-       nk(:size(nk1,1),:size(nk1,2),:size(nk1,3),l)=nk1
+       nk(:size(nk1,1),:size(nk1,2),:size(nk1,3),l1)=nk1
     enddo
 
-    sblock=sum(nblockd(1,:)*nblockd(2,:)*nblockd(3,:))
+    do l=1,save_num_bg
+       l1=save_bg_to_bl(l)
+       proc=save_bg_to_proc(l)
+       if(l1/=0) nblockdg(:,l)=nblockd(:,l1)
+       call bcast(nblockdg(:,l),proc)
+       call reallocate_s(ni,maxval(nblockdg(1,:)),maxval(nblockdg(2,:)),maxval(nblockdg(3,:)),nblocks)
+       call reallocate_s(nj,maxval(nblockdg(1,:)),maxval(nblockdg(2,:)),maxval(nblockdg(3,:)),nblocks)
+       call reallocate_s(nk,maxval(nblockdg(1,:)),maxval(nblockdg(2,:)),maxval(nblockdg(3,:)),nblocks)
+       call bcast(ni(:,:,:,l),proc)
+       call bcast(nj(:,:,:,l),proc)
+       call bcast(nk(:,:,:,l),proc)
+    enddo
+
+    sblock=sum(nblockdg(1,:)*nblockdg(2,:)*nblockdg(3,:))
     if(sblock/=nblocks) then
        stop 'partitionnement impossible'
     else
-       if(verbosity>=1) then
+       if(verbosity>=1.and.rank==0) then
          print*,'découpage réussis : '
          nmax=0
          nmin=nxyza
-         do l=1,save_lt
-            nmax1=maxval(ni(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l)* &
-                          nj(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l)* &
-                          nk(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l))
-            nmin1=minval(ni(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l)* &
-                          nj(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l)* &
-                          nk(:nblockd(1,l),:nblockd(2,l),:nblockd(3,l),l))
-            print*, l,nblockd(:,l),( nmax1- nmin1 )*100./ nmin1,"%"
+         do l=1,save_num_bg
+            nmax1=maxval(ni(:nblockdg(1,l),:nblockdg(2,l),:nblockdg(3,l),l)* &
+                          nj(:nblockdg(1,l),:nblockdg(2,l),:nblockdg(3,l),l)* &
+                          nk(:nblockdg(1,l),:nblockdg(2,l),:nblockdg(3,l),l))
+            nmin1=minval(ni(:nblockdg(1,l),:nblockdg(2,l),:nblockdg(3,l),l)* &
+                          nj(:nblockdg(1,l),:nblockdg(2,l),:nblockdg(3,l),l)* &
+                          nk(:nblockdg(1,l),:nblockdg(2,l),:nblockdg(3,l),l))
+            print*, l,nblockdg(:,l),( nmax1- nmin1 )*100./ nmin1,"%"
             nmax=max(nmax,nmax1)
             nmin=min(nmin,nmin1)
          enddo
          print*, "Total : ",sblock,( nmax- nmin )*100./ nmin,"%"
        endif
-       if(verbosity>=2) then
-          do l=1,save_lt
-            do k=1,nblockd(3,l)
-              do j=1,nblockd(2,l)
-                  print*, l,k,j,ni(:nblockd(1,l),j,k,l)*nj(:nblockd(1,l),j,k,l)*nk(:nblockd(1,l),j,k,l)
+       if(verbosity>=2.and.rank==0) then
+          do l=1,save_num_bg
+            do k=1,nblockdg(3,l)
+              do j=1,nblockdg(2,l)
+                  print*, l,k,j,ni(:nblockdg(1,l),j,k,l)*nj(:nblockdg(1,l),j,k,l)*nk(:nblockdg(1,l),j,k,l)
               enddo
             enddo
           enddo
@@ -418,12 +461,13 @@ contains
       mot(3)="st"     ; imot(3)=2
     endif
 !    print*,'recreate grid '
-    do l=1,save_lt  
-       do k=1,nblockd(3,l)
-          do j=1,nblockd(2,l)
-             do i=1,nblockd(1,l)!     create new grid and initialize it
+    do l=1,save_num_bg  
+      l1=save_bg_to_bl(l)
+       do k=1,nblockdg(3,l)
+          do j=1,nblockdg(2,l)
+             do i=1,nblockdg(1,l)!     create new grid and initialize it
 
-                l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
+                l2=sum(nblock2(1:l-1))+i+(j-1)*nblockdg(1,l)+(k-1)*nblockdg(2,l)*nblockdg(1,l)
 
                 if(verbosity>=2) then
                   call str(mot,imot,nmx,4 ,l2)
@@ -435,17 +479,58 @@ contains
                   call crdms( l2,ni(i,j,k,l),nj(i,j,k,l),nk(i,j,k,l))
                 endif
 
-                call reallocate_s(x,ndimntbx)
-                call reallocate_s(y,ndimntbx)
-                call reallocate_s(z,ndimntbx)
+                orig=save_bg_to_proc(l)
+                dest=bg_to_proc(l2)
+                l3=bg_to_bl(l2)
 
-                ! offset, don't forget to count the interface twice
-                xs=sum(ni(:i-1,j,k,l))-i+1
-                ys=sum(nj(i,:j-1,k,l))-j+1
-                zs=sum(nk(i,j,:k-1,l))-k+1
 
-                call copy_grid(l,l2,xs,ys,zs,x,y,z,save_x,save_y,save_z,              &
-                     save_id1,save_id2,save_jd1,save_jd2,save_kd1,save_kd2,save_npn)
+                if(rank==orig.or.rank==dest) then
+                  if(orig==dest) then ! sending to myself
+
+                    ! offset, don't forget to count the interface twice
+                    xs=sum(ni(:i-1,j,k,l))-i+1
+                    ys=sum(nj(i,:j-1,k,l))-j+1
+                    zs=sum(nk(i,j,:k-1,l))-k+1
+
+                    call reallocate_s(x,ndimntbx)
+                    call reallocate_s(y,ndimntbx)
+                    call reallocate_s(z,ndimntbx)
+
+                    call copy_grid(l1,l3,xs,ys,zs,x,y,z,save_x,save_y,save_z,              &
+                         save_id1,save_id2,save_jd1,save_jd2,save_kd1,save_kd2,save_npn)
+
+                  elseif(rank==orig) then
+
+                    ! offset, don't forget to count the interface twice
+                    xs=sum(ni(:i-1,j,k,l))-i
+                    ys=sum(nj(i,:j-1,k,l))-j
+                    zs=sum(nk(i,j,:k-1,l))-k
+
+                    xe=sum(ni(:i,j,k,l))-i-1
+                    ye=sum(nj(i,:j,k,l))-j-1
+                    ze=sum(nk(i,j,:k,l))-k-1
+
+                    nid = save_id2(l1)-save_id1(l1)+1
+                    njd = save_jd2(l1)-save_jd1(l1)+1
+                    nijd = nid*njd
+
+                    call send_grid(save_x,save_y,save_z,xs,ys,zs,xe,ye,ze,       &
+                        save_id1(l1),save_jd1(l1),save_kd1(l1),nid,nijd,save_npn(l1),orig,dest)
+
+                  elseif(rank==dest) then
+
+                    call reallocate_s(x,ndimntbx)
+                    call reallocate_s(y,ndimntbx)
+                    call reallocate_s(z,ndimntbx)
+
+                    nid = id2(l3)-id1(l3)+1
+                    njd = jd2(l3)-jd1(l3)+1
+                    nijd = nid*njd
+
+                    call recv_grid(x,y,z,ii1(l3),jj1(l3),kk1(l3),ii2(l3),jj2(l3),kk2(l3),       &
+                            id1(l3),jd1(l3),kd1(l3),nid,nijd,npn(l3),orig,dest)
+                  endif
+                endif
 
                 new2old_b(l2)= l
 
@@ -467,10 +552,11 @@ contains
 !    print*,'recreate old boundaries ' ! TODO there might be something simpler with old2new_p and new2old_p
     do fr=1,save_mtb
        l=save_ndlb(fr)
+      l1=save_bl_to_bg(l)
        do k=1,nblockd(3,l)
           do j=1,nblockd(2,l)
              do i=1,nblockd(1,l)
-                l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
+                l2=sum(nblock2(1:l1-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
 
                 call old2new_p(save_iminb(fr),save_jminb(fr),save_kminb(fr),imin,jmin,kmin,i,j,k,l)
                 call old2new_p(save_imaxb(fr),save_jmaxb(fr),save_kmaxb(fr),imax,jmax,kmax,i,j,k,l)
@@ -494,11 +580,12 @@ contains
                    if(tab_raccord(fr)/=0) then ! if boundary shared with another block
                       fr2=tab_raccord(fr)      ! a split on the other side induce split here
                       l3=save_ndlb(fr2) 
+                      l5=save_bl_to_bg(l3)
 
                       do k2=1,nblockd(3,l3)
                          do j2=1,nblockd(2,l3)
                             do i2=1,nblockd(1,l3)
-                               l4=sum(nblock2(1:l3-1))+i2+(j2-1)*nblockd(1,l3)+(k2-1)*nblockd(2,l3)*nblockd(1,l3)
+                               l4=sum(nblock2(1:l5-1))+i2+(j2-1)*nblockd(1,l3)+(k2-1)*nblockd(2,l3)*nblockd(1,l3)
 
                                 call old2new_p(save_iminb(fr2),save_jminb(fr2),save_kminb(fr2),imin2,jmin2,kmin2,i2,j2,k2,l3)
                                 call old2new_p(save_imaxb(fr2),save_jmaxb(fr2),save_kmaxb(fr2),imax2,jmax2,kmax2,i2,j2,k2,l3)
@@ -603,13 +690,14 @@ contains
 
 !    print*,'create new boundaries '
     do l=1,save_lt  !           New coincident boundaries
+      l1=save_bl_to_bg(l)
        do k=1,nblockd(3,l)
           do j=1,nblockd(2,l)
              do i=1,nblockd(1,l)
-                l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
+                l2=sum(nblock2(1:l1-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
 
                 if (i>1) then
-                   l3=sum(nblock2(1:l-1))+i-1+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
+                   l3=sum(nblock2(1:l1-1))+i-1+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
                    mfbe=mfbe+1
                    if(verbosity>=2) then
                      call str(mot,imot,nmx,4 ,mfbe)
@@ -657,7 +745,7 @@ contains
                    bcg_to_bci(mfbe  )= 0
                 endif
                 if (j>1) then
-                   l3=sum(nblock2(1:l-1))+i+(j-2)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
+                   l3=sum(nblock2(1:l1-1))+i+(j-2)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
                    mfbe=mfbe+1
                    if(verbosity>=2) then
                      call str(mot,imot,nmx,4 ,mfbe)
@@ -705,7 +793,7 @@ contains
                    bcg_to_bci(mfbe  )= 0
                 endif
                 if (k>1) then
-                   l3=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-2)*nblockd(2,l)*nblockd(1,l)
+                   l3=sum(nblock2(1:l1-1))+i+(j-1)*nblockd(1,l)+(k-2)*nblockd(2,l)*nblockd(1,l)
                    mfbe=mfbe+1
                    if(verbosity>=2) then
                      call str(mot,imot,nmx,4 ,mfbe)
@@ -836,10 +924,11 @@ contains
 
 !    print*,'initialization '
     do l=1,save_lt
+      l1=save_bl_to_bg(l)
        do k=1,nblockd(3,l)
           do j=1,nblockd(2,l)
              do i=1,nblockd(1,l)
-                l2=sum(nblock2(1:l-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
+                l2=sum(nblock2(1:l1-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
                 do fr=1,mfbe
                    if(ndlb(fr)==l2) then
                       test=.false.
@@ -852,6 +941,7 @@ contains
                             test=.true.
                             fr2=tab_raccord(bcg_to_bci(fr)) ! old other boundary number
                             l3=save_ndlb(fr2)              ! old other block number
+                            l5=save_bl_to_bg(l5)
 
                             call get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,                 &
                                   iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr), &
@@ -862,7 +952,7 @@ contains
                                  do k2=1,nblockd(3,l3)
                             do j2=1,nblockd(2,l3)
                                do i2=1,nblockd(1,l3)
-                                  l4=sum(nblock2(1:l3-1))+i2+(j2-1)*nblockd(1,l3)+(k2-1)*nblockd(2,l3)*nblockd(1,l3) ! potential new block number
+                                  l4=sum(nblock2(1:l5-1))+i2+(j2-1)*nblockd(1,l3)+(k2-1)*nblockd(2,l3)*nblockd(1,l3) ! potential new block number
                                   do fr3=1,mfbe
                                      if(ndlb(fr3)==l4) then  ! potential new boundary number
 
@@ -1120,6 +1210,14 @@ subroutine copy_grid(l,l2,xs,ys,zs,x,y,z,save_x,save_y,save_z,       &
  integer :: xi,yi,zi,nid,njd,nijd,xyz
  integer :: save_xi,save_yi,save_zi,save_nid,save_njd,save_nijd,save_xyz
 
+  nid = id2(l2)-id1(l2)+1
+  njd = jd2(l2)-jd1(l2)+1
+  nijd = nid*njd
+
+  save_nid = save_id2(l)-save_id1(l)+1
+  save_njd = save_jd2(l)-save_jd1(l)+1
+  save_nijd = save_nid*save_njd
+
  do zi=kk1(l2),kk2(l2)
     do yi=jj1(l2),jj2(l2)
        do xi=ii1(l2),ii2(l2)
@@ -1127,14 +1225,6 @@ subroutine copy_grid(l,l2,xs,ys,zs,x,y,z,save_x,save_y,save_z,       &
           save_xi=xi+xs
           save_yi=yi+ys
           save_zi=zi+zs
-
-          nid = id2(l2)-id1(l2)+1
-          njd = jd2(l2)-jd1(l2)+1
-          nijd = nid*njd
-
-          save_nid = save_id2(l)-save_id1(l)+1
-          save_njd = save_jd2(l)-save_jd1(l)+1
-          save_nijd = save_nid*save_njd
 
           xyz      =     npn(l2)+1+(     xi-     id1(l2))+(     yi-     jd1(l2))*     nid+(     zi-     kd1(l2))*     nijd
           save_xyz =save_npn(l )+1+(save_xi-save_id1(l ))+(save_yi-save_jd1(l ))*save_nid+(save_zi-save_kd1(l ))*save_nijd
@@ -1147,6 +1237,65 @@ subroutine copy_grid(l,l2,xs,ys,zs,x,y,z,save_x,save_y,save_z,       &
     enddo
  enddo
 end subroutine copy_grid
+
+
+subroutine send_grid(x,y,z,xs,ys,zs,xe,ye,ze,       &
+    id1,jd1,kd1,nid,nijd,npn,orig,dest)
+  use mod_mpi
+ implicit none
+ integer,intent(in)             :: xs,ys,zs,xe,ye,ze,id1,jd1,kd1,nid,nijd,npn,orig,dest
+ double precision,intent(in)    :: x(:),y(:),z(:)
+ double precision,allocatable   :: buff(:,:,:,:)
+ integer :: xi,yi,zi,xyz
+
+ allocate(buff(3,xe-xs+1,ye-ys+1,xe-xs+1))
+ do zi=zs,ze
+    do yi=ys,ye
+       do xi=xs,xe
+
+          xyz =npn+1+(xi-id1)+(yi-jd1)*nid+(zi-kd1)*nijd
+
+          ! fill buffer
+          buff(1,xi-xs+1,yi-ys+1,zi-zs+1)=x(xyz)
+          buff(2,xi-xs+1,yi-ys+1,zi-zs+1)=y(xyz)
+          buff(3,xi-xs+1,yi-ys+1,zi-zs+1)=z(xyz)
+       enddo
+    enddo
+ enddo
+
+  call MPI_TRANS(buff,buff,orig,DEST)
+
+ deallocate(buff)
+end subroutine send_grid
+
+subroutine recv_grid(x,y,z,xs,ys,zs,xe,ye,ze,       &
+    id1,jd1,kd1,nid,nijd,npn,orig,dest)
+  use mod_mpi
+ implicit none
+ integer,intent(in)             :: xs,ys,zs,xe,ye,ze,id1,jd1,kd1,nid,nijd,npn,orig,dest
+ double precision,intent(inout) :: x(:),y(:),z(:)
+ double precision,allocatable   :: buff(:,:,:,:)
+ integer :: xi,yi,zi,xyz
+
+ allocate(buff(3,xe-xs+1,ye-ys+1,xe-xs+1))
+
+  call MPI_TRANS(buff,buff,orig,dest)
+
+ do zi=zs,ze
+    do yi=ys,ye
+       do xi=xs,xe
+
+          xyz      =     npn+1+(     xi-     id1)+(     yi-     jd1)*     nid+(     zi-     kd1)*     nijd
+
+          ! fill grid
+          x(xyz)=buff(1,xi-xs+1,yi-ys+1,zi-zs+1)
+          y(xyz)=buff(2,xi-xs+1,yi-ys+1,zi-zs+1)
+          z(xyz)=buff(3,xi-xs+1,yi-ys+1,zi-zs+1)
+       enddo
+    enddo
+ enddo
+ deallocate(buff)
+end subroutine recv_grid
 
 subroutine get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,  &
       a,b,c,d,e,f,id1,id2,jd1,jd2,kd1,kd2,npn,x,y,z)
