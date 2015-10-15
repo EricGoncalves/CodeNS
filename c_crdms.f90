@@ -1,7 +1,7 @@
 module mod_c_crdms
   implicit none
 contains
-  subroutine c_crdms(mot,imot,nmot)
+  subroutine c_crdms(mot,imot,nmot,li)
 !
 !***********************************************************************
 !
@@ -21,6 +21,7 @@ contains
     implicit none
     integer          :: imot(nmx),        l,       ni,       nj,       nk
     integer          ::      nmot
+    integer,optional ::li
 !
 !-----------------------------------------------------------------------
 !
@@ -35,7 +36,11 @@ contains
       call barrier
     endif
 !
-    call crdms(l,ni,nj,nk)
+    if (present(li)) then
+      call crdms(l,ni,nj,nk,li)
+    else
+      call crdms(l,ni,nj,nk)
+    endif
 !
     if(bg_to_proc(l)==rank) then
       if(kimp.ge.2) then

@@ -3,7 +3,7 @@ module mod_c_crbds
 contains
   subroutine c_crbds( &
        mot,imot,nmot, &
-       ncbd)
+       ncbd,mfbi)
 !
 !***********************************************************************
 !
@@ -25,6 +25,7 @@ contains
     integer          ::       imax,      imin, imot(nmx),      jmax,      jmin
     integer          ::       kini,      kmax,      kmin,         l,      mfbe
     integer          ::       nmot
+    integer,optional :: mfbi
     integer,allocatable :: ncbd(:)
 !
 !-----------------------------------------------------------------------
@@ -48,11 +49,20 @@ contains
       call barrier
     endif
 !
+    if (present(mfbi)) then
+      call crbds( &
+           mfbe,kini,l, &
+           imin,imax,jmin,jmax,kmin,kmax, &
+           indmf, &
+           ncbd,mfbi)
+    else
       call crbds( &
            mfbe,kini,l, &
            imin,imax,jmin,jmax,kmin,kmax, &
            indmf, &
            ncbd)
+    endif
+
 !
     if(bcg_to_proc(mfbe)==rank) then
       if(kimp.ge.2) then

@@ -925,7 +925,7 @@ contains
     double precision,allocatable :: rtmp(:)
 
     allocate(cl(mtb))
-    allocate(tab_raccord(num_bci))
+    allocate(tab_raccord(num_bcg))
     allocate(ndcc(mtb))
     allocate(nbdc(mtb))
     allocate(nfbc(mtb))

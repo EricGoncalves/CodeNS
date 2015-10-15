@@ -5,7 +5,7 @@ contains
        mfbe,kini,l, &
        imin,imax,jmin,jmax,kmin,kmax, &
        indmf, &
-       ncbd)
+       ncbd,mfbi)
 !
 !***********************************************************************
 !
@@ -65,15 +65,15 @@ contains
     integer          ::       imax,       img,      imgi,      imgj,      imgk
     integer          ::       imin,      jmax,      jmin,      kini,      kmax
     integer          ::       kmin,         l,        lm,        m0,      mfbe
-    integer          ::       mfbi,     mfbim,        mt,ll
+    integer          ::       mfbim,        mt,ll
     integer, allocatable :: ncbd(:)
+    integer, optional :: mfbi
 !
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indmf
 
     num_bcg=num_bcg+1
-    num_bci=num_bci+1
     call reallocate_s(bcg_to_proc,num_bcg)
     call reallocate_s(bcg_to_bcl,num_bcg)
     call reallocate_s(bcg_to_bci,num_bcg)
@@ -82,6 +82,7 @@ contains
     bcg_to_proc(mfbe)=bg_to_proc(l)
     bcg_to_bcl(mfbe)=0
     bcg_to_bci(mfbe)=mfbe
+    if(present(mfbi))    bcg_to_bci(mfbe)=mfbi
 !
     if(bg_to_proc(l)==rank) then
       num_bcl=num_bcl+1
@@ -103,17 +104,16 @@ contains
       call reallocate_s(mmb,mtt)
 
   !
-      mfbi=mtbx
-      nfei(mtb)=mfbi
-      ndlb(mfbi)=bg_to_bl(l)
-      indfl(mfbi)=indmf
+      nfei(mtb)=mtbx
+      ndlb(mtbx)=bg_to_bl(l)
+      indfl(mtbx)=indmf
       bcl_to_bcg(mtb)=mfbe
       bcg_to_bcl(mfbe)=mtb
   !
       do img=1,lgx
   !
          lm=bg_to_bl(l)+(img-1)*lz
-         mfbim=mfbi+(img-1)*mtb
+         mfbim=mtbx+(img-1)*mtb
 
   !
          imgi=img

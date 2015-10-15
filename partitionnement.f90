@@ -46,19 +46,19 @@ contains
     integer             :: l2,mfbe,nid,njd,nijd,xi,yi,zi,sblock,l3,old_mtb
     integer             :: imax2,imin2,jmax2,jmin2,kmax2,kmin2,fr2,i2,j2,k2,l4,fr3
     integer             :: imax3,imin3,jmax3,jmin3,kmax3,kmin3
-    double precision    :: exs1,exs2,vbc(ista*lsta),xmin,xmax,ymin,ymax,zmin,zmax
+    double precision    :: exs1,exs2,vbc(ista*lsta),xmin,xmax,ymin,ymax,zmin,zmax,sub_bc1(2,6)
     double precision    :: save_xmin,save_xmax,save_ymin,save_ymax,save_zmin,save_zmax
     double precision,allocatable :: x(:),y(:),z(:)
     integer,allocatable :: nblock2(:),nblockd(:,:),ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:),tmp(:,:,:,:)
     integer,allocatable :: new2old_b(:),num_cf2(:,:,:)
     integer,allocatable :: ni1(:,:,:),nj1(:,:,:),nk1(:,:,:),ncbd(:)
 
-    integer             :: save_lt,save_ndimntbx,l,verbosity,l1
+    integer             :: save_lt,save_ndimntbx,l,verbosity,l1,ll2,ll3
     integer             :: save_nid,save_njd,save_nijd,save_klzx
     integer             :: save_kmtbx,save_lzx,save_mdimtbx,save_mdimubx
     integer             :: save_mtb,save_mtt,save_ndimctbx
     integer             :: save_ndimubx,save_xi,save_xyz,save_yi,save_zi
-    integer             :: val(3),l5
+    integer             :: val(3),l5,fr4,fri
     double precision,allocatable :: save_x(:),save_y(:),save_z(:),save_bc(:,:),save_bceqt(:,:),save_vbc(:)
     integer,allocatable :: save_ii1(:),save_jj1(:),save_kk1(:)
     integer,allocatable :: save_ii2(:),save_jj2(:),save_kk2(:)
@@ -97,7 +97,7 @@ contains
 
     verbosity=2 ! from 0 to 3
 !    call get_param(mot,nmot,imot,nblocks) ! nblocks is the minimum number of blocks we want
-    nblocks=nprocs
+    nblocks=max(nprocs,num_bg)
 
     !############################################################################################
     !############################# SAVE OLD MESH FOR CHECKING PURPOSE ###########################
@@ -480,9 +480,9 @@ contains
                   call str(mot,imot,nmx,5 ,ni(i,j,k,l))
                   call str(mot,imot,nmx,6 ,nj(i,j,k,l))
                   call str(mot,imot,nmx,7 ,nk(i,j,k,l))
-                  call c_crdms( mot,imot,nmot)
+                  call c_crdms( mot,imot,nmot,save_bg_to_bi(l))
                 else
-                  call crdms( l2,ni(i,j,k,l),nj(i,j,k,l),nk(i,j,k,l))
+                  call crdms( l2,ni(i,j,k,l),nj(i,j,k,l),nk(i,j,k,l),save_bg_to_bi(l))
                 endif
 
                 orig=save_bg_to_proc(l)
@@ -671,13 +671,13 @@ contains
                         call str(mot,imot,nmx,11,sub_bc(i2,5))
                         call str(mot,imot,nmx,12,sub_bc(i2,6))
                         mot(13)=indmf ; imot(13)=2
-                        call c_crbds( mot,imot,nmot, ncbd)
+                        call c_crbds( mot,imot,nmot, ncbd,save_bcg_to_bci(fr1))
                       else
                         call crbds( &
                              mfbe,1,l2, &
                              sub_bc(i2,1),sub_bc(i2,2),sub_bc(i2,3),sub_bc(i2,4),sub_bc(i2,5),sub_bc(i2,6), &
                              indmf, &
-                             ncbd)
+                             ncbd,save_bcg_to_bci(fr1))
                       endif
                   enddo
             enddo
@@ -690,34 +690,59 @@ contains
     !############################################################################################
 
 !    print*,'create new boundaries '
-    do l=1,save_lt  !           New coincident boundaries
-      l1=save_bl_to_bg(l)
-       do k=1,nblockd(3,l)
-          do j=1,nblockd(2,l)
-             do i=1,nblockd(1,l)
-                l2=sum(nblock2(1:l1-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
+    call reallocate(sub_bc,2,6)
+    do l=1,save_num_bg  
+      l1=save_bg_to_bl(l)
+       do k=1,nblockdg(3,l)
+          do j=1,nblockdg(2,l)
+             do i=1,nblockdg(1,l) !           New coincident boundaries
+                l2=sum(nblock2(1:l-1))+i+(j-1)*nblockdg(1,l)+(k-1)*nblockdg(2,l)*nblockdg(1,l)
+                ll2=bg_to_bl(l2)
+                orig1=bg_to_proc(l2)
 
                 if (i>1) then
-                   l3=sum(nblock2(1:l1-1))+i-1+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
+                  l3=sum(nblock2(1:l-1))+i-1+(j-1)*nblockdg(1,l)+(k-1)*nblockdg(2,l)*nblockdg(1,l)
+                  ll3=bg_to_bl(l3)
+                  orig2=bg_to_proc(l3)
+
+                  if (rank==orig1) then
+                      sub_bc(1,1)=ii1(ll2)
+                      sub_bc(1,2)=ii1(ll2)
+                      sub_bc(1,3)=jj1(ll2)
+                      sub_bc(1,4)=jj2(ll2)
+                      sub_bc(1,5)=kk1(ll2)
+                      sub_bc(1,6)=kk2(ll2)
+                  elseif (rank==orig1) then
+                      sub_bc(2,1)=ii1(ll3)
+                      sub_bc(2,2)=ii1(ll3)
+                      sub_bc(2,3)=jj1(ll3)
+                      sub_bc(2,4)=jj2(ll3)
+                      sub_bc(2,5)=kk1(ll3)
+                      sub_bc(2,6)=kk2(ll3)
+                  endif
+
+                  call bcast(sub_bc(1,:),orig1)
+                  call bcast(sub_bc(2,:),orig2)
+
                    mfbe=mfbe+1
                    if(verbosity>=2) then
                      call str(mot,imot,nmx,4 ,mfbe)
                      call str(mot,imot,nmx,5 ,1)
                      call str(mot,imot,nmx,6 ,l2)
-                     call str(mot,imot,nmx,7 ,ii1(l2))
-                     call str(mot,imot,nmx,8 ,ii1(l2))
-                     call str(mot,imot,nmx,9 ,jj1(l2))
-                     call str(mot,imot,nmx,10,jj2(l2))
-                     call str(mot,imot,nmx,11,kk1(l2))
-                     call str(mot,imot,nmx,12,kk2(l2))
+                     call str(mot,imot,nmx,7 ,sub_bc(1,1))
+                     call str(mot,imot,nmx,8 ,sub_bc(1,2))
+                     call str(mot,imot,nmx,9 ,sub_bc(1,3))
+                     call str(mot,imot,nmx,10,sub_bc(1,4))
+                     call str(mot,imot,nmx,11,sub_bc(1,5))
+                     call str(mot,imot,nmx,12,sub_bc(1,6))
                      mot(13)="i1" ; imot(13)=2
-                     call c_crbds( mot,imot,nmot, ncbd)
+                     call c_crbds( mot,imot,nmot, ncbd,0)
                    else
                      call crbds( &
                           mfbe,1,l2, &
-                          ii1(l2),ii1(l2),jj1(l2),jj2(l2),kk1(l2),kk2(l2), &
+                           sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6), &
                           'i1', &
-                          ncbd)
+                          ncbd,0)
                     endif
 
                    mfbe=mfbe+1
@@ -725,47 +750,65 @@ contains
                      call str(mot,imot,nmx,4 ,mfbe)
                      call str(mot,imot,nmx,5 ,1)
                      call str(mot,imot,nmx,6 ,l3)
-                     call str(mot,imot,nmx,7 ,ii2(l3))
-                     call str(mot,imot,nmx,8 ,ii2(l3))
-                     call str(mot,imot,nmx,9 ,jj1(l3))
-                     call str(mot,imot,nmx,10,jj2(l3))
-                     call str(mot,imot,nmx,11,kk1(l3))
-                     call str(mot,imot,nmx,12,kk2(l3))
+                     call str(mot,imot,nmx,7 ,sub_bc(2,1))
+                     call str(mot,imot,nmx,8 ,sub_bc(2,2))
+                     call str(mot,imot,nmx,9 ,sub_bc(2,3))
+                     call str(mot,imot,nmx,10,sub_bc(2,4))
+                     call str(mot,imot,nmx,11,sub_bc(2,5))
+                     call str(mot,imot,nmx,12,sub_bc(2,6))
                      mot(13)="i2" ; imot(13)=2
-                     call c_crbds( mot,imot,nmot, ncbd)
+                     call c_crbds( mot,imot,nmot, ncbd,0)
                    else
                      call crbds( &
                           mfbe,1,l3, &
-                          ii2(l3),ii2(l3),jj1(l3),jj2(l3),kk1(l3),kk2(l3), &
+                          sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6), &
                           'i2', &
-                          ncbd)
+                          ncbd,0)
                     endif
-
-                   call reallocate_s(bcg_to_bci,mtb)
-                   bcg_to_bci(mfbe-1)= 0
-                   bcg_to_bci(mfbe  )= 0
                 endif
                 if (j>1) then
-                   l3=sum(nblock2(1:l1-1))+i+(j-2)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
+                  l3=sum(nblock2(1:l-1))+i+(j-2)*nblockdg(1,l)+(k-1)*nblockdg(2,l)*nblockdg(1,l)
+                  ll3=bg_to_bl(l3)
+                  orig2=bg_to_proc(l3)
+
+                  if (rank==orig1) then
+                      sub_bc(1,1)=ii1(ll2)
+                      sub_bc(1,2)=ii1(ll2)
+                      sub_bc(1,3)=jj1(ll2)
+                      sub_bc(1,4)=jj2(ll2)
+                      sub_bc(1,5)=kk1(ll2)
+                      sub_bc(1,6)=kk2(ll2)
+                  elseif (rank==orig1) then
+                      sub_bc(2,1)=ii1(ll3)
+                      sub_bc(2,2)=ii1(ll3)
+                      sub_bc(2,3)=jj1(ll3)
+                      sub_bc(2,4)=jj2(ll3)
+                      sub_bc(2,5)=kk1(ll3)
+                      sub_bc(2,6)=kk2(ll3)
+                  endif
+
+                  call bcast(sub_bc(1,:),orig1)
+                  call bcast(sub_bc(2,:),orig2)
+
                    mfbe=mfbe+1
                    if(verbosity>=2) then
                      call str(mot,imot,nmx,4 ,mfbe)
                      call str(mot,imot,nmx,5 ,1)
                      call str(mot,imot,nmx,6 ,l2)
-                     call str(mot,imot,nmx,7 ,ii1(l2))
-                     call str(mot,imot,nmx,8 ,ii2(l2))
-                     call str(mot,imot,nmx,9 ,jj1(l2))
-                     call str(mot,imot,nmx,10,jj1(l2))
-                     call str(mot,imot,nmx,11,kk1(l2))
-                     call str(mot,imot,nmx,12,kk2(l2))
+                     call str(mot,imot,nmx,7 ,sub_bc(1,1))
+                     call str(mot,imot,nmx,8 ,sub_bc(1,2))
+                     call str(mot,imot,nmx,9 ,sub_bc(1,3))
+                     call str(mot,imot,nmx,10,sub_bc(1,4))
+                     call str(mot,imot,nmx,11,sub_bc(1,5))
+                     call str(mot,imot,nmx,12,sub_bc(1,6))
                      mot(13)="j1" ; imot(13)=2
-                     call c_crbds( mot,imot,nmot, ncbd)
+                     call c_crbds( mot,imot,nmot, ncbd,0)
                    else
                      call crbds( &
                           mfbe,1,l2, &
-                          ii1(l2),ii2(l2),jj1(l2),jj1(l2),kk1(l2),kk2(l2), &
+                           sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6), &
                           'j1', &
-                          ncbd)
+                          ncbd,0)
                     endif
 
                    mfbe=mfbe+1
@@ -773,47 +816,65 @@ contains
                      call str(mot,imot,nmx,4 ,mfbe)
                      call str(mot,imot,nmx,5 ,1)
                      call str(mot,imot,nmx,6 ,l3)
-                     call str(mot,imot,nmx,7 ,ii1(l3))
-                     call str(mot,imot,nmx,8 ,ii2(l3))
-                     call str(mot,imot,nmx,9 ,jj2(l3))
-                     call str(mot,imot,nmx,10,jj2(l3))
-                     call str(mot,imot,nmx,11,kk1(l3))
-                     call str(mot,imot,nmx,12,kk2(l3))
+                     call str(mot,imot,nmx,7 ,sub_bc(2,1))
+                     call str(mot,imot,nmx,8 ,sub_bc(2,2))
+                     call str(mot,imot,nmx,9 ,sub_bc(2,3))
+                     call str(mot,imot,nmx,10,sub_bc(2,4))
+                     call str(mot,imot,nmx,11,sub_bc(2,5))
+                     call str(mot,imot,nmx,12,sub_bc(2,6))
                      mot(13)="j2" ; imot(13)=2
-                     call c_crbds( mot,imot,nmot, ncbd)
+                     call c_crbds( mot,imot,nmot, ncbd,0)
                    else
                      call crbds( &
                           mfbe,1,l3, &
-                          ii1(l3),ii2(l3),jj2(l3),jj2(l3),kk1(l3),kk2(l3), &
+                          sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6), &
                           'j2', &
-                          ncbd)
+                          ncbd,0)
                     endif
-
-                   call reallocate_s(bcg_to_bci,mtb)
-                   bcg_to_bci(mfbe-1)= 0
-                   bcg_to_bci(mfbe  )= 0
                 endif
                 if (k>1) then
-                   l3=sum(nblock2(1:l1-1))+i+(j-1)*nblockd(1,l)+(k-2)*nblockd(2,l)*nblockd(1,l)
+                  l3=sum(nblock2(1:l-1))+i+(j-1)*nblockdg(1,l)+(k-2)*nblockdg(2,l)*nblockdg(1,l)
+                  ll3=bg_to_bl(l3)
+                  orig2=bg_to_proc(l3)
+
+                  if (rank==orig1) then
+                      sub_bc(1,1)=ii1(ll2)
+                      sub_bc(1,2)=ii1(ll2)
+                      sub_bc(1,3)=jj1(ll2)
+                      sub_bc(1,4)=jj2(ll2)
+                      sub_bc(1,5)=kk1(ll2)
+                      sub_bc(1,6)=kk2(ll2)
+                  elseif (rank==orig1) then
+                      sub_bc(2,1)=ii1(ll3)
+                      sub_bc(2,2)=ii1(ll3)
+                      sub_bc(2,3)=jj1(ll3)
+                      sub_bc(2,4)=jj2(ll3)
+                      sub_bc(2,5)=kk1(ll3)
+                      sub_bc(2,6)=kk2(ll3)
+                  endif
+
+                  call bcast(sub_bc(1,:),orig1)
+                  call bcast(sub_bc(2,:),orig2)
+
                    mfbe=mfbe+1
                    if(verbosity>=2) then
                      call str(mot,imot,nmx,4 ,mfbe)
                      call str(mot,imot,nmx,5 ,1)
                      call str(mot,imot,nmx,6 ,l2)
-                     call str(mot,imot,nmx,7 ,ii1(l2))
-                     call str(mot,imot,nmx,8 ,ii2(l2))
-                     call str(mot,imot,nmx,9 ,jj1(l2))
-                     call str(mot,imot,nmx,10,jj2(l2))
-                     call str(mot,imot,nmx,11,kk1(l2))
-                     call str(mot,imot,nmx,12,kk1(l2))
+                     call str(mot,imot,nmx,7 ,sub_bc(1,1))
+                     call str(mot,imot,nmx,8 ,sub_bc(1,2))
+                     call str(mot,imot,nmx,9 ,sub_bc(1,3))
+                     call str(mot,imot,nmx,10,sub_bc(1,4))
+                     call str(mot,imot,nmx,11,sub_bc(1,5))
+                     call str(mot,imot,nmx,12,sub_bc(1,6))
                      mot(13)="k1" ; imot(13)=2
-                     call c_crbds( mot,imot,nmot, ncbd)
+                     call c_crbds( mot,imot,nmot, ncbd,0)
                    else
                      call crbds( &
                           mfbe,1,l2, &
-                          ii1(l2),ii2(l2),jj1(l2),jj2(l2),kk1(l2),kk1(l2), &
+                           sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6), &
                           'k1', &
-                          ncbd)
+                          ncbd,0)
                     endif
 
                    mfbe=mfbe+1
@@ -821,25 +882,21 @@ contains
                      call str(mot,imot,nmx,4 ,mfbe)
                      call str(mot,imot,nmx,5 ,1)
                      call str(mot,imot,nmx,6 ,l3)
-                     call str(mot,imot,nmx,7 ,ii1(l3))
-                     call str(mot,imot,nmx,8 ,ii2(l3))
-                     call str(mot,imot,nmx,9 ,jj1(l3))
-                     call str(mot,imot,nmx,10,jj2(l3))
-                     call str(mot,imot,nmx,11,kk2(l3))
-                     call str(mot,imot,nmx,12,kk2(l3))
+                     call str(mot,imot,nmx,7 ,sub_bc(2,1))
+                     call str(mot,imot,nmx,8 ,sub_bc(2,2))
+                     call str(mot,imot,nmx,9 ,sub_bc(2,3))
+                     call str(mot,imot,nmx,10,sub_bc(2,4))
+                     call str(mot,imot,nmx,11,sub_bc(2,5))
+                     call str(mot,imot,nmx,12,sub_bc(2,6))
                      mot(13)="k2" ; imot(13)=2
-                     call c_crbds( mot,imot,nmot, ncbd)
+                     call c_crbds( mot,imot,nmot, ncbd,0)
                    else
                      call crbds( &
                           mfbe,1,l3, &
-                          ii1(l3),ii2(l3),jj1(l2),jj2(l2),kk2(l2),kk2(l2), &
+                          sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6), &
                           'k2', &
-                          ncbd)
+                          ncbd,0)
                     endif
-
-                   call reallocate_s(bcg_to_bci,mtb)
-                   bcg_to_bci(mfbe-1)= 0
-                   bcg_to_bci(mfbe  )= 0
                 endif
              enddo
           enddo
@@ -911,6 +968,7 @@ contains
     ip42=mdimtbx            ! Nb point frontiere
     ip43=mdimtbx            ! Nb point frontiere
     ip44=0!mdimubx            !TODO
+    test=.false.
     call reallocate(cl,mtb)
     call reallocate(ndcc,mtb)
     call reallocate(nbdc,mtb)
@@ -924,131 +982,135 @@ contains
     call reallocate(mnc,ip43)
 
 !    print*,'initialization '
-    do l=1,save_lt
-      l1=save_bl_to_bg(l)
-       do k=1,nblockd(3,l)
-          do j=1,nblockd(2,l)
-             do i=1,nblockd(1,l)
-                l2=sum(nblock2(1:l1-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
-                do fr=1,mfbe
-                   if(ndlb(fr)==l2) then
-                      test=.false.
-                      if (bcg_to_bci(fr)==0) then  ! new boundary 
-                         test=.true.
-                         if (indfl(fr)(2:2)=="1") fr2=fr+1
-                         if (indfl(fr)(2:2)=="2") fr2=fr-1
-                      else                        ! old raccord boundary
-                         if(tab_raccord(bcg_to_bci(fr))/=0) then
-                            test=.true.
-                            fr2=tab_raccord(bcg_to_bci(fr)) ! old other boundary number
-                            l3=save_ndlb(fr2)              ! old other block number
-                            l5=save_bl_to_bg(l5)
+    do fr1=1,num_bcg
+       fr=bcg_to_bcl(fr1)
+       l=bcg_to_bg(fr1)
+       l1=bg_to_bl(l)
+       fri=bcg_to_bci(fr1)
+       test=.false.
+       orig1=bcg_to_proc(fr1)
+       if (fri==0) then  ! new boundary , it's easy
+         test=.true.
+         if (rank==orig1) then
+           if (indfl(fr)(2:2)=="1") fr2=fr1+1
+           if (indfl(fr)(2:2)=="2") fr2=fr1-1
+         endif
+      elseif(tab_raccord(fri)/=0) then ! old raccord boundary
+         test=.true.
+         if (rank==orig1) &
+            call get_coords_box(sub_bc1(1,1),sub_bc1(1,2),sub_bc1(1,3),sub_bc1(1,4),sub_bc1(1,5),sub_bc1(1,6),                 &
+                  iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr), &
+                  id1(l1),id2(l1),jd1(l1),jd2(l1),kd1(l1),kd2(l1),npn(l1),       &
+                  x,y,z)
+         call bcast(sub_bc1,orig1)
 
-                            call get_coords_box(xmin,xmax,ymin,ymax,zmin,zmax,                 &
-                                  iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr), &
-                                  id1(l2),id2(l2),jd1(l2),jd2(l2),kd1(l2),kd2(l2),npn(l2),       &
-                                  x,y,z)
+         fr4=0
+         find_otherblock: do fr2=1,mtb
+            fr3=bcl_to_bcg(fr2)
+            l2=bcg_to_bg(fr3)
+            l3=bg_to_bl(l2)
+            if(tab_raccord(bcg_to_bci(fr3))==fri) then  ! potential new boundary number
 
-                            find_otherblock:&
-                                 do k2=1,nblockd(3,l3)
-                            do j2=1,nblockd(2,l3)
-                               do i2=1,nblockd(1,l3)
-                                  l4=sum(nblock2(1:l5-1))+i2+(j2-1)*nblockd(1,l3)+(k2-1)*nblockd(2,l3)*nblockd(1,l3) ! potential new block number
-                                  do fr3=1,mfbe
-                                     if(ndlb(fr3)==l4) then  ! potential new boundary number
+              call get_coords_box(sub_bc1(2,1),sub_bc1(2,2),sub_bc1(2,3),sub_bc1(2,4),sub_bc1(2,5),sub_bc1(2,6),                 &
+                    iminb(fr2),imaxb(fr2),jminb(fr2),jmaxb(fr2),kminb(fr2),kmaxb(fr2), &
+                    id1(l3),id2(l3),jd1(l3),jd2(l3),kd1(l3),kd2(l3),npn(l3),       &
+                    x,y,z)
 
-                                    call get_coords_box(save_xmin,save_xmax,save_ymin,save_ymax,save_zmin,save_zmax, &
-                                          iminb(fr3),imaxb(fr3),jminb(fr3),jmaxb(fr3),kminb(fr3),kmaxb(fr3), &
-                                          id1(l4),id2(l4),jd1(l4),jd2(l4),kd1(l4),kd2(l4),npn(l4),       &
-                                          x,y,z)
+              if (abs(sub_bc1(1,1)-sub_bc1(2,1))<=1d-10 .and. &
+                  abs(sub_bc1(1,2)-sub_bc1(2,2))<=1d-10 .and. &
+                  abs(sub_bc1(1,3)-sub_bc1(2,3))<=1d-10 .and. & ! It' me ! 
+                  abs(sub_bc1(1,4)-sub_bc1(2,4))<=1d-10 .and. &
+                  abs(sub_bc1(1,5)-sub_bc1(2,5))<=1d-10 .and. &
+                  abs(sub_bc1(1,6)-sub_bc1(2,6))<=1d-10) then
 
-                                        if (abs(save_xmin-xmin)<=1d-10 .and. &
-                                             abs(save_xmax-xmax)<=1d-10 .and. &
-                                             abs(save_ymin-ymin)<=1d-10 .and. & ! there is a part of the boundary in this block
-                                             abs(save_ymax-ymax)<=1d-10 .and. &
-                                             abs(save_zmin-zmin)<=1d-10 .and. &
-                                             abs(save_zmax-zmax)<=1d-10) then
+                  fr4=fr3
+                  exit find_otherblock
+              endif
+            endif
+         enddo find_otherblock
+         call sum_mpi(fr4) ! there should be only one non zero value in this sum
+         fr2=fr4
+      endif
+      if (test) then   ! raccord boundary
 
-                                           fr2=fr3
-                                           exit find_otherblock
-                                        endif
-                                     endif
-                                  enddo
-                               enddo
-                            enddo
-                         enddo find_otherblock
-                      endif
-                   endif
-                   if (test) then   ! raccord boundary
-                       if(verbosity>=2) then
-                         mot="" ; nmot=6   ; imot=0
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="basic"    ; imot(3)=5
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="rc"       ; imot(5)=2
-                         call str(mot,imot,nmx,6 ,1)
-                         call c_inbdb( mot,imot,nmot,ncbd,ncin,bceqt,partition=.true.)
-                       else
-                        call inbdb( &
-                             ncbd,ncin, &
-                             fr,"rc  ",1, &
-                             0,0,0,0,vbc,bceqt)
-                        endif
+         l2=bcg_to_bg(fr2)
+         if (rank==bg_to_proc(l2)) then
+           sub_bc(1,1)=iminb(bcg_to_bcl(fr2))
+           sub_bc(1,2)=jminb(bcg_to_bcl(fr2))
+           sub_bc(1,3)=kminb(bcg_to_bcl(fr2))
+         endif
+         call bcast(sub_bc(1,1:3),bcg_to_proc(fr2))
 
-                      select case(indfl(fr)(1:1))
-                      case("i")
-                           mot(16)="fa"      ; imot(16)=2
-                           mot(17)="+j"      ; imot(17)=2
-                           mot(18)="+k"      ; imot(18)=2
-                      case("j")
-                         mot(16)="+i"      ; imot(16)=2
-                         mot(17)="fa"      ; imot(17)=2
-                         mot(18)="+k"      ; imot(18)=2
-                      case("k")
-                         mot(16)="+i"      ; imot(16)=2
-                         mot(17)="+j"      ; imot(17)=2
-                         mot(18)="fa"      ; imot(18)=2
-                      end select
 
-                       if(verbosity>=2) then
-                         nmot=18  
-                         mot(1)="init"     ; imot(1)=4
-                         mot(2)="boundary" ; imot(2)=8
-                         mot(3)="coin"     ; imot(3)=4
-                         call str(mot,imot,nmx,4 ,fr)
-                         mot(5)="frc"      ; imot(5)=3
-                         call str(mot,imot,nmx,6 ,fr2)
-                         mot(7)="kibdc"    ; imot(7)=5
-                         call str(mot,imot,nmx,8 ,1)
-                         mot(9)="krr"      ; imot(9)=3
-                         call str(mot,imot,nmx,10 ,0)
-                         mot(11)="ptc"     ; imot(11)=3
-                         call str(mot,imot,nmx,12 ,iminb(fr2))
-                         call str(mot,imot,nmx,13 ,jminb(fr2))
-                         call str(mot,imot,nmx,14 ,kminb(fr2))
-                         mot(15)="dir"     ; imot(15)=3
-                         call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
-                       else
-                        call inbdc( &
-                             exs1,exs2, &
-                             x,y,z, &
-                             ncbd,ncin,mnc, &
-                             0,fr,fr2,1,0., &
-                             iminb(fr2),jminb(fr2),kminb(fr2),mot(16)(1:2),mot(17)(1:2),mot(18)(1:2))
-                       endif
-                   endif
-                endif
-             enddo
-          enddo
-       enddo
-    enddo
+           if(verbosity>=2) then
+             mot="" ; nmot=6   ; imot=0
+             mot(1)="init"     ; imot(1)=4
+             mot(2)="boundary" ; imot(2)=8
+             mot(3)="basic"    ; imot(3)=5
+             call str(mot,imot,nmx,4 ,fr1)
+             mot(5)="rc"       ; imot(5)=2
+             call str(mot,imot,nmx,6 ,1)
+             call c_inbdb( mot,imot,nmot,ncbd,ncin,bceqt,partition=.true.)
+           else
+            call inbdb( &
+                 ncbd,ncin, &
+                 fr1,"rc  ",1, &
+                 0,0,0,0,vbc,bceqt)
+            endif
+
+         if (rank==orig1) indmf=indfl(fr)
+         call bcast(indmf,orig1)
+
+          select case(indmf(1:1))
+          case("i")
+               mot(16)="fa"      ; imot(16)=2
+               mot(17)="+j"      ; imot(17)=2
+               mot(18)="+k"      ; imot(18)=2
+          case("j")
+             mot(16)="+i"      ; imot(16)=2
+             mot(17)="fa"      ; imot(17)=2
+             mot(18)="+k"      ; imot(18)=2
+          case("k")
+             mot(16)="+i"      ; imot(16)=2
+             mot(17)="+j"      ; imot(17)=2
+             mot(18)="fa"      ; imot(18)=2
+          end select
+
+           if(verbosity>=2) then
+             nmot=18  
+             mot(1)="init"     ; imot(1)=4
+             mot(2)="boundary" ; imot(2)=8
+             mot(3)="coin"     ; imot(3)=4
+             call str(mot,imot,nmx,4 ,fr1)
+             mot(5)="frc"      ; imot(5)=3
+             call str(mot,imot,nmx,6 ,fr2)
+             mot(7)="kibdc"    ; imot(7)=5
+             call str(mot,imot,nmx,8 ,1)
+             mot(9)="krr"      ; imot(9)=3
+             call str(mot,imot,nmx,10 ,0)
+             mot(11)="ptc"     ; imot(11)=3
+             call str(mot,imot,nmx,12 ,sub_bc(1,1))
+             call str(mot,imot,nmx,13 ,sub_bc(1,2))
+             call str(mot,imot,nmx,14 ,sub_bc(1,3))
+             mot(15)="dir"     ; imot(15)=3
+             call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
+           else
+            call inbdc( &
+                 exs1,exs2, &
+                 x,y,z, &
+                 ncbd,ncin,mnc, &
+                 0,fr1,fr2,1,0., &
+                 sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),mot(16)(1:2),mot(17)(1:2),mot(18)(1:2))
+           endif
+      endif
 !    print*,l,' : filling done'
- enddo
+   enddo
 
  deallocate(save_x,save_y,save_z,save_ndlb,save_nfei,save_indfl,save_mpb,save_mmb,save_ncbd,save_ii1)
  deallocate(save_jj1,save_kk1,save_ii2,save_jj2,save_kk2,save_id1,save_jd1,save_kd1,save_id2,save_jd2)
  deallocate(save_kd2,save_nnn,save_nnc,save_nnfb,save_npn,save_npc,save_npfb)
+
+write(stderr,*)"done!"
 
  return
 
