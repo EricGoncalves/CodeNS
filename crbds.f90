@@ -77,6 +77,8 @@ contains
     call reallocate_s(bcg_to_proc,num_bcg)
     call reallocate_s(bcg_to_bcl,num_bcg)
     call reallocate_s(bcg_to_bci,num_bcg)
+    call reallocate_s(bcg_to_bg,num_bcg)
+    bcg_to_bg(mfbe)=l
     bcg_to_proc(mfbe)=bg_to_proc(l)
     bcg_to_bcl(mfbe)=0
     bcg_to_bci(mfbe)=mfbe

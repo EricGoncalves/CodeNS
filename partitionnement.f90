@@ -1,15 +1,16 @@
 module mod_partitionnement
+  use tools
   implicit none
-  interface reallocate
-     module procedure reallocate_1r,reallocate_1i, &
-          reallocate_2r,reallocate_2i, &
-          reallocate_3r,reallocate_3i, &
-          reallocate_4r,reallocate_4i, &
-          reallocate_1c
-  end interface reallocate
-  interface reallocate_s
-     module procedure reallocate_s_1r,reallocate_s_4i,reallocate_s_1i
-  end interface reallocate_s
+!  interface reallocate
+!     module procedure reallocate_1r,reallocate_1i, &
+!          reallocate_2r,reallocate_2i, &
+!          reallocate_3r,reallocate_3i, &
+!          reallocate_4r,reallocate_4i, &
+!          reallocate_1c
+!  end interface reallocate
+!  interface reallocate_s
+!     module procedure reallocate_s_1r,reallocate_s_4i,reallocate_s_1i,reallocate_s_2i
+!  end interface reallocate_s
 contains
   subroutine partitionnement(x,y,z,mot,imot,nmot,ncbd,mnc,ncin,bceqt,exs1,exs2)
     use mod_valenti
@@ -74,15 +75,16 @@ contains
     integer,allocatable :: save_ncin(:),save_mnc(:)
     integer,allocatable :: save_bcg_to_proc(:),save_bcg_to_bcl(:),save_bcg_to_bci(:),save_bcl_to_bcg(:)
     integer,allocatable :: save_bg_to_proc(:),save_bg_to_bl(:),save_bg_to_bi(:),save_bl_to_bg(:)
-    integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),nblockdg(:,:)
+    integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),nblockdg(:,:),save_bcg_to_bg(:),sub_bc(:,:)
     integer             :: save_ip41,save_num_bcg,save_num_bci,save_num_bcl,save_num_bg
-    integer             :: save_num_bl,save_num_bi,proc,orig,dest,xe,ye,ze
+    integer             :: save_num_bl,save_num_bi,proc,orig,dest,xe,ye,ze,fr1,orig1,orig2,nsub
     character(len=2),allocatable :: save_indfl(:)
     character(len=4),allocatable :: save_cl(:)
 
     character(len=50)::fich
     character(len=32) ::  mot(nmx)
     character(len=32) ::  comment
+    character(len=2) :: indmf
 
     integer         ,allocatable ::   mnc(:),ncin(:)
     double precision,allocatable ::  bceqt(:,:)
@@ -187,6 +189,7 @@ contains
     allocate(save_bg_to_bl(size(bg_to_bl)))
     allocate(save_bg_to_bi(size(bg_to_bi)))
     allocate(save_bl_to_bg(size(bl_to_bg)))
+    allocate(save_bcg_to_bg(size(bcg_to_bg)))
 
     ! Save old split
     save_lzx=lzx
@@ -270,6 +273,7 @@ contains
     save_bg_to_bl=bg_to_bl
     save_bg_to_bi=bg_to_bi
     save_bl_to_bg=bl_to_bg
+    save_bcg_to_bg=bcg_to_bg
 
     !   reinitialisation
 
@@ -326,6 +330,7 @@ contains
     call reallocate(bg_to_bl,0)
     call reallocate(bg_to_bi,0)
     call reallocate(bl_to_bg,0)
+    call reallocate(bcg_to_bg,0)
 
     ndimubx = 0
     ndimctbx=0
@@ -358,6 +363,7 @@ contains
     ! nouveaux tableaux
     allocate(nblock2(save_num_bg),nblockd(3,save_lt),ni(1,1,1,nblocks),nj(1,1,1,nblocks),nk(1,1,1,nblocks))
     allocate(ii2g(save_num_bg),jj2g(save_num_bg),kk2g(save_num_bg),nblockdg(3,save_num_bg))
+    allocate(sub_bc(0,0))
 
     nblock2=1    ! initial number of splitting for each existing block
     nblockd=1    ! initial number of splitting for each existing block
@@ -488,9 +494,7 @@ contains
                   if(orig==dest) then ! sending to myself
 
                     ! offset, don't forget to count the interface twice
-                    xs=sum(ni(:i-1,j,k,l))-i+1
-                    ys=sum(nj(i,:j-1,k,l))-j+1
-                    zs=sum(nk(i,j,:k-1,l))-k+1
+                    call new2old_p(0,0,0,xs,ys,zs,i,j,k,l)
 
                     call reallocate_s(x,ndimntbx)
                     call reallocate_s(y,ndimntbx)
@@ -502,13 +506,8 @@ contains
                   elseif(rank==orig) then
 
                     ! offset, don't forget to count the interface twice
-                    xs=sum(ni(:i-1,j,k,l))-i
-                    ys=sum(nj(i,:j-1,k,l))-j
-                    zs=sum(nk(i,j,:k-1,l))-k
-
-                    xe=sum(ni(:i,j,k,l))-i-1
-                    ye=sum(nj(i,:j,k,l))-j-1
-                    ze=sum(nk(i,j,:k,l))-k-1
+                    call new2old_p(1,1,1,xs,ys,zs,i,j,k,l)
+                    call new2old_p(ni(i,j,k,l),nj(i,j,k,l),nk(i,j,k,l),xe,ye,ze,i,j,k,l)
 
                     nid = save_id2(l1)-save_id1(l1)+1
                     njd = save_jd2(l1)-save_jd1(l1)+1
@@ -549,136 +548,138 @@ contains
       mot(3)="st"       ; imot(3)=2
     endif
 
-!    print*,'recreate old boundaries ' ! TODO there might be something simpler with old2new_p and new2old_p
-    do fr=1,save_mtb
-       l=save_ndlb(fr)
-      l1=save_bl_to_bg(l)
-       do k=1,nblockd(3,l)
-          do j=1,nblockd(2,l)
-             do i=1,nblockd(1,l)
-                l2=sum(nblock2(1:l1-1))+i+(j-1)*nblockd(1,l)+(k-1)*nblockd(2,l)*nblockd(1,l)
+!    print*,'recreate old boundaries '
+    do fr1=1,save_num_bcg
+       fr=save_bcg_to_bcl(fr1)
+       l=save_bcg_to_bg(fr1)
+       l1=save_bg_to_bl(l)
+       orig1=save_bg_to_proc(l)
+       do k=1,nblockdg(3,l)
+          do j=1,nblockdg(2,l)
+             do i=1,nblockdg(1,l)
+                l2=sum(nblock2(1:l-1))+i+(j-1)*nblockdg(1,l)+(k-1)*nblockdg(2,l)*nblockdg(1,l)
+                dest=bg_to_proc(l2)
 
-                call old2new_p(save_iminb(fr),save_jminb(fr),save_kminb(fr),imin,jmin,kmin,i,j,k,l)
-                call old2new_p(save_imaxb(fr),save_jmaxb(fr),save_kmaxb(fr),imax,jmax,kmax,i,j,k,l)
+                nsub=0 ! count sub_boundaries
+                call reallocate(sub_bc,0,0)
 
-                if ( imin<=ii2(l2) .and. &
-                     imax>=ii1(l2) .and. &
-                     jmin<=jj2(l2) .and. &
-                     jmax>=jj1(l2) .and. & ! there is a part of the boundary in this block
-                     kmin<=kk2(l2) .and. &
-                     kmax>=kk1(l2) ) then
+                if (rank==orig1) then
 
-                   ! part of the boundary which concern this block
+                    call new2old_p(0,0,0,xs,ys,zs,i,j,k,l)
+                    call new2old_p(ni(i,j,k,l),nj(i,j,k,l),nk(i,j,k,l),xe,ye,ze,i,j,k,l)
 
-                    imin=min(ii2(l2),max(ii1(l2),imin))
-                    imax=min(ii2(l2),max(ii1(l2),imax))
-                    jmin=min(jj2(l2),max(jj1(l2),jmin))
-                    jmax=min(jj2(l2),max(jj1(l2),jmax))
-                    kmin=min(kk2(l2),max(kk1(l2),kmin))
-                    kmax=min(kk2(l2),max(kk1(l2),kmax))
+                    if ( save_iminb(fr)<=xe .and. &
+                         save_imaxb(fr)>=xs .and. &
+                         save_jminb(fr)<=ye .and. &
+                         save_jmaxb(fr)>=ys .and. & ! there is a part of the boundary in this block
+                         save_kminb(fr)<=ze .and. &
+                         save_kmaxb(fr)>=zs ) then
 
-                   if(tab_raccord(fr)/=0) then ! if boundary shared with another block
-                      fr2=tab_raccord(fr)      ! a split on the other side induce split here
-                      l3=save_ndlb(fr2) 
-                      l5=save_bl_to_bg(l3)
+                         nsub=1
+                         call reallocate(sub_bc,1,6)
 
-                      do k2=1,nblockd(3,l3)
-                         do j2=1,nblockd(2,l3)
-                            do i2=1,nblockd(1,l3)
-                               l4=sum(nblock2(1:l5-1))+i2+(j2-1)*nblockd(1,l3)+(k2-1)*nblockd(2,l3)*nblockd(1,l3)
+                       ! part of the boundary which concern this block
 
-                                call old2new_p(save_iminb(fr2),save_jminb(fr2),save_kminb(fr2),imin2,jmin2,kmin2,i2,j2,k2,l3)
-                                call old2new_p(save_imaxb(fr2),save_jmaxb(fr2),save_kmaxb(fr2),imax2,jmax2,kmax2,i2,j2,k2,l3)
+                        sub_bc(1,1)=min(xe,max(xs,save_iminb(fr)))-save_iminb(fr) ! coordinate of the new boundary
+                        sub_bc(1,2)=min(xe,max(xs,save_imaxb(fr)))-save_iminb(fr) ! in the boundary ref
+                        sub_bc(1,3)=min(ye,max(ys,save_jminb(fr)))-save_jminb(fr)
+                        sub_bc(1,4)=min(ye,max(ys,save_jmaxb(fr)))-save_jminb(fr)
+                        sub_bc(1,5)=min(ze,max(zs,save_kminb(fr)))-save_kminb(fr)
+                        sub_bc(1,6)=min(ze,max(zs,save_kmaxb(fr)))-save_kminb(fr)
+                        indmf=save_indfl(fr)
+                   endif
+                endif
+                call bcast(nsub,orig1)
 
-                                if ( imin2<=ii2(l4) .and. &
-                                     imax2>=ii1(l4) .and. &
-                                     jmin2<=jj2(l4) .and. &
-                                     jmax2>=jj1(l4) .and. & ! there is a part of the boundary in this block
-                                     kmin2<=kk2(l4) .and. &
-                                     kmax2>=kk1(l4) ) then
+                if (nsub==0) cycle
+
+                 if(tab_raccord(fr1)/=0) then ! if boundary shared with another block
+                    fr2=tab_raccord(fr1)      ! a split on the other side induce split here
+                    fr3=save_bcg_to_bcl(fr2)
+                    l3=save_bcg_to_bg(fr2)
+                    l4=save_bg_to_bl(l3)
+                    orig2=save_bg_to_proc(l3)
+
+                    if(rank==orig2) call reallocate(sub_bc,1,6)
+                    call MPI_TRANS(sub_bc,sub_bc,orig1,orig2)
+
+                    if(rank==orig2) then
+                      nsub=0
+
+                      imin=sub_bc(1,1)+save_iminb(fr3)
+                      imax=sub_bc(1,2)+save_iminb(fr3) ! coordinate of the new boundary
+                      jmin=sub_bc(1,3)+save_jminb(fr3) ! in the block ref
+                      jmax=sub_bc(1,4)+save_jminb(fr3)
+                      kmin=sub_bc(1,5)+save_kminb(fr3)
+                      kmax=sub_bc(1,6)+save_kminb(fr3)
+
+                      do k2=1,nblockdg(3,l3)
+                         do j2=1,nblockdg(2,l3)
+                            do i2=1,nblockdg(1,l3)
+
+                                call new2old_p(imin,jmin,kmin,xs,ys,zs,i2,j2,k2,l3)
+                                call new2old_p(imax,jmax,kmax,xe,ye,ze,i2,j2,k2,l3)
+
+                                if ( save_iminb(fr3)<=xe .and. &
+                                     save_imaxb(fr3)>=xs .and. &
+                                     save_jminb(fr3)<=ye .and. &
+                                     save_jmaxb(fr3)>=ys .and. & ! there is a part of the boundary in this block
+                                     save_kminb(fr3)<=ze .and. &
+                                     save_kmaxb(fr3)>=zs ) then
 
                                    ! part of the boundary which concern this block
 
-                                    imin2=min(ii2(l4),max(ii1(l4),imin2))
-                                    imax2=min(ii2(l4),max(ii1(l4),imax2))
-                                    jmin2=min(jj2(l4),max(jj1(l4),jmin2))
-                                    jmax2=min(jj2(l4),max(jj1(l4),jmax2))
-                                    kmin2=min(kk2(l4),max(kk1(l4),kmin2))
-                                    kmax2=min(kk2(l4),max(kk1(l4),kmax2))
-
-                                call new2old_p(imin2,jmin2,kmin2,imin3,jmin3,kmin3,i2,j2,k2,l3)
-                                call new2old_p(imax2,jmin2,kmax2,imax3,jmax3,kmax3,i2,j2,k2,l3)
-
-                                  imin3=imin3-save_iminb(fr2)+save_iminb(fr)
-                                  imax3=imax3-save_iminb(fr2)+save_iminb(fr)
-                                  jmin3=jmin3-save_jminb(fr2)+save_jminb(fr)
-                                  jmax3=jmax3-save_jminb(fr2)+save_jminb(fr)
-                                  kmin3=kmin3-save_kminb(fr2)+save_kminb(fr)
-                                  kmax3=kmax3-save_kminb(fr2)+save_kminb(fr)
-
-
-                                  call old2new_p(imin3,jmin3,kmin3,imin2,jmin2,kmin2,i,j,k,l)
-                                  call old2new_p(imax3,jmax3,kmax3,imax2,jmax2,kmax2,i,j,k,l)
-
-                                  imin2=min(imax,max(imin,imin2))
-                                  imax2=min(imax,max(imin,imax2))
-                                  jmin2=min(jmax,max(jmin,jmin2))
-                                  jmax2=min(jmax,max(jmin,jmax2))
-                                  kmin2=min(kmax,max(kmin,kmin2))
-                                  kmax2=min(kmax,max(kmin,kmax2))
-
-
-                                  mfbe=mfbe+1
-                                  if(verbosity>=2) then
-                                    call str(mot,imot,nmx,4 ,mfbe)
-                                    call str(mot,imot,nmx,5 ,1)
-                                    call str(mot,imot,nmx,6 ,l2)
-                                    call str(mot,imot,nmx,7 ,imin2)
-                                    call str(mot,imot,nmx,8 ,imax2)
-                                    call str(mot,imot,nmx,9 ,jmin2)
-                                    call str(mot,imot,nmx,10,jmax2)
-                                    call str(mot,imot,nmx,11,kmin2)
-                                    call str(mot,imot,nmx,12,kmax2)
-                                    mot(13)=save_indfl(fr) ; imot(13)=2
-                                    call c_crbds( mot,imot,nmot, ncbd)
-                                  else
-                                    call crbds( &
-                                         mfbe,1,l2, &
-                                         imin2,imax2,jmin2,jmax2,kmin2,kmax2, &
-                                         save_indfl(fr), &
-                                         ncbd)
-                                  endif
-                                  call reallocate_s(bcg_to_bci,mtb)
-                                  bcg_to_bci(mfbe)= fr
+                                    nsub=nsub+1
+                                    call reallocate_s(sub_bc,nsub,6)
+                                    sub_bc(nsub,1)=min(xe,max(xs,save_iminb(fr3)))-save_iminb(fr3) ! coordinate of the new boundary
+                                    sub_bc(nsub,2)=min(xe,max(xs,save_imaxb(fr3)))-save_iminb(fr3) ! in the boundary ref
+                                    sub_bc(nsub,3)=min(ye,max(ys,save_jminb(fr3)))-save_jminb(fr3)
+                                    sub_bc(nsub,4)=min(ye,max(ys,save_jmaxb(fr3)))-save_jminb(fr3)
+                                    sub_bc(nsub,5)=min(ze,max(zs,save_kminb(fr3)))-save_kminb(fr3)
+                                    sub_bc(nsub,6)=min(ze,max(zs,save_kmaxb(fr3)))-save_kminb(fr3)
                                endif
                             enddo
                          enddo
                       enddo
-                   else
+                    endif
+                    call MPI_TRANS(nsub,nsub,orig2,orig1)
+                    if(rank==orig1) call reallocate(sub_bc,nsub,6)
+                    call MPI_TRANS(sub_bc,sub_bc,orig2,orig1)
+                    if(rank==orig1) then
+                      sub_bc(:,1)=sub_bc(:,1)+save_iminb(fr)
+                      sub_bc(:,2)=sub_bc(:,2)+save_iminb(fr) ! coordinate of the new boundary
+                      sub_bc(:,3)=sub_bc(:,3)+save_jminb(fr) ! in the block ref
+                      sub_bc(:,4)=sub_bc(:,4)+save_jminb(fr)
+                      sub_bc(:,5)=sub_bc(:,5)+save_kminb(fr)
+                      sub_bc(:,6)=sub_bc(:,6)+save_kminb(fr)
+                    endif
+                  endif
+                  call bcast(nsub,orig1)
+                  if(rank/=orig1) call reallocate(sub_bc,nsub,6)
+                  call bcast(sub_bc,orig1)
+                  call bcast(indmf,orig1)
+                  do i2=1,nsub
                       mfbe=mfbe+1
                       if(verbosity>=2) then
                         call str(mot,imot,nmx,4 ,mfbe)
                         call str(mot,imot,nmx,5 ,1)
                         call str(mot,imot,nmx,6 ,l2)
-                        call str(mot,imot,nmx,7 ,imin)
-                        call str(mot,imot,nmx,8 ,imax)
-                        call str(mot,imot,nmx,9 ,jmin)
-                        call str(mot,imot,nmx,10,jmax)
-                        call str(mot,imot,nmx,11,kmin)
-                        call str(mot,imot,nmx,12,kmax)
-                        mot(13)=save_indfl(fr) ; imot(13)=2
+                        call str(mot,imot,nmx,7 ,sub_bc(i2,1))
+                        call str(mot,imot,nmx,8 ,sub_bc(i2,2))
+                        call str(mot,imot,nmx,9 ,sub_bc(i2,3))
+                        call str(mot,imot,nmx,10,sub_bc(i2,4))
+                        call str(mot,imot,nmx,11,sub_bc(i2,5))
+                        call str(mot,imot,nmx,12,sub_bc(i2,6))
+                        mot(13)=indmf ; imot(13)=2
                         call c_crbds( mot,imot,nmot, ncbd)
                       else
                         call crbds( &
                              mfbe,1,l2, &
-                             imin,imax,jmin,jmax,kmin,kmax, &
-                             save_indfl(fr), &
+                             sub_bc(i2,1),sub_bc(i2,2),sub_bc(i2,3),sub_bc(i2,4),sub_bc(i2,5),sub_bc(i2,6), &
+                             indmf, &
                              ncbd)
                       endif
-                      call reallocate_s(bcg_to_bci,mtb)
-                      bcg_to_bci(mfbe)= fr
-                   endif
-               endif
+                  enddo
             enddo
          enddo
       enddo
@@ -1353,131 +1354,146 @@ subroutine iniraccord(mot,imot,nmot)
  tab_raccord(fr2)=fr1
 end subroutine iniraccord
 
-subroutine reallocate_1r(in,size)
- implicit none
- double precision,allocatable,intent(inout) :: in(:)
- integer,intent(in)             :: size
+!subroutine reallocate_1r(in,size)
+! implicit none
+! double precision,allocatable,intent(inout) :: in(:)
+! integer,intent(in)             :: size
 
- if(allocated(in)) deallocate(in)
- allocate(in(size))
+! if(allocated(in)) deallocate(in)
+! allocate(in(size))
 
-end subroutine reallocate_1r
+!end subroutine reallocate_1r
 
-subroutine reallocate_2r(in,size1,size2)
- implicit none
- double precision,allocatable,intent(inout) :: in(:,:)
- integer,intent(in)             :: size1,size2
+!subroutine reallocate_2r(in,size1,size2)
+! implicit none
+! double precision,allocatable,intent(inout) :: in(:,:)
+! integer,intent(in)             :: size1,size2
 
- if(allocated(in)) deallocate(in)
- allocate(in(size1,size2))
+! if(allocated(in)) deallocate(in)
+! allocate(in(size1,size2))
 
-end subroutine reallocate_2r
+!end subroutine reallocate_2r
 
-subroutine reallocate_3r(in,size1,size2,size3)
- implicit none
- double precision,allocatable,intent(inout) :: in(:,:,:)
- integer,intent(in)             :: size1,size2,size3
+!subroutine reallocate_3r(in,size1,size2,size3)
+! implicit none
+! double precision,allocatable,intent(inout) :: in(:,:,:)
+! integer,intent(in)             :: size1,size2,size3
 
- if(allocated(in)) deallocate(in)
- allocate(in(size1,size2,size3))
+! if(allocated(in)) deallocate(in)
+! allocate(in(size1,size2,size3))
 
-end subroutine reallocate_3r
+!end subroutine reallocate_3r
 
-subroutine reallocate_4r(in,size1,size2,size3,size4)
- implicit none
- double precision,allocatable,intent(inout) :: in(:,:,:,:)
- integer,intent(in)                :: size1,size2,size3,size4
+!subroutine reallocate_4r(in,size1,size2,size3,size4)
+! implicit none
+! double precision,allocatable,intent(inout) :: in(:,:,:,:)
+! integer,intent(in)                :: size1,size2,size3,size4
 
- if(allocated(in)) deallocate(in)
- allocate(in(size1,size2,size3,size4))
+! if(allocated(in)) deallocate(in)
+! allocate(in(size1,size2,size3,size4))
 
-end subroutine reallocate_4r
+!end subroutine reallocate_4r
 
-subroutine reallocate_1i(in,size)
- implicit none
- integer,allocatable,intent(inout) :: in(:)
- integer,intent(in)                :: size
+!subroutine reallocate_1i(in,size)
+! implicit none
+! integer,allocatable,intent(inout) :: in(:)
+! integer,intent(in)                :: size
 
- if(allocated(in)) deallocate(in)
- allocate(in(size))
+! if(allocated(in)) deallocate(in)
+! allocate(in(size))
 
-end subroutine reallocate_1i
+!end subroutine reallocate_1i
 
-subroutine reallocate_2i(in,size1,size2)
- implicit none
- integer,allocatable,intent(inout) :: in(:,:)
- integer,intent(in)                :: size1,size2
+!subroutine reallocate_2i(in,size1,size2)
+! implicit none
+! integer,allocatable,intent(inout) :: in(:,:)
+! integer,intent(in)                :: size1,size2
 
- if(allocated(in)) deallocate(in)
- allocate(in(size1,size2))
+! if(allocated(in)) deallocate(in)
+! allocate(in(size1,size2))
 
-end subroutine reallocate_2i
+!end subroutine reallocate_2i
 
-subroutine reallocate_3i(in,size1,size2,size3)
- implicit none
- integer,allocatable,intent(inout) :: in(:,:,:)
- integer,intent(in)                :: size1,size2,size3
+!subroutine reallocate_3i(in,size1,size2,size3)
+! implicit none
+! integer,allocatable,intent(inout) :: in(:,:,:)
+! integer,intent(in)                :: size1,size2,size3
 
- if(allocated(in)) deallocate(in)
- allocate(in(size1,size2,size3))
+! if(allocated(in)) deallocate(in)
+! allocate(in(size1,size2,size3))
 
-end subroutine reallocate_3i
+!end subroutine reallocate_3i
 
-subroutine reallocate_4i(in,size1,size2,size3,size4)
- implicit none
- integer,allocatable,intent(inout) :: in(:,:,:,:)
- integer,intent(in)                :: size1,size2,size3,size4
+!subroutine reallocate_4i(in,size1,size2,size3,size4)
+! implicit none
+! integer,allocatable,intent(inout) :: in(:,:,:,:)
+! integer,intent(in)                :: size1,size2,size3,size4
 
- if(allocated(in)) deallocate(in)
- allocate(in(size1,size2,size3,size4))
+! if(allocated(in)) deallocate(in)
+! allocate(in(size1,size2,size3,size4))
 
-end subroutine reallocate_4i
+!end subroutine reallocate_4i
 
-subroutine reallocate_1c(in,size)
- implicit none
- character(*),allocatable,intent(inout) :: in(:)
- integer,intent(in)                :: size
+!subroutine reallocate_1c(in,size)
+! implicit none
+! character(*),allocatable,intent(inout) :: in(:)
+! integer,intent(in)                :: size
 
- if(allocated(in)) deallocate(in)
- allocate(in(size))
+! if(allocated(in)) deallocate(in)
+! allocate(in(size))
 
-end subroutine reallocate_1c
+!end subroutine reallocate_1c
 
-subroutine reallocate_s_1i(in,newsize)
- implicit none
- integer,allocatable::in(:),tmp(:)
- integer :: newsize
- allocate(tmp(size(in)))
- tmp=in
- call reallocate(in,newsize)
- in=0
- in(1:size(tmp))=tmp
- deallocate(tmp)
-end subroutine reallocate_s_1i
+!subroutine reallocate_s_1i(in,newsize)
+! implicit none
+! integer,allocatable::in(:),tmp(:)
+! integer :: newsize
+! call backtrace
+! allocate(tmp(size(in)))
+! tmp=in
+! call reallocate(in,newsize)
+! in=0
+! in(:size(tmp))=tmp
+! deallocate(tmp)
+!end subroutine reallocate_s_1i
 
-subroutine reallocate_s_4i(in,size1,size2,size3,size4)
- implicit none
- integer,allocatable::in(:,:,:,:),tmp(:,:,:,:)
- integer :: size1,size2,size3,size4
- allocate(tmp(size(in,1),size(in,2),size(in,3),size(in,4)))
- tmp=in
- call reallocate(in,size1,size2,size3,size4)
- in=0
- in(:size(tmp,1),:size(tmp,2),:size(tmp,3),:size(tmp,4))=tmp
- deallocate(tmp)
-end subroutine reallocate_s_4i
+!subroutine reallocate_s_2i(in,newsize1,newsize2)
+! implicit none
+! integer,allocatable::in(:,:),tmp(:,:)
+! integer :: newsize1,newsize2
+! if(newsize1*newsize2/=size(in)) then
+!   allocate(tmp(size(in,1),size(in,2)))
+!   tmp=in
+!   call reallocate(in,newsize1,newsize2)
+!   in=0
+!   in(:size(tmp,1),:size(tmp,2))=tmp
+!   deallocate(tmp)
+! endif
+!end subroutine reallocate_s_2i
 
-subroutine reallocate_s_1r(in,newsize)
- implicit none
- double precision,allocatable::in(:),tmp(:)
- integer :: newsize
- allocate(tmp(size(in)))
- tmp=in
- call reallocate(in,newsize)
- in=0.
- in(1:size(tmp))=tmp
- deallocate(tmp)
-end subroutine reallocate_s_1r
+!subroutine reallocate_s_4i(in,size1,size2,size3,size4)
+! implicit none
+! integer,allocatable::in(:,:,:,:),tmp(:,:,:,:)
+! integer :: size1,size2,size3,size4
+! allocate(tmp(size(in,1),size(in,2),size(in,3),size(in,4)))
+! tmp=in
+! call reallocate(in,size1,size2,size3,size4)
+! in=0
+! in(:size(tmp,1),:size(tmp,2),:size(tmp,3),:size(tmp,4))=tmp
+! deallocate(tmp)
+!end subroutine reallocate_s_4i
+
+!subroutine reallocate_s_1r(in,newsize)
+! implicit none
+! double precision,allocatable::in(:),tmp(:)
+! integer :: newsize
+! allocate(tmp(size(in)))
+! tmp=in
+! call reallocate(in,newsize)
+! in=0.
+! in(:size(tmp))=tmp
+! deallocate(tmp)
+!end subroutine reallocate_s_1r
 
 
 subroutine str(mot,imot,nmx,lmot,val)

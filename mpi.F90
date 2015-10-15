@@ -12,7 +12,7 @@ module mod_mpi
   integer             :: num_bcg=0,num_bci=0,num_bcl=0
   integer             :: num_bg=0,num_bi=0,num_bl=0
   integer,allocatable :: bcg_to_proc(:),bcg_to_bcl(:),bcl_to_bcg(:)
-  integer,allocatable :: bg_to_proc(:),bg_to_bl(:),bl_to_bg(:)
+  integer,allocatable :: bg_to_proc(:),bg_to_bl(:),bl_to_bg(:),bcg_to_bg(:)
   integer,allocatable :: bcint_to_bcintg(:),bcintg_to_proc(:)
   integer,allocatable :: lbdko_to_lbdkog(:),lbdkog_to_proc(:)
   !ab_to_ab where a is :
@@ -42,7 +42,7 @@ module mod_mpi
     ! BROADCAST THE MESSAGE A FROM ORIG FOR EVERY PROC
     ! RETURN WHEN EVERYTHING IS DONE
     MODULE PROCEDURE BCAST_0R,BCAST_0I,&
-          BCAST_1R,BCAST_1I,&
+          BCAST_1R,BCAST_1I,BCAST_0C,&
           BCAST_2R,BCAST_2I,BCAST_3I
   END INTERFACE BCAST
 
@@ -58,7 +58,7 @@ module mod_mpi
 
   INTERFACE MPI_TRANS
     !        SEND A MESSAGE WITH MPI
-    MODULE PROCEDURE MPI_TRANS_R1,MPI_TRANS_R2,MPI_TRANS_I,MPI_TRANS_I0,MPI_TRANS_C0,MPI_TRANS_R4
+    MODULE PROCEDURE MPI_TRANS_R1,MPI_TRANS_R2,MPI_TRANS_I1,MPI_TRANS_I0,MPI_TRANS_C0,MPI_TRANS_R4,MPI_TRANS_I2
   END INTERFACE MPI_TRANS
 
   INTERFACE MPI_ITRANS2
@@ -84,7 +84,7 @@ contains
 #endif
 
       allocate(bcg_to_proc(0),bcg_to_bcl(0),bcl_to_bcg(0))
-      allocate(bg_to_proc(0),bg_to_bl(0),bl_to_bg(0))
+      allocate(bg_to_proc(0),bg_to_bl(0),bl_to_bg(0),bcg_to_bg(0))
   END SUBROUTINE  INIMPI
 
   subroutine endmpi
@@ -193,7 +193,7 @@ contains
 
   END SUBROUTINE MPI_TRANS_R4
 
-  SUBROUTINE MPI_TRANS_I(A,B,ORIG,DEST)
+  SUBROUTINE MPI_TRANS_I1(A,B,ORIG,DEST)
       !ORIG SEND THE MESSAGE A TO DEST
       !DEST RECV THE MESSAGE B FROM ORIG
       !RETURN WHEN EVERYTHING IS DONE
@@ -222,7 +222,38 @@ contains
 #endif
       ENDIF
 
-  END SUBROUTINE MPI_TRANS_I
+  END SUBROUTINE MPI_TRANS_I1
+
+  SUBROUTINE MPI_TRANS_I2(A,B,ORIG,DEST)
+      !ORIG SEND THE MESSAGE A TO DEST
+      !DEST RECV THE MESSAGE B FROM ORIG
+      !RETURN WHEN EVERYTHING IS DONE
+      IMPLICIT NONE
+      integer,INTENT(INOUT) :: A(:,:)
+      integer,INTENT(IN)    :: B(:,:)
+      integer,INTENT(IN)    :: ORIG,DEST
+#ifdef WITH_MPI
+      integer :: STATUS(MPI_STATUS_SIZE),TAG
+      integer :: ierr
+#endif
+
+      IF (RANK==ORIG.AND.RANK==DEST) THEN ! SENDING A MESSAGE TO MYSELF
+        A=B
+#ifdef WITH_MPI
+      ELSE
+        TAG=ORIG*NPROCS+DEST
+
+        IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
+            CALL MPI_SEND(B(1,1),SIZE(B),MPI_INTEGER,DEST, &
+            TAG,MPI_COMM_WORLD,IERR)
+
+        IF(RANK==DEST) &  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
+            CALL MPI_RECV(A(1,1),SIZE(A),MPI_INTEGER,ORIG, &
+            TAG,MPI_COMM_WORLD,STATUS,IERR)
+#endif
+      ENDIF
+
+  END SUBROUTINE MPI_TRANS_I2
 
 
   SUBROUTINE MPI_TRANS_I0(A,B,ORIG,DEST)
@@ -739,6 +770,19 @@ contains
 #endif
 
   END SUBROUTINE BCAST_3I
+
+  SUBROUTINE BCAST_0C(IN,ORIG)
+      !BROADCAST THE MESSAGE IN FROM ORIG
+      !RETURN WHEN EVERYTHING IS DONE
+      IMPLICIT NONE
+      character(*),INTENT(INOUT) :: IN
+      integer,INTENT(IN)    :: ORIG
+      integer :: ierr
+#ifdef WITH_MPI
+      CALL MPI_BCAST( IN,len(in), MPI_CHARACTER, ORIG, MPI_COMM_WORLD,IERR)
+#endif
+
+  END SUBROUTINE BCAST_0C
 
   SUBROUTINE GATHER_I(IN,OUT,SIZE)
       ! THIS ROUTINE IS GATHERING INTEGER FOR EVERY PROC FROM EVERY PROC
