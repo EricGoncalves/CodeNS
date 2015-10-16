@@ -18,10 +18,11 @@ subroutine reallocate_1r(in,newsize)
  double precision,allocatable,intent(inout) :: in(:)
  integer,intent(in)             :: newsize
 
- if(newsize/=size(in)) then
+! if(newsize/=size(in)) then
    if(allocated(in)) deallocate(in)
    allocate(in(newsize))
- endif
+   in=0.
+! endif
 
 end subroutine reallocate_1r
 
@@ -30,10 +31,11 @@ subroutine reallocate_2r(in,newsize1,newsize2)
  double precision,allocatable,intent(inout) :: in(:,:)
  integer,intent(in)             :: newsize1,newsize2
 
- if(newsize1*newsize2/=size(in)) then
+! if(newsize1*newsize2/=size(in)) then
    if(allocated(in)) deallocate(in)
    allocate(in(newsize1,newsize2))
- endif
+   in=0.
+! endif
 
 end subroutine reallocate_2r
 
@@ -42,10 +44,11 @@ subroutine reallocate_3r(in,newsize1,newsize2,newsize3)
  double precision,allocatable,intent(inout) :: in(:,:,:)
  integer,intent(in)             :: newsize1,newsize2,newsize3
 
- if(newsize1*newsize2*newsize3/=size(in)) then
+! if(newsize1*newsize2*newsize3/=size(in)) then
    if(allocated(in)) deallocate(in)
    allocate(in(newsize1,newsize2,newsize3))
- endif
+   in=0.
+! endif
 
 end subroutine reallocate_3r
 
@@ -54,10 +57,11 @@ subroutine reallocate_4r(in,newsize1,newsize2,newsize3,newsize4)
  double precision,allocatable,intent(inout) :: in(:,:,:,:)
  integer,intent(in)                :: newsize1,newsize2,newsize3,newsize4
 
- if(newsize1*newsize2*newsize3*newsize4/=size(in)) then
+! if(newsize1*newsize2*newsize3*newsize4/=size(in)) then
    if(allocated(in)) deallocate(in)
    allocate(in(newsize1,newsize2,newsize3,newsize4))
- endif
+  in=0.
+! endif
 
 end subroutine reallocate_4r
 
@@ -66,10 +70,11 @@ subroutine reallocate_1i(in,newsize)
  integer,allocatable,intent(inout) :: in(:)
  integer,intent(in)                :: newsize
 
- if(newsize/=size(in)) then
+! if(newsize/=size(in)) then
    if(allocated(in)) deallocate(in)
    allocate(in(newsize))
- endif
+   in=0
+! endif
 
 end subroutine reallocate_1i
 
@@ -78,10 +83,11 @@ subroutine reallocate_2i(in,newsize1,newsize2)
  integer,allocatable,intent(inout) :: in(:,:)
  integer,intent(in)                :: newsize1,newsize2
 
- if(newsize1*newsize2/=size(in)) then
+! if(newsize1*newsize2/=size(in)) then
    if(allocated(in)) deallocate(in)
    allocate(in(newsize1,newsize2))
- endif
+   in=0
+! endif
 
 end subroutine reallocate_2i
 
@@ -90,10 +96,12 @@ subroutine reallocate_3i(in,newsize1,newsize2,newsize3)
  integer,allocatable,intent(inout) :: in(:,:,:)
  integer,intent(in)                :: newsize1,newsize2,newsize3
 
- if(newsize1*newsize2*newsize3/=size(in)) then
+! if(newsize1*newsize2*newsize3/=size(in)) then
    if(allocated(in)) deallocate(in)
    allocate(in(newsize1,newsize2,newsize3))
- endif
+   in=0
+! endif
+
 end subroutine reallocate_3i
 
 subroutine reallocate_4i(in,newsize1,newsize2,newsize3,newsize4)
@@ -101,10 +109,11 @@ subroutine reallocate_4i(in,newsize1,newsize2,newsize3,newsize4)
  integer,allocatable,intent(inout) :: in(:,:,:,:)
  integer,intent(in)                :: newsize1,newsize2,newsize3,newsize4
 
- if(newsize1*newsize2*newsize3*newsize4/=size(in)) then
+! if(newsize1*newsize2*newsize3*newsize4/=size(in)) then
    if(allocated(in)) deallocate(in)
    allocate(in(newsize1,newsize2,newsize3,newsize4))
- endif
+   in=0
+! endif
 
 end subroutine reallocate_4i
 
@@ -113,10 +122,11 @@ subroutine reallocate_1c(in,newsize)
  character(*),allocatable,intent(inout) :: in(:)
  integer,intent(in)                :: newsize
 
- if(newsize/=size(in)) then
+! if(newsize/=size(in)) then
    if(allocated(in)) deallocate(in)
    allocate(in(newsize))
- endif
+   in=""
+! endif
 
 end subroutine reallocate_1c
 
@@ -144,8 +154,8 @@ subroutine reallocate_s_1i(in,newsize)
    deallocate(tmp)
  elseif(newsize<size(in)) then
   write(*,*) "Probleme dans les tailles : ",newsize,size(in)
-  call backtrace
-  stop
+!  call backtrace
+  call abort
  endif
 end subroutine reallocate_s_1i
 
@@ -162,8 +172,8 @@ subroutine reallocate_s_2i(in,newsize1,newsize2)
    deallocate(tmp)
  elseif(newsize1*newsize2<size(in)) then
   write(*,*) "Probleme dans les tailles : ",newsize1*newsize2,size(in)
-  call backtrace
-  stop
+!  call backtrace
+  call abort
  endif
 end subroutine reallocate_s_2i
 
@@ -180,8 +190,8 @@ subroutine reallocate_s_4i(in,newsize1,newsize2,newsize3,newsize4)
    deallocate(tmp)
  elseif(newsize1*newsize2*newsize3*newsize4<size(in)) then
   write(*,*) "Probleme dans les tailles : ",newsize1*newsize2*newsize3*newsize4,size(in)
-  call backtrace
-  stop
+!  call backtrace
+  call abort
  endif
 end subroutine reallocate_s_4i
 
@@ -198,8 +208,8 @@ subroutine reallocate_s_1r(in,newsize)
    deallocate(tmp)
  elseif(newsize<size(in)) then
   write(*,*) "Probleme dans les tailles : ",newsize,size(in)
-  call backtrace
-  stop
+!  call backtrace
+  call abort
  endif
 end subroutine reallocate_s_1r
 end module tools

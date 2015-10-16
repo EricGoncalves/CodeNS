@@ -912,6 +912,9 @@ contains
     allocate(x(ip21))
     allocate(y(ip21))
     allocate(z(ip21))
+    x=0.
+    y=0.
+    z=0.
 
   end subroutine allocdom
 
@@ -931,8 +934,12 @@ contains
     allocate(nfbc(mtb))
     allocate(bc(mtb,ista*lsta))
 ndcc=0
+nbdc=0
+nfbc=0
 bc=0.
 tab_raccord=0
+cl=""
+
 !    allocate(nfbr(mtb))
 !    allocate(ndrr(mtb))
 !    allocate(srotr(mtb))
@@ -944,7 +951,6 @@ tab_raccord=0
 !    allocate(nba(mtb))
 !    call defdfpmcfg
 
-save_mtbx=mtbx
     mtt=mtbx*lgx
     allocate(mdnc(mtt))
     allocate(mper(mtt))

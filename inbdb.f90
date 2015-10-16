@@ -115,7 +115,6 @@ contains
        endif
     enddo
     endif
-    call barrier
 !
     return
   end subroutine inbdb

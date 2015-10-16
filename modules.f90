@@ -35,7 +35,7 @@ implicit none
   integer          ::    kcaldis,   kecrdis,   klecdis,       kvn,       lgx
   integer          ::        lzx,   mdimtbx,   mdimtcx,   mdimtnx,   mdimtrx
   integer          ::    mdimubx,      mtax,      mtbx,      mtcx,      mtnx
-  integer          ::       mtrx,  ndimctbx,  ndimntbx,   ndimubx,save_mtbx
+  integer          ::       mtrx,  ndimctbx,  ndimntbx,   ndimubx
   integer          ::      neqtx,     nptot
   integer         ,allocatable ::    id1(:),   id2(:),   ii1(:),   ii2(:),   jd1(:)
   integer         ,allocatable ::    jd2(:),   jj1(:),   jj2(:),   kd1(:),   kd2(:)

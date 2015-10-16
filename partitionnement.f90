@@ -45,7 +45,7 @@ contains
     integer             :: imot(nmx),nmot,fr,imax,imin,jmax,jmin,kmax,kmin,kval
     integer             :: l2,mfbe,nid,njd,nijd,xi,yi,zi,sblock,l3,old_mtb
     integer             :: imax2,imin2,jmax2,jmin2,kmax2,kmin2,fr2,i2,j2,k2,l4,fr3
-    integer             :: imax3,imin3,jmax3,jmin3,kmax3,kmin3
+    integer             :: imax3,imin3,jmax3,jmin3,kmax3,kmin3,mf,mfb
     double precision    :: exs1,exs2,vbc(ista*lsta),xmin,xmax,ymin,ymax,zmin,zmax,sub_bc1(2,6)
     double precision    :: save_xmin,save_xmax,save_ymin,save_ymax,save_zmin,save_zmax
     double precision,allocatable :: x(:),y(:),z(:)
@@ -58,7 +58,7 @@ contains
     integer             :: save_kmtbx,save_lzx,save_mdimtbx,save_mdimubx
     integer             :: save_mtb,save_mtt,save_ndimctbx
     integer             :: save_ndimubx,save_xi,save_xyz,save_yi,save_zi
-    integer             :: val(3),l5,fr4,fri
+    integer             :: val(3),l5,fr4,fri,save_mtbx
     double precision,allocatable :: save_x(:),save_y(:),save_z(:),save_bc(:,:),save_bceqt(:,:),save_vbc(:)
     integer,allocatable :: save_ii1(:),save_jj1(:),save_kk1(:)
     integer,allocatable :: save_ii2(:),save_jj2(:),save_kk2(:)
@@ -104,9 +104,9 @@ contains
     !############################################################################################
 
     if(verbosity>=3) then
-      ! write old grid
+    ! write old grid
       do l=1,lt
-         write(fich,'(A,I0.2,A)') "origmesh_",l,".dat"
+         write(fich,'(A,I0.2,A)') "origmesh_",bl_to_bg(l),".dat"
          open(42,file=fich,status="replace")
 
          do k=kk1(l),kk2(l)
@@ -127,6 +127,32 @@ contains
          enddo
          close(42)
       enddo
+
+    ! write old boundaries
+      do fr=1,mtb
+
+      write(fich,'(A,I0.2,A)') "origbnd_",bcl_to_bcg(fr),".dat"
+      open(42,file=fich,status="replace")
+
+         do k=kminb(fr),kmaxb(fr)
+            do j=jminb(fr),jmaxb(fr)
+               do i=iminb(fr),imaxb(fr)
+                  l=ndlb(fr)
+                  nid = id2(l)-id1(l)+1
+                  njd = jd2(l)-jd1(l)+1
+                  nijd = nid*njd
+
+                  xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+
+                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),fr
+
+               enddo
+               if(indfl(fr)(1:1)/="i") write(42,*) ""
+            enddo
+            if(indfl(fr)(1:1)=="i") write(42,*) ""
+         enddo
+      enddo
+      close(42)
     endif
 
 
@@ -190,6 +216,7 @@ contains
     allocate(save_bg_to_bi(size(bg_to_bi)))
     allocate(save_bl_to_bg(size(bl_to_bg)))
     allocate(save_bcg_to_bg(size(bcg_to_bg)))
+    allocate(save_vbc(size(vbc)))
 
     ! Save old split
     save_lzx=lzx
@@ -363,7 +390,7 @@ contains
     ! nouveaux tableaux
     allocate(nblock2(save_num_bg),nblockd(3,save_lt),ni(1,1,1,nblocks),nj(1,1,1,nblocks),nk(1,1,1,nblocks))
     allocate(ii2g(save_num_bg),jj2g(save_num_bg),kk2g(save_num_bg),nblockdg(3,save_num_bg))
-    allocate(sub_bc(0,0))
+    allocate(sub_bc(0,0),ni1(1,1,1),nj1(1,1,1),nk1(1,1,1))
 
     nblock2=1    ! initial number of splitting for each existing block
     nblockd=1    ! initial number of splitting for each existing block
@@ -561,7 +588,7 @@ contains
                 dest=bg_to_proc(l2)
 
                 nsub=0 ! count sub_boundaries
-                call reallocate(sub_bc,0,0)
+                call reallocate(sub_bc,1,6)
 
                 if (rank==orig1) then
 
@@ -580,12 +607,13 @@ contains
 
                        ! part of the boundary which concern this block
 
-                        sub_bc(1,1)=min(xe,max(xs,save_iminb(fr)))-save_iminb(fr) ! coordinate of the new boundary
-                        sub_bc(1,2)=min(xe,max(xs,save_imaxb(fr)))-save_iminb(fr) ! in the boundary ref
-                        sub_bc(1,3)=min(ye,max(ys,save_jminb(fr)))-save_jminb(fr)
-                        sub_bc(1,4)=min(ye,max(ys,save_jmaxb(fr)))-save_jminb(fr)
-                        sub_bc(1,5)=min(ze,max(zs,save_kminb(fr)))-save_kminb(fr)
-                        sub_bc(1,6)=min(ze,max(zs,save_kmaxb(fr)))-save_kminb(fr)
+                        sub_bc(1,1)=min(xe,max(xs,save_iminb(fr))) ! coordinate of the new boundary
+                        sub_bc(1,2)=min(xe,max(xs,save_imaxb(fr))) ! in the block ref
+                        sub_bc(1,3)=min(ye,max(ys,save_jminb(fr)))
+                        sub_bc(1,4)=min(ye,max(ys,save_jmaxb(fr)))
+                        sub_bc(1,5)=min(ze,max(zs,save_kminb(fr)))
+                        sub_bc(1,6)=min(ze,max(zs,save_kmaxb(fr)))
+
                         indmf=save_indfl(fr)
                    endif
                 endif
@@ -600,7 +628,17 @@ contains
                     l4=save_bg_to_bl(l3)
                     orig2=save_bg_to_proc(l3)
 
-                    if(rank==orig2) call reallocate(sub_bc,1,6)
+                    if(rank==orig2) call reallocate_s(sub_bc,1,6)
+
+                    if(rank==orig1) then
+                      sub_bc(1,1)=sub_bc(1,1)-save_iminb(fr)
+                      sub_bc(1,2)=sub_bc(1,2)-save_iminb(fr) ! coordinate of the new boundary
+                      sub_bc(1,3)=sub_bc(1,3)-save_jminb(fr) ! in the boundary ref
+                      sub_bc(1,4)=sub_bc(1,4)-save_jminb(fr)
+                      sub_bc(1,5)=sub_bc(1,5)-save_kminb(fr)
+                      sub_bc(1,6)=sub_bc(1,6)-save_kminb(fr)
+                    endif
+
                     call MPI_TRANS(sub_bc,sub_bc,orig1,orig2)
 
                     if(rank==orig2) then
@@ -712,9 +750,9 @@ contains
                       sub_bc(1,4)=jj2(ll2)
                       sub_bc(1,5)=kk1(ll2)
                       sub_bc(1,6)=kk2(ll2)
-                  elseif (rank==orig1) then
-                      sub_bc(2,1)=ii1(ll3)
-                      sub_bc(2,2)=ii1(ll3)
+                  elseif (rank==orig2) then
+                      sub_bc(2,1)=ii2(ll3)
+                      sub_bc(2,2)=ii2(ll3)
                       sub_bc(2,3)=jj1(ll3)
                       sub_bc(2,4)=jj2(ll3)
                       sub_bc(2,5)=kk1(ll3)
@@ -773,15 +811,15 @@ contains
 
                   if (rank==orig1) then
                       sub_bc(1,1)=ii1(ll2)
-                      sub_bc(1,2)=ii1(ll2)
+                      sub_bc(1,2)=ii2(ll2)
                       sub_bc(1,3)=jj1(ll2)
-                      sub_bc(1,4)=jj2(ll2)
+                      sub_bc(1,4)=jj1(ll2)
                       sub_bc(1,5)=kk1(ll2)
                       sub_bc(1,6)=kk2(ll2)
-                  elseif (rank==orig1) then
+                  elseif (rank==orig2) then
                       sub_bc(2,1)=ii1(ll3)
-                      sub_bc(2,2)=ii1(ll3)
-                      sub_bc(2,3)=jj1(ll3)
+                      sub_bc(2,2)=ii2(ll3)
+                      sub_bc(2,3)=jj2(ll3)
                       sub_bc(2,4)=jj2(ll3)
                       sub_bc(2,5)=kk1(ll3)
                       sub_bc(2,6)=kk2(ll3)
@@ -839,17 +877,17 @@ contains
 
                   if (rank==orig1) then
                       sub_bc(1,1)=ii1(ll2)
-                      sub_bc(1,2)=ii1(ll2)
+                      sub_bc(1,2)=ii2(ll2)
                       sub_bc(1,3)=jj1(ll2)
                       sub_bc(1,4)=jj2(ll2)
                       sub_bc(1,5)=kk1(ll2)
-                      sub_bc(1,6)=kk2(ll2)
-                  elseif (rank==orig1) then
+                      sub_bc(1,6)=kk1(ll2)
+                  elseif (rank==orig2) then
                       sub_bc(2,1)=ii1(ll3)
-                      sub_bc(2,2)=ii1(ll3)
+                      sub_bc(2,2)=ii2(ll3)
                       sub_bc(2,3)=jj1(ll3)
                       sub_bc(2,4)=jj2(ll3)
-                      sub_bc(2,5)=kk1(ll3)
+                      sub_bc(2,5)=kk2(ll3)
                       sub_bc(2,6)=kk2(ll3)
                   endif
 
@@ -912,7 +950,7 @@ contains
    if(verbosity>=3) then
     ! write new grid
       do l=1,lt
-         write(fich,'(A,I0.2,A)') "testmesh_",l,".dat"
+         write(fich,'(A,I0.2,A)') "testmesh_",bl_to_bg(l),".dat"
          open(42,file=fich,status="replace")
 
          do k=kk1(l),kk2(l)
@@ -933,10 +971,13 @@ contains
          enddo
          close(42)
       enddo
-      write(fich,'(A,I0.2,A)') "testbnd.dat"
-      open(42,file=fich,status="replace")
+
     ! write new boundaries
-      do fr=1,mfbe
+      do fr=1,mtb
+
+      write(fich,'(A,I0.2,A)') "testbnd_",bcl_to_bcg(fr),".dat"
+      open(42,file=fich,status="replace")
+
          do k=kminb(fr),kmaxb(fr)
             do j=jminb(fr),jmaxb(fr)
                do i=iminb(fr),imaxb(fr)
@@ -957,6 +998,10 @@ contains
       enddo
       close(42)
     endif
+
+ deallocate(save_x,save_y,save_z,save_ndlb,save_nfei,save_indfl,save_mpb,save_mmb,save_ncbd,save_ii1) ! TESTED AND OK
+ deallocate(save_jj1,save_kk1,save_ii2,save_jj2,save_kk2,save_id1,save_jd1,save_kd1,save_id2,save_jd2)
+ deallocate(save_kd2,save_nnn,save_nnc,save_nnfb,save_npn,save_npc,save_npfb)
 
     !############################################################################################
     !################### INITIALIZE COINCIDENT BOUNDARIES #######################################
@@ -980,6 +1025,57 @@ contains
     call reallocate(ncin,ip41)
     call reallocate(bceqt,ip41,neqt)
     call reallocate(mnc,ip43)
+    call reallocate(sub_bc,2,6)
+
+
+
+
+
+    write(stderr,*) rank,"a",size(save_cl),size(save_ndcc),size(save_nbdc),size(save_nfbc),size(save_mdnc),size(save_mper)
+    write(stderr,*) rank,"b",size(cl),size(ndcc),size(nbdc),size(nfbc),size(mdnc),size(mper)
+
+    do i=1,size(save_cl)
+      if(save_cl(i)/=cl(i)) write(stderr,*) rank,"cl",i,save_cl(i),cl(i)
+      if(save_ndcc(i)/=ndcc(i)) write(stderr,*) rank,"ndcc",i,save_ndcc(i),ndcc(i)
+      if(save_nbdc(i)/=nbdc(i)) write(stderr,*) rank,"nbdc",i,save_nbdc(i),nbdc(i)
+      if(save_nfbc(i)/=nfbc(i)) write(stderr,*) rank,"nfbc",i,save_nfbc(i),nfbc(i)
+      if(save_mdnc(i)/=mdnc(i)) write(stderr,*) rank,"mdnc",i,save_mdnc(i),mdnc(i)
+      if(save_mper(i)/=mper(i)) write(stderr,*) rank,"mper",i,save_mper(i),mper(i)
+    enddo
+
+
+!    allocate(save_iminb(size(iminb)))
+!    allocate(save_imaxb(size(imaxb)))
+!    allocate(save_jminb(size(jminb)))
+!    allocate(save_jmaxb(size(jmaxb)))
+!    allocate(save_kminb(size(kminb)))
+!    allocate(save_kmaxb(size(kmaxb)))
+
+!    allocate(save_cl(size(cl)))
+!    allocate(save_ndcc(size(ndcc)))
+!    allocate(save_nbdc(size(nbdc)))
+!    allocate(save_nfbc(size(nfbc)))
+!    allocate(save_mdnc(size(mdnc)))
+!    allocate(save_mper(size(mper)))
+
+!    allocate(save_mpc(size(mpc)))
+!    allocate(save_ncin(size(ncin)))
+!    allocate(save_mnc(size(mnc)))
+!    allocate(save_bcg_to_proc(size(bcg_to_proc)))
+!    allocate(save_bcg_to_bcl(size(bcg_to_bcl)))
+!    allocate(save_bcg_to_bci(size(bcg_to_bci)))
+!    allocate(save_bcl_to_bcg(size(bcl_to_bcg)))
+!    allocate(save_bg_to_proc(size(bg_to_proc)))
+!    allocate(save_bg_to_bl(size(bg_to_bl)))
+!    allocate(save_bg_to_bi(size(bg_to_bi)))
+!    allocate(save_bl_to_bg(size(bl_to_bg)))
+!    allocate(save_bcg_to_bg(size(bcg_to_bg)))
+!    allocate(save_vbc(size(vbc)))
+!    allocate(save_bc(size(bc,1),size(bc,2)))
+!    allocate(save_bceqt(size(bceqt,1),size(bceqt,2)))
+
+
+
 
 !    print*,'initialization '
     do fr1=1,num_bcg
@@ -1106,11 +1202,7 @@ contains
 !    print*,l,' : filling done'
    enddo
 
- deallocate(save_x,save_y,save_z,save_ndlb,save_nfei,save_indfl,save_mpb,save_mmb,save_ncbd,save_ii1)
- deallocate(save_jj1,save_kk1,save_ii2,save_jj2,save_kk2,save_id1,save_jd1,save_kd1,save_id2,save_jd2)
- deallocate(save_kd2,save_nnn,save_nnc,save_nnfb,save_npn,save_npc,save_npfb)
-
-write(stderr,*)"done!"
+write(stderr,*) "done"
 
  return
 
@@ -1217,7 +1309,7 @@ subroutine triv_split(nblock2,nbl,nxyza,ii2,jj2,kk2, &
  integer,allocatable,intent(in)  :: ii2(:),jj2(:),kk2(:)
  integer,intent(in)              :: nxyza,nbl,nblock2
 
- integer,allocatable,intent(out) :: new_ii2(:,:,:),new_jj2(:,:,:),new_kk2(:,:,:), num_cf2(:,:,:)
+ integer,allocatable,intent(inout) :: new_ii2(:,:,:),new_jj2(:,:,:),new_kk2(:,:,:), num_cf2(:,:,:)
  integer,intent(out)             :: nblockd(3)
 
  integer             :: i,j,k,i1,j1,k1
@@ -1226,7 +1318,8 @@ subroutine triv_split(nblock2,nbl,nxyza,ii2,jj2,kk2, &
  !   trivial spliting : divide my block in nblock2 subblock
  !                      test all possiblities constisting in dividing
  !                      i times in the x direction, j times in the y direction and k times in the z direction
- allocate(num_cf2(1,1,1)) ; num_cf2=nxyza*nblock2 ! useless initial big value
+ call reallocate(num_cf2,1,1,1)
+ num_cf2=nxyza*nblock2 ! useless initial big value
  do k=1,nblock2
     do j=1,nblock2
        do i=1,nblock2
@@ -1415,148 +1508,6 @@ subroutine iniraccord(mot,imot,nmot)
  tab_raccord(fr1)=fr2
  tab_raccord(fr2)=fr1
 end subroutine iniraccord
-
-!subroutine reallocate_1r(in,size)
-! implicit none
-! double precision,allocatable,intent(inout) :: in(:)
-! integer,intent(in)             :: size
-
-! if(allocated(in)) deallocate(in)
-! allocate(in(size))
-
-!end subroutine reallocate_1r
-
-!subroutine reallocate_2r(in,size1,size2)
-! implicit none
-! double precision,allocatable,intent(inout) :: in(:,:)
-! integer,intent(in)             :: size1,size2
-
-! if(allocated(in)) deallocate(in)
-! allocate(in(size1,size2))
-
-!end subroutine reallocate_2r
-
-!subroutine reallocate_3r(in,size1,size2,size3)
-! implicit none
-! double precision,allocatable,intent(inout) :: in(:,:,:)
-! integer,intent(in)             :: size1,size2,size3
-
-! if(allocated(in)) deallocate(in)
-! allocate(in(size1,size2,size3))
-
-!end subroutine reallocate_3r
-
-!subroutine reallocate_4r(in,size1,size2,size3,size4)
-! implicit none
-! double precision,allocatable,intent(inout) :: in(:,:,:,:)
-! integer,intent(in)                :: size1,size2,size3,size4
-
-! if(allocated(in)) deallocate(in)
-! allocate(in(size1,size2,size3,size4))
-
-!end subroutine reallocate_4r
-
-!subroutine reallocate_1i(in,size)
-! implicit none
-! integer,allocatable,intent(inout) :: in(:)
-! integer,intent(in)                :: size
-
-! if(allocated(in)) deallocate(in)
-! allocate(in(size))
-
-!end subroutine reallocate_1i
-
-!subroutine reallocate_2i(in,size1,size2)
-! implicit none
-! integer,allocatable,intent(inout) :: in(:,:)
-! integer,intent(in)                :: size1,size2
-
-! if(allocated(in)) deallocate(in)
-! allocate(in(size1,size2))
-
-!end subroutine reallocate_2i
-
-!subroutine reallocate_3i(in,size1,size2,size3)
-! implicit none
-! integer,allocatable,intent(inout) :: in(:,:,:)
-! integer,intent(in)                :: size1,size2,size3
-
-! if(allocated(in)) deallocate(in)
-! allocate(in(size1,size2,size3))
-
-!end subroutine reallocate_3i
-
-!subroutine reallocate_4i(in,size1,size2,size3,size4)
-! implicit none
-! integer,allocatable,intent(inout) :: in(:,:,:,:)
-! integer,intent(in)                :: size1,size2,size3,size4
-
-! if(allocated(in)) deallocate(in)
-! allocate(in(size1,size2,size3,size4))
-
-!end subroutine reallocate_4i
-
-!subroutine reallocate_1c(in,size)
-! implicit none
-! character(*),allocatable,intent(inout) :: in(:)
-! integer,intent(in)                :: size
-
-! if(allocated(in)) deallocate(in)
-! allocate(in(size))
-
-!end subroutine reallocate_1c
-
-!subroutine reallocate_s_1i(in,newsize)
-! implicit none
-! integer,allocatable::in(:),tmp(:)
-! integer :: newsize
-! call backtrace
-! allocate(tmp(size(in)))
-! tmp=in
-! call reallocate(in,newsize)
-! in=0
-! in(:size(tmp))=tmp
-! deallocate(tmp)
-!end subroutine reallocate_s_1i
-
-!subroutine reallocate_s_2i(in,newsize1,newsize2)
-! implicit none
-! integer,allocatable::in(:,:),tmp(:,:)
-! integer :: newsize1,newsize2
-! if(newsize1*newsize2/=size(in)) then
-!   allocate(tmp(size(in,1),size(in,2)))
-!   tmp=in
-!   call reallocate(in,newsize1,newsize2)
-!   in=0
-!   in(:size(tmp,1),:size(tmp,2))=tmp
-!   deallocate(tmp)
-! endif
-!end subroutine reallocate_s_2i
-
-!subroutine reallocate_s_4i(in,size1,size2,size3,size4)
-! implicit none
-! integer,allocatable::in(:,:,:,:),tmp(:,:,:,:)
-! integer :: size1,size2,size3,size4
-! allocate(tmp(size(in,1),size(in,2),size(in,3),size(in,4)))
-! tmp=in
-! call reallocate(in,size1,size2,size3,size4)
-! in=0
-! in(:size(tmp,1),:size(tmp,2),:size(tmp,3),:size(tmp,4))=tmp
-! deallocate(tmp)
-!end subroutine reallocate_s_4i
-
-!subroutine reallocate_s_1r(in,newsize)
-! implicit none
-! double precision,allocatable::in(:),tmp(:)
-! integer :: newsize
-! allocate(tmp(size(in)))
-! tmp=in
-! call reallocate(in,newsize)
-! in=0.
-! in(:size(tmp))=tmp
-! deallocate(tmp)
-!end subroutine reallocate_s_1r
-
 
 subroutine str(mot,imot,nmx,lmot,val)
  implicit none

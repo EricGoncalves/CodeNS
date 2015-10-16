@@ -72,7 +72,7 @@ contains
   SUBROUTINE  INIMPI
       !************************************
       IMPLICIT NONE
-      integer :: ierr
+      integer :: ierr,ERRHANDLER
 
 #if defined(WITH_MPI)
       CALL MPI_INIT(IERR)
@@ -85,7 +85,24 @@ contains
 
       allocate(bcg_to_proc(0),bcg_to_bcl(0),bcl_to_bcg(0))
       allocate(bg_to_proc(0),bg_to_bl(0),bl_to_bg(0),bcg_to_bg(0))
+
+!      call MPI_COMM_CREATE_ERRHANDLER(COMM_ERRHANDLER_FUNCTION, ERRHANDLER, ierr)
+!      call MPI_COMM_SET_ERRHANDLER(MPI_COMM_WORLD, ERRHANDLER, ierr)
+
   END SUBROUTINE  INIMPI
+
+  !************************************
+SUBROUTINE COMM_ERRHANDLER_FUNCTION(COMM, ierr)
+      !************************************
+      use sortiefichier
+      IMPLICIT NONE
+      integer :: ierr,comm
+
+      write(stderr,*) "ERROR : ",ierr," IN MPI, rank : ",rank
+!      call backtrace
+      call abort
+
+  END  SUBROUTINE COMM_ERRHANDLER_FUNCTION
 
   subroutine endmpi
       implicit none
@@ -420,32 +437,50 @@ contains
 
   END SUBROUTINE WAIT_MPI
 
-  SUBROUTINE BARRIER()
+  SUBROUTINE BARRIER(a)
       ! SYNC POINT FOR ALL PROCESS
       use sortiefichier
       IMPLICIT NONE
 
       interface
-        !function fsync (fd) bind(c,name="fsync")
-            !use iso_c_binding, only: c_int
-            !integer(c_int), value :: fd
-            !integer(c_int) :: fsync
-        !end function fsync
+        function fsync (fd) bind(c,name="fsync")
+            use iso_c_binding, only: c_int
+            integer(c_int), value :: fd
+            integer(c_int) :: fsync
+        end function fsync
       end interface
 
-      integer :: ierr,i
-      !do i =1,10000
+      integer :: ierr,i=0,j=0,k
+      integer ,optional :: a
+    
+j=j+1
+if (present(a)) j=a
+
+do i=0,nprocs-1
+    k=-j
+    if (rank==i) k=j
+    call bcast(k,i)
+    if (k/=j) call abort
+enddo
+
+!      do i =1,10000
+!k=mod(i+1,nprocs)
 #ifdef WITH_MPI
       CALL MPI_Barrier(MPI_COMM_WORLD,IERR )
 #endif
-
+!        call bcast(j,k)
+!  if (i==rank)then
+!    write(stderr,*)"RANG",i
+!    call backtrace
+!  endif
         flush(imp)
-        !ierr = fsync(fnum(imp)) ! not supported on ifort
+        flush(stderr)
+!        ierr = fsync(fnum(imp)) ! not supported on ifort
 
 #ifdef WITH_MPI
         CALL MPI_Barrier(MPI_COMM_WORLD,IERR )
 #endif
-      !enddo
+!      enddo
   END SUBROUTINE BARRIER
 
   SUBROUTINE GATHER_P(IN,OUT)

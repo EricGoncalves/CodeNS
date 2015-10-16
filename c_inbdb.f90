@@ -23,7 +23,7 @@ contains
     implicit none
     integer          ::     ibdcfl,    ibdcst,    ibddim, imot(nmx),     kibdb
     integer          ::          l,     lmfbd,ncbd(ip41),ncin(ip41),      nmot
-    integer          ::       nvbc,l1
+    integer          ::       nvbc,l1,l2
     double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
     integer         ,allocatable :: lmfb(:)
     logical,optional :: partition
@@ -56,10 +56,11 @@ contains
             ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
     else
        do l1=1,mtb
-        if (bcg_to_bci(bcl_to_bcg(l1))==lmfb(l)) &
+        l2=bcl_to_bcg(l1)
+        if (bcg_to_bci(l2)==lmfb(l)) &
        call inbdb( &
             ncbd,ncin, &
-            l1,clmf,kibdb, &
+            l2,clmf,kibdb, &
             ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
 !
     enddo
