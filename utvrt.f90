@@ -22,7 +22,7 @@ contains
     use definition
     use proprieteflu
     implicit none
-    integer          ::         id,        jd,        kd,         l,         m
+    integer          ::          l,         m
     integer          ::        mfl,        ml,  mmb(mtt),  mpb(mtt),        mt
     integer          ::        n0c,       n0n,        nc,ncbd(ip41),       nci
     integer          ::       ncij,     ncijk,      ncik,       ncj,      ncjk

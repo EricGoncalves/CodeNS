@@ -43,9 +43,9 @@ contains
     use chainecarac
     implicit none
     integer          ::           i,         i1,       i1m1,         i2,       i2m1
-    integer          ::          id,          j,         j1,       j1m1,         j2
-    integer          ::        j2m1,         jd,          k,         k1,       k1m1
-    integer          ::          k2,       k2m1,         kd,          l,          m
+    integer          ::           j,         j1,       j1m1,         j2
+    integer          ::        j2m1,          k,         k1,       k1m1
+    integer          ::          k2,       k2m1,          l,          m
     integer          :: mnpar(ip12),          n,        n0c,        nci, ncin(ip41)
     integer          ::         ncj,        nck,       ncyc,        nid,       nijd
     integer          ::         njd
@@ -55,7 +55,7 @@ contains
     double precision ::        exp2x,          f1,         fmu,       fmujl,       fmusm
     double precision ::   frac(ip12),    mu(ip12),   mut(ip12),        mut0,       retur
     double precision ::          s24,txxf5x(ip12),txyf5y(ip12),txzf5z(ip12),tyyf6x(ip12)
-    double precision :: tyzf6y(ip12),tzzf6z(ip12),v(ip11,ip60),          x1,          xk
+    double precision :: tyzf6y(ip12),tzzf6z(ip12),v(ip11,ip60),          xk
     double precision ::           xl,        zeta
 !
 !-----------------------------------------------------------------------

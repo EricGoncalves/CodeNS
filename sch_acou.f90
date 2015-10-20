@@ -23,9 +23,9 @@ contains
     use constantes
     use schemanum
     implicit none
-    integer          ::      i,    i1,    i2,  i2m1, idcyc
-    integer          ::   ind1,  ind2,ityprk,     j,    j1
-    integer          ::     j2,  j2m1,     k,    k1,    k2
+    integer          ::     i1,    i2,  i2m1, idcyc
+    integer          ::   ind1,  ind2,ityprk,    j1
+    integer          ::     j2,  j2m1,    k1,    k2
     integer          ::   k2m1,    lm,     m,   n0c,    nc
     integer          ::    nid,  nijd,   njd
     double precision ::         dtpas,ff(ip11,ip60),         omeg,        temps,          ts1

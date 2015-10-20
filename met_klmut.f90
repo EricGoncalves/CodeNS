@@ -19,10 +19,10 @@ contains
     use modeleturb
     use proprieteflu
     implicit none
-    integer          ::    i,  i1,  i2,i2m1,  id
-    integer          ::    j,  j1,  j2,j2m1,  jd
-    integer          ::    k,  k1,  k2,k2m1,  kd
-    integer          ::    l,   n,  n0, nci, ncj
+    integer          ::    i,  i1,  i2,i2m1, ncj
+    integer          ::    j,  j1,  j2,j2m1
+    integer          ::    k,  k1,  k2,k2m1
+    integer          ::    l,   n,  n0, nci
     integer          ::  nck, nid,nijd, njd
     double precision ::           c1,         c14,          c2,         c22,  dist(ip12)
     double precision ::           f1,         fmu,    mu(ip12),   mut(ip12),       r2sb1

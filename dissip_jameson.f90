@@ -23,11 +23,11 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  ind1,  ind2,     j
+    integer          ::     i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  ind1,  ind2,     j
     integer          ::     j1,  j1m1,  j1p1,    j2,  j2m1
-    integer          ::     jd,     k,    k1,  k1m1,  k1p1
-    integer          ::     k2,  k2m1,    kd,  kdir,lgsnlt
+    integer          ::      k,    k1,  k1m1,  k1p1
+    integer          ::     k2,  k2m1,  kdir,lgsnlt
     integer          ::     lm,     m,     n,   n0c,   nci
     integer          ::    ncj,   nck,   nid,  nijd,  ninc
     integer          ::    njd

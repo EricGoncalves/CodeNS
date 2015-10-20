@@ -34,9 +34,9 @@ contains
     use maillage
     use modeleturb
     implicit none
-    integer          ::    i,  i1,  i2,i2m1,ind1
-    integer          :: ind2,   j,  j1,  j2,j2m1
-    integer          ::    k,  k1,  k2,k2m1,   l
+    integer          ::   i1,  i2,i2m1,ind1
+    integer          :: ind2,  j1,  j2,j2m1
+    integer          ::   k1,  k2,k2m1,   l
     integer          ::    n,  n0, nid,nijd, njd
     double precision :: fd5x(ip12),fd5y(ip12),fd5z(ip12),fd6x(ip12),fd6y(ip12)
     double precision :: fd6z(ip12),  mu(ip12), mut(ip12)

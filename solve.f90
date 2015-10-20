@@ -924,8 +924,6 @@ contains
     use schemanum
     use modeleturb
     implicit none
-    integer,allocatable          :: itmp(:)
-    double precision,allocatable :: rtmp(:)
 
     allocate(cl(mtb))
     allocate(tab_raccord(num_bcg))

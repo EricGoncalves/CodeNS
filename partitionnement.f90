@@ -1,16 +1,6 @@
 module mod_partitionnement
   use tools
   implicit none
-!  interface reallocate
-!     module procedure reallocate_1r,reallocate_1i, &
-!          reallocate_2r,reallocate_2i, &
-!          reallocate_3r,reallocate_3i, &
-!          reallocate_4r,reallocate_4i, &
-!          reallocate_1c
-!  end interface reallocate
-!  interface reallocate_s
-!     module procedure reallocate_s_1r,reallocate_s_4i,reallocate_s_1i,reallocate_s_2i
-!  end interface reallocate_s
 contains
   subroutine partitionnement(x,y,z,mot,imot,nmot,ncbd,mnc,ncin,bceqt,exs1,exs2)
     use mod_valenti
@@ -41,24 +31,22 @@ contains
     !-----parameters figes--------------------------------------------------
     !
     implicit none
-    integer             :: icmt,nblocks,nxyza,i,j,k,xyz,nm,xs,ys,zs,nmin,nmax,nmin1,nmax1
-    integer             :: imot(nmx),nmot,fr,imax,imin,jmax,jmin,kmax,kmin,kval
-    integer             :: l2,mfbe,nid,njd,nijd,xi,yi,zi,sblock,l3,old_mtb
-    integer             :: imax2,imin2,jmax2,jmin2,kmax2,kmin2,fr2,i2,j2,k2,l4,fr3
-    integer             :: imax3,imin3,jmax3,jmin3,kmax3,kmin3,mf,mfb
-    double precision    :: exs1,exs2,vbc(ista*lsta),xmin,xmax,ymin,ymax,zmin,zmax,sub_bc1(2,6)
-    double precision    :: save_xmin,save_xmax,save_ymin,save_ymax,save_zmin,save_zmax
+    integer             :: nblocks,nxyza,i,j,k,xyz,xs,ys,zs,nmin,nmax,nmin1,nmax1
+    integer             :: imot(nmx),nmot,fr,imax,imin,jmax,jmin,kmax,kmin
+    integer             :: l2,mfbe,nid,njd,nijd,sblock,l3
+    integer             :: fr2,i2,j2,k2,l4,fr3
+    double precision    :: exs1,exs2,vbc(ista*lsta),sub_bc1(2,6)
     double precision,allocatable :: x(:),y(:),z(:)
-    integer,allocatable :: nblock2(:),nblockd(:,:),ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:),tmp(:,:,:,:)
+    integer,allocatable :: nblock2(:),nblockd(:,:),ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:)
     integer,allocatable :: new2old_b(:),num_cf2(:,:,:)
     integer,allocatable :: ni1(:,:,:),nj1(:,:,:),nk1(:,:,:),ncbd(:)
 
     integer             :: save_lt,save_ndimntbx,l,verbosity,l1,ll2,ll3
-    integer             :: save_nid,save_njd,save_nijd,save_klzx
+    integer             :: save_klzx
     integer             :: save_kmtbx,save_lzx,save_mdimtbx,save_mdimubx
     integer             :: save_mtb,save_mtt,save_ndimctbx
-    integer             :: save_ndimubx,save_xi,save_xyz,save_yi,save_zi
-    integer             :: val(3),l5,fr4,fri,save_mtbx
+    integer             :: save_ndimubx
+    integer             :: val(3),fr4,fri,save_mtbx
     double precision,allocatable :: save_x(:),save_y(:),save_z(:),save_bc(:,:),save_bceqt(:,:),save_vbc(:)
     integer,allocatable :: save_ii1(:),save_jj1(:),save_kk1(:)
     integer,allocatable :: save_ii2(:),save_jj2(:),save_kk2(:)
@@ -83,7 +71,6 @@ contains
 
     character(len=50)::fich
     character(len=32) ::  mot(nmx)
-    character(len=32) ::  comment
     character(len=2) :: indmf
 
     integer         ,allocatable ::   mnc(:),ncin(:)
@@ -95,8 +82,7 @@ contains
     !############################## GET PARAMETERS ##############################################
     !############################################################################################
 
-    verbosity=2 ! from 0 to 3
-!    call get_param(mot,nmot,imot,nblocks) ! nblocks is the minimum number of blocks we want
+    verbosity=1 ! from 0 to 3
     nblocks=max(nprocs,num_bg)
 
     !############################################################################################
@@ -1027,56 +1013,6 @@ contains
     call reallocate(mnc,ip43)
     call reallocate(sub_bc,2,6)
 
-
-
-
-
-    write(stderr,*) rank,"a",size(save_cl),size(save_ndcc),size(save_nbdc),size(save_nfbc),size(save_mdnc),size(save_mper)
-    write(stderr,*) rank,"b",size(cl),size(ndcc),size(nbdc),size(nfbc),size(mdnc),size(mper)
-
-    do i=1,size(save_cl)
-      if(save_cl(i)/=cl(i)) write(stderr,*) rank,"cl",i,save_cl(i),cl(i)
-      if(save_ndcc(i)/=ndcc(i)) write(stderr,*) rank,"ndcc",i,save_ndcc(i),ndcc(i)
-      if(save_nbdc(i)/=nbdc(i)) write(stderr,*) rank,"nbdc",i,save_nbdc(i),nbdc(i)
-      if(save_nfbc(i)/=nfbc(i)) write(stderr,*) rank,"nfbc",i,save_nfbc(i),nfbc(i)
-      if(save_mdnc(i)/=mdnc(i)) write(stderr,*) rank,"mdnc",i,save_mdnc(i),mdnc(i)
-      if(save_mper(i)/=mper(i)) write(stderr,*) rank,"mper",i,save_mper(i),mper(i)
-    enddo
-
-
-!    allocate(save_iminb(size(iminb)))
-!    allocate(save_imaxb(size(imaxb)))
-!    allocate(save_jminb(size(jminb)))
-!    allocate(save_jmaxb(size(jmaxb)))
-!    allocate(save_kminb(size(kminb)))
-!    allocate(save_kmaxb(size(kmaxb)))
-
-!    allocate(save_cl(size(cl)))
-!    allocate(save_ndcc(size(ndcc)))
-!    allocate(save_nbdc(size(nbdc)))
-!    allocate(save_nfbc(size(nfbc)))
-!    allocate(save_mdnc(size(mdnc)))
-!    allocate(save_mper(size(mper)))
-
-!    allocate(save_mpc(size(mpc)))
-!    allocate(save_ncin(size(ncin)))
-!    allocate(save_mnc(size(mnc)))
-!    allocate(save_bcg_to_proc(size(bcg_to_proc)))
-!    allocate(save_bcg_to_bcl(size(bcg_to_bcl)))
-!    allocate(save_bcg_to_bci(size(bcg_to_bci)))
-!    allocate(save_bcl_to_bcg(size(bcl_to_bcg)))
-!    allocate(save_bg_to_proc(size(bg_to_proc)))
-!    allocate(save_bg_to_bl(size(bg_to_bl)))
-!    allocate(save_bg_to_bi(size(bg_to_bi)))
-!    allocate(save_bl_to_bg(size(bl_to_bg)))
-!    allocate(save_bcg_to_bg(size(bcg_to_bg)))
-!    allocate(save_vbc(size(vbc)))
-!    allocate(save_bc(size(bc,1),size(bc,2)))
-!    allocate(save_bceqt(size(bceqt,1),size(bceqt,2)))
-
-
-
-
 !    print*,'initialization '
     do fr1=1,num_bcg
        fr=bcg_to_bcl(fr1)
@@ -1201,8 +1137,6 @@ contains
       endif
 !    print*,l,' : filling done'
    enddo
-
-write(stderr,*) "done"
 
  return
 
@@ -1519,31 +1453,5 @@ subroutine str(mot,imot,nmx,lmot,val)
  mot(lmot)=adjustl(mot(lmot))
  imot(lmot) =len_trim(adjustl(mot(lmot)))
 end subroutine str
-
-subroutine get_param(mot,nmot,imot,nblocks)
- use chainecarac,only : ci
- use para_fige,only : nmx
- use mod_valenti
- implicit none
- integer,intent(in)  :: nmot,imot(nmx)
- integer,intent(out) :: nblocks
- character(len=32),intent(in) ::  mot(nmx)
- integer :: icmt,kval,nm
- character(len=32) ::  comment
-
- ! get number of block we want from flec TODO : replace valenti by mpi
- do icmt=1,32
-    comment(icmt:icmt)=' '
- enddo
- kval=0
- !
- nm=2
- if(nmot.lt.nm) then ! read number of block at the end  TODO : replace valenti by mpi
-    comment=ci
-    call synterr(mot,imot,nmot,comment)
- else
-    call valenti(mot,imot,nm,nblocks,kval)
- endif
-end subroutine get_param
 
 end module mod_partitionnement

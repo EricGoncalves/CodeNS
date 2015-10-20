@@ -17,9 +17,9 @@ contains
     use modeleturb
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          ::   id,   j,  j1,j1m1,  j2
-    integer          :: j2m1,  jd,   k,  k1,k1m1
-    integer          ::   k2,k2m1,  kd,   l,   n
+    integer          ::    j,  j1,j1m1,  j2
+    integer          :: j2m1,   k,  k1,k1m1
+    integer          ::   k2,k2m1,   l,   n
     integer          ::  n0c, nci, nid,nijd, njd
     double precision :: s(ip11,ip60)
 !

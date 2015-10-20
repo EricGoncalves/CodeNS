@@ -24,20 +24,19 @@ contains
     use schemanum
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,  i2p1,    id,  ind1,  ind2
+    integer          ::   i2m1,  i2p1,  ind1,  ind2
     integer          ::     is,     j,    j1,  j1m1,  j1p1
-    integer          ::     j2,  j2m1,  j2p1,    jd,     k
+    integer          ::     j2,  j2m1,  j2p1,     k
     integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
-    integer          ::   k2p1,    kd,     l,lgsnlt,     m
+    integer          ::   k2p1,     l,lgsnlt,     m
     integer          ::     m1,    m2,     n,    n0,    n1
     integer          ::    nci,   ncj,   nck,   nid,  nijd
     integer          ::   ninc,   njd
-    double precision ::                    a,                  aa,                   b,                   c,               cndsi
+    double precision ::                    c,               cndsi
     double precision ::                cndsj,               cndsk,                coef,        d(ip11,ip60),                  dd
     double precision ::           del6(ip00),          del7(ip00),                 eps,                etot,                  q2
     double precision ::                 rlam,                 rro,                rro1,sn(lgsnlt,nind,ndir),        t(ip11,ip60)
-    double precision ::                    u,                   v,           vol(ip11),                   w,                   x
-    double precision ::                    y,                   z
+    double precision ::                    u,                   v,           vol(ip11),                   w
 !
 !-----------------------------------------------------------------------
 !

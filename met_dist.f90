@@ -24,9 +24,9 @@ contains
     use maillage
     use chainecarac
     implicit none
-    integer          ::     i,   i1,   i2, i2m1,   id
-    integer          ::     j,   j1,   j2, j2m1,   jd
-    integer          ::     k,   k1,   k2, k2m1,   kd
+    integer          ::     i,   i1,   i2, i2m1
+    integer          ::     j,   j1,   j2, j2m1
+    integer          ::     k,   k1,   k2, k2m1
     integer          ::     l,    m,    n,  n0c,  nci
     integer          ::  ncij,ncijk, ncik,  ncj, ncjk
     integer          ::   nck,  nid,  njd

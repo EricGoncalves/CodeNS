@@ -28,15 +28,15 @@ contains
     use proprieteflu
     use definition
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  ind1,  ind2,ityprk
+    integer          ::     i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  ind1,  ind2,ityprk
     integer          ::      j,    j1,  j1m1,  j1p1,    j2
-    integer          ::   j2m1,    jd,     k,    k1,  k1m1
-    integer          ::   k1p1,    k2,  k2m1,    kd,  kdir
+    integer          ::   j2m1,     k,    k1,  k1m1
+    integer          ::   k1p1,    k2,  k2m1,  kdir
     integer          :: lgsnlt,    lm,     m,     n,   n0c
     integer          ::     n1,   nci,   ncj,   nck,   nid
     integer          ::   nijd,  ninc,   njd
-    double precision ::                   aa,                  ai,                  al,                 ani,                  ar
+    double precision ::                   ai,                  al,                 ani,                  ar
     double precision ::               beta2l,              beta2r,               betai,                  ca,                  cb
     double precision ::                  cmi,                 cml,                 cmm,                 cmr,                cnds
     double precision ::         d(ip11,ip60),                  dm,                 fex,                 fey,                 fez
@@ -47,14 +47,14 @@ contains
     double precision ::                  hk3,                 hk4,                 hk5,                  hl,                  hr
     double precision ::                   nx,                  ny,                  nz,            pl(ip00),           prr(ip00)
     double precision ::             ps(ip11),                 psi,                 q2l,                 q2r,           qcx(ip12)
-    double precision ::            qcy(ip12),           qcz(ip12),                qinf,                  ra,          rhol(ip00)
+    double precision ::            qcy(ip12),           qcz(ip12),                qinf,          rhol(ip00)
     double precision ::           rhor(ip00),                 si1,                 si2,                 si3,                 si4
     double precision ::                  si5,                 sj1,                 sj2,                 sj3,                 sj4
     double precision ::                  sj5,                 sk1,                 sk2,                 sk3,                 sk4
-    double precision ::                  sk5,sn(lgsnlt,nind,ndir),                  ta,          toxx(ip12),          toxy(ip12)
+    double precision ::                  sk5,sn(lgsnlt,nind,ndir),          toxx(ip12),          toxy(ip12)
     double precision ::           toxz(ip12),          toyy(ip12),          toyz(ip12),          tozz(ip12),        u(ip11,ip60)
     double precision ::             ul(ip00),            ur(ip00),        v(ip11,ip60),            vl(ip00),                 vnl
-    double precision ::                  vnr,            vr(ip00),            wl(ip00),            wr(ip00),                  xa
+    double precision ::                  vnr,            vr(ip00),            wl(ip00),            wr(ip00)
 !
 !-----------------------------------------------------------------------
 !

@@ -30,15 +30,15 @@ contains
     use schemanum
     use proprieteflu
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  ind1,  ind2,ityprk
+    integer          ::     i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  ind1,  ind2,ityprk
     integer          ::      j,    j1,  j1m1,  j1p1,    j2
-    integer          ::   j2m1,    jd,     k,    k1,  k1m1
-    integer          ::   k1p1,    k2,  k2m1,    kd,  kdir
+    integer          ::   j2m1,     k,    k1,  k1m1
+    integer          ::   k1p1,    k2,  k2m1,  kdir
     integer          :: lgsnlt,    lm,     m,     n,   n0c
     integer          ::     n1,   nci,   ncj,   nck,   nid
     integer          ::   nijd,  ninc,   njd
-    double precision ::                    a,                  aa,                  ai,                  al,                  ar
+    double precision ::                   ai,                  al,                  ar
     double precision ::                  cal,                 car,                 cbl,                 cbr,                 cmi
     double precision ::                  cml,                 cmr,         cmui1(ip21),         cmui2(ip21),         cmuj1(ip21)
     double precision ::          cmuj2(ip21),         cmuk1(ip21),         cmuk2(ip21),                cnds,           cvi(ip21)
@@ -49,14 +49,14 @@ contains
     double precision ::                  hj2,                 hj3,                 hj4,                 hj5,                 hk1
     double precision ::                  hk2,                 hk3,                 hk4,                 hk5,                  hl
     double precision ::                   hr,            pl(ip00),           prr(ip00),            ps(ip11),                 psi
-    double precision ::            qcx(ip12),           qcy(ip12),           qcz(ip12),                  ra,          rhol(ip00)
+    double precision ::            qcx(ip12),           qcy(ip12),           qcz(ip12),          rhol(ip00)
     double precision ::           rhor(ip00),                 si0,                 si1,                 si2,                 si3
     double precision ::                  si4,                 sj0,                 sj1,                 sj2,                 sj3
     double precision ::                  sj4,                 sk0,                 sk1,                 sk2,                 sk3
-    double precision ::                  sk4,sn(lgsnlt,nind,ndir),                  ta,          toxx(ip12),          toxy(ip12)
+    double precision ::                  sk4,sn(lgsnlt,nind,ndir),          toxx(ip12),          toxy(ip12)
     double precision ::           toxz(ip12),          toyy(ip12),          toyz(ip12),          tozz(ip12),        u(ip11,ip60)
     double precision ::             ul(ip00),            ur(ip00),        v(ip11,ip60),            vl(ip00),            vr(ip00)
-    double precision ::             wl(ip00),            wr(ip00),                  xa
+    double precision ::             wl(ip00),            wr(ip00)
     double precision,allocatable :: r1(:),r2(:),r3(:),r4(:),r5(:)
 !
 !-----------------------------------------------------------------------

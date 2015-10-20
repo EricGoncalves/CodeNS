@@ -28,10 +28,10 @@ contains
     use modeleturb
     implicit none
     integer          ::          i,        i1,      i1m1,        i2,      i2m1
-    integer          ::     ibalai,        id,      ind1,      ind2,         j
-    integer          ::         j1,      j1m1,        j2,      j2m1,        jd
+    integer          ::     ibalai,      ind1,      ind2,         j
+    integer          ::         j1,      j1m1,        j2,      j2m1
     integer          ::          k,        k1,      k1m1,        k2,      k2m1
-    integer          ::         kd,      kdir,         l,      ldom,    lgsnlt
+    integer          ::       kdir,         l,      ldom,    lgsnlt
     integer          ::         li,        lj,         m,        mb,        mf
     integer          ::        mfb,        mt,         n,       n0c,       nci
     integer          :: ncin(ip41),       ncj,       nck,      ncyc,        ni
