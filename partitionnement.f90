@@ -77,13 +77,14 @@ contains
     double precision,allocatable ::  bceqt(:,:)
     logical :: test
 
-
     !############################################################################################
     !############################## GET PARAMETERS ##############################################
     !############################################################################################
 
-    verbosity=1 ! from 0 to 3
+    verbosity=2 ! from 0 to 3
     nblocks=max(nprocs,num_bg)
+if(.true.)then
+!if(nblocks/=num_bg) then ! there is some partitionning to do
 
     !############################################################################################
     !############################# SAVE OLD MESH FOR CHECKING PURPOSE ###########################
@@ -589,7 +590,6 @@ contains
                          save_kmaxb(fr)>=zs ) then
 
                          nsub=1
-                         call reallocate(sub_bc,1,6)
 
                        ! part of the boundary which concern this block
 
@@ -607,14 +607,12 @@ contains
 
                 if (nsub==0) cycle
 
-                 if(tab_raccord(fr1)/=0) then ! if boundary shared with another block
+                 if(tab_raccord(fr1)/=0) then ! if boundary is shared with another block
                     fr2=tab_raccord(fr1)      ! a split on the other side induce split here
                     fr3=save_bcg_to_bcl(fr2)
                     l3=save_bcg_to_bg(fr2)
                     l4=save_bg_to_bl(l3)
                     orig2=save_bg_to_proc(l3)
-
-                    if(rank==orig2) call reallocate_s(sub_bc,1,6)
 
                     if(rank==orig1) then
                       sub_bc(1,1)=sub_bc(1,1)-save_iminb(fr)
@@ -667,7 +665,7 @@ contains
                       enddo
                     endif
                     call MPI_TRANS(nsub,nsub,orig2,orig1)
-                    if(rank==orig1) call reallocate(sub_bc,nsub,6)
+                    if(rank==orig1) call reallocate_s(sub_bc,nsub,6)
                     call MPI_TRANS(sub_bc,sub_bc,orig2,orig1)
                     if(rank==orig1) then
                       sub_bc(:,1)=sub_bc(:,1)+save_iminb(fr)
@@ -1027,41 +1025,41 @@ contains
            if (indfl(fr)(2:2)=="1") fr2=fr1+1
            if (indfl(fr)(2:2)=="2") fr2=fr1-1
          endif
-      elseif(tab_raccord(fri)/=0) then ! old raccord boundary
-         test=.true.
-         if (rank==orig1) &
-            call get_coords_box(sub_bc1(1,1),sub_bc1(1,2),sub_bc1(1,3),sub_bc1(1,4),sub_bc1(1,5),sub_bc1(1,6),                 &
-                  iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr), &
-                  id1(l1),id2(l1),jd1(l1),jd2(l1),kd1(l1),kd2(l1),npn(l1),       &
-                  x,y,z)
-         call bcast(sub_bc1,orig1)
+!      elseif(tab_raccord(fri)/=0) then ! old raccord boundary
+!         test=.true.
+!         if (rank==orig1) &
+!            call get_coords_box(sub_bc1(1,1),sub_bc1(1,2),sub_bc1(1,3),sub_bc1(1,4),sub_bc1(1,5),sub_bc1(1,6),                 &
+!                  iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr), &
+!                  id1(l1),id2(l1),jd1(l1),jd2(l1),kd1(l1),kd2(l1),npn(l1),       &
+!                  x,y,z)
+!         call bcast(sub_bc1,orig1)
 
-         fr4=0
-         find_otherblock: do fr2=1,mtb
-            fr3=bcl_to_bcg(fr2)
-            l2=bcg_to_bg(fr3)
-            l3=bg_to_bl(l2)
-            if(tab_raccord(bcg_to_bci(fr3))==fri) then  ! potential new boundary number
+!         fr4=0
+!         find_otherblock: do fr2=1,mtb
+!            fr3=bcl_to_bcg(fr2)
+!            l2=bcg_to_bg(fr3)
+!            l3=bg_to_bl(l2)
+!            if(tab_raccord(bcg_to_bci(fr3))==fri) then  ! potential new boundary number
 
-              call get_coords_box(sub_bc1(2,1),sub_bc1(2,2),sub_bc1(2,3),sub_bc1(2,4),sub_bc1(2,5),sub_bc1(2,6),                 &
-                    iminb(fr2),imaxb(fr2),jminb(fr2),jmaxb(fr2),kminb(fr2),kmaxb(fr2), &
-                    id1(l3),id2(l3),jd1(l3),jd2(l3),kd1(l3),kd2(l3),npn(l3),       &
-                    x,y,z)
+!              call get_coords_box(sub_bc1(2,1),sub_bc1(2,2),sub_bc1(2,3),sub_bc1(2,4),sub_bc1(2,5),sub_bc1(2,6),                 &
+!                    iminb(fr2),imaxb(fr2),jminb(fr2),jmaxb(fr2),kminb(fr2),kmaxb(fr2), &
+!                    id1(l3),id2(l3),jd1(l3),jd2(l3),kd1(l3),kd2(l3),npn(l3),       &
+!                    x,y,z)
 
-              if (abs(sub_bc1(1,1)-sub_bc1(2,1))<=1d-10 .and. &
-                  abs(sub_bc1(1,2)-sub_bc1(2,2))<=1d-10 .and. &
-                  abs(sub_bc1(1,3)-sub_bc1(2,3))<=1d-10 .and. & ! It' me ! 
-                  abs(sub_bc1(1,4)-sub_bc1(2,4))<=1d-10 .and. &
-                  abs(sub_bc1(1,5)-sub_bc1(2,5))<=1d-10 .and. &
-                  abs(sub_bc1(1,6)-sub_bc1(2,6))<=1d-10) then
+!              if (abs(sub_bc1(1,1)-sub_bc1(2,1))<=1d-10 .and. &
+!                  abs(sub_bc1(1,2)-sub_bc1(2,2))<=1d-10 .and. &
+!                  abs(sub_bc1(1,3)-sub_bc1(2,3))<=1d-10 .and. & ! It's me ! 
+!                  abs(sub_bc1(1,4)-sub_bc1(2,4))<=1d-10 .and. &
+!                  abs(sub_bc1(1,5)-sub_bc1(2,5))<=1d-10 .and. &
+!                  abs(sub_bc1(1,6)-sub_bc1(2,6))<=1d-10) then
 
-                  fr4=fr3
-                  exit find_otherblock
-              endif
-            endif
-         enddo find_otherblock
-         call sum_mpi(fr4) ! there should be only one non zero value in this sum
-         fr2=fr4
+!                  fr4=fr3
+!                  exit find_otherblock
+!              endif
+!            endif
+!         enddo find_otherblock
+!         call sum_mpi(fr4) ! there should be only one non zero value in this sum
+!         fr2=fr4
       endif
       if (test) then   ! raccord boundary
 
@@ -1137,7 +1135,7 @@ contains
       endif
 !    print*,l,' : filling done'
    enddo
-
+endif
  return
 
 
@@ -1453,5 +1451,31 @@ subroutine str(mot,imot,nmx,lmot,val)
  mot(lmot)=adjustl(mot(lmot))
  imot(lmot) =len_trim(adjustl(mot(lmot)))
 end subroutine str
+
+subroutine get_param(mot,nmot,imot,nblocks)
+ use chainecarac,only : ci
+ use para_fige,only : nmx
+ use mod_valenti
+ implicit none
+ integer,intent(in)  :: nmot,imot(nmx)
+ integer,intent(out) :: nblocks
+ character(len=32),intent(in) ::  mot(nmx)
+ integer :: icmt,kval,nm
+ character(len=32) ::  comment
+
+ ! get number of block we want from flec TODO : replace valenti by mpi
+ do icmt=1,32
+    comment(icmt:icmt)=' '
+ enddo
+ kval=0
+ !
+ nm=2
+ if(nmot.lt.nm) then ! read number of block at the end  TODO : replace valenti by mpi
+    comment=ci
+    call synterr(mot,imot,nmot,comment)
+ else
+    call valenti(mot,imot,nm,nblocks,kval)
+ endif
+end subroutine get_param
 
 end module mod_partitionnement

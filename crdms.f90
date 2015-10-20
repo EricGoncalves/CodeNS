@@ -73,13 +73,14 @@ contains
     bg_to_bi(l)=l
     if(present(li))    bg_to_bi(l)=li
 !
+
+    klzx=2
     if(bg_to_proc(l)==rank) then
       num_bl=num_bl+1
   !
   !-----------------------------------------------------------------------
   !
       lzx=lzx+1
-      klzx=2
 
       lz=lzx
       lt=lgx*lzx
