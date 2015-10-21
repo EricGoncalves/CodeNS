@@ -50,10 +50,16 @@ contains
              do n2=1,mtb
              if(bcg_to_bci(bcl_to_bcg(n2))==tmp) then
                n1=n1+1
-               nba(n1)=bcg_to_bcl(tmp)
+               nba(n1)=n2
              endif
              enddo
           endif
+       enddo
+       do n2=1,mtbx
+       if(bcg_to_bci(bcl_to_bcg(n2))==0) then
+         n1=n1+1
+         nba(n1)=n2
+       endif
        enddo
     else
        comment=cs

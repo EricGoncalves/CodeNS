@@ -377,6 +377,7 @@ SUBROUTINE COMM_ERRHANDLER_FUNCTION(COMM, ierr)
       !DEST RECV THE MESSAGE B FROM ORIG
       !RETURN WHEN EVERYTHING IS STARTED
       !(THE MESSAGES HAVEN'T BEEN DELIVERED YET)
+      use sortiefichier
       IMPLICIT NONE
       double precision   ,INTENT(INOUT) :: A(:)
       integer,INTENT(IN)    :: ORIG,DEST
@@ -385,6 +386,7 @@ SUBROUTINE COMM_ERRHANDLER_FUNCTION(COMM, ierr)
       integer :: TAG
 
 #ifdef WITH_MPI
+if (size(A)>0) then
       TAG = (ORIG+1)*NPROCS*2+DEST+1
       if (rank==ORIG) &
           CALL MPI_ISEND(A(1), SIZE(A), MPI_REAL8, DEST, &
@@ -393,6 +395,7 @@ SUBROUTINE COMM_ERRHANDLER_FUNCTION(COMM, ierr)
       if (rank==dest) &
           CALL MPI_IRECV(A(1), SIZE(A), MPI_REAL8, ORIG, &
           TAG, MPI_COMM_WORLD,REQ,IERR)! RECV THE BUFFER
+endif
 #endif
 
   END SUBROUTINE MPI_ITRANS2_R1
@@ -411,6 +414,7 @@ SUBROUTINE COMM_ERRHANDLER_FUNCTION(COMM, ierr)
       integer :: TAG
 
 #ifdef WITH_MPI
+if (size(A)>0) then
       TAG = (ORIG+1)*NPROCS*2+DEST+1
       if (rank==ORIG) &
           CALL MPI_ISEND(A(1,1), SIZE(A), MPI_REAL8, DEST, &
@@ -419,6 +423,7 @@ SUBROUTINE COMM_ERRHANDLER_FUNCTION(COMM, ierr)
       if (rank==dest) &
           CALL MPI_IRECV(A(1,1), SIZE(A), MPI_REAL8, ORIG, &
           TAG, MPI_COMM_WORLD,REQ,IERR)! RECV THE BUFFER
+endif
 #endif
 
   END SUBROUTINE MPI_ITRANS2_R2
@@ -453,15 +458,15 @@ SUBROUTINE COMM_ERRHANDLER_FUNCTION(COMM, ierr)
       integer :: ierr,i=0,j=0,k
       integer ,optional :: a
     
-j=j+1
-if (present(a)) j=a
+!j=j+1
+!if (present(a)) j=a
 
-do i=0,nprocs-1
-    k=-j
-    if (rank==i) k=j
-    call bcast(k,i)
-    if (k/=j) call abort
-enddo
+!do i=0,nprocs-1
+!    k=-j
+!    if (rank==i) k=j
+!    call bcast(k,i)
+!    if (k/=j) call abort
+!enddo
 
 !      do i =1,10000
 !k=mod(i+1,nprocs)

@@ -940,6 +940,7 @@ if(.true.)then
            if (indfl(fr)(2:2)=="1") fr2=fr1+1
            if (indfl(fr)(2:2)=="2") fr2=fr1-1
          endif
+         call bcast(fr2,orig1)
       elseif(tab_raccord(fri)/=0) then ! old raccord boundary
          test=.true.
          if (rank==orig1) &
@@ -1054,7 +1055,6 @@ if(.true.)then
 !    print*,l,' : filling done'
    enddo
 endif
-    write(stderr,*) "done"
  return
 
 
