@@ -42,7 +42,6 @@ contains
        call synterr(mot,imot,nmot,comment)
     else
        call sum_mpi(lzx,lzx2)
-       write(stderr,*) rank,lzx2,klzx
        call vallent(mot,imot,nm,ldom,ldomd,lzx2,klzx)
     endif
 !

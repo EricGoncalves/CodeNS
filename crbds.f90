@@ -84,10 +84,10 @@ contains
     bcg_to_bci(mfbe)=mfbe
     if(present(mfbi))    bcg_to_bci(mfbe)=mfbi
 !
+    kmtbx=2
     if(bg_to_proc(l)==rank) then
       num_bcl=num_bcl+1
       mtbx=mtbx+1
-      kmtbx=2
       mtb=mtbx
       call reallocate_s(bcl_to_bcg,mtb)
       call reallocate_s(ndlb,mtb)

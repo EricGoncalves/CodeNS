@@ -772,9 +772,14 @@ enddo
       IMPLICIT NONE
       integer,INTENT(INOUT) :: IN(:)
       integer,INTENT(IN)    :: ORIG
+      integer,allocatable :: buff(:) ! securiy necessary
       integer :: ierr
 #ifdef WITH_MPI
-      CALL MPI_BCAST( IN(1),SIZE(IN), MPI_INTEGER, ORIG, MPI_COMM_WORLD,IERR)
+      allocate(buff(size(in)))
+      buff=in
+      CALL MPI_BCAST( buff(1),SIZE(IN), MPI_INTEGER, ORIG, MPI_COMM_WORLD,IERR)
+      in=buff
+      deallocate(buff)
 #endif
 
   END SUBROUTINE BCAST_1I

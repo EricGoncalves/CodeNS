@@ -34,16 +34,15 @@ contains
     integer             :: nblocks,nxyza,i,j,k,xyz,xs,ys,zs,nmin,nmax,nmin1,nmax1
     integer             :: imot(nmx),nmot,fr,imax,imin,jmax,jmin,kmax,kmin
     integer             :: l2,mfbe,nid,njd,nijd,sblock,l3
-    integer             :: fr2,i2,j2,k2,l4,fr3
+    integer             :: fr2,i2,j2,k2,l4,fr3,fri2
     double precision    :: exs1,exs2,vbc(ista*lsta),sub_bc1(2,6)
     double precision,allocatable :: x(:),y(:),z(:)
     integer,allocatable :: nblock2(:),nblockd(:,:),ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:)
     integer,allocatable :: new2old_b(:),num_cf2(:,:,:)
     integer,allocatable :: ni1(:,:,:),nj1(:,:,:),nk1(:,:,:),ncbd(:)
 
-    integer             :: save_lt,save_ndimntbx,l,verbosity,l1,ll2,ll3
-    integer             :: save_klzx
-    integer             :: save_kmtbx,save_lzx,save_mdimtbx,save_mdimubx
+    integer             :: save_lt,l,verbosity,l1,ll2,ll3
+    integer             :: save_lzx,save_mdimtbx,save_mdimubx
     integer             :: save_mtb,save_mtt,save_ndimctbx
     integer             :: save_ndimubx
     integer             :: val(3),fr4,fri,save_mtbx
@@ -106,7 +105,7 @@ if(.true.)then
 
                   xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),l
+                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),bl_to_bg(l)
 
                enddo
                write(42,*) ""
@@ -131,7 +130,7 @@ if(.true.)then
 
                   xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),fr
+                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),bcl_to_bcg(fr)
 
                enddo
                if(indfl(fr)(1:1)/="i") write(42,*) ""
@@ -207,7 +206,6 @@ if(.true.)then
 
     ! Save old split
     save_lzx=lzx
-    save_klzx=klzx
     save_lt=lt
 
     ! Save old grid
@@ -236,7 +234,6 @@ if(.true.)then
     save_npfb=npfb
     save_ndimubx = ndimubx
     save_ndimctbx=ndimctbx
-    save_ndimntbx=ndimntbx
 
     ! Save old boundary
     save_ndlb=ndlb
@@ -264,7 +261,6 @@ if(.true.)then
     save_mnc=mnc
 
     save_mtbx=mtbx
-    save_kmtbx=kmtbx
     save_mtb=mtb
     save_mtt=mtt
     save_mdimubx=mdimubx
@@ -579,7 +575,7 @@ if(.true.)then
 
                 if (rank==orig1) then
 
-                    call new2old_p(0,0,0,xs,ys,zs,i,j,k,l)
+                    call new2old_p(1,1,1,xs,ys,zs,i,j,k,l)
                     call new2old_p(ni(i,j,k,l),nj(i,j,k,l),nk(i,j,k,l),xe,ye,ze,i,j,k,l)
 
                     if ( save_iminb(fr)<=xe .and. &
@@ -594,7 +590,7 @@ if(.true.)then
                        ! part of the boundary which concern this block
 
                         sub_bc(1,1)=min(xe,max(xs,save_iminb(fr))) ! coordinate of the new boundary
-                        sub_bc(1,2)=min(xe,max(xs,save_imaxb(fr))) ! in the block ref
+                        sub_bc(1,2)=min(xe,max(xs,save_imaxb(fr))) ! in the old block ref
                         sub_bc(1,3)=min(ye,max(ys,save_jminb(fr)))
                         sub_bc(1,4)=min(ye,max(ys,save_jmaxb(fr)))
                         sub_bc(1,5)=min(ze,max(zs,save_kminb(fr)))
@@ -617,7 +613,7 @@ if(.true.)then
                     if(rank==orig1) then
                       sub_bc(1,1)=sub_bc(1,1)-save_iminb(fr)
                       sub_bc(1,2)=sub_bc(1,2)-save_iminb(fr) ! coordinate of the new boundary
-                      sub_bc(1,3)=sub_bc(1,3)-save_jminb(fr) ! in the boundary ref
+                      sub_bc(1,3)=sub_bc(1,3)-save_jminb(fr) ! in the old boundary ref
                       sub_bc(1,4)=sub_bc(1,4)-save_jminb(fr)
                       sub_bc(1,5)=sub_bc(1,5)-save_kminb(fr)
                       sub_bc(1,6)=sub_bc(1,6)-save_kminb(fr)
@@ -630,7 +626,7 @@ if(.true.)then
 
                       imin=sub_bc(1,1)+save_iminb(fr3)
                       imax=sub_bc(1,2)+save_iminb(fr3) ! coordinate of the new boundary
-                      jmin=sub_bc(1,3)+save_jminb(fr3) ! in the block ref
+                      jmin=sub_bc(1,3)+save_jminb(fr3) ! in the old block ref
                       jmax=sub_bc(1,4)+save_jminb(fr3)
                       kmin=sub_bc(1,5)+save_kminb(fr3)
                       kmax=sub_bc(1,6)+save_kminb(fr3)
@@ -654,7 +650,7 @@ if(.true.)then
                                     nsub=nsub+1
                                     call reallocate_s(sub_bc,nsub,6)
                                     sub_bc(nsub,1)=min(xe,max(xs,save_iminb(fr3)))-save_iminb(fr3) ! coordinate of the new boundary
-                                    sub_bc(nsub,2)=min(xe,max(xs,save_imaxb(fr3)))-save_iminb(fr3) ! in the boundary ref
+                                    sub_bc(nsub,2)=min(xe,max(xs,save_imaxb(fr3)))-save_iminb(fr3) ! in the old boundary ref
                                     sub_bc(nsub,3)=min(ye,max(ys,save_jminb(fr3)))-save_jminb(fr3)
                                     sub_bc(nsub,4)=min(ye,max(ys,save_jmaxb(fr3)))-save_jminb(fr3)
                                     sub_bc(nsub,5)=min(ze,max(zs,save_kminb(fr3)))-save_kminb(fr3)
@@ -670,7 +666,7 @@ if(.true.)then
                     if(rank==orig1) then
                       sub_bc(:,1)=sub_bc(:,1)+save_iminb(fr)
                       sub_bc(:,2)=sub_bc(:,2)+save_iminb(fr) ! coordinate of the new boundary
-                      sub_bc(:,3)=sub_bc(:,3)+save_jminb(fr) ! in the block ref
+                      sub_bc(:,3)=sub_bc(:,3)+save_jminb(fr) ! in the old block ref
                       sub_bc(:,4)=sub_bc(:,4)+save_jminb(fr)
                       sub_bc(:,5)=sub_bc(:,5)+save_kminb(fr)
                       sub_bc(:,6)=sub_bc(:,6)+save_kminb(fr)
@@ -682,6 +678,8 @@ if(.true.)then
                   call bcast(indmf,orig1)
                   do i2=1,nsub
                       mfbe=mfbe+1
+                      call old2new_p(sub_bc(i2,1),sub_bc(i2,3),sub_bc(i2,5),sub_bc(i2,1),sub_bc(i2,3),sub_bc(i2,5),i,j,k,l)
+                      call old2new_p(sub_bc(i2,2),sub_bc(i2,4),sub_bc(i2,6),sub_bc(i2,2),sub_bc(i2,4),sub_bc(i2,6),i,j,k,l)
                       if(verbosity>=2) then
                         call str(mot,imot,nmx,4 ,mfbe)
                         call str(mot,imot,nmx,5 ,1)
@@ -721,6 +719,7 @@ if(.true.)then
                 l2=sum(nblock2(1:l-1))+i+(j-1)*nblockdg(1,l)+(k-1)*nblockdg(2,l)*nblockdg(1,l)
                 ll2=bg_to_bl(l2)
                 orig1=bg_to_proc(l2)
+                sub_bc=0
 
                 if (i>1) then
                   l3=sum(nblock2(1:l-1))+i-1+(j-1)*nblockdg(1,l)+(k-1)*nblockdg(2,l)*nblockdg(1,l)
@@ -947,7 +946,7 @@ if(.true.)then
 
                   xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),l
+                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),bl_to_bg(l)
 
                enddo
                write(42,*) ""
@@ -972,7 +971,7 @@ if(.true.)then
 
                   xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),fr
+                  write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),bcl_to_bcg(fr)
 
                enddo
                if(indfl(fr)(1:1)/="i") write(42,*) ""
@@ -990,7 +989,6 @@ if(.true.)then
     !############################################################################################
     !################### INITIALIZE COINCIDENT BOUNDARIES #######################################
     !############################################################################################
-
     ip21=ndimntbx
     ip40=mdimubx            ! Nb point frontiere
     ip41=mdimtbx            ! Nb point frontiere
@@ -1025,41 +1023,44 @@ if(.true.)then
            if (indfl(fr)(2:2)=="1") fr2=fr1+1
            if (indfl(fr)(2:2)=="2") fr2=fr1-1
          endif
-!      elseif(tab_raccord(fri)/=0) then ! old raccord boundary
-!         test=.true.
-!         if (rank==orig1) &
-!            call get_coords_box(sub_bc1(1,1),sub_bc1(1,2),sub_bc1(1,3),sub_bc1(1,4),sub_bc1(1,5),sub_bc1(1,6),                 &
-!                  iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr), &
-!                  id1(l1),id2(l1),jd1(l1),jd2(l1),kd1(l1),kd2(l1),npn(l1),       &
-!                  x,y,z)
-!         call bcast(sub_bc1,orig1)
+      elseif(tab_raccord(fri)/=0) then ! old raccord boundary
+         test=.true.
+         if (rank==orig1) &
+            call get_coords_box(sub_bc1(1,1),sub_bc1(1,2),sub_bc1(1,3),sub_bc1(1,4),sub_bc1(1,5),sub_bc1(1,6),                 &
+                  iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr), &
+                  id1(l1),id2(l1),jd1(l1),jd2(l1),kd1(l1),kd2(l1),npn(l1),       &
+                  x,y,z)
+         call bcast(sub_bc1,orig1)
 
-!         fr4=0
-!         find_otherblock: do fr2=1,mtb
-!            fr3=bcl_to_bcg(fr2)
-!            l2=bcg_to_bg(fr3)
-!            l3=bg_to_bl(l2)
-!            if(tab_raccord(bcg_to_bci(fr3))==fri) then  ! potential new boundary number
+         fr4=0
+         find_otherblock: do fr2=1,mtb
+            fr3=bcl_to_bcg(fr2)
+            l2=bcg_to_bg(fr3)
+            l3=bg_to_bl(l2)
+            fri2=bcg_to_bci(fr3)
+            if(fri2/=0)then
+            if(tab_raccord(fri2)==fri) then  ! potential new boundary number
 
-!              call get_coords_box(sub_bc1(2,1),sub_bc1(2,2),sub_bc1(2,3),sub_bc1(2,4),sub_bc1(2,5),sub_bc1(2,6),                 &
-!                    iminb(fr2),imaxb(fr2),jminb(fr2),jmaxb(fr2),kminb(fr2),kmaxb(fr2), &
-!                    id1(l3),id2(l3),jd1(l3),jd2(l3),kd1(l3),kd2(l3),npn(l3),       &
-!                    x,y,z)
+              call get_coords_box(sub_bc1(2,1),sub_bc1(2,2),sub_bc1(2,3),sub_bc1(2,4),sub_bc1(2,5),sub_bc1(2,6),                 &
+                    iminb(fr2),imaxb(fr2),jminb(fr2),jmaxb(fr2),kminb(fr2),kmaxb(fr2), &
+                    id1(l3),id2(l3),jd1(l3),jd2(l3),kd1(l3),kd2(l3),npn(l3),       &
+                    x,y,z)
 
-!              if (abs(sub_bc1(1,1)-sub_bc1(2,1))<=1d-10 .and. &
-!                  abs(sub_bc1(1,2)-sub_bc1(2,2))<=1d-10 .and. &
-!                  abs(sub_bc1(1,3)-sub_bc1(2,3))<=1d-10 .and. & ! It's me ! 
-!                  abs(sub_bc1(1,4)-sub_bc1(2,4))<=1d-10 .and. &
-!                  abs(sub_bc1(1,5)-sub_bc1(2,5))<=1d-10 .and. &
-!                  abs(sub_bc1(1,6)-sub_bc1(2,6))<=1d-10) then
+              if (abs(sub_bc1(1,1)-sub_bc1(2,1))<=1d-10 .and. &
+                  abs(sub_bc1(1,2)-sub_bc1(2,2))<=1d-10 .and. &
+                  abs(sub_bc1(1,3)-sub_bc1(2,3))<=1d-10 .and. & ! It's me ! 
+                  abs(sub_bc1(1,4)-sub_bc1(2,4))<=1d-10 .and. &
+                  abs(sub_bc1(1,5)-sub_bc1(2,5))<=1d-10 .and. &
+                  abs(sub_bc1(1,6)-sub_bc1(2,6))<=1d-10) then
 
-!                  fr4=fr3
-!                  exit find_otherblock
-!              endif
-!            endif
-!         enddo find_otherblock
-!         call sum_mpi(fr4) ! there should be only one non zero value in this sum
-!         fr2=fr4
+                  fr4=fr3
+                  exit find_otherblock
+              endif
+            endif
+            endif
+         enddo find_otherblock
+         call sum_mpi(fr4) ! there should be only one non zero value in this sum
+         fr2=fr4
       endif
       if (test) then   ! raccord boundary
 
@@ -1136,6 +1137,7 @@ if(.true.)then
 !    print*,l,' : filling done'
    enddo
 endif
+    write(stderr,*) "done"
  return
 
 
