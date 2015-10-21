@@ -38,35 +38,24 @@ contains
     double precision    :: exs1,exs2,vbc(ista*lsta),sub_bc1(2,6)
     double precision,allocatable :: x(:),y(:),z(:)
     integer,allocatable :: nblock2(:),nblockd(:,:),ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:)
-    integer,allocatable :: new2old_b(:),num_cf2(:,:,:)
+    integer,allocatable :: num_cf2(:,:,:)
     integer,allocatable :: ni1(:,:,:),nj1(:,:,:),nk1(:,:,:),ncbd(:)
 
     integer             :: save_lt,l,verbosity,l1,ll2,ll3
-    integer             :: save_lzx,save_mdimtbx,save_mdimubx
-    integer             :: save_mtb,save_mtt,save_ndimctbx
-    integer             :: save_ndimubx
-    integer             :: val(3),fr4,fri,save_mtbx
-    double precision,allocatable :: save_x(:),save_y(:),save_z(:),save_bc(:,:),save_bceqt(:,:),save_vbc(:)
-    integer,allocatable :: save_ii1(:),save_jj1(:),save_kk1(:)
+    integer             :: val(3),fr4,fri
+    double precision,allocatable :: save_x(:),save_y(:),save_z(:)
     integer,allocatable :: save_ii2(:),save_jj2(:),save_kk2(:)
     integer,allocatable :: save_id1(:),save_jd1(:),save_kd1(:)
     integer,allocatable :: save_id2(:),save_jd2(:),save_kd2(:)
-    integer,allocatable :: save_npn(:),save_ndlb(:)
+    integer,allocatable :: save_npn(:)
     integer,allocatable :: save_iminb(:),save_jminb(:),save_kminb(:)
     integer,allocatable :: save_imaxb(:),save_jmaxb(:),save_kmaxb(:)
-    integer,allocatable :: save_nnn(:),save_nnc(:),save_nnfb(:)
-    integer,allocatable :: save_npc(:),save_npfb(:),save_nfei(:)
-    integer,allocatable :: save_mpb(:),save_ncbd(:),save_mmb(:)
-    integer,allocatable :: save_ndcc(:),save_nbdc(:),save_nfbc(:)
-    integer,allocatable :: save_mdnc(:),save_mper(:),save_mpc(:)
-    integer,allocatable :: save_ncin(:),save_mnc(:)
-    integer,allocatable :: save_bcg_to_proc(:),save_bcg_to_bcl(:),save_bcg_to_bci(:),save_bcl_to_bcg(:)
+    integer,allocatable :: save_bcg_to_bcl(:),save_bcg_to_bci(:)
     integer,allocatable :: save_bg_to_proc(:),save_bg_to_bl(:),save_bg_to_bi(:),save_bl_to_bg(:)
     integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),nblockdg(:,:),save_bcg_to_bg(:),sub_bc(:,:)
-    integer             :: save_ip41,save_num_bcg,save_num_bci,save_num_bcl,save_num_bg
-    integer             :: save_num_bl,save_num_bi,proc,orig,dest,xe,ye,ze,fr1,orig1,orig2,nsub
+    integer             :: save_num_bcg,save_num_bg
+    integer             :: proc,orig,dest,xe,ye,ze,fr1,orig1,orig2,nsub
     character(len=2),allocatable :: save_indfl(:)
-    character(len=4),allocatable :: save_cl(:)
 
     character(len=50)::fich
     character(len=32) ::  mot(nmx)
@@ -152,8 +141,6 @@ if(.true.)then
     allocate(save_x(size(x)))
     allocate(save_y(size(y)))
     allocate(save_z(size(z)))
-    allocate(save_ndlb(size(ndlb)))
-    allocate(save_nfei(size(nfei)))
     allocate(save_indfl(size(indfl)))
     allocate(save_iminb(size(iminb)))
     allocate(save_imaxb(size(imaxb)))
@@ -161,12 +148,6 @@ if(.true.)then
     allocate(save_jmaxb(size(jmaxb)))
     allocate(save_kminb(size(kminb)))
     allocate(save_kmaxb(size(kmaxb)))
-    allocate(save_mpb(size(mpb)))
-    allocate(save_mmb(size(mmb)))
-    allocate(save_ncbd(size(ncbd)))
-    allocate(save_ii1(size(ii1)))
-    allocate(save_jj1(size(jj1)))
-    allocate(save_kk1(size(kk1)))
     allocate(save_ii2(size(ii2)))
     allocate(save_jj2(size(jj2)))
     allocate(save_kk2(size(kk2)))
@@ -176,45 +157,22 @@ if(.true.)then
     allocate(save_id2(size(id2)))
     allocate(save_jd2(size(jd2)))
     allocate(save_kd2(size(kd2)))
-    allocate(save_nnn(size(nnn)))
-    allocate(save_nnc(size(nnc)))
-    allocate(save_nnfb(size(nnfb)))
     allocate(save_npn(size(npn)))
-    allocate(save_npc(size(npc)))
-    allocate(save_npfb(size(npfb)))
-    allocate(save_cl(size(cl)))
-    allocate(save_ndcc(size(ndcc)))
-    allocate(save_nbdc(size(nbdc)))
-    allocate(save_nfbc(size(nfbc)))
-    allocate(save_bc(size(bc,1),size(bc,2)))
-    allocate(save_mdnc(size(mdnc)))
-    allocate(save_mper(size(mper)))
-    allocate(save_mpc(size(mpc)))
-    allocate(save_ncin(size(ncin)))
-    allocate(save_bceqt(size(bceqt,1),size(bceqt,2)))
-    allocate(save_mnc(size(mnc)))
-    allocate(save_bcg_to_proc(size(bcg_to_proc)))
     allocate(save_bcg_to_bcl(size(bcg_to_bcl)))
     allocate(save_bcg_to_bci(size(bcg_to_bci)))
-    allocate(save_bcl_to_bcg(size(bcl_to_bcg)))
     allocate(save_bg_to_proc(size(bg_to_proc)))
     allocate(save_bg_to_bl(size(bg_to_bl)))
     allocate(save_bg_to_bi(size(bg_to_bi)))
     allocate(save_bl_to_bg(size(bl_to_bg)))
     allocate(save_bcg_to_bg(size(bcg_to_bg)))
-    allocate(save_vbc(size(vbc)))
 
     ! Save old split
-    save_lzx=lzx
     save_lt=lt
 
     ! Save old grid
     save_x=x
     save_y=y
     save_z=z
-    save_ii1 = ii1
-    save_jj1 = jj1
-    save_kk1 = kk1
     save_ii2 = ii2
     save_jj2 = jj2
     save_kk2 = kk2
@@ -225,19 +183,9 @@ if(.true.)then
     save_jd2 = jd2
     save_kd2 = kd2
 
-    save_nnn  = nnn
-    save_nnc  = nnc
-    save_nnfb = nnfb
-
     save_npn = npn
-    save_npc = npc
-    save_npfb=npfb
-    save_ndimubx = ndimubx
-    save_ndimctbx=ndimctbx
 
     ! Save old boundary
-    save_ndlb=ndlb
-    save_nfei=nfei
     save_indfl=indfl
     save_iminb=iminb
     save_imaxb=imaxb
@@ -245,40 +193,12 @@ if(.true.)then
     save_jmaxb=jmaxb
     save_kminb=kminb
     save_kmaxb=kmaxb
-    save_mpb=mpb
-    save_mmb=mmb
-    save_ncbd=ncbd
-    save_cl=cl
-    save_ndcc=ndcc
-    save_nbdc=nbdc
-    save_nfbc=nfbc
-    save_bc=bc
-    save_mdnc=mdnc
-    save_mper=mper
-    save_mpc=mpc
-    save_ncin=ncin
-    save_bceqt=bceqt
-    save_mnc=mnc
 
-    save_mtbx=mtbx
-    save_mtb=mtb
-    save_mtt=mtt
-    save_mdimubx=mdimubx
-    save_mdimtbx=mdimtbx
-
-    save_ip41=ip41
-    save_vbc=vbc
     save_num_bcg=num_bcg
-    save_num_bci=num_bci
-    save_num_bcl=num_bcl
     save_num_bg=num_bg
-    save_num_bi=num_bi
-    save_num_bl=num_bl
 
-    save_bcg_to_proc=bcg_to_proc
     save_bcg_to_bcl=bcg_to_bcl
     save_bcg_to_bci=bcg_to_bci
-    save_bcl_to_bcg=bcl_to_bcg
     save_bg_to_proc=bg_to_proc
     save_bg_to_bl=bg_to_bl
     save_bg_to_bi=bg_to_bi
@@ -468,7 +388,6 @@ if(.true.)then
     !############################################################################################
     !######################### RECREATE GRID ####################################################
     !############################################################################################
-    allocate(new2old_b(nblocks))
 
     if(verbosity>=2) then
       mot="" ; nmot=7 ; imot=0
@@ -540,8 +459,6 @@ if(.true.)then
                             id1(l3),jd1(l3),kd1(l3),nid,nijd,npn(l3),orig,dest)
                   endif
                 endif
-
-                new2old_b(l2)= l
 
              enddo
           enddo
@@ -982,9 +899,9 @@ if(.true.)then
       close(42)
     endif
 
- deallocate(save_x,save_y,save_z,save_ndlb,save_nfei,save_indfl,save_mpb,save_mmb,save_ncbd,save_ii1) ! TESTED AND OK
- deallocate(save_jj1,save_kk1,save_ii2,save_jj2,save_kk2,save_id1,save_jd1,save_kd1,save_id2,save_jd2)
- deallocate(save_kd2,save_nnn,save_nnc,save_nnfb,save_npn,save_npc,save_npfb)
+ deallocate(save_x,save_y,save_z,save_indfl) ! TESTED AND OK
+ deallocate(save_ii2,save_jj2,save_kk2,save_id1,save_jd1,save_kd1,save_id2,save_jd2)
+ deallocate(save_kd2,save_npn)
 
     !############################################################################################
     !################### INITIALIZE COINCIDENT BOUNDARIES #######################################
