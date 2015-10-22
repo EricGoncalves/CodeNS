@@ -539,7 +539,7 @@ program solve
         endif
      case('partition')
 !--   PARTITION
-       call partitionnement(x,y,z,mot,imot,nmot,ncbd,mnc,ncin,bceqt,exs1,exs2)
+       call partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2)
 !--   ALLOC
      case('alloc')
 !--   ALLOC DOM
