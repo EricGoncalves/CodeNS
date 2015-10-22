@@ -1,6 +1,7 @@
 module mod_partitionnement
   use tools
   implicit none
+  integer :: verbosity
 contains
   subroutine partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2)
     use boundary
@@ -47,7 +48,7 @@ contains
 
     integer             :: save_lt,save_num_bcg,save_num_bg
     integer             :: nblocks,nxyza
-    integer             :: imot(nmx),nmot,verbosity
+    integer             :: imot(nmx),nmot
     integer             :: nmin,nmax,nmin1,nmax1
     integer             :: imax,imin,jmax,jmin,kmax,kmin
     integer             :: nid,njd,nijd,sblock
@@ -94,7 +95,7 @@ contains
        !############################# SAVE OLD MESH FOR CHECKING PURPOSE ###########################
        !############################################################################################
        if(verbosity>=3) call write_mesh("orig",x,y,z)
-          
+
        !############################################################################################
        !################# SAVE ALL MESH AND BOUNDARIES VARIABLES ###################################
        !#################            AND CLEAR EVERYTHING        ###################################
@@ -239,7 +240,7 @@ contains
        ii2g=0
        jj2g=0
        kk2g=0
-  
+
        ! Gather all block size
        ! in order to keep the order, a gather call, won't do the trick
        do lli1=1,save_lt
@@ -260,9 +261,9 @@ contains
        !          ni,nj,nk  : nombre de points par direction de chaque nouveau block
        ! entrée : tout le reste
        call compute_split(nblock2,nblockdg,ni,nj,nk,                  &
-                          nxyza,save_num_bg,nblocks,save_lt,          &
-                          save_ii2 ,save_jj2 ,save_kk2 ,save_bl_to_bg,&
-                          ii2g,jj2g,kk2g,save_bg_to_proc)
+            nxyza,save_num_bg,nblocks,save_lt,          &
+            save_ii2 ,save_jj2 ,save_kk2 ,save_bl_to_bg,&
+            ii2g,jj2g,kk2g,save_bg_to_proc)
 
        deallocate(ii2g,jj2g,kk2g)
 
@@ -302,12 +303,7 @@ contains
        !######################### RECREATE GRID ####################################################
        !############################################################################################
 
-       if(verbosity>=2) then
-          mot="" ; nmot=7 ; imot=0
-          mot(1)="create" ; imot(1)=6
-          mot(2)="dom"    ; imot(2)=3
-          mot(3)="st"     ; imot(3)=2
-       endif
+
        !    print*,'create new grid '
        do lgi1=1,save_num_bg     !     create new grid and initialize it
           do k=1,nblockdg(3,lgi1)!  tout le monde parcours les nouveaux blocs dans le même ordre
@@ -316,15 +312,7 @@ contains
 
                    lgf1=old2new_b(i,j,k,lgi1)
 
-                   if(verbosity>=2) then
-                      call str(mot,imot,nmx,4 ,lgf1)
-                      call str(mot,imot,nmx,5 ,ni(i,j,k,lgi1))
-                      call str(mot,imot,nmx,6 ,nj(i,j,k,lgi1))
-                      call str(mot,imot,nmx,7 ,nk(i,j,k,lgi1))
-                      call c_crdms( mot,imot,nmot,save_bg_to_bi(lgi1))
-                   else
-                      call crdms( lgf1,ni(i,j,k,lgi1),nj(i,j,k,lgi1),nk(i,j,k,lgi1),save_bg_to_bi(lgi1))
-                   endif
+                   call create_grid(lgf1,ni(i,j,k,lgi1),nj(i,j,k,lgi1),nk(i,j,k,lgi1),save_bg_to_bi(lgi1))
 
                    proci1=save_bg_to_proc(lgi1)
                    procf1=bg_to_proc(lgf1)
@@ -358,16 +346,8 @@ contains
 
                       elseif(rank==procf1) then
                          llf1=bg_to_bl(lgf1)
-                         call reallocate_s(x,ndimntbx)
-                         call reallocate_s(y,ndimntbx)
-                         call reallocate_s(z,ndimntbx)
 
-                         nid = id2(llf1)-id1(llf1)+1
-                         njd = jd2(llf1)-jd1(llf1)+1
-                         nijd = nid*njd
-
-                         call recv_grid(x,y,z,ii1(llf1),jj1(llf1),kk1(llf1),ii2(llf1),jj2(llf1),kk2(llf1),       &
-                              id1(llf1),jd1(llf1),kd1(llf1),nid,nijd,npn(llf1),proci1,procf1)
+                         call recv_grid(x,y,z,llf1,proci1,procf1)
                       endif
                    endif
 
@@ -379,12 +359,6 @@ contains
        !############################################################################################
        !######################### RECREATE OLD BOUNDARIES ##########################################
        !############################################################################################
-       if(verbosity>=2) then
-          mot="" ; nmot=13  ; imot=0
-          mot(1)="create"   ; imot(1)=6
-          mot(2)="boundary" ; imot(2)=8
-          mot(3)="st"       ; imot(3)=2
-       endif
 
        !    print*,'recreate old boundaries '
        do frgi1=1,save_num_bcg
@@ -507,25 +481,10 @@ contains
                       ! coordinate of the new boundary in the new block ref
                       call old2new_p(sub_bc(i2,1),sub_bc(i2,3),sub_bc(i2,5),sub_bc(i2,1),sub_bc(i2,3),sub_bc(i2,5),i,j,k,lgi1)
                       call old2new_p(sub_bc(i2,2),sub_bc(i2,4),sub_bc(i2,6),sub_bc(i2,2),sub_bc(i2,4),sub_bc(i2,6),i,j,k,lgi1)
-                      if(verbosity>=2) then
-                         call str(mot,imot,nmx,4 ,frgf1)
-                         call str(mot,imot,nmx,5 ,1)
-                         call str(mot,imot,nmx,6 ,lgf1)
-                         call str(mot,imot,nmx,7 ,sub_bc(i2,1))
-                         call str(mot,imot,nmx,8 ,sub_bc(i2,2))
-                         call str(mot,imot,nmx,9 ,sub_bc(i2,3))
-                         call str(mot,imot,nmx,10,sub_bc(i2,4))
-                         call str(mot,imot,nmx,11,sub_bc(i2,5))
-                         call str(mot,imot,nmx,12,sub_bc(i2,6))
-                         mot(13)=indmf ; imot(13)=2
-                         call c_crbds( mot,imot,nmot, ncbd,save_bcg_to_bci(frgi1))
-                      else
-                         call crbds( &
-                              frgf1,1,lgf1, &
-                              sub_bc(i2,1),sub_bc(i2,2),sub_bc(i2,3),sub_bc(i2,4),sub_bc(i2,5),sub_bc(i2,6), &
-                              indmf, &
-                              ncbd,save_bcg_to_bci(frgi1))
-                      endif
+
+                      call create_boundary(frgf1,lgf1,indmf,ncbd,save_bcg_to_bci(frgi1),&
+                           sub_bc(i2,1),sub_bc(i2,2),sub_bc(i2,3),sub_bc(i2,4),sub_bc(i2,5),sub_bc(i2,6))
+
                    enddo
                 enddo
              enddo
@@ -572,46 +531,12 @@ contains
                       call bcast(sub_bc(2,:),procf2)
 
                       frgf1=frgf1+1
-                      if(verbosity>=2) then
-                         call str(mot,imot,nmx,4 ,frgf1)
-                         call str(mot,imot,nmx,5 ,1)
-                         call str(mot,imot,nmx,6 ,lgf1)
-                         call str(mot,imot,nmx,7 ,sub_bc(1,1))
-                         call str(mot,imot,nmx,8 ,sub_bc(1,2))
-                         call str(mot,imot,nmx,9 ,sub_bc(1,3))
-                         call str(mot,imot,nmx,10,sub_bc(1,4))
-                         call str(mot,imot,nmx,11,sub_bc(1,5))
-                         call str(mot,imot,nmx,12,sub_bc(1,6))
-                         mot(13)="i1" ; imot(13)=2
-                         call c_crbds( mot,imot,nmot, ncbd,0)
-                      else
-                         call crbds( &
-                              frgf1,1,lgf1, &
-                              sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6), &
-                              'i1', &
-                              ncbd,0)
-                      endif
+                      call create_boundary(frgf1,lgf1,"i1",ncbd,0,&
+                           sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6))
 
                       frgf1=frgf1+1
-                      if(verbosity>=2) then
-                         call str(mot,imot,nmx,4 ,frgf1)
-                         call str(mot,imot,nmx,5 ,1)
-                         call str(mot,imot,nmx,6 ,lgf2)
-                         call str(mot,imot,nmx,7 ,sub_bc(2,1))
-                         call str(mot,imot,nmx,8 ,sub_bc(2,2))
-                         call str(mot,imot,nmx,9 ,sub_bc(2,3))
-                         call str(mot,imot,nmx,10,sub_bc(2,4))
-                         call str(mot,imot,nmx,11,sub_bc(2,5))
-                         call str(mot,imot,nmx,12,sub_bc(2,6))
-                         mot(13)="i2" ; imot(13)=2
-                         call c_crbds( mot,imot,nmot, ncbd,0)
-                      else
-                         call crbds( &
-                              frgf1,1,lgf2, &
-                              sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6), &
-                              'i2', &
-                              ncbd,0)
-                      endif
+                      call create_boundary(frgf1,lgf2,"i2",ncbd,0,&
+                           sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6))
                    endif
                    if (j>1) then
                       lgf2=old2new_b(i,j-1,k,lgi1)
@@ -638,46 +563,12 @@ contains
                       call bcast(sub_bc(2,:),procf2)
 
                       frgf1=frgf1+1
-                      if(verbosity>=2) then
-                         call str(mot,imot,nmx,4 ,frgf1)
-                         call str(mot,imot,nmx,5 ,1)
-                         call str(mot,imot,nmx,6 ,lgf1)
-                         call str(mot,imot,nmx,7 ,sub_bc(1,1))
-                         call str(mot,imot,nmx,8 ,sub_bc(1,2))
-                         call str(mot,imot,nmx,9 ,sub_bc(1,3))
-                         call str(mot,imot,nmx,10,sub_bc(1,4))
-                         call str(mot,imot,nmx,11,sub_bc(1,5))
-                         call str(mot,imot,nmx,12,sub_bc(1,6))
-                         mot(13)="j1" ; imot(13)=2
-                         call c_crbds( mot,imot,nmot, ncbd,0)
-                      else
-                         call crbds( &
-                              frgf1,1,lgf1, &
-                              sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6), &
-                              'j1', &
-                              ncbd,0)
-                      endif
+                      call create_boundary(frgf1,lgf1,"j1",ncbd,0,&
+                           sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6))
 
                       frgf1=frgf1+1
-                      if(verbosity>=2) then
-                         call str(mot,imot,nmx,4 ,frgf1)
-                         call str(mot,imot,nmx,5 ,1)
-                         call str(mot,imot,nmx,6 ,lgf2)
-                         call str(mot,imot,nmx,7 ,sub_bc(2,1))
-                         call str(mot,imot,nmx,8 ,sub_bc(2,2))
-                         call str(mot,imot,nmx,9 ,sub_bc(2,3))
-                         call str(mot,imot,nmx,10,sub_bc(2,4))
-                         call str(mot,imot,nmx,11,sub_bc(2,5))
-                         call str(mot,imot,nmx,12,sub_bc(2,6))
-                         mot(13)="j2" ; imot(13)=2
-                         call c_crbds( mot,imot,nmot, ncbd,0)
-                      else
-                         call crbds( &
-                              frgf1,1,lgf2, &
-                              sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6), &
-                              'j2', &
-                              ncbd,0)
-                      endif
+                      call create_boundary(frgf1,lgf2,"j2",ncbd,0,&
+                           sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6))
                    endif
                    if (k>1) then
                       lgf2=old2new_b(i,j,k-1,lgi1)
@@ -704,46 +595,12 @@ contains
                       call bcast(sub_bc(2,:),procf2)
 
                       frgf1=frgf1+1
-                      if(verbosity>=2) then
-                         call str(mot,imot,nmx,4 ,frgf1)
-                         call str(mot,imot,nmx,5 ,1)
-                         call str(mot,imot,nmx,6 ,lgf1)
-                         call str(mot,imot,nmx,7 ,sub_bc(1,1))
-                         call str(mot,imot,nmx,8 ,sub_bc(1,2))
-                         call str(mot,imot,nmx,9 ,sub_bc(1,3))
-                         call str(mot,imot,nmx,10,sub_bc(1,4))
-                         call str(mot,imot,nmx,11,sub_bc(1,5))
-                         call str(mot,imot,nmx,12,sub_bc(1,6))
-                         mot(13)="k1" ; imot(13)=2
-                         call c_crbds( mot,imot,nmot, ncbd,0)
-                      else
-                         call crbds( &
-                              frgf1,1,lgf1, &
-                              sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6), &
-                              'k1', &
-                              ncbd,0)
-                      endif
+                      call create_boundary(frgf1,lgf1,"k1",ncbd,0,&
+                           sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6))
 
                       frgf1=frgf1+1
-                      if(verbosity>=2) then
-                         call str(mot,imot,nmx,4 ,frgf1)
-                         call str(mot,imot,nmx,5 ,1)
-                         call str(mot,imot,nmx,6 ,lgf2)
-                         call str(mot,imot,nmx,7 ,sub_bc(2,1))
-                         call str(mot,imot,nmx,8 ,sub_bc(2,2))
-                         call str(mot,imot,nmx,9 ,sub_bc(2,3))
-                         call str(mot,imot,nmx,10,sub_bc(2,4))
-                         call str(mot,imot,nmx,11,sub_bc(2,5))
-                         call str(mot,imot,nmx,12,sub_bc(2,6))
-                         mot(13)="k2" ; imot(13)=2
-                         call c_crbds( mot,imot,nmot, ncbd,0)
-                      else
-                         call crbds( &
-                              frgf1,1,lgf2, &
-                              sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6), &
-                              'k2', &
-                              ncbd,0)
-                      endif
+                      call create_boundary(frgf1,lgf2,"k2",ncbd,0,&
+                           sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6))
                    endif
                 enddo
              enddo
@@ -1009,11 +866,10 @@ contains
   end subroutine write_mesh
 
   subroutine compute_split(nsplit,nsplit_dir,nigf,njgf,nkgf,  &
-                           npoints,num_bgi,num_bgf,num_bli,   &
-                           nili,njli,nkli,bli_to_bgi,         &
-                           nigi,njgi,nkgi,bgi_to_proc)
+       npoints,num_bgi,num_bgf,num_bli,   &
+       nili,njli,nkli,bli_to_bgi,         &
+       nigi,njgi,nkgi,bgi_to_proc)
     use mod_mpi
-    use tools
     implicit none
     integer,intent(in) :: npoints,num_bgi,num_bgf,num_bli
     integer,dimension(num_bli),intent(in) :: nili,njli,nkli,bli_to_bgi
@@ -1029,42 +885,42 @@ contains
     nsplit=1     ! initial number of splitting for each existing block
     nsplit_dir=0 ! initial number of splitting per direction for each existing block
 
-     ! routine calculant combiens de fois splitter chaque block
-     ! sortie : nsplit (TODO : le vrai num_bgf)
-     ! entrée : tout le reste
-     call num_split(nsplit,num_bgi,npoints,num_bgf,nigi,njgi,nkgi)
+    ! routine calculant combiens de fois splitter chaque block
+    ! sortie : nsplit (TODO : le vrai num_bgf)
+    ! entrée : tout le reste
+    call num_split(nsplit,num_bgi,npoints,num_bgf,nigi,njgi,nkgi)
 
-     do ll=1,num_bli
-        lg=bli_to_bgi(ll)
+    do ll=1,num_bli
+       lg=bli_to_bgi(ll)
 
-        ! calcule le split pour un block, c'est à dire
-        ! le nombre de découpe par direction            (nblockd)
-        ! le nombre de points dans chaque nouveau block (nilf,njlf,nklf)
-        call triv_split(nsplit(lg),ll,npoints,nili ,njli ,nkli, &
-             nsplit_dir(:,lg),nilf,njlf,nklf)
+       ! calcule le split pour un block, c'est à dire
+       ! le nombre de découpe par direction            (nblockd)
+       ! le nombre de points dans chaque nouveau block (nilf,njlf,nklf)
+       call triv_split(nsplit(lg),ll,npoints,nili ,njli ,nkli, &
+            nsplit_dir(:,lg),nilf,njlf,nklf)
 
-        ! ajoute le split avec les splits des autres blocks localement
-        call reallocate_s(nigf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
-        nigf(:size(nilf,1),:size(nilf,2),:size(nilf,3),lg)=nilf
+       ! ajoute le split avec les splits des autres blocks localement
+       call reallocate_s(nigf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
+       nigf(:size(nilf,1),:size(nilf,2),:size(nilf,3),lg)=nilf
 
-        call reallocate_s(njgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
-        njgf(:size(njlf,1),:size(njlf,2),:size(njlf,3),lg)=njlf
+       call reallocate_s(njgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
+       njgf(:size(njlf,1),:size(njlf,2),:size(njlf,3),lg)=njlf
 
-        call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
-        nkgf(:size(nklf,1),:size(nklf,2),:size(nklf,3),lg)=nklf
-     enddo
+       call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
+       nkgf(:size(nklf,1),:size(nklf,2),:size(nklf,3),lg)=nklf
+    enddo
 
-     do lg=1,num_bgi
-        ! propage à tout le monde les informations sur le découpage
-        proc=bgi_to_proc(lg)
-        call bcast(nsplit_dir(:,lg),proc)
-        call reallocate_s(nigf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
-        call reallocate_s(njgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
-        call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
-        call bcast(nigf(:,:,:,lg),proc)
-        call bcast(njgf(:,:,:,lg),proc)
-        call bcast(nkgf(:,:,:,lg),proc)
-     enddo
+    do lg=1,num_bgi
+       ! propage à tout le monde les informations sur le découpage
+       proc=bgi_to_proc(lg)
+       call bcast(nsplit_dir(:,lg),proc)
+       call reallocate_s(nigf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
+       call reallocate_s(njgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
+       call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
+       call bcast(nigf(:,:,:,lg),proc)
+       call bcast(njgf(:,:,:,lg),proc)
+       call bcast(nkgf(:,:,:,lg),proc)
+    enddo
 
   end subroutine compute_split
 
@@ -1192,6 +1048,65 @@ contains
     end do
   end subroutine triv_split
 
+  subroutine create_grid(l,ni,nj,nk,bi)
+    use para_fige,only:nmx
+    use mod_c_crdms
+    use mod_crdms
+    implicit none
+    integer,intent(in) :: l,ni,nj,nk,bi
+    integer            :: imot(nmx),nmot
+    character(len=32)  :: mot(nmx)
+
+    if(verbosity>=2) then
+       mot="" ; nmot=7 ; imot=0
+       mot(1)="create" ; imot(1)=6
+       mot(2)="dom"    ; imot(2)=3
+       mot(3)="st"     ; imot(3)=2
+       call str(mot,imot,nmx,4 ,l)
+       call str(mot,imot,nmx,5 ,ni)
+       call str(mot,imot,nmx,6 ,nj)
+       call str(mot,imot,nmx,7 ,nk)
+       call c_crdms( mot,imot,nmot,bi)
+    else
+       call crdms(l,ni,nj,nk,bi)
+    endif
+  end subroutine create_grid
+
+  subroutine create_boundary(fr,l,indmf,ncbd,bci,&
+       imin,imax,jmin,jmax,kmin,kmax)
+    use para_fige,only:nmx
+    use mod_c_crbds
+    use mod_crbds
+    implicit none
+    integer            ,intent(in)    :: fr,l,bci,imin,imax,jmin,jmax,kmin,kmax
+    integer,allocatable,intent(inout) :: ncbd(:)
+    character(len=2)   ,intent(in)    :: indmf
+    integer            :: imot(nmx),nmot
+    character(len=32)  :: mot(nmx)
+
+    if(verbosity>=2) then
+       mot="" ; nmot=13  ; imot=0
+       mot(1)="create"   ; imot(1)=6
+       mot(2)="boundary" ; imot(2)=8
+       mot(3)="st"       ; imot(3)=2
+       call str(mot,imot,nmx,4 ,fr)
+       call str(mot,imot,nmx,5 ,1)
+       call str(mot,imot,nmx,6 ,l)
+       call str(mot,imot,nmx,7 ,imin)
+       call str(mot,imot,nmx,8 ,imax)
+       call str(mot,imot,nmx,9 ,jmin)
+       call str(mot,imot,nmx,10,jmax)
+       call str(mot,imot,nmx,11,kmin)
+       call str(mot,imot,nmx,12,kmax)
+       mot(13)=indmf ; imot(13)=2
+       call c_crbds( mot,imot,nmot, ncbd,bci)
+    else
+       call crbds(fr,1,l, &
+            imin,imax,jmin,jmax,kmin,kmax, &
+            indmf,ncbd,bci)
+    endif
+  end subroutine create_boundary
+
   subroutine copy_grid(l,l2,xs,ys,zs,x,y,z,save_x,save_y,save_z,       &
        save_id1,save_id2,save_jd1,save_jd2,save_kd1,save_kd2,save_npn)
     use maillage,only : kk1,kk2,jj1,jj2,ii1,ii2,kd1,kd2,jd1,jd2,id1,id2,npn
@@ -1262,29 +1177,38 @@ contains
     deallocate(buff)
   end subroutine send_grid
 
-  subroutine recv_grid(x,y,z,xs,ys,zs,xe,ye,ze,       &
-       id1,jd1,kd1,nid,nijd,npn,orig,dest)
+  subroutine recv_grid(x,y,z,l,orig,dest)
     use mod_mpi
+    use maillage
     implicit none
-    integer,intent(in)             :: xs,ys,zs,xe,ye,ze,id1,jd1,kd1,nid,nijd,npn,orig,dest
-    double precision,intent(inout) :: x(:),y(:),z(:)
-    double precision,allocatable   :: buff(:,:,:,:)
-    integer :: xi,yi,zi,xyz
+    integer                     ,intent(in)    :: l,orig,dest
+    double precision,allocatable,intent(inout) :: x(:),y(:),z(:)
 
-    allocate(buff(3,xe-xs+1,ye-ys+1,xe-xs+1))
+    double precision,allocatable :: buff(:,:,:,:)
+    integer                      :: xi,yi,zi,xyz,nid,njd,nijd
+
+    allocate(buff(3,ii2(l)-ii1(l)+1,jj2(l)-jj1(l)+1,ii2(l)-ii1(l)+1))
+
+    call reallocate_s(x,ndimntbx)
+    call reallocate_s(y,ndimntbx)
+    call reallocate_s(z,ndimntbx)
+
+    nid = id2(l)-id1(l)+1
+    njd = jd2(l)-jd1(l)+1
+    nijd = nid*njd
 
     call MPI_TRANS(buff,buff,orig,dest)
 
-    do zi=zs,ze
-       do yi=ys,ye
-          do xi=xs,xe
+    do zi=kk1(l),kk2(l)
+       do yi=jj1(l),jj2(l)
+          do xi=ii1(l),ii2(l)
 
-             xyz      =     npn+1+(     xi-     id1)+(     yi-     jd1)*     nid+(     zi-     kd1)*     nijd
+             xyz = npn(l)+1+(xi-id1(l)) + (yi-jd1(l))*nid + (zi-kd1(l))*nijd
 
              ! fill grid
-             x(xyz)=buff(1,xi-xs+1,yi-ys+1,zi-zs+1)
-             y(xyz)=buff(2,xi-xs+1,yi-ys+1,zi-zs+1)
-             z(xyz)=buff(3,xi-xs+1,yi-ys+1,zi-zs+1)
+             x(xyz)=buff(1,xi-ii1(l)+1,yi-jj1(l)+1,zi-kk1(l)+1)
+             y(xyz)=buff(2,xi-ii1(l)+1,yi-jj1(l)+1,zi-kk1(l)+1)
+             z(xyz)=buff(3,xi-ii1(l)+1,yi-jj1(l)+1,zi-kk1(l)+1)
           enddo
        enddo
     enddo
