@@ -1,7 +1,7 @@
 module mod_c_crdms
   implicit none
 contains
-  subroutine c_crdms(mot,imot,nmot,li)
+  subroutine c_crdms(mot,imot,nmot,li,proc)
 !
 !***********************************************************************
 !
@@ -21,7 +21,7 @@ contains
     implicit none
     integer          :: imot(nmx),        l,       ni,       nj,       nk
     integer          ::      nmot
-    integer,optional ::li
+    integer,optional ::li,proc
 !
 !-----------------------------------------------------------------------
 !
@@ -37,7 +37,7 @@ contains
     endif
 !
     if (present(li)) then
-      call crdms(l,ni,nj,nk,li)
+      call crdms(l,ni,nj,nk,li,proc)
     else
       call crdms(l,ni,nj,nk)
     endif

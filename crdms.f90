@@ -2,7 +2,7 @@ module mod_crdms
   implicit none
 contains
   subroutine crdms( &
-       l,ni,nj,nk,li)
+       l,ni,nj,nk,li,proc)
 !
 !***********************************************************************
 !
@@ -62,16 +62,21 @@ contains
     integer          ::   img, imgi, imgj, imgk,    l
     integer          ::    lm,   ni,  nid,   nj,  njd
     integer          ::    nk,  nkd,nptfs
-    integer,optional :: li
+    integer,optional :: li,proc
 
     num_bg=num_bg+1
-    call reallocate_s(bg_to_proc,num_bg)
+
     call reallocate_s(bg_to_bl,num_bg)
     call reallocate_s(bg_to_bi,num_bg)
-    bg_to_proc(l)=modulo((l-1),nprocs)
     bg_to_bl(l)=0
     bg_to_bi(l)=l
     if(present(li))    bg_to_bi(l)=li
+    if(present(proc)) then
+       bg_to_proc(l)=proc ! useless...
+    else
+      call reallocate_s(bg_to_proc,num_bg)
+      bg_to_proc(l)=modulo((l-1),nprocs)
+    endif
 !
 
     klzx=2

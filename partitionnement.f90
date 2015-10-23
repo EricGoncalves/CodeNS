@@ -8,14 +8,10 @@ contains
     use para_var
     use kcle,only:klzx,kmtbx
     use sortiefichier
-    use mod_crbds
-    use mod_c_crbds
     use mod_inbdc
     use mod_c_inbdc
     use mod_inbdb
     use mod_c_inbdb
-    use mod_crdms
-    use mod_c_crdms
     use mod_mpi
     !
     !***********************************************************************
@@ -41,8 +37,8 @@ contains
     !   i being an arbirary number
     !
     implicit none
-    double precision,allocatable,intent(  out) :: bceqt(:,:)
-    integer         ,allocatable,intent(  out) :: ncin(:),mnc(:),ncbd(:)
+    double precision,allocatable,intent(inout) :: bceqt(:,:)
+    integer         ,allocatable,intent(inout) :: ncin(:),mnc(:),ncbd(:)
     double precision,allocatable,intent(inout) :: x(:),y(:),z(:)
     double precision            ,intent(inout) :: exs1,exs2
 
@@ -52,14 +48,14 @@ contains
     integer             :: nmin,nmax,nmin1,nmax1
     integer             :: imax,imin,jmax,jmin,kmax,kmin
     integer             :: nid,njd,nijd,sblock
-    integer             :: nsub,tmp(3)
+    integer             :: nsub
     integer             :: i2,j2,k2,i,j,k
     integer             :: xs,ys,zs,xe,ye,ze
     integer             :: lli1,lgi1,lgi2
     integer             :: llf1,lgf1,llf2,lgf2,llf3,lgf3
     integer             :: frli1,frli2,frgi1,frgi2,frgi3
     integer             :: frlf1,frgf1,frgf2,frlf3,frgf3,frgf4
-    integer             :: proci1,procf1,proci2,procf2
+    integer             :: proci1,procf1,proci2,procf2,proc,load(0:nprocs-1),nload(0:nprocs-1)
 
     integer,allocatable :: save_ii2(:),save_jj2(:),save_kk2(:)
     integer,allocatable :: save_id1(:),save_jd1(:),save_kd1(:)
@@ -69,8 +65,8 @@ contains
     integer,allocatable :: save_imaxb(:),save_jmaxb(:),save_kmaxb(:)
     integer,allocatable :: save_bcg_to_bcl(:),save_bcg_to_bci(:),save_bcg_to_bg(:)
     integer,allocatable :: save_bg_to_proc(:),save_bg_to_bl(:),save_bg_to_bi(:),save_bl_to_bg(:)
-    integer,allocatable :: nblock2(:),ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:)
-    integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),nblockdg(:,:),sub_bc(:,:)
+    integer,allocatable :: nblock2(:),ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:),nijk(:,:,:,:)
+    integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),nblockdg(:,:),sub_bc(:,:),tmp(:)
 
     double precision    :: vbc(ista*lsta),sub_bc_c(2,6)
     double precision,allocatable :: save_x(:),save_y(:),save_z(:)
@@ -88,8 +84,8 @@ contains
     verbosity=2 ! from 0 to 3
     nblocks=max(nprocs,num_bg) ! number of bloc that we need
 
-    !if(.true.) then ! always do the partitionning in order to reequilibrate
-    if(nblocks/=num_bg) then ! there is some partitionning to do
+    if(.true.) then ! always do the partitionning in order to reequilibrate
+    !if(nblocks/=num_bg) then ! there is some partitionning to do
 
        !############################################################################################
        !############################# SAVE OLD MESH FOR CHECKING PURPOSE ###########################
@@ -284,7 +280,7 @@ contains
                 nmin1=minval(ni(:nblockdg(1,lgi1),:nblockdg(2,lgi1),:nblockdg(3,lgi1),lgi1)* &
                      nj(:nblockdg(1,lgi1),:nblockdg(2,lgi1),:nblockdg(3,lgi1),lgi1)* &
                      nk(:nblockdg(1,lgi1),:nblockdg(2,lgi1),:nblockdg(3,lgi1),lgi1))
-                write(*,500) lgi1,nblockdg(:,lgi1),( nmax1- nmin1 )*100./ nmin1
+                write(*,500) lgi1,nblockdg(:,lgi1)-1,( nmax1- nmin1 )*100./ nmin1
                 nmax=max(nmax,nmax1)
                 nmin=min(nmin,nmin1)
              enddo
@@ -297,7 +293,35 @@ contains
        !######################### PLACE BLOCKS ON PROCS ############################################
        !############################################################################################
 
-       ! TODO: construct new bg_to_proc
+       ! construct new bg_to_proc
+       call reallocate(bg_to_proc,sblock)
+       allocate(nijk(size(ni,1),size(ni,2),size(ni,3),size(ni,4)))
+       allocate(tmp(4))
+       nijk=ni*nj*nk ! size of the new blocks before attribution
+       load=0
+       nload=0
+
+       do while (maxval(nijk)/=0)                        ! there is still block to be attributed
+         proc=minloc(load,1)-1                           ! the process with the minimum load
+         tmp=maxloc(nijk)                                ! take the biggest non attributed block
+         lgf1=old2new_b(tmp(1),tmp(2),tmp(3),tmp(4))
+         nload(proc)=nload(proc)+1
+         load(proc)=load(proc)+nijk(tmp(1),tmp(2),tmp(3),tmp(4))
+         bg_to_proc(lgf1)=proc
+         nijk(tmp(1),tmp(2),tmp(3),tmp(4))=0             ! block is attributed
+       enddo
+       deallocate(nijk)
+
+      if(verbosity>=1.and.rank==0) then
+         print*,''
+         print*,"Proc | Nb blocks | Load"
+         do proc=0,nprocs-1
+            write(*,'(x,i4," | ",5x,i4," | ",i8)') proc,nload(proc),load(proc)
+         enddo
+         write(*,'(A,I8,A,I4,A,I4,A,F6.2,A)') " Total : ",sum(load)," dispatched on "&
+                                    ,sum(nload)," blocks on "&
+                                    ,nprocs," process, unbalance : ",( maxval(load)- minval(load) )*100./ minval(load),"%"
+      endif
 
        !############################################################################################
        !######################### RECREATE GRID ####################################################
@@ -312,7 +336,8 @@ contains
 
                    lgf1=old2new_b(i,j,k,lgi1)
 
-                   call create_grid(lgf1,ni(i,j,k,lgi1),nj(i,j,k,lgi1),nk(i,j,k,lgi1),save_bg_to_bi(lgi1))
+                   call create_grid(lgf1,ni(i,j,k,lgi1),nj(i,j,k,lgi1),nk(i,j,k,lgi1),&
+                          save_bg_to_bi(lgi1),bg_to_proc(lgi1))
 
                    proci1=save_bg_to_proc(lgi1)
                    procf1=bg_to_proc(lgf1)
@@ -621,9 +646,6 @@ contains
        deallocate(save_ii2,save_jj2,save_kk2,save_id1,save_jd1,save_kd1,save_id2,save_jd2)
        deallocate(save_kd2,save_npn)
 
-       !############################################################################################
-       !################### INITIALIZE COINCIDENT BOUNDARIES #######################################
-       !############################################################################################
        ip21=ndimntbx
        ip40=mdimubx            ! Nb point frontiere
        ip41=mdimtbx            ! Nb point frontiere
@@ -642,6 +664,14 @@ contains
        call reallocate(ncin,ip41)
        call reallocate(bceqt,ip41,neqt)
        call reallocate(mnc,ip43)
+
+
+       !############################################################################################
+       !################### INITIALIZE COINCIDENT BOUNDARIES #######################################
+       !############################################################################################
+
+    endif
+    call reallocate(tmp,3)
 
        !    print*,'initialization '
        do frgf1=1,num_bcg
@@ -755,9 +785,9 @@ contains
                 mot(9)="krr"      ; imot(9)=3
                 call str(mot,imot,nmx,10 ,0)
                 mot(11)="ptc"     ; imot(11)=3
-                call str(mot,imot,nmx,12 ,sub_bc(1,1))
-                call str(mot,imot,nmx,13 ,sub_bc(1,2))
-                call str(mot,imot,nmx,14 ,sub_bc(1,3))
+                call str(mot,imot,nmx,12 ,tmp(1))
+                call str(mot,imot,nmx,13 ,tmp(2))
+                call str(mot,imot,nmx,14 ,tmp(3))
                 mot(15)="dir"     ; imot(15)=3
                 call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
              else
@@ -766,11 +796,11 @@ contains
                      x,y,z, &
                      ncbd,ncin,mnc, &
                      0,frgf1,frgf2,1,0., &
-                     sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),mot(16)(1:2),mot(17)(1:2),mot(18)(1:2))
+                     tmp(1),tmp(2),tmp(3),mot(16)(1:2),mot(17)(1:2),mot(18)(1:2))
              endif
           endif
        enddo
-    endif
+      deallocate(tmp)
     return
 
 
@@ -1048,12 +1078,12 @@ contains
     end do
   end subroutine triv_split
 
-  subroutine create_grid(l,ni,nj,nk,bi)
+  subroutine create_grid(l,ni,nj,nk,bi,proc)
     use para_fige,only:nmx
     use mod_c_crdms
     use mod_crdms
     implicit none
-    integer,intent(in) :: l,ni,nj,nk,bi
+    integer,intent(in) :: l,ni,nj,nk,bi,proc
     integer            :: imot(nmx),nmot
     character(len=32)  :: mot(nmx)
 
@@ -1066,9 +1096,9 @@ contains
        call str(mot,imot,nmx,5 ,ni)
        call str(mot,imot,nmx,6 ,nj)
        call str(mot,imot,nmx,7 ,nk)
-       call c_crdms( mot,imot,nmot,bi)
+       call c_crdms( mot,imot,nmot,bi,proc)
     else
-       call crdms(l,ni,nj,nk,bi)
+       call crdms(l,ni,nj,nk,bi,proc)
     endif
   end subroutine create_grid
 
