@@ -337,7 +337,7 @@ contains
                    lgf1=old2new_b(i,j,k,lgi1)
 
                    call create_grid(lgf1,ni(i,j,k,lgi1),nj(i,j,k,lgi1),nk(i,j,k,lgi1),&
-                          save_bg_to_bi(lgi1),bg_to_proc(lgi1))
+                          save_bg_to_bi(lgi1),bg_to_proc(lgf1))
 
                    proci1=save_bg_to_proc(lgi1)
                    procf1=bg_to_proc(lgf1)
@@ -664,7 +664,6 @@ contains
        call reallocate(ncin,ip41)
        call reallocate(bceqt,ip41,neqt)
        call reallocate(mnc,ip43)
-
 
        !############################################################################################
        !################### INITIALIZE COINCIDENT BOUNDARIES #######################################
