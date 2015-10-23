@@ -911,7 +911,7 @@ contains
     integer :: lg,ll,proc
 
     allocate(nsplit(num_bgi),nsplit_dir(3,num_bgi),nilf(1,1,1),njlf(1,1,1),nklf(1,1,1))
-    allocate(nigf(1,1,1,num_bgf),njgf(1,1,1,num_bgf),nkgf(1,1,1,num_bgf))
+    allocate(nigf(1,1,1,num_bgi),njgf(1,1,1,num_bgi),nkgf(1,1,1,num_bgi))
     nsplit=1     ! initial number of splitting for each existing block
     nsplit_dir=0 ! initial number of splitting per direction for each existing block
 
@@ -930,13 +930,13 @@ contains
             nsplit_dir(:,lg),nilf,njlf,nklf)
 
        ! ajoute le split avec les splits des autres blocks localement
-       call reallocate_s(nigf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
+       call reallocate_s(nigf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
        nigf(:size(nilf,1),:size(nilf,2),:size(nilf,3),lg)=nilf
 
-       call reallocate_s(njgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
+       call reallocate_s(njgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
        njgf(:size(njlf,1),:size(njlf,2),:size(njlf,3),lg)=njlf
 
-       call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
+       call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
        nkgf(:size(nklf,1),:size(nklf,2),:size(nklf,3),lg)=nklf
     enddo
 
@@ -944,9 +944,9 @@ contains
        ! propage à tout le monde les informations sur le découpage
        proc=bgi_to_proc(lg)
        call bcast(nsplit_dir(:,lg),proc)
-       call reallocate_s(nigf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
-       call reallocate_s(njgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
-       call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgf)
+       call reallocate_s(nigf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
+       call reallocate_s(njgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
+       call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
        call bcast(nigf(:,:,:,lg),proc)
        call bcast(njgf(:,:,:,lg),proc)
        call bcast(nkgf(:,:,:,lg),proc)
