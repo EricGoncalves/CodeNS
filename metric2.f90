@@ -94,7 +94,6 @@ contains
        do j=j1p1,j2m1
           do i=i1p1,i2m1
              n=indn(i,j,k1)
-             m=n-n0c
 !-----------------------------------------------------------------------
 !             pour le flux calcule dans la direction i
 !-----------------------------------------------------------------------
@@ -137,8 +136,8 @@ contains
              dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
 !--------pour operateur mu pondere------------------------------
 !c       attention! facteur 2 pour calcul des flux
-             cmui1(m)=2.*dpi/(dpi+dmi)
-             cmui2(m)=2.*dmi/(dpi+dmi)
+             cmui1(n)=2.*dpi/(dpi+dmi)
+             cmui2(n)=2.*dmi/(dpi+dmi)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction j
 !------------------------------------------------------------------------
@@ -162,23 +161,23 @@ contains
              ze=zp+tk*(zr-zp)
              dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-             cmuj1(m)=2.*dpj/(dpj+dmj)
-             cmuj2(m)=2.*dmj/(dpj+dmj)
+             cmuj1(n)=2.*dpj/(dpj+dmj)
+             cmuj2(n)=2.*dmj/(dpj+dmj)
           enddo
        enddo
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2m1
-          m=indn(i1,j,k1)-n0c
-          cmuj1(m)=cmuj1(m+nci)
-          cmuj2(m)=cmuj2(m+nci)
+          n=indn(i1,j,k1)
+          cmuj1(n)=cmuj1(n+nci)
+          cmuj2(n)=cmuj2(n+nci)
        enddo
 !
        do i=i1p1,i2m1
-          m=indn(i,j1,k1)-n0c
-          cmui1(m)=cmui1(m+ncj)
-          cmui2(m)=cmui2(m+ncj)
+          n=indn(i,j1,k1)
+          cmui1(n)=cmui1(n+ncj)
+          cmui2(n)=cmui2(n+ncj)
        enddo
 !
 !******************************************************************************
@@ -188,7 +187,6 @@ contains
        do k=k1p1,k2m1
           do i=i1p1,i2m1
              n=indn(i,j1,k)
-             m=n-n0c
 !-----------------------------------------------------------------------
 !             pour le flux calcule dans la direction i
 !-----------------------------------------------------------------------
@@ -221,8 +219,8 @@ contains
              dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
 !--------pour operateur mu pondere------------------------------
 !c       attention! facteur 2 pour calcul des flux
-             cmui1(m)=2.*dpi/(dpi+dmi)
-             cmui2(m)=2.*dmi/(dpi+dmi)
+             cmui1(n)=2.*dpi/(dpi+dmi)
+             cmui2(n)=2.*dmi/(dpi+dmi)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction k
 !------------------------------------------------------------------------
@@ -247,23 +245,23 @@ contains
 !------------------------------------------------------------------
              dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-             cmuk1(m)=2.*dpk/(dpk+dmk)
-             cmuk2(m)=2.*dmk/(dpk+dmk)
+             cmuk1(n)=2.*dpk/(dpk+dmk)
+             cmuk2(n)=2.*dmk/(dpk+dmk)
           enddo
        enddo
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
        do k=k1p1,k2m1
-          m=indn(i1,j1,k)-n0c
-          cmuk1(m)=cmuk1(m+nci)
-          cmuk2(m)=cmuk2(m+nci)
+          n=indn(i1,j1,k)
+          cmuk1(n)=cmuk1(n+nci)
+          cmuk2(n)=cmuk2(n+nci)
        enddo
 !
        do i=i1p1,i2m1
-          m=indn(i,j1,k1)-n0c
-          cmui1(m)=cmui1(m+nck)
-          cmui2(m)=cmui2(m+nck)
+          n=indn(i,j1,k1)
+          cmui1(n)=cmui1(n+nck)
+          cmui2(n)=cmui2(n+nck)
        enddo
 !
 !******************************************************************************
@@ -273,7 +271,6 @@ contains
        do k=k1p1,k2m1
           do j=j1p1,j2m1
              n=indn(i1,j,k)
-             m=n-n0c
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction j
 !------------------------------------------------------------------------
@@ -303,8 +300,8 @@ contains
              ze=zp+tk*(zr-zp)
              dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-             cmuj1(m)=2.*dpj/(dpj+dmj)
-             cmuj2(m)=2.*dmj/(dpj+dmj)
+             cmuj1(n)=2.*dpj/(dpj+dmj)
+             cmuj2(n)=2.*dmj/(dpj+dmj)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction k
 !------------------------------------------------------------------------
@@ -329,23 +326,23 @@ contains
 !------------------------------------------------------------------
              dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-             cmuk1(m)=2.*dpk/(dpk+dmk)
-             cmuk2(m)=2.*dmk/(dpk+dmk)
+             cmuk1(n)=2.*dpk/(dpk+dmk)
+             cmuk2(n)=2.*dmk/(dpk+dmk)
           enddo
        enddo
 !------------------------------------------------------------------------
 !c----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2m1
-          m=indn(i1,j,k1)-n0c
-          cmuj1(m)=cmuj1(m+nck)
-          cmuj2(m)=cmuj2(m+nck)
+          n=indn(i1,j,k1)
+          cmuj1(n)=cmuj1(n+nck)
+          cmuj2(n)=cmuj2(n+nck)
        enddo
 !
        do k=k1p1,k2m1
-          m=indn(i1,j1,k)-n0c
-          cmuk1(m)=cmuk1(m+ncj)
-          cmuk2(m)=cmuk2(m+ncj)
+          n=indn(i1,j1,k)
+          cmuk1(n)=cmuk1(n+ncj)
+          cmuk2(n)=cmuk2(n+ncj)
        enddo
 !
 !******************************************************************************
@@ -356,7 +353,6 @@ contains
           do j=j1,j2m1
              do i=i1,i2m1
                 n=indn(i,j,k)
-                m=n-n0c
 !-----------------------------------------------------------------------
 !             pour le flux calcule dans la direction i
 !-----------------------------------------------------------------------
@@ -397,8 +393,8 @@ contains
                 ze=zp+tk*(zr-zp)
                 dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
                 dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-                cmui1(m)=2.*dpi/(dpi+dmi)
-                cmui2(m)=2.*dmi/(dpi+dmi)
+                cmui1(n)=2.*dpi/(dpi+dmi)
+                cmui2(n)=2.*dmi/(dpi+dmi)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction j
 !------------------------------------------------------------------------
@@ -422,8 +418,8 @@ contains
                 ze=zp+tk*(zr-zp)
                 dpj=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
                 dmj=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-                cmuj1(m)=2.*dpj/(dpj+dmj)
-                cmuj2(m)=2.*dmj/(dpj+dmj)
+                cmuj1(n)=2.*dpj/(dpj+dmj)
+                cmuj2(n)=2.*dmj/(dpj+dmj)
 !------------------------------------------------------------------------
 !      pour le flux calcule dans la direction k
 !------------------------------------------------------------------------
@@ -448,8 +444,8 @@ contains
 !------------------------------------------------------------------
                 dpk=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
                 dmk=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
-                cmuk1(m)=2.*dpk/(dpk+dmk)
-                cmuk2(m)=2.*dmk/(dpk+dmk)
+                cmuk1(n)=2.*dpk/(dpk+dmk)
+                cmuk2(n)=2.*dmk/(dpk+dmk)
              enddo
           enddo
        enddo
@@ -458,53 +454,54 @@ contains
 !------------------------------------------------------------------------
        do j=j1p1,j2m1
           do k=k1p1,k2m1
-             m=indn(i1,j,k)-n0c
-             cmuj1(m)=cmuj1(m+nci)
-             cmuj2(m)=cmuj2(m+nci)
-             cmuk1(m)=cmuk1(m+nci)
-             cmuk2(m)=cmuk2(m+nci)
+             n=indn(i1,j,k)
+             cmuj1(n)=cmuj1(n+nci)
+             cmuj2(n)=cmuj2(n+nci)
+             cmuk1(n)=cmuk1(n+nci)
+             cmuk2(n)=cmuk2(n+nci)
           enddo
        enddo
 !
        do i=i1p1,i2m1
           do j=j1p1,j2m1
-             m=indn(i,j,k1)-n0c
-             cmui1(m)=cmui1(m+nck)
-             cmui2(m)=cmui2(m+nck)
-             cmuj1(m)=cmuj1(m+nck)
-             cmuj2(m)=cmuj2(m+nck)
+             n=indn(i,j,k1)
+             cmui1(n)=cmui1(n+nck)
+             cmui2(n)=cmui2(n+nck)
+             cmuj1(n)=cmuj1(n+nck)
+             cmuj2(n)=cmuj2(n+nck)
           enddo
        enddo
 !
        do i=i1p1,i2m1
           do k=k1p1,k2m1
-             m=indn(i,j1,k)-n0c
-             cmui1(m)=cmui1(m+ncj)
-             cmui2(m)=cmui2(m+ncj)
-             cmuk1(m)=cmuk1(m+ncj)
-             cmuk2(m)=cmuk2(m+ncj)
+             n=indn(i,j1,k)
+             cmui1(n)=cmui1(n+ncj)
+             cmui2(n)=cmui2(n+ncj)
+             cmuk1(n)=cmuk1(n+ncj)
+             cmuk2(n)=cmuk2(n+ncj)
           enddo
        enddo
 !
        do i=i1p1,i2m1
-          m=indn(i,j1,k1)-n0c
-          cmui1(m)=cmui1(m+ncj)
-          cmui2(m)=cmui2(m+ncj)
+          n=indn(i,j1,k1)
+          cmui1(n)=cmui1(n+ncj)
+          cmui2(n)=cmui2(n+ncj)
        enddo
 !
        do j=j1p1,j2m1
-          m=indn(i1,j,k1)-n0c
-          cmuj1(m)=cmuj1(m+nci)
-          cmuj2(m)=cmuj2(m+nci)
+          n=indn(i1,j,k1)
+          cmuj1(n)=cmuj1(n+nci)
+          cmuj2(n)=cmuj2(n+nci)
        enddo
 !
        do k=k1p1,k2m1
-          m=indn(i1,j1,k)-n0c
-          cmuk1(m)=cmuk1(m+ncj)
-          cmuk2(m)=cmuk2(m+ncj)
+          n=indn(i1,j1,k)
+          cmuk1(n)=cmuk1(n+ncj)
+          cmuk2(n)=cmuk2(n+ncj)
        enddo
 !******************************************************************
     endif
+!
 !
     return
   contains

@@ -63,16 +63,16 @@ contains
 !
     form='(''Verification du dimensionnement du code:'',/,' &
          //'1x,39(1h-),                             //,' &
-         //'1x,''code     '',  11x,''calcul    '',7x/,' &
-         //'1x,''----     '',  11x,''------    '',7x//,' &
+         //'1x,''code     '',  11x,''calcul           '',7x/,' &
+         //'1x,''----     '',  11x,''------           '',7x//,' &
          //'1x,''lz     = '',i7,4x,''lzx     = '',i7//,' &
          //'1x,''ndimub = '',i7,4x,''ndimubx = '',i7//,' &
          //'1x,''ndimctb= '',i7,4x,''ndimctbx= '',i7//,' &
          //'1x,''ndimntb= '',i7,4x,''ndimntbx= '',i7//,' &
-         //'1x,''nvar   = '',i7,4x,''equat   = '',2x,a//,' &
+         //'1x,''nvar   = '',i7,4x,''equat          = '',2x,a//,' &
          //'1x,''kdimv  = '',i7,//,' &
          //'1x,''kdimk  = '',i7,//,' &
-         //'1x,''kdimg  = '',i7,4x,''lgx     = '',i7/)'
+         //'1x,''kdimg  = '',i7,4x,''lgx            = '',i7/)'
     write(imp,form)lz,lzx,ndimub,ndimubx,ndimctb,ndimctbx, &
          ndimntb,ndimntbx, &
          nvar,equat,kdimv,kdimk,kdimg,lgx

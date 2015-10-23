@@ -21,6 +21,7 @@ contains
     use sortiefichier
     use mod_b1_dfpmdtd
     use mod_tcmd_dfpmdtd
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),    ldomd,     lgrd,     nmot
     integer         ,allocatable :: ldom(:), lgr(:)
@@ -37,9 +38,12 @@ contains
          lgr,lgrd)
 !
     if(kimp.ge.1) then
+       if (rank==0) then
        call b1_dfpmdtd( &
             ldom,ldomd, &
             lgr,lgrd)
+       endif
+       call barrier
     endif
 !
     deallocate(ldom,lgr)

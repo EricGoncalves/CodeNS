@@ -22,7 +22,7 @@ contains
     use modeleturb
     use mod_tcmd_dfpmtbn
     use mod_b1_dfpmtbn
-
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     nmot
 !
@@ -33,7 +33,7 @@ contains
     call tcmd_dfpmtbn(mot,imot,nmot)
 !
     if(kimp.ge.1) then
-       call b1_dfpmtbn
+       if (rank==0) call b1_dfpmtbn
     endif
 !
     return

@@ -21,11 +21,13 @@ contains
     use mod_infw
     use mod_tcmd_infw
     use mod_b1_infw
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     kina,        l,    ldomd,     nmot
-    double precision ::         mut(ip12), tnte1(ip11,ip60),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60)
+    double precision ::         mut(ip12), tnte1(ip11,ip60),     v(ip11,ip60), vdual(ip11,ip60)
     double precision :: vdual1(ip11,ip60),vdual2(ip11,ip60),          x(ip21),          y(ip21),          z(ip21)
     integer         ,allocatable :: ldom(:)
+    double precision,allocatable :: utau(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -37,16 +39,18 @@ contains
          mot,imot,nmot, &
          ldom,ldomd,kina)
 !
-    if (kimp.ge.1) then
-       call b1_infw(ldom,ldomd,kina)
+    if (kimp.ge.1.and.rank==0) then
+        call b1_infw(ldom,ldomd,kina)
     endif
 !
     do l=1,ldomd
-!
+    if(bg_to_proc(ldom(l))==rank) then
        call infw( &
-            ldom(l),x,y,z,v,mut,tnte1, &
-            kina,utau, &
-            vdual,vdual1,vdual2)
+          bg_to_bl(ldom(l)),x,y,z,v,mut,tnte1, &
+          kina,utau, &
+          vdual,vdual1,vdual2)
+    endif
+      call barrier
 !
     enddo
 !

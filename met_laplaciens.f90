@@ -20,10 +20,10 @@ contains
 !       dsx      (ip 00)       composante suivant x du gradient de la vitesse
 !       dsy      (ip 00)       composante suivant y du gradient de la vitesse
 !       dsz      (ip 00)       composante suivant z du gradient de la vitesse
-!       dsd2x    (ip 00)       dérivée de ds/x
-!       dsd2y    (ip 00)       dérivéé de ds/y
-!       dsd2z    (ip 00)       dérivée de ds/z
-!       v        (ip 11 ip 60) variables à l'instant n
+!       dsd2x    (ip 00)       dÃ©rivÃ©e de ds/x
+!       dsd2y    (ip 00)       dÃ©rivÃ©Ã© de ds/y
+!       dsd2z    (ip 00)       dÃ©rivÃ©e de ds/z
+!       v        (ip 11 ip 60) variables Ã  l'instant n
 !
 !-----parameters figes--------------------------------------------------
 !
@@ -32,12 +32,12 @@ contains
     use maillage
     use schemanum
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,  i2p1,    id,  ind1,  ind2
+    integer          ::     i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  i2p1,  ind1,  ind2
     integer          ::      j,    j1,  j1m1,  j1p1,    j2
-    integer          ::   j2m1,  j2p1,    jd,     k,    k1
+    integer          ::   j2m1,  j2p1,     k,    k1
     integer          ::   k1m1,  k1p1,    k2,  k2m1,  k2p1
-    integer          ::     kd,  kdir,     l,lgsnlt,     m
+    integer          ::   kdir,     l,lgsnlt,     m
     integer          ::      n,   n0c,   nci,   ncj,   nck
     integer          ::    nid,  nijd,  ninc,   njd
     double precision ::                   c0,         cmui1(ip21),         cmui2(ip21),         cmuj1(ip21),         cmuj2(ip21)
@@ -255,9 +255,9 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   sk1=(cmuk1(m)*dsx(m)+cmuk2(m)*dsx(m-ninc))*sn(m,kdir,1)
-                   sk2=(cmuk1(m)*dsy(m)+cmuk2(m)*dsy(m-ninc))*sn(m,kdir,2)
-                   sk3=(cmuk1(m)*dsz(m)+cmuk2(m)*dsz(m-ninc))*sn(m,kdir,3)
+                   sk1=(cmuk1(n)*dsx(m)+cmuk2(n)*dsx(m-ninc))*sn(m,kdir,1)
+                   sk2=(cmuk1(n)*dsy(m)+cmuk2(n)*dsy(m-ninc))*sn(m,kdir,2)
+                   sk3=(cmuk1(n)*dsz(m)+cmuk2(n)*dsz(m-ninc))*sn(m,kdir,3)
                    dsd2x(m)=dsd2x(m)-sk1
                    dsd2y(m)=dsd2y(m)-sk2
                    dsd2z(m)=dsd2z(m)-sk3
@@ -305,9 +305,9 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   sj1=(cmuj1(m)*dsx(m)+cmuj2(m)*dsx(m-ninc))*sn(m,kdir,1)
-                   sj2=(cmuj1(m)*dsy(m)+cmuj2(m)*dsy(m-ninc))*sn(m,kdir,2)
-                   sj3=(cmuj1(m)*dsz(m)+cmuj2(m)*dsz(m-ninc))*sn(m,kdir,3)
+                   sj1=(cmuj1(n)*dsx(m)+cmuj2(n)*dsx(m-ninc))*sn(m,kdir,1)
+                   sj2=(cmuj1(n)*dsy(m)+cmuj2(n)*dsy(m-ninc))*sn(m,kdir,2)
+                   sj3=(cmuj1(n)*dsz(m)+cmuj2(n)*dsz(m-ninc))*sn(m,kdir,3)
                    dsd2x(m)=dsd2x(m)-sj1
                    dsd2y(m)=dsd2y(m)-sj2
                    dsd2z(m)=dsd2z(m)-sj3
@@ -355,9 +355,9 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   si1=(cmui1(m)*dsx(m)+cmui2(m)*dsx(m-ninc))*sn(m,kdir,1)
-                   si2=(cmui1(m)*dsy(m)+cmui2(m)*dsy(m-ninc))*sn(m,kdir,2)
-                   si3=(cmui1(m)*dsz(m)+cmui2(m)*dsz(m-ninc))*sn(m,kdir,3)
+                   si1=(cmui1(n)*dsx(m)+cmui2(n)*dsx(m-ninc))*sn(m,kdir,1)
+                   si2=(cmui1(n)*dsy(m)+cmui2(n)*dsy(m-ninc))*sn(m,kdir,2)
+                   si3=(cmui1(n)*dsz(m)+cmui2(n)*dsz(m-ninc))*sn(m,kdir,3)
                    dsd2x(m)=dsd2x(m)-si1
                    dsd2y(m)=dsd2y(m)-si2
                    dsd2z(m)=dsd2z(m)-si3

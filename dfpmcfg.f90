@@ -22,6 +22,7 @@ contains
     use sortiefichier
     use maillage
     use boundary
+    use mod_mpi
     implicit none
     integer          :: mfbe,  no
 !

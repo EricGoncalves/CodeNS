@@ -3,7 +3,7 @@ module mod_c_crbds
 contains
   subroutine c_crbds( &
        mot,imot,nmot, &
-       ncbd)
+       ncbd,mfbi)
 !
 !***********************************************************************
 !
@@ -20,10 +20,13 @@ contains
     use mod_b1_crbds
     use mod_tcmd_crbds
     use mod_crbds
+    use mod_mpi
     implicit none
     integer          ::       imax,      imin, imot(nmx),      jmax,      jmin
     integer          ::       kini,      kmax,      kmin,         l,      mfbe
-    integer          :: ncbd(ip41),      nmot
+    integer          ::       nmot
+    integer,optional :: mfbi
+    integer,allocatable :: ncbd(:)
 !
 !-----------------------------------------------------------------------
 !
@@ -38,19 +41,33 @@ contains
          indmf)
 !
     if (kimp.ge.1) then
-       call b1_crbds( &
-            mfbe,kini,l,imin,imax,jmin,jmax,kmin,kmax, &
-            indmf)
+      if(rank==0) then
+         call b1_crbds( &
+              mfbe,kini,l,imin,imax,jmin,jmax,kmin,kmax, &
+              indmf)
+      endif
+      call barrier
     endif
 !
-    call crbds( &
-         mfbe,kini,l, &
-         imin,imax,jmin,jmax,kmin,kmax, &
-         indmf, &
-         ncbd)
+    if (present(mfbi)) then
+      call crbds( &
+           mfbe,kini,l, &
+           imin,imax,jmin,jmax,kmin,kmax, &
+           indmf, &
+           ncbd,mfbi)
+    else
+      call crbds( &
+           mfbe,kini,l, &
+           imin,imax,jmin,jmax,kmin,kmax, &
+           indmf, &
+           ncbd)
+    endif
+
 !
-    if(kimp.ge.2) then
-       call b2_crbds(mfbe)
+    if(bcg_to_proc(mfbe)==rank) then
+      if(kimp.ge.2) then
+         call b2_crbds(bcg_to_bcl(mfbe))
+      endif
     endif
 !
     return

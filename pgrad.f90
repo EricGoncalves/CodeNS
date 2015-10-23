@@ -26,12 +26,12 @@ contains
     use boundary
     use chainecarac
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,  i2p1,    id,  ind1,  ind2
+    integer          ::     i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  i2p1,  ind1,  ind2
     integer          ::      j,    j1,  j1m1,  j1p1,    j2
-    integer          ::   j2m1,  j2p1,    jd,     k,    k1
+    integer          ::   j2m1,  j2p1,     k,    k1
     integer          ::   k1m1,  k1p1,    k2,  k2m1,  k2p1
-    integer          ::     kd,     l,lgsnlt,     m,     n
+    integer          ::      l,lgsnlt,     m,     n
     integer          ::     n0,   nci,   ncj,   nck,   nid
     integer          ::   nijd,   njd
     double precision ::                  cc0,          dpdx(ip00),          dpdy(ip00),          dpdz(ip00),                 eps

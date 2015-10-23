@@ -42,6 +42,7 @@ contains
     use mod_svfw
     use mod_tcmd_svfw
     use mod_b1_svfw
+    use mod_mpi
     implicit none
     integer          ::  imot(nmx),         l,ncbd(ip41),ncin(ip41),      nmot
     double precision ::    mut(ip12),   tn1(ip00),   tn2(ip00),   tn3(ip00),   tn4(ip00)
@@ -58,7 +59,7 @@ contains
          mot,imot,nmot, &
          disc)
 !
-    if ((kimp.ge.1).and.(l.eq.1)) then
+    if ((kimp.ge.1).and.(bl_to_bg(l).eq.1)) then
        call b1_svfw(disc)
     endif
 !

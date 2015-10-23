@@ -34,7 +34,7 @@ contains
     use maillage
     implicit none
     integer          ::    i,  i1,  i2,i2m1,   j
-    integer          ::   j1,  j2,j2m1,   k,  k1
+    integer          ::   j1,  j2,j2m1,  k1
     integer          ::   k2,k2m1,   l,   n,  n0
     integer          ::  nid,nijd, njd
     double precision :: v(ip11,ip60)

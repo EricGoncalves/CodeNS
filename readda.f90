@@ -42,21 +42,27 @@ contains
     use schemanum
     use chainecarac
     use modeleturb
+    use mod_mpi
     implicit none
     integer          ::        i,      i1,      i2,    i2m1,       j
     integer          ::       j1,      j2,    j2m1,       k,      k1
     integer          ::       k2,    k2m1,     kda,       l,       m
     integer          :: mdimtnxl,       n,      n0,     nid,    nijd
-    integer          ::      njd,    resu
-    double precision ::         mut(ip12),       utau(ip42),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
+    integer          ::      njd,    resu,pos,ll
+    double precision ::         mut(ip12),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
     double precision :: vdual2(ip11,ip60)
+    double precision,allocatable :: utau(:)
 !
 !-----------------------------------------------------------------------
 !
 !
 !
-
+    ll=bl_to_bg(l)
+    if(ll.eq.1) rewind kda
+    pos=int(FTELL(kda))
 !
+    call START_KEEP_ORDER(ll,bg_to_proc,pos)
+    CALL my_FSEEK(kda, pos)
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -101,6 +107,9 @@ contains
 !         modeles de Chien ou k-omega bas Reynolds ou
 !         k-omega de Wilcox ou Menter avec rugosite
           read(kda,iostat=resu)mdimtnxl
+          deallocate(utau)
+          ip42=mdimtnxl
+          allocate(utau(mdimtnxl))
           if(resu .EQ. 0) then
              read(kda) utau(1:mdimtnxl)
           else
@@ -133,6 +142,9 @@ contains
 !       enddo
 !     enddo
 !     close(200)
+    pos=int(FTELL(kda))
+
+    call END_KEEP_ORDER(ll,bg_to_proc,pos)
 
     if(kfmg.eq.3) then
        do k=k1,k2m1

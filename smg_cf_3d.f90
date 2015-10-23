@@ -105,7 +105,7 @@ contains
           cc4 =  1./ (sqrt(11.)*sss)
           cc5 =  1./ (sqrt(11.)*sss)
           cc6 =  1./ (sqrt(19.)*sss)
-          cc7 =  1./ (3*sqrt(3.)*sss)
+          cc7 =  1./ (3.*sqrt(3.)*sss)
           cc8 =  1./ (sqrt(11.)*sss)
        endif
 !

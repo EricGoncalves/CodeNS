@@ -47,14 +47,18 @@ contains
     integer          ::          i,        ii,      imax,      imin,         j
     integer          ::         jj,      jmax,      jmin,         k,        kk
     integer          ::       kmax,      kmin,         l,         m,        m0
-    integer          ::         mt,        n0,ncbd(ip41),       nid,      nijd
+    integer          ::         mt,        n0,       nid,      nijd
     integer          ::        njd
+    integer,allocatable :: ncbd(:),ncbd1(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indfl
 !
-
+   allocate(ncbd1(ip41))
+   ncbd1(1:size(ncbd))=ncbd
+   deallocate(ncbd)
+   
 !
     n0=npc(l)
 !
@@ -67,63 +71,83 @@ contains
     select case(indfl)
     case('i1')
        ii=imin-1
+       mt=(kmax-kmin)*(jmax-jmin)
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
+       ncbd(:size(ncbd1))=ncbd1
        do k=kmin,kmax-1
           do j=jmin,jmax-1
              m=m+1
              ncbd(m)=ind(ii,j,k)
           enddo
        enddo
-       mt=(kmax-kmin)*(jmax-jmin)
+
 !
     case('i2')
        ii=imax
+       mt=(kmax-kmin)*(jmax-jmin)
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
+       ncbd(:size(ncbd1))=ncbd1
        do k=kmin,kmax-1
           do j=jmin,jmax-1
              m=m+1
              ncbd(m)=ind(ii,j,k)
           enddo
        enddo
-       mt=(kmax-kmin)*(jmax-jmin)
+
 !
     case('j1')
        jj=jmin-1
+       mt=(kmax-kmin)*(imax-imin)
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
+       ncbd(:size(ncbd1))=ncbd1
        do k=kmin,kmax-1
           do i=imin,imax-1
              m=m+1
              ncbd(m)=ind(i,jj,k)
           enddo
        enddo
-       mt=(kmax-kmin)*(imax-imin)
 !
     case('j2')
        jj=jmax
+       mt=(kmax-kmin)*(imax-imin)
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
+       ncbd(:size(ncbd1))=ncbd1
        do k=kmin,kmax-1
           do i=imin,imax-1
              m=m+1
              ncbd(m)=ind(i,jj,k)
           enddo
        enddo
-       mt=(kmax-kmin)*(imax-imin)
 !
     case('k1')
        kk=kmin-1
+       mt=(jmax-jmin)*(imax-imin)
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
+       ncbd(:size(ncbd1))=ncbd1
        do j=jmin,jmax-1
           do i=imin,imax-1
              m=m+1
              ncbd(m)=ind(i,j,kk)
           enddo
        enddo
-       mt=(jmax-jmin)*(imax-imin)
 !
     case('k2')
        kk=kmax
+       mt=(jmax-jmin)*(imax-imin)
+       ip41=ip41+mt
+       allocate(ncbd(ip41))
+       ncbd(:size(ncbd1))=ncbd1
        do j=jmin,jmax-1
           do i=imin,imax-1
              m=m+1
              ncbd(m)=ind(i,j,kk)
           enddo
        enddo
-       mt=(jmax-jmin)*(imax-imin)
 !
     end select
 !

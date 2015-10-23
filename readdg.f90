@@ -38,10 +38,11 @@ contains
     use para_fige
     use sortiefichier
     use maillage
+    use mod_mpi
     implicit none
     integer          ::    i,  i1,  i2,   j,  j1
-    integer          ::   j2,   k,  k1,  k2, kdg
-    integer          ::    l,   n, nid,nijd, njd
+    integer          ::   j2,   k,  k1,  k2, kdg,pos
+    integer          ::    l,   n, nid,nijd, njd,ll
     double precision :: x(ip21),y(ip21),z(ip21)
     logical          :: ecri
 !
@@ -53,6 +54,11 @@ contains
 !
     ecri=.false.
 !      ecri=.true.
+    pos=int(FTELL(kdg))
+!
+    ll=bl_to_bg(l)
+    call START_KEEP_ORDER(ll,bg_to_proc,pos)
+    call my_FSEEK(kdg, pos)
 !
     i1=ii1(l)
     i2=ii2(l)
@@ -65,29 +71,29 @@ contains
     njd = jd2(l)-jd1(l)+1
     nijd = nid*njd
 !
-    read(kdg,err=10) &
+    coord='x'
+    read(kdg,err=13) &
          (((x(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
-    read(kdg,err=11) &
+    coord='y'
+    read(kdg,err=13) &
          (((y(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
-    read(kdg,err=12) &
+    coord='z'
+    read(kdg,err=13) &
          (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
 !
+    pos=int(FTELL(kdg))
+    call END_KEEP_ORDER(ll,bg_to_proc,pos)
+
     return
 !
-10  continue
-    coord='x'
-    write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
-11  continue
-    coord='y'
-    write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
-12  continue
-    coord='z'
+13  continue
     write(imp,'(/,"!!!readdg: probleme lecture maillage ",/,a1,3x,"l=",i3)') coord,l
     write(imp,'(10x,"i2=",i5,3x,"j2=",i5,3x,"k2=",i5)')i2,j2,k2
     stop
 !
     if(ecri) then
 !       ecriture plaque plane 1 domaine
+       open(out  ,file='fout',position="append")
        k=1
        do k=1,2
           do i=1,i2,50
@@ -100,6 +106,7 @@ contains
              enddo
           enddo
        enddo
+       close(out)
     endif
 !
     return

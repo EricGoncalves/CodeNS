@@ -44,10 +44,10 @@ contains
     use modeleturb
     use chainecarac
     implicit none
-    integer          ::    i,  i1,i1m1,  i2,i2m1
-    integer          :: imax,imin,ind1,ind2,   j
+    integer          ::   i1,i1m1,  i2,i2m1
+    integer          :: imax,imin,ind1,ind2
     integer          ::   j1,j1m1,  j2,j2m1,jmax
-    integer          :: jmin,   k,  k1,k1m1,  k2
+    integer          :: jmin,  k1,k1m1,  k2
     integer          :: k2m1,kmax,kmin,   l,   n
     integer          ::   n0, nid,nijd, njd
     double precision ::   dtdx(ip00),  dtdy(ip00),  dtdz(ip00),  fd5x(ip12),  fd5y(ip12)

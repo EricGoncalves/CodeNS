@@ -30,15 +30,15 @@ contains
     use schemanum
     use proprieteflu
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  ind1,  ind2,ityprk
+    integer          ::     i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  ind1,  ind2,ityprk
     integer          ::      j,    j1,  j1m1,  j1p1,    j2
-    integer          ::   j2m1,    jd,     k,    k1,  k1m1
-    integer          ::   k1p1,    k2,  k2m1,    kd,  kdir
+    integer          ::   j2m1,     k,    k1,  k1m1
+    integer          ::   k1p1,    k2,  k2m1,  kdir
     integer          :: lgsnlt,    lm,     m,     n,   n0c
     integer          ::     n1,   nci,   ncj,   nck,   nid
     integer          ::   nijd,  ninc,   njd
-    double precision ::                    a,                  aa,                  ai,                  al,                  ar
+    double precision ::                   ai,                  al,                  ar
     double precision ::                  cal,                 car,                 cbl,                 cbr,                 cmi
     double precision ::                  cml,                 cmr,         cmui1(ip21),         cmui2(ip21),         cmuj1(ip21)
     double precision ::          cmuj2(ip21),         cmuk1(ip21),         cmuk2(ip21),                cnds,           cvi(ip21)
@@ -49,14 +49,14 @@ contains
     double precision ::                  hj2,                 hj3,                 hj4,                 hj5,                 hk1
     double precision ::                  hk2,                 hk3,                 hk4,                 hk5,                  hl
     double precision ::                   hr,            pl(ip00),           prr(ip00),            ps(ip11),                 psi
-    double precision ::            qcx(ip12),           qcy(ip12),           qcz(ip12),                  ra,          rhol(ip00)
+    double precision ::            qcx(ip12),           qcy(ip12),           qcz(ip12),          rhol(ip00)
     double precision ::           rhor(ip00),                 si0,                 si1,                 si2,                 si3
     double precision ::                  si4,                 sj0,                 sj1,                 sj2,                 sj3
     double precision ::                  sj4,                 sk0,                 sk1,                 sk2,                 sk3
-    double precision ::                  sk4,sn(lgsnlt,nind,ndir),                  ta,          toxx(ip12),          toxy(ip12)
+    double precision ::                  sk4,sn(lgsnlt,nind,ndir),          toxx(ip12),          toxy(ip12)
     double precision ::           toxz(ip12),          toyy(ip12),          toyz(ip12),          tozz(ip12),        u(ip11,ip60)
     double precision ::             ul(ip00),            ur(ip00),        v(ip11,ip60),            vl(ip00),            vr(ip00)
-    double precision ::             wl(ip00),            wr(ip00),                  xa
+    double precision ::             wl(ip00),            wr(ip00)
     double precision,allocatable :: r1(:),r2(:),r3(:),r4(:),r5(:)
 !
 !-----------------------------------------------------------------------
@@ -186,8 +186,8 @@ contains
              ind2 = indc(i2-2,j,k)
              do n=ind1,ind2
                 m=n-n0c
-                cal=0.5*cvi(m-ninc)*(1.-xk)/(cvi(m-ninc)+cvi(m))
-                cbl=0.5*cvi(m-ninc)*(1.+xk*cvi(m-ninc)/cvi(m))/(cvi(m-ninc)+cvi(m))
+                cal=0.5*cvi(n-ninc)*(1.-xk)/(cvi(n-ninc)+cvi(n))
+                cbl=0.5*cvi(n-ninc)*(1.+xk*cvi(n-ninc)/cvi(n))/(cvi(n-ninc)+cvi(n))
 
                 rhol(m)=v(n-ninc,1)+(cal*phi(r1(m)   )*(v(n-ninc,1)-v(n-2*ninc,1)) &
                      +cbl*phi(1./r1(m))*(v(n     ,1)-v(n-ninc  ,1)))
@@ -203,8 +203,8 @@ contains
                 pl(m)=ps(n-ninc) + (cal*phi(r5(m)   )*(ps(n-ninc)-ps(n-2*ninc)) &
                      +cbl*phi(1./r5(m))*(ps(n     )-ps(n-  ninc)))
 !
-                car=0.5*cvi(m)*(1.+xk)/(cvi(m)+cvi(m+ninc))
-                cbr=0.5*cvi(m)*(1.-xk*cvi(m)/cvi(m+ninc))/(cvi(m)+cvi(m+ninc))
+                car=0.5*cvi(n)*(1.+xk)/(cvi(n)+cvi(n+ninc))
+                cbr=0.5*cvi(n)*(1.-xk*cvi(n)/cvi(n+ninc))/(cvi(n)+cvi(n+ninc))
 
                 rhor(m)=v(n,1)-(car*phi(r1(m+ninc   ))*(v(n,1)     -v(n-ninc,1)) &
                      +cbr*phi(1./r1(m+ninc))*(v(n+ninc,1)-v(n     ,1)))
@@ -228,8 +228,8 @@ contains
           ind2 = indc(i2m1,j2m1,k)
           do n=ind1,ind2,ncj
              m=n-n0c
-             cal=0.5*cvi(m-ninc)*(1.-xk)/(cvi(m-ninc)+cvi(m))
-             cbl=0.5*cvi(m-ninc)*(1.+xk*cvi(m-ninc)/cvi(m))/(cvi(m-ninc)+cvi(m))
+             cal=0.5*cvi(n-ninc)*(1.-xk)/(cvi(n-ninc)+cvi(n))
+             cbl=0.5*cvi(n-ninc)*(1.+xk*cvi(n-ninc)/cvi(n))/(cvi(n-ninc)+cvi(n))
 
              rhol(m)=v(n-ninc,1)+muscl*(cal*(v(n-ninc,1)-v(n-2*ninc,1)) &
                   +cbl*(v(n     ,1)-v(n-ninc  ,1)))
@@ -245,8 +245,8 @@ contains
              pl(m)=ps(n-ninc) + muscl*(cal*(ps(n-ninc)-ps(n-2*ninc)) &
                   +cbl*(ps(n     )-ps(n-  ninc)))
 !
-             car=0.5*cvi(m)*(1.+xk)/(cvi(m)+cvi(m+ninc))
-             cbr=0.5*cvi(m)*(1.-xk*cvi(m)/cvi(m+ninc))/(cvi(m)+cvi(m+ninc))
+             car=0.5*cvi(n)*(1.+xk)/(cvi(n)+cvi(n+ninc))
+             cbr=0.5*cvi(n)*(1.-xk*cvi(n)/cvi(n+ninc))/(cvi(n)+cvi(n+ninc))
              rhor(m)=v(n,1)-muscl*(car*(v(n,1)     -v(n-ninc,1)) &
                   +cbr*(v(n+ninc,1)-v(n     ,1)))
              ur(m)=v(n,2)/v(n,1) - muscl*( &
@@ -271,8 +271,8 @@ contains
              ind2 = indc(i2m1,j,k)
              do n=ind1,ind2
                 m=n-n0c
-                cal=0.5*cvi(m-ninc)*(1.-xk)/(cvi(m-ninc)+cvi(m))
-                cbl=0.5*cvi(m-ninc)*(1.+xk*cvi(m-ninc)/cvi(m))/ (cvi(m-ninc)+cvi(m))
+                cal=0.5*cvi(n-ninc)*(1.-xk)/(cvi(n-ninc)+cvi(n))
+                cbl=0.5*cvi(n-ninc)*(1.+xk*cvi(n-ninc)/cvi(n))/ (cvi(n-ninc)+cvi(n))
 
                 rhol(m)=v(n-ninc,1)+muscl*(cal*(v(n-ninc,1)-v(n-2*ninc,1)) &
                      +cbl*(v(n     ,1)-v(n-ninc  ,1)))
@@ -288,8 +288,8 @@ contains
                 pl(m)=ps(n-ninc) + muscl*(cal*(ps(n-ninc)-ps(n-2*ninc)) &
                      +cbl*(ps(n     )-ps(n-  ninc)))
 !
-                car=0.5*cvi(m)*(1.+xk)/(cvi(m)+cvi(m+ninc))
-                cbr=0.5*cvi(m)*(1.-xk*cvi(m)/cvi(m+ninc))/(cvi(m)+cvi(m+ninc))
+                car=0.5*cvi(n)*(1.+xk)/(cvi(n)+cvi(n+ninc))
+                cbr=0.5*cvi(n)*(1.-xk*cvi(n)/cvi(n+ninc))/(cvi(n)+cvi(n+ninc))
 
                 rhor(m)=v(n,1)-muscl*(car*(v(n,1)     -v(n-ninc,1)) &
                      +cbr*(v(n+ninc,1)-v(n     ,1)))
@@ -337,21 +337,21 @@ contains
 !        calcul du flux numerique
              hi1=dm
              hi2=dm*(ul(m)+ur(m))-abs(dm)*(ur(m)-ul(m))+psi*sn(m,kdir,1) &
-                  - (cmui1(m)*toxx(n)+cmui2(m)*toxx(n-ninc))*sn(m,kdir,1)  &
-                  - (cmui1(m)*toxy(n)+cmui2(m)*toxy(n-ninc))*sn(m,kdir,2) &
-                  - (cmui1(m)*toxz(n)+cmui2(m)*toxz(n-ninc))*sn(m,kdir,3)
+                  - (cmui1(n)*toxx(n)+cmui2(n)*toxx(n-ninc))*sn(m,kdir,1)  &
+                  - (cmui1(n)*toxy(n)+cmui2(n)*toxy(n-ninc))*sn(m,kdir,2) &
+                  - (cmui1(n)*toxz(n)+cmui2(n)*toxz(n-ninc))*sn(m,kdir,3)
              hi3=dm*(vl(m)+vr(m))-abs(dm)*(vr(m)-vl(m))+psi*sn(m,kdir,2) &
-                  - (cmui1(m)*toxy(n)+cmui2(m)*toxy(n-ninc))*sn(m,kdir,1) &
-                  - (cmui1(m)*toyy(n)+cmui2(m)*toyy(n-ninc))*sn(m,kdir,2) &
-                  - (cmui1(m)*toyz(n)+cmui2(m)*toyz(n-ninc))*sn(m,kdir,3)
+                  - (cmui1(n)*toxy(n)+cmui2(n)*toxy(n-ninc))*sn(m,kdir,1) &
+                  - (cmui1(n)*toyy(n)+cmui2(n)*toyy(n-ninc))*sn(m,kdir,2) &
+                  - (cmui1(n)*toyz(n)+cmui2(n)*toyz(n-ninc))*sn(m,kdir,3)
              hi4=dm*(wl(m)+wr(m))-abs(dm)*(wr(m)-wl(m))+psi*sn(m,kdir,3) &
-                  - (cmui1(m)*toxz(n)+cmui2(m)*toxz(n-ninc))*sn(m,kdir,1) &
-                  - (cmui1(m)*toyz(n)+cmui2(m)*toyz(n-ninc))*sn(m,kdir,2) &
-                  - (cmui1(m)*tozz(n)+cmui2(m)*tozz(n-ninc))*sn(m,kdir,3)
+                  - (cmui1(n)*toxz(n)+cmui2(n)*toxz(n-ninc))*sn(m,kdir,1) &
+                  - (cmui1(n)*toyz(n)+cmui2(n)*toyz(n-ninc))*sn(m,kdir,2) &
+                  - (cmui1(n)*tozz(n)+cmui2(n)*tozz(n-ninc))*sn(m,kdir,3)
              hi5=dm*(hl+hr)-abs(dm)*(hr-hl)  &
-                  - (cmui1(m)*d(n,1)+cmui2(m)*d(n-ninc,1))*sn(m,kdir,1) &
-                  - (cmui1(m)*d(n,2)+cmui2(m)*d(n-ninc,2))*sn(m,kdir,2) &
-                  - (cmui1(m)*d(n,3)+cmui2(m)*d(n-ninc,3))*sn(m,kdir,3)
+                  - (cmui1(n)*d(n,1)+cmui2(n)*d(n-ninc,1))*sn(m,kdir,1) &
+                  - (cmui1(n)*d(n,2)+cmui2(n)*d(n-ninc,2))*sn(m,kdir,2) &
+                  - (cmui1(n)*d(n,3)+cmui2(n)*d(n-ninc,3))*sn(m,kdir,3)
              u(n,1)=u(n,1)-hi1
              u(n,2)=u(n,2)-0.5*hi2
              u(n,3)=u(n,3)-0.5*hi3
@@ -514,8 +514,8 @@ contains
              ind2 = indc(i2m1,j,k)
              do n=ind1,ind2
                 m=n-n0c
-                cal=0.5*cvj(m-ninc)*(1.-xk)/(cvj(m-ninc)+cvj(m))
-                cbl=0.5*cvj(m-ninc)*(1.+xk*cvj(m-ninc)/cvj(m))/(cvj(m-ninc)+cvj(m))
+                cal=0.5*cvj(n-ninc)*(1.-xk)/(cvj(n-ninc)+cvj(n))
+                cbl=0.5*cvj(n-ninc)*(1.+xk*cvj(n-ninc)/cvj(n))/(cvj(n-ninc)+cvj(n))
 
                 rhol(m)=v(n-ninc,1)+(cal*phi(r1(m)   )*(v(n-ninc,1)-v(n-2*ninc,1)) &
                      +cbl*phi(1./r1(m))*(v(n     ,1)-v(n-ninc  ,1)))
@@ -531,8 +531,8 @@ contains
                 pl(m)=ps(n-ninc) + (cal*phi(r5(m)   )*(ps(n-ninc)-ps(n-2*ninc)) &
                      +cbl*phi(1./r5(m))*(ps(n     )-ps(n-  ninc)))
 !
-                car=0.5*cvj(m)*(1.+xk)/(cvj(m)+cvj(m+ninc))
-                cbr=0.5*cvj(m)*(1.-xk*cvj(m)/cvj(m+ninc))/(cvj(m)+cvj(m+ninc))
+                car=0.5*cvj(n)*(1.+xk)/(cvj(n)+cvj(n+ninc))
+                cbr=0.5*cvj(n)*(1.-xk*cvj(n)/cvj(n+ninc))/(cvj(n)+cvj(n+ninc))
 
                 rhor(m)=v(n,1)-(car*phi(r1(m+ninc   ))*(v(n,1)     -v(n-ninc,1)) &
                      +cbr*phi(1./r1(m+ninc))*(v(n+ninc,1)-v(n     ,1)))
@@ -556,8 +556,8 @@ contains
           ind2 = indc(i2m1,j2m1,k)
           do n=ind1,ind2
              m=n-n0c
-             cal=0.5*cvj(m-ninc)*(1.-xk)/(cvj(m-ninc)+cvj(m))
-             cbl=0.5*cvj(m-ninc)*(1.+xk*cvj(m-ninc)/cvj(m))/(cvj(m-ninc)+cvj(m))
+             cal=0.5*cvj(n-ninc)*(1.-xk)/(cvj(n-ninc)+cvj(n))
+             cbl=0.5*cvj(n-ninc)*(1.+xk*cvj(n-ninc)/cvj(n))/(cvj(n-ninc)+cvj(n))
 
              rhol(m)=v(n-ninc,1)+muscl*(cal*(v(n-ninc,1)-v(n-2*ninc,1)) &
                   +cbl*(v(n     ,1)-v(n-ninc  ,1)))
@@ -573,8 +573,8 @@ contains
              pl(m)=ps(n-ninc) + muscl*(cal*(ps(n-ninc)-ps(n-2*ninc)) &
                   +cbl*(ps(n     )-ps(n-  ninc)))
 !
-             car=0.5*cvj(m)*(1.+xk)/(cvj(m)+cvj(m+ninc))
-             cbr=0.5*cvj(m)*(1.-xk*cvj(m)/cvj(m+ninc))/(cvj(m)+cvj(m+ninc))
+             car=0.5*cvj(n)*(1.+xk)/(cvj(n)+cvj(n+ninc))
+             cbr=0.5*cvj(n)*(1.-xk*cvj(n)/cvj(n+ninc))/(cvj(n)+cvj(n+ninc))
 
              rhor(m)=v(n,1)-muscl*(car*(v(n,1)     -v(n-ninc,1)) &
                   +cbr*(v(n+ninc,1)-v(n     ,1)))
@@ -600,8 +600,8 @@ contains
              ind2 = indc(i2m1,j,k)
              do n=ind1,ind2
                 m=n-n0c
-                cal=0.5*cvj(m-ninc)*(1.-xk)/(cvj(m-ninc)+cvj(m))
-                cbl=0.5*cvj(m-ninc)*(1.+xk*cvj(m-ninc)/cvj(m))/(cvj(m-ninc)+cvj(m))
+                cal=0.5*cvj(n-ninc)*(1.-xk)/(cvj(n-ninc)+cvj(n))
+                cbl=0.5*cvj(n-ninc)*(1.+xk*cvj(n-ninc)/cvj(n))/(cvj(n-ninc)+cvj(n))
 
                 rhol(m)=v(n-ninc,1)+muscl*(cal*(v(n-ninc,1)-v(n-2*ninc,1)) &
                      +cbl*(v(n     ,1)-v(n-ninc  ,1)))
@@ -617,8 +617,8 @@ contains
                 pl(m)=ps(n-ninc) + muscl*(cal*(ps(n-ninc)-ps(n-2*ninc)) &
                      +cbl*(ps(n     )-ps(n-  ninc)))
 !
-                car=0.5*cvj(m)*(1.+xk)/(cvj(m)+cvj(m+ninc))
-                cbr=0.5*cvj(m)*(1.-xk*cvj(m)/cvj(m+ninc))/(cvj(m)+cvj(m+ninc))
+                car=0.5*cvj(n)*(1.+xk)/(cvj(n)+cvj(n+ninc))
+                cbr=0.5*cvj(n)*(1.-xk*cvj(n)/cvj(n+ninc))/(cvj(n)+cvj(n+ninc))
 
                 rhor(m)=v(n,1)-muscl*(car*(v(n,1)     -v(n-ninc,1)) &
                      +cbr*(v(n+ninc,1)-v(n     ,1)))
@@ -666,21 +666,21 @@ contains
 !        calcul du flux numerique
              hj1=dm
              hj2=dm*(ul(m)+ur(m))-abs(dm)*(ur(m)-ul(m))+psi*sn(m,kdir,1) &
-                  - (cmuj1(m)*toxx(n)+cmuj2(m)*toxx(n-ninc))*sn(m,kdir,1)  &
-                  - (cmuj1(m)*toxy(n)+cmuj2(m)*toxy(n-ninc))*sn(m,kdir,2) &
-                  - (cmuj1(m)*toxz(n)+cmuj2(m)*toxz(n-ninc))*sn(m,kdir,3)
+                  - (cmuj1(n)*toxx(n)+cmuj2(n)*toxx(n-ninc))*sn(m,kdir,1)  &
+                  - (cmuj1(n)*toxy(n)+cmuj2(n)*toxy(n-ninc))*sn(m,kdir,2) &
+                  - (cmuj1(n)*toxz(n)+cmuj2(n)*toxz(n-ninc))*sn(m,kdir,3)
              hj3=dm*(vl(m)+vr(m))-abs(dm)*(vr(m)-vl(m))+psi*sn(m,kdir,2) &
-                  - (cmuj1(m)*toxy(n)+cmuj2(m)*toxy(n-ninc))*sn(m,kdir,1) &
-                  - (cmuj1(m)*toyy(n)+cmuj2(m)*toyy(n-ninc))*sn(m,kdir,2) &
-                  - (cmuj1(m)*toyz(n)+cmuj2(m)*toyz(n-ninc))*sn(m,kdir,3)
+                  - (cmuj1(n)*toxy(n)+cmuj2(n)*toxy(n-ninc))*sn(m,kdir,1) &
+                  - (cmuj1(n)*toyy(n)+cmuj2(n)*toyy(n-ninc))*sn(m,kdir,2) &
+                  - (cmuj1(n)*toyz(n)+cmuj2(n)*toyz(n-ninc))*sn(m,kdir,3)
              hj4=dm*(wl(m)+wr(m))-abs(dm)*(wr(m)-wl(m))+psi*sn(m,kdir,3) &
-                  - (cmuj1(m)*toxz(n)+cmuj2(m)*toxz(n-ninc))*sn(m,kdir,1) &
-                  - (cmuj1(m)*toyz(n)+cmuj2(m)*toyz(n-ninc))*sn(m,kdir,2) &
-                  - (cmuj1(m)*tozz(n)+cmuj2(m)*tozz(n-ninc))*sn(m,kdir,3)
+                  - (cmuj1(n)*toxz(n)+cmuj2(n)*toxz(n-ninc))*sn(m,kdir,1) &
+                  - (cmuj1(n)*toyz(n)+cmuj2(n)*toyz(n-ninc))*sn(m,kdir,2) &
+                  - (cmuj1(n)*tozz(n)+cmuj2(n)*tozz(n-ninc))*sn(m,kdir,3)
              hj5=dm*(hl+hr)-abs(dm)*(hr-hl)  &
-                  - (cmuj1(m)*d(n,1)+cmuj2(m)*d(n-ninc,1))*sn(m,kdir,1) &
-                  - (cmuj1(m)*d(n,2)+cmuj2(m)*d(n-ninc,2))*sn(m,kdir,2) &
-                  - (cmuj1(m)*d(n,3)+cmuj2(m)*d(n-ninc,3))*sn(m,kdir,3)
+                  - (cmuj1(n)*d(n,1)+cmuj2(n)*d(n-ninc,1))*sn(m,kdir,1) &
+                  - (cmuj1(n)*d(n,2)+cmuj2(n)*d(n-ninc,2))*sn(m,kdir,2) &
+                  - (cmuj1(n)*d(n,3)+cmuj2(n)*d(n-ninc,3))*sn(m,kdir,3)
              u(n,1)=u(n,1)-hj1
              u(n,2)=u(n,2)-0.5*hj2
              u(n,3)=u(n,3)-0.5*hj3
@@ -842,8 +842,8 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   cal=0.5*cvk(m-ninc)*(1.-xk)/(cvk(m-ninc)+cvk(m))
-                   cbl=0.5*cvk(m-ninc)*(1.+xk*cvk(m-ninc)/cvk(m))/(cvk(m-ninc)+cvk(m))
+                   cal=0.5*cvk(n-ninc)*(1.-xk)/(cvk(n-ninc)+cvk(n))
+                   cbl=0.5*cvk(n-ninc)*(1.+xk*cvk(n-ninc)/cvk(n))/(cvk(n-ninc)+cvk(n))
 
                    rhol(m)=v(n-ninc,1)+(cal*phi(r1(m)   )*(v(n-ninc,1)-v(n-2*ninc,1)) &
                         +cbl*phi(1./r1(m))*(v(n     ,1)-v(n-ninc  ,1)))
@@ -859,8 +859,8 @@ contains
                    pl(m)=ps(n-ninc) + (cal*phi(r5(m)   )*(ps(n-ninc)-ps(n-2*ninc)) &
                         +cbl*phi(1./r5(m))*(ps(n     )-ps(n-  ninc)))
 !
-                   car=0.5*cvk(m)*(1.+xk)/(cvk(m)+cvk(m+ninc))
-                   cbr=0.5*cvk(m)*(1.-xk*cvk(m)/cvk(m+ninc))/(cvk(m)+cvk(m+ninc))
+                   car=0.5*cvk(n)*(1.+xk)/(cvk(n)+cvk(n+ninc))
+                   cbr=0.5*cvk(n)*(1.-xk*cvk(n)/cvk(n+ninc))/(cvk(n)+cvk(n+ninc))
 
                    rhor(m)=v(n,1)-(car*phi(r1(m+ninc   ))*(v(n,1)     -v(n-ninc,1)) &
                         +cbr*phi(1./r1(m+ninc))*(v(n+ninc,1)-v(n     ,1)))
@@ -884,8 +884,8 @@ contains
              ind2 = indc(i2m1,j2m1,k2m1)
              do n=ind1,ind2
                 m=n-n0c
-                cal=0.5*cvk(m-ninc)*(1.-xk)/(cvk(m-ninc)+cvk(m))
-                cbl=0.5*cvk(m-ninc)*(1.+xk*cvk(m-ninc)/cvk(m))/(cvk(m-ninc)+cvk(m))
+                cal=0.5*cvk(n-ninc)*(1.-xk)/(cvk(n-ninc)+cvk(n))
+                cbl=0.5*cvk(n-ninc)*(1.+xk*cvk(n-ninc)/cvk(n))/(cvk(n-ninc)+cvk(n))
 
                 rhol(m)=v(n-ninc,1)+muscl*(cal*(v(n-ninc,1)-v(n-2*ninc,1)) &
                      +cbl*(v(n     ,1)-v(n-ninc  ,1)))
@@ -901,8 +901,8 @@ contains
                 pl(m)=ps(n-ninc) + muscl*(cal*(ps(n-ninc)-ps(n-2*ninc)) &
                      +cbl*(ps(n     )-ps(n-  ninc)))
 !
-                car=0.5*cvk(m)*(1.+xk)/(cvk(m)+cvk(m+ninc))
-                cbr=0.5*cvk(m)*(1.-xk*cvk(m)/cvk(m+ninc))/(cvk(m)+cvk(m+ninc))
+                car=0.5*cvk(n)*(1.+xk)/(cvk(n)+cvk(n+ninc))
+                cbr=0.5*cvk(n)*(1.-xk*cvk(n)/cvk(n+ninc))/(cvk(n)+cvk(n+ninc))
 
                 rhor(m)=v(n,1)-muscl*(car*(v(n,1)     -v(n-ninc,1)) &
                      +cbr*(v(n+ninc,1)-v(n     ,1)))
@@ -928,8 +928,8 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   cal=0.5*cvk(m-ninc)*(1.-xk)/(cvk(m-ninc)+cvk(m))
-                   cbl=0.5*cvk(m-ninc)*(1.+xk*cvk(m-ninc)/cvk(m))/(cvk(m-ninc)+cvk(m))
+                   cal=0.5*cvk(n-ninc)*(1.-xk)/(cvk(n-ninc)+cvk(n))
+                   cbl=0.5*cvk(n-ninc)*(1.+xk*cvk(n-ninc)/cvk(n))/(cvk(n-ninc)+cvk(n))
 
                    rhol(m)=v(n-ninc,1)+muscl*(cal*(v(n-ninc,1)-v(n-2*ninc,1)) &
                         +cbl*(v(n     ,1)-v(n-ninc  ,1)))
@@ -945,8 +945,8 @@ contains
                    pl(m)=ps(n-ninc) + muscl*(cal*(ps(n-ninc)-ps(n-2*ninc)) &
                         +cbl*(ps(n     )-ps(n-  ninc)))
 !
-                   car=0.5*cvk(m)*(1.+xk)/(cvk(m)+cvk(m+ninc))
-                   cbr=0.5*cvk(m)*(1.-xk*cvk(m)/cvk(m+ninc))/(cvk(m)+cvk(m+ninc))
+                   car=0.5*cvk(n)*(1.+xk)/(cvk(n)+cvk(n+ninc))
+                   cbr=0.5*cvk(n)*(1.-xk*cvk(n)/cvk(n+ninc))/(cvk(n)+cvk(n+ninc))
 
                    rhor(m)=v(n,1)-muscl*(car*(v(n,1)     -v(n-ninc,1)) &
                         +cbr*(v(n+ninc,1)-v(n     ,1)))
@@ -994,21 +994,21 @@ contains
 !        calcul du flux numerique
                 hk1=dm
                 hk2=dm*(ul(m)+ur(m))-abs(dm)*(ur(m)-ul(m))+psi*sn(m,kdir,1) &
-                     - (cmuk1(m)*toxx(n)+cmuk2(m)*toxx(n-ninc))*sn(m,kdir,1) &
-                     - (cmuk1(m)*toxy(n)+cmuk2(m)*toxy(n-ninc))*sn(m,kdir,2) &
-                     - (cmuk1(m)*toxz(n)+cmuk2(m)*toxz(n-ninc))*sn(m,kdir,3)
+                     - (cmuk1(n)*toxx(n)+cmuk2(n)*toxx(n-ninc))*sn(m,kdir,1) &
+                     - (cmuk1(n)*toxy(n)+cmuk2(n)*toxy(n-ninc))*sn(m,kdir,2) &
+                     - (cmuk1(n)*toxz(n)+cmuk2(n)*toxz(n-ninc))*sn(m,kdir,3)
                 hk3=dm*(vl(m)+vr(m))-abs(dm)*(vr(m)-vl(m))+psi*sn(m,kdir,2) &
-                     - (cmuk1(m)*toxy(n)+cmuk2(m)*toxy(n-ninc))*sn(m,kdir,1) &
-                     - (cmuk1(m)*toyy(n)+cmuk2(m)*toyy(n-ninc))*sn(m,kdir,2) &
-                     - (cmuk1(m)*toyz(n)+cmuk2(m)*toyz(n-ninc))*sn(m,kdir,3)
+                     - (cmuk1(n)*toxy(n)+cmuk2(n)*toxy(n-ninc))*sn(m,kdir,1) &
+                     - (cmuk1(n)*toyy(n)+cmuk2(n)*toyy(n-ninc))*sn(m,kdir,2) &
+                     - (cmuk1(n)*toyz(n)+cmuk2(n)*toyz(n-ninc))*sn(m,kdir,3)
                 hk4=dm*(wl(m)+wr(m))-abs(dm)*(wr(m)-wl(m))+psi*sn(m,kdir,3) &
-                     - (cmuk1(m)*toxz(n)+cmuk2(m)*toxz(n-ninc))*sn(m,kdir,1) &
-                     - (cmuk1(m)*toyz(n)+cmuk2(m)*toyz(n-ninc))*sn(m,kdir,2) &
-                     - (cmuk1(m)*tozz(n)+cmuk2(m)*tozz(n-ninc))*sn(m,kdir,3)
+                     - (cmuk1(n)*toxz(n)+cmuk2(n)*toxz(n-ninc))*sn(m,kdir,1) &
+                     - (cmuk1(n)*toyz(n)+cmuk2(n)*toyz(n-ninc))*sn(m,kdir,2) &
+                     - (cmuk1(n)*tozz(n)+cmuk2(n)*tozz(n-ninc))*sn(m,kdir,3)
                 hk5=dm*(hl+hr)-abs(dm)*(hr-hl)  &
-                     - (cmuk1(m)*d(n,1)+cmuk2(m)*d(n-ninc,1))*sn(m,kdir,1) &
-                     - (cmuk1(m)*d(n,2)+cmuk2(m)*d(n-ninc,2))*sn(m,kdir,2) &
-                     - (cmuk1(m)*d(n,3)+cmuk2(m)*d(n-ninc,3))*sn(m,kdir,3)
+                     - (cmuk1(n)*d(n,1)+cmuk2(n)*d(n-ninc,1))*sn(m,kdir,1) &
+                     - (cmuk1(n)*d(n,2)+cmuk2(n)*d(n-ninc,2))*sn(m,kdir,2) &
+                     - (cmuk1(n)*d(n,3)+cmuk2(n)*d(n-ninc,3))*sn(m,kdir,3)
                 u(n,1)=u(n,1)-hk1
                 u(n,2)=u(n,2)-0.5*hk2
                 u(n,3)=u(n,3)-0.5*hk3

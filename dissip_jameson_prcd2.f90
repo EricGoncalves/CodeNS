@@ -25,11 +25,11 @@ contains
     use schemanum
     use definition
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  ind1,  ind2,     j
+    integer          ::     i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  ind1,  ind2,     j
     integer          ::     j1,  j1m1,  j1p1,    j2,  j2m1
-    integer          ::     jd,     k,    k1,  k1m1,  k1p1
-    integer          ::     k2,  k2m1,    kd,  kdir,lgsnlt
+    integer          ::      k,    k1,  k1m1,  k1p1
+    integer          ::     k2,  k2m1,  kdir,lgsnlt
     integer          ::     lm,     m,     n,   n0c,   nci
     integer          ::    ncj,   nck,   nid,  nijd,  ninc
     integer          ::    njd
@@ -41,7 +41,7 @@ contains
     double precision ::                  ds4,                 ds5,                 dw1,                 dw2,                 dw3
     double precision ::                  dw4,                 dw5,                eps2,                eps4,                  gd
     double precision ::                   ge,                 get,               prec1,               prec3,                pres
-    double precision ::             ps(ip11),                  q2,                qinf,                  qq,                 rho
+    double precision ::             ps(ip11),                  q2,                qinf,                 rho
     double precision ::                   rl,sn(lgsnlt,nind,ndir),          snup(ip00),                  uu,        v(ip11,ip60)
     double precision ::                   vn,                  vv,                  ww
     double precision,allocatable :: temp(:)

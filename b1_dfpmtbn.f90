@@ -34,8 +34,8 @@ contains
 !
     form='(/,2x,''def. des parametres pour modele de turbulence'',/' &
          //'2x,''---------------------------------------------'',/' &
-         //'2x,''icytur0                  : '',11x,i5,2x,a/' &
-         //'2x,''ncyturb                  : '',11x,i5,2x,a)'
+         //'2x,''icytur0                  : '',11x,i6,2x,a/' &
+         //'2x,''ncyturb                  : '',11x,i6,2x,a)'
     write(imp,form) icytur0,cicytur0, &
          ncyturb,cncyturb
 !

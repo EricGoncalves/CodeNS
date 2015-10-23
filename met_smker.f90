@@ -21,9 +21,9 @@ contains
     use modeleturb
     implicit none
     integer          ::    i,  i1,i1m1,i1p1,  i2
-    integer          :: i2m1,  id,   j,  j1,j1p1
-    integer          ::   j2,j2m1,  jd,   k,  k1
-    integer          :: k1p1,  k2,k2m1,  kd,   l
+    integer          :: i2m1,   j,  j1,j1p1
+    integer          ::   j2,j2m1,   k,  k1
+    integer          :: k1p1,  k2,k2m1,   l
     integer          ::    m,   n, n0c, nci, nid
     integer          :: nijd, njd
     double precision ::           as,           b,        c1f1,        c2f2,  cfke(ip13)

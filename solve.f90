@@ -269,6 +269,7 @@ program solve
   use mod_c_svbdb
   use mod_c_svbdc
   use mod_inimem
+  use mod_inivec
   use mod_c_dfst0
   use mod_c_dffw
   use mod_utdon_gen
@@ -292,6 +293,10 @@ program solve
   use mod_c_cpbd
   use mod_c_dfpmdtg
   use mod_c_dfpmdtd
+  use mod_defdfpmcfg
+  use mod_defdfpmimd
+  use mod_defdfpmdsd
+  use mod_defdfpmdtd
   use mod_c_dfnzst
   use mod_c_dfgm
   use mod_c_infw
@@ -307,11 +312,14 @@ program solve
   use mod_c_ingr
   use mod_c_inbdb
   use mod_c_dfst
+  use mod_mpi
+  use mod_partitionnement
   implicit none
-  integer          ::    img,iyplus,     l,  mfbi,   mfc
-  integer          ::    mfn,   mfr,  ncyc,  nmot,imot(nmx)
+  integer          ::     Time_1,    Time_2,clock_rate,       img,    iyplus
+  integer          ::          l,         m,      mfbi,       mfc,       mfn
+  integer          ::        mfr,      ncyc,      nmot, imot(nmx)
   double precision ::  aam,exs1,exs2,roam, tam
-  integer         ,allocatable ::  mnc(:),mnpar(:),  mnr(:), ncbd(:)
+  integer         ,allocatable ::   mnc(:),mnpar(:),  mnr(:), ncbd(:)
   integer         ,allocatable ::  ncin(:)
   double precision,allocatable ::  bceqt(:,:),    cfke(:),   cmui1(:),   cmui2(:),   cmuj1(:)
   double precision,allocatable ::    cmuj2(:),   cmuk1(:),   cmuk2(:),    cson(:),     cvi(:)
@@ -335,8 +343,36 @@ program solve
 !-----------------------------------------------------------------------
 !
   character(len=32) :: comment,mot(nmx)
-  integer :: Time_1,clock_rate,Time_2,m
-  call allocdata()
+  call inimpi
+
+  ip00=0!ndimub                            ! Nb de cellules
+  ip11=0!ndimctf+kdimg*ndimctf/ccg2        ! Nb de cellules
+  ip12=0!kdimv*(ip11-1)+1                  ! Nb de cellules ?
+  ip13=0!kdimk*(ip11-1)+1                  ! Nb de cellules ?
+  ip21=0!ndimnts+kdimg*ndimnts/cng2+ndimntu! Nb de noeuds
+  ip31=0!1+3*(ndimnts+kdimg*ndimnts/cng2)  ! ?
+  ip40=0!mdimub                            ! Nb max point front
+  ip41=0!mdimtbf+kdimg*mdimtbf/cfg2        ! Nb point frontiere
+  ip42=0!mdimtbf+kdimg*mdimtbf/cfg2        ! Nb point frontiere
+  ip43=0!mdimtbf+kdimg*mdimtbf/cfg2        ! Nb point frontiere
+  ip44=0!mdimtbf+kdimg*mdimtbf/cfg2        ! Nb point frontiere
+  ip60=0!nvar
+
+  lz=50        ! Nb zone !TODO ?
+  lg=0!6       ! ?
+  mtb=0!600    ! Nb front
+  lt=0!lz*lg   ! ?
+  mtt=0!mtb*lg ! Nb front total
+
+  if (.false.) then ! wait for gdb
+    l=0
+    write(stderr,*) rank,"I'm waiting for gdb ", getpid()
+    do while(l==0)
+       call sleep(1)
+    enddo
+  endif
+
+  call allocdata
   temp_array=0.
 !
 !     tableaux de travail
@@ -357,17 +393,19 @@ program solve
 !     reservation des unites logiques generales
 !
   open(lec  ,file='flec')
-  open(imp  ,file='fimp')
-  open(out  ,file='fout')
-  open(sec  ,file='fsec')
-  open(sor1 ,file='smoy')
-  open(sor2 ,file='pres')
-  open(sor3 ,file='resro')
+  imp=stdout
+!  open(imp  ,file='fimp')
+  if (rank==0) then! clear files
+      open(out  ,file='fout',status="replace") ; close(out)
+      open(sec  ,file='fsec',status="replace") ; close(sec)
+      open(sor1 ,file='smoy',status="replace") ; close(sor1)
+      open(sor3 ,file='resro',status="replace") ; close(sor3)
+  endif
   open(kfa  ,file='fcla',form='formatted')
   open(kdgv ,file='fgv' ,form='unformatted')
   open(kdgc ,file='fgc' ,form='unformatted')
   open(kdac ,file='fac' ,form='unformatted')
-!      open(kdav ,file='fav' ,form='unformatted')
+  open(kdav ,file='fav' ,form='unformatted')
 !      open(kdgcf,file='fgcf',form='unformatted')
 !      open(kdacf,file='facf',form='unformatted')
 !      open(kfi  ,file='fi'  ,form='unformatted')
@@ -382,19 +420,7 @@ program solve
 !
 !     initialisations
 !
-  call inimem(          &
-       dt,v,mu,mut, &
-       toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
-       sn, &
-       vol, &
-       ptdual,vdual,vdual1,vdual2, &
-       cvi,cvj,cvk, &
-       cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
-       pression,ztemp,cson, &
-       tnte1,tnte3,tnte4, &
-       ncyc, &
-       tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-       comment)
+  call inimem(ncyc)
 !
 !  lecture et interpretation des donnees  ******************************
 !
@@ -462,6 +488,7 @@ program solve
 !--   COMPUTE FLOW
         if(mot(2)(1:imot(2)).eq.'flow') then
 !
+           call barrier
            call system_clock(Time_1,clock_rate)
            call c_cpfw( &
                 mot,imot,nmot, &
@@ -487,11 +514,12 @@ program solve
                 pression,ztemp,cson, &
                 cvi,cvj,cvk, &
                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+           call barrier
            CALL system_clock(Time_2)
            do m=1,neqt
-              write(*,*) m,temp_array(m,:)
+              if (rank==0) write(*,*) m,temp_array(m,:)
            enddo
-           print*,'TEMPS DE CALCUL ',(Time_2-Time_1)*1./clock_rate
+           if (rank==0) print*,'TEMPS DE CALCUL ',(Time_2-Time_1)*1./clock_rate
 !
 !--   COMPUTE BOUNDARY
         else if(mot(2)(1:imot(2)).eq.'boundary') then
@@ -508,6 +536,34 @@ program solve
 !
         else
            call synterr(mot,imot,2,cb)
+        endif
+     case('partition')
+!--   PARTITION
+       call partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2)
+!--   ALLOC
+     case('alloc')
+!--   ALLOC DOM
+        if((imot(2).eq.3).and.(mot(2)(1:3).eq.'dom')) then
+           call allocdom()
+!     initialisation des tab
+!--   ALLOC DOM
+        elseif((imot(2).eq.5).and.(mot(2)(1:5).eq.'array')) then
+           call allocarray()
+!     initialisation des tableaux
+           call inivec( &
+                dt,v,mu,mut, &
+                toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                sn, &
+                vol, &
+                ptdual,vdual,vdual1,vdual2, &
+                cvi,cvj,cvk, &
+                cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2, &
+                pression,ztemp,cson, &
+                tnte1,tnte3,tnte4, &
+                tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10)
+        elseif((imot(2).eq.8).and.(mot(2)(1:8).eq.'boundary')) then
+!--   ALLOC BOUNDARY
+           call allocbnd()
         endif
 !--   CREATE
      case('create')
@@ -622,8 +678,12 @@ program solve
         call c_end(mot,imot,nmot)
 !--   INIT
      case('init')
+!--   INIT raccord
+        if(mot(2)(1:imot(2)).eq.'raccord') then
+          call iniraccord(&
+                   mot,imot,nmot)
 !--   INIT DOM
-        if(mot(2)(1:imot(2)).eq.'dom') then
+        elseif(mot(2)(1:imot(2)).eq.'dom') then
 !--   INIT DOM XYZ
            select case(mot(3)(1:imot(3)))
            case('xyz')
@@ -784,43 +844,292 @@ program solve
         call synterr(mot,imot,1,cb)
      end select
 !
+    call barrier
   enddo
 !
 contains
 
   subroutine allocdata
+    use kcle
+    use schemanum
+    use modeleturb
     implicit none
 
-    allocate(mnr(ip44))
-    allocate(mnc(ip43))
+    lg=1 ! FIXME ?
+    allocate(ncycle(lg))
+    allocate(kncycle(lg))
+
+!    lz=1 ! FIXME ?
+!    allocate(nbdrat(lz))
+!    allocate(npbrat(lz))
+
+    ! will be reallocated
+    ip41=0
+    ip42=0
+    allocate(utau(ip41)) ! if necessary (readda)
+    lt=0
+    allocate(ii1(lt))   !crbms
+    allocate(jj1(lt))   !crbms
+    allocate(kk1(lt))   !crbms
+    allocate(ii2(lt))   !crbms
+    allocate(jj2(lt))   !crbms
+    allocate(kk2(lt))   !crbms
+    allocate(id1(lt))   !crbms
+    allocate(jd1(lt))   !crbms
+    allocate(kd1(lt))   !crbms
+    allocate(id2(lt))   !crbms
+    allocate(jd2(lt))   !crbms
+    allocate(kd2(lt))   !crbms
+    allocate(nnn(lt))   !crbms
+    allocate(nnc(lt))   !crbms
+    allocate(nnfb(lt))  !crbms
+    allocate(npn(lt))   !crbms
+    allocate(npfb(lt))  !crbms
+    allocate(npc(lt))   !crbms
+    allocate(bg_to_bi(mtb))   !crbds
+    allocate(ncbd(ip41)) ! initis
+    mtb=0
+    allocate(indfl(mtb))  !crbds
+    allocate(nfei(mtb))   !crbds
+    allocate(ndlb(mtb))   !crbds
+    allocate(bcg_to_bci(mtb))   !crbds
+    mtt=0
+    allocate(kmaxb(mtt))   !crbds
+    allocate(iminb(mtt))   !crbds
+    allocate(jmaxb(mtt))   !crbds
+    allocate(jminb(mtt))   !crbds
+    allocate(mpb(mtt))     !crbds
+    allocate(mmb(mtt))     !crbds
+    allocate(kminb(mtt))   !crbds
+    allocate(imaxb(mtt))   !crbds
+
+  end subroutine allocdata
+
+  subroutine allocdom
+    implicit none
+
+    ip21 = ndimntbx        ! nbr de cellules de tts les domaines (strict)
+    allocate(x(ip21))
+    allocate(y(ip21))
+    allocate(z(ip21))
+    x=0.
+    y=0.
+    z=0.
+
+  end subroutine allocdom
+
+
+  subroutine allocbnd
+    use kcle
+    use schemanum
+    use modeleturb
+    implicit none
+
+    allocate(cl(mtb))
+    allocate(tab_raccord(num_bcg))
+    allocate(ndcc(mtb))
+    allocate(nbdc(mtb))
+    allocate(nfbc(mtb))
+    allocate(bc(mtb,ista*lsta))
+ndcc=0
+nbdc=0
+nfbc=0
+bc=0.
+tab_raccord=0
+cl=""
+
+!    allocate(nfbr(mtb))
+!    allocate(ndrr(mtb))
+!    allocate(srotr(mtb))
+!    allocate(nfba(mtb))
+!    allocate(nfbn(mtb))
+!    allocate(crotr(mtb))
+!    allocate(lbdrat(mtb))
+!    allocate(nmfint(mtb))
+!    allocate(nba(mtb))
+!    call defdfpmcfg
+
+    mtt=mtbx*lgx
+    allocate(mdnc(mtt))
+    allocate(mper(mtt))
+    allocate(mpc(mtt))
+mdnc=0
+mper=0
+mpc=0
+!    allocate(lbd(mtt))
+!    allocate(mpn(mtt))
+!    allocate(lbdko(mtt))
+!    allocate(mpr(mtt))
+
+    lt=lgx*lzx
+!    allocate(klmax(lt))
+!    allocate(kkmf(lt))
+!    allocate(keta(lt))
+!    allocate(kki2(lt))
+!    allocate(kki4(lt))
+!    allocate(kmf(lt))
+!    allocate(lmax(lt))
+!    allocate(ki2(lt))
+!    allocate(ki4(lt))
+!    allocate(eta(lt))
+!    allocate(pctvort(lt))
+
+    ip40=mdimubx            ! Nb point frontiere
+!    allocate(rod(ip40))
+!    allocate(qtx(ip40))
+!    allocate(qty(ip40))
+!    allocate(qtz(ip40))
+!    allocate(res(ip40))
+!    allocate(tm1(ip40))
+!    allocate(tm2(ip40))
+!    allocate(tm3(ip40))
+!    allocate(tm4(ip40))
+!    allocate(tm5(ip40))
+!    allocate(tm6(ip40))
+!    allocate(tm7(ip40))
+!    allocate(tm8(ip40))
+!    allocate(tm9(ip40))
+!    allocate(tm10(ip40))
+!    allocate(tm11(ip40))
+!    allocate(tm12(ip40))
+!    allocate(tm13(ip40))
+!    allocate(tp(ip40))
+!    allocate(rpi(ip40))
+!    allocate(d0y(ip40))
+!    allocate(d0x(ip40))
+!    allocate(d0z(ip40))
+!    allocate(pres(ip40))
+!    allocate(roud(ip40))
+!    allocate(rovd(ip40))
+!    allocate(rowd(ip40))
+!    allocate(roed(ip40))
+
+    ip41=mdimtbx            ! Nb point frontiere
     allocate(ncin(ip41))
-    allocate(ncbd(ip41))
-    allocate(mnpar(ip12))
-    allocate(dist(ip12))
-    allocate(rod(ip40))
-    allocate(nyn(ip42))
+    allocate(bceqt(ip41,neqt))
+
+    ip42=mdimtbx            ! Nb point frontiere
+!    allocate(fgam(ip42))
+!    allocate(nxn(ip42))
+!    allocate(nyn(ip42))
+!    allocate(nzn(ip42))
+
+    ip43=mdimtbx            ! Nb point frontiere
+    allocate(mnc(ip43))
+mnc=0
+    ip44=0!mdimubx            !TODO
+!    allocate(mnr(ip44))
+!    allocate(xnr(ip44))
+!    allocate(ynr(ip44))
+!    allocate(znr(ip44))
+
+  end subroutine allocbnd
+
+  subroutine allocarray
+    use kcle
+    use schemanum
+    use modeleturb
+    implicit none
+
+    ip00 = ndimubx        ! nbr de cellules du plus grd domaine (strict)
+    allocate(tn1(ip00))
+    allocate(tn2(ip00))
+    allocate(tn3(ip00))
+    allocate(tn4(ip00))
+    allocate(tn5(ip00))
+    allocate(tn6(ip00))
+    allocate(tn7(ip00))
+    allocate(tn8(ip00))
+    allocate(tn9(ip00))
+    allocate(tn10(ip00))
+
+    ip11 = ndimntbx        ! nbr de cellules de tts les domaines (strict)
+    ip60 = nvar
+    allocate(tnte1(ip11,ip60))
+    allocate(tnte2(ip11,ip60))
+    allocate(tnte3(ip11,ip60))
+    allocate(tnte4(ip11,ip60))
+    allocate(v(ip11,ip60))
+    allocate(vdual(ip11,ip60))
     allocate(vdual2(ip11,ip60))
     allocate(vdual1(ip11,ip60))
-    allocate(rti(ip40))
-    allocate(utau(ip42))
-    allocate(tozz(ip12))
     allocate(ptdual(ip11,ip60))
     allocate(pression(ip11))
     allocate(dt(ip11))
-    allocate(fgam(ip42))
-    allocate(x(ip21))
-    allocate(ynr(ip44))
-    allocate(qtz(ip40))
+    allocate(ztemp(ip11))
+    allocate(cson(ip11))
+    allocate(r(ip11))
+    allocate(vol(ip11))
+
+    ip12 = ndimntbx        ! nbr de cellules de tts les domaines (strict)
+    allocate(toxx(ip12))
+    allocate(toxy(ip12))
+    allocate(toxz(ip12))
+    allocate(toyy(ip12))
+    allocate(toyz(ip12))
+    allocate(tozz(ip12))
+    allocate(qcx(ip12))
+    allocate(qcy(ip12))
+    allocate(qcz(ip12))
+    allocate(mu(ip12))
+    allocate(mut(ip12))
+    allocate(mnpar(ip12))
+    allocate(dist(ip12))
+
+    ip13 = 0!ndimctbx ! TODO ?
+    allocate(cfke(ip13))
+
+    allocate(cvi(ip21))
+    allocate(cvj(ip21))
+    allocate(cvk(ip21))
+    allocate(cmui1(ip21))
+    allocate(cmui2(ip21))
+    allocate(cmuj1(ip21))
+    allocate(cmuj2(ip21))
+    allocate(cmuk1(ip21))
+    allocate(cmuk2(ip21))
+
+    ip31=1+3*(ndimnts+kdimg*ndimnts/cng2)  ! ?
+!print*,ip31,ndir
+    allocate(sn(ip31*ndir)) ! TODO ?
+
+
+lz=lt
+
+    allocate(rti(ip40))
+
+    allocate(nfbr(mtb))
+    allocate(ndrr(mtb))
+    allocate(srotr(mtb))
+    allocate(nfba(mtb))
+    allocate(nfbn(mtb))
+    allocate(crotr(mtb))
+    allocate(lbdrat(mtb))
+    allocate(nmfint(mtb))
+    allocate(nba(mtb))
+
+    allocate(lbd(mtt))
+    allocate(mpn(mtt))
+    allocate(lbdko(mtt))
+    allocate(mpr(mtt))
+
+    allocate(klmax(lt))
+    allocate(kkmf(lt))
+    allocate(keta(lt))
+    allocate(kki2(lt))
+    allocate(kki4(lt))
+    allocate(kmf(lt))
+    allocate(lmax(lt))
+    allocate(ki2(lt))
+    allocate(ki4(lt))
+    allocate(eta(lt))
+    allocate(pctvort(lt))
+
+    allocate(rod(ip40))
     allocate(qtx(ip40))
     allocate(qty(ip40))
-    allocate(mut(ip12))
+    allocate(qtz(ip40))
     allocate(res(ip40))
-    allocate(cfke(ip13))
-    allocate(cmuk1(ip21))
-    allocate(tnte2(ip11,ip60))
-    allocate(cvi(ip21))
-    allocate(vdual(ip11,ip60))
-    allocate(bceqt(ip41,neqt))
     allocate(tm1(ip40))
     allocate(tm2(ip40))
     allocate(tm3(ip40))
@@ -830,72 +1139,62 @@ contains
     allocate(tm7(ip40))
     allocate(tm8(ip40))
     allocate(tm9(ip40))
-    allocate(ztemp(ip11))
-    allocate(tn10(ip00))
-    allocate(tn8(ip00))
-    allocate(tm12(ip40))
-    allocate(tm13(ip40))
     allocate(tm10(ip40))
     allocate(tm11(ip40))
+    allocate(tm12(ip40))
+    allocate(tm13(ip40))
     allocate(tp(ip40))
     allocate(rpi(ip40))
-    allocate(toyy(ip12))
-    allocate(toyz(ip12))
-    allocate(tn5(ip00))
-    allocate(tn4(ip00))
-    allocate(tn7(ip00))
-    allocate(tn6(ip00))
-    allocate(tn1(ip00))
-    allocate(tn3(ip00))
-    allocate(tn2(ip00))
-    allocate(qcz(ip12))
-    allocate(qcy(ip12))
-    allocate(qcx(ip12))
-    allocate(tn9(ip00))
-    allocate(d0z(ip40))
     allocate(d0y(ip40))
     allocate(d0x(ip40))
-    allocate(rowd(ip40))
-    allocate(tnte4(ip11,ip60))
-    allocate(tnte1(ip11,ip60))
+    allocate(d0z(ip40))
     allocate(pres(ip40))
-    allocate(tnte3(ip11,ip60))
-    allocate(cson(ip11))
-    allocate(xnr(ip44))
-    allocate(mu(ip12))
-    allocate(r(ip11))
-    allocate(cvj(ip21))
-    allocate(cvk(ip21))
-    allocate(cmuk2(ip21))
-    allocate(z(ip21))
-    allocate(nzn(ip42))
-    allocate(v(ip11,ip60))
-    allocate(vol(ip11))
-    allocate(znr(ip44))
-    allocate(cmuj2(ip21))
-    allocate(cmuj1(ip21))
     allocate(roud(ip40))
-    allocate(roed(ip40))
-    allocate(toxz(ip12))
-    allocate(toxy(ip12))
-    allocate(toxx(ip12))
-    allocate(cmui2(ip21))
-    allocate(cmui1(ip21))
     allocate(rovd(ip40))
-    allocate(y(ip21))
+    allocate(rowd(ip40))
+    allocate(roed(ip40))
+
+    allocate(fgam(ip42))
     allocate(nxn(ip42))
-    allocate(sn(ip31*ndir))
-  end subroutine allocdata
+    allocate(nyn(ip42))
+    allocate(nzn(ip42))
+
+    allocate(mnr(ip44))
+    allocate(xnr(ip44))
+    allocate(ynr(ip44))
+    allocate(znr(ip44))
+
+
+    call defdfpmcfg ! (fill nba)
+    call defdfpmdtd ! (fill eta keta)
+    call defdfpmdsd ! (fill ki2 ki4 kki2 kki4)
+    call defdfpmimd ! (fill kmf lmax kkmf klmax)
+
+  end subroutine allocarray
+
   subroutine deallocdata
+    use kcle
+    use schemanum
+    use modeleturb
     implicit none
 
-    deallocate(mnr,mnc,ncin,ncbd,mnpar,dist,rod,nyn,vdual2,vdual1,rti)
-    deallocate(utau,tozz,ptdual,pression,dt,fgam,x,ynr,qtz,qtx,qty,mut,res,cfke,cmuk1)
+    deallocate(mnr,mnc,ncin,ncbd,rod,nyn,vdual2,vdual1,rti)
+    deallocate(utau,ptdual,pression,dt,fgam,x,ynr,qtz,qtx,qty,res,cfke,cmuk1)
     deallocate(tnte2,cvi,vdual,bceqt,tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,ztemp,tn10)
-    deallocate(tn8,tm12,tm13,tm10,tm11,tp,rpi,toyy,toyz,tn5,tn4,tn7,tn6,tn1,tn3,tn2)
-    deallocate(qcz,qcy,qcx,tn9,d0z,d0y,d0x,rowd,tnte4,tnte1,pres,tnte3,cson,xnr,mu)
-    deallocate(r,cvj,cvk,cmuk2,z,nzn,v,vol,znr,cmuj2,cmuj1,roud,roed,toxz,toxy,toxx)
+    deallocate(tn8,tm12,tm13,tm10,tm11,tp,rpi,tn5,tn4,tn7,tn6,tn1,tn3,tn2)
+    deallocate(tn9,d0z,d0y,d0x,rowd,tnte4,tnte1,pres,tnte3,cson,xnr)
+    deallocate(r,cvj,cvk,cmuk2,z,nzn,v,vol,znr,cmuj2,cmuj1,roud,roed)
     deallocate(cmui2,cmui1,rovd,y,nxn,sn)
+
+    deallocate(toxx,toxy,toxz,toyy,toyz,tozz,qcz,qcy,qcx,mut,mu,mnpar,dist)
+
+    deallocate(ncycle,kncycle,klmax,kkmf,keta,kki2,kki4,kmf,lmax,ki2,ki4,eta,pctvort)
+    deallocate(cl,ndcc,nbdc,mdnc,mper,mpc,nfbr,ndrr,srotr,nfba,nfbn,crotr,lbdrat)
+    deallocate(nmfint,nba,lbd,mpn,lbdko,mpr,bc,nfbc)
+
+    deallocate(ii1,jj1,kk1,ii2,jj2,kk2,id1,jd1,kd1,id2,jd2,kd2,nnn,nnc,nnfb,npn,npc,npfb)
+    deallocate(ndlb,nfei,indfl,iminb,imaxb,jminb,jmaxb,kminb,kmaxb,mpb,mmb)
+
 
   end subroutine deallocdata
 end program solve

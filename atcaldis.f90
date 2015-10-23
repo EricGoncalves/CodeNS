@@ -128,13 +128,15 @@ contains
     use mod_atecrfp
     use mod_atccc
     use mod_atindnor
+    use mod_mpi
     implicit none
     integer          ::         dm1,        dm2,        dm3,       ierr,        img
     integer          ::      isens3,          l,         lm,          m,        m10
     integer          ::       m1max,      m1min,        m20,      m2max,      m2min
     integer          ::         m30,      m3max,      m3min,         mf,  mnc(ip43)
     integer          :: mnpar(ip12),          n, ncbd(ip41), ncin(ip41),       nfbe
-    integer          ::        nfbi,         no
+    integer          ::        nfbi,         no,proc,nbdkog
+    integer,allocatable :: nbdko_proc(:)
     double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
     double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
     double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
@@ -191,6 +193,25 @@ contains
        write(imp,'(/,"!!!atcaldis: pas de paroi pour calcul des distances aux parois - arret")')
        stop
     end if
+
+    allocate(nbdko_proc(nprocs))
+    call gather((/nbdko/),nbdko_proc,1)
+    nbdkog=sum(nbdko_proc)
+    allocate(lbdko_to_lbdkog(nbdko))
+    allocate(lbdkog_to_proc(nbdkog))
+    proc=0
+    do mf=1,nbdkog
+      if(mf>sum(nbdko_proc(1:proc+1))) then
+        do l=proc,nprocs
+           proc=proc+1
+           if(mf<=sum(nbdko_proc(1:proc+1))) exit
+        enddo
+      endif
+      lbdkog_to_proc(mf)=proc
+    enddo
+    do mf=1,nbdko
+      lbdko_to_lbdkog(mf)=mf+sum(nbdko_proc(1:rank))
+    enddo
 !
 !     ----------------------------------------------------------
 !       initialisation des distances a une valeur infinie

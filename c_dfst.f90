@@ -24,6 +24,7 @@ contains
     use sortiefichier
     use mod_b1_dfst
     use mod_tcmd_dfst
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     nmot,      nst
 !
@@ -36,7 +37,8 @@ contains
          nst)
 !
     if (kimp.ge.1) then
-       call b1_dfst(nst)
+       if (rank==0) call b1_dfst(nst)
+       call barrier
     endif
 !
     return

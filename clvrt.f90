@@ -23,7 +23,7 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-    integer          ::         id,        jd,        kd,         l,         m
+    integer          ::          l,         m
     integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
     integer          ::   mpn(mtt),        mt,       n0c,       n0n,ncbd(ip41)
     integer          ::        nci,      ncij,     ncijk,      ncik,       ncj

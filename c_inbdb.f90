@@ -3,7 +3,7 @@ module mod_c_inbdb
 contains
   subroutine c_inbdb( &
        mot,imot,nmot, &
-       ncbd,ncin,bceqt)
+       ncbd,ncin,bceqt,partition)
 !
 !***********************************************************************
 !
@@ -14,17 +14,19 @@ contains
 !-----parameters figes--------------------------------------------------
 !
     use para_var
-    use para_fige
+    use boundary
     use sortiefichier
     use mod_tcmd_inbdb
     use mod_b1_inbdb
     use mod_inbdb
+    use mod_mpi
     implicit none
     integer          ::     ibdcfl,    ibdcst,    ibddim, imot(nmx),     kibdb
     integer          ::          l,     lmfbd,ncbd(ip41),ncin(ip41),      nmot
-    integer          ::       nvbc
+    integer          ::       nvbc,l1,l2
     double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
     integer         ,allocatable :: lmfb(:)
+    logical,optional :: partition
 !
 !-----------------------------------------------------------------------
 !
@@ -40,18 +42,29 @@ contains
          ibdcst,ibdcfl,ibddim,nvbc,vbc)
 !
     if (kimp.ge.1) then
-       call b1_inbdb( &
+       if (rank==0) call b1_inbdb( &
             lmfb,lmfbd,clmf,kibdb, &
             ibdcst,ibdcfl,ibddim,nvbc,vbc)
     endif
 !
     do l=1,lmfbd
 !
+      if (present(partition)) then
        call inbdb( &
             ncbd,ncin, &
             lmfb(l),clmf,kibdb, &
             ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
+    else
+       do l1=1,mtb
+        l2=bcl_to_bcg(l1)
+        if (bcg_to_bci(l2)==lmfb(l)) &
+       call inbdb( &
+            ncbd,ncin, &
+            l2,clmf,kibdb, &
+            ibdcst,ibdcfl,ibddim,nvbc,vbc,bceqt)
 !
+    enddo
+    endif
     enddo
 !
     deallocate(lmfb)

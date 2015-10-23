@@ -12,7 +12,7 @@ contains
 !
 !***********************************************************************
 !
-!     ACT  calcul du terme source modèle k-e SAS
+!     ACT  calcul du terme source modÃ¨le k-e SAS
 !     Auteur: Jean Decaix 07/2010
 !
 !-----parameters figes--------------------------------------------------

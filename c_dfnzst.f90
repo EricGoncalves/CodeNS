@@ -46,6 +46,7 @@ contains
     use mod_tcmd_dfnzst
     use mod_b1_dfnzst
     use mod_dfnzst
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     nmot,   nonzst
 !
@@ -58,7 +59,8 @@ contains
          nonzst)
 !
     if (kimp.ge.1) then
-       call b1_dfnzst(nonzst)
+       if(rank==0) call b1_dfnzst(nonzst)
+       call barrier
     endif
 !
     call dfnzst(nonzst)

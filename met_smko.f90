@@ -51,13 +51,13 @@ contains
     use maillage
     use modeleturb
     implicit none
-    integer          ::    i,  i1,  i2,i2m1,ind1
+    integer          ::   i1,  i2,i2m1,ind1
     integer          :: ind2,   j,  j1,  j2,j2m1
     integer          ::    k,  k1,  k2,k2m1,   l
     integer          ::    m,   n, n0c, nid,nijd
     integer          ::  njd
-    double precision ::           aa,       betac,      betasc,          cd,  cfke(ip13)
-    double precision ::   cson(ip11),        gkgo,        omeg,qcxts5(ip12),qcyts6(ip12)
+    double precision ::        betac,      betasc,          cd,  cfke(ip13)
+    double precision ::   cson(ip11),        omeg,qcxts5(ip12),qcyts6(ip12)
     double precision ::  tprod(ip00),txxf5x(ip12),txyf5y(ip12),txzf5z(ip12),tyyf6x(ip12)
     double precision :: tyzf6y(ip12),tzzf6z(ip12),v(ip11,ip60),         xmt,        xmt0
     double precision ::           xw

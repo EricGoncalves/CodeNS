@@ -43,6 +43,7 @@ contains
     write(imp,formatcm) command
     write(imp,'(a)') comment
 !
+!    call backtrace
     stop 'Erreur de syntaxe dans une commande!'
 !
     return

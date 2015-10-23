@@ -19,7 +19,7 @@ contains
     use maillage
     use schemanum
     implicit none
-    integer          ::      i,    i1,    i2,  i2m1,icycle
+    integer          ::     i1,    i2,  i2m1,icycle
     integer          ::   ind1,  ind2,     j,    j1,    j2
     integer          ::   j2m1,     k,    k1,    k2,  k2m1
     integer          ::     lm,     n,   n0c,   nid,  nijd

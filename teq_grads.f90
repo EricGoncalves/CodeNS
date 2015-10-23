@@ -23,14 +23,14 @@ contains
     use maillage
     use schemanum
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,  i2p1,    id,  ind1,  ind2
-    integer          ::      j,    j1,  j1m1,  j1p1,    j2
-    integer          ::   j2m1,  j2p1,    jd,     k,    k1
-    integer          ::   k1m1,  k1p1,    k2,  k2m1,  k2p1
-    integer          ::     kd,  kdir,     l,lgsnlt,     m
+    integer          ::     i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  i2p1,  ind1,  ind2
+    integer          ::      j,    j1,  j1m1,  j1p1
+    integer          ::   j2m1,  j2p1,     k,    k1
+    integer          ::   k1m1,  k1p1,    k2,  k2m1
+    integer          ::   kdir,     l,lgsnlt,     m,  k2p1
     integer          ::      n,   n0c,   nci,   ncj,   nck
-    integer          ::    nid,  nijd,  ninc,   njd
+    integer          ::    nid,  nijd,  ninc,   njd,    j2
     double precision ::                   c0,         cmui1(ip21),         cmui2(ip21),         cmuj1(ip21),         cmuj2(ip21)
     double precision ::          cmuk1(ip21),         cmuk2(ip21),          dsdx(ip00),          dsdy(ip00),          dsdz(ip00)
     double precision ::                  eps,             s(ip00),                 si1,                 si2,                 si3
@@ -254,18 +254,18 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   sk1=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,1)
-                   sk2=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,2)
-                   sk3=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,3)
+                   sk1=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,1)
+                   sk2=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,2)
+                   sk3=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m)=dsdx(m)-sk1
                    dsdy(m)=dsdy(m)-sk2
                    dsdz(m)=dsdz(m)-sk3
                 enddo
                 do n=ind1,ind2
                    m=n-n0c
-                   sk1=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,1)
-                   sk2=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,2)
-                   sk3=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,3)
+                   sk1=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,1)
+                   sk2=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,2)
+                   sk3=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m-ninc)=dsdx(m-ninc)+sk1
                    dsdy(m-ninc)=dsdy(m-ninc)+sk2
                    dsdz(m-ninc)=dsdz(m-ninc)+sk3
@@ -311,18 +311,18 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   sj1=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,1)
-                   sj2=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,2)
-                   sj3=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,3)
+                   sj1=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,1)
+                   sj2=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,2)
+                   sj3=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m)=dsdx(m)-sj1
                    dsdy(m)=dsdy(m)-sj2
                    dsdz(m)=dsdz(m)-sj3
                 enddo
                 do n=ind1,ind2
                    m=n-n0c
-                   sj1=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,1)
-                   sj2=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,2)
-                   sj3=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,3)
+                   sj1=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,1)
+                   sj2=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,2)
+                   sj3=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m-ninc)=dsdx(m-ninc)+sj1
                    dsdy(m-ninc)=dsdy(m-ninc)+sj2
                    dsdz(m-ninc)=dsdz(m-ninc)+sj3
@@ -367,18 +367,18 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   si1=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,1)
-                   si2=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,2)
-                   si3=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,3)
+                   si1=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,1)
+                   si2=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,2)
+                   si3=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m)=dsdx(m)-si1
                    dsdy(m)=dsdy(m)-si2
                    dsdz(m)=dsdz(m)-si3
                 enddo
                 do n=ind1,ind2
                    m=n-n0c
-                   si1=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,1)
-                   si2=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,2)
-                   si3=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,3)
+                   si1=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,1)
+                   si2=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,2)
+                   si3=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m-ninc)=dsdx(m-ninc)+si1
                    dsdy(m-ninc)=dsdy(m-ninc)+si2
                    dsdz(m-ninc)=dsdz(m-ninc)+si3

@@ -155,6 +155,7 @@ contains
     use chainecarac
     use sortiefichier
     use schemanum
+    use mod_mpi
     implicit none
     integer          ::         i1,        i2,      idf1,      idf2,     idfac
     integer          ::        idm,     imaxf,     iminf,        j1,        j2
@@ -165,7 +166,7 @@ contains
     integer          ::      mfacn,       mfl,       n0c,       n0n,ncbd(ip41)
     integer          ::        nci,ncin(ip41),       ncj,       nck,     nfac1
     integer          ::      nfac2,     nfac3,     nfac4,     nfacf,     nfaci
-    integer          ::      nfacm,       nid,      nijd,       njd,        nn
+    integer          ::      nfacm,       nid,      nijd,       njd,        nn,mfg
     double precision ::          akp,       alfar,       betar,      cfinf0,      claefr
     double precision ::      claerfr,      claero,     claerob,     claetfr,        clav
     double precision ::        clavb,     clavbfr,      clavfr,     clavtfr,     clavtot
@@ -254,6 +255,8 @@ contains
 !     -------------------------------------------------------
 !     SORTIES RELATIVES A DES VALEURS SUR LES PAROIS
 !
+    if(rank==0)then
+    open(sor2 ,file='pres')
     write(sor2,'(''TITLE='',a1,a80,a1)')c,titrt1,c
     if(ecrcom) then
 !        write(sor2,'("#==>utsorfr: adimensionnement du frottement ",
@@ -278,6 +281,8 @@ contains
             //'t78,"Kp",t89,"P/Pi",t99,"Mp_isen",t114,"qx",t125,"qy",t136,' &
             //'"qz",t144,"i   j",t164,"L Utau/nu",t175,' &
             //'"Utau/a_i")')
+    close(sor2)
+    end if
     end if
 !
     pis2=atan2(1.,0.)
@@ -328,6 +333,9 @@ contains
 !       boucle sur les parois
 !
        mfl=nmfint(mf)
+       mfg=bcint_to_bcintg(mf)
+       call start_keep_order(mfg,bcintg_to_proc)
+       open(sor2 ,file='pres',position="append")
        l=ndlb(mfl)
 !
        i1=ii1(l)
@@ -357,7 +365,7 @@ contains
        kmaxf=kmaxb(mfl)
 !
        if(kimpl.eq.1) then
-          write(imp,987) l,mfl,iminf,imaxf,jminf,jmaxf,kminf,kmaxf
+          write(imp,987) bl_to_bg(l),bcl_to_bcg(mfl),iminf,imaxf,jminf,jmaxf,kminf,kmaxf
 987       format('integration des pressions par frontiere :', &
                /1x,39('-') &
                //1x,'zone ',i3,'  - frontiere ',i3/1x,26('-'), &
@@ -683,6 +691,7 @@ contains
 !
 !         fin de boucle sur les bandes
        enddo
+
 !
 !       pression
        cxav   =cxav/(q0spi0*sref)
@@ -750,9 +759,17 @@ contains
                /,5x,'cx = ',f8.4,5x,'cy = ',f8.4,5x,'cz = ',f8.4 &
                ,5x,'cl = ',f8.4,5x,'cm = ',f8.4,5x,'cn = ',f8.4)
        endif
+       close(sor2)
+      call END_KEEP_ORDER(mfg,bcintg_to_proc)
 !       fin de boucle sur les parois
     enddo
 !
+    call SUM_MPI(cxavtot)
+    call SUM_MPI(cyavtot)
+    call SUM_MPI(czavtot)
+    call SUM_MPI(clavtot)
+    call SUM_MPI(cmavtot)
+    call SUM_MPI(cnavtot)
 !     pression
     cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
     cyaero= cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
@@ -761,6 +778,12 @@ contains
     cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
     cnaero=-clavtot*snal+cnavtot*csal
 !
+    call SUM_MPI(cxavtfr)
+    call SUM_MPI(cyavtfr)
+    call SUM_MPI(czavtfr)
+    call SUM_MPI(clavtfr)
+    call SUM_MPI(cmavtfr)
+    call SUM_MPI(cnavtfr)
 !     frottement
     cxaetfr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
     cyaetfr= cxavtfr*csal*snbe+cyavtfr*csbe+czavtfr*snal*snbe
@@ -769,7 +792,7 @@ contains
     cmaetfr=-clavtfr*csal*snbe+cmavtfr*csbe-cnavtfr*snal*snbe
     cnaetfr=-clavtfr*snal+cnavtfr*csal
 !
-    if(kimpl.eq.1) then
+    if(kimpl.eq.1.and.rank==0) then
        write(imp,890) cxavtot,cyavtot,czavtot,clavtot,cmavtot,cnavtot, &
             cxaero,cyaero,czaero,claero,cmaero,cnaero
 890    format('efforts globaux pression - configuration ', &

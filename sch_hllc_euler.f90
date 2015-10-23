@@ -14,7 +14,7 @@ contains
 !_DA  DATE_C : avril 2008 - Eric Goncalves / LEGI
 !
 !     ACT
-!_A    Calcul des bilans de flux physiques. Schéma HLLC.
+!_A    Calcul des bilans de flux physiques. SchÃ©ma HLLC.
 !_A    Avec extrapolation MUSCL (pour ordre 2 et 3).
 !_A    Pas de limiteur de pentes
 !

@@ -33,15 +33,15 @@ contains
     call convich(kklomg,cklomg)
     call convich(komg,comg)
 !
-    form='(/,2x,''definition de l''''ecoulement'',/' &
-         //'2x,''--------------------------'',/' &
-         //'2x,''equat                    : '',9x,a,2x,a/' &
-         //'2x,''klomg                    : '',11x,i5,2x,a/' &
-         //'2x,''omg                      : '',e12.6,''t/mn'',' &
-         //'2x,a)'
-    write(imp,form) equat,cequat, &
-         klomg,cklomg, &
-         omg,comg
+      form='(/,2x,''definition de l''''ecoulement'',/' &
+           //'2x,''--------------------------'',/' &
+           //'2x,''equat                    : '',9x,a,2x,a/' &
+           //'2x,''klomg                    : '',11x,i5,2x,a/' &
+           //'2x,''omg                      : '',e12.6,''t/mn'',' &
+           //'2x,a)'
+      write(imp,form) equat,cequat, &
+           klomg,cklomg, &
+           omg,comg
 !
     return
   end subroutine b1_dffw

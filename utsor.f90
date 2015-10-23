@@ -152,6 +152,7 @@ contains
     use proprieteflu
     use definition
     use chainecarac
+    use mod_mpi
     implicit none
     integer          ::         i1,        i2,      idf1,      idf2,     idfac
     integer          ::        idm,     imaxf,     iminf,        j1,        j2
@@ -161,7 +162,7 @@ contains
     integer          ::    m2maxm1,     m2min,        mf,      mfac,     mfacn
     integer          ::        mfl,       n0c,       n0n,ncbd(ip41),       nci
     integer          ::        ncj,       nck,     nfac1,     nfac2,     nfac3
-    integer          ::      nfac4,     nfacf,       nid,      nijd,       njd
+    integer          ::      nfac4,     nfacf,       nid,      nijd,       njd,mfg
     double precision ::          akp,       alfar,       betar,      claero,     claerob
     double precision ::         clav,       clavb,     clavtot,      cmaero,     cmaerob
     double precision ::         cmav,       cmavb,     cmavtot,      cnaero,     cnaerob
@@ -185,6 +186,7 @@ contains
 !
 !     SORTIES POUR EXPLOITATION
 !
+  if(rank==0) then
     open(sorf1,file='fsor1')
 !
     write(sorf1,1000) equat
@@ -198,6 +200,8 @@ contains
     write(sorf1,2000) tnz,ronz,anz,dnz
     write(sorf1,2000) roa1,aa1,ta1,pa1,ha1
     write(sorf1,2000) omg,perio
+  close(sorf1)
+  endif
 !
 1000 format(a)
 2000 format(5e14.7)
@@ -207,7 +211,6 @@ contains
     if(kvglo.eq.0) return
     if(nbfll.eq.0) return
 !
-    open(sorf2,file='fsor2')
 !
     pis2=atan2(1.,0.)
     raddeg=90./pis2
@@ -229,6 +232,10 @@ contains
     do mf=1,nbfll
 !
        mfl=nmfint(mf)
+       mfg=bcint_to_bcintg(mf)
+       call start_keep_order(mfg,bcintg_to_proc)
+       open(sorf2,file='fsor2',position="append")
+       if(mfg==1) rewind(sorf2)
        l=ndlb(mfl)
 !
        i1=ii1(l)
@@ -258,7 +265,7 @@ contains
        kmaxf=kmaxb(mfl)
 !
        if(kimp.eq.1) then
-          write(imp,987) l,mfl,iminf,imaxf,jminf,jmaxf,kminf,kmaxf
+          write(imp,987) bl_to_bg(l),bcl_to_bcg(mfl),iminf,imaxf,jminf,jmaxf,kminf,kmaxf
        endif
 987    format("integration des pressions par frontiere : ",39("-") &
             //1x,"zone ",i3,"   - frontiere ",i3/1x,26("-"), &
@@ -470,7 +477,17 @@ contains
             /,1x,"efforts dans le repere aerodynamique : ",/ &
             /,5x,"cx = ",f8.4,5x,"cy = ",f8.4,5x,"cz = ",f8.4 &
             ,5x,"cl = ",f8.4,5x,"cm = ",f8.4,5x,"cn = ",f8.4//)
+      close(sorf2)
+       call end_keep_order(mfg,bcintg_to_proc)
     enddo
+
+    call SUM_MPI(cxavtot)
+    call SUM_MPI(cyavtot)
+    call SUM_MPI(czavtot)
+    call SUM_MPI(clavtot)
+    call SUM_MPI(cmavtot)
+    call SUM_MPI(cnavtot)
+
 !
     cxaero=cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
     cyaero=cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
@@ -479,7 +496,7 @@ contains
     cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
     cnaero=-clavtot*snal+cnavtot*csal
 !
-    if(kimp.eq.1) then
+    if(kimp.eq.1.and.rank==0) then
        write(imp,990) cxavtot,cyavtot,czavtot,clavtot,cmavtot,cnavtot, &
             cxaero,cyaero,czaero,claero,cmaero,cnaero
     endif

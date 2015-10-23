@@ -44,9 +44,10 @@ contains
     use mod_inbdbfl
     use mod_inbdbdf
     use mod_inbdbst
+    use mod_mpi
     implicit none
     integer          ::     ibdcfl,    ibdcst,    ibddim,       img,     kibdb
-    integer          ::          l,        lm,         m,        m0,      mfbe
+    integer          ::          l,        lm,         m,        m0,      mfbe,      mfbe1
     integer          ::       mfbi,     mfbim,      mflm,        ml,        mt
     integer          :: ncbd(ip41),ncin(ip41),        nv,      nvbc
     double precision :: bceqt(ip41,neqt),  vbc(ista*lsta)
@@ -55,7 +56,9 @@ contains
 !
     character(len=4 ) :: clmf
 !
-    mfbi=nfei(mfbe)
+    mfbe1=bcg_to_bcl(mfbe)
+    if(mfbe1/=0) then
+    mfbi=nfei(mfbe1)
     cl(mfbi)=clmf
     l=ndlb(mfbi)
 !
@@ -111,6 +114,7 @@ contains
 !                 mt,m0)
        endif
     enddo
+    endif
 !
     return
   end subroutine inbdb

@@ -53,7 +53,7 @@ contains
     use proprieteflu
     use boundary
     implicit none
-    integer          ::         id,        jd,        kd,         l,         m
+    integer          ::          l,         m
     integer          ::        mfl,        ml,        mt,       n0c,       n0n
     integer          ::         nc,ncbd(ip41),       nci,      ncij,     ncijk
     integer          ::       ncik,       ncj,      ncjk,       nck,       nid

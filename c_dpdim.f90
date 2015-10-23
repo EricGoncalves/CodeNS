@@ -39,7 +39,7 @@ contains
     use boundary
     use sortiefichier
     use mod_b2_dpdim
-
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),       kl,        l,   mdimtb,   mdimtc
     integer          ::    mdimtn,   mdimtr,  ndimctb,  ndimctc,  ndimctk
@@ -65,25 +65,28 @@ contains
     enddo
 !
     if (kimp.ge.2) then
+       call start_keep_order
+       write(imp,*) "rank :",rank
        call b2_dpdim
+       call end_keep_order
     endif
 !
-    if (lt     .lt.lzx     ) stop 'dimensionnement incorrecte'
-    if (ndimub .lt.ndimubx ) stop 'dimensionnement incorrecte'
-    if (ndimctb.lt.ndimctbx) stop 'dimensionnement incorrecte'
-    if (ndimntb.lt.ndimntbx) stop 'dimensionnement incorrecte'
+    if (lt     .lt.lzx     ) stop 'dimensionnement incorrect lt'
+    if (ndimub .lt.ndimubx ) stop 'dimensionnement incorrect ndimub'
+    if (ndimctb.lt.ndimctbx) stop 'dimensionnement incorrect ndimctb'
+    if (ndimntb.lt.ndimntbx) stop 'dimensionnement incorrect ndimntb'
     if((kdimg.eq.0).and.(lgx.gt.1)) &
-         stop 'dimensionnement incorrecte'
+         stop 'dimensionnement incorrect kdimg'
     if((kdimv.eq.0).and.(equat(1:2).eq.'ns')) &
-         stop 'dimensionnement incorrecte'
+         stop 'dimensionnement incorrect kdimv'
     if((kdimk.eq.0).and.(equat(1:2).eq.'ke')) &
-         stop 'dimensionnement incorrecte'
-    if (mtb    .lt.mtbx    ) stop 'dimensionnement incorrecte'
-    if (mdimub .lt.mdimubx ) stop 'dimensionnement incorrecte'
-    if (mdimtb .lt.mdimtbx ) stop 'dimensionnement incorrecte'
-    if (mdimtn .lt.mdimtnx ) stop 'dimensionnement incorrecte'
-    if (mdimtc .lt.mdimtcx ) stop 'dimensionnement incorrecte'
-    if (mdimtr .lt.mdimtrx ) stop 'dimensionnement incorrecte'
+         stop 'dimensionnement incorrect kdimk'
+    if (mtb    .lt.mtbx    ) stop 'dimensionnement incorrect mtb'
+    if (mdimub .lt.mdimubx ) stop 'dimensionnement incorrect mdimub'
+    if (mdimtb .lt.mdimtbx ) stop 'dimensionnement incorrect mdimtb'
+    if (mdimtn .lt.mdimtnx ) stop 'dimensionnement incorrect mdimtn'
+    if (mdimtc .lt.mdimtcx ) stop 'dimensionnement incorrect mdimtc'
+    if (mdimtr .lt.mdimtrx ) stop 'dimensionnement incorrect mdimtr'
 !
     return
   end subroutine c_dpdim

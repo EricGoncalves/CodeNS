@@ -24,10 +24,9 @@ contains
     use para_fige
     use sortiefichier
     use mod_dfph
-
     use mod_b1_dfph
-
     use mod_tcmd_dfph
+    use mod_mpi
     implicit none
     integer          :: imot(nmx),     nmot
 !
@@ -38,7 +37,8 @@ contains
     call tcmd_dfph(mot,imot,nmot)
 !
     if(kimp.ge.1) then
-       call b1_dfph
+       if(rank==0) call b1_dfph
+        call barrier
     endif
 !
     call dfph

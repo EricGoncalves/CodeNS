@@ -46,12 +46,12 @@ contains
     use proprieteflu
     use sortiefichier
     implicit none
-    integer          ::      i,    i1,    i2,  i2m1,iarret
+    integer          ::     i1,    i2,  i2m1,iarret
     integer          ::   ind1,  ind2,     j,    j1,    j2
     integer          ::   j2m1,     k,    k1,    k2,  k2m1
     integer          ::      l,     n,    n0,   nid,  nijd
     integer          ::    njd
-    double precision ::            a,          bl,    mu(ip12),s(ip11,ip60),  temp(ip11)
+    double precision ::            a,    mu(ip12),s(ip11,ip60),  temp(ip11)
     double precision ::        usrey
 !
 !-----------------------------------------------------------------------

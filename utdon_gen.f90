@@ -54,15 +54,18 @@ contains
 !
     use para_var
     use para_fige
+    use boundary,only :bcg_to_bci
     use sortiefichier
     use maillage
     use constantes
     use modeleturb
     use schemanum
     use definition
+    use mod_mpi
     implicit none
-    integer          ::   idefconf,  idefxref,      ierr,     ligne,      mflu
-    integer          ::         nb,ncbd(ip41)
+    integer          ::   idefconf,  idefxref,      ierr,     ligne,      mflu,mflu1
+    integer          ::         nb,ncbd(ip41),l,l1,proc,nbfllg,mf
+    integer,allocatable :: nbfll_proc(:)
     double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),        omg1,          p2
     double precision ::          rpi,         rti,        tpar,v(ip11,ip60),     x(ip21)
     double precision ::      y(ip21),     z(ip21)
@@ -103,7 +106,6 @@ contains
        elseif(cmtlec(1:10).eq.'schema num' .or. &
             cmtlec(1:10).eq.'SCHEMA NUM') then
 !
-          write(imp,'(/,"SCHEMA NUMerique:")')
 !
 !         donnees pour schema numerique d'integration de k-epsilon
 !         schema centre de Jameson ou decentre de Roe
@@ -112,23 +114,26 @@ contains
           ligne=ligne+1
           read(don1,*,err=99) kditur
           ligne=ligne+1
-          write(imp,6803) kditur
           read(don1,7000) cmtlec
           ligne=ligne+1
           read(don1,*,err=99) klroe
           ligne=ligne+1
-          write(imp,6802) klroe
           read(don1,7000) cmtlec
           ligne=ligne+1
           read(don1,*,err=99) epsroe
           ligne=ligne+1
-          write(imp,6800) epsroe
+          if (rank==0) then
+            write(imp,'(/,"SCHEMA NUMerique:")')
+            write(imp,6803) kditur
+            write(imp,6802) klroe
+            write(imp,6800) epsroe
+          endif
 !
        elseif(cmtlec(1:10).eq.'configurat' .or. &
             cmtlec(1:10).eq.'CONFIGURAT') then
 !
-          if(kimp.gt.1) then
-             write(imp,'(/,"CONFIGURATion >>>")')
+          if(kimp.gt.1.and.rank==0) then
+              write(imp,'(/,"CONFIGURATion >>>")')
           endif
 !
 !         Donnees propres a la configuration : exemple
@@ -152,7 +157,7 @@ contains
           alpha0=al0
           beta0 =be0
 !
-          if(kimp.gt.1) then
+          if(kimp.gt.1.and.rank==0) then
              write(imp,'(9x," p2=",1pe11.3,3x,"tpar=",1pe11.3,' &
                   //'3x,"  rpi=",1pe11.3,3x,"rti=",1pe11.3)') p2,tpar,rpi,rti
              write(imp,'(9x,"rm0=",1pe11.3,3x," al0=",1pe11.3,' &
@@ -165,8 +170,8 @@ contains
        elseif(cmtlec(1:10).eq.'surfaces i' .or. &
             cmtlec(1:10).eq.'SURFACES I') then
 !
-          if(kimp.gt.1) then
-             write(imp,'(/,"SURFACES I >>> ")')
+          if(kimp.gt.1.and.rank==0) then
+              write(imp,'(/,"SURFACES I >>> ")')
           end if
 !
           kvglo=1
@@ -176,14 +181,14 @@ contains
           read(don1,*,err=99) p0spi0,q0spi0,v0
           ligne=ligne+1
 !
-          if(kimp.gt.1) then
-             write(imp,'("integration pression et frottement ",' &
+          if(kimp.gt.1.and.rank==0) then
+              write(imp,'("integration pression et frottement ",' &
                   //'"sur les parois. kvglo=",i3)') kvglo
-             write(imp,'("grandeurs de reference :",/,' &
+              write(imp,'("grandeurs de reference :",/,' &
                   //'5x,"Xref=",1pe12.4,"   Yref=",1pe12.4,"  Zref=",1pe12.4,/,' &
                   //'5x,"Sref=",1pe12.4,"  XLref=",1pe12.4)') &
                   xref,yref,zref, sref,xlref
-             write(imp,'(3x,"Po/Pio=",1pe12.4,1x,"Qo/Pio=",1pe12.4,' &
+              write(imp,'(3x,"Po/Pio=",1pe12.4,1x,"Qo/Pio=",1pe12.4,' &
                   //'4x,"Vo=",1pe12.4)')p0spi0,q0spi0,v0
           endif
 !
@@ -191,12 +196,12 @@ contains
             cmtlec(1:10).eq.'LISTE SURF') then
 !         liste d'un nombre mon fixe de numeros de parois
 !
-          if(kimp.gt.1) then
-             write(imp,'(/,"LISTE SURFaces >>> pour calcul epaisseurs et Cx_f")')
+          if(kimp.gt.1.and.rank==0) then
+              write(imp,'(/,"LISTE SURFaces >>> pour calcul epaisseurs et Cx_f")')
           endif
 !
           if(kvglo.eq.0) then
-             write(imp,'(/,"!!!utdon_gen: il faut mettre : SURFACES Integration avant LISTE SURFaces")')
+             if (rank==0) write(imp,'(/,"!!!utdon_gen: il faut mettre : SURFACES Integration avant LISTE SURFaces")')
              ierr=ierr+1
           endif
 !
@@ -206,21 +211,46 @@ contains
              if(cmtlec(1:3).ne.'fin' .and. cmtlec(1:3).ne.'FIN') then
                 backspace(don1)
                 read(don1,*,err=99) mflu
-                if(mflu.ge.1 .and. mflu.le.mtbx) then
-                   if(nbfll.lt.mtb) then
+                do mflu1=1,mtb
+                if (bcg_to_bci(bcl_to_bcg(mflu1))==mflu) then
+                  if (mflu1==0) cycle
+                  if(mflu1.ge.1 .and. mflu1.le.mtbx) then
+                    if(nbfll.lt.mtb) then
                       nbfll=nbfll+1
-                      nmfint(nbfll)=mflu
-                   else
+                      nmfint(nbfll)=mflu1
+                    else
 !                 suite de la liste non prise en compte
-                      write(imp,'(/,"!!!utdon_gen: trop de surfaces ")')
-                   endif
-                else
-!               mauvais numero de surface
-                   write(imp,'(/,"!!!utdon_gen: numero de surface incorrect: mf=",i4)')mflu
+                       if (rank==0) write(imp,'(/,"!!!utdon_gen: trop de surfaces ")')
+                    endif
+                  else
+!                 mauvais numero de surface
+                    if (rank==0) write(imp,'(/,"!!!utdon_gen: numero de surface incorrect: mf=",i4)')mflu
+                  endif
                 endif
+                enddo
              else !fin sequence, continuer la lecture generale des mots-c
+                allocate(nbfll_proc(nprocs))
+                call gather((/nbfll/),nbfll_proc,1)
+                nbfllg=sum(nbfll_proc)
+                allocate(bcint_to_bcintg(nbfll))
+                allocate(bcintg_to_proc(nbfllg))
+                proc=0
+                do mf=1,nbfllg
+                  if(mf>sum(nbfll_proc(1:proc+1))) then
+                    do l=proc,nprocs
+                       proc=proc+1
+                       if(mf<=sum(nbfll_proc(1:proc+1))) exit
+                    enddo
+                  endif
+                  bcintg_to_proc(mf)=proc
+                enddo
+                do mf=1,nbfll
+                  bcint_to_bcintg(mf)=mf+sum(nbfll_proc(1:rank))
+                enddo
                 if(kimp.gt.1) then
-                   write(imp,'( (20i4) )')(nmfint(nb),nb=1,nbfll)
+                   call start_keep_order
+                       write(imp,'( (A,i4,A,20i4) )') "Rank : ",rank," - Surfaces d'integration : ",(bcl_to_bcg(nmfint(nb)),nb=1,nbfll)
+                   call end_keep_order
                 endif
                 exit
              endif
@@ -229,7 +259,7 @@ contains
        elseif(cmtlec(1:3).eq.'vrt' .or. cmtlec(1:3).eq.'VRT') then
           read(don1,*,err=99) vrtcz
           ligne=ligne+1
-          if(kimp.gt.1) then
+          if(kimp.gt.1.and.rank==0) then
              write(imp,'(/,"VRT  >>> correction de vorticite vrtcz=",1pe11.4)')vrtcz
              write(imp,'(/,9x,"le profil doit etre dans le plan x-z")')
              if(idefxref.ne.1 .or. idefconf.ne.1) then
@@ -264,15 +294,15 @@ contains
 !
     if(kditur.eq.intmx) then
        ierr=ierr+1
-       write(imp,'(/,"!!!utdon_gen: schema numerique non defini mot-cle SCHEMA NUM")')
+       if (rank==0) write(imp,'(/,"!!!utdon_gen: schema numerique non defini mot-cle SCHEMA NUM")')
     end if
 !
     if(ierr.ne.0) then
-       write(imp,'(/,"!!!utdon_gen: ierr=",i3," STOP")')ierr
+       if (rank==0) write(imp,'(/,"!!!utdon_gen: ierr=",i3," STOP")')ierr
        stop
     end if
     if (kimp.gt.1) then
-       write(imp,'(/,70("-"),/)')
+       if (rank==0) write(imp,'(/,70("-"),/)')
     end if
 !
 !
@@ -287,11 +317,11 @@ contains
     return
 !
 99  continue
-    write(imp,'(/,"!!!utdon_gen: erreur lecture fdon1 ligne :",i4)') &
+    if (rank==0) write(imp,'(/,"!!!utdon_gen: erreur lecture fdon1 ligne :",i4)') &
          ligne
     stop
 101 continue
-    write(imp,'(/,"!!!utdon_gen: erreur ouverture fdon1")')
+    if (rank==0) write(imp,'(/,"!!!utdon_gen: erreur ouverture fdon1")')
     stop
 !
     return

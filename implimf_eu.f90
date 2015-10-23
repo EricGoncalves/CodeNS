@@ -28,11 +28,11 @@ contains
     use proprieteflu
     use schemanum
     implicit none
-    integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          ::     id,  ind1,  ind2,ityprk,     j
-    integer          ::     j1,  j1m1,    j2,  j2m1,    jd
+    integer          ::     i1,  i1m1,    i2,  i2m1
+    integer          ::   ind1,  ind2,ityprk,     j
+    integer          ::     j1,  j1m1,    j2,  j2m1
     integer          ::      k,    k1,  k1m1,    k2,  k2m1
-    integer          ::     kd,  kdir,lgsnlt,    lm,   lmx
+    integer          ::   kdir,lgsnlt,    lm,   lmx
     integer          ::     ls,     m,     n,   n0c,   nci
     integer          ::    ncj,   nck,   nid,  nijd,  ninc
     integer          ::    njd,inc_dir(4,3),numdir
@@ -46,8 +46,7 @@ contains
     double precision ::                  fzz,                pres,            ps(ip11),sn(lgsnlt,nind,ndir),                 tn1
     double precision ::                  tn2,                 tn3,                 tn4,                 tn5,        u(ip11,ip60)
     double precision ::                   ui,                  uu,        v(ip11,ip60),                  vi,           vol(ip11)
-    double precision ::                   vv,                  wi,                 wi1,                 wi2,                 wi3
-    double precision ::                  wi4,                 wi5,                  ww,norm,norm1
+    double precision ::                   vv,                  wi,                 wi1,                 wi5,                  ww,norm,norm1
 !
 !-----------------------------------------------------------------------
 !

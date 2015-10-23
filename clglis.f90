@@ -65,8 +65,8 @@ contains
     use boundary
     use mod_idirch
     implicit none
-    integer          ::         id,      incf,      incm,     isens,        jd
-    integer          ::         kd,         l,    lgsnlt,         m,        mb
+    integer          ::       incf,      incm,     isens
+    integer          ::          l,    lgsnlt,         m,        mb
     integer          ::        mfb,        mn,     mnode,        mt,       n0c
     integer          ::        n0n,        nc,     nc12f,      nc1f,      nc2f
     integer          :: ncbd(ip41),       nci,      ncij,     ncijk,ncin(ip41)

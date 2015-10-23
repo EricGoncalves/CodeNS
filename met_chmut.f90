@@ -19,9 +19,9 @@ contains
     use modeleturb
     use chainecarac
     implicit none
-    integer          ::           i,         i1,         i2,       i2m1,         id
-    integer          ::           j,         j1,         j2,       j2m1,         jd
-    integer          ::           k,         k1,         k2,       k2m1,         kd
+    integer          ::           i,         i1,         i2,       i2m1
+    integer          ::           j,         j1,         j2,       j2m1
+    integer          ::           k,         k1,         k2,       k2m1
     integer          ::           l,mnpar(ip12),         mp,          n,         n0
     integer          ::         nci,        ncj,        nck,        nid,       nijd
     integer          ::         njd

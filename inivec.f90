@@ -66,33 +66,19 @@ contains
 !-----------------------------------------------------------------------
 !
 !
+    do i=1,ip60
+      do n=1,ip11
+         v(n,i)=reelmn
+         tnte1(n,i)=0.
+         tnte3(n,i)=0.
+         tnte4(n,i)=0.
+      enddo
+    enddo
     do n=1,ip11
-       v(n,1)=reelmn
-       v(n,2)=reelmn
-       v(n,3)=reelmn
-       v(n,4)=reelmn
-       v(n,5)=reelmn
-       v(n,6)=reelmn
-       v(n,7)=reelmn
-       dt(n) =reelmx
-       tnte1(n,1)=reelmx
-       tnte1(n,2)=reelmx
-       tnte1(n,3)=reelmx
-       tnte1(n,4)=reelmx
-       tnte1(n,5)=reelmx
-       tnte3(n,1)=reelmx
-       tnte3(n,2)=reelmx
-       tnte3(n,3)=reelmx
-       tnte3(n,4)=reelmx
-       tnte3(n,5)=reelmx
-       tnte4(n,1)=reelmx
-       tnte4(n,2)=reelmx
-       tnte4(n,3)=reelmx
-       tnte4(n,4)=reelmx
-       tnte4(n,5)=reelmx
-       pression(n)=reelmn
-       ztemp(n)=reelmn
-       cson(n)=reelmn
+       dt(n) =0.
+       pression(n)=0.
+       ztemp(n)=0.
+       cson(n)=0.
     enddo
 !
     do n=1,ip31*ndir

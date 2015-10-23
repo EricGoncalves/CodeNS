@@ -194,6 +194,7 @@ contains
     use mod_smg_num
     use mod_metric
     use mod_metric3
+    use mod_mpi
     implicit none
     integer          ::         img,          l,        lev,         lm,        mfb
     integer          ::         mfc,        mfn,        mfr,  mnc(ip43),mnpar(ip12)
@@ -231,7 +232,7 @@ contains
             sn,vol, &
             ncbd,mnc, &
             mnr,xnr,ynr,znr, &
-            tn1,tn2,tn3)
+            tn1,tn2,tn3,ncin)
 
        if((ischema.eq.2).or.(ischema.eq.3).or.(ischema.eq.4).or.(ischema.eq.6).or. &
             (ischema.eq.8).or.(ischema.eq.11).or.(ischema.eq.13).or.(ischema.eq.15)) then
@@ -292,9 +293,9 @@ contains
     do lev=1,ngx
        img = ngx - lev + 1
        mgl = img
-       write(imp,*)' '
-       write(imp,*)' ITERATION POUR LA GRILLE =',img
-       write(imp,*)' Nombre de cycles requis =',ncycle(img)
+       if (rank==0) write(imp,*)' '
+       if (rank==0) write(imp,*)' ITERATION POUR LA GRILLE =',img
+       if (rank==0) write(imp,*)' Nombre de cycles requis =',ncycle(img)
 !
        if(ncycle(img).ne.0)then
 !
@@ -334,7 +335,7 @@ contains
        nbd=mtcx
        call rfvc( &
             v,ncbd,mnc, &
-            pression,ztemp,cson)
+            pression,ztemp,cson,ncin)
 !            call rfvc(v,ncbd,mnc)
 !
        do mfr=1,mtrx

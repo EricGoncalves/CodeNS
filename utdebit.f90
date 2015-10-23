@@ -42,9 +42,9 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::          i,        i1,        i2,        id,      ind1
-    integer          ::       ind2,         j,        j1,        j2,        jd
-    integer          ::          k,        k1,        k2,        kd,      kdir
+    integer          ::         i1,        i2,      ind1
+    integer          ::       ind2,        j1,        j2
+    integer          ::          k,        k1,        k2,      kdir
     integer          ::     lgsnlt,        lm,         m,        mb,       mfb
     integer          ::   mmb(mtt),        mn,  mpb(mtt),  mpn(mtt),        mt
     integer          ::          n,       n0c,ncbd(ip41),       nci,       ncj

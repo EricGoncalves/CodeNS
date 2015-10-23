@@ -37,9 +37,9 @@ contains
     use para_fige
     use sortiefichier
     use mod_b1_cpfw
-
     use mod_tcmd_cpfw
     use mod_cpfw
+    use mod_mpi
     implicit none
     integer          ::   imot(nmx),  mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41)
     integer          ::  ncin(ip41),       ncyc,       nmot
@@ -70,7 +70,8 @@ contains
     call tcmd_cpfw(mot,imot,nmot)
 !
     if(kimp.ge.1) then
-       call b1_cpfw
+       if (rank==0) call b1_cpfw
+       call barrier
     endif
 !
     call cpfw( &

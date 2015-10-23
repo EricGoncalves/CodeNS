@@ -5,7 +5,7 @@ contains
        mfbe,kini,l, &
        imin,imax,jmin,jmax,kmin,kmax, &
        indmf, &
-       ncbd)
+       ncbd,mfbi)
 !
 !***********************************************************************
 !
@@ -59,68 +59,103 @@ contains
     use sortiefichier
     use boundary
     use mod_initis
+    use mod_mpi
+    use tools
     implicit none
     integer          ::       imax,       img,      imgi,      imgj,      imgk
     integer          ::       imin,      jmax,      jmin,      kini,      kmax
     integer          ::       kmin,         l,        lm,        m0,      mfbe
-    integer          ::       mfbi,     mfbim,        mt,ncbd(ip41)
+    integer          ::       mfbim,        mt,ll
+    integer, allocatable :: ncbd(:)
+    integer, optional :: mfbi
 !
 !-----------------------------------------------------------------------
 !
     character(len=2 ) :: indmf
+
+    num_bcg=num_bcg+1
+    call reallocate_s(bcg_to_proc,num_bcg)
+    call reallocate_s(bcg_to_bcl,num_bcg)
+    call reallocate_s(bcg_to_bci,num_bcg)
+    call reallocate_s(bcg_to_bg,num_bcg)
+    bcg_to_bg(mfbe)=l
+    bcg_to_proc(mfbe)=bg_to_proc(l)
+    bcg_to_bcl(mfbe)=0
+    bcg_to_bci(mfbe)=mfbe
+    if(present(mfbi))    bcg_to_bci(mfbe)=mfbi
 !
-    mtbx=mtbx+1
     kmtbx=2
-!
-    mfbi=mtbx
-    nfei(mfbe)=mfbi
-    ndlb(mfbi)=l
-    indfl(mfbi)=indmf
-!
-    do img=1,lgx
-!
-       lm=l+(img-1)*lz
-       mfbim=mfbi+(img-1)*mtb
-!
-       imgi=img
-       imgj=img
-       imgk=img
-       if (equat(3:5).eq.'2di') imgi = 1
-       if (equat(3:5).eq.'2dj') imgj = 1
-       if (equat(3:5).eq.'2dk') imgk = 1
-       if (equat(3:5).eq.'2xk') imgk = 1
-!
-       iminb(mfbim)=(imin-ii1(lm))/2**(imgi-1)+ii1(lm)
-       imaxb(mfbim)=(imax-ii1(lm))/2**(imgi-1)+ii1(lm)
-       jminb(mfbim)=(jmin-jj1(lm))/2**(imgj-1)+jj1(lm)
-       jmaxb(mfbim)=(jmax-jj1(lm))/2**(imgj-1)+jj1(lm)
-       kminb(mfbim)=(kmin-kk1(lm))/2**(imgk-1)+kk1(lm)
-       kmaxb(mfbim)=(kmax-kk1(lm))/2**(imgk-1)+kk1(lm)
-!
-       mpb(mfbim)=mdimtbx
-       m0=mpb(mfbim)
-!
-!     remplissage des tableaux  ncbd, mmb
-!
-       if((kini.eq.1).or.(img.gt.1)) then
-          call initis( &
-               lm, &
-               iminb(mfbim),imaxb(mfbim), &
-               jminb(mfbim),jmaxb(mfbim), &
-               kminb(mfbim),kmaxb(mfbim), &
-               indmf,ncbd, &
-               mt,m0)
-       elseif(kini.eq.0) then
-!            call readfi( &
-!                 kfi,ncbd, &
-!                 mt,m0)
-       endif
-!
-       mmb(mfbim)=mt
-       mdimubx=max(mdimubx,mmb(mfbim))
-       mdimtbx=mdimtbx+mmb(mfbim)
-!
-    enddo
+    if(bg_to_proc(l)==rank) then
+      num_bcl=num_bcl+1
+      mtbx=mtbx+1
+      mtb=mtbx
+      call reallocate_s(bcl_to_bcg,mtb)
+      call reallocate_s(ndlb,mtb)
+      call reallocate_s(nfei,mtb)
+      call reallocate_s(indfl,mtb)
+      mtt=mtbx*lgx
+      call reallocate_s(iminb,mtt)
+      call reallocate_s(imaxb,mtt)
+      call reallocate_s(jminb,mtt)
+      call reallocate_s(jmaxb,mtt)
+      call reallocate_s(kminb,mtt)
+      call reallocate_s(kmaxb,mtt)
+      call reallocate_s(mpb,mtt)
+      call reallocate_s(mmb,mtt)
+
+  !
+      nfei(mtb)=mtbx
+      ndlb(mtbx)=bg_to_bl(l)
+      indfl(mtbx)=indmf
+      bcl_to_bcg(mtb)=mfbe
+      bcg_to_bcl(mfbe)=mtb
+  !
+      do img=1,lgx
+  !
+         lm=bg_to_bl(l)+(img-1)*lz
+         mfbim=mtbx+(img-1)*mtb
+
+  !
+         imgi=img
+         imgj=img
+         imgk=img
+         if (equat(3:5).eq.'2di') imgi = 1
+         if (equat(3:5).eq.'2dj') imgj = 1
+         if (equat(3:5).eq.'2dk') imgk = 1
+         if (equat(3:5).eq.'2xk') imgk = 1
+  !
+         iminb(mfbim)=(imin-ii1(lm))/2**(imgi-1)+ii1(lm)
+         imaxb(mfbim)=(imax-ii1(lm))/2**(imgi-1)+ii1(lm)
+         jminb(mfbim)=(jmin-jj1(lm))/2**(imgj-1)+jj1(lm)
+         jmaxb(mfbim)=(jmax-jj1(lm))/2**(imgj-1)+jj1(lm)
+         kminb(mfbim)=(kmin-kk1(lm))/2**(imgk-1)+kk1(lm)
+         kmaxb(mfbim)=(kmax-kk1(lm))/2**(imgk-1)+kk1(lm)
+  !
+         mpb(mfbim)=mdimtbx
+         m0=mpb(mfbim)
+  !
+  !     remplissage des tableaux  ncbd, mmb
+  !
+         if((kini.eq.1).or.(img.gt.1)) then
+            call initis( &
+                 lm, &
+                 iminb(mfbim),imaxb(mfbim), &
+                 jminb(mfbim),jmaxb(mfbim), &
+                 kminb(mfbim),kmaxb(mfbim), &
+                 indmf,ncbd, &
+                 mt,m0)
+         elseif(kini.eq.0) then
+  !            call readfi( &
+  !                 kfi,ncbd, &
+  !                 mt,m0)
+         endif
+  !
+         mmb(mfbim)=mt
+         mdimubx=max(mdimubx,mmb(mfbim))
+         mdimtbx=mdimtbx+mmb(mfbim)
+  !
+      enddo
+    endif
 !
     return
   end subroutine crbds

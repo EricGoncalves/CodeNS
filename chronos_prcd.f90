@@ -71,10 +71,10 @@ contains
     use maillage
     use proprieteflu
     implicit none
-    integer          ::       i,     i1,     i2,   i2m1,     id
+    integer          ::       i,     i1,     i2,   i2m1
     integer          :: isortie,  ivisq,      j,     j1,     j2
-    integer          ::    j2m1,     jd,      k,     k1,     k2
-    integer          ::    k2m1,     kd,      l, lgsnlt,      m
+    integer          ::    j2m1,      k,     k1,     k2
+    integer          ::    k2m1,      l, lgsnlt,      m
     integer          ::      mc,     mn,      n,    n0c,    n0n
     integer          ::      n1,     n2,     nc,    nci,    ncj
     integer          ::     nck,    nid,   nijd,    njd
