@@ -98,6 +98,7 @@ contains
     use mod_implimf_eu
     use mod_atcaldis
     use mod_rfvc
+    use mod_rbtc
     use mod_rfve
     use mod_cllparoi1
     use mod_zpres
@@ -291,6 +292,14 @@ contains
                   v,ncbd,mnc, &
                   pression,ztemp,cson,ncin)
 !
+              do mfc=1,mtcx
+                 lbd(mfc)=nfbc(mfc)
+              enddo
+              nbd=mtcx
+              call rbtc( & ! TODO: before or after ?
+                   toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                   ncbd,ncin,mnc)
+
              do l=1,lzx
                 SELECT CASE(kinke)
                 CASE(1)
@@ -378,6 +387,14 @@ contains
                 END SELECT
              enddo   ! fin boucle domaine
 !
+              do mfc=1,mtcx
+                 lbd(mfc)=nfbc(mfc)
+              enddo
+              nbd=mtcx
+              call rbtc( & ! TODO: before or after ?
+                   toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
+                   ncbd,ncin,mnc)
+
              if(kutau.eq.1) then
 !
 !           initialisation de "utau" pour modele de Chien, le

@@ -133,7 +133,7 @@ module mod_mpi
 #ifdef WITH_MPI
         ELSE
           TAG=ORIG*NPROCS+DEST
-
+          STATUS=MPI_STATUS_IGNORE
           IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
               CALL MPI_SEND(B(1),SIZE(B),MPI_REAL8,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
@@ -164,7 +164,7 @@ module mod_mpi
 #ifdef WITH_MPI
         ELSE
           TAG=ORIG*NPROCS+DEST
-
+          STATUS=MPI_STATUS_IGNORE
           IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
               CALL MPI_SEND(B(1,1),SIZE(B),MPI_REAL8,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
@@ -196,7 +196,7 @@ module mod_mpi
 #ifdef WITH_MPI
         ELSE
           TAG=ORIG*NPROCS+DEST
-
+          STATUS=MPI_STATUS_IGNORE
           IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
               CALL MPI_SEND(B(1,1,1,1),SIZE(B),MPI_REAL8,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
@@ -227,7 +227,7 @@ module mod_mpi
 #ifdef WITH_MPI
         ELSE
           TAG=ORIG*NPROCS+DEST
-
+          STATUS=MPI_STATUS_IGNORE
           IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
               CALL MPI_SEND(B(1),SIZE(B),MPI_INTEGER,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
@@ -258,7 +258,7 @@ module mod_mpi
 #ifdef WITH_MPI
         ELSE
           TAG=ORIG*NPROCS+DEST
-
+          STATUS=MPI_STATUS_IGNORE
           IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
               CALL MPI_SEND(B(1,1),SIZE(B),MPI_INTEGER,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
@@ -290,7 +290,7 @@ module mod_mpi
 #ifdef WITH_MPI
         ELSE
           TAG=ORIG*NPROCS+DEST
-
+          STATUS=MPI_STATUS_IGNORE
           IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
               CALL MPI_SEND(B,1,MPI_INTEGER,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
@@ -321,7 +321,7 @@ module mod_mpi
 #ifdef WITH_MPI
         ELSE
           TAG=ORIG*NPROCS+DEST
-
+          STATUS=MPI_STATUS_IGNORE
           IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
               CALL MPI_SEND(B,len(b),MPI_CHARACTER,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
@@ -334,7 +334,7 @@ module mod_mpi
 
     END SUBROUTINE MPI_TRANS_C0
 
-    SUBROUTINE MPI_ITRANS2_R1(A,ORIG,DEST,REQ)
+    SUBROUTINE MPI_ITRANS2_R1(A,ORIG,DEST,REQ,TAG)
         !ORIG SEND THE MESSAGE A TO DEST
         !DEST RECV THE MESSAGE B FROM ORIG
         !RETURN WHEN EVERYTHING IS STARTED
@@ -342,14 +342,12 @@ module mod_mpi
         use sortiefichier
         IMPLICIT NONE
         double precision   ,INTENT(INOUT) :: A(:)
-        integer,INTENT(IN)    :: ORIG,DEST
+        integer,INTENT(IN)    :: ORIG,DEST,TAG
         integer,INTENT(INOUT) :: REQ
         integer :: ierr
-        integer :: TAG
 
 #ifdef WITH_MPI
         if (size(A)>0) then
-          TAG = (ORIG+1)*NPROCS*2+DEST+1
           if (rank==ORIG) &
               CALL MPI_ISEND(A(1), SIZE(A), MPI_REAL8, DEST, &
               TAG, MPI_COMM_WORLD,REQ,IERR)! SEND THE BUFFER
@@ -363,21 +361,20 @@ module mod_mpi
     END SUBROUTINE MPI_ITRANS2_R1
 
 
-    SUBROUTINE MPI_ITRANS2_R2(A,ORIG,DEST,REQ)
+    SUBROUTINE MPI_ITRANS2_R2(A,ORIG,DEST,REQ,TAG)
         !ORIG SEND THE MESSAGE A TO DEST
         !DEST RECV THE MESSAGE B FROM ORIG
         !RETURN WHEN EVERYTHING IS STARTED
         !(THE MESSAGES HAVEN'T BEEN DELIVERED YET)
         IMPLICIT NONE
         double precision   ,INTENT(INOUT) :: A(:,:)
-        integer,INTENT(IN)    :: ORIG,DEST
+        integer,INTENT(IN)    :: ORIG,DEST,TAG
         integer,INTENT(INOUT) :: REQ
         integer :: ierr
-        integer :: TAG
 
 #ifdef WITH_MPI
         if (size(A)>0) then
-          TAG = (ORIG+1)*NPROCS*2+DEST+1
+
           if (rank==ORIG) &
               CALL MPI_ISEND(A(1,1), SIZE(A), MPI_REAL8, DEST, &
               TAG, MPI_COMM_WORLD,REQ,IERR)! SEND THE BUFFER
@@ -398,7 +395,7 @@ module mod_mpi
 #ifdef WITH_MPI
         integer :: STATUS(MPI_STATUS_SIZE)
         integer :: ierr
-
+        STATUS=MPI_STATUS_IGNORE
         IF(REQ/=MPI_REQUEST_NULL)   CALL MPI_WAIT(REQ, STATUS, IERR)
 #endif
 

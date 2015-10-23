@@ -30,7 +30,6 @@ contains
     use mod_zgrad
     use mod_rbte
     use mod_zvismo
-    use mod_rbtc
     implicit none
     integer          ::          l,    lgsnlt,        mf,       mfc,       mfr
     integer          ::  mnc(ip43), mnr(ip44),ncbd(ip41),ncin(ip41),      npsn
@@ -98,15 +97,6 @@ contains
          txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
          qcxts5,qcyts6,qcz000, &
          ncbd,ncin)
-!
-    do mfc=1,mtcx
-       lbd(mfc)=nfbc(mfc)
-    enddo
-    nbd=mtcx
-    call rbtc( &
-         txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
-         qcxts5,qcyts6,qcz000, &
-         ncbd,ncin,mnc)
 !
     do mfr=1,mtrx
        lbd(mfr)=nfbr(mfr)

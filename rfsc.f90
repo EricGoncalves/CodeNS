@@ -69,8 +69,8 @@ contains
            buff(m,mf,1)=t(nc) ! we fill a buffer, so we can send bigger messages simultaneously
 !
        enddo
-       call MPI_itrans2(buff(1:mt,mf,1),bcg_to_proc(me),bcg_to_proc(other),req(mf,1)) ! send
-       call MPI_itrans2(buff(1:mt,mf,2),bcg_to_proc(other),bcg_to_proc(me),req(mf,2)) ! recv
+       call MPI_itrans2(buff(1:mt,mf,1),bcg_to_proc(me),bcg_to_proc(other),req(mf,1),me) ! send
+       call MPI_itrans2(buff(1:mt,mf,2),bcg_to_proc(other),bcg_to_proc(me),req(mf,2),other) ! recv
         endif
     enddo
 
