@@ -51,7 +51,7 @@ contains
     integer             :: nsub
     integer             :: i2,j2,k2,i,j,k
     integer             :: xs,ys,zs,xe,ye,ze
-    integer             :: lli1,lgi1,lgi2
+    integer             :: lli1,lgi1,lgi2,lli2
     integer             :: llf1,lgf1,llf2,lgf2,llf3,lgf3
     integer             :: frli1,frli2,frgi1,frgi2,frgi3
     integer             :: frlf1,frgf1,frgf2,frlf3,frgf3,frgf4
@@ -81,7 +81,7 @@ contains
     !############################## GET PARAMETERS ##############################################
     !############################################################################################
 
-    verbosity=2 ! from 0 to 3
+    verbosity=3 ! from 0 to 3
     nblocks=max(nprocs,num_bg) ! number of bloc that we need
 
     if(.true.) then ! always do the partitionning in order to reequilibrate
@@ -311,6 +311,7 @@ contains
          nijk(tmp(1),tmp(2),tmp(3),tmp(4))=0             ! block is attributed
        enddo
        deallocate(nijk)
+       deallocate(tmp)
 
       if(verbosity>=1.and.rank==0) then
          print*,''
@@ -384,7 +385,7 @@ contains
        !############################################################################################
        !######################### RECREATE OLD BOUNDARIES ##########################################
        !############################################################################################
-
+       allocate(tmp(6))
        !    print*,'recreate old boundaries '
        do frgi1=1,save_num_bcg
           frli1=save_bcg_to_bcl(frgi1) ! tout le monde parcours les nouvelles condition limites dans le même ordre
@@ -395,6 +396,7 @@ contains
                 do i=1,nblockdg(1,lgi1)
 
                    lgf1=old2new_b(i,j,k,lgi1)
+                   llf1=bg_to_bl(lgf1)
 
                    nsub=0 ! count sub_boundaries
                    call reallocate(sub_bc,1,6)
@@ -460,30 +462,34 @@ contains
                             do j2=1,nblockdg(2,lgi2)
                                do i2=1,nblockdg(1,lgi2)
 
-                                  call new2old_p(imin,jmin,kmin,xs,ys,zs,i2,j2,k2,lgi2)
-                                  call new2old_p(imax,jmax,kmax,xe,ye,ze,i2,j2,k2,lgi2)
+                                  lgf2=old2new_b(i2,j2,k2,lgi2)
+                                  llf2=bg_to_bl(lgf2)
+                                  lli2=save_bg_to_bl(lgi2)
 
-                                  if ( save_iminb(frli2)<=xe .and. &
-                                       save_imaxb(frli2)>=xs .and. &
-                                       save_jminb(frli2)<=ye .and. &
-                                       save_jmaxb(frli2)>=ys .and. & ! there is a part of the boundary in this block
-                                       save_kminb(frli2)<=ze .and. &
-                                       save_kmaxb(frli2)>=zs ) then
+                                   call new2old_p(1,1,1,xs,ys,zs,i2,j2,k2,lgi2)
+                                   call new2old_p(ni(i2,j2,k2,lgi2),nj(i2,j2,k2,lgi2),nk(i2,j2,k2,lgi2),xe,ye,ze,i2,j2,k2,lgi2)
+
+                                  if ( imin<=xe .and. &
+                                       imax>=xs .and. &
+                                       jmin<=ye .and. &
+                                       jmax>=ys .and. & ! there is a part of the boundary in this block
+                                       kmin<=ze .and. &
+                                       kmax>=zs ) then
 
                                      ! part of the boundary which concern this block
 
                                      nsub=nsub+1
                                      call reallocate_s(sub_bc,nsub,6)
-                                     sub_bc(nsub,1)=min(xe,max(xs,save_iminb(frli2)))-save_iminb(frli2) ! coordinate of the new boundary
-                                     sub_bc(nsub,2)=min(xe,max(xs,save_imaxb(frli2)))-save_iminb(frli2) ! in the old boundary ref
-                                     sub_bc(nsub,3)=min(ye,max(ys,save_jminb(frli2)))-save_jminb(frli2)
-                                     sub_bc(nsub,4)=min(ye,max(ys,save_jmaxb(frli2)))-save_jminb(frli2)
-                                     sub_bc(nsub,5)=min(ze,max(zs,save_kminb(frli2)))-save_kminb(frli2)
-                                     sub_bc(nsub,6)=min(ze,max(zs,save_kmaxb(frli2)))-save_kminb(frli2)
+                                     sub_bc(nsub,1)=min(xe,max(xs,imin))-save_iminb(frli2) ! coordinate of the new boundary
+                                     sub_bc(nsub,2)=min(xe,max(xs,imax))-save_iminb(frli2) ! in the old boundary ref
+                                     sub_bc(nsub,3)=min(ye,max(ys,jmin))-save_jminb(frli2)
+                                     sub_bc(nsub,4)=min(ye,max(ys,jmax))-save_jminb(frli2)
+                                     sub_bc(nsub,5)=min(ze,max(zs,kmin))-save_kminb(frli2)
+                                     sub_bc(nsub,6)=min(ze,max(zs,kmax))-save_kminb(frli2)
                                   endif
                                enddo
                             enddo
-                         enddo
+  enddo
                       endif
                       call MPI_TRANS(nsub,nsub,proci2,proci1)
                       if(rank==proci1) call reallocate_s(sub_bc,nsub,6)
@@ -515,7 +521,7 @@ contains
              enddo
           enddo
        enddo
-
+       deallocate(tmp)
        !############################################################################################
        !########################### CREATE NEW BOUNDARIES ##########################################
        !############################################################################################
@@ -736,7 +742,6 @@ contains
              endif
              call bcast(tmp,bcg_to_proc(frgf2))
 
-
              if(verbosity>=2) then
                 mot="" ; nmot=6   ; imot=0
                 mot(1)="init"     ; imot(1)=4
@@ -800,6 +805,7 @@ contains
           endif
        enddo
       deallocate(tmp)
+      write(stderr,*) "done"
     return
 
 
@@ -889,9 +895,9 @@ contains
           enddo
           if(indfl(fr)(1:1)=="i") write(42,*) ""
        enddo
+       close(42)
     enddo
-    close(42)
-
+    call barrier
   end subroutine write_mesh
 
   subroutine compute_split(nsplit,nsplit_dir,nigf,njgf,nkgf,  &
@@ -899,8 +905,10 @@ contains
        nili,njli,nkli,bli_to_bgi,         &
        nigi,njgi,nkgi,bgi_to_proc)
     use mod_mpi
+    use sortiefichier,only:stderr
     implicit none
-    integer,intent(in) :: npoints,num_bgi,num_bgf,num_bli
+    integer,intent(in)    :: npoints,num_bgi,num_bli
+    integer,intent(inout) :: num_bgf
     integer,dimension(num_bli),intent(in) :: nili,njli,nkli,bli_to_bgi
     integer,dimension(num_bgi),intent(in) :: nigi,njgi,nkgi,bgi_to_proc
     integer,allocatable,intent(out) :: nsplit(:),nsplit_dir(:,:)
@@ -943,6 +951,10 @@ contains
        ! propage à tout le monde les informations sur le découpage
        proc=bgi_to_proc(lg)
        call bcast(nsplit_dir(:,lg),proc)
+    enddo
+    do lg=1,num_bgi
+       ! propage à tout le monde les informations sur le découpage
+       proc=bgi_to_proc(lg)
        call reallocate_s(nigf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
        call reallocate_s(njgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
        call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
@@ -954,17 +966,23 @@ contains
   end subroutine compute_split
 
   subroutine num_split(nblock2,lt,nxyza,nblocks,ii2,jj2,kk2)
+    use mod_mpi,only:nprocs
     implicit none
-    integer,intent(in)  :: lt,nxyza,nblocks
-    integer,intent(in)  :: ii2(lt),jj2(lt),kk2(lt)
-    integer,intent(out) :: nblock2(lt)
-    integer             :: rsize,sblock(lt),i,j,k,nblock(lt)
-    double precision    :: unbalance,unbalance1
+    integer,intent(in)    :: lt,nxyza
+    integer,intent(in)    :: ii2(lt),jj2(lt),kk2(lt)
+    integer,intent(inout) :: nblocks
+    integer,intent(out)   :: nblock2(lt)
+    integer               :: rsize,sblock(lt),i,j,k,nblock(lt)
+    double precision      :: unbalance,unbalance1
 
     ! TODO
     ! switch to the alternative version which permit to have ideal blocks size
     ! need a criteria to avoid too small block, and need to manage the residual block
     ! todo
+!    sblock=ii2*jj2*kk2
+!    rsize=minval(sblock) ! smallest block
+!    nblocks=max(nblocks,nint(nxyza*1./rsize))   ! have all the block to be around the size of the smallest one
+!    nblocks=nblocks+mod(nblocks,nprocs)         ! have a multiple of the number of process
 
     !   compute number of spliting of each blocks with the best equilibrium
     ! do i=lt,nblocks-1                       ! split until lt>=nblocks

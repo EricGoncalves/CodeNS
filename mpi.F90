@@ -122,6 +122,7 @@ module mod_mpi
         IMPLICIT NONE
         double precision   ,INTENT(INOUT) :: A(:)
         double precision   ,INTENT(IN)    :: B(:)
+        double precision,allocatable :: buff(:) ! security necessary
         integer,INTENT(IN)    :: ORIG,DEST
 #ifdef WITH_MPI
         integer :: STATUS(MPI_STATUS_SIZE),TAG
@@ -134,13 +135,20 @@ module mod_mpi
         ELSE
           TAG=ORIG*NPROCS+DEST
           STATUS=MPI_STATUS_IGNORE
-          IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
-              CALL MPI_SEND(B(1),SIZE(B),MPI_REAL8,DEST, &
+          IF(RANK==ORIG)  then ! I'M ORIG, I SEND THE MESSAGE B TO DEST
+              allocate(buff(size(b)))
+              buff=b
+              CALL MPI_SEND(Buff(1),SIZE(B),MPI_REAL8,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
-
-          IF(RANK==DEST) &  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
-              CALL MPI_RECV(A(1),SIZE(A),MPI_REAL8,ORIG, &
+              deallocate(buff)
+          endif
+          IF(RANK==DEST) then  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
+              allocate(buff(size(a)))
+              CALL MPI_RECV(buff(1),SIZE(A),MPI_REAL8,ORIG, &
               TAG,MPI_COMM_WORLD,STATUS,IERR)
+              a=buff
+              deallocate(buff)
+          endif
 #endif
         ENDIF
 
@@ -153,6 +161,7 @@ module mod_mpi
         IMPLICIT NONE
         double precision   ,INTENT(INOUT) :: A(:,:)
         double precision   ,INTENT(IN)    :: B(:,:)
+        double precision,allocatable :: buff(:,:) ! security necessary
         integer,INTENT(IN)    :: ORIG,DEST
 #ifdef WITH_MPI
         integer :: STATUS(MPI_STATUS_SIZE),TAG
@@ -165,13 +174,20 @@ module mod_mpi
         ELSE
           TAG=ORIG*NPROCS+DEST
           STATUS=MPI_STATUS_IGNORE
-          IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
-              CALL MPI_SEND(B(1,1),SIZE(B),MPI_REAL8,DEST, &
+          IF(RANK==ORIG)  then ! I'M ORIG, I SEND THE MESSAGE B TO DEST
+              allocate(buff(size(b,1),size(b,2)))
+              buff=b
+              CALL MPI_SEND(Buff(1,1),SIZE(B),MPI_REAL8,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
-
-          IF(RANK==DEST) &  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
-              CALL MPI_RECV(A(1,1),SIZE(A),MPI_REAL8,ORIG, &
+              deallocate(buff)
+          endif
+          IF(RANK==DEST) then  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
+              allocate(buff(size(a,1),size(a,2)))
+              CALL MPI_RECV(buff(1,1),SIZE(A),MPI_REAL8,ORIG, &
               TAG,MPI_COMM_WORLD,STATUS,IERR)
+              a=buff
+              deallocate(buff)
+          endif
 #endif
         ENDIF
 
@@ -185,6 +201,7 @@ module mod_mpi
         IMPLICIT NONE
         double precision   ,INTENT(INOUT) :: A(:,:,:,:)
         double precision   ,INTENT(IN)    :: B(:,:,:,:)
+        double precision,allocatable :: buff(:,:,:,:) ! security necessary
         integer,INTENT(IN)    :: ORIG,DEST
 #ifdef WITH_MPI
         integer :: STATUS(MPI_STATUS_SIZE),TAG
@@ -197,13 +214,20 @@ module mod_mpi
         ELSE
           TAG=ORIG*NPROCS+DEST
           STATUS=MPI_STATUS_IGNORE
-          IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
-              CALL MPI_SEND(B(1,1,1,1),SIZE(B),MPI_REAL8,DEST, &
+          IF(RANK==ORIG)  then ! I'M ORIG, I SEND THE MESSAGE B TO DEST
+              allocate(buff(size(b,1),size(b,2),size(b,3),size(b,3)))
+              buff=b
+              CALL MPI_SEND(Buff(1,1,1,1),SIZE(B),MPI_REAL8,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
-
-          IF(RANK==DEST) &  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
-              CALL MPI_RECV(A(1,1,1,1),SIZE(A),MPI_REAL8,ORIG, &
+              deallocate(buff)
+          endif
+          IF(RANK==DEST) then  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
+              allocate(buff(size(a,1),size(a,2),size(a,3),size(a,4)))
+              CALL MPI_RECV(buff(1,1,1,1),SIZE(A),MPI_REAL8,ORIG, &
               TAG,MPI_COMM_WORLD,STATUS,IERR)
+              a=buff
+              deallocate(buff)
+          endif
 #endif
         ENDIF
 
@@ -216,6 +240,7 @@ module mod_mpi
         IMPLICIT NONE
         integer,INTENT(INOUT) :: A(:)
         integer,INTENT(IN)    :: B(:)
+        integer,allocatable :: buff(:) ! security necessary
         integer,INTENT(IN)    :: ORIG,DEST
 #ifdef WITH_MPI
         integer :: STATUS(MPI_STATUS_SIZE),TAG
@@ -228,13 +253,20 @@ module mod_mpi
         ELSE
           TAG=ORIG*NPROCS+DEST
           STATUS=MPI_STATUS_IGNORE
-          IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
-              CALL MPI_SEND(B(1),SIZE(B),MPI_INTEGER,DEST, &
+          IF(RANK==ORIG)  then ! I'M ORIG, I SEND THE MESSAGE B TO DEST
+              allocate(buff(size(b)))
+              buff=b
+              CALL MPI_SEND(Buff(1),SIZE(B),MPI_INTEGER,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
-
-          IF(RANK==DEST) &  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
-              CALL MPI_RECV(A(1),SIZE(A),MPI_INTEGER,ORIG, &
+              deallocate(buff)
+          endif
+          IF(RANK==DEST) then  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
+              allocate(buff(size(a)))
+              CALL MPI_RECV(buff(1),SIZE(A),MPI_INTEGER,ORIG, &
               TAG,MPI_COMM_WORLD,STATUS,IERR)
+              a=buff
+              deallocate(buff)
+          endif
 #endif
         ENDIF
 
@@ -247,6 +279,7 @@ module mod_mpi
         IMPLICIT NONE
         integer,INTENT(INOUT) :: A(:,:)
         integer,INTENT(IN)    :: B(:,:)
+        integer,allocatable :: buff(:,:) ! security necessary
         integer,INTENT(IN)    :: ORIG,DEST
 #ifdef WITH_MPI
         integer :: STATUS(MPI_STATUS_SIZE),TAG
@@ -259,13 +292,20 @@ module mod_mpi
         ELSE
           TAG=ORIG*NPROCS+DEST
           STATUS=MPI_STATUS_IGNORE
-          IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
-              CALL MPI_SEND(B(1,1),SIZE(B),MPI_INTEGER,DEST, &
+          IF(RANK==ORIG)  then ! I'M ORIG, I SEND THE MESSAGE B TO DEST
+              allocate(buff(size(b,1),size(b,2)))
+              buff=b
+              CALL MPI_SEND(Buff(1,1),SIZE(B),MPI_INTEGER,DEST, &
               TAG,MPI_COMM_WORLD,IERR)
-
-          IF(RANK==DEST) &  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
-              CALL MPI_RECV(A(1,1),SIZE(A),MPI_INTEGER,ORIG, &
+              deallocate(buff)
+          endif
+          IF(RANK==DEST) then  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
+              allocate(buff(size(a,1),size(a,2)))
+              CALL MPI_RECV(buff(1,1),SIZE(A),MPI_INTEGER,ORIG, &
               TAG,MPI_COMM_WORLD,STATUS,IERR)
+              a=buff
+              deallocate(buff)
+          endif
 #endif
         ENDIF
 
@@ -608,9 +648,14 @@ module mod_mpi
         IMPLICIT NONE
         double precision   ,INTENT(INOUT) :: IN(:)
         integer,INTENT(IN)    :: ORIG
+        double precision,allocatable :: buff(:) ! securiy necessary
         integer :: ierr
 #ifdef WITH_MPI
-        CALL MPI_BCAST( IN(1),SIZE(IN), MPI_REAL8, ORIG, MPI_COMM_WORLD,IERR)
+        allocate(buff(size(in)))
+        buff=in
+        CALL MPI_BCAST( buff(1),SIZE(IN), MPI_REAL8, ORIG, MPI_COMM_WORLD,IERR)
+        in=buff
+        deallocate(buff)
 #endif
 
     END SUBROUTINE BCAST_1R
@@ -621,9 +666,14 @@ module mod_mpi
         IMPLICIT NONE
         double precision   ,INTENT(INOUT) :: IN(:,:)
         integer,INTENT(IN)    :: ORIG
+        double precision,allocatable :: buff(:,:) ! securiy necessary
         integer :: ierr
 #ifdef WITH_MPI
-        CALL MPI_BCAST( IN(1,1),SIZE(IN), MPI_REAL8, ORIG, MPI_COMM_WORLD,IERR)
+        allocate(buff(size(in,1),size(in,2)))
+        buff=in
+        CALL MPI_BCAST( buff(1,1),SIZE(IN), MPI_REAL8, ORIG, MPI_COMM_WORLD,IERR)
+        in=buff
+        deallocate(buff)
 #endif
 
     END SUBROUTINE BCAST_2R
@@ -652,9 +702,14 @@ module mod_mpi
         IMPLICIT NONE
         integer,INTENT(INOUT) :: IN(:,:)
         integer,INTENT(IN)    :: ORIG
+        integer,allocatable :: buff(:,:) ! securiy necessary
         integer :: ierr
 #ifdef WITH_MPI
-        CALL MPI_BCAST( IN(1,1),SIZE(IN), MPI_INTEGER, ORIG, MPI_COMM_WORLD,IERR)
+        allocate(buff(size(in,1),size(in,2)))
+        buff=in
+        CALL MPI_BCAST( buff(1,1),SIZE(IN), MPI_INTEGER, ORIG, MPI_COMM_WORLD,IERR)
+        in=buff
+        deallocate(buff)
 #endif
 
     END SUBROUTINE BCAST_2I
@@ -666,9 +721,14 @@ module mod_mpi
         IMPLICIT NONE
         integer,INTENT(INOUT) :: IN(:,:,:)
         integer,INTENT(IN)    :: ORIG
+        integer,allocatable :: buff(:,:,:) ! securiy necessary
         integer :: ierr
 #ifdef WITH_MPI
-        CALL MPI_BCAST( IN(1,1,1),SIZE(IN), MPI_INTEGER, ORIG, MPI_COMM_WORLD,IERR)
+        allocate(buff(size(in,1),size(in,2),size(in,3)))
+        buff=in
+        CALL MPI_BCAST( buff(1,1,1),SIZE(IN), MPI_INTEGER, ORIG, MPI_COMM_WORLD,IERR)
+        in=buff
+        deallocate(buff)
 #endif
 
     END SUBROUTINE BCAST_3I
