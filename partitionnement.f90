@@ -347,7 +347,7 @@ contains
                       if(proci1==procf1) then ! sending to myself
                          lli1=save_bg_to_bl(lgi1)
                          llf1=bg_to_bl(lgf1)
-                         ! offset, don't forget to count the interface twice
+
                          call new2old_p(0,0,0,xs,ys,zs,i,j,k,lgi1)
 
                          call reallocate_s(x,ndimntbx)
@@ -359,7 +359,7 @@ contains
 
                       elseif(rank==proci1) then
                          lli1=save_bg_to_bl(lgi1)
-                         ! offset, don't forget to count the interface twice
+
                          call new2old_p(1,1,1,xs,ys,zs,i,j,k,lgi1)
                          call new2old_p(ni(i,j,k,lgi1),nj(i,j,k,lgi1),nk(i,j,k,lgi1),xe,ye,ze,i,j,k,lgi1)
 
@@ -489,7 +489,7 @@ contains
                                   endif
                                enddo
                             enddo
-  enddo
+                         enddo
                       endif
                       call MPI_TRANS(nsub,nsub,proci2,proci1)
                       if(rank==proci1) call reallocate_s(sub_bc,nsub,6)
@@ -549,7 +549,8 @@ contains
                          sub_bc(1,4)=jj2(llf1)
                          sub_bc(1,5)=kk1(llf1)
                          sub_bc(1,6)=kk2(llf1)
-                      elseif (rank==procf2) then
+                      endif
+                      if (rank==procf2) then
                          sub_bc(2,1)=ii2(llf2)
                          sub_bc(2,2)=ii2(llf2)
                          sub_bc(2,3)=jj1(llf2)
@@ -581,7 +582,8 @@ contains
                          sub_bc(1,4)=jj1(llf1)
                          sub_bc(1,5)=kk1(llf1)
                          sub_bc(1,6)=kk2(llf1)
-                      elseif (rank==procf2) then
+                      endif
+                      if (rank==procf2) then
                          sub_bc(2,1)=ii1(llf2)
                          sub_bc(2,2)=ii2(llf2)
                          sub_bc(2,3)=jj2(llf2)
@@ -613,7 +615,8 @@ contains
                          sub_bc(1,4)=jj2(llf1)
                          sub_bc(1,5)=kk1(llf1)
                          sub_bc(1,6)=kk1(llf1)
-                      elseif (rank==procf2) then
+                      endif
+                      if (rank==procf2) then
                          sub_bc(2,1)=ii1(llf2)
                          sub_bc(2,2)=ii2(llf2)
                          sub_bc(2,3)=jj1(llf2)
@@ -983,7 +986,7 @@ contains
 !    rsize=minval(sblock) ! smallest block
 !    nblocks=max(nblocks,nint(nxyza*1./rsize))   ! have all the block to be around the size of the smallest one
 !    nblocks=nblocks+mod(nblocks,nprocs)         ! have a multiple of the number of process
-
+nblocks=5
     !   compute number of spliting of each blocks with the best equilibrium
     ! do i=lt,nblocks-1                       ! split until lt>=nblocks
     !    unbalance=10000 ! a lot
