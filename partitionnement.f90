@@ -1075,7 +1075,7 @@ contains
     !                      test all possiblities constisting in dividing
     !                      i times in the x direction, j times in the y direction and k times in the z direction
     call reallocate(num_cf2,1,1,1)
-    num_cf2=nxyza*nblock2 ! useless initial big value
+    num_cf2=nxyza*nblock2*6 ! useless initial big value
     do k=1,nblock2
        do j=1,nblock2
           do i=1,nblock2
