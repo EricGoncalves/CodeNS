@@ -81,7 +81,7 @@ contains
     !############################## GET PARAMETERS ##############################################
     !############################################################################################
 
-    verbosity=3 ! from 0 to 3
+    verbosity=1 ! from 0 to 3
     nblocks=max(nprocs,num_bg) ! number of bloc that we need
 
     if(.true.) then ! always do the partitionning in order to reequilibrate

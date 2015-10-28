@@ -20,7 +20,7 @@ contains
     use maillage
     use schemanum
     use sortiefichier
-    use mod_mpi,only:rank
+    use mod_mpi,only:rank,sum_mpi
     implicit none
     integer          ::    i,  i1,  i2,i2m1,icyc
     integer          ::  img,   j,  j1,  j2,j2m1
@@ -62,6 +62,7 @@ contains
           enddo
        enddo
     enddo        ! Fin boucle domaines - Grille fine
+    call sum_mpi(durmy2)
 !
 !      if(ncyc.eq.1) then
 !       resno1=sqrt(durmy2)

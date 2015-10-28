@@ -119,6 +119,7 @@ contains
     use mod_sch_rusanov
     use mod_sch_ausmp_pond
     use mod_sch_rusanov_prcd
+    use mod_mpi
     implicit none
     integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
     integer          ::           l,     ldismx,     lgsnlt,         lm,    mcychro
