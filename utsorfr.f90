@@ -325,9 +325,9 @@ contains
 !
 !      write(imp,'("===>utsorfr: nbfll=",i3)')nbfll
 !
-    if(nbfll.eq.0) then !pas de paroi a traiter
-       return
-    endif
+!    if(nbfll.eq.0) then !pas de paroi a traiter
+!       return
+!    endif
 !
     do mf=1,nbfll
 !       boucle sur les parois

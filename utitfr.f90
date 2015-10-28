@@ -139,8 +139,8 @@ contains
 !
     icyexpl=mod(icyc,ncyexpl)
 !
-    if(kvglo.eq.0) return
-    if(nbfll.eq.0) return
+!    if(kvglo.eq.0) return
+!    if(nbfll.eq.0) return
 !
     alfar=alpha0/raddeg
     betar=beta0/raddeg
@@ -387,12 +387,12 @@ contains
        cnavtfr=cnavtfr+cnavfr
     enddo !fin boucle sur les parois
 
-    call SUM_MPI(cxavtot,cxavtot)
-    call SUM_MPI(cyavtot,cyavtot)
-    call SUM_MPI(czavtot,czavtot)
-    call SUM_MPI(clavtot,clavtot)
-    call SUM_MPI(cmavtot,cmavtot)
-    call SUM_MPI(cnavtot,cnavtot)
+    call SUM_MPI(cxavtot)
+    call SUM_MPI(cyavtot)
+    call SUM_MPI(czavtot)
+    call SUM_MPI(clavtot)
+    call SUM_MPI(cmavtot)
+    call SUM_MPI(cnavtot)
 
 !
 !     pression

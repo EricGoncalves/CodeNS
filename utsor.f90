@@ -208,8 +208,8 @@ contains
 !
 !     SORTIES RELATIVES A DES VALEURS SUR LES PAROIS
 !
-    if(kvglo.eq.0) return
-    if(nbfll.eq.0) return
+!    if(kvglo.eq.0) return
+!    if(nbfll.eq.0) return
 !
 !
     pis2=atan2(1.,0.)

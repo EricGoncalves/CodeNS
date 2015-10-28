@@ -413,18 +413,23 @@ contains
                            save_kminb(frli1)<=ze .and. &
                            save_kmaxb(frli1)>=zs ) then
 
-                         nsub=1
-
                          ! part of the boundary which concern this block
 
-                         sub_bc(1,1)=min(xe,max(xs,save_iminb(frli1))) ! coordinate of the new boundary
-                         sub_bc(1,2)=min(xe,max(xs,save_imaxb(frli1))) ! in the old block ref
-                         sub_bc(1,3)=min(ye,max(ys,save_jminb(frli1)))
-                         sub_bc(1,4)=min(ye,max(ys,save_jmaxb(frli1)))
-                         sub_bc(1,5)=min(ze,max(zs,save_kminb(frli1)))
-                         sub_bc(1,6)=min(ze,max(zs,save_kmaxb(frli1)))
+                         tmp(1)=min(xe,max(xs,save_iminb(frli1))) ! coordinate of the new boundary
+                         tmp(2)=min(xe,max(xs,save_imaxb(frli1))) ! in the old block ref
+                         tmp(3)=min(ye,max(ys,save_jminb(frli1)))
+                         tmp(4)=min(ye,max(ys,save_jmaxb(frli1)))
+                         tmp(5)=min(ze,max(zs,save_kminb(frli1)))
+                         tmp(6)=min(ze,max(zs,save_kmaxb(frli1)))
 
-                         indmf=save_indfl(frli1)
+                         if((tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0).or. &
+                            (tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0).or. &
+                            (tmp(2)-tmp(1)>0.and.tmp(6)-tmp(5)>0)) then
+
+                           nsub=1
+                           sub_bc(1,:)=tmp
+                           indmf=save_indfl(frli1)
+                         endif
                       endif
                    endif
                    call bcast(nsub,proci1)
@@ -478,14 +483,21 @@ contains
 
                                      ! part of the boundary which concern this block
 
-                                     nsub=nsub+1
-                                     call reallocate_s(sub_bc,nsub,6)
-                                     sub_bc(nsub,1)=min(xe,max(xs,imin))-save_iminb(frli2) ! coordinate of the new boundary
-                                     sub_bc(nsub,2)=min(xe,max(xs,imax))-save_iminb(frli2) ! in the old boundary ref
-                                     sub_bc(nsub,3)=min(ye,max(ys,jmin))-save_jminb(frli2)
-                                     sub_bc(nsub,4)=min(ye,max(ys,jmax))-save_jminb(frli2)
-                                     sub_bc(nsub,5)=min(ze,max(zs,kmin))-save_kminb(frli2)
-                                     sub_bc(nsub,6)=min(ze,max(zs,kmax))-save_kminb(frli2)
+                                     tmp(1)=min(xe,max(xs,imin))-save_iminb(frli2) ! coordinate of the new boundary
+                                     tmp(2)=min(xe,max(xs,imax))-save_iminb(frli2) ! in the old boundary ref
+                                     tmp(3)=min(ye,max(ys,jmin))-save_jminb(frli2)
+                                     tmp(4)=min(ye,max(ys,jmax))-save_jminb(frli2)
+                                     tmp(5)=min(ze,max(zs,kmin))-save_kminb(frli2)
+                                     tmp(6)=min(ze,max(zs,kmax))-save_kminb(frli2)
+
+                                     if((tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0).or. &
+                                        (tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0).or. &
+                                        (tmp(2)-tmp(1)>0.and.tmp(6)-tmp(5)>0)) then
+
+                                       nsub=nsub+1
+                                       call reallocate_s(sub_bc,nsub,6)
+                                       sub_bc(nsub,:)=tmp
+                                     endif
                                   endif
                                enddo
                             enddo
@@ -732,7 +744,7 @@ contains
                    endif
                 endif
              enddo find_otherblock
-             call sum_mpi(frgf4) ! there must be only one non zero value in this sum
+             call sum_mpi(frgf4) ! there must be exactly one non zero value in this sum
              frgf2=frgf4
           endif
           if (test) then   ! raccord boundary
@@ -982,11 +994,11 @@ contains
     ! switch to the alternative version which permit to have ideal blocks size
     ! need a criteria to avoid too small block, and need to manage the residual block
     ! todo
-!    sblock=ii2*jj2*kk2
-!    rsize=minval(sblock) ! smallest block
-!    nblocks=max(nblocks,nint(nxyza*1./rsize))   ! have all the block to be around the size of the smallest one
-!    nblocks=nblocks+mod(nblocks,nprocs)         ! have a multiple of the number of process
-nblocks=5
+    sblock=ii2*jj2*kk2
+    rsize=minval(sblock) ! smallest block
+    nblocks=max(nblocks,nint(nxyza*1./rsize))   ! have all the block to be around the size of the smallest one
+    nblocks=nblocks+mod(nblocks,nprocs)         ! have a multiple of the number of process
+!nblocks=7
     !   compute number of spliting of each blocks with the best equilibrium
     ! do i=lt,nblocks-1                       ! split until lt>=nblocks
     !    unbalance=10000 ! a lot
