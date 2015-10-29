@@ -168,21 +168,24 @@ contains
        endif !gin test img
 !
     enddo
+    call sum_mpi(dumy2g)
+    call max_mpi(dumaxg)
+    call sum_mpi(npts)
 !
     if(img.eq.1) then
        if(equat(6:7).eq.'ke') then
           do m=1,7
              dumy2g(m)=sqrt(dumy2g(m)/npts)
           enddo
-!        form='(i6,1x,7e10.4)'
-!        write(imp,form) icyc,(dumy2g(m),m=1,7)
-!        write(imp,form) icyc,(dumaxg(m),m=1,7)
+        form='(A,i6,1x,7e11.4)'
+        if (rank==0) write(imp,form) "Stationnarite L2  ",icyc,(dumy2g(m),m=1,7)
+        if (rank==0) write(imp,form) "Stationnarite Linf",icyc,(dumaxg(m),m=1,7)
        else
           do m=1,5
              dumy2g(m)=sqrt(dumy2g(m)/npts)
           enddo
-!        form='(i6,1x,10e10.4)'
-!        write(out,form) icyc,(dumy2g(m),m=1,5),(dumaxg(m),m=1,5)
+        form='(i6,1x,10e11.4)'
+        if (rank==0) write(out,form) icyc,(dumy2g(m),m=1,5),(dumaxg(m),m=1,5)
        endif
     endif
 

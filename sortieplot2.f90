@@ -25,6 +25,7 @@ contains
     use sortiefichier
     use chainecarac
     use proprieteflu
+    use mod_mpi
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
     integer          ::    j,  j1,j1m1,  j2,j2m1
@@ -39,11 +40,13 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1 ) :: c
+    character(len=50) :: file
 !
 !
 
 !
-    open(sec  ,file='fsec',position="append")
+    write(file,'(A,I0.4)') 'fsec.',bl_to_bg(l)
+    open(sec  ,file=trim(file),status="replace")
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -65,15 +68,15 @@ contains
 !     double cote
     c=char(34)
 !
-    write(sec,'(''TITLE='',a1,a50,a1)')c,titrt1,c
-    write(sec,'(''VARIABLES = '',a1,12(a,a1,'', '',a1),a,a1)') &
-         c,'x',c, c,'y',c, c,'Pstat',c, c,'rho',c, c,'dist',c, &
-         c,'u',c, c,'v',c, c,'M',c, c,'T',c, c,'i',c, c,'j',c
+!    write(sec,'(''TITLE='',a1,a50,a1)')c,titrt1,c
+!    write(sec,'(''VARIABLES = '',a1,12(a,a1,'', '',a1),a,a1)') &
+!         c,'x',c, c,'y',c, c,'Pstat',c, c,'rho',c, c,'dist',c, &
+!         c,'u',c, c,'v',c, c,'M',c, c,'T',c, c,'i',c, c,'j',c
 !          c,'mutsmu',c, c,'i',c, c,'j',c
 !        write(sec,'(''VARIABLES = '',a1,11(a,a1,'', '',a1),a,a1)')
 !     &    c,'x',c, c,'y',c, c,'rho',c, c,'Pstat',c, c,'u',c, c,'v',c,
 !     &    c,'alpha',c, c,'M',c, c,'cson',c, c,'mutsmu',c, c,'i',c, c,'j',c
-    write(sec,'("ZONE F=POINT, I=",i3," J=",i4)')j2m1,i2m1
+!    write(sec,'("ZONE F=POINT, I=",i3," J=",i4)')j2m1,i2m1
 !
     do k=k1,k2m1
        do i=i1,i2m1
@@ -99,6 +102,7 @@ contains
                   xcc,ycc,ps(n),t(n,1),dist(n),u,v,xme,temp(n),i,j
 !             mut(n)/mu(n),i,j
           enddo
+     write(sec,*) ""
        enddo
     enddo
     close(sec)
