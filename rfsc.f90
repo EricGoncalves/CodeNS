@@ -36,7 +36,7 @@ contains
     integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd,ncin(ip41)
     double precision :: t(ip11)
     double precision,allocatable :: buff(:,:,:)
-    integer :: req(nbd,2),other,me
+    integer :: req(nbd,2),other,me,bcg_to_mf(num_bcl)
 !
 !-----------------------------------------------------------------------
 !
@@ -46,6 +46,8 @@ contains
     do mf=1,nbd
        mfb=lbd(mf)
        mt=max(mt,mmb(mfb))
+       me=bcl_to_bcg(mfb)
+       bcg_to_mf(me)=mf
     enddo
     allocate(buff(mt,nbd,2))
 
@@ -56,7 +58,6 @@ contains
        mt=mmb(mfb)
        other=ndcc(mfb)
        me=bcl_to_bcg(mfb)
-       if (bcg_to_proc(me)/=bcg_to_proc(other)) then
 !
 !     we have to exchange the globally numbered me boundary with the owner of the globally numbered other boundary
 !
@@ -69,9 +70,10 @@ contains
            buff(m,mf,1)=t(nc) ! we fill a buffer, so we can send bigger messages simultaneously
 !
        enddo
-       call MPI_itrans2(buff(1:mt,mf,1),bcg_to_proc(me),bcg_to_proc(other),req(mf,1),me) ! send
-       call MPI_itrans2(buff(1:mt,mf,2),bcg_to_proc(other),bcg_to_proc(me),req(mf,2),other) ! recv
-        endif
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) then
+         call MPI_itrans2(buff(1:mt,mf,1),bcg_to_proc(me),bcg_to_proc(other),req(mf,1),me) ! send
+         call MPI_itrans2(buff(1:mt,mf,2),bcg_to_proc(other),bcg_to_proc(me),req(mf,2),other) ! recv
+       endif
     enddo
 
     do mf=1,nbd
@@ -81,9 +83,10 @@ contains
        other=ndcc(mfb)
        me=bcl_to_bcg(mfb)
        if (bcg_to_proc(me)/=bcg_to_proc(other)) then
-!
-       call WAIT_MPI(req(mf,2))  ! waiting for the message to be received
-!       buff(1:mt,mf,2)=buff(1:mt,mf,1)
+         call WAIT_MPI(req(mf,2))  ! waiting for the message to be received
+       else
+         buff(1:mt,mf,2)=buff(1:mt,bcg_to_mf(other),1)
+       endif
 
        do m=1,mt
           mb=mpb(mfb)+m
@@ -94,19 +97,6 @@ contains
           t(nd)=buff(m,mf,2)
 !
        enddo
-       else
-       do m=1,mt
-          mc=mpc(mfb)+m
-          nc=mnc(mc)
-          mb=mpb(mfb)+m
-          nd=ncbd(mb)
-!
-!     definition d'un scalaire aux points fictifs
-!
-          t(nd)=t(nc)
-!
-       enddo
-       endif
     enddo
 
     do mf=1,nbd

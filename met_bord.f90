@@ -36,6 +36,12 @@ contains
 !
 !
 !
+    do mfb=1,mtcx
+       lbd(mfb)=nfbc(mfb)
+    enddo
+    nbd=mtcx
+    call met_rbvc(v, ncbd,ncin,mnc) ! TODO before or after
+
     nbd=1
 !
     do no=1,mtbx
@@ -280,7 +286,7 @@ contains
 !
 !...raccord coincident
        else if (cl(mfb)(1:2).eq.'rc') then
-          call met_rbvc(v, ncbd,ncin,mnc)
+!          call met_rbvc(v, ncbd,ncin,mnc)
 !
 !...affectation de valeurs extrapolees en vue de post-traitement
        else if (((cl(mfb).eq.'rien').or.(cl(mfb).eq.'axe ')).and. &
@@ -324,6 +330,12 @@ contains
        endif
 !
     enddo
+
+    do mfb=1,mtcx
+       lbd(mfb)=nfbc(mfb)
+    enddo
+    nbd=mtcx
+    call met_rbvc(v, ncbd,ncin,mnc) ! TODO before or after
 !
     return
   end subroutine met_bord

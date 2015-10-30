@@ -499,7 +499,7 @@ contains
           lbd(mfc)=nfbc(mfc)+(img-1)*mtb
        enddo
        nbd=mtcx
-       call met_rfvc(v,ncbd,mnc)
+       call met_rfvc(v,ncbd,mnc,ncin)
 !
        do l=1,lzx
           lm=l+(img-1)*lz

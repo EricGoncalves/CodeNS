@@ -1076,7 +1076,7 @@ mnc=0
     allocate(mnpar(ip12))
     allocate(dist(ip12))
 
-    ip13 = 0!ndimctbx ! TODO ?
+    ip13 = kdimk*ndimntbx
     allocate(cfke(ip13))
 
     allocate(cvi(ip21))

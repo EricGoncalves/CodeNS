@@ -40,7 +40,7 @@ contains
     integer          ::         nd,       ndm
     double precision :: t(ip11,ip60),        tper
     double precision,allocatable :: buff(:,:,:,:)
-    integer :: req(nbd,2),other,me
+    integer :: req(nbd,2),other,me,bcg_to_mf(num_bcl)
 !
 !-----------------------------------------------------------------------
 !
@@ -50,6 +50,8 @@ contains
     do mf=1,nbd
        mfb=lbd(mf)
        mt=max(mt,mmb(mfb))
+       me=bcl_to_bcg(mfb)
+       bcg_to_mf(me)=mf
     enddo
     allocate(buff(5,mt,nbd,2))
 
@@ -59,7 +61,6 @@ contains
        mt=mmb(mfb)
        other=ndcc(mfb)
        me=bcl_to_bcg(mfb)
-       if (bcg_to_proc(me)/=bcg_to_proc(other)) then
 !
 !     we have to exchange the globally numbered me boundary with the owner of the globally numbered other boundary
 !
@@ -78,9 +79,9 @@ contains
           buff(5,m,mf,1)=t(nc,5)
 !
        enddo
-
-       call MPI_itrans2(buff(:,1:mt,mf,1),bcg_to_proc(me),bcg_to_proc(other),req(mf,1),me) ! send
-       call MPI_itrans2(buff(:,1:mt,mf,2),bcg_to_proc(other),bcg_to_proc(me),req(mf,2),other) ! recv
+       if (bcg_to_proc(me)/=bcg_to_proc(other)) then
+         call MPI_itrans2(buff(:,1:mt,mf,1),bcg_to_proc(me),bcg_to_proc(other),req(mf,1),me) ! send
+         call MPI_itrans2(buff(:,1:mt,mf,2),bcg_to_proc(other),bcg_to_proc(me),req(mf,2),other) ! recv
        endif
     enddo
 
@@ -91,9 +92,10 @@ contains
        other=ndcc(mfb)
        me=bcl_to_bcg(mfb)
        if (bcg_to_proc(me)/=bcg_to_proc(other)) then
-!
-       call WAIT_MPI(req(mf,2))  ! waiting for the message to be received
-!       buff(:,1:mt,mf,2)=buff(:,1:mt,mf,1)!
+         call WAIT_MPI(req(mf,2))  ! waiting for the message to be received
+       else
+         buff(:,1:mt,mf,2)=buff(:,1:mt,bcg_to_mf(other),1)
+       endif
 !
        do m=1,mt
           mb=mpb(mfb)+m
@@ -109,26 +111,6 @@ contains
           t(nd,5) = 0.5*( t(ndm,5)+buff(5,m,mf,2))
 !
        enddo
-       else
-       tper=protat*real(mper(mfb))
-!
-       do m=1,mt
-          mc=mpc(mfb)+m
-          nc=mnc(mc)
-          mb=mpb(mfb)+m
-          nd=ncbd(mb)
-          ndm=ncin(mb)
-!
-!     definition des variables aux bords (centre des facettes frontieres)
-!
-          t(nd,1) = 0.5*( t(ndm,1)+t(nc,1) )
-          t(nd,2) = 0.5*( t(ndm,2)+t(nc,2) )
-          t(nd,3) = 0.5*( t(ndm,3)+t(nc,3)*cos(tper)+t(nc,4)*sin(tper))
-          t(nd,4) = 0.5*( t(ndm,4)+t(nc,4)*cos(tper)-t(nc,3)*sin(tper))
-          t(nd,5) = 0.5*( t(ndm,5)+t(nc,5) )
-!
-       enddo
-       endif
     enddo
 
     do mf=1,nbd
