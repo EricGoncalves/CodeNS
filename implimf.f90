@@ -50,8 +50,6 @@ contains
     character(len=7 ) :: equat
 !
 
-
-
     ALLOCATE(coefe(ndir,ip00))
     ALLOCATE(coefdiag(ip00))
 
@@ -60,9 +58,6 @@ contains
     i2=ii2(lm)
     j1=jj1(lm)
     j2=jj2(lm)
-
-
-
 
     k1=kk1(lm)
     k2=kk2(lm)
@@ -377,14 +372,14 @@ contains
 
     return
   contains
-    function    indc(i,j,k)
+    pure integer function     indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+      integer,intent(in)          ::    i,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
-    function    inc(id,jd,kd)
+    pure integer function     inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+      integer,intent(in)          ::  id, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine implimf

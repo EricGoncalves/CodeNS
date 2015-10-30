@@ -27,23 +27,28 @@ contains
     use chainecarac
     use modeleturb
     implicit none
-    integer          ::          i,        i1,      i1m1,        i2,      i2m1
-    integer          ::     ibalai,      ind1,      ind2,         j
-    integer          ::         j1,      j1m1,        j2,      j2m1
-    integer          ::          k,        k1,      k1m1,        k2,      k2m1
-    integer          ::       kdir,         l,      ldom,    lgsnlt
-    integer          ::         li,        lj,         m,        mb,        mf
-    integer          ::        mfb,        mt,         n,       n0c,       nci
-    integer          :: ncin(ip41),       ncj,       nck,      ncyc,        ni
-    integer          ::        nid,      nijd,      ninc,       njd,        no
-    double precision ::                   ai,         alpha(ip00),         beta6(ip00),         beta7(ip00),                  bi
-    double precision ::                  cci,          cfke(ip13),                 cmt,                cnds,      coefdiag(ip00)
-    double precision ::                  di6,                 di7,                 dj6,                 dj7,            dt(ip11)
-    double precision ::           dwi6(ip00),          dwi7(ip00),                fact,            mu(ip12),           mut(ip12)
-    double precision ::             rv(ip00),sn(lgsnlt,nind,ndir),                  td,                 tmi,                 tmj
-    double precision ::                  tpi,                 tpj,        u(ip11,ip60),            u1(ip00),            u2(ip00)
-    double precision ::             u3(ip00),                  uu,        v(ip11,ip60),           vol(ip11),                  vv
-    double precision ::                   ww
+    integer         ,intent(in)    :: l,ncin(ip41),ncyc,lgsnlt
+    double precision,intent(in)    :: u(ip11,ip60),dt(ip11),mu(ip12),mut(ip12),cfke(ip13)
+    double precision,intent(in)    :: sn(lgsnlt,nind,ndir),vol(ip11)
+    double precision,intent(inout) :: v(ip11,ip60),dwi6(ip00),dwi7(ip00),u1(ip00),u2(ip00),u3(ip00)
+    double precision,intent(inout) :: rv(ip00),coefdiag(ip00),alpha(ip00),beta6(ip00),beta7(ip00)
+
+    integer          ::          i,i1  ,i1m1,i2  ,i2m1
+    integer          ::     ibalai,ind1,ind2,j
+    integer          ::         j1,j1m1,j2  ,j2m1
+    integer          ::          k,k1  ,k1m1,k2  ,k2m1
+    integer          ::       kdir,ldom
+    integer          ::         li,lj  ,m   ,mb  ,mf
+    integer          ::        mfb,mt  ,n   ,n0c ,nci
+    integer          ::        ncj,nck ,ni
+    integer          ::        nid,nijd,ninc,njd ,no
+    double precision ::       ai  ,bi  ,fact
+    double precision ::      cci  ,cmt ,cnds
+    double precision ::      di6  ,di7 ,dj6 ,dj7
+    double precision ::         td,tmi ,tmj
+    double precision ::        tpi,tpj
+    double precision ::         uu,vv  ,ww
+
     double precision,allocatable :: coefe(:,:)
 !
 !-----------------------------------------------------------------
@@ -347,14 +352,14 @@ contains
 
     return
   contains
-    function    indc(i,j,k)
+    pure integer function    indc(i,j,k)
       implicit none
-      integer          ::    i,indc,   j,   k
+      integer,intent(in)          ::    i,  j,   k
       indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function indc
-    function    inc(id,jd,kd)
+    pure integer function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+      integer,intent(in)          ::  id, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
   end subroutine impli2_eqt

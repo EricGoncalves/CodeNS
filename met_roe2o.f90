@@ -1,7 +1,7 @@
 module mod_met_roe2o
   implicit none
 contains
-  subroutine met_roe2o( &
+  pure subroutine met_roe2o( &
        l,t,d, &
        sn,lgsnlt, &
        vol,del6,del7)
@@ -21,28 +21,27 @@ contains
     use maillage
     use chainecarac
     implicit none
+    double precision,intent(inout) :: d(ip11,ip60),del6(ip00),del7(ip00)
+    double precision,intent(in)    :: t(ip11,ip60),sn(lgsnlt,nind,ndir)
+    double precision,intent(in)    :: vol(ip11)
+    integer         ,intent(in)    :: l,lgsnlt
+
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
     integer          ::   i2m1,  i2p1,  ind1,  ind2
     integer          ::     is,     j,    j1,  j1m1,  j1p1
     integer          ::     j2,  j2m1,  j2p1,     k
     integer          ::     k1,  k1m1,  k1p1,    k2,  k2m1
-    integer          ::   k2p1,     l,lgsnlt,     m
+    integer          ::   k2p1,     m
     integer          ::     m1,    m2,     n,    n0,    n1
     integer          ::    nci,   ncj,   nck,   nid,  nijd
     integer          ::   ninc,   njd
-    double precision ::         d(ip11,ip60),                  dd,          del6(ip00)
-    double precision ::           del7(ip00),                rlam,                 rro,                rro1,sn(lgsnlt,nind,ndir)
-    double precision ::         t(ip11,ip60),                   u,                   v,           vol(ip11),                   w
+
+    double precision :: dd,rlam,rro,rro1,u,v,w
 !
 !-----------------------------------------------------------------------
 !
 !
-
-
 !
-
-
-
     n0 = npc(l)
     i1 = ii1(l)
     i2 = ii2(l)
@@ -270,24 +269,24 @@ contains
 
     return
   contains
-    function    ind(i,j,k)
+    pure integer function    ind(i,j,k)
       implicit none
-      integer          ::   i,ind,  j,  k
+      integer,intent(in)          ::   i,  j,  k
       ind=1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
     end function ind
-    function    inc(id,jd,kd)
+    pure integer function    inc(id,jd,kd)
       implicit none
-      integer          ::  id,inc, jd, kd
+      integer,intent(in)           ::  id, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
-    function    amimd(a,b)
+    pure double precision function    amimd(a,b)
       implicit none
-      double precision ::     a,amimd,    b
+      double precision,intent(in) ::     a,    b
       amimd=sign(1.,a)*max(0.,min(abs(a),b*sign(1.,a)))
     end function amimd
-    function    fi1(x,y,z)
+    pure double precision function    fi1(x,y,z)
       implicit none
-      double precision :: fi1,  x,  y,  z
+      double precision,intent(in) ::   x,  y,  z
       fi1=amimd(x,amimd(y,z))
     end function fi1
   end subroutine met_roe2o
