@@ -215,7 +215,7 @@ module mod_mpi
           TAG=ORIG*NPROCS+DEST
           STATUS=MPI_STATUS_IGNORE
           IF(RANK==ORIG)  then ! I'M ORIG, I SEND THE MESSAGE B TO DEST
-              allocate(buff(size(b,1),size(b,2),size(b,3),size(b,3)))
+              allocate(buff(size(b,1),size(b,2),size(b,3),size(b,4)))
               buff=b
               CALL MPI_SEND(Buff(1,1,1,1),SIZE(B),MPI_REAL8,DEST, &
               TAG,MPI_COMM_WORLD,IERR)

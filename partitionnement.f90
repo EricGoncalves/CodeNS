@@ -399,7 +399,7 @@ contains
                    llf1=bg_to_bl(lgf1)
 
                    nsub=0 ! count sub_boundaries
-                   call reallocate(sub_bc,1,6)
+                   call reallocate(sub_bc,6,1)
 
                    if (rank==proci1) then
 
@@ -427,7 +427,7 @@ contains
                             (tmp(2)-tmp(1)>0.and.tmp(6)-tmp(5)>0)) then
 
                            nsub=1
-                           sub_bc(1,:)=tmp
+                           sub_bc(:,1)=tmp
                            indmf=save_indfl(frli1)
                          endif
                       endif
@@ -444,11 +444,11 @@ contains
 
                       if(rank==proci1) then
                          sub_bc(1,1)=sub_bc(1,1)-save_iminb(frli1)
-                         sub_bc(1,2)=sub_bc(1,2)-save_iminb(frli1) ! coordinate of the new boundary
-                         sub_bc(1,3)=sub_bc(1,3)-save_jminb(frli1) ! in the old boundary ref
-                         sub_bc(1,4)=sub_bc(1,4)-save_jminb(frli1)
-                         sub_bc(1,5)=sub_bc(1,5)-save_kminb(frli1)
-                         sub_bc(1,6)=sub_bc(1,6)-save_kminb(frli1)
+                         sub_bc(2,1)=sub_bc(2,1)-save_iminb(frli1) ! coordinate of the new boundary
+                         sub_bc(3,1)=sub_bc(3,1)-save_jminb(frli1) ! in the old boundary ref
+                         sub_bc(4,1)=sub_bc(4,1)-save_jminb(frli1)
+                         sub_bc(5,1)=sub_bc(5,1)-save_kminb(frli1)
+                         sub_bc(6,1)=sub_bc(6,1)-save_kminb(frli1)
                       endif
 
                       call MPI_TRANS(sub_bc,sub_bc,proci1,proci2)
@@ -457,11 +457,11 @@ contains
                          nsub=0
 
                          imin=sub_bc(1,1)+save_iminb(frli2)
-                         imax=sub_bc(1,2)+save_iminb(frli2) ! coordinate of the new boundary
-                         jmin=sub_bc(1,3)+save_jminb(frli2) ! in the old block ref
-                         jmax=sub_bc(1,4)+save_jminb(frli2)
-                         kmin=sub_bc(1,5)+save_kminb(frli2)
-                         kmax=sub_bc(1,6)+save_kminb(frli2)
+                         imax=sub_bc(2,1)+save_iminb(frli2) ! coordinate of the new boundary
+                         jmin=sub_bc(3,1)+save_jminb(frli2) ! in the old block ref
+                         jmax=sub_bc(4,1)+save_jminb(frli2)
+                         kmin=sub_bc(5,1)+save_kminb(frli2)
+                         kmax=sub_bc(6,1)+save_kminb(frli2)
 
                          do k2=1,nblockdg(3,lgi2)
                             do j2=1,nblockdg(2,lgi2)
@@ -495,8 +495,8 @@ contains
                                         (tmp(2)-tmp(1)>0.and.tmp(6)-tmp(5)>0)) then
 
                                        nsub=nsub+1
-                                       call reallocate_s(sub_bc,nsub,6)
-                                       sub_bc(nsub,:)=tmp
+                                       call reallocate_s(sub_bc,6,nsub)
+                                       sub_bc(:,nsub)=tmp
                                      endif
                                   endif
                                enddo
@@ -504,29 +504,29 @@ contains
                          enddo
                       endif
                       call MPI_TRANS(nsub,nsub,proci2,proci1)
-                      if(rank==proci1) call reallocate_s(sub_bc,nsub,6)
+                      if(rank==proci1) call reallocate_s(sub_bc,6,nsub)
                       call MPI_TRANS(sub_bc,sub_bc,proci2,proci1)
                       if(rank==proci1) then
-                         sub_bc(:,1)=sub_bc(:,1)+save_iminb(frli1)
-                         sub_bc(:,2)=sub_bc(:,2)+save_iminb(frli1) ! coordinate of the new boundary
-                         sub_bc(:,3)=sub_bc(:,3)+save_jminb(frli1) ! in the old block ref
-                         sub_bc(:,4)=sub_bc(:,4)+save_jminb(frli1)
-                         sub_bc(:,5)=sub_bc(:,5)+save_kminb(frli1)
-                         sub_bc(:,6)=sub_bc(:,6)+save_kminb(frli1)
+                         sub_bc(1,:)=sub_bc(1,:)+save_iminb(frli1)
+                         sub_bc(2,:)=sub_bc(2,:)+save_iminb(frli1) ! coordinate of the new boundary
+                         sub_bc(3,:)=sub_bc(3,:)+save_jminb(frli1) ! in the old block ref
+                         sub_bc(4,:)=sub_bc(4,:)+save_jminb(frli1)
+                         sub_bc(5,:)=sub_bc(5,:)+save_kminb(frli1)
+                         sub_bc(6,:)=sub_bc(6,:)+save_kminb(frli1)
                       endif
                    endif
                    call bcast(nsub,proci1)
-                   if(rank/=proci1) call reallocate(sub_bc,nsub,6)
+                   if(rank/=proci1) call reallocate(sub_bc,6,nsub)
                    call bcast(sub_bc,proci1)
                    call bcast(indmf,proci1)
                    do i2=1,nsub
                       frgf1=frgf1+1
                       ! coordinate of the new boundary in the new block ref
-                      call old2new_p(sub_bc(i2,1),sub_bc(i2,3),sub_bc(i2,5),sub_bc(i2,1),sub_bc(i2,3),sub_bc(i2,5),i,j,k,lgi1)
-                      call old2new_p(sub_bc(i2,2),sub_bc(i2,4),sub_bc(i2,6),sub_bc(i2,2),sub_bc(i2,4),sub_bc(i2,6),i,j,k,lgi1)
+                      call old2new_p(sub_bc(1,i2),sub_bc(3,i2),sub_bc(5,i2),sub_bc(1,i2),sub_bc(3,i2),sub_bc(5,i2),i,j,k,lgi1)
+                      call old2new_p(sub_bc(2,i2),sub_bc(4,i2),sub_bc(6,i2),sub_bc(2,i2),sub_bc(4,i2),sub_bc(6,i2),i,j,k,lgi1)
 
                       call create_boundary(frgf1,lgf1,indmf,ncbd,save_bcg_to_bci(frgi1),&
-                           sub_bc(i2,1),sub_bc(i2,2),sub_bc(i2,3),sub_bc(i2,4),sub_bc(i2,5),sub_bc(i2,6))
+                           sub_bc(1,i2),sub_bc(2,i2),sub_bc(3,i2),sub_bc(4,i2),sub_bc(5,i2),sub_bc(6,i2))
 
                    enddo
                 enddo
@@ -539,7 +539,7 @@ contains
        !############################################################################################
 
        !    print*,'create new boundaries '
-       call reallocate(sub_bc,2,6)
+       call reallocate(sub_bc,6,2)
        do lgi1=1,save_num_bg
           do k=1,nblockdg(3,lgi1)
              do j=1,nblockdg(2,lgi1)
@@ -556,31 +556,31 @@ contains
 
                       if (rank==procf1) then
                          sub_bc(1,1)=ii1(llf1)
-                         sub_bc(1,2)=ii1(llf1)
-                         sub_bc(1,3)=jj1(llf1)
-                         sub_bc(1,4)=jj2(llf1)
-                         sub_bc(1,5)=kk1(llf1)
-                         sub_bc(1,6)=kk2(llf1)
+                         sub_bc(2,1)=ii1(llf1)
+                         sub_bc(3,1)=jj1(llf1)
+                         sub_bc(4,1)=jj2(llf1)
+                         sub_bc(5,1)=kk1(llf1)
+                         sub_bc(6,1)=kk2(llf1)
                       endif
                       if (rank==procf2) then
-                         sub_bc(2,1)=ii2(llf2)
+                         sub_bc(1,2)=ii2(llf2)
                          sub_bc(2,2)=ii2(llf2)
-                         sub_bc(2,3)=jj1(llf2)
-                         sub_bc(2,4)=jj2(llf2)
-                         sub_bc(2,5)=kk1(llf2)
-                         sub_bc(2,6)=kk2(llf2)
+                         sub_bc(3,2)=jj1(llf2)
+                         sub_bc(4,2)=jj2(llf2)
+                         sub_bc(5,2)=kk1(llf2)
+                         sub_bc(6,2)=kk2(llf2)
                       endif
 
-                      call bcast(sub_bc(1,:),procf1)
-                      call bcast(sub_bc(2,:),procf2)
+                      call bcast(sub_bc(:,1),procf1)
+                      call bcast(sub_bc(:,2),procf2)
 
                       frgf1=frgf1+1
                       call create_boundary(frgf1,lgf1,"i1",ncbd,0,&
-                           sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6))
+                           sub_bc(1,1),sub_bc(2,1),sub_bc(3,1),sub_bc(4,1),sub_bc(5,1),sub_bc(6,1))
 
                       frgf1=frgf1+1
                       call create_boundary(frgf1,lgf2,"i2",ncbd,0,&
-                           sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6))
+                           sub_bc(1,2),sub_bc(2,2),sub_bc(3,2),sub_bc(4,2),sub_bc(5,2),sub_bc(6,2))
                    endif
                    if (j>1) then
                       lgf2=old2new_b(i,j-1,k,lgi1)
@@ -589,31 +589,31 @@ contains
 
                       if (rank==procf1) then
                          sub_bc(1,1)=ii1(llf1)
-                         sub_bc(1,2)=ii2(llf1)
-                         sub_bc(1,3)=jj1(llf1)
-                         sub_bc(1,4)=jj1(llf1)
-                         sub_bc(1,5)=kk1(llf1)
-                         sub_bc(1,6)=kk2(llf1)
+                         sub_bc(2,1)=ii2(llf1)
+                         sub_bc(3,1)=jj1(llf1)
+                         sub_bc(4,1)=jj1(llf1)
+                         sub_bc(5,1)=kk1(llf1)
+                         sub_bc(6,1)=kk2(llf1)
                       endif
                       if (rank==procf2) then
-                         sub_bc(2,1)=ii1(llf2)
+                         sub_bc(1,2)=ii1(llf2)
                          sub_bc(2,2)=ii2(llf2)
-                         sub_bc(2,3)=jj2(llf2)
-                         sub_bc(2,4)=jj2(llf2)
-                         sub_bc(2,5)=kk1(llf2)
-                         sub_bc(2,6)=kk2(llf2)
+                         sub_bc(3,2)=jj2(llf2)
+                         sub_bc(4,2)=jj2(llf2)
+                         sub_bc(5,2)=kk1(llf2)
+                         sub_bc(6,2)=kk2(llf2)
                       endif
 
-                      call bcast(sub_bc(1,:),procf1)
-                      call bcast(sub_bc(2,:),procf2)
+                      call bcast(sub_bc(:,1),procf1)
+                      call bcast(sub_bc(:,2),procf2)
 
                       frgf1=frgf1+1
                       call create_boundary(frgf1,lgf1,"j1",ncbd,0,&
-                           sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6))
+                           sub_bc(1,1),sub_bc(2,1),sub_bc(3,1),sub_bc(4,1),sub_bc(5,1),sub_bc(6,1))
 
                       frgf1=frgf1+1
                       call create_boundary(frgf1,lgf2,"j2",ncbd,0,&
-                           sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6))
+                           sub_bc(1,2),sub_bc(2,2),sub_bc(3,2),sub_bc(4,2),sub_bc(5,2),sub_bc(6,2))
                    endif
                    if (k>1) then
                       lgf2=old2new_b(i,j,k-1,lgi1)
@@ -622,31 +622,31 @@ contains
 
                       if (rank==procf1) then
                          sub_bc(1,1)=ii1(llf1)
-                         sub_bc(1,2)=ii2(llf1)
-                         sub_bc(1,3)=jj1(llf1)
-                         sub_bc(1,4)=jj2(llf1)
-                         sub_bc(1,5)=kk1(llf1)
-                         sub_bc(1,6)=kk1(llf1)
+                         sub_bc(2,1)=ii2(llf1)
+                         sub_bc(3,1)=jj1(llf1)
+                         sub_bc(4,1)=jj2(llf1)
+                         sub_bc(5,1)=kk1(llf1)
+                         sub_bc(6,1)=kk1(llf1)
                       endif
                       if (rank==procf2) then
-                         sub_bc(2,1)=ii1(llf2)
+                         sub_bc(1,2)=ii1(llf2)
                          sub_bc(2,2)=ii2(llf2)
-                         sub_bc(2,3)=jj1(llf2)
-                         sub_bc(2,4)=jj2(llf2)
-                         sub_bc(2,5)=kk2(llf2)
-                         sub_bc(2,6)=kk2(llf2)
+                         sub_bc(3,2)=jj1(llf2)
+                         sub_bc(4,2)=jj2(llf2)
+                         sub_bc(5,2)=kk2(llf2)
+                         sub_bc(6,2)=kk2(llf2)
                       endif
 
-                      call bcast(sub_bc(1,:),procf1)
-                      call bcast(sub_bc(2,:),procf2)
+                      call bcast(sub_bc(:,1),procf1)
+                      call bcast(sub_bc(:,2),procf2)
 
                       frgf1=frgf1+1
                       call create_boundary(frgf1,lgf1,"k1",ncbd,0,&
-                           sub_bc(1,1),sub_bc(1,2),sub_bc(1,3),sub_bc(1,4),sub_bc(1,5),sub_bc(1,6))
+                           sub_bc(1,1),sub_bc(2,1),sub_bc(3,1),sub_bc(4,1),sub_bc(5,1),sub_bc(6,1))
 
                       frgf1=frgf1+1
                       call create_boundary(frgf1,lgf2,"k2",ncbd,0,&
-                           sub_bc(2,1),sub_bc(2,2),sub_bc(2,3),sub_bc(2,4),sub_bc(2,5),sub_bc(2,6))
+                           sub_bc(1,2),sub_bc(2,2),sub_bc(3,2),sub_bc(4,2),sub_bc(5,2),sub_bc(6,2))
                    endif
                 enddo
              enddo
