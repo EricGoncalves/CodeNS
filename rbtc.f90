@@ -61,7 +61,7 @@ contains
     double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12),      txxr
     double precision ::       txyr,      txzr,      tyyr,      tyzr,      tzzr
     double precision,allocatable :: buff(:,:,:,:)
-    integer :: req(nbd,2),other,me,bcg_to_mf(num_bcl)
+    integer :: req(nbd,2),other,me,bcg_to_mf(num_bcg)
 !
 !-----------------------------------------------------------------------
 !

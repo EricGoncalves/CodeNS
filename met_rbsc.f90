@@ -22,7 +22,7 @@ contains
     double precision :: s1x(ip12),s1y(ip12),s1z(ip12),s2x(ip12),s2y(ip12)
     double precision :: s2z(ip12)
     double precision,allocatable :: buff(:,:,:,:)
-    integer :: req(nbd,2),other,me,bcg_to_mf(num_bcl)
+    integer :: req(nbd,2),other,me,bcg_to_mf(num_bcg)
 !
 !-----------------------------------------------------------------------
 !

@@ -16,7 +16,7 @@ contains
     integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd,ncin(ip41)
     double precision :: t(ip11,ip60)
     double precision,allocatable :: buff(:,:,:,:)
-    integer :: req(nbd,2),other,me,bcg_to_mf(num_bcl)
+    integer :: req(nbd,2),other,me,bcg_to_mf(num_bcg)
 !
 !-----------------------------------------------------------------------
 !
