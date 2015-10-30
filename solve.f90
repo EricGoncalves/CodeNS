@@ -315,10 +315,10 @@ program solve
   use mod_mpi
   use mod_partitionnement
   implicit none
-  integer          ::     Time_1,    Time_2,clock_rate,       img,    iyplus
+  integer          ::        img,    iyplus
   integer          ::          l,         m,      mfbi,       mfc,       mfn
   integer          ::        mfr,      ncyc,      nmot, imot(nmx)
-  double precision ::  aam,exs1,exs2,roam, tam
+  double precision ::  aam,exs1,exs2,roam, tam,     Time_1,    Time_2
   integer         ,allocatable ::   mnc(:),mnpar(:),  mnr(:), ncbd(:)
   integer         ,allocatable ::  ncin(:)
   double precision,allocatable ::  bceqt(:,:),    cfke(:),   cmui1(:),   cmui2(:),   cmuj1(:)
@@ -489,7 +489,7 @@ program solve
         if(mot(2)(1:imot(2)).eq.'flow') then
 !
            call barrier
-           call system_clock(Time_1,clock_rate)
+           call get_time(Time_1)
            call c_cpfw( &
                 mot,imot,nmot, &
                 ncyc, &
@@ -515,11 +515,11 @@ program solve
                 cvi,cvj,cvk, &
                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
            call barrier
-           CALL system_clock(Time_2)
+           CALL get_time(Time_2)
            do m=1,neqt
               if (rank==0) write(*,*) m,temp_array(m,:)
            enddo
-           if (rank==0) print*,'TEMPS DE CALCUL ',(Time_2-Time_1)*1./clock_rate
+           if (rank==0) print*,'TEMPS DE CALCUL ',Time_2-Time_1
 !
 !--   COMPUTE BOUNDARY
         else if(mot(2)(1:imot(2)).eq.'boundary') then

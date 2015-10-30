@@ -866,5 +866,29 @@ module mod_mpi
         call fseek(unit,pos,0)
 #endif
     end subroutine my_fseek
+
+
+    subroutine get_time(time)
+        implicit none
+        double precision,intent(out) :: time
+
+        logical,parameter :: wall_time=.true.
+        integer(kind=8) :: clock_rate,clock
+#ifdef WITH_MPI
+        if (wall_time) then
+          time=MPI_Wtime()
+        else
+          call CPU_TIME(time)
+          call sum_mpi(time)                      ! THIS MIGHT NOT BE RELEVANT
+        endif
+#else
+        if (wall_time) then
+          call system_clock(clock,clock_rate)
+          time=clock/clock_rate
+        else
+          call CPU_TIME(time)
+        endif
+#endif
+    end subroutine get_time
   end module mod_mpi
 
