@@ -503,7 +503,7 @@ contains
 !
 !*********Schema HLLC avec extrapolation MUSCL*******************
 !
-       case(15)
+       case(14)
           if(equat(1:2).eq.'ns') then
              if(kprec.eq.0) then
                 call sch_hllc( &

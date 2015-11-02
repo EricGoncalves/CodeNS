@@ -994,10 +994,10 @@ contains
     ! switch to the alternative version which permit to have ideal blocks size
     ! need a criteria to avoid too small block, and need to manage the residual block
     ! todo
-!    sblock=ii2*jj2*kk2
-!    rsize=minval(sblock) ! smallest block
-!    nblocks=max(nblocks,nint(nxyza*1./rsize))   ! have all the block to be around the size of the smallest one
-!    nblocks=nblocks+mod(nblocks,nprocs)         ! have a multiple of the number of process
+    sblock=ii2*jj2*kk2
+    rsize=minval(sblock) ! smallest block
+    nblocks=max(nblocks,nint(nxyza*1./rsize))   ! have all the block to be around the size of the smallest one
+    nblocks=nblocks+mod(nblocks,nprocs)         ! have a multiple of the number of process
 !nblocks=7
     !   compute number of spliting of each blocks with the best equilibrium
     ! do i=lt,nblocks-1                       ! split until lt>=nblocks

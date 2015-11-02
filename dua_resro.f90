@@ -71,7 +71,7 @@ contains
 !      resite=sqrt(durmy2)/resno1
     resite=sqrt(durmy2)
     if (rank==0) then
-      open(sor3 ,file='resro')
+      open(sor3 ,file='resro',position="append")
       write(sor3,'(1x,i6,1x,i6,1x,e13.6)') ncyc,icyc,resite
       close(sor3)
     endif
