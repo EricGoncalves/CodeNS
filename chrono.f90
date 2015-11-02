@@ -66,6 +66,7 @@ contains
     use sortiefichier
     use mod_chronos_prcd
     use mod_chronos
+    use mod_mpi
     implicit none
     integer          ::      i,   img,     j,     k,     l
     integer          :: lgsnlt,    lm,     n,  ndeb,  nfin
@@ -130,11 +131,15 @@ contains
 !
        enddo
 !
+       call min_mpi(dtmin)
        dtmin=min(dt1min,dtmin)
        if(dtmin.lt.dt1min) then
-          write(imp,'("===> chrono")')
-          write(imp,'(2(1pe11.3))') &
-               dtmin,dt1min
+          if (rank==0) then
+            write(imp,'("===> chrono")')
+            write(imp,'(2(1pe11.3))') &
+                 dtmin,dt1min
+          endif
+          call barrier
           STOP
        endif
 !

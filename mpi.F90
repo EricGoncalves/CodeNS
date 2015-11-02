@@ -43,6 +43,15 @@ module mod_mpi
     MODULE PROCEDURE MAX_MPI_0I,MAX_MPI_1R
   END INTERFACE MAX_MPI
 
+  INTERFACE MIN_MPI
+    !       MIN_MPI(A,B)
+    ! COMPUTE THE MAX OF A IN B
+    !       MIN_MPI(A)
+    ! COMPUTE THE MAX OF A IN A
+    ! RETURN WHEN EVERYTHING IS DONE
+    MODULE PROCEDURE MIN_MPI_0R
+  END INTERFACE MIN_MPI
+
   INTERFACE BCAST
     !       BCAST(A,ORIG)
     ! BROADCAST THE MESSAGE A FROM ORIG FOR EVERY PROC
@@ -574,6 +583,26 @@ module mod_mpi
 #endif
 
     END SUBROUTINE SUM_MPI_0I
+
+    SUBROUTINE MIN_MPI_0R(A,B)
+        !COMPUTE THE SUM OF A IN B
+        !RETURN WHEN EVERYTHING IS DONE
+        IMPLICIT NONE
+        double precision   ,INTENT(INOUT)    :: A
+        double precision   ,INTENT(OUT),optional :: B
+#ifdef WITH_MPI
+        double precision ::C
+        integer :: ierr
+        CALL MPI_ALLREDUCE(A, C, 1, MPI_REAL8,MPI_MIN, MPI_COMM_WORLD,IERR)
+        if (present(B)) then
+          B=C
+        else
+          A=C
+        endif
+#else
+        if (present(B))  B=A
+#endif
+    END SUBROUTINE MIN_MPI_0R
 
     SUBROUTINE MAX_MPI_0I(A,B)
         !COMPUTE THE SUM OF A IN B
