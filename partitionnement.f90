@@ -3,7 +3,7 @@ module mod_partitionnement
   implicit none
   integer :: verbosity
 contains
-  subroutine partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2)
+  subroutine partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2,nblocks,nsplit,nsplit_dir)
     use boundary
     use para_var
     use kcle,only:klzx,kmtbx
@@ -41,6 +41,7 @@ contains
     integer         ,allocatable,intent(inout) :: ncin(:),mnc(:),ncbd(:)
     double precision,allocatable,intent(inout) :: x(:),y(:),z(:)
     double precision            ,intent(inout) :: exs1,exs2
+    integer,intent(inout) :: nsplit(:),nsplit_dir(:,:)
 
     integer             :: save_lt,save_num_bcg,save_num_bg
     integer             :: nblocks,nxyza
@@ -65,8 +66,8 @@ contains
     integer,allocatable :: save_imaxb(:),save_jmaxb(:),save_kmaxb(:)
     integer,allocatable :: save_bcg_to_bcl(:),save_bcg_to_bci(:),save_bcg_to_bg(:)
     integer,allocatable :: save_bg_to_proc(:),save_bg_to_bl(:),save_bg_to_bi(:),save_bl_to_bg(:)
-    integer,allocatable :: nblock2(:),ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:),nijk(:,:,:,:)
-    integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),nblockdg(:,:),sub_bc(:,:),tmp(:)
+    integer,allocatable :: ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:),nijk(:,:,:,:)
+    integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),sub_bc(:,:),tmp(:)
 
     double precision    :: vbc(ista*lsta),sub_bc_c(2,6)
     double precision,allocatable :: save_x(:),save_y(:),save_z(:)
@@ -82,7 +83,8 @@ contains
     !############################################################################################
 
     verbosity=1 ! from 0 to 3
-    nblocks=max(nprocs,num_bg) ! number of bloc that we need
+    nblocks=max(nblocks,nprocs) ! minimum number of bloc that we need
+    nblocks=max(nblocks,num_bg) ! number of bloc that we need
 
     if(.true.) then ! always do the partitionning in order to reequilibrate
     !if(nblocks/=num_bg) then ! there is some partitionning to do
@@ -252,35 +254,35 @@ contains
        nxyza=sum(ii2g*jj2g*kk2g)  ! total number of points
 
        ! routine calculant combiens de fois splitter chaque block
-       ! sortie : nblock2   : nombre de splits de chaque block initial
-       !          nblockdg  : nombre de splits par direction de chaque block initial
+       ! sortie : nsplit   : nombre de splits de chaque block initial
+       !          nsplit_dir  : nombre de splits par direction de chaque block initial
        !          ni,nj,nk  : nombre de points par direction de chaque nouveau block
        ! entrée : tout le reste
-       call compute_split(nblock2,nblockdg,ni,nj,nk,                  &
+       call compute_split(nsplit,nsplit_dir,ni,nj,nk,                  &
             nxyza,save_num_bg,nblocks,save_lt,          &
             save_ii2 ,save_jj2 ,save_kk2 ,save_bl_to_bg,&
             ii2g,jj2g,kk2g,save_bg_to_proc)
 
        deallocate(ii2g,jj2g,kk2g)
 
-       sblock=sum(nblockdg(1,:)*nblockdg(2,:)*nblockdg(3,:))
+       sblock=sum(nsplit_dir(1,:)*nsplit_dir(2,:)*nsplit_dir(3,:))
        if(sblock/=nblocks) then
           stop 'partitionnement impossible'
        else
           if(verbosity>=1.and.rank==0) then
              print*,''
              print*,'découpage réussis : '
-             print*,"Block | Nb split x | Nb split y | Nb split z | unbalance"
+             print*,"Block | Nb block x | Nb block y | Nb block z | unbalance"
              nmax=0
              nmin=nxyza
              do lgi1=1,save_num_bg
-                nmax1=maxval(ni(:nblockdg(1,lgi1),:nblockdg(2,lgi1),:nblockdg(3,lgi1),lgi1)* &
-                     nj(:nblockdg(1,lgi1),:nblockdg(2,lgi1),:nblockdg(3,lgi1),lgi1)* &
-                     nk(:nblockdg(1,lgi1),:nblockdg(2,lgi1),:nblockdg(3,lgi1),lgi1))
-                nmin1=minval(ni(:nblockdg(1,lgi1),:nblockdg(2,lgi1),:nblockdg(3,lgi1),lgi1)* &
-                     nj(:nblockdg(1,lgi1),:nblockdg(2,lgi1),:nblockdg(3,lgi1),lgi1)* &
-                     nk(:nblockdg(1,lgi1),:nblockdg(2,lgi1),:nblockdg(3,lgi1),lgi1))
-                write(*,500) lgi1,nblockdg(:,lgi1)-1,( nmax1- nmin1 )*100./ nmin1
+                nmax1=maxval(ni(:nsplit_dir(1,lgi1),:nsplit_dir(2,lgi1),:nsplit_dir(3,lgi1),lgi1)* &
+                     nj(:nsplit_dir(1,lgi1),:nsplit_dir(2,lgi1),:nsplit_dir(3,lgi1),lgi1)* &
+                     nk(:nsplit_dir(1,lgi1),:nsplit_dir(2,lgi1),:nsplit_dir(3,lgi1),lgi1))
+                nmin1=minval(ni(:nsplit_dir(1,lgi1),:nsplit_dir(2,lgi1),:nsplit_dir(3,lgi1),lgi1)* &
+                     nj(:nsplit_dir(1,lgi1),:nsplit_dir(2,lgi1),:nsplit_dir(3,lgi1),lgi1)* &
+                     nk(:nsplit_dir(1,lgi1),:nsplit_dir(2,lgi1),:nsplit_dir(3,lgi1),lgi1))
+                write(*,500) lgi1,nsplit_dir(:,lgi1),( nmax1- nmin1 )*100./ nmin1
                 nmax=max(nmax,nmax1)
                 nmin=min(nmin,nmin1)
              enddo
@@ -331,9 +333,9 @@ contains
 
        !    print*,'create new grid '
        do lgi1=1,save_num_bg     !     create new grid and initialize it
-          do k=1,nblockdg(3,lgi1)!  tout le monde parcours les nouveaux blocs dans le même ordre
-             do j=1,nblockdg(2,lgi1)
-                do i=1,nblockdg(1,lgi1)
+          do k=1,nsplit_dir(3,lgi1)!  tout le monde parcours les nouveaux blocs dans le même ordre
+             do j=1,nsplit_dir(2,lgi1)
+                do i=1,nsplit_dir(1,lgi1)
 
                    lgf1=old2new_b(i,j,k,lgi1)
 
@@ -391,9 +393,9 @@ contains
           frli1=save_bcg_to_bcl(frgi1) ! tout le monde parcours les nouvelles condition limites dans le même ordre
           lgi1=save_bcg_to_bg(frgi1)
           proci1=save_bg_to_proc(lgi1)
-          do k=1,nblockdg(3,lgi1)
-             do j=1,nblockdg(2,lgi1)
-                do i=1,nblockdg(1,lgi1)
+          do k=1,nsplit_dir(3,lgi1)
+             do j=1,nsplit_dir(2,lgi1)
+                do i=1,nsplit_dir(1,lgi1)
 
                    lgf1=old2new_b(i,j,k,lgi1)
                    llf1=bg_to_bl(lgf1)
@@ -463,9 +465,9 @@ contains
                          kmin=sub_bc(5,1)+save_kminb(frli2)
                          kmax=sub_bc(6,1)+save_kminb(frli2)
 
-                         do k2=1,nblockdg(3,lgi2)
-                            do j2=1,nblockdg(2,lgi2)
-                               do i2=1,nblockdg(1,lgi2)
+                         do k2=1,nsplit_dir(3,lgi2)
+                            do j2=1,nsplit_dir(2,lgi2)
+                               do i2=1,nsplit_dir(1,lgi2)
 
                                   lgf2=old2new_b(i2,j2,k2,lgi2)
                                   llf2=bg_to_bl(lgf2)
@@ -541,9 +543,9 @@ contains
        !    print*,'create new boundaries '
        call reallocate(sub_bc,6,2)
        do lgi1=1,save_num_bg
-          do k=1,nblockdg(3,lgi1)
-             do j=1,nblockdg(2,lgi1)
-                do i=1,nblockdg(1,lgi1) !           New coincident boundaries
+          do k=1,nsplit_dir(3,lgi1)
+             do j=1,nsplit_dir(2,lgi1)
+                do i=1,nsplit_dir(1,lgi1) !           New coincident boundaries
                    lgf1=old2new_b(i,j,k,lgi1)
                    llf1=bg_to_bl(lgf1)
                    procf1=bg_to_proc(lgf1)
@@ -829,7 +831,7 @@ contains
     integer function old2new_b(i,j,k,lg)
       implicit none
       integer,intent(in) :: i,j,k,lg
-      old2new_b=sum(nblock2(1:lg-1))+i+(j-1)*nblockdg(1,lg)+(k-1)*nblockdg(2,lg)*nblockdg(1,lg)
+      old2new_b=sum(nsplit(1:lg-1))+i+(j-1)*nsplit_dir(1,lg)+(k-1)*nsplit_dir(2,lg)*nsplit_dir(1,lg)
     end function old2new_b
 
     subroutine old2new_p(old_i,old_j,old_k,new_i,new_j,new_k,i,j,k,l)
@@ -923,22 +925,19 @@ contains
     use sortiefichier,only:stderr
     implicit none
     integer,intent(in)    :: npoints,num_bgi,num_bli
-    integer,intent(inout) :: num_bgf
+    integer,intent(inout) :: num_bgf,nsplit(:),nsplit_dir(:,:)
     integer,dimension(num_bli),intent(in) :: nili,njli,nkli,bli_to_bgi
     integer,dimension(num_bgi),intent(in) :: nigi,njgi,nkgi,bgi_to_proc
-    integer,allocatable,intent(out) :: nsplit(:),nsplit_dir(:,:)
     integer,allocatable,intent(out) :: nigf(:,:,:,:),njgf(:,:,:,:),nkgf(:,:,:,:)
 
     integer,allocatable :: nilf(:,:,:),njlf(:,:,:),nklf(:,:,:)
     integer :: lg,ll,proc
 
-    allocate(nsplit(num_bgi),nsplit_dir(3,num_bgi),nilf(1,1,1),njlf(1,1,1),nklf(1,1,1))
+    allocate(nilf(1,1,1),njlf(1,1,1),nklf(1,1,1))
     allocate(nigf(1,1,1,num_bgi),njgf(1,1,1,num_bgi),nkgf(1,1,1,num_bgi))
-    nsplit=1     ! initial number of splitting for each existing block
-    nsplit_dir=0 ! initial number of splitting per direction for each existing block
 
-    ! routine calculant combiens de fois splitter chaque block
-    ! sortie : nsplit (TODO : le vrai num_bgf)
+    ! routine calculant combiens de fois splitter chaque block initial
+    ! sortie : nsplit
     ! entrée : tout le reste
     call num_split(nsplit,num_bgi,npoints,num_bgf,nigi,njgi,nkgi)
 
@@ -946,9 +945,9 @@ contains
        lg=bli_to_bgi(ll)
 
        ! calcule le split pour un block, c'est à dire
-       ! le nombre de découpe par direction            (nblockd)
+       ! le nombre de blocs par direction              (nsplit_dir)
        ! le nombre de points dans chaque nouveau block (nilf,njlf,nklf)
-       call triv_split(nsplit(lg),ll,npoints,nili ,njli ,nkli, &
+       call triv_split(nsplit(lg),npoints,nili(ll) ,njli(ll) ,nkli(ll), &
             nsplit_dir(:,lg),nilf,njlf,nklf)
 
        ! ajoute le split avec les splits des autres blocks localement
@@ -987,7 +986,7 @@ contains
     integer,intent(in)    :: ii2(lt),jj2(lt),kk2(lt)
     integer,intent(inout) :: nblocks
     integer,intent(out)   :: nblock2(lt)
-    integer               :: rsize,sblock(lt),i,j,k,nblock(lt)
+    integer               :: rsize,sblock(lt),i,j,k,nblock(lt),li
     double precision      :: unbalance,unbalance1
 
     ! TODO
@@ -1014,10 +1013,11 @@ contains
     !    end do
     !    nblock2(k)=nblock2(k)+1
     ! end do
-
+    li=sum(nblock2)
+    where(nblock2>1) nblock2=-nblock2 ! block user values
 
     !   compute number of spliting of each blocks with the best equilibrium
-    do i=lt,nblocks-1                       ! split until lt>=nblocks
+    do i=li,nblocks-1                       ! split until we have nblocks blocks
        sblock=ceiling(ii2*jj2*kk2*1./nblock2) ! compute the current size of blocks
        j=maxloc(sblock,1)                        ! split the first bigest block
        do k=j+1,lt
@@ -1027,7 +1027,7 @@ contains
        end do
        nblock2(j)=nblock2(j)+1
     end do
-
+    where(nblock2<0) nblock2=-nblock2 ! restore user values
 
     !    compute number of spliting of each blocks with the ideal equilibrium
     !     rsize=nint(nxyza*1./nblocks)              ! ideal size of a block
@@ -1056,19 +1056,16 @@ contains
     !    nblock2(k)=nblock2(k)-1
     ! end do
 
-
   end subroutine num_split
 
-  subroutine triv_split(nblock2,nbl,nxyza,ii2,jj2,kk2, &
+  subroutine triv_split(nblock2,nxyza,ii2,jj2,kk2, &
        nblockd,new_ii2,new_jj2,new_kk2)
     implicit none
-    integer,intent(in)  :: ii2(:),jj2(:),kk2(:)
-    integer,intent(in)              :: nxyza,nbl,nblock2
+    integer,intent(in)  :: ii2,jj2,kk2,nxyza,nblock2
+    integer,allocatable,intent(out) :: new_ii2(:,:,:),new_jj2(:,:,:),new_kk2(:,:,:)
+    integer,intent(inout)             :: nblockd(3)
 
-    integer,allocatable,intent(inout) :: new_ii2(:,:,:),new_jj2(:,:,:),new_kk2(:,:,:)
-    integer,intent(out)             :: nblockd(3)
-
-    integer             :: i,j,k,i1,j1,k1
+    integer             :: i,j,k,i1,j1,k1,i2,j2,k2
     integer,allocatable :: tmp_ii2(:,:,:),tmp_jj2(:,:,:),tmp_kk2(:,:,:),num_cft(:,:,:), num_cf2(:,:,:)
 
     !   trivial spliting : divide my block in nblock2 subblock
@@ -1076,21 +1073,29 @@ contains
     !                      i times in the x direction, j times in the y direction and k times in the z direction
     call reallocate(num_cf2,1,1,1)
     num_cf2=nxyza*nblock2*6 ! useless initial big value
-    do k=1,nblock2
-       do j=1,nblock2
-          do i=1,nblock2
+    i1=nblockd(1)
+    i2=nblockd(1)
+    j1=nblockd(2)
+    j2=nblockd(2)
+    k1=nblockd(3)
+    k2=nblockd(3)
+
+    if(i1==0) i1=1
+    if(i2==0) i2=nblock2
+    if(j1==0) j1=1
+    if(j2==0) j2=nblock2
+    if(k1==0) k1=1
+    if(k2==0) k2=nblock2
+
+
+    do k=k1,k2
+       do j=j1,j2
+          do i=i1,i2
              if(i*j*k==nblock2) then !           if we get the right number of blocks
-                allocate(tmp_jj2(i,j,k),tmp_ii2(i,j,k),tmp_kk2(i,j,k), num_cft(i,j,k))
+                allocate(num_cft(i,j,k))
                 !       compute sizes of sub-blocks
-                do k1=1,k
-                   do j1=1,j
-                      do i1=1,i
-                         tmp_ii2(i1,j1,k1)=nint(i1*(ii2(nbl)+i-1)*1./i) - nint((i1-1.)*(ii2(nbl)+i-1)*1./i)
-                         tmp_jj2(i1,j1,k1)=nint(j1*(jj2(nbl)+j-1)*1./j) - nint((j1-1.)*(jj2(nbl)+j-1)*1./j)    ! count interface twice
-                         tmp_kk2(i1,j1,k1)=nint(k1*(kk2(nbl)+k-1)*1./k) - nint((k1-1.)*(kk2(nbl)+k-1)*1./k)
-                      end do
-                   end do
-                end do
+                call compute_size(i,j,k,ii2,jj2,kk2,tmp_ii2,tmp_jj2,tmp_kk2)
+!
                 if (min(minval(tmp_ii2),minval(tmp_jj2),minval(tmp_kk2))>1) then ! if the splitting is acceptable   !  todo : criteria may be different elsewhere
                    !             compute sizes of new communication, must be over evaluated (including boundary condition)
                    num_cft=2*(tmp_jj2*tmp_ii2 + tmp_ii2*tmp_kk2 + tmp_jj2*tmp_kk2)
@@ -1109,6 +1114,25 @@ contains
        end do
     end do
   end subroutine triv_split
+
+subroutine compute_size(i,j,k,ii2,jj2,kk2,new_ii2,new_jj2,new_kk2)
+    !       compute sizes of sub-blocks
+    implicit none
+    integer,intent(in)  :: ii2,jj2,kk2,i,j,k
+    integer,allocatable,intent(out) :: new_ii2(:,:,:),new_jj2(:,:,:),new_kk2(:,:,:)
+    integer             :: i1,j1,k1
+
+    allocate(new_ii2(i,j,k),new_jj2(i,j,k),new_kk2(i,j,k))
+    do k1=1,k
+       do j1=1,j
+          do i1=1,i
+             new_ii2(i1,j1,k1)=nint(i1*(ii2+i-1)*1./i) - nint((i1-1.)*(ii2+i-1)*1./i)
+             new_jj2(i1,j1,k1)=nint(j1*(jj2+j-1)*1./j) - nint((j1-1.)*(jj2+j-1)*1./j)    ! count interface twice
+             new_kk2(i1,j1,k1)=nint(k1*(kk2+k-1)*1./k) - nint((k1-1.)*(kk2+k-1)*1./k)
+          end do
+       end do
+    end do
+  end subroutine compute_size
 
   subroutine create_grid(l,ni,nj,nk,bi,proc)
     use para_fige,only:nmx

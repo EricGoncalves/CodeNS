@@ -313,7 +313,8 @@ program solve
   use mod_c_inbdb
   use mod_c_dfst
   use mod_mpi
-  use mod_partitionnement
+  use mod_c_partitionnement
+  use mod_partitionnement,only:iniraccord
   implicit none
   integer          ::        img,    iyplus
   integer          ::          l,         m,      mfbi,       mfc,       mfn
@@ -539,7 +540,7 @@ program solve
         endif
      case('partition')
 !--   PARTITION
-       call partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2)
+       call c_partitionnement(mot,imot,nmot,x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2)
 !--   ALLOC
      case('alloc')
 !--   ALLOC DOM
@@ -1178,23 +1179,30 @@ lz=lt
     use modeleturb
     implicit none
 
-    deallocate(mnr,mnc,ncin,ncbd,rod,nyn,vdual2,vdual1,rti)
-    deallocate(utau,ptdual,pression,dt,fgam,x,ynr,qtz,qtx,qty,res,cfke,cmuk1)
-    deallocate(tnte2,cvi,vdual,bceqt,tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,ztemp,tn10)
-    deallocate(tn8,tm12,tm13,tm10,tm11,tp,rpi,tn5,tn4,tn7,tn6,tn1,tn3,tn2)
-    deallocate(tn9,d0z,d0y,d0x,rowd,tnte4,tnte1,pres,tnte3,cson,xnr)
-    deallocate(r,cvj,cvk,cmuk2,z,nzn,v,vol,znr,cmuj2,cmuj1,roud,roed)
-    deallocate(cmui2,cmui1,rovd,y,nxn,sn)
+    if (allocated(tn1)) then
+      deallocate(tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10)
+      deallocate(tnte1,tnte2,tnte3,tnte4,v,vdual,vdual2,vdual1)
+      deallocate(ptdual,pression,dt,ztemp,cson,r,vol,toxx,toxy,toxz)
+      deallocate(toyy,toyz,tozz,qcx,qcy,qcz,mu,mut,mnpar,dist,cfke,cvi)
+      deallocate(cvj,cvk,cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2,sn,rti,nfbr)
+      deallocate(ndrr,srotr,nfba,nfbn,crotr,lbdrat,nmfint,nba,lbd,mpn,lbdko)
+      deallocate(mpr,klmax,kkmf,keta,kki2,kki4,kmf,lmax,ki2,ki4,eta,pctvort)
+      deallocate(rod,qtx,qty,qtz,res,tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9)
+      deallocate(tm10,tm11,tm12,tm13,tp,rpi,d0y,d0x,d0z,pres,roud,rovd,rowd)
+      deallocate(roed,fgam,nxn,nyn,nzn,mnr,xnr,ynr,znr)
+    endif
 
-    deallocate(toxx,toxy,toxz,toyy,toyz,tozz,qcz,qcy,qcx,mut,mu,mnpar,dist)
+    if (allocated(cl)) then
+      deallocate(cl,tab_raccord,ndcc,nbdc,nfbc,bc,mdnc,mper,mpc,ncin,bceqt,mnc)
+    endif
 
-    deallocate(ncycle,kncycle,klmax,kkmf,keta,kki2,kki4,kmf,lmax,ki2,ki4,eta,pctvort)
-    deallocate(cl,ndcc,nbdc,mdnc,mper,mpc,nfbr,ndrr,srotr,nfba,nfbn,crotr,lbdrat)
-    deallocate(nmfint,nba,lbd,mpn,lbdko,mpr,bc,nfbc)
+    if (allocated(x)) then
+      deallocate(x,y,z)
+    endif
 
-    deallocate(ii1,jj1,kk1,ii2,jj2,kk2,id1,jd1,kd1,id2,jd2,kd2,nnn,nnc,nnfb,npn,npc,npfb)
-    deallocate(ndlb,nfei,indfl,iminb,imaxb,jminb,jmaxb,kminb,kmaxb,mpb,mmb)
-
+    if (allocated(ncycle)) then
+      deallocate(ncycle,kncycle)
+    endif
 
   end subroutine deallocdata
 end program solve
