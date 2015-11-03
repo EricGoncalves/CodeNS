@@ -496,11 +496,11 @@ contains
                 rhoe=ro*e-.5*ro*qq
 !               p=gam1*(rhoe-pinfl)
                 p=ps(n)
-!               sg=sign(1.,qq)
+!               sg=sign(1.D0,qq)
                 rm2=abs(qq*ro/(gam*p))
                 rr=y(n)**2+z(n)**2
                 vv=qq+omg*(omg*rr+2.*(y(n)*w-z(n)*v))
-                sg=sign(1.,vv)
+                sg=sign(1.D0,vv)
 !               am2=abs(vv*ro/(gam*p))
                 am2=abs(vv)/cson(n)**2
 !
@@ -870,7 +870,7 @@ contains
 !              p=gam1*(rhoe*e-.5*rhoe*qq-pinfl)
                 p=ps(ndel)+rpdel*(ps(ndel+idm3)-ps(ndel))
                 csc=cson(ndel)+rpdel*(cson(ndel+idm3)-cson(ndel))
-                sg=sign(1.,qq)
+                sg=sign(1.D0,qq)
 !              rm2=abs(qq*rhoe/(gam*p))
                 rm2=abs(qq/csc**2)
                 xme=sg*sqrt(rm2)
@@ -886,7 +886,7 @@ contains
                 e=s(n,5)/s(n,1)
                 qq=(s(n,2)**2+s(n,3)**2+s(n,4)**2)/s(n,1)**2
                 p=gam1*(s(n,5)-.5*s(n,1)*qq-pinfl)
-                sg=sign(1.,qq*s(n,1)/(gam*p))
+                sg=sign(1.D0,qq*s(n,1)/(gam*p))
                 rm2=abs(qq*s(n,1)/(gam*p))
                 xme=sg*sqrt(rm2)
                 uex=us(m)/s(n,1)

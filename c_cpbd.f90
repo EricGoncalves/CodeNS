@@ -82,7 +82,6 @@ contains
     use schemanum
     use sortiefichier
     use mod_b1_cpbd
-
     use mod_cpbd
     use mod_tcmd_cpbd
     implicit none
@@ -100,7 +99,6 @@ contains
     double precision ::      ztemp(ip11)
 !
 !-----------------------------------------------------------------------
-!
 !
     character(len=32) ::  mot(nmx)
 !

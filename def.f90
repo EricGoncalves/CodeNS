@@ -18,7 +18,6 @@ contains
     use mod_defdfpmcfg
     use mod_defdfnm
     use mod_defdfpmdtd
-
     implicit none
 !
 !***********************************************************************

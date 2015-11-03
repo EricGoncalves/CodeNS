@@ -50,8 +50,6 @@ contains
 !
     character(len=1) :: coord
 !
-
-!
     ecri=.false.
 !      ecri=.true.
     pos=int(FTELL(kdg))

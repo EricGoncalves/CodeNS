@@ -1,7 +1,7 @@
 module mod_rbvc
   implicit none
 contains
-  subroutine rbvc(t,ncbd,ncin,mnc)
+  subroutine rbvc(t,ncbd,ncin,mnc,ps,temp,cson)
 !
 !***********************************************************************
 !
@@ -38,7 +38,7 @@ contains
     integer          ::          m,        mb,        mc,        mf,       mfb
     integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),ncin(ip41)
     integer          ::         nd,       ndm
-    double precision :: t(ip11,ip60),        tper
+    double precision :: t(ip11,ip60),        tper,ps(ip11),cson(ip11),temp(ip11)
     double precision,allocatable :: buff(:,:,:,:)
     integer :: req(nbd,2),other,me,bcg_to_mf(num_bcg)
 !
@@ -53,7 +53,7 @@ contains
        me=bcl_to_bcg(mfb)
        bcg_to_mf(me)=mf
     enddo
-    allocate(buff(5,mt,nbd,2))
+    allocate(buff(8,mt,nbd,2))
 
     do mf=1,nbd
 !
@@ -77,6 +77,9 @@ contains
           buff(3,m,mf,1)=t(nc,3)*cos(tper)+t(nc,4)*sin(tper)
           buff(4,m,mf,1)=t(nc,4)*cos(tper)-t(nc,3)*sin(tper)
           buff(5,m,mf,1)=t(nc,5)
+          buff(6,m,mf,1)=ps(nc)
+          buff(7,m,mf,1)=temp(nc)
+          buff(8,m,mf,1)=cson(nc)
 !
        enddo
        if (bcg_to_proc(me)/=bcg_to_proc(other)) then
@@ -109,6 +112,9 @@ contains
           t(nd,3) = 0.5*( t(ndm,3)+buff(3,m,mf,2))
           t(nd,4) = 0.5*( t(ndm,4)+buff(4,m,mf,2))
           t(nd,5) = 0.5*( t(ndm,5)+buff(5,m,mf,2))
+          ps(nd)   = 0.5*(   ps(ndm)+buff(6,m,mf,2))
+          temp(nd) = 0.5*( temp(ndm)+buff(7,m,mf,2))
+          cson(nd) = 0.5*( cson(ndm)+buff(8,m,mf,2))
 !
        enddo
     enddo

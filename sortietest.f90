@@ -44,8 +44,6 @@ contains
     character(len=1 ) :: c
 !
 !
-
-!
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)

@@ -51,10 +51,6 @@ contains
 !-----------------------------------------------------------------
 !
 !
-!
-
-
-
     ALLOCATE(coefe(ndir,ip00))
 
     n0c=npc(l)
@@ -134,14 +130,14 @@ contains
           enddo
        enddo
     enddo
-!
+
 !*****************************************************************
 !-----remplissage des coefficients par direction
 !*****************************************************************
-!
+
     kdir=1
     ninc=nci
-!
+
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1,j,k)
@@ -160,10 +156,10 @@ contains
           enddo
        enddo
     enddo
-!
+
     kdir=2
     ninc=ncj
-!
+
     do k=k1,k2m1
        do j=j1,j2
           ind1 = indc(i1  ,j,k)
@@ -182,10 +178,10 @@ contains
           enddo
        enddo
     enddo
-!
+
     kdir=3
     ninc=nck
-!
+
     do k=k1,k2
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -204,7 +200,7 @@ contains
           enddo
        enddo
     enddo
-!
+
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -217,7 +213,7 @@ contains
           enddo
        enddo
     enddo
-!
+
 !c-----calcul instationnaire avec dts-----------------------------
 !
 !       if(kfmg.eq.3) then
@@ -243,7 +239,7 @@ contains
 !-----inversion direction i-----------------------------------------
 !
     do li=1,ibalai
-!
+
        do k=k1,k2m1
           do i=i2m1,i1,-1
              ind1=indc(i,j1  ,k)
@@ -268,7 +264,7 @@ contains
              enddo
           enddo
        enddo
-!
+
        do k=k1,k2m1
           do i=i1,i2m1
              ind1=indc(i,j1  ,k)
@@ -280,7 +276,7 @@ contains
              enddo
           enddo
        enddo
-!
+
     enddo
 !
 !-----inversion direction j------------------------------------
@@ -292,9 +288,9 @@ contains
        beta6(m)=0.
        beta7(m)=0.
     enddo
-!
+
     do lj=1,ibalai
-!
+
        do k=k1,k2m1
           do j=j2m1,j1,-1
              ind1=indc(i1  ,j,k)
@@ -319,7 +315,7 @@ contains
              enddo
           enddo
        enddo
-!
+
        do k=k1,k2m1
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
@@ -331,7 +327,7 @@ contains
              enddo
           enddo
        enddo
-!
+
     enddo
 !
 !------inversion direction k--------------------------------------
@@ -343,9 +339,9 @@ contains
        beta6(m)=0.
        beta7(m)=0.
     enddo
-!
+
     do lk=1,ibalai
-!
+
        do k=k2m1,k1,-1
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
@@ -370,7 +366,7 @@ contains
              enddo
           enddo
        enddo
-!
+
        do k=k1,k2m1
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
@@ -382,7 +378,7 @@ contains
              enddo
           enddo
        enddo
-!
+
     enddo
 !
 !-----lois de paroi------------------------------------------------

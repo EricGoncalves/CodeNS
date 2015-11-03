@@ -14,8 +14,8 @@ contains
 !
 !***********************************************************************
 !
-!     DATE
-!      juillet 2010 - Jean DECAIX
+!     DATE 
+!      juillet 2010 - Jean DECAIX / LEGI
 !     ACT
 !_A    Modele de Spalart-Allmaras avec terme SAS.
 !_A    Calcul du second  membre de l'equation pour nu-tilde.
@@ -68,27 +68,23 @@ contains
     integer          ::      m,     n,   n0c,   nid,  nijd
     integer          ::    njd,  npsn
     double precision ::        cb2sig,         cc43,   cfke(ip13),  cmui1(ip21),  cmui2(ip21)
-    double precision ::   cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),         csas
-    double precision ::          ct42,         cv13,        cv133,         cw36,         dft2
+    double precision ::   cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21),  cmuk2(ip21),   csas
+    double precision ::    ct42,   cv13,  cv133,   cw36,   dft2
     double precision ::          dfv1,         dfv2,          dfw,   dist(ip12),        dist2
-    double precision ::           dpr,        dsdif,         dsm1,         dsm2,          dst
+    double precision ::     dpr,  dsdif,   dsm1,   dsm2,    dst
     double precision ::    dtdx(ip00),   dtdy(ip00),   dtdz(ip00),   dvxx(ip00),   dvxy(ip00)
     double precision ::    dvxz(ip00),   dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00)
-    double precision ::    dvzy(ip00),   dvzz(ip00),          dxg,           fd,          ft2
-    double precision ::           fv1,          fv2,           fw,        kapd2,       kappa2
-    double precision ::      mu(ip12),       nlaplu,      nutilde, qcxts5(ip12), qcyts6(ip12)
-    double precision ::         rtil3,        rtil6,       rtilde,   sdif(ip00),          sm1
-    double precision ::           sm2,sn(ip31*ndir),           ss,       stilde,      t(ip00)
+    double precision ::    dvzy(ip00),   dvzz(ip00),    dxg,     fd,    ft2
+    double precision ::     fv1,    fv2,     fw,  kapd2, kappa2
+    double precision ::      mu(ip12), nlaplu,nutilde, qcxts5(ip12), qcyts6(ip12)
+    double precision ::   rtil3,  rtil6, rtilde,   sdif(ip00),    sm1
+    double precision ::     sm2,     sn(ip31*ndir),     ss, stilde,            t(ip00)
     double precision ::     tn1(ip00),   tn10(ip00),    tn2(ip00),    tn3(ip00), txxf5x(ip12)
     double precision ::  txyf5y(ip12), txzf5z(ip12),         uns6, v(ip11,ip60),    vol(ip11)
-    double precision ::          vort,           xg,          xg6,         xkhi,        xkhi2
-    double precision ::         xkhi3,        xkhi4,         xlvk,        xlvk2
+    double precision ::    vort,     xg,    xg6,   xkhi,  xkhi2
+    double precision ::   xkhi3,  xkhi4,   xlvk,  xlvk2
 !
 !-----------------------------------------------------------------------
-!
-!
-!
-
 !
 !     ---------------------------------------------------------------
 !com  sdif --> grad(ro nu_tilde).grad(nu_tilde) * cb2/sigma
@@ -214,7 +210,7 @@ contains
     cv133=3.*cv13
     ct42=2.*ct4
     cb2sig=cb2/sigma
-    cc43=4./3.
+    cc43=4./3. 
 !
     csas=1.   ! constante modèle SAS
 !
@@ -241,7 +237,7 @@ contains
              rtilde=nutilde/(stilde*kapd2)
 !          rtilde=min(rtilde,1.)
              rtil6=rtilde**6
-             rtil3=(8.*rtilde)**3
+             rtil3=(8.*rtilde)**3          
              fd=1.-tanh(rtil3)            ! fonction fd DDES
              ft2=ct3*exp(-ct4*xkhi2)
              sm1=cb1*(1.-ft2)*stilde*v(n,6)

@@ -118,10 +118,9 @@ contains
     intmx=huge(1)
     reelmx=huge(1.)
     reelmn=tiny(1.)
-    pis2=acos(-1.)/2.
-    raddeg=90./pis2
-    degrad=pis2/90.
-
+    pis2=atan2(1.D0,0.D0)
+    raddeg=90.D0/pis2
+    degrad=pis2/90.D0
 !
 !     valeurs par defaut
 !

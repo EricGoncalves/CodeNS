@@ -52,9 +52,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
-
     ALLOCATE(coefe(ndir,ip00))
     ALLOCATE(coefdiag(ip00),d2w1(ip00),d2w2(ip00),d2w3(ip00),d2w4(ip00),d2w5(ip00))
 
@@ -81,9 +78,9 @@ contains
     ncj = inc(0,1,0)
     nck = inc(0,0,1)
 
-!     constante instationnaire DTS
+!   constante instationnaire DTS
     fact=1.5
-!     fact=11./6.  !ordre 3
+!   fact=11./6.  !ordre 3
 
 !-----initalisation--------------------------------
 !
@@ -278,8 +275,8 @@ contains
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
-                     +0.5*(d(n,3)+d(n-ninc,3))*sn(m,kdir,2) &
-                     +0.5*(d(n,4)+d(n-ninc,4))*sn(m,kdir,3)
+                   +0.5*(d(n,3)+d(n-ninc,3))*sn(m,kdir,2) &
+                   +0.5*(d(n,4)+d(n-ninc,4))*sn(m,kdir,3)
                 tn2=0.5*(dfxx(m)+dfxx(m-ninc))*sn(m,kdir,1) &
                      +0.5*(dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2) &
                      +0.5*(dfxz(m)+dfxz(m-ninc))*sn(m,kdir,3)

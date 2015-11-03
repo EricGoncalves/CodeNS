@@ -63,6 +63,7 @@ contains
 !
     call START_KEEP_ORDER(ll,bg_to_proc,pos)
     CALL my_FSEEK(kda, pos)
+
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -87,19 +88,18 @@ contains
     if(equat(1:2).eq.'ns') then   !calcul Navier-stokes
        read(kda)(((mut(ind(i,j,k)),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
     endif
-!
-!
+
 !cEG d  mise en commentaire du test pour reprise en multi-domaine
 !       if(keinit.eq.0) then
 !       pb pour relire un fichier multi-domaines ecri avec k-e mais
 !       calcul initialise avec keinit=1. keinit ne devrait etre
 !       utilise que pour initialiser le calcul de mut, pas pour gerer la lecture
 
-    if(equat(6:7).eq.'ke') then  !calcul avec equations de transport
-!       if((equat(6:7).eq.'ke' .and. keinit.eq.0) .or. &
-!          (equat(2:4).eq.'res' .and. ip60.eq.7 )) then
+!    if(equat(6:7).eq.'ke') then  !calcul avec equations de transport
+       if((equat(6:7).eq.'ke' .and. keinit.eq.0) .or. &
+          (equat(2:4).eq.'res' .and. ip60.eq.7 )) then
 
-!         reprise calcul avec equations de transport
+!      reprise calcul avec equations de transport
        read(kda)((( v(ind(i,j,k),6),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
        read(kda)((( v(ind(i,j,k),7),i=i1,i2m1),j=j1,j2m1),k=k1,k2m1)
 !
@@ -119,15 +119,15 @@ contains
           endif
        endif
 
-!        elseif(equat(6:7).eq.'ke' .and. keinit.ge.1) then    !nouveau calcul avec equations de transport
-!          do k=k1,k2m1
-!           do j=j1,j2m1
-!            do i=i1,i2m1
-!             v(ind(i,j,k),6)=0.
-!             v(ind(i,j,k),7)=0.
-!            enddo
-!           enddo
-!          enddo
+        elseif(equat(6:7).eq.'ke' .and. keinit.ge.1) then    !nouveau calcul avec equations de transport
+          do k=k1,k2m1
+           do j=j1,j2m1
+            do i=i1,i2m1
+             v(ind(i,j,k),6)=0.
+             v(ind(i,j,k),7)=0.
+            enddo
+           enddo
+          enddo
     endif         !fin test keinit
 !cEG d     mise en commentaire du test pour reprise en multi-domaine
 

@@ -16,6 +16,7 @@ contains
     use kcle
     use boundary
     use mod_valenti
+    use mod_synterr
     implicit none
     integer          ::      icmt,imot(nmx),       nm,     nmot
 !

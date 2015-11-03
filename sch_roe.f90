@@ -77,7 +77,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
     ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))
 
     n0c=npc(lm)
@@ -1495,8 +1494,7 @@ contains
       integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
-!      phi(a)=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
-
+!      phi(a)=sign(1.D0,a)*max(0.,min(abs(a),sign(1.D0,a)))
 !     phi(a)=max(0.,(a+a**2)/(1.+a**2))  !van albada
 !      phi(a)=max(0.,min(1.,2.*a),min(2.,a)) !superbee
     function    phi(a)

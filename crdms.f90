@@ -111,51 +111,50 @@ contains
 
       bl_to_bg(lzx)=l
       bg_to_bl(l)=lzx
-  !
-      do img=1,lgx
-  !
+!
+    do img=1,lgx
+!
          lm=lzx+(img-1)*lz
-  !
-         imgi = img
-         imgj = img
-         imgk = img
-         if (equat(3:5).eq.'2di') imgi = 1
-         if (equat(3:5).eq.'2dj') imgj = 1
-         if (equat(3:5).eq.'2dk') imgk = 1
-  !
-         ii1(lm)=1
-         jj1(lm)=1
-         kk1(lm)=1
-  !
-         ii2(lm)= (ni-1)/2**(imgi-1)+1
-         jj2(lm)= (nj-1)/2**(imgj-1)+1
-         kk2(lm)= (nk-1)/2**(imgk-1)+1
-  !
-         id1(lm)=ii1(lm)-nfi
-         jd1(lm)=jj1(lm)-nfi
-         kd1(lm)=kk1(lm)-nfi
-         id2(lm)=ii2(lm)+nfi
-         jd2(lm)=jj2(lm)+nfi
-         kd2(lm)=kk2(lm)+nfi
-  !
-         nid=id2(lm)-id1(lm)+1
-         njd=jd2(lm)-jd1(lm)+1
-         nkd=kd2(lm)-kd1(lm)+1
-         nptfs =nid*njd*nkd
-         nnn(lm)=nptfs
-!         nptfs =(nid-1)*(njd-1)*(nkd-1)
-         nnc(lm)=nptfs
-         nnfb(lm)=nind*nptfs
-  !
-         npn(lm)=ndimntbx
-         npc(lm)=ndimctbx
-         npfb(lm)=nind*ndimntbx
-  !
-         ndimubx =max(ndimubx,nnn(lm))
-!         ndimubx =max(ndimubx,nnc(lm))
-         ndimctbx=ndimctbx+nnc(lm)
-         ndimntbx=ndimntbx+nnn(lm)
-      enddo
+!
+       imgi = img
+       imgj = img
+       imgk = img
+       if (equat(3:5).eq.'2di') imgi = 1
+       if (equat(3:5).eq.'2dj') imgj = 1
+       if (equat(3:5).eq.'2dk') imgk = 1
+!
+       ii1(lm)=1
+       jj1(lm)=1
+       kk1(lm)=1
+!
+       ii2(lm)= (ni-1)/2**(imgi-1)+1
+       jj2(lm)= (nj-1)/2**(imgj-1)+1
+       kk2(lm)= (nk-1)/2**(imgk-1)+1
+!
+       id1(lm)=ii1(lm)-nfi
+       jd1(lm)=jj1(lm)-nfi
+       kd1(lm)=kk1(lm)-nfi
+       id2(lm)=ii2(lm)+nfi
+       jd2(lm)=jj2(lm)+nfi
+       kd2(lm)=kk2(lm)+nfi
+!
+       nid=id2(lm)-id1(lm)+1
+       njd=jd2(lm)-jd1(lm)+1
+       nkd=kd2(lm)-kd1(lm)+1
+       nptfs =nid*njd*nkd
+       nnn(lm)=nptfs
+       nnc(lm)=nptfs
+       nnfb(lm)=nind*nptfs
+!
+       npn(lm)=ndimntbx
+       npc(lm)=ndimctbx
+       npfb(lm)=nind*ndimntbx
+!
+       ndimubx =max(ndimubx,nnn(lm))
+!       ndimubx =max(ndimubx,nnc(lm))
+       ndimctbx=ndimctbx+nnc(lm)
+       ndimntbx=ndimntbx+nnn(lm)
+    enddo
     endif
 !
     return

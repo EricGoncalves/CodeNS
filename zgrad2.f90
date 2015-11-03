@@ -94,12 +94,9 @@ contains
 !
     character(len=7 ) :: equat
 
-!
-
-
+    ALLOCATE(vx(ip00),vy(ip00),vz(ip00))
 
     eps=0.00001
-    ALLOCATE(vx(ip00),vy(ip00),vz(ip00))
 
     n0=npc(l)
     i1=ii1(l)
@@ -161,7 +158,7 @@ contains
        enddo
     enddo
 !
-!     initialisation
+!   initialisation
     ind1=ind(id1(l),jd1(l),kd1(l))-n0
     ind2=ind(id2(l),jd2(l),kd2(l))-n0
     do m=ind1,ind2
@@ -468,7 +465,7 @@ contains
     do n=ind1,ind2
        m=n-n0
 !      le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t
-       ts=sign(0.5,-vol(n))
+       ts=sign(0.5D0,-vol(n))
        vols = (0.5+ts)*eps+(0.5-ts)*vol(n)
        c0 =.5/(vols+tiny(1.))
 !       c0=0.5/vol(n)

@@ -39,7 +39,7 @@ contains
     double precision ::                   cc,                cnds,      coefdiag(ip00),          cson(ip11),        d(ip11,ip60)
     double precision ::           dfex(ip00),          dfey(ip00),          dfez(ip00),          dfxx(ip00),          dfxy(ip00)
     double precision ::           dfxz(ip00),          dfyy(ip00),          dfyz(ip00),          dfzz(ip00),            dt(ip11)
-    double precision ::                dtpas,                fact,                 fex,                 fey,                 fez
+    double precision ::    dtpas,    fact,     fex,     fey,     fez
     double precision ::        ff(ip11,ip60),                fiex,                fiey,                fiez,                fixx
     double precision ::                 fixy,                fixz,                fiyy,                fiyz,                fizz
     double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
@@ -51,8 +51,6 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=7 ) :: equat
-!
-
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)
@@ -293,16 +291,6 @@ contains
 !         pression donnee par loi d'etat
                 pres=gam1*(wi5-.5*wi1*(ui**2+vi**2+wi**2)-pinfl)
 !
-                fixx=wi1*ui**2+pres
-                fixy=wi1*ui*vi
-                fixz=wi1*ui*wi
-                fiyy=wi1*vi**2+pres
-                fiyz=wi1*vi*wi
-                fizz=wi1*wi**2+pres
-                fiex=wi1*ui*(wi5+pres-pinfl)
-                fiey=wi1*vi*(wi5+pres-pinfl)
-                fiez=wi1*wi*(wi5+pres-pinfl)
-!
                 norm=1./v(n,1)
                 fxx=v(n,2)*(v(n,2)*norm)+ps(n)
                 fxy=v(n,3)*(v(n,2)*norm)
@@ -314,15 +302,15 @@ contains
                 fey=(v(n,5)+ps(n)-pinfl)*v(n,3)*norm
                 fez=(v(n,5)+ps(n)-pinfl)*v(n,4)*norm
 !
-                dfxx(m)=fixx-fxx
-                dfxy(m)=fixy-fxy
-                dfxz(m)=fixz-fxz
-                dfex(m)=fiex-fex
-                dfyy(m)=fiyy-fyy
-                dfyz(m)=fiyz-fyz
-                dfey(m)=fiey-fey
-                dfzz(m)=fizz-fzz
-                dfez(m)=fiez-fez
+               dfxx(m)=wi1*ui**2+pres-fxx
+               dfxy(m)=wi1*ui*vi-fxy
+               dfxz(m)=wi1*ui*wi-fxz
+               dfex(m)=wi1*ui*(wi5+pres-pinfl)-fex
+               dfyy(m)=wi1*vi**2+pres-fyy
+               dfyz(m)=wi1*vi*wi-fyz
+               dfey(m)=wi1*vi*(wi5+pres-pinfl)-fey
+               dfzz(m)=wi1*wi**2+pres-fzz
+               dfez(m)=wi1*(wi5+pres-pinfl)-fez
              enddo
           enddo
        enddo

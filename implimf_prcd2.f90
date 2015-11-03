@@ -60,8 +60,6 @@ contains
     character(len=7 ) :: equat
 !
 
-
-
     ALLOCATE(coefe(ndir,ip00),coefv(ndir,ip00))
     ALLOCATE(coefdiag(ip00),coefb(ip00), &
          d2w1(ip00),d2w2(ip00),d2w3(ip00),d2w4(ip00),d2w5(ip00))

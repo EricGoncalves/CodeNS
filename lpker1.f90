@@ -82,7 +82,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!
     cmu1=1./sqrt(cmu)
     cmu2=1./(cmu**0.75)
     as=0.3/sqrt(3.)
@@ -199,5 +198,4 @@ contains
 !
     return
   end subroutine lpker1
-
 end module mod_lpker1

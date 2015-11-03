@@ -54,10 +54,6 @@ contains
 !-----------------------------------------------------------------
 !
 !
-!
-
-
-!
     ALLOCATE(coefe(ndir,ip00))
 
     n0c=npc(l)
@@ -83,12 +79,12 @@ contains
     ncj=inc(0,1,0)
     nck=inc(0,0,1)
 
-!     nombre de balayage par direction
+!   nombre de balayage par direction
     ibalai=2
 
-!     constante instationnaire dts
+!     constante instationnaire dts 
     fact=1.5
-!     fact=11./6.  !ordre 3
+!   fact=11./6.  !ordre 3
 
 !     constante du modele
     select case(equatt(1:3))
@@ -125,7 +121,7 @@ contains
        beta6(m)=0.
        beta7(m)=0.
     enddo
-!
+
 !----calculs du rayon spectral visqueux-------------------------
 !
     do k=k1,k2m1
@@ -139,14 +135,14 @@ contains
           enddo
        enddo
     enddo
-!
+
 !*****************************************************************
 !-----remplissage des coefficients par direction
 !*****************************************************************
-!
+
     kdir=1
     ninc=nci
-!
+
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1,j,k)
@@ -165,10 +161,10 @@ contains
           enddo
        enddo
     enddo
-!
+
     kdir=2
     ninc=ncj
-!
+
     do k=k1,k2m1
        do j=j1,j2
           ind1 = indc(i1  ,j,k)
@@ -187,7 +183,7 @@ contains
           enddo
        enddo
     enddo
-!
+
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -195,7 +191,7 @@ contains
           do n=ind1,ind2
              m=n-n0c
              coefdiag(m)=coefdiag(m) + coefe(1,m) + coefe(1,m+nci) &
-                  + coefe(2,m) + coefe(2,m+ncj)
+                                     + coefe(2,m) + coefe(2,m+ncj)
           enddo
        enddo
     enddo
@@ -214,7 +210,7 @@ contains
           enddo
        enddo
     endif
-!
+
 !*******************************************************************
 !                          CAS 2D
 !     inversion du systeme par direction  - algorithme de Thomas
@@ -244,7 +240,7 @@ contains
              enddo
           enddo
        enddo
-!
+
        do k=k1,k2m1
           do i=i1,i2m1
              ind1=indc(i,j1  ,k)
@@ -256,7 +252,7 @@ contains
              enddo
           enddo
        enddo
-!
+
     enddo
 !
 !-----inversion direction j------------------------------------
@@ -268,9 +264,8 @@ contains
        beta6(m)=0.
        beta7(m)=0.
     enddo
-!
     do lj=1,ibalai
-!
+
        do k=k1,k2m1
           do j=j2m1,j1,-1
              ind1=indc(i1  ,j,k)
@@ -291,7 +286,7 @@ contains
              enddo
           enddo
        enddo
-!
+
        do k=k1,k2m1
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)

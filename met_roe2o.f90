@@ -41,7 +41,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!
     n0 = npc(l)
     i1 = ii1(l)
     i2 = ii2(l)
@@ -282,7 +281,7 @@ contains
     pure double precision function    amimd(a,b)
       implicit none
       double precision,intent(in) ::     a,    b
-      amimd=sign(1.,a)*max(0.,min(abs(a),b*sign(1.,a)))
+      amimd=sign(1.D0,a)*max(0.,min(abs(a),b*sign(1.D0,a)))
     end function amimd
     pure double precision function    fi1(x,y,z)
       implicit none

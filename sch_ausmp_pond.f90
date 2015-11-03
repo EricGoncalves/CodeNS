@@ -63,11 +63,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
-!
-
-
     ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))
 
     n0c=npc(lm)
@@ -190,35 +185,35 @@ contains
                 cbl=0.5*cvi(n-ninc)*(1.+xk*cvi(n-ninc)/cvi(n))/(cvi(n-ninc)+cvi(n))
 
                 rhol(m)=v(n-ninc,1)+(cal*phi(r1(m)   )*(v(n-ninc,1)-v(n-2*ninc,1)) &
-                     +cbl*phi(1./r1(m))*(v(n     ,1)-v(n-ninc  ,1)))
+                                    +cbl*phi(1./r1(m))*(v(n     ,1)-v(n-ninc  ,1)))
                 ul(m)=v(n-ninc,2)/v(n-ninc,1) + ( &
                      cal*phi(r2(m)   )*(v(n-ninc,2)/v(n-ninc,1)-v(n-2*ninc,2)/v(n-2*ninc,1)) &
-                     +cbl*phi(1./r2(m))*(v(n     ,2)/v(n     ,1)-v(n-ninc  ,2)/v(n-ninc  ,1)))
+                    +cbl*phi(1./r2(m))*(v(n     ,2)/v(n     ,1)-v(n-ninc  ,2)/v(n-ninc  ,1)))
                 vl(m)=v(n-ninc,3)/v(n-ninc,1) + ( &
                      cal*phi(r3(m)   )*(v(n-ninc,3)/v(n-ninc,1)-v(n-2*ninc,3)/v(n-2*ninc,1)) &
-                     +cbl*phi(1./r3(m))*(v(n     ,3)/v(n     ,1)-v(n-ninc  ,3)/v(n-ninc  ,1)))
+                    +cbl*phi(1./r3(m))*(v(n     ,3)/v(n     ,1)-v(n-ninc  ,3)/v(n-ninc  ,1)))
                 wl(m)=v(n-ninc,4)/v(n-ninc,1) + ( &
                      cal*phi(r4(m)   )*(v(n-ninc,4)/v(n-ninc,1)-v(n-2*ninc,4)/v(n-2*ninc,1)) &
-                     +cbl*phi(1./r4(m))*(v(n     ,4)/v(n     ,1)-v(n-ninc  ,4)/v(n-ninc  ,1)))
+                    +cbl*phi(1./r4(m))*(v(n     ,4)/v(n     ,1)-v(n-ninc  ,4)/v(n-ninc  ,1)))
                 pl(m)=ps(n-ninc) + (cal*phi(r5(m)   )*(ps(n-ninc)-ps(n-2*ninc)) &
-                     +cbl*phi(1./r5(m))*(ps(n     )-ps(n-  ninc)))
+                    +cbl*phi(1./r5(m))*(ps(n     )-ps(n-  ninc)))
 !
                 car=0.5*cvi(n)*(1.+xk)/(cvi(n)+cvi(n+ninc))
                 cbr=0.5*cvi(n)*(1.-xk*cvi(n)/cvi(n+ninc))/(cvi(n)+cvi(n+ninc))
 
                 rhor(m)=v(n,1)-(car*phi(r1(m+ninc   ))*(v(n,1)     -v(n-ninc,1)) &
-                     +cbr*phi(1./r1(m+ninc))*(v(n+ninc,1)-v(n     ,1)))
+                               +cbr*phi(1./r1(m+ninc))*(v(n+ninc,1)-v(n     ,1)))
                 ur(m)=v(n,2)/v(n,1) - ( &
                      car*phi(r2(m+ninc   ))*(v(n     ,2)/v(n     ,1)-v(n-ninc,2)/v(n-ninc,1)) &
-                     +cbr*phi(1./r2(m+ninc))*(v(n+ninc,2)/v(n+ninc,1)-v(n     ,2)/v(n     ,1)))
+                    +cbr*phi(1./r2(m+ninc))*(v(n+ninc,2)/v(n+ninc,1)-v(n     ,2)/v(n     ,1)))
                 vr(m)=v(n,3)/v(n,1) - ( &
                      car*phi(r3(m+ninc   ))*(v(n     ,3)/v(n     ,1)-v(n-ninc,3)/v(n-ninc,1)) &
-                     +cbr*phi(1./r3(m+ninc))*(v(n+ninc,3)/v(n+ninc,1)-v(n     ,3)/v(n     ,1)))
+                    +cbr*phi(1./r3(m+ninc))*(v(n+ninc,3)/v(n+ninc,1)-v(n     ,3)/v(n     ,1)))
                 wr(m)=v(n,4)/v(n,1) - ( &
                      car*phi(r4(m+ninc   ))*(v(n     ,4)/v(n     ,1)-v(n-ninc,4)/v(n-ninc,1)) &
-                     +cbr*phi(1./r4(m+ninc))*(v(n+ninc,4)/v(n+ninc,1)-v(n     ,4)/v(n     ,1)))
+                    +cbr*phi(1./r4(m+ninc))*(v(n+ninc,4)/v(n+ninc,1)-v(n     ,4)/v(n     ,1)))
                 prr(m)=ps(n) - (car*phi(r5(m+ninc   ))*(ps(n)     -ps(n-ninc)) &
-                     +cbr*phi(1./r5(m+ninc))*(ps(n+ninc)-ps(n     )))
+                               +cbr*phi(1./r5(m+ninc))*(ps(n+ninc)-ps(n     )))
              enddo
           enddo
        enddo
@@ -232,34 +227,34 @@ contains
              cbl=0.5*cvi(n-ninc)*(1.+xk*cvi(n-ninc)/cvi(n))/(cvi(n-ninc)+cvi(n))
 
              rhol(m)=v(n-ninc,1)+muscl*(cal*(v(n-ninc,1)-v(n-2*ninc,1)) &
-                  +cbl*(v(n     ,1)-v(n-ninc  ,1)))
+                                       +cbl*(v(n     ,1)-v(n-ninc  ,1)))
              ul(m)=v(n-ninc,2)/v(n-ninc,1) + muscl*( &
                   cal*(v(n-ninc,2)/v(n-ninc,1)-v(n-2*ninc,2)/v(n-2*ninc,1)) &
-                  +cbl*(v(n     ,2)/v(n     ,1)-v(n-ninc  ,2)/v(n-ninc  ,1)))
+                 +cbl*(v(n     ,2)/v(n     ,1)-v(n-ninc  ,2)/v(n-ninc  ,1)))
              vl(m)=v(n-ninc,3)/v(n-ninc,1) + muscl*( &
                   cal*(v(n-ninc,3)/v(n-ninc,1)-v(n-2*ninc,3)/v(n-2*ninc,1)) &
-                  +cbl*(v(n     ,3)/v(n     ,1)-v(n-ninc  ,3)/v(n-ninc  ,1)))
+                 +cbl*(v(n     ,3)/v(n     ,1)-v(n-ninc  ,3)/v(n-ninc  ,1)))
              wl(m)=v(n-ninc,4)/v(n-ninc,1) + muscl*( &
                   cal*(v(n-ninc,4)/v(n-ninc,1)-v(n-2*ninc,4)/v(n-2*ninc,1)) &
-                  +cbl*(v(n     ,4)/v(n     ,1)-v(n-ninc  ,4)/v(n-ninc  ,1)))
+                 +cbl*(v(n     ,4)/v(n     ,1)-v(n-ninc  ,4)/v(n-ninc  ,1)))
              pl(m)=ps(n-ninc) + muscl*(cal*(ps(n-ninc)-ps(n-2*ninc)) &
-                  +cbl*(ps(n     )-ps(n-  ninc)))
+                                      +cbl*(ps(n     )-ps(n-  ninc)))
 !
              car=0.5*cvi(n)*(1.+xk)/(cvi(n)+cvi(n+ninc))
              cbr=0.5*cvi(n)*(1.-xk*cvi(n)/cvi(n+ninc))/(cvi(n)+cvi(n+ninc))
              rhor(m)=v(n,1)-muscl*(car*(v(n,1)     -v(n-ninc,1)) &
-                  +cbr*(v(n+ninc,1)-v(n     ,1)))
+                                  +cbr*(v(n+ninc,1)-v(n     ,1)))
              ur(m)=v(n,2)/v(n,1) - muscl*( &
                   car*(v(n     ,2)/v(n     ,1)-v(n-ninc,2)/v(n-ninc,1)) &
-                  +cbr*(v(n+ninc,2)/v(n+ninc,1)-v(n     ,2)/v(n     ,1)))
+                 +cbr*(v(n+ninc,2)/v(n+ninc,1)-v(n     ,2)/v(n     ,1)))
              vr(m)=v(n,3)/v(n,1) - muscl*( &
                   car*(v(n     ,3)/v(n     ,1)-v(n-ninc,3)/v(n-ninc,1)) &
-                  +cbr*(v(n+ninc,3)/v(n+ninc,1)-v(n     ,3)/v(n     ,1)))
+                 +cbr*(v(n+ninc,3)/v(n+ninc,1)-v(n     ,3)/v(n     ,1)))
              wr(m)=v(n,4)/v(n,1) - muscl*( &
                   car*(v(n     ,4)/v(n     ,1)-v(n-ninc,4)/v(n-ninc,1)) &
-                  +cbr*(v(n+ninc,4)/v(n+ninc,1)-v(n     ,4)/v(n     ,1)))
+                 +cbr*(v(n+ninc,4)/v(n+ninc,1)-v(n     ,4)/v(n     ,1)))
              prr(m)=ps(n) - muscl*(car*(ps(n)     -ps(n-ninc)) &
-                  +cbr*(ps(n+ninc)-ps(n     )))
+                                  +cbr*(ps(n+ninc)-ps(n     )))
           enddo
        enddo
 
@@ -275,35 +270,35 @@ contains
                 cbl=0.5*cvi(n-ninc)*(1.+xk*cvi(n-ninc)/cvi(n))/ (cvi(n-ninc)+cvi(n))
 
                 rhol(m)=v(n-ninc,1)+muscl*(cal*(v(n-ninc,1)-v(n-2*ninc,1)) &
-                     +cbl*(v(n     ,1)-v(n-ninc  ,1)))
+                                          +cbl*(v(n     ,1)-v(n-ninc  ,1)))
                 ul(m)=v(n-ninc,2)/v(n-ninc,1) + muscl*( &
                      cal*(v(n-ninc,2)/v(n-ninc,1)-v(n-2*ninc,2)/v(n-2*ninc,1)) &
-                     +cbl*(v(n     ,2)/v(n     ,1)-v(n-ninc  ,2)/v(n-ninc  ,1)))
+                    +cbl*(v(n     ,2)/v(n     ,1)-v(n-ninc  ,2)/v(n-ninc  ,1)))
                 vl(m)=v(n-ninc,3)/v(n-ninc,1) + muscl*( &
                      cal*(v(n-ninc,3)/v(n-ninc,1)-v(n-2*ninc,3)/v(n-2*ninc,1)) &
-                     +cbl*(v(n     ,3)/v(n     ,1)-v(n-ninc  ,3)/v(n-ninc  ,1)))
+                    +cbl*(v(n     ,3)/v(n     ,1)-v(n-ninc  ,3)/v(n-ninc  ,1)))
                 wl(m)=v(n-ninc,4)/v(n-ninc,1) + muscl*( &
                      cal*(v(n-ninc,4)/v(n-ninc,1)-v(n-2*ninc,4)/v(n-2*ninc,1)) &
-                     +cbl*(v(n     ,4)/v(n     ,1)-v(n-ninc  ,4)/v(n-ninc  ,1)))
+                    +cbl*(v(n     ,4)/v(n     ,1)-v(n-ninc  ,4)/v(n-ninc  ,1)))
                 pl(m)=ps(n-ninc) + muscl*(cal*(ps(n-ninc)-ps(n-2*ninc)) &
-                     +cbl*(ps(n     )-ps(n-  ninc)))
+                                         +cbl*(ps(n     )-ps(n-  ninc)))
 !
                 car=0.5*cvi(n)*(1.+xk)/(cvi(n)+cvi(n+ninc))
                 cbr=0.5*cvi(n)*(1.-xk*cvi(n)/cvi(n+ninc))/(cvi(n)+cvi(n+ninc))
 
                 rhor(m)=v(n,1)-muscl*(car*(v(n,1)     -v(n-ninc,1)) &
-                     +cbr*(v(n+ninc,1)-v(n     ,1)))
+                                     +cbr*(v(n+ninc,1)-v(n     ,1)))
                 ur(m)=v(n,2)/v(n,1) - muscl*( &
                      car*(v(n     ,2)/v(n     ,1)-v(n-ninc,2)/v(n-ninc,1)) &
-                     +cbr*(v(n+ninc,2)/v(n+ninc,1)-v(n     ,2)/v(n     ,1)))
+                    +cbr*(v(n+ninc,2)/v(n+ninc,1)-v(n     ,2)/v(n     ,1)))
                 vr(m)=v(n,3)/v(n,1) - muscl*( &
                      car*(v(n     ,3)/v(n     ,1)-v(n-ninc,3)/v(n-ninc,1)) &
-                     +cbr*(v(n+ninc,3)/v(n+ninc,1)-v(n     ,3)/v(n     ,1)))
+                    +cbr*(v(n+ninc,3)/v(n+ninc,1)-v(n     ,3)/v(n     ,1)))
                 wr(m)=v(n,4)/v(n,1) - muscl*( &
                      car*(v(n     ,4)/v(n     ,1)-v(n-ninc,4)/v(n-ninc,1)) &
-                     +cbr*(v(n+ninc,4)/v(n+ninc,1)-v(n     ,4)/v(n     ,1)))
+                    +cbr*(v(n+ninc,4)/v(n+ninc,1)-v(n     ,4)/v(n     ,1)))
                 prr(m)=ps(n) - muscl*(car*(ps(n)     -ps(n-ninc)) &
-                     +cbr*(ps(n+ninc)-ps(n     )))
+                                     +cbr*(ps(n+ninc)-ps(n     )))
              enddo
           enddo
        enddo
@@ -339,7 +334,7 @@ contains
              hi2=dm*(ul(m)+ur(m))-abs(dm)*(ur(m)-ul(m))+psi*sn(m,kdir,1) &
                   - (cmui1(n)*toxx(n)+cmui2(n)*toxx(n-ninc))*sn(m,kdir,1)  &
                   - (cmui1(n)*toxy(n)+cmui2(n)*toxy(n-ninc))*sn(m,kdir,2) &
-                  - (cmui1(n)*toxz(n)+cmui2(n)*toxz(n-ninc))*sn(m,kdir,3)
+                  - (cmui1(n)*toxz(n)+cmui2(n)*toxz(n-ninc))*sn(m,kdir,3) 
              hi3=dm*(vl(m)+vr(m))-abs(dm)*(vr(m)-vl(m))+psi*sn(m,kdir,2) &
                   - (cmui1(n)*toxy(n)+cmui2(n)*toxy(n-ninc))*sn(m,kdir,1) &
                   - (cmui1(n)*toyy(n)+cmui2(n)*toyy(n-ninc))*sn(m,kdir,2) &
@@ -386,20 +381,20 @@ contains
                -toxz(n1)*v(n1,2)-toyz(n1)*v(n1,3))/v(n1,1)-qcz(n1)
 !
           si0= v(n-ninc,2)*sn(m,kdir,1) &
-               +v(n-ninc,3)*sn(m,kdir,2) &
-               +v(n-ninc,4)*sn(m,kdir,3)
+              +v(n-ninc,3)*sn(m,kdir,2) &
+              +v(n-ninc,4)*sn(m,kdir,3)
           si1= fxx*sn(m,kdir,1) &
-               +fxy*sn(m,kdir,2) &
-               +fxz*sn(m,kdir,3)
+              +fxy*sn(m,kdir,2) &
+              +fxz*sn(m,kdir,3)
           si2= fxy*sn(m,kdir,1) &
-               +fyy*sn(m,kdir,2) &
-               +fyz*sn(m,kdir,3)
+              +fyy*sn(m,kdir,2) &
+              +fyz*sn(m,kdir,3)
           si3= fxz*sn(m,kdir,1) &
-               +fyz*sn(m,kdir,2) &
-               +fzz*sn(m,kdir,3)
+              +fyz*sn(m,kdir,2) &
+              +fzz*sn(m,kdir,3)
           si4= fex*sn(m,kdir,1) &
-               +fey*sn(m,kdir,2) &
-               +fez*sn(m,kdir,3)
+              +fey*sn(m,kdir,2) &
+              +fez*sn(m,kdir,3)
           u(n,1)=u(n,1)-si0
           u(n,2)=u(n,2)-si1
           u(n,3)=u(n,3)-si2
@@ -715,20 +710,20 @@ contains
                -toxz(n1)*v(n1,2)-toyz(n1)*v(n1,3))/v(n1,1)-qcz(n1)
 !
           sj0= v(n-ninc,2)*sn(m,kdir,1) &
-               +v(n-ninc,3)*sn(m,kdir,2) &
-               +v(n-ninc,4)*sn(m,kdir,3)
+              +v(n-ninc,3)*sn(m,kdir,2) &
+              +v(n-ninc,4)*sn(m,kdir,3)
           sj1= fxx*sn(m,kdir,1) &
-               +fxy*sn(m,kdir,2) &
-               +fxz*sn(m,kdir,3)
+              +fxy*sn(m,kdir,2) &
+              +fxz*sn(m,kdir,3)
           sj2= fxy*sn(m,kdir,1) &
-               +fyy*sn(m,kdir,2) &
-               +fyz*sn(m,kdir,3)
+              +fyy*sn(m,kdir,2) &
+              +fyz*sn(m,kdir,3)
           sj3= fxz*sn(m,kdir,1) &
-               +fyz*sn(m,kdir,2) &
-               +fzz*sn(m,kdir,3)
+              +fyz*sn(m,kdir,2) &
+              +fzz*sn(m,kdir,3)
           sj4= fex*sn(m,kdir,1) &
-               +fey*sn(m,kdir,2) &
-               +fez*sn(m,kdir,3)
+              +fey*sn(m,kdir,2) &
+              +fez*sn(m,kdir,3)
           u(n,1)=u(n,1)-sj0
           u(n,2)=u(n,2)-sj1
           u(n,3)=u(n,3)-sj2
@@ -756,20 +751,20 @@ contains
                -toxz(n)*v(n,2)-toyz(n)*v(n,3))/v(n,1)-qcz(n)
 !
           sj0= v(n,2)*sn(m,kdir,1) &
-               +v(n,3)*sn(m,kdir,2) &
-               +v(n,4)*sn(m,kdir,3)
+              +v(n,3)*sn(m,kdir,2) &
+              +v(n,4)*sn(m,kdir,3)
           sj1= fxx*sn(m,kdir,1) &
-               +fxy*sn(m,kdir,2) &
-               +fxz*sn(m,kdir,3)
+              +fxy*sn(m,kdir,2) &
+              +fxz*sn(m,kdir,3)
           sj2= fxy*sn(m,kdir,1) &
-               +fyy*sn(m,kdir,2) &
-               +fyz*sn(m,kdir,3)
+              +fyy*sn(m,kdir,2) &
+              +fyz*sn(m,kdir,3)
           sj3= fxz*sn(m,kdir,1) &
-               +fyz*sn(m,kdir,2) &
-               +fzz*sn(m,kdir,3)
+              +fyz*sn(m,kdir,2) &
+              +fzz*sn(m,kdir,3)
           sj4= fex*sn(m,kdir,1) &
-               +fey*sn(m,kdir,2) &
-               +fez*sn(m,kdir,3)
+              +fey*sn(m,kdir,2) &
+              +fez*sn(m,kdir,3)
           u(n-ninc,1)=u(n-ninc,1)+sj0
           u(n-ninc,2)=u(n-ninc,2)+sj1
           u(n-ninc,3)=u(n-ninc,3)+sj2
@@ -1043,20 +1038,20 @@ contains
                   -toxz(n1)*v(n1,2)-toyz(n1)*v(n1,3))/v(n1,1)-qcz(n1)
 !
              sk0= v(n-ninc,2)*sn(m,kdir,1) &
-                  +v(n-ninc,3)*sn(m,kdir,2) &
-                  +v(n-ninc,4)*sn(m,kdir,3)
+                 +v(n-ninc,3)*sn(m,kdir,2) &
+                 +v(n-ninc,4)*sn(m,kdir,3)
              sk1= fxx*sn(m,kdir,1) &
-                  +fxy*sn(m,kdir,2) &
-                  +fxz*sn(m,kdir,3)
+                 +fxy*sn(m,kdir,2) &
+                 +fxz*sn(m,kdir,3)
              sk2= fxy*sn(m,kdir,1) &
-                  +fyy*sn(m,kdir,2) &
-                  +fyz*sn(m,kdir,3)
+                 +fyy*sn(m,kdir,2) &
+                 +fyz*sn(m,kdir,3)
              sk3= fxz*sn(m,kdir,1) &
-                  +fyz*sn(m,kdir,2) &
-                  +fzz*sn(m,kdir,3)
+                 +fyz*sn(m,kdir,2) &
+                 +fzz*sn(m,kdir,3)
              sk4= fex*sn(m,kdir,1) &
-                  +fey*sn(m,kdir,2) &
-                  +fez*sn(m,kdir,3)
+                 +fey*sn(m,kdir,2) &
+                 +fez*sn(m,kdir,3)
              u(n,1)=u(n,1)-sk0
              u(n,2)=u(n,2)-sk1
              u(n,3)=u(n,3)-sk2
@@ -1084,20 +1079,20 @@ contains
                   -toxz(n)*v(n,2)-toyz(n)*v(n,3))/v(n,1)-qcz(n)
 !
              sk0= v(n,2)*sn(m,kdir,1) &
-                  +v(n,3)*sn(m,kdir,2) &
-                  +v(n,4)*sn(m,kdir,3)
+                 +v(n,3)*sn(m,kdir,2) &
+                 +v(n,4)*sn(m,kdir,3)
              sk1= fxx*sn(m,kdir,1) &
-                  +fxy*sn(m,kdir,2) &
-                  +fxz*sn(m,kdir,3)
+                 +fxy*sn(m,kdir,2) &
+                 +fxz*sn(m,kdir,3)
              sk2= fxy*sn(m,kdir,1) &
-                  +fyy*sn(m,kdir,2) &
-                  +fyz*sn(m,kdir,3)
+                 +fyy*sn(m,kdir,2) &
+                 +fyz*sn(m,kdir,3)
              sk3= fxz*sn(m,kdir,1) &
-                  +fyz*sn(m,kdir,2) &
-                  +fzz*sn(m,kdir,3)
+                 +fyz*sn(m,kdir,2) &
+                 +fzz*sn(m,kdir,3)
              sk4= fex*sn(m,kdir,1) &
-                  +fey*sn(m,kdir,2) &
-                  +fez*sn(m,kdir,3)
+                 +fey*sn(m,kdir,2) &
+                 +fez*sn(m,kdir,3)
              u(n-ninc,1)=u(n-ninc,1)+sk0
              u(n-ninc,2)=u(n-ninc,2)+sk1
              u(n-ninc,3)=u(n-ninc,3)+sk2
@@ -1144,31 +1139,31 @@ contains
     function    fmp(aa)
       implicit none
       double precision ::  aa,fmp
-      fmp=0.25*(1.+sign(1.,abs(aa)-1.))*(aa+abs(aa)) &
-           +0.125*(1.-sign(1.,abs(aa)-1.))*(aa+1.)**2 !*(1.+0.5*(aa-1.)**2)
+      fmp=0.25*(1.+sign(1.D0,abs(aa)-1.))*(aa+abs(aa)) &
+        +0.125*(1.-sign(1.D0,abs(aa)-1.))*(aa+1.)**2 !*(1.+0.5*(aa-1.)**2)
     end function fmp
     function    fmm(xa)
       implicit none
       double precision :: fmm, xa
-      fmm=0.25*(1.+sign(1.,abs(xa)-1.))*(xa-abs(xa)) &
-           -0.125*(1.-sign(1.,abs(xa)-1.))*(xa-1.)**2 !*(1.+0.5*(xa+1.)**2)
+      fmm=0.25*(1.+sign(1.D0,abs(xa)-1.))*(xa-abs(xa)) &
+        -0.125*(1.-sign(1.D0,abs(xa)-1.))*(xa-1.)**2 !*(1.+0.5*(xa+1.)**2)
     end function fmm
     function    fpp(ta)
       implicit none
       double precision :: fpp, ta
-      fpp=0.25*(1.+sign(1.,abs(ta)-1.))*(1.+sign(1.,abs(ta))) &
-           +0.125*(1.-sign(1.,abs(ta)-1.))*(ta+1.)**2*(2.-ta+0.75*ta*(ta-1.)**2)
+      fpp=0.25*(1.+sign(1.D0,abs(ta)-1.))*(1.+sign(1.D0,abs(ta))) &
+        +0.125*(1.-sign(1.D0,abs(ta)-1.))*(ta+1.)**2*(2.-ta+0.75*ta*(ta-1.)**2)
     end function fpp
     function    fpm(ra)
       implicit none
       double precision :: fpm, ra
-      fpm=0.25*(1.+sign(1.,abs(ra)-1.))*(1.-sign(1.,abs(ra))) &
-           +0.125*(1.-sign(1.,abs(ra)-1.))*(ra-1.)**2*(2.+ra-0.75*ra*(ra+1.)**2)
+      fpm=0.25*(1.+sign(1.D0,abs(ra)-1.))*(1.-sign(1.D0,abs(ra))) &
+        +0.125*(1.-sign(1.D0,abs(ra)-1.))*(ra-1.)**2*(2.+ra-0.75*ra*(ra+1.)**2)
     end function fpm
     function    phi(a)
       implicit none
       double precision ::   a,phi
-      phi=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
+      phi=sign(1.D0,a)*max(0.,min(abs(a),sign(1.D0,a)))
     end function phi
 
   end subroutine sch_ausmp_pond

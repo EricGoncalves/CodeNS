@@ -60,8 +60,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)
@@ -759,29 +757,29 @@ contains
     function    fmp(aa)
       implicit none
       double precision ::  aa,fmp
-      fmp=0.25*(1.+sign(1.,abs(aa)-1.))*(aa+abs(aa)) &
-           +0.5*(1.-sign(1.,abs(aa)-1.))* &
+      fmp=0.25*(1.+sign(1.D0,abs(aa)-1.))*(aa+abs(aa)) &
+          +0.5*(1.-sign(1.D0,abs(aa)-1.))* &
            (0.25*(aa+1.)**2+cb*(aa**2-1.)**2)
     end function fmp
     function    fmm(xa)
       implicit none
       double precision :: fmm, xa
-      fmm=0.25*(1.+sign(1.,abs(xa)-1.))*(xa-abs(xa)) &
-           -0.5*(1.-sign(1.,abs(xa)-1.))* &
+      fmm=0.25*(1.+sign(1.D0,abs(xa)-1.))*(xa-abs(xa)) &
+          -0.5*(1.-sign(1.D0,abs(xa)-1.))* &
            (0.25*(xa-1.)**2-cb**(xa**2-1.)**2)
     end function fmm
     function    fpp(ta)
       implicit none
       double precision :: fpp, ta
-      fpp=0.25*(1.+sign(1.,abs(ta)-1.))*(1.+sign(1.,abs(ta))) &
-           +0.5*(1.-sign(1.,abs(ta)-1.))* &
+      fpp=0.25*(1.+sign(1.D0,abs(ta)-1.))*(1.+sign(1.D0,abs(ta))) &
+          +0.5*(1.-sign(1.D0,abs(ta)-1.))* &
            (0.25*(ta+1.)**2*(2.-ta)+ca*ta*(ta**2-1.)**2)
     end function fpp
     function    fpm(ra)
       implicit none
       double precision :: fpm, ra
-      fpm=0.25*(1.+sign(1.,abs(ra)-1.))*(1.-sign(1.,abs(ra))) &
-           +0.5*(1.-sign(1.,abs(ra)-1.))* &
+      fpm=0.25*(1.+sign(1.D0,abs(ra)-1.))*(1.-sign(1.D0,abs(ra))) &
+          +0.5*(1.-sign(1.D0,abs(ra)-1.))* &
            (0.25*(ra-1.)**2*(2.+ra)-ca*ra*(ra**2-1.)**2)
     end function fpm
   end subroutine sch_ausmp_prcd

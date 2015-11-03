@@ -52,10 +52,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
-
-
-!
     nid=id2(l)-id1(l)+1
     njd=jd2(l)-jd1(l)+1
 !
@@ -67,7 +63,6 @@ contains
     ncjk= inc(0,1,1)
     ncijk= inc(1,1,1)
 !
-    n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
     j1=jj1(l)
@@ -119,14 +114,14 @@ contains
                   y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
              zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
                   z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
-!c------vecteur normal au plan interface--------------------------------
+!-------vecteur normal au plan interface--------------------------------
              xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
                   (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
              yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
                   (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
              zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
                   (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
-!c-------coordonnees du point E-------------------------------------------
+!--------coordonnees du point E-------------------------------------------
              tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
                   (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
              xe=xp+tk*(xr-xp)
@@ -135,7 +130,7 @@ contains
              dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
 !--------pour operateur mu pondere------------------------------
-!c       attention! facteur 2 pour calcul des flux
+!        attention! facteur 2 pour calcul des flux
              cmui1(n)=2.*dpi/(dpi+dmi)
              cmui2(n)=2.*dmi/(dpi+dmi)
 !------------------------------------------------------------------------
@@ -166,7 +161,7 @@ contains
           enddo
        enddo
 !------------------------------------------------------------------------
-!c----remplissage des bords
+!-----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2m1
           n=indn(i1,j,k1)
@@ -202,14 +197,14 @@ contains
                   y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
              zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
                   z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
-!c------vecteur normal au plan interface--------------------------------
+!-------vecteur normal au plan interface--------------------------------
              xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
                   (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
              yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
                   (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
              zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
                   (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
-!c-------coordonnees du point E-------------------------------------------
+!--------coordonnees du point E-------------------------------------------
              tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
                   (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
              xe=xp+tk*(xr-xp)
@@ -218,7 +213,7 @@ contains
              dpi=sqrt((xp-xe)**2+(yp-ye)**2+(zp-ze)**2)
              dmi=sqrt((xr-xe)**2+(yr-ye)**2+(zr-ze)**2)
 !--------pour operateur mu pondere------------------------------
-!c       attention! facteur 2 pour calcul des flux
+!        attention! facteur 2 pour calcul des flux
              cmui1(n)=2.*dpi/(dpi+dmi)
              cmui2(n)=2.*dmi/(dpi+dmi)
 !------------------------------------------------------------------------
@@ -250,7 +245,7 @@ contains
           enddo
        enddo
 !------------------------------------------------------------------------
-!c----remplissage des bords
+!-----remplissage des bords
 !------------------------------------------------------------------------
        do k=k1p1,k2m1
           n=indn(i1,j1,k)
@@ -331,7 +326,7 @@ contains
           enddo
        enddo
 !------------------------------------------------------------------------
-!c----remplissage des bords
+!-----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2m1
           n=indn(i1,j,k1)
@@ -378,14 +373,14 @@ contains
                      y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
                 zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
                      z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
-!c------vecteur normal au plan interface--------------------------------
+!-------vecteur normal au plan interface--------------------------------
                 xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
                      (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
                 yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
                      (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
                 zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
                      (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
-!c-------coordonnees du point E-------------------------------------------
+!--------coordonnees du point E-------------------------------------------
                 tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
                      (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
                 xe=xp+tk*(xr-xp)
@@ -450,7 +445,7 @@ contains
           enddo
        enddo
 !------------------------------------------------------------------------
-!c----remplissage des bords
+!-----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2m1
           do k=k1p1,k2m1
@@ -501,7 +496,6 @@ contains
        enddo
 !******************************************************************
     endif
-!
 !
     return
   contains

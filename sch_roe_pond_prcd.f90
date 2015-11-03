@@ -83,9 +83,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
-!
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)
@@ -330,32 +327,32 @@ contains
                   +(p51*v1*q15+p52*v1*q25+p53*v1*q35+p54*v4*q45+p55*v5*q55)*dw5
 !        calcul du flux numerique
              dfxx=cmui1(n)*(rhor(m)*ur(m)**2 + prr(m)-pinfl - toxx(n)) &
-                  +cmui2(n)*(rhol(m)*ul(m)**2 + pl(m)-pinfl - toxx(n-ninc))
+                 +cmui2(n)*(rhol(m)*ul(m)**2 + pl(m)-pinfl - toxx(n-ninc))
              dfxy=cmui1(n)*(rhor(m)*ur(m)*vr(m) - toxy(n)) &
-                  +cmui2(n)*(rhol(m)*ul(m)*vl(m) - toxy(n-ninc))
+                 +cmui2(n)*(rhol(m)*ul(m)*vl(m) - toxy(n-ninc))
              dfxz=cmui1(n)*(rhor(m)*ur(m)*wr(m) - toxz(n)) &
-                  +cmui2(n)*(rhol(m)*ul(m)*wl(m) - toxz(n-ninc))
+                 +cmui2(n)*(rhol(m)*ul(m)*wl(m) - toxz(n-ninc))
              dfyy=cmui1(n)*(rhor(m)*vr(m)**2 + prr(m)-pinfl - toyy(n)) &
-                  +cmui2(n)*(rhol(m)*vl(m)**2 + pl(m)-pinfl - toyy(n-ninc))
+                 +cmui2(n)*(rhol(m)*vl(m)**2 + pl(m)-pinfl - toyy(n-ninc))
              dfyz=cmui1(n)*(rhor(m)*vr(m)*wr(m) - toyz(n)) &
-                  +cmui2(n)*(rhol(m)*vl(m)*wl(m) - toyz(n-ninc))
+                 +cmui2(n)*(rhol(m)*vl(m)*wl(m) - toyz(n-ninc))
              dfzz=cmui1(n)*(rhor(m)*wr(m)**2 + prr(m)-pinfl - tozz(n)) &
-                  +cmui2(n)*(rhol(m)*wl(m)**2 + pl(m)-pinfl - tozz(n-ninc))
+                 +cmui2(n)*(rhol(m)*wl(m)**2 + pl(m)-pinfl - tozz(n-ninc))
              dfex=cmui1(n)*((rhor(m)*er+prr(m)-pinfl)*ur(m) - qcx(n) &
                   -(toxx(n     )*ur(m)+toxy(n     )*vr(m)+toxz(n     )*wr(m))) &
-                  +cmui2(n)*((rhol(m)*el+pl(m)-pinfl)*ul(m) - qcx(n-ninc) &
+                 +cmui2(n)*((rhol(m)*el+pl(m)-pinfl)*ul(m) - qcx(n-ninc) &
                   -(toxx(n-ninc)*ul(m)+toxy(n-ninc)*vl(m)+toxz(n-ninc)*wl(m)))
              dfey=cmui1(n)*((rhor(m)*er+prr(m)-pinfl)*vr(m) - qcy(n) &
                   -(toxy(n     )*ur(m)+toyy(n     )*vr(m)+toyz(n     )*wr(m))) &
-                  +cmui2(n)*((rhol(m)*el+pl(m)-pinfl)*vl(m) - qcy(n-ninc) &
+                 +cmui2(n)*((rhol(m)*el+pl(m)-pinfl)*vl(m) - qcy(n-ninc) &
                   -(toxy(n-ninc)*ul(m)+toyy(n-ninc)*vl(m)+toyz(n-ninc)*wl(m)))
              dfez=cmui1(n)*((rhor(m)*er+prr(m)-pinfl)*wr(m) - qcz(n) &
                   -(toxz(n     )*ur(m)+toyz(n     )*vr(m)+tozz(n     )*wr(m))) &
-                  +cmui2(n)*((rhol(m)*el+pl(m)-pinfl)*wl(m) - qcz(n-ninc) &
+                 +cmui2(n)*((rhol(m)*el+pl(m)-pinfl)*wl(m) - qcz(n-ninc) &
                   -(toxz(n-ninc)*ul(m)+toyz(n-ninc)*vl(m)+tozz(n-ninc)*wl(m)))
              f1=(cmui1(n)*rhor(m)*ur(m)+cmui2(n)*rhol(m)*ul(m))*sn(m,kdir,1) &
-                  +(cmui1(n)*rhor(m)*vr(m)+cmui2(n)*rhol(m)*vl(m))*sn(m,kdir,2) &
-                  +(cmui1(n)*rhor(m)*wr(m)+cmui2(n)*rhol(m)*wl(m))*sn(m,kdir,3) &
+               +(cmui1(n)*rhor(m)*vr(m)+cmui2(n)*rhol(m)*vl(m))*sn(m,kdir,2) &
+               +(cmui1(n)*rhor(m)*wr(m)+cmui2(n)*rhol(m)*wl(m))*sn(m,kdir,3) &
                   -di1
              f2=dfxx*sn(m,kdir,1)+dfxy*sn(m,kdir,2)+dfxz*sn(m,kdir,3)-di2
              f3=dfxy*sn(m,kdir,1)+dfyy*sn(m,kdir,2)+dfyz*sn(m,kdir,3)-di3
@@ -644,32 +641,32 @@ contains
                   +(p51*v1*q15+p52*v1*q25+p53*v1*q35+p54*v4*q45+p55*v5*q55)*dw5
 !        calcul du flux numerique
              dfxx=cmuj1(n)*(rhor(m)*ur(m)**2 + prr(m)-pinfl - toxx(n)) &
-                  +cmuj2(n)*(rhol(m)*ul(m)**2 + pl(m)-pinfl - toxx(n-ninc))
+                 +cmuj2(n)*(rhol(m)*ul(m)**2 + pl(m)-pinfl - toxx(n-ninc))
              dfxy=cmuj1(n)*(rhor(m)*ur(m)*vr(m) - toxy(n)) &
-                  +cmuj2(n)*(rhol(m)*ul(m)*vl(m) - toxy(n-ninc))
+                 +cmuj2(n)*(rhol(m)*ul(m)*vl(m) - toxy(n-ninc))
              dfxz=cmuj1(n)*(rhor(m)*ur(m)*wr(m) - toxz(n)) &
-                  +cmuj2(n)*(rhol(m)*ul(m)*wl(m) - toxz(n-ninc))
+                 +cmuj2(n)*(rhol(m)*ul(m)*wl(m) - toxz(n-ninc))
              dfyy=cmuj1(n)*(rhor(m)*vr(m)**2 + prr(m)-pinfl - toyy(n)) &
-                  +cmuj2(n)*(rhol(m)*vl(m)**2 + pl(m)-pinfl - toyy(n-ninc))
+                 +cmuj2(n)*(rhol(m)*vl(m)**2 + pl(m)-pinfl - toyy(n-ninc))
              dfyz=cmuj1(n)*(rhor(m)*vr(m)*wr(m) - toyz(n)) &
-                  +cmuj2(n)*(rhol(m)*vl(m)*wl(m) - toyz(n-ninc))
+                 +cmuj2(n)*(rhol(m)*vl(m)*wl(m) - toyz(n-ninc))
              dfzz=cmuj1(n)*(rhor(m)*wr(m)**2 + prr(m)-pinfl - tozz(n)) &
-                  +cmuj2(n)*(rhol(m)*wl(m)**2 + pl(m)-pinfl - tozz(n-ninc))
+                 +cmuj2(n)*(rhol(m)*wl(m)**2 + pl(m)-pinfl - tozz(n-ninc))
              dfex=cmuj1(n)*((rhor(m)*er+prr(m)-pinfl)*ur(m) - qcx(n) &
                   -(toxx(n     )*ur(m)+toxy(n     )*vr(m)+toxz(n     )*wr(m))) &
-                  +cmuj2(n)*((rhol(m)*el+pl(m)-pinfl)*ul(m) - qcx(n-ninc) &
+                 +cmuj2(n)*((rhol(m)*el+pl(m)-pinfl)*ul(m) - qcx(n-ninc) &
                   -(toxx(n-ninc)*ul(m)+toxy(n-ninc)*vl(m)+toxz(n-ninc)*wl(m)))
              dfey=cmuj1(n)*((rhor(m)*er+prr(m)-pinfl)*vr(m) - qcy(n) &
                   -(toxy(n     )*ur(m)+toyy(n     )*vr(m)+toyz(n     )*wr(m))) &
-                  +cmuj2(n)*((rhol(m)*el+pl(m)-pinfl)*vl(m) - qcy(n-ninc) &
+                 +cmuj2(n)*((rhol(m)*el+pl(m)-pinfl)*vl(m) - qcy(n-ninc) &
                   -(toxy(n-ninc)*ul(m)+toyy(n-ninc)*vl(m)+toyz(n-ninc)*wl(m)))
              dfez=cmuj1(n)*((rhor(m)*er+prr(m)-pinfl)*wr(m) - qcz(n) &
                   -(toxz(n     )*ur(m)+toyz(n     )*vr(m)+tozz(n     )*wr(m))) &
-                  +cmuj2(n)*((rhol(m)*el+pl(m)-pinfl)*wl(m) - qcz(n-ninc) &
+                 +cmuj2(n)*((rhol(m)*el+pl(m)-pinfl)*wl(m) - qcz(n-ninc) &
                   -(toxz(n-ninc)*ul(m)+toyz(n-ninc)*vl(m)+tozz(n-ninc)*wl(m)))
              g1=(cmuj1(n)*rhor(m)*ur(m)+cmuj2(n)*rhol(m)*ul(m))*sn(m,kdir,1) &
-                  +(cmuj1(n)*rhor(m)*vr(m)+cmuj2(n)*rhol(m)*vl(m))*sn(m,kdir,2) &
-                  +(cmuj1(n)*rhor(m)*wr(m)+cmuj2(n)*rhol(m)*wl(m))*sn(m,kdir,3) &
+               +(cmuj1(n)*rhor(m)*vr(m)+cmuj2(n)*rhol(m)*vl(m))*sn(m,kdir,2) &
+               +(cmuj1(n)*rhor(m)*wr(m)+cmuj2(n)*rhol(m)*wl(m))*sn(m,kdir,3) &
                   -dj1
              g2=dfxx*sn(m,kdir,1)+dfxy*sn(m,kdir,2)+dfxz*sn(m,kdir,3)-dj2
              g3=dfxy*sn(m,kdir,1)+dfyy*sn(m,kdir,2)+dfyz*sn(m,kdir,3)-dj3
@@ -959,32 +956,32 @@ contains
                      +(p51*v1*q15+p52*v1*q25+p53*v1*q35+p54*v4*q45+p55*v5*q55)*dw5
 !        calcul du flux numerique
                 dfxx=cmuk1(n)*(rhor(m)*ur(m)**2 + prr(m)-pinfl - toxx(n)) &
-                     +cmuk2(n)*(rhol(m)*ul(m)**2 + pl(m)-pinfl - toxx(n-ninc))
+                    +cmuk2(n)*(rhol(m)*ul(m)**2 + pl(m)-pinfl - toxx(n-ninc))
                 dfxy=cmuk1(n)*(rhor(m)*ur(m)*vr(m) - toxy(n)) &
-                     +cmuk2(n)*(rhol(m)*ul(m)*vl(m) - toxy(n-ninc))
+                    +cmuk2(n)*(rhol(m)*ul(m)*vl(m) - toxy(n-ninc))
                 dfxz=cmuk1(n)*(rhor(m)*ur(m)*wr(m) - toxz(n)) &
-                     +cmuk2(n)*(rhol(m)*ul(m)*wl(m) - toxz(n-ninc))
+                    +cmuk2(n)*(rhol(m)*ul(m)*wl(m) - toxz(n-ninc))
                 dfyy=cmuk1(n)*(rhor(m)*vr(m)**2 + prr(m)-pinfl - toyy(n)) &
-                     +cmuk2(n)*(rhol(m)*vl(m)**2 + pl(m)-pinfl - toyy(n-ninc))
+                    +cmuk2(n)*(rhol(m)*vl(m)**2 + pl(m)-pinfl - toyy(n-ninc))
                 dfyz=cmuk1(n)*(rhor(m)*vr(m)*wr(m) - toyz(n)) &
-                     +cmuk2(n)*(rhol(m)*vl(m)*wl(m) - toyz(n-ninc))
+                    +cmuk2(n)*(rhol(m)*vl(m)*wl(m) - toyz(n-ninc))
                 dfzz=cmuk1(n)*(rhor(m)*wr(m)**2 + prr(m)-pinfl - tozz(n)) &
-                     +cmuk2(n)*(rhol(m)*wl(m)**2 + pl(m)-pinfl - tozz(n-ninc))
+                    +cmuk2(n)*(rhol(m)*wl(m)**2 + pl(m)-pinfl - tozz(n-ninc))
                 dfex=cmuk1(n)*((rhor(m)*er+prr(m)-pinfl)*ur(m) - qcx(n) &
                      -(toxx(n     )*ur(m)+toxy(n     )*vr(m)+toxz(n     )*wr(m))) &
-                     +cmuk2(n)*((rhol(m)*el+pl(m)-pinfl)*ul(m) - qcx(n-ninc) &
+                    +cmuk2(n)*((rhol(m)*el+pl(m)-pinfl)*ul(m) - qcx(n-ninc) &
                      -(toxx(n-ninc)*ul(m)+toxy(n-ninc)*vl(m)+toxz(n-ninc)*wl(m)))
                 dfey=cmuk1(n)*((rhor(m)*er+prr(m)-pinfl)*vr(m) - qcy(n) &
                      -(toxy(n     )*ur(m)+toyy(n     )*vr(m)+toyz(n     )*wr(m))) &
-                     +cmuk2(n)*((rhol(m)*el+pl(m)-pinfl)*vl(m) - qcy(n-ninc) &
+                    +cmuk2(n)*((rhol(m)*el+pl(m)-pinfl)*vl(m) - qcy(n-ninc) &
                      -(toxy(n-ninc)*ul(m)+toyy(n-ninc)*vl(m)+toyz(n-ninc)*wl(m)))
                 dfez=cmuk1(n)*((rhor(m)*er+prr(m)-pinfl)*wr(m) - qcz(n) &
                      -(toxz(n     )*ur(m)+toyz(n     )*vr(m)+tozz(n     )*wr(m))) &
-                     +cmuk2(n)*((rhol(m)*el+pl(m)-pinfl)*wl(m) - qcz(n-ninc) &
+                    +cmuk2(n)*((rhol(m)*el+pl(m)-pinfl)*wl(m) - qcz(n-ninc) &
                      -(toxz(n-ninc)*ul(m)+toyz(n-ninc)*vl(m)+tozz(n-ninc)*wl(m)))
                 h1=(cmuk1(n)*rhor(m)*ur(m)+cmuk2(n)*rhol(m)*ul(m))*sn(m,kdir,1) &
-                     +(cmuk1(n)*rhor(m)*vr(m)+cmuk2(n)*rhol(m)*vl(m))*sn(m,kdir,2) &
-                     +(cmuk1(n)*rhor(m)*wr(m)+cmuk2(n)*rhol(m)*wl(m))*sn(m,kdir,3) &
+                  +(cmuk1(n)*rhor(m)*vr(m)+cmuk2(n)*rhol(m)*vl(m))*sn(m,kdir,2) &
+                  +(cmuk1(n)*rhor(m)*wr(m)+cmuk2(n)*rhol(m)*wl(m))*sn(m,kdir,3) &
                      -dk1
                 h2=dfxx*sn(m,kdir,1)+dfxy*sn(m,kdir,2)+dfxz*sn(m,kdir,3)-dk2
                 h3=dfxy*sn(m,kdir,1)+dfyy*sn(m,kdir,2)+dfyz*sn(m,kdir,3)-dk3

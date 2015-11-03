@@ -169,9 +169,9 @@ contains
              tnkx(m)=dy1*dz2-dz1*dy2
              tnky(m)=dz1*dx2-dx1*dz2
              tnkz(m)=dx1*dy2-dy1*dx2
-             tnkx(m)=sign(.5,psk)*tnkx(m)
-             tnky(m)=sign(.5,psk)*tnky(m)
-             tnkz(m)=sign(.5,psk)*tnkz(m)
+             tnkx(m)=sign(.5D0,psk)*tnkx(m)
+             tnky(m)=sign(.5D0,psk)*tnky(m)
+             tnkz(m)=sign(.5D0,psk)*tnkz(m)
           enddo
        enddo
     enddo
@@ -216,9 +216,9 @@ contains
              tnjx(m)=dy1*dz2-dz1*dy2
              tnjy(m)=dz1*dx2-dx1*dz2
              tnjz(m)=dx1*dy2-dy1*dx2
-             tnjx(m)=sign(.5,psj)*tnjx(m)
-             tnjy(m)=sign(.5,psj)*tnjy(m)
-             tnjz(m)=sign(.5,psj)*tnjz(m)
+             tnjx(m)=sign(.5D0,psj)*tnjx(m)
+             tnjy(m)=sign(.5D0,psj)*tnjy(m)
+             tnjz(m)=sign(.5D0,psj)*tnjz(m)
           enddo
        enddo
     enddo
@@ -263,9 +263,9 @@ contains
              tnix(m)=dy1*dz2-dz1*dy2
              tniy(m)=dz1*dx2-dx1*dz2
              tniz(m)=dx1*dy2-dy1*dx2
-             tnix(m)=sign(.5,psi)*tnix(m)
-             tniy(m)=sign(.5,psi)*tniy(m)
-             tniz(m)=sign(.5,psi)*tniz(m)
+             tnix(m)=sign(.5D0,psi)*tnix(m)
+             tniy(m)=sign(.5D0,psi)*tniy(m)
+             tniz(m)=sign(.5D0,psi)*tniz(m)
           enddo
        enddo
     enddo

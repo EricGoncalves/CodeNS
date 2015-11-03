@@ -80,10 +80,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
-!
-
-!
 !     ---------------------------------------------------------------
 !com  sdif --> grad(ro nu_tilde).grad(nu_tilde) * cb2/sigma
 !
@@ -190,6 +186,7 @@ contains
 !
              fv1=xkhi3/(xkhi3+cv13)
              fv2=1.-(xkhi/(1+xkhi*fv1))
+!            fv2=abs(1.-(xkhi/(1.+xkhi*fv1)))   !modif R114
              stilde=vort+nutilde*fv2/kapd2
              rtilde=nutilde/(stilde*kapd2)
              rtilde=min(rtilde,1.)

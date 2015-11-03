@@ -102,9 +102,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-
-
-!
     impli=.true.
 !      impli=.false.
 !
@@ -244,7 +241,6 @@ contains
             cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
     endif
 !
-
     do k=k1,k2m1
        do j=j1,j2m1
           n=indc(i1m1,j,k)

@@ -58,8 +58,6 @@ contains
 !
     character(len=7 ) :: eqt
 !
-
-!
     ll=bl_to_bg(l)
     if(ll.eq.1) rewind kda
     pos=int(FTELL(kda))
@@ -85,9 +83,9 @@ contains
             (((mut(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
     endif
 !
-    if(eqt(6:7).eq.'ke') then
-!      if (eqt(6:7).eq.'ke' .or. &
-!         (eqt(2:4).eq.'res' .and. ip60.eq.7) ) then
+!    if(eqt(6:7).eq.'ke') then
+      if (eqt(6:7).eq.'ke' .or. &
+         (eqt(2:4).eq.'res' .and. ip60.eq.7) ) then
        write(kda) &
             ((( v6(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
        write(kda) &

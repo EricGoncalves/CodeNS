@@ -62,9 +62,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
-
     isortie=0
 !
     n0c=npc(lm)

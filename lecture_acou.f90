@@ -42,8 +42,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-
-!
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -58,7 +56,6 @@ contains
     nid = id2(l)-id1(l)+1
     njd = jd2(l)-jd1(l)+1
     nijd = nid*njd
-!
 !
     open(unit=77,file='sortieacou',form='formatted',status='unknown')
 !

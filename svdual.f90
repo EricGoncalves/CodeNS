@@ -32,11 +32,9 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
 if(rank==bg_to_proc(bl_to_bg(l))) then
 !
 !            Fichier sauvegarde
-!
     open(UNIT=98,FILE='facdual',FORM='unformatted',STATUS='unknown')
 !
     n0   = npc(l)

@@ -32,8 +32,6 @@ contains
 !--------------------------------------------------------------------
 !
 !
-
-!
     durmy2 = 0.
     do l=1,lzx
        lm=l+(img-1)*lz
@@ -64,12 +62,12 @@ contains
     enddo        ! Fin boucle domaines - Grille fine
     call sum_mpi(durmy2)
 !
-!      if(ncyc.eq.1) then
-!       resno1=sqrt(durmy2)
-!       if(resno1.eq.0.) resno1=1.
-!      endif
-!      resite=sqrt(durmy2)/resno1
-    resite=sqrt(durmy2)
+      if(ncyc.eq.1) then
+       resno1=sqrt(durmy2)
+       if(resno1.eq.0.) resno1=1.
+      endif
+      resite=sqrt(durmy2)/resno1
+!     resite=sqrt(durmy2)
     if (rank==0) then
       open(sor3 ,file='resro',position="append")
       write(sor3,'(1x,i6,1x,i6,1x,e13.6)') ncyc,icyc,resite

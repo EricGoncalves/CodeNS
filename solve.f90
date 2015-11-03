@@ -263,55 +263,55 @@ program solve
   use definition
   use chainecarac
   use sortiefichier
-  use mod_c_svbdn
+  use mod_atlecdon
+  use mod_inimem
+  use mod_utdon_gen
+  use mod_rdcmd
+  use mod_svdual
+  use mod_met_intep3
+  use mod_met_yplus
+  use mod_utsorfr
+  use mod_c_cpfw
+  use mod_c_crdms
+  use mod_c_crbds
+  use mod_c_cpbd
   use mod_c_dfpmtbkeg
+  use mod_c_dffw
+  use mod_c_dfpmcfg
+  use mod_c_dfph
+  use mod_c_dfst
+  use mod_c_dfst0
+  use mod_c_dfpmdtg
+  use mod_c_dfpmdtd
+  use mod_c_dfnzst
+  use mod_c_dfpmdsd
+  use mod_c_dfpmtbn
+  use mod_c_dfpmimd
+  use mod_c_dpdim
+  use mod_c_dpbd
+  use mod_c_dfnm  
+  use mod_c_dfgm  
+  use mod_c_dftl1
+  use mod_c_intn
+  use mod_c_inbdn
+  use mod_c_inbdc
+  use mod_c_ingr
+  use mod_c_inbdb
+  use mod_c_infw
+  use mod_c_end
+  use mod_c_nzst
+  use mod_c_svbdn
   use mod_c_svfw
   use mod_c_svbdb
   use mod_c_svbdc
-  use mod_inimem
-  use mod_inivec
-  use mod_c_dfst0
-  use mod_c_dffw
-  use mod_utdon_gen
-  use mod_c_intn
-  use mod_c_dfpmcfg
-  use mod_c_dfph
-  use mod_c_crdms
-  use mod_utsorfr
-  use mod_met_intep3
-  use mod_met_yplus
-  use mod_rdcmd
   use mod_c_svgr
-  use mod_atlecdon
-  use mod_c_dfpmtbn
-  use mod_c_nzst
-  use mod_c_dftl1
-  use mod_svdual
-  use mod_c_cpfw
-  use mod_c_end
-  use mod_c_crbds
-  use mod_c_cpbd
-  use mod_c_dfpmdtg
-  use mod_c_dfpmdtd
-  use mod_defdfpmcfg
-  use mod_defdfpmimd
-  use mod_defdfpmdsd
-  use mod_defdfpmdtd
-  use mod_c_dfnzst
-  use mod_c_dfgm
-  use mod_c_infw
   use mod_c_secpfw
   use mod_c_svbd
-  use mod_c_dfpmdsd
-  use mod_c_dpdim
-  use mod_c_dpbd
-  use mod_c_dfnm
-  use mod_c_inbdn
-  use mod_c_inbdc
-  use mod_c_dfpmimd
-  use mod_c_ingr
-  use mod_c_inbdb
-  use mod_c_dfst
+  use mod_inivec
+  use mod_defdfpmcfg
+  use mod_defdfpmdtd
+  use mod_defdfpmdsd
+  use mod_defdfpmimd
   use mod_mpi
   use mod_c_partitionnement
   use mod_partitionnement,only:iniraccord
@@ -454,7 +454,7 @@ program solve
 !
 !           calcul et ecriture de y+ pour la premiere maille
 !            hauteur demi-maille adjacente aux parois
-              iyplus=1
+              iyplus=0
               if(iyplus.eq.1) then
                  call  met_yplus( &
                       ncbd,ncin,v,mu,dist, &

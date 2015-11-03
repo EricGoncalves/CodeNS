@@ -85,7 +85,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!
 !    boucle sur toutes les frontieres
     do no=1,mtbx
 !

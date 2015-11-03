@@ -29,15 +29,15 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!c    boucle sur toutes les frontieres
+!    boucle sur toutes les frontieres
     do no=1,mtbx
        mfb=nba(no)
        if (cl(mfb)(1:3).eq.'par') then
           mt=mmb(mfb)
-!c      suppression de la dissipation artificielle pour omega pres
-!c      de la paroi (sur nper couches de cellules perpendiculairement
-!c      a la paroi)
-!c      calculs des indices direction parallele et normale a la paroi
+!      suppression de la dissipation artificielle pour omega pres
+!      de la paroi (sur nper couches de cellules perpendiculairement
+!      a la paroi)
+!      calculs des indices direction parallele et normale a la paroi
           call atindnor( &
                mfb, &
                m10,m20,m30, &
@@ -50,7 +50,7 @@ contains
              mb=mpb(mfb)+m
              ni=ncin(mb)
              do m3=m3min,m3max,isens3
-!c         boucle sur les nper points perpendiculaire a la paroi
+!          boucle sur les nper points perpendiculaire a la paroi
                 n=ni+(m3-m3min)*dm3
                 d(n,7)=0.
              enddo
@@ -60,5 +60,4 @@ contains
 !
     return
   end subroutine met_pardis
-
 end module mod_met_pardis

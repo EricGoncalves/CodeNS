@@ -75,7 +75,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!
 !     lois viscosite : sutherland pour gaz et loi exponentielle pour liquide
 !     loi sutherland mu=mu0*sqrt(T/T0)*(1+S/T0)/(1+S/T)
 !     pour vapeur d'eau S=548K, mu0=9.73e-6 Pa.s et T0=293K
@@ -116,7 +115,7 @@ contains
        nfacns=m0ns+m
        mpar=mnpar(ni)
        nii=ni-n0c
-!         test sur transition et regime d'ecoulement
+!      test sur transition et regime d'ecoulement
        if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
 !           laminaire
           lamin=.true.
@@ -124,15 +123,15 @@ contains
 !           turbulent
           lamin=.false.
        end if
-!         vitesse cellule adjacente a la paroi (cellule 1)
+!      vitesse cellule adjacente a la paroi (cellule 1)
        v1x=v(ni,2)/v(ni,1)
        v1y=v(ni,3)/v(ni,1)
        v1z=v(ni,4)/v(ni,1)
-!         normale a la paroi
+!      normale a la paroi
        n1=nxn(nfacns)
        n2=nyn(nfacns)
        n3=nzn(nfacns)
-!         tangente normee a la paroi
+!      tangente normee a la paroi
        tn=v1x*n1+v1y*n2+v1z*n3
        t1=v1x-tn*n1
        t2=v1y-tn*n2
@@ -141,23 +140,23 @@ contains
        t1=t1/tt
        t2=t2/tt
        t3=t3/tt
-!         composante tangentielle de la vitesse dans repere paroi : v1t
+!      composante tangentielle de la vitesse dans repere paroi : v1t
        v1t=v1x*t1+v1y*t2+v1z*t3
-!         temperature cellule 1 : temp1
+!      temperature cellule 1 : temp1
        temp1=temp(ni)
-!         temperature a la paroi : tparoi
+!      temperature a la paroi : tparoi
        pka=cp*(mu(ni)/pr+mut(ni)/prt)
        pkb=mu(ni)+mut(ni)
        tparoi=temp1+0.5*pkb*v1t**2/pka
-!          tparoi=temp(nc)
-!         viscosite moleculaire a la paroi
+!       tparoi=temp(nc)
+!      viscosite moleculaire a la paroi
        mup=mu(ni)*sqrt(tparoi/temp1)*(1.+sv/temp1)/(1.+sv/tparoi)
-!         masse volumique a la paroi
+!      masse volumique a la paroi
        rop=v(ni,1)*temp1/tparoi
-!         correction de compressibilite (loi de Van Driest)
+!      correction de compressibilite (loi de Van Driest)
        co=sqrt(2.*pka*tparoi/pkb)
        v1t=co*asin(v1t/co)
-!         contrainte de frottement a la paroi : top
+!      contrainte de frottement a la paroi : top
        upyp1=rop*v1t*dist(ni)/mup
        yp02=yp0**2
 !         loi standard
@@ -223,7 +222,7 @@ contains
 !          endif
 !         yplus cellule 1
        yplus1=dist(ni)*sqrt(top*rop)/mup
-!         calcul de nu_tilde en cellule 1
+!       calcul de nu_tilde en cellule 1
        mut(ni)=v(ni,1)*vkar**2*dist(ni)**2*dudy* &
             (1.-exp(-yplus1/26.))**2
        ca=mut(ni)
@@ -235,8 +234,8 @@ contains
        rc4=sqrt(ca**2+c4)
        rnutilde=0.25*(ca+rc4)+0.25*sqrt(2.)*sqrt(ca**2*rc4-2.*c3**c13*rc4 &
             +2.*c2**c13*rc4+ca**3)/rc4**0.5
-!         ATTENTION! si probleme en maillage fin, utiliser nu=kappa*dist*utau
-!          rnutilde=v(ni,1)*kappa*dist(ni)*sqrt(top/rop)
+!      ATTENTION! si probleme en maillage fin, utiliser nu=kappa*dist*utau
+!      rnutilde=v(ni,1)*kappa*dist(ni)*sqrt(top/rop)
        v(ni,6)=max(rnutilde,epsk)
        v(nc,6)=0.
 !       fin boucle sur facettes paroi
@@ -244,5 +243,4 @@ contains
 !
     return
   end subroutine lpsa1
-
 end module mod_lpsa1

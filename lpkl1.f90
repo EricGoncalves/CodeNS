@@ -56,8 +56,7 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!
-    cmu1=1./sqrt(cmu)
+!    cmu1=1./sqrt(0.09)
     sv=110.4/tnz !air
 
     mt=mmb(mfb)
@@ -173,5 +172,4 @@ contains
 !
     return
   end subroutine lpkl1
-
 end module mod_lpkl1

@@ -59,9 +59,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
-!
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)

@@ -64,8 +64,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
     ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))
 
     isortie=0
@@ -1393,16 +1391,13 @@ contains
       inc=id+jd*nid+kd*nijd
     end function inc
 
-!
-!      phi(a)=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
-!      phi(a)=max(0.,min(1.,a))  !minmod
-
-!      phi(a)=max(0.,min(1.,2.*a),min(2.,a)) !superbee
-
     function    phi(a)
       implicit none
       double precision ::   a,phi
       phi=max(0.,(a+a**2)/(1.+a**2))  !van albada
+!      phi=max(0.,min(1.,a))  !minmod
+!      phi=max(0.,min(1.,2.*a),min(2.,a)) !superbee
     end function phi
+
   end subroutine sch_hllc
 end module mod_sch_hllc

@@ -65,9 +65,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
-
     isortie=0
 !
     n0c=npc(lm)
@@ -670,7 +667,7 @@ contains
        enddo
     enddo
 !
-!c------direction k-------------------------------------------------------
+!-------direction k-------------------------------------------------------
 !
     if(equat(3:4).eq.'3d') then
        kdir=3
@@ -987,5 +984,6 @@ contains
       integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
+
   end subroutine sch_hllc_prcd
 end module mod_sch_hllc_prcd

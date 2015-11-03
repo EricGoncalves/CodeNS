@@ -79,7 +79,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!
     cmu1=1./sqrt(betae)
     cmu2=1./(betae**0.75)
     cmu3=betae**0.25
@@ -171,5 +170,4 @@ contains
 !
     return
   end subroutine lpkomega2
-
 end module mod_lpkomega2

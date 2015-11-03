@@ -49,9 +49,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
-
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)
@@ -88,13 +85,13 @@ contains
        ind2 = indc(i2  ,j2  ,k2  )
     endif
 !
-    do n=ind1,ind2
-       m=n-n0c
-       u(n,1)=0.
-       u(n,2)=0.
-       u(n,3)=0.
-       u(n,4)=0.
-       u(n,5)=0.
+       do n=ind1,ind2
+          m=n-n0c
+          u(n,1)=0.
+          u(n,2)=0.
+          u(n,3)=0.
+          u(n,4)=0.
+          u(n,5)=0.
        norm=1./v(n,1)
        fxx(m)=v(n,2)*(v(n,2)*norm)+ps(n)-pinfl
        fxy(m)=v(n,3)*(v(n,2)*norm)
@@ -105,7 +102,7 @@ contains
        fex(m)=(v(n,5)+ps(n)-pinfl)*v(n,2)*norm
        fey(m)=(v(n,5)+ps(n)-pinfl)*v(n,3)*norm
        fez(m)=(v(n,5)+ps(n)-pinfl)*v(n,4)*norm
-    enddo
+       enddo
     if (equat(1:2).eq.'ns') then
        do n=ind1,ind2
           m=n-n0c

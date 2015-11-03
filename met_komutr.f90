@@ -25,7 +25,6 @@ contains
 !     OUT
 !_O    mut        : arg real(ip12      ) ; viscosite turbulente
 !
-!
 !-----parameters figes--------------------------------------------------
 !
     use para_var
@@ -50,8 +49,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
-
 !
     n0=npc(l)
     i1=ii1(l)

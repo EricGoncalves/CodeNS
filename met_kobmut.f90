@@ -41,9 +41,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-
-
-!
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -51,7 +48,6 @@ contains
     j2=jj2(l)
     k1=kk1(l)
     k2=kk2(l)
-!
 !
     i2m1=i2-1
     j2m1=j2-1
@@ -66,9 +62,9 @@ contains
     nck = inc(0,0,1)
 !
     idebug=0
-!c
-!c      modele bas Reynolds de Wilcox ou de Menter
-!c
+!
+!      modele bas Reynolds de Wilcox ou de Menter
+!
     do k=k1,k2m1
        do j=j1,j2m1
           n=ind(i1-1,j,k)

@@ -38,61 +38,61 @@ contains
     use proprieteflu
     use chainecarac
     use sortiefichier
-    use mod_lp2ke
-    use mod_met_samut
-    use mod_lp2kl
-    use mod_met_chmut
-    use mod_met_fludcsa
-    use mod_met_roe2oh
-    use mod_met_smsa
-    use mod_lp2kw
-    use mod_met_smklsas
-    use mod_sch_turb2
-    use mod_met_smdes
-    use mod_impli2_eqt_3d
-    use mod_sch_turb
-    use mod_met_komutr
-    use mod_met_roe2o
-    use mod_met_kocmut
-    use mod_met_bord
-    use mod_lpker
     use mod_at_cutke
-    use mod_met_roe
-    use mod_met_mutke2
-    use mod_met_fludmt
-    use mod_lpke
-    use mod_met_klrmut
-    use mod_met_klsmut
     use mod_atctranske
-    use mod_lpkl
-    use mod_met_dual2
+    use mod_lp2ke
+    use mod_lp2kl
+    use mod_lp2kw
     use mod_lp2sa
     use mod_lpkomega
-    use mod_met_gradtr
-    use mod_met_fludc
-    use mod_met_smch
-    use mod_met_smsasas
-    use mod_met_kemutr
-    use mod_met_fludko
-    use mod_met_smmtr
+    use mod_lpkomegar
+    use mod_lpsa
+    use mod_lpke
+    use mod_lpker
+    use mod_lpkl
+    use mod_impli2_eqt_3d
     use mod_impli2_eqt
+    use mod_met_fludc
+    use mod_met_fludcsa
+    use mod_met_fludmt
+    use mod_met_fludko
+    use mod_met_roe
+    use mod_met_roe2o
+    use mod_met_roe2oh
+    use mod_sch_turb_pond
+    use mod_sch_turb
+    use mod_met_samut
+    use mod_met_chmut
+    use mod_met_kemut
+    use mod_met_ke2mut
     use mod_met_kemutm
+    use mod_met_kemutr
+    use mod_met_klmut
+    use mod_met_klrmut
+    use mod_met_klsmut
+    use mod_met_komut
+    use mod_met_komutr
+    use mod_met_kocmut
+    use mod_met_smch
+    use mod_met_smke
+    use mod_met_smko
     use mod_met_smkor
+    use mod_met_smmt
+    use mod_met_smmtr
+    use mod_met_smkl
+    use mod_met_smklsas
+    use mod_met_smsa
+    use mod_met_smsasas
+    use mod_met_smdes
+    use mod_met_dual
+    use mod_met_dual2
+    use mod_met_parko
+    use mod_met_prod
+    use mod_met_gradtr
+    use mod_met_bord
     use mod_met_rbsc
     use mod_met_rbse
-    use mod_met_parko
-    use mod_lpsa
-    use mod_met_smmt
-    use mod_met_klmut
-    use mod_met_komut
-    use mod_met_prod
-    use mod_met_dual
-    use mod_met_smke
     use mod_met_rbsr
-    use mod_lpkomegar
-    use mod_met_kemut
-    use mod_met_smkl
-    use mod_met_smko
     implicit none
     integer          ::      icycle,          l,     lgsnlt,         mf,        mfc
     integer          ::         mfr,  mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41)
@@ -114,7 +114,6 @@ contains
     allocate(coefe(ndir,ip00))
 !
 !-----------------------------------------------------------------------
-!
 !
     ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
          dvzx(ip00),dvzy(ip00),dvzz(ip00),fracmod(ip12))
@@ -141,7 +140,7 @@ contains
 !
     endif
 !
-!-----------application des condition aux limites----------------------------------------
+!-----------application des condition aux limites--------------------------------------
 !
     call met_bord( &
          0, &
@@ -652,7 +651,7 @@ contains
           if((ischema.eq.2).or.(ischema.eq.4).or.(ischema.eq.6).or. &
                (ischema.eq.8).or.(ischema.eq.11).or.(ischema.eq.13)) then
 !             schemas ponderes de Jameson et de Roe
-             call sch_turb2( &
+             call sch_turb_pond( &
                   l,u,v,d, &
                   txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                   qcxts5,qcyts6, &
@@ -826,12 +825,12 @@ contains
 !                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
           case('R')
 !         Modeles k-omega de Menter avec realisabilite de Durbin
-             call met_komutr( &
-                  l, &
-                  sn,vol,t, &
-                  dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
-                  dist,v,mu,mut, &
-                  cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
+                call met_komutr( &
+                     l, &
+                     sn,vol,t, &
+                     dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
+                     dist,v,mu,mut, &
+                     cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
           case default
              if(equatt(5:5).eq.'R') then
 !         Modeles k-omega de Menter avec realisabilite de Durbin
@@ -870,7 +869,7 @@ contains
 !
        case(6)
 !
-          call met_mutke2( &
+          call met_ke2mut( &
                l,ncyc, &
                v,mu,mut,dist,mnpar,ncin, &
                txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &

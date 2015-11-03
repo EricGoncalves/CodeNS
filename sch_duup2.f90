@@ -57,11 +57,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
-
-
-!
-
 
     ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
          dvzx(ip00),dvzy(ip00),dvzz(ip00))

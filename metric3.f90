@@ -69,7 +69,6 @@ contains
     ncjk= inc(0,1,1)
     ncijk= inc(1,1,1)
 !
-    n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
     j1=jj1(l)
@@ -118,14 +117,14 @@ contains
                   y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
              zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
                   z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
-!c------vecteur normal au plan interface--------------------------------
+!-------vecteur normal au plan interface--------------------------------
              xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
                   (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
              yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
                   (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
              zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
                   (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
-!c-------coordonnees du point E-------------------------------------------
+!--------coordonnees du point E-------------------------------------------
              tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
                   (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
              xe=xp+tk*(xr-xp)
@@ -193,7 +192,7 @@ contains
           enddo
        enddo
 !------------------------------------------------------------------------
-!c----remplissage des bords
+!-----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2
           n=indn(i1,j,k1)
@@ -211,9 +210,9 @@ contains
           cvi(n)=cvi(n+ncj)
        enddo
 !
-       nc=indn(i1,j1,k1)
-       cvi(nc)=cvi(nc+ncj)
-       cvj(nc)=cvj(nc+nci)
+       n=indn(i1,j1,k1)
+       cvi(n)=cvi(n+ncj)
+       cvj(n)=cvj(n+nci)
 !
 !******************************************************************************
     elseif(equat(3:5).eq.'2dj') then
@@ -237,14 +236,14 @@ contains
                   y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
              zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
                   z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
-!c------vecteur normal au plan interface--------------------------------
+!-------vecteur normal au plan interface--------------------------------
              xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
                   (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
              yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
                   (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
              zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
                   (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
-!c-------coordonnees du point E-------------------------------------------
+!--------coordonnees du point E-------------------------------------------
              tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
                   (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
              xe=xp+tk*(xr-xp)
@@ -312,7 +311,7 @@ contains
           enddo
        enddo
 !------------------------------------------------------------------------
-!c----remplissage des bords
+!-----remplissage des bords
 !------------------------------------------------------------------------
        do k=k1p1,k2
           n=indn(i1,j1,k)
@@ -330,9 +329,9 @@ contains
           cvi(n)=cvi(n+nck)
        enddo
 !
-       nc=indn(i1,j1,k1)
-       cvi(nc)=cvi(nc+nck)
-       cvk(nc)=cvk(nc+nci)
+       n=indn(i1,j1,k1)
+       cvi(n)=cvi(n+nck)
+       cvk(n)=cvk(n+nci)
 !
 !******************************************************************************
     elseif(equat(3:5).eq.'2di') then
@@ -430,7 +429,7 @@ contains
           enddo
        enddo
 !------------------------------------------------------------------------
-!c----remplissage des bords
+!-----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2
           n=indn(i1,j,k1)
@@ -448,9 +447,9 @@ contains
           cvk(n)=cvk(n+ncj)
        enddo
 !
-       nc=indn(i1,j1,k1)
-       cvj(nc)=cvj(nc+nck)
-       cvk(nc)=cvk(nc+ncj)
+       n=indn(i1,j1,k1)
+       cvj(n)=cvj(n+nck)
+       cvk(n)=cvk(n+ncj)
 !
 !******************************************************************************
     elseif(equat(3:4).eq.'3d') then
@@ -485,14 +484,14 @@ contains
                      y(n+nck)+y(n+ncik)+y(n+ncjk)+y(n+ncijk))
                 zr=0.125*(z(n)+z(n+nci)+z(n+ncj)+z(n+ncij)+ &
                      z(n+nck)+z(n+ncik)+z(n+ncjk)+z(n+ncijk))
-!c------vecteur normal au plan interface--------------------------------
+!-------vecteur normal au plan interface--------------------------------
                 xn=(y(n)-y(n+ncjk))*(z(n+nck)-z(n+ncj))- &
                      (z(n)-z(n+ncjk))*(y(n+nck)-y(n+ncj))
                 yn=(z(n)-z(n+ncjk))*(x(n+nck)-x(n+ncj))- &
                      (x(n)-x(n+ncjk))*(z(n+nck)-z(n+ncj))
                 zn=(x(n)-x(n+ncjk))*(y(n+nck)-y(n+ncj))- &
                      (y(n)-y(n+ncjk))*(x(n+nck)-x(n+ncj))
-!c-------coordonnees du point E-------------------------------------------
+!--------coordonnees du point E-------------------------------------------
                 tk=(xn*(x(n)-xp)+yn*(y(n)-yp)+zn*(z(n)-zp))/ &
                      (xn*(xr-xp)+yn*(yr-yp)+zn*(zr-zp))
                 xe=xp+tk*(xr-xp)
@@ -601,7 +600,7 @@ contains
           enddo
        enddo
 !------------------------------------------------------------------------
-!c----remplissage des bords
+!-----remplissage des bords
 !------------------------------------------------------------------------
        do j=j1p1,j2
           do k=k1p1,k2
@@ -669,10 +668,10 @@ contains
           cvk(n)=cvk(n+ncj)
        enddo
 !
-       nc=indn(i1,j1,k1)
-       cvi(nc)=cvi(nc+ncj)
-       cvj(nc)=cvj(nc+nci)
-       cvk(nc)=cvk(nc+ncj)
+       n=indn(i1,j1,k1)
+       cvi(n)=cvi(n+ncj)
+       cvj(n)=cvj(n+nci)
+       cvk(n)=cvk(n+ncj)
 !******************************************************************
     endif
 !

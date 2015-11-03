@@ -86,10 +86,6 @@ contains
     character(len=7 ) :: equat
 !
 !
-
-
-
-
     n0c =npc(l)
     n0n =npn(l)
     i1  =ii1(l)
@@ -127,7 +123,7 @@ contains
                   sn(m,1,3)*sn(m,1,3)
           enddo
        enddo
-
+!
        do j=j1,j2
           do i=i1,i2m1
              n=indn(i,j,k)

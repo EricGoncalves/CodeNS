@@ -78,7 +78,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!
     cmu1=1./sqrt(0.09)
     cmu2=1./(0.09**0.75)
     cmu3=0.09**0.25
@@ -190,5 +189,4 @@ contains
 !
     return
   end subroutine lpkomega1
-
 end module mod_lpkomega1

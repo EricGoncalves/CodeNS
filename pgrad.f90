@@ -222,7 +222,7 @@ contains
     do n=ind1,ind2
        m=n-n0
 !       le coefficient 1/2 provient de la moyenne de ps
-       ts=sign(0.5,-vol(n))
+       ts=sign(0.5D0,-vol(n))
        vols=(0.5+ts)*eps+(0.5-ts)*vol(n)
        cc0=0.5/vols
 !

@@ -49,8 +49,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-
-!
     n0n=npn(l)
     n0c=npc(l)
 !
@@ -122,9 +120,9 @@ contains
             -.5*(v(nl,2)**2+v(nl,3)**2+v(nl,4)**2))
        roc0=sqrt(roc0)
        roqn0=v(nl,2)*nxn(mn)+v(nl,3)*nyn(mn)+v(nl,4)*nzn(mn)
-       epsm=.5+sign(.5, roc0-roqn0)
-       eps0=.5+sign(.5,-roqn0)
-       epsp=.5+sign(.5,-roc0-roqn0)
+       epsm=.5+sign(.5D0, roc0-roqn0)
+       eps0=.5+sign(.5D0,-roqn0)
+       epsp=.5+sign(.5D0,-roc0-roqn0)
 !
        qxd=roud(m)/rod(m)+dvx
        qyd=rovd(m)/rod(m)
@@ -164,7 +162,7 @@ contains
        v(nl,2)=ro*(qtx+qn*nxn(mn))
        v(nl,3)=ro*(qty+qn*nyn(mn))
        v(nl,4)=ro*(qtz+qn*nzn(mn))
-       v(nl,5)=p*gam4+0.5*(v(nl,2)**2+v(nl,3)**2+v(nl,4)**2)/ro
+       v(nl,5)=p*gam4+pinfl+0.5*(v(nl,2)**2+v(nl,3)**2+v(nl,4)**2)/ro
        pression(nl)=p
        temp(nl)=gam*pression(nl)/ro
        cson(nl)=sqrt(temp(nl))

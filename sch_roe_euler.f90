@@ -72,9 +72,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
-
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)
@@ -218,7 +215,7 @@ contains
              v1=abs(vn*cnds)
              v4=abs(vn*cnds+am*cnds)
              v5=abs(vn*cnds-am*cnds)
-!        calcul des coefficients des matrices de passage a gauche et a droite
+!        calcul des coefficients des matrices de passage à gauche et a droite
              q11=(1.-gam1*vitm2*am2i)*nx-(vm*nz-wm*ny)*rhomi
              q12=gam1*um*nx*am2i
              q13=gam1*vm*nx*am2i+nz*rhomi
@@ -501,7 +498,7 @@ contains
              v1=abs(vn*cnds)
              v4=abs(vn*cnds+am*cnds)
              v5=abs(vn*cnds-am*cnds)
-!        calcul des coefficients des matrices de passage a gauche et a droite
+!        calcul des coefficients des matrices de passage à gauche et a droite
              q11=(1.-gam1*vitm2*am2i)*nx-(vm*nz-wm*ny)*rhomi
              q12=gam1*um*nx*am2i
              q13=gam1*vm*nx*am2i+nz*rhomi
@@ -782,7 +779,7 @@ contains
                 v1=abs(vn*cnds)
                 v4=abs(vn*cnds+am*cnds)
                 v5=abs(vn*cnds-am*cnds)
-!        calcul des coefficients des matrices de passage a gauche et a droite
+!        calcul des coefficients des matrices de passage à gauche et a droite
                 q11=(1.-gam1*vitm2*am2i)*nx-(vm*nz-wm*ny)*rhomi
                 q12=gam1*um*nx*am2i
                 q13=gam1*vm*nx*am2i+nz*rhomi

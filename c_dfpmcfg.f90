@@ -12,7 +12,7 @@ contains
 !_I    kimp       : com int              ; niveau de sortie sur unite logi imp
 !_I    mtbx       : com int              ; nbr total de frontieres
 !_I    nfei       : com int (mtb       ) ; numero de base interne d'une front
-!_I                                                   en fct du numero externe
+!_I                                         en fct du numero externe
 !
 !     I/O
 !_/    nba        : com int (mtb       ) ; rang de traitement d'une front

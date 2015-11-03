@@ -85,9 +85,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!
-
-!
 !     ---------------------------------------------------------------
 !com  sdif --> grad(ro nu_tilde).grad(nu_tilde) * cb2/sigma
 !
@@ -125,7 +122,6 @@ contains
     i2m1=i2-1
     j2m1=j2-1
     k2m1=k2-1
-!
 !
 !       calcul grad( rho ) pour implicitation
 !       dtdx<->d(rho)/dx  dtdy<->d(rho)/dy  dtdz<->d(rho)/dz
@@ -184,8 +180,8 @@ contains
     cb2sig=cb2/sigma
 !
 !     constante DES
-!      ctdes=0.65 !valeur init
-    ctdes=0.95
+      ctdes=0.65 !valeur init
+!    ctdes=0.95
 !
     do k=k1,k2m1
        do j=j1,j2m1

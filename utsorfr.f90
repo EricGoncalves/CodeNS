@@ -29,7 +29,7 @@ contains
 !_A        -de pi/pi0
 !
 !     VAL
-!_V    Il faut que les surfaces projetees sur xy soient non nulles.
+!_V    Il faut que les surfaces projetees sur xz soient non nulles.
 !_A    ATTENTION! demi-longueur en envergure.
 !
 !     INP
@@ -157,46 +157,46 @@ contains
     use schemanum
     use mod_mpi
     implicit none
-    integer          ::         i1,        i2,      idf1,      idf2,     idfac
-    integer          ::        idm,     imaxf,     iminf,        j1,        j2
-    integer          ::      jmaxf,     jminf,        k1,        k2,     kimpl
-    integer          ::      kmaxf,     kminf,         l,       m0b,       m0n
-    integer          ::         m1,     m1max,   m1maxm1,     m1min,        m2
-    integer          ::      m2max,   m2maxm1,     m2min,        mf,      mfac
-    integer          ::      mfacn,       mfl,       n0c,       n0n,ncbd(ip41)
-    integer          ::        nci,ncin(ip41),       ncj,       nck,     nfac1
-    integer          ::      nfac2,     nfac3,     nfac4,     nfacf,     nfaci
-    integer          ::      nfacm,       nid,      nijd,       njd,        nn,mfg
-    double precision ::          akp,       alfar,       betar,      cfinf0,      claefr
-    double precision ::      claerfr,      claero,     claerob,     claetfr,        clav
-    double precision ::        clavb,     clavbfr,      clavfr,     clavtfr,     clavtot
-    double precision ::       cmaefr,     cmaerfr,      cmaero,     cmaerob,     cmaetfr
-    double precision ::         cmav,       cmavb,     cmavbfr,      cmavfr,     cmavtfr
-    double precision ::      cmavtot,      cnaefr,     cnaerfr,      cnaero,     cnaerob
-    double precision ::      cnaetfr,        cnav,       cnavb,     cnavbfr,      cnavfr
+    integer          ::      i1,     i2,   idf1,   idf2,  idfac
+    integer          ::     idm,  imaxf,  iminf,     j1,     j2
+    integer          ::   jmaxf,  jminf,     k1,     k2,  kimpl
+    integer          ::   kmaxf,  kminf,      l,    m0b,    m0n
+    integer          ::      m1,  m1max,m1maxm1,  m1min,     m2
+    integer          ::   m2max,m2maxm1,  m2min,     mf,   mfac
+    integer          ::   mfacn,    mfl,    n0c,    n0n,   ncbd(ip41)
+    integer          ::     nci,   ncin(ip41),    ncj,    nck,  nfac1
+    integer          ::   nfac2,  nfac3,  nfac4,  nfacf,  nfaci
+    integer          ::   nfacm,    nid,   nijd,    njd,     nn,mfg
+    double precision ::     akp,  alfar,  betar, cfinf0, claefr
+    double precision :: claerfr, claero,claerob,claetfr,   clav
+    double precision ::   clavb,clavbfr, clavfr,clavtfr,clavtot
+    double precision ::  cmaefr,cmaerfr, cmaero,cmaerob,cmaetfr
+    double precision ::    cmav,  cmavb,cmavbfr, cmavfr,cmavtfr
+    double precision :: cmavtot, cnaefr,cnaerfr, cnaero,cnaerob
+    double precision :: cnaetfr,   cnav,  cnavb,cnavbfr, cnavfr
     double precision ::      cnavtfr,     cnavtot,        csal,        csbe,  cson(ip11)
-    double precision ::       cxaefr,     cxaerfr,      cxaero,     cxaerob,     cxaetfr
-    double precision ::         cxav,       cxavb,     cxavbfr,      cxavfr,     cxavtfr
-    double precision ::      cxavtot,      cyaefr,     cyaerfr,      cyaero,     cyaerob
-    double precision ::      cyaetfr,        cyav,       cyavb,     cyavbfr,      cyavfr
-    double precision ::      cyavtfr,     cyavtot,      czaefr,     czaerfr,      czaero
-    double precision ::      czaerob,     czaetfr,        czav,       czavb,     czavbfr
-    double precision ::       czavfr,     czavtfr,     czavtot,         dcl,       dclfr
-    double precision ::          dcm,       dcmfr,         dcn,       dcnfr,         dcx
-    double precision ::        dcxfr,         dcy,       dcyfr,         dcz,       dczfr
-    double precision ::         dsml,        dsxy,        dsxz,        dsyz,         dx1
-    double precision ::          dx2,         dy1,         dy2,         dz1,         dz2
+    double precision ::  cxaefr,cxaerfr, cxaero,cxaerob,cxaetfr
+    double precision ::    cxav,  cxavb,cxavbfr, cxavfr,cxavtfr
+    double precision :: cxavtot, cyaefr,cyaerfr, cyaero,cyaerob
+    double precision :: cyaetfr,   cyav,  cyavb,cyavbfr, cyavfr
+    double precision :: cyavtfr,cyavtot, czaefr,czaerfr, czaero
+    double precision :: czaerob,czaetfr,   czav,  czavb,czavbfr
+    double precision ::  czavfr,czavtfr,czavtot,    dcl,  dclfr,sxzb
+    double precision ::     dcm,  dcmfr,    dcn,  dcnfr,    dcx
+    double precision ::   dcxfr,    dcy,  dcyfr,    dcz,  dczfr
+    double precision ::    dsml,   dsxy,   dsxz,   dsyz,    dx1
+    double precision ::     dx2,    dy1,    dy2,    dz1,    dz2
     double precision ::     mu(ip12),   mut(ip12),   nxn(ip42),   nyn(ip42),   nzn(ip42)
-    double precision ::         phip,     phipadi,     phiref0,        phit,        pis2
+    double precision ::    phip,phipadi,phiref0,   phit,   pis2
     double precision ::     ps(ip11),       pspi0,   qcx(ip12),   qcy(ip12),   qcz(ip12)
-    double precision ::           qq,          qt,         qtx,         qty,         qtz
+    double precision ::      qq,     qt,    qtx,    qty,    qtz
     double precision ::       raddeg,          rm,s(ip11,ip60),         sml,       smlfr
     double precision ::         snal,        snbe,         sxy,        sxyb,       sxyfr
-    double precision ::          sxz,       sxzfr,         syz,       syzfr,          t1
-    double precision ::           t2,          t3,      taumod,     taunorm,     tauref0
+    double precision ::     sxz,  sxzfr,    syz,  syzfr,     t1
+    double precision ::      t2,     t3, taumod,taunorm,tauref0
     double precision ::   temp(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12)
     double precision ::   toyz(ip12),  tozz(ip12),           u,       utaur,       utsnu
-    double precision ::          utx,        utxt,         uty,        utyt,         utz
+    double precision ::     utx,   utxt,    uty,   utyt,    utz
     double precision ::         utzt,           v,           w,     x(ip21),       xcfac
     double precision ::      y(ip21),       ycfac,     z(ip21),       zcfac
     logical          :: ecrcom
@@ -285,8 +285,8 @@ contains
     end if
     end if
 !
-    pis2=atan2(1.,0.)
-    raddeg=90./pis2
+    pis2=atan2(1.D0,0.D0)
+    raddeg=90.D0/pis2
 !
     alfar=alpha0/raddeg
     betar=beta0/raddeg
@@ -456,7 +456,8 @@ contains
           cnavbfr=0.
 !
 !         surface de la bande bande
-          sxyb=0.
+!          sxyb=0.
+          sxzb=0. 
 !
 !                 mfac   : pointeur tableaux toutes frontieres
 !                 mfacn  : pointeur tableaux frontieres a normales stockees
@@ -488,9 +489,9 @@ contains
              dsxz =abs(dz1*dx2-dx1*dz2)/2.
              dsxy =abs(dx1*dy2-dy1*dx2)/2.
              dsml =sqrt(dsyz*dsyz+dsxz*dsxz+dsxy*dsxy)
-             dcx  =(p0spi0-pspi0)*dsyz*sign(1.,nxn(mfacn))
-             dcy  =(p0spi0-pspi0)*dsxz*sign(1.,nyn(mfacn))
-             dcz  =(p0spi0-pspi0)*dsxy*sign(1.,nzn(mfacn))
+             dcx  =(p0spi0-pspi0)*dsyz*sign(1.D0,nxn(mfacn))
+             dcy  =(p0spi0-pspi0)*dsxz*sign(1.D0,nyn(mfacn))
+             dcz  =(p0spi0-pspi0)*dsxy*sign(1.D0,nzn(mfacn))
              dcl  =dcy*(zcfac-zref)-dcz*(ycfac-yref)
              dcm  =dcx*(zcfac-zref)-dcz*(xcfac-xref)
              dcn  =dcx*(ycfac-yref)-dcy*(xcfac-xref)
@@ -513,11 +514,11 @@ contains
 !
 !           frottement
              utx=toxx(nfacf)*nxn(mfacn)+toxy(nfacf)*nyn(mfacn)+ &
-                  toxz(nfacf)*nzn(mfacn)
+                 toxz(nfacf)*nzn(mfacn)
              uty=toxy(nfacf)*nxn(mfacn)+toyy(nfacf)*nyn(mfacn)+ &
-                  toyz(nfacf)*nzn(mfacn)
+                 toyz(nfacf)*nzn(mfacn)
              utz=toxz(nfacf)*nxn(mfacn)+toyz(nfacf)*nyn(mfacn)+ &
-                  tozz(nfacf)*nzn(mfacn)
+                 tozz(nfacf)*nzn(mfacn)
 !           projection du frottement sur la surface
              taunorm=utx*nxn(mfacn)+uty*nyn(mfacn)+utz*nzn(mfacn)
              utxt   =utx-taunorm*nxn(mfacn)
@@ -543,43 +544,69 @@ contains
              cnavbfr=cnavbfr+dcnfr
 !
 !           surface
-             sxyb=sxyb+dsxy
+!             sxyb=sxyb+dsxy
+             sxzb=sxzb+dsxz 
 !           fin de boucle sur les cellules de la bande
           enddo
 !
-          if(sxyb.gt.0.) then
+!          if(sxyb.gt.0.) then
+          if(sxzb.gt.0.) then
 !
 !           bande de surface non nulle
 !           pression
-             cxavb  =cxavb/(q0spi0*sxyb)
-             cyavb  =cyavb/(q0spi0*sxyb)
-             czavb  =czavb/(q0spi0*sxyb)
-             clavb  =clavb/(q0spi0*sxyb*xlref)
-             cmavb  =cmavb/(q0spi0*sxyb*xlref)
-             cnavb  =cnavb/(q0spi0*sxyb*xlref)
-             cxaerob= cxavb*csal*csbe-cyavb*snbe+czavb*snal*csbe
-             cyaerob= cxavb*csal*snbe+cyavb*csbe+czavb*snal*snbe
-             czaerob=-cxavb*snal+czavb*csal
-             claerob= clavb*csal*csbe+cmavb*snbe+cnavb*snal*csbe
-             cmaerob=-clavb*csal*snbe+cmavb*csbe-cnavb*snal*snbe
-             cnaerob=-clavb*snal+cnavb*csal
+!             cxavb  =cxavb/(q0spi0*sxyb)
+!             cyavb  =cyavb/(q0spi0*sxyb)
+!             czavb  =czavb/(q0spi0*sxyb)
+!             clavb  =clavb/(q0spi0*sxyb*xlref)
+!             cmavb  =cmavb/(q0spi0*sxyb*xlref)
+!             cnavb  =cnavb/(q0spi0*sxyb*xlref)
+             cxavb  =cxavb/(q0spi0*sxzb)
+             cyavb  =cyavb/(q0spi0*sxzb)
+             czavb  =czavb/(q0spi0*sxzb)
+             clavb  =clavb/(q0spi0*sxzb*xlref)
+             cmavb  =cmavb/(q0spi0*sxzb*xlref)
+             cnavb  =cnavb/(q0spi0*sxzb*xlref)
+!             cxaerob= cxavb*csal*csbe-cyavb*snbe+czavb*snal*csbe
+!             cyaerob= cxavb*csal*snbe+cyavb*csbe+czavb*snal*snbe
+!             czaerob=-cxavb*snal+czavb*csal
+!             claerob= clavb*csal*csbe+cmavb*snbe+cnavb*snal*csbe
+!             cmaerob=-clavb*csal*snbe+cmavb*csbe-cnavb*snal*snbe
+!             cnaerob=-clavb*snal+cnavb*csal
+             cxaerob= cxavb*csal*csbe-czavb*snbe+cyavb*snal*csbe
+             czaerob= cxavb*csal*snbe+czavb*csbe+cyavb*snal*snbe
+             cyaerob=-cxavb*snal+cyavb*csal
+             claerob= clavb*csal*csbe+cnavb*snbe+cmavb*snal*csbe
+             cmaerob=-clavb*csal*snbe+cnavb*csbe-cmavb*snal*snbe
+             cnaerob=-clavb*snal+cmavb*csal
 !
 !           frottement
-             cxavbfr=cxavbfr*tauref0/ sxyb
-             cyavbfr=cyavbfr*tauref0/ sxyb
-             czavbfr=czavbfr*tauref0/ sxyb
-             clavbfr=clavbfr*tauref0/(sxyb*xlref)
-             cmavbfr=cmavbfr*tauref0/(sxyb*xlref)
-             cnavbfr=cnavbfr*tauref0/(sxyb*xlref)
-             cxaerfr= cxavbfr*csal*csbe-cyavbfr*snbe+czavbfr*snal*csbe
-             cyaerfr= cxavbfr*csal*snbe+cyavbfr*csbe+czavbfr*snal*snbe
-             czaerfr=-cxavbfr*snal+czavbfr*csal
-             claerfr= clavbfr*csal*csbe+cmavbfr*snbe+cnavbfr*snal*csbe
-             cmaerfr=-clavbfr*csal*snbe+cmavbfr*csbe-cnavbfr*snal*snbe
-             cnaerfr=-clavbfr*snal+cnavbfr*csal
+!             cxavbfr=cxavbfr*tauref0/ sxyb
+!             cyavbfr=cyavbfr*tauref0/ sxyb
+!             czavbfr=czavbfr*tauref0/ sxyb
+!             clavbfr=clavbfr*tauref0/(sxyb*xlref)
+!             cmavbfr=cmavbfr*tauref0/(sxyb*xlref)
+!             cnavbfr=cnavbfr*tauref0/(sxyb*xlref)
+             cxavbfr=cxavbfr*tauref0/ sxzb
+             cyavbfr=cyavbfr*tauref0/ sxzb
+             czavbfr=czavbfr*tauref0/ sxzb
+             clavbfr=clavbfr*tauref0/(sxzb*xlref)
+             cmavbfr=cmavbfr*tauref0/(sxzb*xlref)
+             cnavbfr=cnavbfr*tauref0/(sxzb*xlref)
+!             cxaerfr= cxavbfr*csal*csbe-cyavbfr*snbe+czavbfr*snal*csbe
+!             cyaerfr= cxavbfr*csal*snbe+cyavbfr*csbe+czavbfr*snal*snbe
+!             czaerfr=-cxavbfr*snal+czavbfr*csal
+!             claerfr= clavbfr*csal*csbe+cmavbfr*snbe+cnavbfr*snal*csbe
+!             cmaerfr=-clavbfr*csal*snbe+cmavbfr*csbe-cnavbfr*snal*snbe
+!             cnaerfr=-clavbfr*snal+cnavbfr*csal
+             cxaerfr= cxavbfr*csal*csbe-czavbfr*snbe+cyavbfr*snal*csbe
+             czaerfr= cxavbfr*csal*snbe+czavbfr*csbe+cyavbfr*snal*snbe
+             cyaerfr=-cxavbfr*snal+cyavbfr*csal
+             claerfr= clavbfr*csal*csbe+cnavbfr*snbe+cmavbfr*snal*csbe
+             cmaerfr=-clavbfr*csal*snbe+cnavbfr*csbe-cmavbfr*snal*snbe
+             cnaerfr=-clavbfr*snal+cmavbfr*csal
 !
              if(kimpl.eq.1) then
-                write(imp,991) m2,sxyb,cxavb,cyavb,czavb,clavb,cmavb, &
+                write(imp,991) m2,sxzb,cxavb,cyavb,czavb,clavb,cmavb, &
                      cnavb,cxaerob,cyaerob,czaerob,claerob,cmaerob,cnaerob
 991             format(//,1x,'bande numero ',i3,' :',/,1x,('-'),// &
                      /,1x,'surface mouillee projetee sur xy : ',e12.4,/ &
@@ -655,11 +682,11 @@ contains
              utyt   =(uty-taunorm*nyn(nfacm))*tauref0
              utzt   =(utz-taunorm*nzn(nfacm))*tauref0
              cfinf0 =sqrt(utxt**2+utyt**2+utzt**2)
-             cfinf0 =cfinf0*sign(1.,utxt)
+             cfinf0 =cfinf0*sign(1.D0,utxt)
 !
 !           flux de chaleur
              phipadi=qcx(nfacf)*nxn(nfacm)+qcy(nfacf)*nyn(nfacm)+ &
-                  qcz(nfacf)*nzn(nfacm)
+                     qcz(nfacf)*nzn(nfacm)
 !EG d       composante tangentielle de q
              qtx=qcx(nfacf)-phipadi*nxn(nfacm)
              qty=qcy(nfacf)-phipadi*nyn(nfacm)
@@ -700,12 +727,18 @@ contains
        clav   =clav/(q0spi0*sref*xlref)
        cmav   =cmav/(q0spi0*sref*xlref)
        cnav   =cnav/(q0spi0*sref*xlref)
-       cxaero = cxav*csal*csbe-cyav*snbe+czav*snal*csbe
-       cyaero = cxav*csal*snbe+cyav*csbe+czav*snal*snbe
-       czaero =-cxav*snal+czav*csal
-       claero = clav*csal*csbe+cmav*snbe+cnav*snal*csbe
-       cmaero =-clav*csal*snbe+cmav*csbe-cnav*snal*snbe
-       cnaero =-clav*snal+cnav*csal
+!       cxaero = cxav*csal*csbe-cyav*snbe+czav*snal*csbe
+!       cyaero = cxav*csal*snbe+cyav*csbe+czav*snal*snbe
+!       czaero =-cxav*snal+czav*csal
+!       claero = clav*csal*csbe+cmav*snbe+cnav*snal*csbe
+!       cmaero =-clav*csal*snbe+cmav*csbe-cnav*snal*snbe
+!       cnaero =-clav*snal+cnav*csal
+       cxaero = cxav*csal*csbe-czav*snbe+cyav*snal*csbe
+       czaero = cxav*csal*snbe+czav*csbe+cyav*snal*snbe
+       cyaero =-cxav*snal+cyav*csal
+       claero = clav*csal*csbe+cnav*snbe+cmav*snal*csbe
+       cmaero =-clav*csal*snbe+cnav*csbe-cmav*snal*snbe
+       cnaero =-clav*snal+cmav*csal
        cxavtot=cxavtot+cxav
        cyavtot=cyavtot+cyav
        czavtot=czavtot+czav
@@ -720,12 +753,18 @@ contains
        clavfr =clavfr*tauref0/(sref*xlref)
        cmavfr =cmavfr*tauref0/(sref*xlref)
        cnavfr =cnavfr*tauref0/(sref*xlref)
-       cxaefr = cxavfr*csal*csbe-cyavfr*snbe+czavfr*snal*csbe
-       cyaefr = cxavfr*csal*snbe+cyavfr*csbe+czavfr*snal*snbe
-       czaefr =-cxavfr*snal+czavfr*csal
-       claefr = clavfr*csal*csbe+cmavfr*snbe+cnavfr*snal*csbe
-       cmaefr =-clavfr*csal*snbe+cmavfr*csbe-cnavfr*snal*snbe
-       cnaefr =-clavfr*snal+cnavfr*csal
+!       cxaefr = cxavfr*csal*csbe-cyavfr*snbe+czavfr*snal*csbe
+!       cyaefr = cxavfr*csal*snbe+cyavfr*csbe+czavfr*snal*snbe
+!       czaefr =-cxavfr*snal+czavfr*csal
+!       claefr = clavfr*csal*csbe+cmavfr*snbe+cnavfr*snal*csbe
+!       cmaefr =-clavfr*csal*snbe+cmavfr*csbe-cnavfr*snal*snbe
+!       cnaefr =-clavfr*snal+cnavfr*csal
+       cxaefr = cxavfr*csal*csbe-czavfr*snbe+cyavfr*snal*csbe
+       czaefr = cxavfr*csal*snbe+czavfr*csbe+cyavfr*snal*snbe
+       cyaefr =-cxavfr*snal+cyavfr*csal
+       claefr = clavfr*csal*csbe+cnavfr*snbe+cmavfr*snal*csbe
+       cmaefr =-clavfr*csal*snbe+cnavfr*csbe-cmavfr*snal*snbe
+       cnaefr =-clavfr*snal+cmavfr*csal
        cxavtfr=cxavtfr+cxavfr
        cyavtfr=cyavtfr+cyavfr
        czavtfr=czavtfr+czavfr
@@ -771,12 +810,18 @@ contains
     call SUM_MPI(cmavtot)
     call SUM_MPI(cnavtot)
 !     pression
-    cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
-    cyaero= cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
-    czaero=-cxavtot*snal+czavtot*csal
-    claero= clavtot*csal*csbe+cmavtot*snbe+cnavtot*snal*csbe
-    cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
-    cnaero=-clavtot*snal+cnavtot*csal
+!    cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
+!    cyaero= cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
+!    czaero=-cxavtot*snal+czavtot*csal
+!    claero= clavtot*csal*csbe+cmavtot*snbe+cnavtot*snal*csbe
+!    cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
+!    cnaero=-clavtot*snal+cnavtot*csal
+    cxaero= cxavtot*csal*csbe-czavtot*snbe+cyavtot*snal*csbe
+    czaero= cxavtot*csal*snbe+czavtot*csbe+cyavtot*snal*snbe
+    cyaero=-cxavtot*snal+cyavtot*csal
+    claero= clavtot*csal*csbe+cnavtot*snbe+cmavtot*snal*csbe
+    cmaero=-clavtot*csal*snbe+cnavtot*csbe-cmavtot*snal*snbe
+    cnaero=-clavtot*snal+cmavtot*csal
 !
     call SUM_MPI(cxavtfr)
     call SUM_MPI(cyavtfr)
@@ -785,12 +830,18 @@ contains
     call SUM_MPI(cmavtfr)
     call SUM_MPI(cnavtfr)
 !     frottement
-    cxaetfr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
-    cyaetfr= cxavtfr*csal*snbe+cyavtfr*csbe+czavtfr*snal*snbe
-    czaetfr=-cxavtfr*snal+czavtfr*csal
-    claetfr= clavtfr*csal*csbe+cmavtfr*snbe+cnavtfr*snal*csbe
-    cmaetfr=-clavtfr*csal*snbe+cmavtfr*csbe-cnavtfr*snal*snbe
-    cnaetfr=-clavtfr*snal+cnavtfr*csal
+!    cxaetfr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
+!    cyaetfr= cxavtfr*csal*snbe+cyavtfr*csbe+czavtfr*snal*snbe
+!    czaetfr=-cxavtfr*snal+czavtfr*csal
+!    claetfr= clavtfr*csal*csbe+cmavtfr*snbe+cnavtfr*snal*csbe
+!    cmaetfr=-clavtfr*csal*snbe+cmavtfr*csbe-cnavtfr*snal*snbe
+!    cnaetfr=-clavtfr*snal+cnavtfr*csal
+    cxaetfr= cxavtfr*csal*csbe-czavtfr*snbe+cyavtfr*snal*csbe
+    czaetfr= cxavtfr*csal*snbe+czavtfr*csbe+cyavtfr*snal*snbe
+    cyaetfr=-cxavtfr*snal+cyavtfr*csal
+    claetfr= clavtfr*csal*csbe+cnavtfr*snbe+cmavtfr*snal*csbe
+    cmaetfr=-clavtfr*csal*snbe+cnavtfr*csbe-cmavtfr*snal*snbe
+    cnaetfr=-clavtfr*snal+cmavtfr*csal
 !
     if(kimpl.eq.1.and.rank==0) then
        write(imp,890) cxavtot,cyavtot,czavtot,clavtot,cmavtot,cnavtot, &

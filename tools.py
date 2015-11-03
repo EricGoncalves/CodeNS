@@ -541,13 +541,141 @@ def matched(string, regexp):
 
 
 
-listfiles = [ f for f in listdir(".") if isfile(join(".",f)) ]
-for fich in listfiles:
-  fileExtension = path.splitext(fich)[1]
-  if fileExtension == ".f90" :
-        for line in fileinput.input(fich,inplace=1):
-          if not "!$OMP" in line:
-            print line,
+#listfiles = [ f for f in listdir(".") if isfile(join(".",f)) ]
+#for fich in listfiles:
+#  fileExtension = path.splitext(fich)[1]
+#  if fileExtension == ".f90" :
+#        for line in fileinput.input(fich,inplace=1):
+#          if not "!$OMP" in line:
+#            print line,
+
+def compareplusandminus(plusblock,minusblock):
+  newblock=""
+  testminusblock=""
+  testplusblock=""
+
+  for line in minusblock.split("\n")[:-1]:
+    line=line[1:]
+    line=line.replace("D0","")
+    line=line.replace(".e",".D")
+    line=re.sub("\s","",line)
+    testminusblock=testminusblock+line+"\n"
+  for line in plusblock.split("\n")[:-1]:
+    line=line[1:]
+    line=line.replace("D0","")
+    line=line.replace(".e",".D")
+    line=re.sub("\s","",line)
+    testplusblock=testplusblock+line+"\n"
+
+  if testminusblock==testplusblock:
+    minusblock=""
+    plusblock=""
+
+  for line in minusblock.split("\n")[:-1]:
+    newblock=newblock+line+"\n"
+  for line in plusblock.split("\n")[:-1]:
+    newblock=newblock+line+"\n"
+
+  return newblock
+
+def compareblocks(diffblock):
+  newblock=""
+  plusblock=""
+  minusblock=""
+  for line in diffblock.split("\n")[:-1]:
+    if matched(line,"^\+"):
+      plusblock=plusblock+line+"\n"
+    elif matched(line,"^-"):
+      minusblock=minusblock+line+"\n"
+    else:
+      if plusblock or minusblock:
+        newblock=newblock+compareplusandminus(plusblock,minusblock)
+        minusblock=""
+        plusblock=""
+      newblock=newblock+line+"\n"
+  if plusblock or minusblock:
+    newblock=newblock+compareplusandminus(plusblock,minusblock)
+
+  return newblock
 
 
+def removemodules(diffblock):
+  newdiffblock=""
+  for line in diffblock.split("\n")[:-1]:
+    if not matched(line,"^[-\+][\s!]*use .*"):
+      newdiffblock=newdiffblock+line+"\n"
+
+  return newdiffblock
+
+def removecomments(diffblock):
+  newdiffblock=""
+  for line in diffblock.split("\n")[:-1]:
+    if not matched(line,"^[-\+][\s]*!.*"):
+      newdiffblock=newdiffblock+line+"\n"
+
+  return newdiffblock
+
+def removeemptyline(diffblock):
+  newdiffblock=""
+  for line in diffblock.split("\n")[:-1]:
+    if not matched(line,"^[-\+][\s!]*$"):
+      newdiffblock=newdiffblock+line+"\n"
+
+  return newdiffblock
+
+def cleandiffblock(diffblock):
+
+  newdiffblock=removeemptyline(diffblock)
+  newdiffblock=removemodules(newdiffblock)
+  newdiffblock=removecomments(newdiffblock)
+  newdiffblock=compareblocks(newdiffblock)
+
+  empty=True
+  for line in newdiffblock.split("\n")[:-1]:
+    if matched(line,"^[-\+]"):
+      empty=False
+      break
+
+  if empty:
+    newdiffblock=""
+
+  return newdiffblock
+
+def cleanfileblock(fileblock):
+  newfileblock=""
+  diffblock=""
+  for line in fileblock.split("\n"):
+    if matched(line,"^@@"):
+      if diffblock:
+        newfileblock=newfileblock+cleandiffblock(diffblock)
+      diffblock=""
+    diffblock=diffblock+line+"\n"
+  if diffblock:
+    newfileblock=newfileblock+cleandiffblock(diffblock)
+
+  empty=True
+  for line in newfileblock.split("\n")[:-1]:
+    if matched(line,"^@@"):
+      empty=False
+      break
+
+  if empty:
+    newfileblock=""
+
+  for line in newfileblock.split("\n")[:-1]:
+    print(line)
+
+
+def clean_diff(difffile):
+  fileblock=""
+  for line in open(difffile):
+    if matched(line,"^diff --git"):
+      if fileblock:
+        cleanfileblock(fileblock)
+      fileblock=""
+    fileblock=fileblock+line
+  if fileblock:
+    cleanfileblock(fileblock)
+
+clean_diff("diff")
 

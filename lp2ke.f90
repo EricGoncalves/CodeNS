@@ -69,7 +69,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
 !      dimension phipar(ip42),topx(ip42),topz(ip42)
 !
     nbd=0
@@ -113,5 +112,4 @@ contains
 !
     return
   end subroutine lp2ke
-
 end module mod_lp2ke

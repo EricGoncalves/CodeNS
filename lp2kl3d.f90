@@ -186,7 +186,7 @@ contains
                 top=rop*v1t**2/(log(dist(ni)*sqrt(rop*top)/mup)/vkar+cllog)**2
              enddo
           endif
-          utau(nfacns)=sign(1.,top)*sqrt(abs(top)/rop)
+          utau(nfacns)=sign(1.D0,top)*sqrt(abs(top)/rop)
        enddo !fin boucle sur facettes paroi
     endif
 !-----fin initialisation de utau--------------------------------
@@ -365,7 +365,7 @@ contains
           v(nc,7)=0.
        endif
 !       vitesse de frottement utau
-       utau(nfacns)=sign(1.,toparx)*sqrt(abs(toparx)/rop)
+       utau(nfacns)=sign(1.D0,toparx)*sqrt(abs(toparx)/rop)
 !       topz
        topz(nc)=toparz
 !       fin boucle sur facettes d'une frontiere paroi

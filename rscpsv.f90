@@ -141,10 +141,10 @@ contains
                   l, &
                   x,y,z, &
                   res1xx,res2yy,res3zz)
-             call writdg( &
-                  l,kdgc, &
-                  imin,imax,jmin,jmax,kmin,kmax, &
-                  res1xx,res2yy,res3zz)
+!             call writdg( &
+!                  l,kdgc, &
+!                  imin,imax,jmin,jmax,kmin,kmax, &
+!                  res1xx,res2yy,res3zz)
           endif
 !
           ni = ii2(l)-ii1(l)

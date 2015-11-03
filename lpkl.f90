@@ -66,7 +66,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-!
     nbd=0
     do no=1,mtbx
 !c    boucle sur toutes les frontieres
@@ -107,5 +106,4 @@ contains
 !
     return
   end subroutine lpkl
-
 end module mod_lpkl

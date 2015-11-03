@@ -46,9 +46,6 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-
-
-!
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -73,8 +70,8 @@ contains
     ncjk =inc(0,1,1)
     ncijk=inc(1,1,1)
 !
-    pis2=atan2(1.,0.)
-    degrad=pis2/90.
+    pis2=atan2(1.D0,0.D0)
+    degrad=pis2/90.D0
 !
 !----------if en commentaire pour cas multidomaines
 !     if(bl_to_bg(l).eq.1) then

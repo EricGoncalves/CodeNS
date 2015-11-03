@@ -285,7 +285,7 @@ contains
           mn=m0n+m1+(m2-1)*dm
 !
           nn=sqrt(nxn(mn)*nxn(mn)+nyn(mn)*nyn(mn)+nzn(mn)*nzn(mn))
-          nn=nn+(sign(1.,-abs(nn))+1.)*eps
+          nn=nn+(sign(1.D0,-abs(nn))+1.D0)*eps
           nxn(mn)=nxn(mn)/nn
           nyn(mn)=nyn(mn)/nn
           nzn(mn)=nzn(mn)/nn

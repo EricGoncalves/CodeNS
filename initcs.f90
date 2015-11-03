@@ -90,21 +90,21 @@ contains
     use sortiefichier
     use mod_mpi
     implicit none
-    integer          ::         i,      ia1,      ia2,      ib1,      ib2
-    integer          ::       iba,       ii,     imax,      img,    inpcb
-    integer          ::       ipb,        j,      ja1,      ja2,      jb1
-    integer          ::       jb2,      jba,       jj,     jmax,      jpb
-    integer          ::         k,      ka1,      ka2,      kb1,      kb2
-    integer          ::       kba,   kinitc,       kk,     kmax,      kpb
-    integer          ::       krr,        l,       la,       lb,     lper
-    integer          ::         m,      m0c,       mc,     mfba,mnc(ip43)
-    integer          ::        na,      nai,      naj,      nak,       nb
-    integer          ::       nbv,    ncilb,    ncjlb,    ncklb,    nidla
-    integer          ::     nidlb,   nijdla,   nijdlb,    njdla,    njdlb
-    integer          ::       nvi,      nvj,      nvk
+    integer          ::      i,   ia1,   ia2,   ib1,   ib2
+    integer          ::    iba,    ii,  imax,   img, inpcb
+    integer          ::    ipb,     j,   ja1,   ja2,   jb1
+    integer          ::    jb2,   jba,    jj,  jmax,   jpb
+    integer          ::      k,   ka1,   ka2,   kb1,   kb2
+    integer          ::    kba,kinitc,    kk,  kmax,   kpb
+    integer          ::    krr,     l,    la,    lb
+    integer          ::      m,   m0c,    mc,  mfba,   mnc(ip43)
+    integer          ::     na,   nai,   naj,   nak,    nb
+    integer          ::    nbv, ncilb, ncjlb, ncklb, nidla
+    integer          ::  nidlb,nijdla,nijdlb, njdla, njdlb
+    integer          ::    nvi,   nvj,   nvk
     integer          ::  id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb
-    double precision ::  cnrota,   dist,    eps, snrota,x(ip21)
-    double precision :: y(ip21),    ynb,z(ip21),    znb
+    double precision :: cnrota,  dist,   eps,snrota,     x(ip21)
+    double precision ::      y(ip21),   ynb,     z(ip21),   znb
 !
 !-----------------------------------------------------------------------
 !
@@ -113,170 +113,167 @@ contains
     character(len=7 ) :: equat
     character(len=2 ) :: tvi,tvj,tvk
 !
-    nidla = id2(la)-id1(la)+1
-    njdla = jd2(la)-jd1(la)+1
-    nijdla = nidla*njdla
-    nidlb = id2b-id1b+1
-    njdlb = jd2b-jd1b+1
-    nijdlb = nidlb*njdlb
+!---------------------------------------------------------------------
 !
-    ncilb = 1
-    ncjlb = nidlb
-    ncklb = nijdlb
+      nidla = id2(la)-id1(la)+1
+      njdla = jd2(la)-jd1(la)+1
+      nijdla = nidla*njdla
+      nidlb = id2b-id1b+1
+      njdlb = jd2b-jd1b+1
+      nijdlb = nidlb*njdlb
 !
-    lper=0
-    if(krr.eq.1) then ! TODO DO NOT WORK if nprocs > 1
-       na=npn(la)+1+(ia1-id1(la)) &
-            +(ja1-jd1(la))*nidla &
-            +(ka1-kd1(la))*nijdla
+      ncilb = 1
+      ncjlb = nidlb
+      ncklb = nijdlb
 !
-       nai = na+1
-       naj = na+nidla
-       nak = na+nijdla
+      if (krr.eq.1) then ! TODO DO NOT WORK if nprocs > 1
+!---------------------------------------------------------------------
+      na = npn(la)+1+(ia1-id1(la)) &
+                    +(ja1-jd1(la))*nidla &
+                    +(ka1-kd1(la))*nijdla
 !
-       ipb=max(1,ib2-ib1)
-       jpb=max(1,jb2-jb1)
-       kpb=max(1,kb2-kb1)
+      nai = na+1
+      naj = na+nidla
+      nak = na+nijdla
 !
-       do lper=-1,1
-          cnrota=cos(real(lper)*protat)
-          snrota=sin(real(lper)*protat)
+      do k=kb1,kb2
+       do j=jb1,jb2
+        do i=ib1,ib2
+         iba=i
+         jba=j
+         kba=k
+         nb = npnb+1+(i-id1b) &
+                       +(j-jd1b)*nidlb &
+                       +(k-kd1b)*nijdlb
 !
-          print*,' lper=',lper
-          do k=kb1,kb2,kpb
-             do j=jb1,jb2,jpb
-                do i=ib1,ib2,ipb
-                   iba=i
-                   jba=j
-                   kba=k
-                   nb=npnb+1+(i-id1b) &
-                        +(j-jd1b)*nidlb &
-                        +(k-kd1b)*nijdlb
-!
-                   ynb=y(nb)*cnrota+z(nb)*snrota
-                   znb=z(nb)*cnrota-y(nb)*snrota
-                   dist=sqrt( (x(nb)-x(na))**2+(ynb-y(na))**2+(znb-z(na))**2)
-                   if(dist.lt.eps) exit
-                enddo
-             enddo
-          enddo
+!print*,x(na),x(nb),i
+!print*,y(na),y(nb),j
+!print*,z(na),z(nb),k
+!print*,la   ,lb     
+         dist=sqrt( (x(nb)-x(na))**2+(y(nb)-y(na))**2+(z(nb)-z(na))**2 )
+         if(dist.lt.eps) go to 51
+!         if(dist.lt.eps) exit
+        enddo
        enddo
-       kinitc=1
-       print*,' kinitc=',kinitc
-!
-       do k=kb1,kb2
-          do j=jb1,jb2
-             do i=ib1,ib2
-                ii=i
-                jj=j
-                kk=k
-                nb=npnb+1+(i-id1b) &
-                     +(j-jd1b)*nidlb &
-                     +(k-kd1b)*nijdlb
-!
-                ynb=y(nb)*cnrota+z(nb)*snrota
-                znb=z(nb)*cnrota-y(nb)*snrota
-                dist=sqrt( (x(nb)-x(nai))**2+(ynb-y(nai))**2+(znb-z(nai))**2)
-                if(dist.lt.eps) exit
-             enddo
-          enddo
-       enddo
-!
-       tvi = 'fa'
-!
-       if(equat(3:5).ne.'2di') then
-          if(ii-iba.eq.+1) tvi = '+i'
-          if(ii-iba.eq.-1) tvi = '-i'
-       endif
-!
-       if(equat(3:5).ne.'2dj') then
-          if(jj-jba.eq.+1) tvi = '+j'
-          if(jj-jba.eq.-1) tvi = '-j'
-       endif
-!
-       if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
-          if(kk-kba.eq.+1) tvi = '+k'
-          if(kk-kba.eq.-1) tvi = '-k'
-       endif
+      enddo 
+      kinitc=1
+   51 continue
 !
 !-------
 !
-       do k=kb1,kb2
-          do j=jb1,jb2
-             do i=ib1,ib2
-                ii=i
-                jj=j
-                kk=k
-                nb=npnb+1+(i-id1b) &
-                     +(j-jd1b)*nidlb &
-                     +(k-kd1b)*nijdlb
-!
-                ynb=y(nb)*cnrota+z(nb)*snrota
-                znb=z(nb)*cnrota-y(nb)*snrota
-                dist=sqrt( (x(nb)-x(naj))**2+(ynb-y(naj))**2+(znb-z(naj))**2)
-                if(dist.lt.eps) exit
-             enddo
-          enddo
+      do k=kb1,kb2
+       do j=jb1,jb2
+        do i=ib1,ib2
+         ii=i
+         jj=j
+         kk=k
+         nb = npnb+1+(i-id1b) &
+                       +(j-jd1b)*nidlb &
+                       +(k-kd1b)*nijdlb
+         dist=sqrt( (x(nb)-x(nai))**2+(y(nb)-y(nai))**2+(z(nb)-z(nai))**2 )
+!         if(dist.lt.eps) exit
+         if(dist.lt.eps) go to 61
+        enddo
        enddo
+      enddo 
+   61 continue
 !
-       tvj = 'fa'
+      tvi = 'fa'
 !
-       if(equat(3:5).ne.'2di') then
-          if(ii-iba.eq.+1) tvj = '+i'
-          if(ii-iba.eq.-1) tvj = '-i'
-       endif
+      if(equat(3:5).ne.'2di') then
+      if(ii-iba.eq.+1) tvi = '+i'
+      if(ii-iba.eq.-1) tvi = '-i'
+      endif
 !
-       if(equat(3:5).ne.'2dj') then
-          if(jj-jba.eq.+1) tvj = '+j'
-          if(jj-jba.eq.-1) tvj = '-j'
-       endif
+      if(equat(3:5).ne.'2dj') then
+      if(jj-jba.eq.+1) tvi = '+j'
+      if(jj-jba.eq.-1) tvi = '-j'
+      endif
 !
-       if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
-          if(kk-kba.eq.+1) tvj = '+k'
-          if(kk-kba.eq.-1) tvj = '-k'
-       endif
+!VC   if(equat(3:5).ne.'2dk') then
+      if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
+      if(kk-kba.eq.+1) tvi = '+k'
+      if(kk-kba.eq.-1) tvi = '-k'
+      endif
 !
 !-------
 !
-       do k=kb1,kb2
-          do j=jb1,jb2
-             do i=ib1,ib2
-                ii=i
-                jj=j
-                kk=k
-                nb=npnb+1+(i-id1b) &
-                     +(j-jd1b)*nidlb &
-                     +(k-kd1b)*nijdlb
-!
-                ynb=y(nb)*cnrota+z(nb)*snrota
-                znb=z(nb)*cnrota-y(nb)*snrota
-                dist=sqrt( (x(nb)-x(nak))**2+(ynb-y(nak))**2+(znb-z(nak))**2 )
-                if(dist.lt.eps) exit
-             enddo
-          enddo
+      do k=kb1,kb2
+       do j=jb1,jb2
+        do i=ib1,ib2
+         ii=i
+         jj=j
+         kk=k
+         nb = npnb+1+(i-id1b) &
+                       +(j-jd1b)*nidlb &
+                       +(k-kd1b)*nijdlb
+         dist=sqrt( (x(nb)-x(naj))**2+(y(nb)-y(naj))**2+(z(nb)-z(naj))**2 )
+         if(dist.lt.eps) go to 71
+!         if(dist.lt.eps) exit 
+        enddo
        enddo
+      enddo 
+   71 continue
 !
-       tvk = 'fa'
+      tvj = 'fa'
 !
-       if(equat(3:5).ne.'2di') then
-          if(ii-iba.eq.+1) tvk = '+i'
-          if(ii-iba.eq.-1) tvk = '-i'
-       endif
+      if(equat(3:5).ne.'2di') then
+      if(ii-iba.eq.+1) tvj = '+i'
+      if(ii-iba.eq.-1) tvj = '-i'
+      endif
 !
-       if(equat(3:5).ne.'2dj') then
-          if(jj-jba.eq.+1) tvk = '+j'
-          if(jj-jba.eq.-1) tvk = '-j'
-       endif
+      if(equat(3:5).ne.'2dj') then
+      if(jj-jba.eq.+1) tvj = '+j'
+      if(jj-jba.eq.-1) tvj = '-j'
+      endif
 !
-       if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
-          if(kk-kba.eq.+1) tvk = '+k'
-          if(kk-kba.eq.-1) tvk = '-k'
-       endif
+!VC   if(equat(3:5).ne.'2dk') then
+      if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
+      if(kk-kba.eq.+1) tvj = '+k'
+      if(kk-kba.eq.-1) tvj = '-k'
+      endif
+! 
+!-------
+!
+      do k=kb1,kb2
+       do j=jb1,jb2
+        do i=ib1,ib2
+         ii=i
+         jj=j
+         kk=k
+         nb = npnb+1+(i-id1b) &
+                       +(j-jd1b)*nidlb &
+                       +(k-kd1b)*nijdlb
+         dist=sqrt( (x(nb)-x(nak))**2+(y(nb)-y(nak))**2+(z(nb)-z(nak))**2 )
+!         if(dist.lt.eps) exit 
+         if(dist.lt.eps) go to 81
+        enddo
+       enddo
+      enddo
+   81 continue
+!
+      tvk = 'fa'
+!
+      if(equat(3:5).ne.'2di') then
+      if(ii-iba.eq.+1) tvk = '+i'
+      if(ii-iba.eq.-1) tvk = '-i'
+      endif
+!
+      if(equat(3:5).ne.'2dj') then
+      if(jj-jba.eq.+1) tvk = '+j'
+      if(jj-jba.eq.-1) tvk = '-j'
+      endif
+!
+!VC   if(equat(3:5).ne.'2dk') then
+      if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
+      if(kk-kba.eq.+1) tvk = '+k'
+      if(kk-kba.eq.-1) tvk = '-k'
+      endif
 !
 !---------------------------------------------------------------------
-    endif
+      endif
 !
-    if(kimp.ge.2) then
+      if (kimp.ge.2) then
 !
        l=mod(la,lz)+1
        img=(la-l+1)/lz+1
@@ -290,37 +287,37 @@ contains
             //'''le domaine a'',/,' &
             //'19x,''tvi ='',4x,a,4x,''tvj ='',4x,a,4x,''tvk ='',4x,a,/' &
             //'19x,''rotation de frt b (nb de pas)  ='',i3)'
-       write(imp,form) bl_to_bg(l),iba,jba,kba,tvi,tvj,tvk,lper
-    endif
+       write(imp,form) bl_to_bg(l),iba,jba,kba,tvi,tvj,tvk,0
+      endif
 !
 !-----------------------------------------------------------------------------
 !
 !---- variation des indices du domaine b sur la frontiere commune
 !     en fonction de la variation des indices du domaine a
 !
-    if(tvi.eq.'fa') nvi = 0
-    if(tvi.eq.'+i') nvi = ncilb
-    if(tvi.eq.'-i') nvi =-ncilb
-    if(tvi.eq.'+j') nvi = ncjlb
-    if(tvi.eq.'-j') nvi =-ncjlb
-    if(tvi.eq.'+k') nvi = ncklb
-    if(tvi.eq.'-k') nvi =-ncklb
+      if(tvi.eq.'fa') nvi = 0
+      if(tvi.eq.'+i') nvi = ncilb
+      if(tvi.eq.'-i') nvi =-ncilb
+      if(tvi.eq.'+j') nvi = ncjlb
+      if(tvi.eq.'-j') nvi =-ncjlb
+      if(tvi.eq.'+k') nvi = ncklb
+      if(tvi.eq.'-k') nvi =-ncklb
 !
-    if(tvj.eq.'fa') nvj = 0
-    if(tvj.eq.'+i') nvj = ncilb
-    if(tvj.eq.'-i') nvj =-ncilb
-    if(tvj.eq.'+j') nvj = ncjlb
-    if(tvj.eq.'-j') nvj =-ncjlb
-    if(tvj.eq.'+k') nvj = ncklb
-    if(tvj.eq.'-k') nvj =-ncklb
+      if(tvj.eq.'fa') nvj = 0
+      if(tvj.eq.'+i') nvj = ncilb
+      if(tvj.eq.'-i') nvj =-ncilb
+      if(tvj.eq.'+j') nvj = ncjlb
+      if(tvj.eq.'-j') nvj =-ncjlb
+      if(tvj.eq.'+k') nvj = ncklb
+      if(tvj.eq.'-k') nvj =-ncklb
 !
-    if(tvk.eq.'fa') nvk = 0
-    if(tvk.eq.'+i') nvk = ncilb
-    if(tvk.eq.'-i') nvk =-ncilb
-    if(tvk.eq.'+j') nvk = ncjlb
-    if(tvk.eq.'-j') nvk =-ncjlb
-    if(tvk.eq.'+k') nvk = ncklb
-    if(tvk.eq.'-k') nvk =-ncklb
+      if(tvk.eq.'fa') nvk = 0
+      if(tvk.eq.'+i') nvk = ncilb
+      if(tvk.eq.'-i') nvk =-ncilb
+      if(tvk.eq.'+j') nvk = ncjlb
+      if(tvk.eq.'-j') nvk =-ncjlb
+      if(tvk.eq.'+k') nvk = ncklb
+      if(tvk.eq.'-k') nvk =-ncklb
 !
 !-----------------------------------------------------------------------------
 !
@@ -328,40 +325,39 @@ contains
 !     calcul de l'increment vers le point fictif
 !
 !---- faces
-    if(typb.eq.'i1    ')   inpcb =  0
-    if(typb.eq.'i2    ')   inpcb = -ncilb
-    if(typb.eq.'j1    ')   inpcb =  0
-    if(typb.eq.'j2    ')   inpcb = -ncjlb
-    if(typb.eq.'k1    ')   inpcb  = 0
-    if(typb.eq.'k2    ')   inpcb = -ncklb
+      if(typb.eq.'i1    ')   inpcb =  0
+      if(typb.eq.'i2    ')   inpcb = -ncilb
+      if(typb.eq.'j1    ')   inpcb =  0
+      if(typb.eq.'j2    ')   inpcb = -ncjlb
+      if(typb.eq.'k1    ')   inpcb  = 0
+      if(typb.eq.'k2    ')   inpcb = -ncklb
 !
 !--   adaptation cell centered
-    imax=ia2-1
-    jmax=ja2-1
-    kmax=ka2-1
+      imax=ia2-1
+      jmax=ja2-1
+      kmax=ka2-1
 !
-    if(typa.eq.'i1    ')   imax=ia2
-    if(typa.eq.'i2    ')   imax=ia2
-    if(typa.eq.'j1    ')   jmax=ja2
-    if(typa.eq.'j2    ')   jmax=ja2
-    if(typa.eq.'k1    ')   kmax=ka2
-    if(typa.eq.'k2    ')   kmax=ka2
+      if(typa.eq.'i1    ')   imax=ia2
+      if(typa.eq.'i2    ')   imax=ia2
+      if(typa.eq.'j1    ')   jmax=ja2
+      if(typa.eq.'j2    ')   jmax=ja2
+      if(typa.eq.'k1    ')   kmax=ka2
+      if(typa.eq.'k2    ')   kmax=ka2
 !
-    mper(mfba)=lper
-    m0c=mpc(mfba)
-    m=0
-    do k=ka1,kmax
+      m0c=mpc(mfba)
+      m=0
+      do k=ka1,kmax
        do j=ja1,jmax
-          do i=ia1,imax
-             m=m+1
-             mc=m0c+m
+        do i=ia1,imax
+         m=m+1
+         mc=m0c+m
 !
-             nb = npcb+1+(iba-id1b) &
-                  +(jba-jd1b)*nidlb &
-                  +(kba-kd1b)*nijdlb &
-                  +(i-ia1)*nvi &
-                  +(j-ja1)*nvj &
-                  +(k-ka1)*nvk
+         nb = npcb+1+(iba-id1b) &
+                       +(jba-jd1b)*nidlb &
+                       +(kba-kd1b)*nijdlb &
+                       +(i-ia1)*nvi &
+                       +(j-ja1)*nvj &
+                       +(k-ka1)*nvk 
 !
 !--   modification du stockage du point du domaine b
 !     prenant en compte le stockage en bas a gauche
@@ -369,19 +365,19 @@ contains
 !om   if(nvi.lt.0) nb=nb - pas suivant = nb-abs(nvi) = nb+nvi
 !om   if(nvj.lt.0) nb=nb - pas suivant = nb-abs(nvj) = nb+nvj
 !om   if(nvk.lt.0) nb=nb - pas suivant = nb-abs(nvk) = nb+nvk
-             if(nvi.lt.0) nb=nb+nvi
-             if(nvj.lt.0) nb=nb+nvj
-             if(nvk.lt.0) nb=nb+nvk
+         if(nvi.lt.0) nb=nb+nvi
+         if(nvj.lt.0) nb=nb+nvj
+         if(nvk.lt.0) nb=nb+nvk
 !
 !---- tableau de coincidence des indices
 !
-             nbv=nb+inpcb
-             mnc(mc)=nbv
-!
-          enddo
+         nbv=nb+inpcb
+         mnc(mc)=nbv
+        enddo
        enddo
-    enddo
+      enddo
 !
-    return
+      return
   end subroutine initcs
 end module mod_initcs
+

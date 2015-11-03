@@ -41,10 +41,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-!
-
-
-
     eps=0.000001
 !
     n0c=npc(l)
@@ -76,7 +72,7 @@ contains
     ncj=inc(0,1,0)
     nck=inc(0,0,1)
 !
-!     initialisation
+!   initialisation
     ind1=indc(i1m1,j1m1,k1m1)-n0c
     ind2=indc(i2p1,j2p1,k2p1)-n0c
     do m=ind1,ind2
@@ -420,7 +416,7 @@ contains
     do n=ind1,ind2
        m=n-n0c
 !       le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t
-       ts=sign(0.5,-vol(n))
+       ts=sign(0.5D0,-vol(n))
        vols=(0.5+ts)*eps+(0.5-ts)*vol(n)
        c0=0.5/(vols+tiny(1.))
 !        c0=0.5/vol(n)

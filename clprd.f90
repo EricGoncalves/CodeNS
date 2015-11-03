@@ -65,8 +65,8 @@ contains
     integer          ::        n0n,ncbd(ip41),        nl
     double precision ::     cson(ip11),           dqn,     nxn(ip42),     nyn(ip42),     nzn(ip42)
     double precision ::     pres(ip40),pression(ip11),            ps,            qx,           qxs
-    double precision ::             qy,           qys,            qz,           qzs,           rho
-    double precision ::           roc0,    temp(ip11),  v(ip11,ip60)
+    double precision ::       qy,     qys,      qz,     qzs,     rho
+    double precision ::           roc0,    temp(ip11),  v(ip11,ip60),cs2,drho
 !
 !-----------------------------------------------------------------------
 !
@@ -85,14 +85,16 @@ contains
        qys=v(nl,3)/v(nl,1)
        qzs=v(nl,4)/v(nl,1)
        ps=gam1*(v(nl,5)-0.5*rho*(qxs**2+qys**2+qzs**2)-pinfl)
+       cs2=gam*ps/rho
        roc0=sqrt(gam*ps*rho)
 !
        dqn=(pres(m)-ps)/roc0
        qx=qxs+dqn*nxn(mn)   !attention aux signes des normales
        qy=qys+dqn*nyn(mn)
        qz=qzs+dqn*nzn(mn)
+       drho=(pres(m)-ps)/cs2
 !
-       v(nl,1)=v(nl,1)+rho*rho*dqn/roc0
+       v(nl,1)=v(nl,1)+drho
        v(nl,2)=v(nl,1)*qx
        v(nl,3)=v(nl,1)*qy
        v(nl,4)=v(nl,1)*qz

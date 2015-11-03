@@ -93,10 +93,6 @@ contains
 !
     character(len=7 ) :: equat
 !
-
-
-
-!
     ALLOCATE(beta2v(ip21))
 
     n0c =npc(l)
@@ -136,7 +132,7 @@ contains
                   sn(m,1,3)*sn(m,1,3)
           enddo
        enddo
-
+!
        do j=j1,j2
           do i=i1,i2m1
              n=indn(i,j,k)
@@ -252,31 +248,6 @@ contains
 !           betau=xmach**2+1./cflc**2
                 betau=xmach2*(1.+xmach2*(1.-xm0**2)/xm0**4)
                 beta2v(mc)=min(max(beta2v(mc),betau),1.)
-             enddo
-          enddo
-       enddo
-    endif
-!
-!--------beta2 pour ecoulements visqueux----------------------------
-!
-    ivisq=0
-    if(ivisq.eq.1) then
-       do k=k1,k2m1
-          do j=j1,j2m1
-             mn=indn(i1-1,j,k)-n0n
-             mc=indc(i1-1,j,k)-n0c
-             do i=i1,i2m1
-                mn=mn+nci
-                mc=mc+nci
-                nc=mc+n0c
-                uu=t(nc,2)/t(nc,1)
-                vv=t(nc,3)/t(nc,1)
-                ww=t(nc,4)/t(nc,1)
-                q2=uu**2+vv**2+ww**2
-                a2=cson(nc)**2
-                q=sqrt(q2)
-                betv=7.
-                beta2v(mc)=betv
              enddo
           enddo
        enddo
