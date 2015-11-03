@@ -62,9 +62,6 @@ contains
     dimension vv1(ip00),vv2(ip00),vv3(ip00),vv4(ip00),vv5(ip00), &
          vv6(ip00),vv7(ip00),mmut(ip00)
 !
-
-
-!
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)

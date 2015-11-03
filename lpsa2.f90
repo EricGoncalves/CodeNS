@@ -74,7 +74,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension mu(ip12),mut(ip12)
     dimension nxn(ip42),nyn(ip42),nzn(ip42)
     dimension ncin(ip41),ncbd(ip41)
@@ -121,24 +120,24 @@ contains
        t1=t1/tt
        t2=t2/tt
        t3=t3/tt
-!         composante tangentielle de la vitesse dans repere paroi : v1t
+!      composante tangentielle de la vitesse dans repere paroi : v1t
        v1t=v1x*t1+v1y*t2+v1z*t3
-!         temperature cellule 1 : temp1
+!      temperature cellule 1 : temp1
        temp1=temp(ni)
-!         masse volumique a la paroi
+!      masse volumique a la paroi
        rop=v(ni,1)*temp1/tp(m)
-!         viscosite moleculaire a la paroi
+!      viscosite moleculaire a la paroi
        mup=mu(ni)*sqrt(tp(m)/temp1)*(1.+sv/temp1)/(1.+sv/tp(m))
-!         correction de compressibilite (loi de Van Driest)
+!      correction de compressibilite (loi de Van Driest)
        cta=(mu(ni)+mut(ni))/(cp*(mu(ni)/pr+mut(ni)/prt))
        ctb=cta/(2.*tp(m))
        denom = (tp(m)-temp1-cta*0.5*v1t**2)*sqrt(temp1/tp(m)) + &
             tp(m)-temp1+cta*0.5*v1t**2
        v1t=(1./sqrt(ctb))*asin(2.*sqrt(ctb)*(tp(m)-temp1)*v1t/denom)
-!         contrainte de frottement a la paroi : top
+!      contrainte de frottement a la paroi : top
        upyp1=rop*v1t*dist(ni)/mup
        yp02=yp0**2
-!         loi standard
+!      loi standard
        if(upyp1.le.yp02 .or. lamin) then
 !           loi lineaire
           top=mup*v1t/dist(ni)
@@ -204,5 +203,4 @@ contains
 !
     return
   end subroutine lpsa2
-
 end module mod_lpsa2

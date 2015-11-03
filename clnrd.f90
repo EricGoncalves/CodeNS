@@ -75,7 +75,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension v(ip11,ip60)
     dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
     dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
@@ -97,9 +96,9 @@ contains
        ps0=gam1*(v(nl,5)-0.5*(v(nl,2)**2+v(nl,3)**2+v(nl,4)**2)/v(nl,1)-pinfl)
        roc0=sqrt(gam*ps0*ro0)
        roqn0=v(nl,2)*nxn(mn)+v(nl,3)*nyn(mn)+v(nl,4)*nzn(mn)
-       epsm=.5+sign(.5, roc0-roqn0)
-       eps0=.5+sign(.5,-roqn0)
-       epsp=.5+sign(.5,-roc0-roqn0)
+       epsm=.5+sign(.5D0, roc0-roqn0)
+       eps0=.5+sign(.5D0,-roqn0)
+       epsp=.5+sign(.5D0,-roc0-roqn0)
 !      etat de reference (valeur prise a t=0)
        qxd=roud(m)/rod(m)
        qyd=rovd(m)/rod(m)

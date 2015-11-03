@@ -55,15 +55,11 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension v(ip11,ip60)
     dimension bceqt(ip41,neqt)
     dimension pres(ip40),ncbd(ip41),nxn(ip42),nyn(ip42),nzn(ip42)
     dimension mmb(mtt),mpb(mtt),mpn(mtt)
     dimension sn(lgsnlt,nind,ndir)
-!
-
-
 !
     n0c=npc(lm)
     i1=ii1(lm)

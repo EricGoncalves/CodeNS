@@ -15,7 +15,6 @@ contains
     use sortiefichier
     use mod_tcmd_dfnm
     use mod_b1_dfnm
-
     implicit none
     integer          :: imot,nmot
 !

@@ -368,7 +368,7 @@ contains
 !
 !-----raccord coincident
        else if (cl(mfb)(1:2).eq.'rc') then
-          call rbvc(v,ncbd,ncin,mnc)
+          call rbvc(v,ncbd,ncin,mnc,pression,ztemp,cson)
 !
 !-----affectation de valeurs extrapolees en vue de post-traitement
        else if (((cl(mfb).eq.'rien').or.(cl(mfb).eq.'axe ')).and. &

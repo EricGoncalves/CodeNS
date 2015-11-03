@@ -42,9 +42,6 @@ contains
     dimension tprod(ip00),bark(ip00),bare(ip00)
     dimension cfke(ip13)
 !
-
-
-!
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)

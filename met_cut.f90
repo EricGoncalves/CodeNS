@@ -26,9 +26,6 @@ contains
 !
     dimension s(ip11,ip60)
 !
-
-
-!
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -56,9 +53,9 @@ contains
           n=indc(i1-1,j,k)
           do i=i1,i2m1
              n=n+nci
-             test6=sign(1.,s(n,6)-epsk)
-             test7=sign(1.,s(n,7)-epse)
-             ts=sign(1.,test6+test7-1.5)
+             test6=sign(1.D0,s(n,6)-epsk)
+             test7=sign(1.D0,s(n,7)-epse)
+             ts=sign(1.D0,test6+test7-1.5)
              s(n,6)=0.5*((1.+ts)*s(n,6)+(1.-ts)*epsk)
              s(n,7)=0.5*((1.+ts)*s(n,7)+(1.-ts)*epse)
           enddo

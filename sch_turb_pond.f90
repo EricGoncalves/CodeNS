@@ -1,7 +1,7 @@
-module mod_sch_turb2
+module mod_sch_turb_pond
   implicit none
 contains
-  subroutine sch_turb2( &
+  subroutine sch_turb_pond( &
        l,u,v,d, &
        fd5x,fd5y,fd5z,fd6x,fd6y,fd6z,ts6,ts7, &
        equat,ncin, &
@@ -48,17 +48,14 @@ contains
     character(len=7 ) :: equat
     dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60)           
     dimension fd5x(ip12),fd5y(ip12),fd5z(ip12), &
-         fd6x(ip12),fd6y(ip12),fd6z(ip12), &
-         ts6(ip12),ts7(ip12)
+              fd6x(ip12),fd6y(ip12),fd6z(ip12), &
+              ts6(ip12),ts7(ip12)
     dimension sn(lgsnlt,nind,ndir)
     dimension ncin(ip41),vol(ip11)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
     dimension f6x(ip00),f6y(ip00),f6z(ip00), &
-         f7x(ip00),f7y(ip00),f7z(ip00)
+              f7x(ip00),f7y(ip00),f7z(ip00)
 !
-
-
-
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -127,15 +124,15 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1p1,j,k)
           ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
-             si6= (cmui1(m)*f6x(m)+cmui2(m)*f6x(m-ninc))*sn(m,kdir,1) &
-                  +(cmui1(m)*f6y(m)+cmui2(m)*f6y(m-ninc))*sn(m,kdir,2) &
-                  +(cmui1(m)*f6z(m)+cmui2(m)*f6z(m-ninc))*sn(m,kdir,3)
-             si7= (cmui1(m)*f7x(m)+cmui2(m)*f7x(m-ninc))*sn(m,kdir,1) &
-                  +(cmui1(m)*f7y(m)+cmui2(m)*f7y(m-ninc))*sn(m,kdir,2) &
-                  +(cmui1(m)*f7z(m)+cmui2(m)*f7z(m-ninc))*sn(m,kdir,3)
+             si6= (cmui1(n)*f6x(m)+cmui2(n)*f6x(m-ninc))*sn(m,kdir,1) &
+                 +(cmui1(n)*f6y(m)+cmui2(n)*f6y(m-ninc))*sn(m,kdir,2) &
+                 +(cmui1(n)*f6z(m)+cmui2(n)*f6z(m-ninc))*sn(m,kdir,3)
+             si7= (cmui1(n)*f7x(m)+cmui2(n)*f7x(m-ninc))*sn(m,kdir,1) &
+                 +(cmui1(n)*f7y(m)+cmui2(n)*f7y(m-ninc))*sn(m,kdir,2) &
+                 +(cmui1(n)*f7z(m)+cmui2(n)*f7z(m-ninc))*sn(m,kdir,3)
              u(n,6)=u(n,6)-si6
              u(n,7)=u(n,7)-si7
              u(n-ninc,6)=u(n-ninc,6)+si6
@@ -147,15 +144,15 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1,j1  ,k)
        ind2 = indc(i1,j2m1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2,ncj
           m=n-n0c
           si6= 2*f6x(m-ninc)*sn(m,kdir,1) &
-               +2*f6y(m-ninc)*sn(m,kdir,2) &
-               +2*f6z(m-ninc)*sn(m,kdir,3)
+              +2*f6y(m-ninc)*sn(m,kdir,2) &
+              +2*f6z(m-ninc)*sn(m,kdir,3)
           si7= 2*f7x(m-ninc)*sn(m,kdir,1) &
-               +2*f7y(m-ninc)*sn(m,kdir,2) &
-               +2*f7z(m-ninc)*sn(m,kdir,3)
+              +2*f7y(m-ninc)*sn(m,kdir,2) &
+              +2*f7z(m-ninc)*sn(m,kdir,3)
           u(n,6)=u(n,6)-si6
           u(n,7)=u(n,7)-si7
        enddo
@@ -164,15 +161,15 @@ contains
     do k=k1,k2m1
        ind1 = indc(i2,j1  ,k)
        ind2 = indc(i2,j2m1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2,ncj
           m=n-n0c
           si6= 2*f6x(m)*sn(m,kdir,1) &
-               +2*f6y(m)*sn(m,kdir,2) &
-               +2*f6z(m)*sn(m,kdir,3)
+              +2*f6y(m)*sn(m,kdir,2) &
+              +2*f6z(m)*sn(m,kdir,3)
           si7= 2*f7x(m)*sn(m,kdir,1) &
-               +2*f7y(m)*sn(m,kdir,2) &
-               +2*f7z(m)*sn(m,kdir,3)
+              +2*f7y(m)*sn(m,kdir,2) &
+              +2*f7z(m)*sn(m,kdir,3)
           u(n-ninc,6)=u(n-ninc,6)+si6
           u(n-ninc,7)=u(n-ninc,7)+si7
        enddo
@@ -187,15 +184,15 @@ contains
        do j=j1p1,j2m1
           ind1 = indc(i1,j,k)
           ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
-             sj6= (cmuj1(m)*f6x(m)+cmuj2(m)*f6x(m-ninc))*sn(m,kdir,1) &
-                  +(cmuj1(m)*f6y(m)+cmuj2(m)*f6y(m-ninc))*sn(m,kdir,2) &
-                  +(cmuj1(m)*f6z(m)+cmuj2(m)*f6z(m-ninc))*sn(m,kdir,3)
-             sj7= (cmuj1(m)*f7x(m)+cmuj2(m)*f7x(m-ninc))*sn(m,kdir,1) &
-                  +(cmuj1(m)*f7y(m)+cmuj2(m)*f7y(m-ninc))*sn(m,kdir,2) &
-                  +(cmuj1(m)*f7z(m)+cmuj2(m)*f7z(m-ninc))*sn(m,kdir,3)
+             sj6= (cmuj1(n)*f6x(m)+cmuj2(n)*f6x(m-ninc))*sn(m,kdir,1) &
+                 +(cmuj1(n)*f6y(m)+cmuj2(n)*f6y(m-ninc))*sn(m,kdir,2) &
+                 +(cmuj1(n)*f6z(m)+cmuj2(n)*f6z(m-ninc))*sn(m,kdir,3)
+             sj7= (cmuj1(n)*f7x(m)+cmuj2(n)*f7x(m-ninc))*sn(m,kdir,1) &
+                 +(cmuj1(n)*f7y(m)+cmuj2(n)*f7y(m-ninc))*sn(m,kdir,2) &
+                 +(cmuj1(n)*f7z(m)+cmuj2(n)*f7z(m-ninc))*sn(m,kdir,3)
              u(n,6)=u(n,6)-sj6
              u(n,7)=u(n,7)-sj7
              u(n-ninc,6)=u(n-ninc,6)+sj6
@@ -207,15 +204,15 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2
           m=n-n0c
           sj6= 2*f6x(m-ninc)*sn(m,kdir,1) &
-               +2*f6y(m-ninc)*sn(m,kdir,2) &
-               +2*f6z(m-ninc)*sn(m,kdir,3)
+              +2*f6y(m-ninc)*sn(m,kdir,2) &
+              +2*f6z(m-ninc)*sn(m,kdir,3)
           sj7= 2*f7x(m-ninc)*sn(m,kdir,1) &
-               +2*f7y(m-ninc)*sn(m,kdir,2) &
-               +2*f7z(m-ninc)*sn(m,kdir,3)
+              +2*f7y(m-ninc)*sn(m,kdir,2) &
+              +2*f7z(m-ninc)*sn(m,kdir,3)
           u(n,6)=u(n,6)-sj6
           u(n,7)=u(n,7)-sj7
        enddo
@@ -224,15 +221,15 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2
           m=n-n0c
           sj6= 2*f6x(m)*sn(m,kdir,1) &
-               +2*f6y(m)*sn(m,kdir,2) &
-               +2*f6z(m)*sn(m,kdir,3)
+              +2*f6y(m)*sn(m,kdir,2) &
+              +2*f6z(m)*sn(m,kdir,3)
           sj7= 2*f7x(m)*sn(m,kdir,1) &
-               +2*f7y(m)*sn(m,kdir,2) &
-               +2*f7z(m)*sn(m,kdir,3)
+              +2*f7y(m)*sn(m,kdir,2) &
+              +2*f7z(m)*sn(m,kdir,3)
           u(n-ninc,6)=u(n-ninc,6)+sj6
           u(n-ninc,7)=u(n-ninc,7)+sj7
        enddo
@@ -248,15 +245,15 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!DEC$ IVDEP
              do n=ind1,ind2
                 m=n-n0c
-                sk6= (cmuk1(m)*f6x(m)+cmuk2(m)*f6x(m-ninc))*sn(m,kdir,1) &
-                     +(cmuk1(m)*f6y(m)+cmuk2(m)*f6y(m-ninc))*sn(m,kdir,2) &
-                     +(cmuk1(m)*f6z(m)+cmuk2(m)*f6z(m-ninc))*sn(m,kdir,3)
-                sk7= (cmuk1(m)*f7x(m)+cmuk2(m)*f7x(m-ninc))*sn(m,kdir,1) &
-                     +(cmuk1(m)*f7y(m)+cmuk2(m)*f7y(m-ninc))*sn(m,kdir,2) &
-                     +(cmuk1(m)*f7z(m)+cmuk2(m)*f7z(m-ninc))*sn(m,kdir,3)
+                sk6= (cmuk1(n)*f6x(m)+cmuk2(n)*f6x(m-ninc))*sn(m,kdir,1) &
+                    +(cmuk1(n)*f6y(m)+cmuk2(n)*f6y(m-ninc))*sn(m,kdir,2) &
+                    +(cmuk1(n)*f6z(m)+cmuk2(n)*f6z(m-ninc))*sn(m,kdir,3)
+                sk7= (cmuk1(n)*f7x(m)+cmuk2(n)*f7x(m-ninc))*sn(m,kdir,1) &
+                    +(cmuk1(n)*f7y(m)+cmuk2(n)*f7y(m-ninc))*sn(m,kdir,2) &
+                    +(cmuk1(n)*f7z(m)+cmuk2(n)*f7z(m-ninc))*sn(m,kdir,3)
                 u(n,6)=u(n,6)-sk6
                 u(n,7)=u(n,7)-sk7
                 u(n-ninc,6)=u(n-ninc,6)+sk6
@@ -268,15 +265,15 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k1)
           ind2 = indc(i2m1,j,k1)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
              sk6= 2*f6x(m-ninc)*sn(m,kdir,1) &
-                  +2*f6y(m-ninc)*sn(m,kdir,2) &
-                  +2*f6z(m-ninc)*sn(m,kdir,3)
+                 +2*f6y(m-ninc)*sn(m,kdir,2) &
+                 +2*f6z(m-ninc)*sn(m,kdir,3)
              sk7= 2*f7x(m-ninc)*sn(m,kdir,1) &
-                  +2*f7y(m-ninc)*sn(m,kdir,2) &
-                  +2*f7z(m-ninc)*sn(m,kdir,3)
+                 +2*f7y(m-ninc)*sn(m,kdir,2) &
+                 +2*f7z(m-ninc)*sn(m,kdir,3)
              u(n,6)=u(n,6)-sk6
              u(n,7)=u(n,7)-sk7
           enddo
@@ -285,15 +282,15 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k2)
           ind2 = indc(i2m1,j,k2)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
              sk6= 2*f6x(m)*sn(m,kdir,1) &
-                  +2*f6y(m)*sn(m,kdir,2) &
-                  +2*f6z(m)*sn(m,kdir,3)
+                 +2*f6y(m)*sn(m,kdir,2) &
+                 +2*f6z(m)*sn(m,kdir,3)
              sk7= 2*f7x(m)*sn(m,kdir,1) &
-                  +2*f7y(m)*sn(m,kdir,2) &
-                  +2*f7z(m)*sn(m,kdir,3)
+                 +2*f7y(m)*sn(m,kdir,2) &
+                 +2*f7z(m)*sn(m,kdir,3)
              u(n-ninc,6)=u(n-ninc,6)+sk6
              u(n-ninc,7)=u(n-ninc,7)+sk7
           enddo
@@ -336,5 +333,5 @@ contains
       integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
-  end subroutine sch_turb2
-end module mod_sch_turb2
+  end subroutine sch_turb_pond
+end module mod_sch_turb_pond

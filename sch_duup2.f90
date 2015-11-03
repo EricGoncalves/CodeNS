@@ -55,7 +55,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension v(ip11,ip60)
     dimension vdual1(ip11,ip60),vdual2(ip11,ip60)
     dimension vdual(ip11,ip60),ptdual(ip11,ip60)
@@ -64,11 +63,7 @@ contains
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
     dimension t(ip00),tprod(ip00)
 
-
-!
-
-
-    REAL,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz
+    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz
     ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
          dvzx(ip00),dvzy(ip00),dvzz(ip00))
 

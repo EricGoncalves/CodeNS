@@ -105,7 +105,7 @@ contains
        npfb(lm)=nind*ndimntbx
 !
        ndimubx =max(ndimubx,nnn(lm))
-       ndimubx =max(ndimubx,nnc(lm))
+!       ndimubx =max(ndimubx,nnc(lm))
        ndimctbx=ndimctbx+nnc(lm)
        ndimntbx=ndimntbx+nnn(lm)
     enddo

@@ -55,16 +55,13 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension v(ip11,ip60),ptdual(ip11,ip60),vdual1(ip11,ip60),vdual(ip11,ip60)
     dimension vol(ip11),mut(ip12),mu(ip12),dist(ip12)
     dimension t(ip00),tprod(ip00)
     dimension sn(ip31*ndir)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
 !
-
-
-    REAL,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz
+    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz
     ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
          dvzx(ip00),dvzy(ip00),dvzz(ip00))
 
@@ -126,7 +123,7 @@ contains
 !        Jones Launder ou Launder Sharma
 !        modele de base et avec correction SST
              if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S').or. &
-                  (equatt(4:4).eq.'C').or.(equatt(4:4).eq.'L')) then
+                (equatt(4:4).eq.'C').or.(equatt(4:4).eq.'L')) then
 !            modele de base ou avec correction SST
                 call met_kemut( &
                      lm, &
@@ -229,7 +226,7 @@ contains
 !           Jones Launder ou Launder Sharma avec correction pour utiliser
 !           la fonction f_mu de Smith dans les regions externes et les sillages
 !
-!            call met_mutke2(
+!            call met_ke2mut(
 !     &           l,ncyc,
 !     &           v,mu,mut,dist,mnpar,ncin,
 !     &           txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z,

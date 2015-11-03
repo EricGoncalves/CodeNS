@@ -97,15 +97,12 @@ contains
     dimension u(ip11,ip60),v(ip11,ip60),ff(ip11,ip60),ps(ip11)
     dimension sn(lgsnlt,nind,ndir)
     dimension toxx(ip12),toxy(ip12),toxz(ip12), &
-         toyy(ip12),toyz(ip12),tozz(ip12), &
-         qcx (ip12),qcy (ip12),qcz (ip12)
+              toyy(ip12),toyz(ip12),tozz(ip12), &
+              qcx (ip12),qcy (ip12),qcz (ip12)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cvi(ip21),cvj(ip21)
+              cvi(ip21),cvj(ip21)
     dimension fxx(ip00),fyy(ip00),fzz(ip00),fxy(ip00),fxz(ip00), &
-         fyz(ip00),fex(ip00),fey(ip00),fez(ip00)
-
-
-
+              fyz(ip00),fex(ip00),fey(ip00),fez(ip00)
 
     n0c=npc(lm)
     i1=ii1(lm)
@@ -140,9 +137,9 @@ contains
     isortie=0
 !     activation mapping
     imap=1
-!     epsilon petit
-    eps=1.e-40
-!      eps=1.e-6
+!   epsilon petit
+    eps=1.D-40
+!   eps=1.D-6
 !
 !-----calcul des densites de flux convectifs ----------------------
 !
@@ -331,37 +328,37 @@ contains
                 q5f2p=q51*v(n+2*ninc,2)+q52*fxx(m+2*ninc)+q53*fxy(m+2*ninc) &
                      +q54*fxz(m+2*ninc)+q55*fex(m+2*ninc)
 !        coefficients Crj en maillage irregulier
-                c00=cmui2(m1)*0.5
-                c01=cmui1(m1)*0.5
-                c10=-cmui2(m)*0.5
+                c00=cmui2(n1)*0.5
+                c01=cmui1(n1)*0.5
+                c10=-cmui2(n)*0.5
                 c11=1.-c10
-                c21=-cmui1(m+2*ninc)*0.5
+                c21=-cmui1(n+2*ninc)*0.5
                 c20=1.-c21
 !        calcul des flux d'ordre 2 sur les 2 stencils
-                f11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
-                f12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
+                f11=0.5*(1.+sign(1.D0,v1))*(q1f1m*c10 +q1f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01)
+                f12=0.5*(1.+sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f1p*c11 +q1f2p*c10)
 !
-                f21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
-                f22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q2f1p*c11 +q2f2p*c10)
+                f21=0.5*(1.+sign(1.D0,v1))*(q2f1m*c10 +q2f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01)
+                f22=0.5*(1.+sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f1p*c11 +q2f2p*c10)
 !
-                f31=0.5*(1.+sign(1.,v1))*(q3f1m*c10 +q3f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q3f  *c00 +q3f1p*c01)
-                f32=0.5*(1.+sign(1.,v1))*(q3f  *c00 +q3f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q3f1p*c11 +q3f2p*c10)
+                f31=0.5*(1.+sign(1.D0,v1))*(q3f1m*c10 +q3f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01)
+                f32=0.5*(1.+sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f1p*c11 +q3f2p*c10)
 !
-                f41=0.5*(1.+sign(1.,v4))*(q4f1m*c10 +q4f  *c11) &
-                     +0.5*(1.-sign(1.,v4))*(q4f  *c00 +q4f1p*c01)
-                f42=0.5*(1.+sign(1.,v4))*(q4f  *c00 +q4f1p*c01) &
-                     +0.5*(1.-sign(1.,v4))*(q4f1p*c11 +q4f2p*c10)
+                f41=0.5*(1.+sign(1.D0,v4))*(q4f1m*c10 +q4f  *c11) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01)
+                f42=0.5*(1.+sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f1p*c11 +q4f2p*c10)
 !
-                f51=0.5*(1.+sign(1.,v5))*(q5f1m*c10 +q5f  *c11) &
-                     +0.5*(1.-sign(1.,v5))*(q5f  *c00 +q5f1p*c01)
-                f52=0.5*(1.+sign(1.,v5))*(q5f  *c00 +q5f1p*c01) &
-                     +0.5*(1.-sign(1.,v5))*(q5f1p*c11 +q5f2p*c10)
+                f51=0.5*(1.+sign(1.D0,v5))*(q5f1m*c10 +q5f  *c11) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01)
+                f52=0.5*(1.+sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f1p*c11 +q5f2p*c10)
 !        calcul des senseurs beta (au carre)
 !         d1c1=(q1f-q1f1m)**2    !maillage regulier
 !         d1c2=(q1f1p-q1f)**2
@@ -383,72 +380,72 @@ contains
                 d5c3=4.*((q5f2p-q5f1p)*c01*c21/c00)**2
                 iexp=2
 !         iexp=1
-                beta11=(0.5*(1.+sign(1.,v1))*d1c1 &
-                     +0.5*(1.-sign(1.,v1))*d1c2+eps)**iexp
-                beta12=(0.5*(1.+sign(1.,v1))*d1c2 &
-                     +0.5*(1.-sign(1.,v1))*d1c3+eps)**iexp
+                beta11=(0.5*(1.+sign(1.D0,v1))*d1c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c2+eps)**iexp
+                beta12=(0.5*(1.+sign(1.D0,v1))*d1c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c3+eps)**iexp
 !
-                beta21=(0.5*(1.+sign(1.,v1))*d2c1 &
-                     +0.5*(1.-sign(1.,v1))*d2c2+eps)**iexp
-                beta22=(0.5*(1.+sign(1.,v1))*d2c2 &
-                     +0.5*(1.-sign(1.,v1))*d2c3+eps)**iexp
+                beta21=(0.5*(1.+sign(1.D0,v1))*d2c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c2+eps)**iexp
+                beta22=(0.5*(1.+sign(1.D0,v1))*d2c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c3+eps)**iexp
 !
-                beta31=(0.5*(1.+sign(1.,v1))*d3c1 &
-                     +0.5*(1.-sign(1.,v1))*d3c2+eps)**iexp
-                beta32=(0.5*(1.+sign(1.,v1))*d3c2 &
-                     +0.5*(1.-sign(1.,v1))*d3c3+eps)**iexp
+                beta31=(0.5*(1.+sign(1.D0,v1))*d3c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c2+eps)**iexp
+                beta32=(0.5*(1.+sign(1.D0,v1))*d3c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c3+eps)**iexp
 !
-                beta41=(0.5*(1.+sign(1.,v4))*d4c1 &
-                     +0.5*(1.-sign(1.,v4))*d4c2+eps)**iexp
-                beta42=(0.5*(1.+sign(1.,v4))*d4c2 &
-                     +0.5*(1.-sign(1.,v4))*d4c3+eps)**iexp
+                beta41=(0.5*(1.+sign(1.D0,v4))*d4c1 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c2+eps)**iexp
+                beta42=(0.5*(1.+sign(1.D0,v4))*d4c2 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c3+eps)**iexp
 !
-                beta51=(0.5*(1.+sign(1.,v5))*d5c1 &
-                     +0.5*(1.-sign(1.,v5))*d5c2+eps)**iexp
-                beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
-                     +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
+                beta51=(0.5*(1.+sign(1.D0,v5))*d5c1 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c2+eps)**iexp
+                beta52=(0.5*(1.+sign(1.D0,v5))*d5c2 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c3+eps)**iexp
 !        coefficients gamma en maillage irregulier
-                g1p=cmui2(m1)*cvi(m1)/(cmui1(m)*cvi(m)+cmui2(m)*cvi(m)+cmui2(m1)*cvi(m1))
+                g1p=cmui2(n1)*cvi(n1)/(cmui1(n)*cvi(n)+cmui2(n)*cvi(n)+cmui2(n1)*cvi(n1))
                 g2p=1.-g1p
-                g2m=cmui1(m1)*cvi(m1)/(cmui1(m1)*cvi(m1)+cmui2(m1)*cvi(m1)+cmui2(m+2*ninc)*cvi(m+2*ninc))
+                g2m=cmui1(n1)*cvi(n1)/(cmui1(n1)*cvi(n1)+cmui2(n1)*cvi(n1)+cmui2(n+2*ninc)*cvi(n+2*ninc))
                 g1m=1.-g2m   
 !        calculs des poids wi
-                ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta11)
-                ww21=0.5*(1.+sign(1.,v1))*(g2p/beta12) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta12)
+                ww11=0.5*(1.+sign(1.D0,v1))*(g1p/beta11) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta11)
+                ww21=0.5*(1.+sign(1.D0,v1))*(g2p/beta12) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta12)
                 sw=ww11+ww21
                 w11=ww11/sw
                 w21=ww21/sw
 !
-                ww12=0.5*(1.+sign(1.,v1))*(g1p/beta21) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta21)
-                ww22=0.5*(1.+sign(1.,v1))*(g2p/beta22) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta22)
+                ww12=0.5*(1.+sign(1.D0,v1))*(g1p/beta21) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta21)
+                ww22=0.5*(1.+sign(1.D0,v1))*(g2p/beta22) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta22)
                 sw=ww12+ww22
                 w12=ww12/sw
                 w22=ww22/sw
 !
-                ww13=0.5*(1.+sign(1.,v1))*(g1p/beta31) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta31)
-                ww23=0.5*(1.+sign(1.,v1))*(g2p/beta32) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta32)
+                ww13=0.5*(1.+sign(1.D0,v1))*(g1p/beta31) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta31)
+                ww23=0.5*(1.+sign(1.D0,v1))*(g2p/beta32) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta32)
                 sw=ww13+ww23
                 w13=ww13/sw
                 w23=ww23/sw
 !
-                ww14=0.5*(1.+sign(1.,v4))*(g1p/beta41) &
-                     +0.5*(1.-sign(1.,v4))*(g1m/beta41)
-                ww24=0.5*(1.+sign(1.,v4))*(g2p/beta42) &
-                     +0.5*(1.-sign(1.,v4))*(g2m/beta42)
+                ww14=0.5*(1.+sign(1.D0,v4))*(g1p/beta41) &
+                     +0.5*(1.-sign(1.D0,v4))*(g1m/beta41)
+                ww24=0.5*(1.+sign(1.D0,v4))*(g2p/beta42) &
+                     +0.5*(1.-sign(1.D0,v4))*(g2m/beta42)
                 sw=ww14+ww24
                 w14=ww14/sw
                 w24=ww24/sw
 !
-                ww15=0.5*(1.+sign(1.,v5))*(g1p/beta51) &
-                     +0.5*(1.-sign(1.,v5))*(g1m/beta51)
-                ww25=0.5*(1.+sign(1.,v5))*(g2p/beta52) &
-                     +0.5*(1.-sign(1.,v5))*(g2m/beta52)
+                ww15=0.5*(1.+sign(1.D0,v5))*(g1p/beta51) &
+                     +0.5*(1.-sign(1.D0,v5))*(g1m/beta51)
+                ww25=0.5*(1.+sign(1.D0,v5))*(g2p/beta52) &
+                     +0.5*(1.-sign(1.D0,v5))*(g2m/beta52)
                 sw=ww15+ww25
                 w15=ww15/sw
                 w25=ww25/sw
@@ -510,94 +507,94 @@ contains
                 q5f2p=q51*v(n+2*ninc,3)+q52*fxy(m+2*ninc)+q53*fyy(m+2*ninc) &
                      +q54*fyz(m+2*ninc)+q55*fey(m+2*ninc)
 !        calcul des flux d'ordre 2 sur les 2 stencils
-                g11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
-                g12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
+                g11=0.5*(1.+sign(1.D0,v1))*(q1f1m*c10 +q1f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01)
+                g12=0.5*(1.+sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f1p*c11 +q1f2p*c10)
 !
-                g21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
-                g22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q2f1p*c11 +q2f2p*c10)
+                g21=0.5*(1.+sign(1.D0,v1))*(q2f1m*c10 +q2f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01)
+                g22=0.5*(1.+sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f1p*c11 +q2f2p*c10)
 !
-                g31=0.5*(1.+sign(1.,v1))*(q3f1m*c10 +q3f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q3f  *c00 +q3f1p*c01)
-                g32=0.5*(1.+sign(1.,v1))*(q3f  *c00 +q3f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q3f1p*c11 +q3f2p*c10)
+                g31=0.5*(1.+sign(1.D0,v1))*(q3f1m*c10 +q3f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01)
+                g32=0.5*(1.+sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f1p*c11 +q3f2p*c10)
 !
-                g41=0.5*(1.+sign(1.,v4))*(q4f1m*c10 +q4f  *c11) &
-                     +0.5*(1.-sign(1.,v4))*(q4f  *c00 +q4f1p*c01)
-                g42=0.5*(1.+sign(1.,v4))*(q4f  *c00 +q4f1p*c01) &
-                     +0.5*(1.-sign(1.,v4))*(q4f1p*c11 +q4f2p*c10)
+                g41=0.5*(1.+sign(1.D0,v4))*(q4f1m*c10 +q4f  *c11) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01)
+                g42=0.5*(1.+sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f1p*c11 +q4f2p*c10)
 !
-                g51=0.5*(1.+sign(1.,v5))*(q5f1m*c10 +q5f  *c11) &
-                     +0.5*(1.-sign(1.,v5))*(q5f  *c00 +q5f1p*c01)
-                g52=0.5*(1.+sign(1.,v5))*(q5f  *c00 +q5f1p*c01) &
-                     +0.5*(1.-sign(1.,v5))*(q5f1p*c11 +q5f2p*c10)
+                g51=0.5*(1.+sign(1.D0,v5))*(q5f1m*c10 +q5f  *c11) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01)
+                g52=0.5*(1.+sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f1p*c11 +q5f2p*c10)
 !        calcul des senseurs beta (au carre)
                 iexp=2
 !         iexp=1
-                beta11=(0.5*(1.+sign(1.,v1))*d1c1 &
-                     +0.5*(1.-sign(1.,v1))*d1c2+eps)**iexp
-                beta12=(0.5*(1.+sign(1.,v1))*d1c2 &
-                     +0.5*(1.-sign(1.,v1))*d1c3+eps)**iexp
+                beta11=(0.5*(1.+sign(1.D0,v1))*d1c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c2+eps)**iexp
+                beta12=(0.5*(1.+sign(1.D0,v1))*d1c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c3+eps)**iexp
 !
-                beta21=(0.5*(1.+sign(1.,v1))*d2c1 &
-                     +0.5*(1.-sign(1.,v1))*d2c2+eps)**iexp
-                beta22=(0.5*(1.+sign(1.,v1))*d2c2 &
-                     +0.5*(1.-sign(1.,v1))*d2c3+eps)**iexp
+                beta21=(0.5*(1.+sign(1.D0,v1))*d2c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c2+eps)**iexp
+                beta22=(0.5*(1.+sign(1.D0,v1))*d2c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c3+eps)**iexp
 !
-                beta31=(0.5*(1.+sign(1.,v1))*d3c1 &
-                     +0.5*(1.-sign(1.,v1))*d3c2+eps)**iexp
-                beta32=(0.5*(1.+sign(1.,v1))*d3c2 &
-                     +0.5*(1.-sign(1.,v1))*d3c3+eps)**iexp
+                beta31=(0.5*(1.+sign(1.D0,v1))*d3c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c2+eps)**iexp
+                beta32=(0.5*(1.+sign(1.D0,v1))*d3c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c3+eps)**iexp
 !
-                beta41=(0.5*(1.+sign(1.,v4))*d4c1 &
-                     +0.5*(1.-sign(1.,v4))*d4c2+eps)**iexp
-                beta42=(0.5*(1.+sign(1.,v4))*d4c2 &
-                     +0.5*(1.-sign(1.,v4))*d4c3+eps)**iexp
+                beta41=(0.5*(1.+sign(1.D0,v4))*d4c1 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c2+eps)**iexp
+                beta42=(0.5*(1.+sign(1.D0,v4))*d4c2 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c3+eps)**iexp
 !
-                beta51=(0.5*(1.+sign(1.,v5))*d5c1 &
-                     +0.5*(1.-sign(1.,v5))*d5c2+eps)**iexp
-                beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
-                     +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
+                beta51=(0.5*(1.+sign(1.D0,v5))*d5c1 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c2+eps)**iexp
+                beta52=(0.5*(1.+sign(1.D0,v5))*d5c2 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c3+eps)**iexp
 !        calculs des poids wi
-                ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta11)
-                ww21=0.5*(1.+sign(1.,v1))*(g2p/beta12) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta12)
+                ww11=0.5*(1.+sign(1.D0,v1))*(g1p/beta11) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta11)
+                ww21=0.5*(1.+sign(1.D0,v1))*(g2p/beta12) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta12)
                 sw=ww11+ww21
                 w11=ww11/sw
                 w21=ww21/sw
 !
-                ww12=0.5*(1.+sign(1.,v1))*(g1p/beta21) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta21)
-                ww22=0.5*(1.+sign(1.,v1))*(g2p/beta22) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta22)
+                ww12=0.5*(1.+sign(1.D0,v1))*(g1p/beta21) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta21)
+                ww22=0.5*(1.+sign(1.D0,v1))*(g2p/beta22) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta22)
                 sw=ww12+ww22
                 w12=ww12/sw
                 w22=ww22/sw
 !
-                ww13=0.5*(1.+sign(1.,v1))*(g1p/beta31) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta31)
-                ww23=0.5*(1.+sign(1.,v1))*(g2p/beta32) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta32)
+                ww13=0.5*(1.+sign(1.D0,v1))*(g1p/beta31) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta31)
+                ww23=0.5*(1.+sign(1.D0,v1))*(g2p/beta32) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta32)
                 sw=ww13+ww23
                 w13=ww13/sw
                 w23=ww23/sw
 !
-                ww14=0.5*(1.+sign(1.,v4))*(g1p/beta41) &
-                     +0.5*(1.-sign(1.,v4))*(g1m/beta41)
-                ww24=0.5*(1.+sign(1.,v4))*(g2p/beta42) &
-                     +0.5*(1.-sign(1.,v4))*(g2m/beta42)
+                ww14=0.5*(1.+sign(1.D0,v4))*(g1p/beta41) &
+                     +0.5*(1.-sign(1.D0,v4))*(g1m/beta41)
+                ww24=0.5*(1.+sign(1.D0,v4))*(g2p/beta42) &
+                     +0.5*(1.-sign(1.D0,v4))*(g2m/beta42)
                 sw=ww14+ww24
                 w14=ww14/sw
                 w24=ww24/sw
 !
-                ww15=0.5*(1.+sign(1.,v5))*(g1p/beta51) &
-                     +0.5*(1.-sign(1.,v5))*(g1m/beta51)
-                ww25=0.5*(1.+sign(1.,v5))*(g2p/beta52) &
-                     +0.5*(1.-sign(1.,v5))*(g2m/beta52)
+                ww15=0.5*(1.+sign(1.D0,v5))*(g1p/beta51) &
+                     +0.5*(1.-sign(1.D0,v5))*(g1m/beta51)
+                ww25=0.5*(1.+sign(1.D0,v5))*(g2p/beta52) &
+                     +0.5*(1.-sign(1.D0,v5))*(g2m/beta52)
                 sw=ww15+ww25
                 w15=ww15/sw
                 w25=ww25/sw
@@ -618,14 +615,14 @@ contains
                 df3=f3*sn(m1,kdir,1)+g3*sn(m1,kdir,2)
                 df5=f5*sn(m1,kdir,1)+g5*sn(m1,kdir,2)
 !        calcul des flux visqueux (multiplies par -2)
-                fv2=(cmui2(m1)*toxx(n)+cmui1(m1)*toxx(n1))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,2)
-                fv3=(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*toyy(n)+cmui1(m1)*toyy(n1))*sn(m1,kdir,2)  
-                fv5=(cmui2(m1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
-                     +cmui1(m1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
-                     +cmui1(m1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
+                fv2=(cmui2(n1)*toxx(n)+cmui1(n1)*toxx(n1))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*toxy(n)+cmui1(n1)*toxy(n1))*sn(m1,kdir,2)
+                fv3=(cmui2(n1)*toxy(n)+cmui1(n1)*toxy(n1))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*toyy(n)+cmui1(n1)*toyy(n1))*sn(m1,kdir,2)  
+                fv5=(cmui2(n1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
+                     +cmui1(n1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
+                     +cmui1(n1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
                 u(n1,1)=u(n1,1)-df1
                 u(n1,2)=u(n1,2)-df2+0.5*fv2
                 u(n1,3)=u(n1,3)-df3+0.5*fv3
@@ -787,37 +784,37 @@ contains
                 q5f2p=q51*v(n+2*ninc,2)+q52*fxx(m+2*ninc)+q53*fxy(m+2*ninc) &
                      +q54*fxz(m+2*ninc)+q55*fex(m+2*ninc)
 !        coefficients Crj en maillage irregulier
-                c00=cmuj2(m1)*0.5
-                c01=cmuj1(m1)*0.5
-                c10=-cmuj2(m)*0.5
+                c00=cmuj2(n1)*0.5
+                c01=cmuj1(n1)*0.5
+                c10=-cmuj2(n)*0.5
                 c11=1.-c10
-                c21=-cmuj1(m+2*ninc)*0.5
+                c21=-cmuj1(n+2*ninc)*0.5
                 c20=1.-c21
 !        calcul des flux d'ordre 2 sur les 2 stencils
-                f11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
-                f12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
+                f11=0.5*(1.+sign(1.D0,v1))*(q1f1m*c10 +q1f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01)
+                f12=0.5*(1.+sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f1p*c11 +q1f2p*c10)
 !
-                f21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
-                f22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q2f1p*c11 +q2f2p*c10)
+                f21=0.5*(1.+sign(1.D0,v1))*(q2f1m*c10 +q2f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01)
+                f22=0.5*(1.+sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f1p*c11 +q2f2p*c10)
 !
-                f31=0.5*(1.+sign(1.,v1))*(q3f1m*c10 +q3f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q3f  *c00 +q3f1p*c01)
-                f32=0.5*(1.+sign(1.,v1))*(q3f  *c00 +q3f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q3f1p*c11 +q3f2p*c10)
+                f31=0.5*(1.+sign(1.D0,v1))*(q3f1m*c10 +q3f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01)
+                f32=0.5*(1.+sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f1p*c11 +q3f2p*c10)
 !
-                f41=0.5*(1.+sign(1.,v4))*(q4f1m*c10 +q4f  *c11) &
-                     +0.5*(1.-sign(1.,v4))*(q4f  *c00 +q4f1p*c01)
-                f42=0.5*(1.+sign(1.,v4))*(q4f  *c00 +q4f1p*c01) &
-                     +0.5*(1.-sign(1.,v4))*(q4f1p*c11 +q4f2p*c10)
+                f41=0.5*(1.+sign(1.D0,v4))*(q4f1m*c10 +q4f  *c11) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01)
+                f42=0.5*(1.+sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f1p*c11 +q4f2p*c10)
 !
-                f51=0.5*(1.+sign(1.,v5))*(q5f1m*c10 +q5f  *c11) &
-                     +0.5*(1.-sign(1.,v5))*(q5f  *c00 +q5f1p*c01)
-                f52=0.5*(1.+sign(1.,v5))*(q5f  *c00 +q5f1p*c01) &
-                     +0.5*(1.-sign(1.,v5))*(q5f1p*c11 +q5f2p*c10)
+                f51=0.5*(1.+sign(1.D0,v5))*(q5f1m*c10 +q5f  *c11) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01)
+                f52=0.5*(1.+sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f1p*c11 +q5f2p*c10)
 !        calcul des senseurs beta (au carre)
 !         d1c1=(q1f-q1f1m)**2    !maillage regulier
 !         d1c2=(q1f1p-q1f)**2
@@ -839,72 +836,72 @@ contains
                 d5c3=4.*((q5f2p-q5f1p)*c01*c21/c00)**2
                 iexp=2
 !         iexp=1
-                beta11=(0.5*(1.+sign(1.,v1))*d1c1 &
-                     +0.5*(1.-sign(1.,v1))*d1c2+eps)**iexp
-                beta12=(0.5*(1.+sign(1.,v1))*d1c2 &
-                     +0.5*(1.-sign(1.,v1))*d1c3+eps)**iexp
+                beta11=(0.5*(1.+sign(1.D0,v1))*d1c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c2+eps)**iexp
+                beta12=(0.5*(1.+sign(1.D0,v1))*d1c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c3+eps)**iexp
 !
-                beta21=(0.5*(1.+sign(1.,v1))*d2c1 &
-                     +0.5*(1.-sign(1.,v1))*d2c2+eps)**iexp
-                beta22=(0.5*(1.+sign(1.,v1))*d2c2 &
-                     +0.5*(1.-sign(1.,v1))*d2c3+eps)**iexp
+                beta21=(0.5*(1.+sign(1.D0,v1))*d2c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c2+eps)**iexp
+                beta22=(0.5*(1.+sign(1.D0,v1))*d2c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c3+eps)**iexp
 !
-                beta31=(0.5*(1.+sign(1.,v1))*d3c1 &
-                     +0.5*(1.-sign(1.,v1))*d3c2+eps)**iexp
-                beta32=(0.5*(1.+sign(1.,v1))*d3c2 &
-                     +0.5*(1.-sign(1.,v1))*d3c3+eps)**iexp
+                beta31=(0.5*(1.+sign(1.D0,v1))*d3c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c2+eps)**iexp
+                beta32=(0.5*(1.+sign(1.D0,v1))*d3c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c3+eps)**iexp
 !
-                beta41=(0.5*(1.+sign(1.,v4))*d4c1 &
-                     +0.5*(1.-sign(1.,v4))*d4c2+eps)**iexp
-                beta42=(0.5*(1.+sign(1.,v4))*d4c2 &
-                     +0.5*(1.-sign(1.,v4))*d4c3+eps)**iexp
+                beta41=(0.5*(1.+sign(1.D0,v4))*d4c1 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c2+eps)**iexp
+                beta42=(0.5*(1.+sign(1.D0,v4))*d4c2 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c3+eps)**iexp
 !
-                beta51=(0.5*(1.+sign(1.,v5))*d5c1 &
-                     +0.5*(1.-sign(1.,v5))*d5c2+eps)**iexp
-                beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
-                     +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
+                beta51=(0.5*(1.+sign(1.D0,v5))*d5c1 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c2+eps)**iexp
+                beta52=(0.5*(1.+sign(1.D0,v5))*d5c2 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c3+eps)**iexp
 !        coefficients gamma en maillage irregulier
-                g1p=cmuj2(m1)*cvj(m1)/(cmuj1(m)*cvj(m)+cmuj2(m)*cvj(m)+cmuj2(m1)*cvj(m1))
+                g1p=cmuj2(n1)*cvj(n1)/(cmuj1(n)*cvj(n)+cmuj2(n)*cvj(n)+cmuj2(n1)*cvj(n1))
                 g2p=1.-g1p
-                g2m=cmuj1(m1)*cvj(m1)/(cmuj1(m1)*cvj(m1)+cmuj2(m1)*cvj(m1)+cmuj2(m+2*ninc)*cvj(m+2*ninc))
+                g2m=cmuj1(n1)*cvj(n1)/(cmuj1(n1)*cvj(n1)+cmuj2(n1)*cvj(n1)+cmuj2(n+2*ninc)*cvj(n+2*ninc))
                 g1m=1.-g2m
 !        calculs des poids wi
-                ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta11)
-                ww21=0.5*(1.+sign(1.,v1))*(g2p/beta12) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta12)
+                ww11=0.5*(1.+sign(1.D0,v1))*(g1p/beta11) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta11)
+                ww21=0.5*(1.+sign(1.D0,v1))*(g2p/beta12) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta12)
                 sw=ww11+ww21
                 w11=ww11/sw
                 w21=ww21/sw
 !
-                ww12=0.5*(1.+sign(1.,v1))*(g1p/beta21) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta21)
-                ww22=0.5*(1.+sign(1.,v1))*(g2p/beta22) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta22)
+                ww12=0.5*(1.+sign(1.D0,v1))*(g1p/beta21) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta21)
+                ww22=0.5*(1.+sign(1.D0,v1))*(g2p/beta22) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta22)
                 sw=ww12+ww22
                 w12=ww12/sw
                 w22=ww22/sw
 !
-                ww13=0.5*(1.+sign(1.,v1))*(g1p/beta31) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta31)
-                ww23=0.5*(1.+sign(1.,v1))*(g2p/beta32) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta32)
+                ww13=0.5*(1.+sign(1.D0,v1))*(g1p/beta31) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta31)
+                ww23=0.5*(1.+sign(1.D0,v1))*(g2p/beta32) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta32)
                 sw=ww13+ww23
                 w13=ww13/sw
                 w23=ww23/sw
 !
-                ww14=0.5*(1.+sign(1.,v4))*(g1p/beta41) &
-                     +0.5*(1.-sign(1.,v4))*(g1m/beta41)
-                ww24=0.5*(1.+sign(1.,v4))*(g2p/beta42) &
-                     +0.5*(1.-sign(1.,v4))*(g2m/beta42)
+                ww14=0.5*(1.+sign(1.D0,v4))*(g1p/beta41) &
+                     +0.5*(1.-sign(1.D0,v4))*(g1m/beta41)
+                ww24=0.5*(1.+sign(1.D0,v4))*(g2p/beta42) &
+                     +0.5*(1.-sign(1.D0,v4))*(g2m/beta42)
                 sw=ww14+ww24
                 w14=ww14/sw
                 w24=ww24/sw
 !
-                ww15=0.5*(1.+sign(1.,v5))*(g1p/beta51) &
-                     +0.5*(1.-sign(1.,v5))*(g1m/beta51)
-                ww25=0.5*(1.+sign(1.,v5))*(g2p/beta52) &
-                     +0.5*(1.-sign(1.,v5))*(g2m/beta52)
+                ww15=0.5*(1.+sign(1.D0,v5))*(g1p/beta51) &
+                     +0.5*(1.-sign(1.D0,v5))*(g1m/beta51)
+                ww25=0.5*(1.+sign(1.D0,v5))*(g2p/beta52) &
+                     +0.5*(1.-sign(1.D0,v5))*(g2m/beta52)
                 sw=ww15+ww25
                 w15=ww15/sw
                 w25=ww25/sw
@@ -966,94 +963,94 @@ contains
                 q5f2p=q51*v(n+2*ninc,3)+q52*fxy(m+2*ninc)+q53*fyy(m+2*ninc) &
                      +q54*fyz(m+2*ninc)+q55*fey(m+2*ninc)
 !        calcul des flux d'ordre 2 sur les 2 stencils
-                g11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
-                g12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
+                g11=0.5*(1.+sign(1.D0,v1))*(q1f1m*c10 +q1f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01)
+                g12=0.5*(1.+sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f1p*c11 +q1f2p*c10)
 !
-                g21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
-                g22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q2f1p*c11 +q2f2p*c10)
+                g21=0.5*(1.+sign(1.D0,v1))*(q2f1m*c10 +q2f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01)
+                g22=0.5*(1.+sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f1p*c11 +q2f2p*c10)
 !
-                g31=0.5*(1.+sign(1.,v1))*(q3f1m*c10 +q3f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q3f  *c00 +q3f1p*c01)
-                g32=0.5*(1.+sign(1.,v1))*(q3f  *c00 +q3f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q3f1p*c11 +q3f2p*c10)
+                g31=0.5*(1.+sign(1.D0,v1))*(q3f1m*c10 +q3f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01)
+                g32=0.5*(1.+sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f1p*c11 +q3f2p*c10)
 !
-                g41=0.5*(1.+sign(1.,v4))*(q4f1m*c10 +q4f  *c11) &
-                     +0.5*(1.-sign(1.,v4))*(q4f  *c00 +q4f1p*c01)
-                g42=0.5*(1.+sign(1.,v4))*(q4f  *c00 +q4f1p*c01) &
-                     +0.5*(1.-sign(1.,v4))*(q4f1p*c11 +q4f2p*c10)
+                g41=0.5*(1.+sign(1.D0,v4))*(q4f1m*c10 +q4f  *c11) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01)
+                g42=0.5*(1.+sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f1p*c11 +q4f2p*c10)
 !
-                g51=0.5*(1.+sign(1.,v5))*(q5f1m*c10 +q5f  *c11) &
-                     +0.5*(1.-sign(1.,v5))*(q5f  *c00 +q5f1p*c01)
-                g52=0.5*(1.+sign(1.,v5))*(q5f  *c00 +q5f1p*c01) &
-                     +0.5*(1.-sign(1.,v5))*(q5f1p*c11 +q5f2p*c10)
+                g51=0.5*(1.+sign(1.D0,v5))*(q5f1m*c10 +q5f  *c11) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01)
+                g52=0.5*(1.+sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f1p*c11 +q5f2p*c10)
 !        calcul des senseurs beta (au carre)
                 iexp=2
 !         iexp=1
-                beta11=(0.5*(1.+sign(1.,v1))*d1c1 &
-                     +0.5*(1.-sign(1.,v1))*d1c2+eps)**iexp
-                beta12=(0.5*(1.+sign(1.,v1))*d1c2 &
-                     +0.5*(1.-sign(1.,v1))*d1c3+eps)**iexp
+                beta11=(0.5*(1.+sign(1.D0,v1))*d1c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c2+eps)**iexp
+                beta12=(0.5*(1.+sign(1.D0,v1))*d1c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c3+eps)**iexp
 !
-                beta21=(0.5*(1.+sign(1.,v1))*d2c1 &
-                     +0.5*(1.-sign(1.,v1))*d2c2+eps)**iexp
-                beta22=(0.5*(1.+sign(1.,v1))*d2c2 &
-                     +0.5*(1.-sign(1.,v1))*d2c3+eps)**iexp
+                beta21=(0.5*(1.+sign(1.D0,v1))*d2c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c2+eps)**iexp
+                beta22=(0.5*(1.+sign(1.D0,v1))*d2c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c3+eps)**iexp
 !
-                beta31=(0.5*(1.+sign(1.,v1))*d3c1 &
-                     +0.5*(1.-sign(1.,v1))*d3c2+eps)**iexp
-                beta32=(0.5*(1.+sign(1.,v1))*d3c2 &
-                     +0.5*(1.-sign(1.,v1))*d3c3+eps)**iexp
+                beta31=(0.5*(1.+sign(1.D0,v1))*d3c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c2+eps)**iexp
+                beta32=(0.5*(1.+sign(1.D0,v1))*d3c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c3+eps)**iexp
 !
-                beta41=(0.5*(1.+sign(1.,v4))*d4c1 &
-                     +0.5*(1.-sign(1.,v4))*d4c2+eps)**iexp
-                beta42=(0.5*(1.+sign(1.,v4))*d4c2 &
-                     +0.5*(1.-sign(1.,v4))*d4c3+eps)**iexp
+                beta41=(0.5*(1.+sign(1.D0,v4))*d4c1 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c2+eps)**iexp
+                beta42=(0.5*(1.+sign(1.D0,v4))*d4c2 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c3+eps)**iexp
 !
-                beta51=(0.5*(1.+sign(1.,v5))*d5c1 &
-                     +0.5*(1.-sign(1.,v5))*d5c2+eps)**iexp
-                beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
-                     +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
+                beta51=(0.5*(1.+sign(1.D0,v5))*d5c1 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c2+eps)**iexp
+                beta52=(0.5*(1.+sign(1.D0,v5))*d5c2 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c3+eps)**iexp
 !        calculs des poids wi
-                ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta11)
-                ww21=0.5*(1.+sign(1.,v1))*(g2p/beta12) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta12)
+                ww11=0.5*(1.+sign(1.D0,v1))*(g1p/beta11) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta11)
+                ww21=0.5*(1.+sign(1.D0,v1))*(g2p/beta12) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta12)
                 sw=ww11+ww21
                 w11=ww11/sw
                 w21=ww21/sw
 !
-                ww12=0.5*(1.+sign(1.,v1))*(g1p/beta21) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta21)
-                ww22=0.5*(1.+sign(1.,v1))*(g2p/beta22) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta22)
+                ww12=0.5*(1.+sign(1.D0,v1))*(g1p/beta21) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta21)
+                ww22=0.5*(1.+sign(1.D0,v1))*(g2p/beta22) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta22)
                 sw=ww12+ww22
                 w12=ww12/sw
                 w22=ww22/sw
 !
-                ww13=0.5*(1.+sign(1.,v1))*(g1p/beta31) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta31)
-                ww23=0.5*(1.+sign(1.,v1))*(g2p/beta32) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta32)
+                ww13=0.5*(1.+sign(1.D0,v1))*(g1p/beta31) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta31)
+                ww23=0.5*(1.+sign(1.D0,v1))*(g2p/beta32) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta32)
                 sw=ww13+ww23
                 w13=ww13/sw
                 w23=ww23/sw
 !
-                ww14=0.5*(1.+sign(1.,v4))*(g1p/beta41) &
-                     +0.5*(1.-sign(1.,v4))*(g1m/beta41)
-                ww24=0.5*(1.+sign(1.,v4))*(g2p/beta42) &
-                     +0.5*(1.-sign(1.,v4))*(g2m/beta42)
+                ww14=0.5*(1.+sign(1.D0,v4))*(g1p/beta41) &
+                     +0.5*(1.-sign(1.D0,v4))*(g1m/beta41)
+                ww24=0.5*(1.+sign(1.D0,v4))*(g2p/beta42) &
+                     +0.5*(1.-sign(1.D0,v4))*(g2m/beta42)
                 sw=ww14+ww24
                 w14=ww14/sw
                 w24=ww24/sw
 !
-                ww15=0.5*(1.+sign(1.,v5))*(g1p/beta51) &
-                     +0.5*(1.-sign(1.,v5))*(g1m/beta51)
-                ww25=0.5*(1.+sign(1.,v5))*(g2p/beta52) &
-                     +0.5*(1.-sign(1.,v5))*(g2m/beta52)
+                ww15=0.5*(1.+sign(1.D0,v5))*(g1p/beta51) &
+                     +0.5*(1.-sign(1.D0,v5))*(g1m/beta51)
+                ww25=0.5*(1.+sign(1.D0,v5))*(g2p/beta52) &
+                     +0.5*(1.-sign(1.D0,v5))*(g2m/beta52)
                 sw=ww15+ww25
                 w15=ww15/sw
                 w25=ww25/sw
@@ -1074,14 +1071,14 @@ contains
                 dg3=f3*sn(m1,kdir,1)+g3*sn(m1,kdir,2)
                 dg5=f5*sn(m1,kdir,1)+g5*sn(m1,kdir,2)
 !        calcul des flux visqueux (multiplies par -2)
-                gv2=(cmuj2(m1)*toxx(n)+cmuj1(m1)*toxx(n1))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*toxy(n)+cmuj1(m1)*toxy(n1))*sn(m1,kdir,2)
-                gv3=(cmuj2(m1)*toxy(n)+cmuj1(m1)*toxy(n1))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*toyy(n)+cmuj1(m1)*toyy(n1))*sn(m1,kdir,2)
-                gv5=(cmuj2(m1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
-                     +cmuj1(m1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
-                     +cmuj1(m1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
+                gv2=(cmuj2(n1)*toxx(n)+cmuj1(n1)*toxx(n1))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*toxy(n)+cmuj1(n1)*toxy(n1))*sn(m1,kdir,2)
+                gv3=(cmuj2(n1)*toxy(n)+cmuj1(n1)*toxy(n1))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*toyy(n)+cmuj1(n1)*toyy(n1))*sn(m1,kdir,2)
+                gv5=(cmuj2(n1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
+                     +cmuj1(n1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
+                     +cmuj1(n1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
                 u(n1,1)=u(n1,1)-dg1
                 u(n1,2)=u(n1,2)-dg2+0.5*gv2
                 u(n1,3)=u(n1,3)-dg3+0.5*gv3
@@ -1245,37 +1242,37 @@ contains
                 q5f2p=q51*v(n+2*ninc,2)+q52*fxx(m+2*ninc)+q53*fxy(m+2*ninc) &
                      +q54*fxz(m+2*ninc)+q55*fex(m+2*ninc)
 !        coefficients Crj en maillage irregulier
-                c00=cmui2(m1)*0.5
-                c01=cmui1(m1)*0.5
-                c10=-cmui2(m)*0.5
+                c00=cmui2(n1)*0.5
+                c01=cmui1(n1)*0.5
+                c10=-cmui2(n)*0.5
                 c11=1.-c10
-                c21=-cmui1(m+2*ninc)*0.5
+                c21=-cmui1(n+2*ninc)*0.5
                 c20=1.-c21
 !        calcul des flux d'ordre 2 sur les 2 stencils
-                f11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
-                f12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
+                f11=0.5*(1.+sign(1.D0,v1))*(q1f1m*c10 +q1f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01)
+                f12=0.5*(1.+sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f1p*c11 +q1f2p*c10)
 !
-                f21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
-                f22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q2f1p*c11 +q2f2p*c10)
+                f21=0.5*(1.+sign(1.D0,v1))*(q2f1m*c10 +q2f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01)
+                f22=0.5*(1.+sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f1p*c11 +q2f2p*c10)
 !
-                f31=0.5*(1.+sign(1.,v1))*(q3f1m*c10 +q3f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q3f  *c00 +q3f1p*c01)
-                f32=0.5*(1.+sign(1.,v1))*(q3f  *c00 +q3f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q3f1p*c11 +q3f2p*c10)
+                f31=0.5*(1.+sign(1.D0,v1))*(q3f1m*c10 +q3f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01)
+                f32=0.5*(1.+sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f1p*c11 +q3f2p*c10)
 !
-                f41=0.5*(1.+sign(1.,v4))*(q4f1m*c10 +q4f  *c11) &
-                     +0.5*(1.-sign(1.,v4))*(q4f  *c00 +q4f1p*c01)
-                f42=0.5*(1.+sign(1.,v4))*(q4f  *c00 +q4f1p*c01) &
-                     +0.5*(1.-sign(1.,v4))*(q4f1p*c11 +q4f2p*c10)
+                f41=0.5*(1.+sign(1.D0,v4))*(q4f1m*c10 +q4f  *c11) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01)
+                f42=0.5*(1.+sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f1p*c11 +q4f2p*c10)
 !
-                f51=0.5*(1.+sign(1.,v5))*(q5f1m*c10 +q5f  *c11) &
-                     +0.5*(1.-sign(1.,v5))*(q5f  *c00 +q5f1p*c01)
-                f52=0.5*(1.+sign(1.,v5))*(q5f  *c00 +q5f1p*c01) &
-                     +0.5*(1.-sign(1.,v5))*(q5f1p*c11 +q5f2p*c10)
+                f51=0.5*(1.+sign(1.D0,v5))*(q5f1m*c10 +q5f  *c11) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01)
+                f52=0.5*(1.+sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f1p*c11 +q5f2p*c10)
 !        calcul des senseurs beta (au carre)
 !         d1c1=(q1f-q1f1m)**2    !maillage regulier
 !         d1c2=(q1f1p-q1f)**2
@@ -1297,107 +1294,107 @@ contains
                 d5c3=4.*((q5f2p-q5f1p)*c01*c21/c00)**2
                 iexp=2
 !         iexp=1
-                beta11=(0.5*(1.+sign(1.,v1))*d1c1 &
-                     +0.5*(1.-sign(1.,v1))*d1c2+eps)**iexp
-                beta12=(0.5*(1.+sign(1.,v1))*d1c2 &
-                     +0.5*(1.-sign(1.,v1))*d1c3+eps)**iexp
+                beta11=(0.5*(1.+sign(1.D0,v1))*d1c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c2+eps)**iexp
+                beta12=(0.5*(1.+sign(1.D0,v1))*d1c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c3+eps)**iexp
 !
-                beta21=(0.5*(1.+sign(1.,v1))*d2c1 &
-                     +0.5*(1.-sign(1.,v1))*d2c2+eps)**iexp
-                beta22=(0.5*(1.+sign(1.,v1))*d2c2 &
-                     +0.5*(1.-sign(1.,v1))*d2c3+eps)**iexp
+                beta21=(0.5*(1.+sign(1.D0,v1))*d2c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c2+eps)**iexp
+                beta22=(0.5*(1.+sign(1.D0,v1))*d2c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c3+eps)**iexp
 !
-                beta31=(0.5*(1.+sign(1.,v1))*d3c1 &
-                     +0.5*(1.-sign(1.,v1))*d3c2+eps)**iexp
-                beta32=(0.5*(1.+sign(1.,v1))*d3c2 &
-                     +0.5*(1.-sign(1.,v1))*d3c3+eps)**iexp
+                beta31=(0.5*(1.+sign(1.D0,v1))*d3c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c2+eps)**iexp
+                beta32=(0.5*(1.+sign(1.D0,v1))*d3c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c3+eps)**iexp
 !
-                beta41=(0.5*(1.+sign(1.,v4))*d4c1 &
-                     +0.5*(1.-sign(1.,v4))*d4c2+eps)**iexp
-                beta42=(0.5*(1.+sign(1.,v4))*d4c2 &
-                     +0.5*(1.-sign(1.,v4))*d4c3+eps)**iexp
+                beta41=(0.5*(1.+sign(1.D0,v4))*d4c1 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c2+eps)**iexp
+                beta42=(0.5*(1.+sign(1.D0,v4))*d4c2 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c3+eps)**iexp
 !
-                beta51=(0.5*(1.+sign(1.,v5))*d5c1 &
-                     +0.5*(1.-sign(1.,v5))*d5c2+eps)**iexp
-                beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
-                     +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
+                beta51=(0.5*(1.+sign(1.D0,v5))*d5c1 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c2+eps)**iexp
+                beta52=(0.5*(1.+sign(1.D0,v5))*d5c2 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c3+eps)**iexp
 !        coefficients gamma en maillage irregulier
-                g1p=cmui2(m1)*cvi(m1)/(cmui1(m)*cvi(m)+cmui2(m)*cvi(m)+cmui2(m1)*cvi(m1))
+                g1p=cmui2(n1)*cvi(n1)/(cmui1(n)*cvi(n)+cmui2(n)*cvi(n)+cmui2(n1)*cvi(n1))
                 g2p=1.-g1p
-                g2m=cmui1(m1)*cvi(m1)/(cmui1(m1)*cvi(m1)+cmui2(m1)*cvi(m1)+cmui2(m+2*ninc)*cvi(m+2*ninc))
+                g2m=cmui1(n1)*cvi(n1)/(cmui1(n1)*cvi(n1)+cmui2(n1)*cvi(n1)+cmui2(n+2*ninc)*cvi(n+2*ninc))
                 g1m=1.-g2m   
 !        calculs des poids wi
-                ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta11)
-                ww21=0.5*(1.+sign(1.,v1))*(g2p/beta12) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta12)
+                ww11=0.5*(1.+sign(1.D0,v1))*(g1p/beta11) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta11)
+                ww21=0.5*(1.+sign(1.D0,v1))*(g2p/beta12) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta12)
                 sw=ww11+ww21
                 w11=ww11/sw
                 w21=ww21/sw
-                ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
-                     +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
-                ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
-                     +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
+                ww11m=w11*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
+                     +w11*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
+                ww21m=w21*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
+                     +w21*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
                 swm=ww11m+ww21m
                 w11=ww11m/swm 
                 w21=ww21m/swm 
 !
-                ww12=0.5*(1.+sign(1.,v1))*(g1p/beta21) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta21)
-                ww22=0.5*(1.+sign(1.,v1))*(g2p/beta22) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta22)
+                ww12=0.5*(1.+sign(1.D0,v1))*(g1p/beta21) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta21)
+                ww22=0.5*(1.+sign(1.D0,v1))*(g2p/beta22) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta22)
                 sw=ww12+ww22
                 w12=ww12/sw
                 w22=ww22/sw
-                ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
-                     +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
-                ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
-                     +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
+                ww12m=w12*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
+                     +w12*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
+                ww22m=w22*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
+                     +w22*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
                 swm=ww12m+ww22m 
                 w12=ww12m/swm 
                 w22=ww22m/swm 
 !
-                ww13=0.5*(1.+sign(1.,v1))*(g1p/beta31) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta31)
-                ww23=0.5*(1.+sign(1.,v1))*(g2p/beta32) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta32)
+                ww13=0.5*(1.+sign(1.D0,v1))*(g1p/beta31) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta31)
+                ww23=0.5*(1.+sign(1.D0,v1))*(g2p/beta32) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta32)
                 sw=ww13+ww23
                 w13=ww13/sw
                 w23=ww23/sw
-                ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
-                     +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
-                ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
-                     +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
+                ww13m=w13*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
+                     +w13*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
+                ww23m=w23*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
+                     +w23*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
                 swm=ww13m+ww23m
                 w13=ww13m/swm 
                 w23=ww23m/swm 
 !
-                ww14=0.5*(1.+sign(1.,v4))*(g1p/beta41) &
-                     +0.5*(1.-sign(1.,v4))*(g1m/beta41)
-                ww24=0.5*(1.+sign(1.,v4))*(g2p/beta42) &
-                     +0.5*(1.-sign(1.,v4))*(g2m/beta42)
+                ww14=0.5*(1.+sign(1.D0,v4))*(g1p/beta41) &
+                     +0.5*(1.-sign(1.D0,v4))*(g1m/beta41)
+                ww24=0.5*(1.+sign(1.D0,v4))*(g2p/beta42) &
+                     +0.5*(1.-sign(1.D0,v4))*(g2m/beta42)
                 sw=ww14+ww24
                 w14=ww14/sw
                 w24=ww24/sw
-                ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
-                     +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
-                ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
-                     +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
+                ww14m=w14*0.5*(1.+sign(1.D0,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
+                     +w14*0.5*(1.-sign(1.D0,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
+                ww24m=w24*0.5*(1.+sign(1.D0,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
+                     +w24*0.5*(1.-sign(1.D0,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
                 swm=ww14m+ww24m 
                 w14=ww14m/swm 
                 w24=ww24m/swm 
 !
-                ww15=0.5*(1.+sign(1.,v5))*(g1p/beta51) &
-                     +0.5*(1.-sign(1.,v5))*(g1m/beta51)
-                ww25=0.5*(1.+sign(1.,v5))*(g2p/beta52) &
-                     +0.5*(1.-sign(1.,v5))*(g2m/beta52)
+                ww15=0.5*(1.+sign(1.D0,v5))*(g1p/beta51) &
+                     +0.5*(1.-sign(1.D0,v5))*(g1m/beta51)
+                ww25=0.5*(1.+sign(1.D0,v5))*(g2p/beta52) &
+                     +0.5*(1.-sign(1.D0,v5))*(g2m/beta52)
                 sw=ww15+ww25
                 w15=ww15/sw
                 w25=ww25/sw
-                ww15m=w15*0.5*(1.+sign(1.,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
-                     +w15*0.5*(1.-sign(1.,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
-                ww25m=w25*0.5*(1.+sign(1.,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &   
-                     +w25*0.5*(1.-sign(1.,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
+                ww15m=w15*0.5*(1.+sign(1.D0,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
+                     +w15*0.5*(1.-sign(1.D0,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
+                ww25m=w25*0.5*(1.+sign(1.D0,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &   
+                     +w25*0.5*(1.-sign(1.D0,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
                 swm=ww15m+ww25m
                 w15=ww15m/swm 
                 w25=ww25m/swm 
@@ -1459,129 +1456,129 @@ contains
                 q5f2p=q51*v(n+2*ninc,3)+q52*fxy(m+2*ninc)+q53*fyy(m+2*ninc) &
                      +q54*fyz(m+2*ninc)+q55*fey(m+2*ninc)
 !        calcul des flux d'ordre 2 sur les 2 stencils
-                g11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
-                g12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
+                g11=0.5*(1.+sign(1.D0,v1))*(q1f1m*c10 +q1f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01)
+                g12=0.5*(1.+sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f1p*c11 +q1f2p*c10)
 !
-                g21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
-                g22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q2f1p*c11 +q2f2p*c10)
+                g21=0.5*(1.+sign(1.D0,v1))*(q2f1m*c10 +q2f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01)
+                g22=0.5*(1.+sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f1p*c11 +q2f2p*c10)
 !
-                g31=0.5*(1.+sign(1.,v1))*(q3f1m*c10 +q3f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q3f  *c00 +q3f1p*c01)
-                g32=0.5*(1.+sign(1.,v1))*(q3f  *c00 +q3f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q3f1p*c11 +q3f2p*c10)
+                g31=0.5*(1.+sign(1.D0,v1))*(q3f1m*c10 +q3f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01)
+                g32=0.5*(1.+sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f1p*c11 +q3f2p*c10)
 !
-                g41=0.5*(1.+sign(1.,v4))*(q4f1m*c10 +q4f  *c11) &
-                     +0.5*(1.-sign(1.,v4))*(q4f  *c00 +q4f1p*c01)
-                g42=0.5*(1.+sign(1.,v4))*(q4f  *c00 +q4f1p*c01) &
-                     +0.5*(1.-sign(1.,v4))*(q4f1p*c11 +q4f2p*c10)
+                g41=0.5*(1.+sign(1.D0,v4))*(q4f1m*c10 +q4f  *c11) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01)
+                g42=0.5*(1.+sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f1p*c11 +q4f2p*c10)
 !
-                g51=0.5*(1.+sign(1.,v5))*(q5f1m*c10 +q5f  *c11) &
-                     +0.5*(1.-sign(1.,v5))*(q5f  *c00 +q5f1p*c01)
-                g52=0.5*(1.+sign(1.,v5))*(q5f  *c00 +q5f1p*c01) &
-                     +0.5*(1.-sign(1.,v5))*(q5f1p*c11 +q5f2p*c10)
+                g51=0.5*(1.+sign(1.D0,v5))*(q5f1m*c10 +q5f  *c11) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01)
+                g52=0.5*(1.+sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f1p*c11 +q5f2p*c10)
 !        calcul des senseurs beta (au carre)
                 iexp=2
 !         iexp=1
-                beta11=(0.5*(1.+sign(1.,v1))*d1c1 &
-                     +0.5*(1.-sign(1.,v1))*d1c2+eps)**iexp
-                beta12=(0.5*(1.+sign(1.,v1))*d1c2 &
-                     +0.5*(1.-sign(1.,v1))*d1c3+eps)**iexp
+                beta11=(0.5*(1.+sign(1.D0,v1))*d1c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c2+eps)**iexp
+                beta12=(0.5*(1.+sign(1.D0,v1))*d1c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c3+eps)**iexp
 !
-                beta21=(0.5*(1.+sign(1.,v1))*d2c1 &
-                     +0.5*(1.-sign(1.,v1))*d2c2+eps)**iexp
-                beta22=(0.5*(1.+sign(1.,v1))*d2c2 &
-                     +0.5*(1.-sign(1.,v1))*d2c3+eps)**iexp
+                beta21=(0.5*(1.+sign(1.D0,v1))*d2c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c2+eps)**iexp
+                beta22=(0.5*(1.+sign(1.D0,v1))*d2c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c3+eps)**iexp
 !
-                beta31=(0.5*(1.+sign(1.,v1))*d3c1 &
-                     +0.5*(1.-sign(1.,v1))*d3c2+eps)**iexp
-                beta32=(0.5*(1.+sign(1.,v1))*d3c2 &
-                     +0.5*(1.-sign(1.,v1))*d3c3+eps)**iexp
+                beta31=(0.5*(1.+sign(1.D0,v1))*d3c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c2+eps)**iexp
+                beta32=(0.5*(1.+sign(1.D0,v1))*d3c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c3+eps)**iexp
 !
-                beta41=(0.5*(1.+sign(1.,v4))*d4c1 &
-                     +0.5*(1.-sign(1.,v4))*d4c2+eps)**iexp
-                beta42=(0.5*(1.+sign(1.,v4))*d4c2 &
-                     +0.5*(1.-sign(1.,v4))*d4c3+eps)**iexp
+                beta41=(0.5*(1.+sign(1.D0,v4))*d4c1 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c2+eps)**iexp
+                beta42=(0.5*(1.+sign(1.D0,v4))*d4c2 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c3+eps)**iexp
 !
-                beta51=(0.5*(1.+sign(1.,v5))*d5c1 &
-                     +0.5*(1.-sign(1.,v5))*d5c2+eps)**iexp
-                beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
-                     +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
+                beta51=(0.5*(1.+sign(1.D0,v5))*d5c1 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c2+eps)**iexp
+                beta52=(0.5*(1.+sign(1.D0,v5))*d5c2 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c3+eps)**iexp
 !        calculs des poids wi
-                ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta11)
-                ww21=0.5*(1.+sign(1.,v1))*(g2p/beta12) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta12)
+                ww11=0.5*(1.+sign(1.D0,v1))*(g1p/beta11) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta11)
+                ww21=0.5*(1.+sign(1.D0,v1))*(g2p/beta12) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta12)
                 sw=ww11+ww21
                 w11=ww11/sw
                 w21=ww21/sw
-                ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
-                     +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
-                ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
-                     +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
+                ww11m=w11*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
+                     +w11*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
+                ww21m=w21*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
+                     +w21*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
                 swm=ww11m+ww21m
                 w11=ww11m/swm 
                 w21=ww21m/swm 
 !
-                ww12=0.5*(1.+sign(1.,v1))*(g1p/beta21) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta21)
-                ww22=0.5*(1.+sign(1.,v1))*(g2p/beta22) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta22)
+                ww12=0.5*(1.+sign(1.D0,v1))*(g1p/beta21) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta21)
+                ww22=0.5*(1.+sign(1.D0,v1))*(g2p/beta22) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta22)
                 sw=ww12+ww22
                 w12=ww12/sw
                 w22=ww22/sw
-                ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
-                     +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
-                ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
-                     +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
+                ww12m=w12*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
+                     +w12*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
+                ww22m=w22*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
+                     +w22*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
                 swm=ww12m+ww22m 
                 w12=ww12m/swm 
                 w22=ww22m/swm 
 !
-                ww13=0.5*(1.+sign(1.,v1))*(g1p/beta31) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta31)
-                ww23=0.5*(1.+sign(1.,v1))*(g2p/beta32) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta32)
+                ww13=0.5*(1.+sign(1.D0,v1))*(g1p/beta31) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta31)
+                ww23=0.5*(1.+sign(1.D0,v1))*(g2p/beta32) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta32)
                 sw=ww13+ww23
                 w13=ww13/sw
                 w23=ww23/sw
-                ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
-                     +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
-                ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
-                     +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
+                ww13m=w13*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
+                     +w13*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
+                ww23m=w23*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
+                     +w23*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
                 swm=ww13m+ww23m
                 w13=ww13m/swm 
                 w23=ww23m/swm 
 !
-                ww14=0.5*(1.+sign(1.,v4))*(g1p/beta41) &
-                     +0.5*(1.-sign(1.,v4))*(g1m/beta41)
-                ww24=0.5*(1.+sign(1.,v4))*(g2p/beta42) &
-                     +0.5*(1.-sign(1.,v4))*(g2m/beta42)
+                ww14=0.5*(1.+sign(1.D0,v4))*(g1p/beta41) &
+                     +0.5*(1.-sign(1.D0,v4))*(g1m/beta41)
+                ww24=0.5*(1.+sign(1.D0,v4))*(g2p/beta42) &
+                     +0.5*(1.-sign(1.D0,v4))*(g2m/beta42)
                 sw=ww14+ww24
                 w14=ww14/sw
                 w24=ww24/sw
-                ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
-                     +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
-                ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
-                     +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
+                ww14m=w14*0.5*(1.+sign(1.D0,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
+                     +w14*0.5*(1.-sign(1.D0,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
+                ww24m=w24*0.5*(1.+sign(1.D0,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
+                     +w24*0.5*(1.-sign(1.D0,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
                 swm=ww14m+ww24m 
                 w14=ww14m/swm 
                 w24=ww24m/swm 
 !
-                ww15=0.5*(1.+sign(1.,v5))*(g1p/beta51) &
-                     +0.5*(1.-sign(1.,v5))*(g1m/beta51)
-                ww25=0.5*(1.+sign(1.,v5))*(g2p/beta52) &
-                     +0.5*(1.-sign(1.,v5))*(g2m/beta52)
+                ww15=0.5*(1.+sign(1.D0,v5))*(g1p/beta51) &
+                     +0.5*(1.-sign(1.D0,v5))*(g1m/beta51)
+                ww25=0.5*(1.+sign(1.D0,v5))*(g2p/beta52) &
+                     +0.5*(1.-sign(1.D0,v5))*(g2m/beta52)
                 sw=ww15+ww25
                 w15=ww15/sw
                 w25=ww25/sw
-                ww15m=w15*0.5*(1.+sign(1.,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
-                     +w15*0.5*(1.-sign(1.,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
-                ww25m=w25*0.5*(1.+sign(1.,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &   
-                     +w25*0.5*(1.-sign(1.,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
+                ww15m=w15*0.5*(1.+sign(1.D0,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
+                     +w15*0.5*(1.-sign(1.D0,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
+                ww25m=w25*0.5*(1.+sign(1.D0,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &   
+                     +w25*0.5*(1.-sign(1.D0,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
                 swm=ww15m+ww25m
                 w15=ww15m/swm 
                 w25=ww25m/swm 
@@ -1619,21 +1616,21 @@ contains
 !!             +(p51*v1*q13+p52*v1*q23+p53*v1*q33+p54*v4*q43+p55*v5*q53)*dw3 &
 !!             +(p51*v1*q14+p52*v1*q24+p53*v1*q34+p54*v4*q44+p55*v5*q54)*dw4 &
 !!             +(p51*v1*q15+p52*v1*q25+p53*v1*q35+p54*v4*q45+p55*v5*q55)*dw5
-!          dfex=cmui1(m)*(rhoer+ps(n1)-pinfl)*ur  &
-!              +cmui2(m)*(rhoel+ps(n )-pinfl)*ul
-!          dfey=cmui1(m)*(rhoer+ps(n1)-pinfl)*vr  &
-!              +cmui2(m)*(rhoel+ps(n )-pinfl)*vl
+!          dfex=cmui1(n)*(rhoer+ps(n1)-pinfl)*ur  &
+!              +cmui2(n)*(rhoel+ps(n )-pinfl)*ul
+!          dfey=cmui1(n)*(rhoer+ps(n1)-pinfl)*vr  &
+!              +cmui2(n)*(rhoel+ps(n )-pinfl)*vl
 !          df5=0.5*(dfex*sn(m,kdir,1)+dfey*sn(m,kdir,2)-di5)
 !         endif 
 !        calcul des flux visqueux (multiplies par -2)
-                fv2=(cmui2(m1)*toxx(n)+cmui1(m1)*toxx(n1))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,2)
-                fv3=(cmui2(m1)*toxy(n)+cmui1(m1)*toxy(n1))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*toyy(n)+cmui1(m1)*toyy(n1))*sn(m1,kdir,2)  
-                fv5=(cmui2(m1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
-                     +cmui1(m1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
-                     +(cmui2(m1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
-                     +cmui1(m1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
+                fv2=(cmui2(n1)*toxx(n)+cmui1(n1)*toxx(n1))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*toxy(n)+cmui1(n1)*toxy(n1))*sn(m1,kdir,2)
+                fv3=(cmui2(n1)*toxy(n)+cmui1(n1)*toxy(n1))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*toyy(n)+cmui1(n1)*toyy(n1))*sn(m1,kdir,2)  
+                fv5=(cmui2(n1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
+                     +cmui1(n1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
+                     +(cmui2(n1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
+                     +cmui1(n1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
                 u(n1,1)=u(n1,1)-df1
                 u(n1,2)=u(n1,2)-df2+0.5*fv2
                 u(n1,3)=u(n1,3)-df3+0.5*fv3
@@ -1795,37 +1792,37 @@ contains
                 q5f2p=q51*v(n+2*ninc,2)+q52*fxx(m+2*ninc)+q53*fxy(m+2*ninc) &
                      +q54*fxz(m+2*ninc)+q55*fex(m+2*ninc)
 !        coefficients Crj en maillage irregulier
-                c00=cmuj2(m1)*0.5
-                c01=cmuj1(m1)*0.5
-                c10=-cmuj2(m)*0.5
+                c00=cmuj2(n1)*0.5
+                c01=cmuj1(n1)*0.5
+                c10=-cmuj2(n)*0.5
                 c11=1.-c10
-                c21=-cmuj1(m+2*ninc)*0.5
+                c21=-cmuj1(n+2*ninc)*0.5
                 c20=1.-c21
 !        calcul des flux d'ordre 2 sur les 2 stencils
-                f11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
-                f12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
+                f11=0.5*(1.+sign(1.D0,v1))*(q1f1m*c10 +q1f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01)
+                f12=0.5*(1.+sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f1p*c11 +q1f2p*c10)
 !
-                f21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
-                f22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q2f1p*c11 +q2f2p*c10)
+                f21=0.5*(1.+sign(1.D0,v1))*(q2f1m*c10 +q2f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01)
+                f22=0.5*(1.+sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f1p*c11 +q2f2p*c10)
 !
-                f31=0.5*(1.+sign(1.,v1))*(q3f1m*c10 +q3f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q3f  *c00 +q3f1p*c01)
-                f32=0.5*(1.+sign(1.,v1))*(q3f  *c00 +q3f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q3f1p*c11 +q3f2p*c10)
+                f31=0.5*(1.+sign(1.D0,v1))*(q3f1m*c10 +q3f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01)
+                f32=0.5*(1.+sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f1p*c11 +q3f2p*c10)
 !
-                f41=0.5*(1.+sign(1.,v4))*(q4f1m*c10 +q4f  *c11) &
-                     +0.5*(1.-sign(1.,v4))*(q4f  *c00 +q4f1p*c01)
-                f42=0.5*(1.+sign(1.,v4))*(q4f  *c00 +q4f1p*c01) &
-                     +0.5*(1.-sign(1.,v4))*(q4f1p*c11 +q4f2p*c10)
+                f41=0.5*(1.+sign(1.D0,v4))*(q4f1m*c10 +q4f  *c11) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01)
+                f42=0.5*(1.+sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f1p*c11 +q4f2p*c10)
 !
-                f51=0.5*(1.+sign(1.,v5))*(q5f1m*c10 +q5f  *c11) &
-                     +0.5*(1.-sign(1.,v5))*(q5f  *c00 +q5f1p*c01)
-                f52=0.5*(1.+sign(1.,v5))*(q5f  *c00 +q5f1p*c01) &
-                     +0.5*(1.-sign(1.,v5))*(q5f1p*c11 +q5f2p*c10)
+                f51=0.5*(1.+sign(1.D0,v5))*(q5f1m*c10 +q5f  *c11) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01)
+                f52=0.5*(1.+sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f1p*c11 +q5f2p*c10)
 !        calcul des senseurs beta (au carre)
 !         d1c1=(q1f-q1f1m)**2    !maillage regulier
 !         d1c2=(q1f1p-q1f)**2
@@ -1847,107 +1844,107 @@ contains
                 d5c3=4.*((q5f2p-q5f1p)*c01*c21/c00)**2
                 iexp=2
 !         iexp=1
-                beta11=(0.5*(1.+sign(1.,v1))*d1c1 &
-                     +0.5*(1.-sign(1.,v1))*d1c2+eps)**iexp
-                beta12=(0.5*(1.+sign(1.,v1))*d1c2 &
-                     +0.5*(1.-sign(1.,v1))*d1c3+eps)**iexp
+                beta11=(0.5*(1.+sign(1.D0,v1))*d1c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c2+eps)**iexp
+                beta12=(0.5*(1.+sign(1.D0,v1))*d1c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c3+eps)**iexp
 !
-                beta21=(0.5*(1.+sign(1.,v1))*d2c1 &
-                     +0.5*(1.-sign(1.,v1))*d2c2+eps)**iexp
-                beta22=(0.5*(1.+sign(1.,v1))*d2c2 &
-                     +0.5*(1.-sign(1.,v1))*d2c3+eps)**iexp
+                beta21=(0.5*(1.+sign(1.D0,v1))*d2c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c2+eps)**iexp
+                beta22=(0.5*(1.+sign(1.D0,v1))*d2c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c3+eps)**iexp
 !
-                beta31=(0.5*(1.+sign(1.,v1))*d3c1 &
-                     +0.5*(1.-sign(1.,v1))*d3c2+eps)**iexp
-                beta32=(0.5*(1.+sign(1.,v1))*d3c2 &
-                     +0.5*(1.-sign(1.,v1))*d3c3+eps)**iexp
+                beta31=(0.5*(1.+sign(1.D0,v1))*d3c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c2+eps)**iexp
+                beta32=(0.5*(1.+sign(1.D0,v1))*d3c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c3+eps)**iexp
 !
-                beta41=(0.5*(1.+sign(1.,v4))*d4c1 &
-                     +0.5*(1.-sign(1.,v4))*d4c2+eps)**iexp
-                beta42=(0.5*(1.+sign(1.,v4))*d4c2 &
-                     +0.5*(1.-sign(1.,v4))*d4c3+eps)**iexp
+                beta41=(0.5*(1.+sign(1.D0,v4))*d4c1 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c2+eps)**iexp
+                beta42=(0.5*(1.+sign(1.D0,v4))*d4c2 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c3+eps)**iexp
 !
-                beta51=(0.5*(1.+sign(1.,v5))*d5c1 &
-                     +0.5*(1.-sign(1.,v5))*d5c2+eps)**iexp
-                beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
-                     +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
+                beta51=(0.5*(1.+sign(1.D0,v5))*d5c1 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c2+eps)**iexp
+                beta52=(0.5*(1.+sign(1.D0,v5))*d5c2 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c3+eps)**iexp
 !        coefficients gamma en maillage irregulier
-                g1p=cmuj2(m1)*cvj(m1)/(cmuj1(m)*cvj(m)+cmuj2(m)*cvj(m)+cmuj2(m1)*cvj(m1))
+                g1p=cmuj2(n1)*cvj(n1)/(cmuj1(n)*cvj(n)+cmuj2(n)*cvj(n)+cmuj2(n1)*cvj(n1))
                 g2p=1.-g1p
-                g2m=cmuj1(m1)*cvj(m1)/(cmuj1(m1)*cvj(m1)+cmuj2(m1)*cvj(m1)+cmuj2(m+2*ninc)*cvj(m+2*ninc))
+                g2m=cmuj1(n1)*cvj(n1)/(cmuj1(n1)*cvj(n1)+cmuj2(n1)*cvj(n1)+cmuj2(n+2*ninc)*cvj(n+2*ninc))
                 g1m=1.-g2m
 !        calculs des poids wi
-                ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta11)
-                ww21=0.5*(1.+sign(1.,v1))*(g2p/beta12) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta12)
+                ww11=0.5*(1.+sign(1.D0,v1))*(g1p/beta11) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta11)
+                ww21=0.5*(1.+sign(1.D0,v1))*(g2p/beta12) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta12)
                 sw=ww11+ww21
                 w11=ww11/sw
                 w21=ww21/sw
-                ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
-                     +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
-                ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
-                     +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
+                ww11m=w11*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
+                     +w11*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
+                ww21m=w21*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
+                     +w21*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
                 swm=ww11m+ww21m
                 w11=ww11m/swm 
                 w21=ww21m/swm 
 !
-                ww12=0.5*(1.+sign(1.,v1))*(g1p/beta21) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta21)
-                ww22=0.5*(1.+sign(1.,v1))*(g2p/beta22) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta22)
+                ww12=0.5*(1.+sign(1.D0,v1))*(g1p/beta21) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta21)
+                ww22=0.5*(1.+sign(1.D0,v1))*(g2p/beta22) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta22)
                 sw=ww12+ww22
                 w12=ww12/sw
                 w22=ww22/sw
-                ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
-                     +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
-                ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
-                     +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
+                ww12m=w12*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
+                     +w12*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
+                ww22m=w22*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
+                     +w22*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
                 swm=ww12m+ww22m 
                 w12=ww12m/swm 
                 w22=ww22m/swm 
 !
-                ww13=0.5*(1.+sign(1.,v1))*(g1p/beta31) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta31)
-                ww23=0.5*(1.+sign(1.,v1))*(g2p/beta32) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta32)
+                ww13=0.5*(1.+sign(1.D0,v1))*(g1p/beta31) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta31)
+                ww23=0.5*(1.+sign(1.D0,v1))*(g2p/beta32) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta32)
                 sw=ww13+ww23
                 w13=ww13/sw
                 w23=ww23/sw
-                ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
-                     +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
-                ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
-                     +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
+                ww13m=w13*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
+                     +w13*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
+                ww23m=w23*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
+                     +w23*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
                 swm=ww13m+ww23m
                 w13=ww13m/swm 
                 w23=ww23m/swm 
 !
-                ww14=0.5*(1.+sign(1.,v4))*(g1p/beta41) &
-                     +0.5*(1.-sign(1.,v4))*(g1m/beta41)
-                ww24=0.5*(1.+sign(1.,v4))*(g2p/beta42) &
-                     +0.5*(1.-sign(1.,v4))*(g2m/beta42)
+                ww14=0.5*(1.+sign(1.D0,v4))*(g1p/beta41) &
+                     +0.5*(1.-sign(1.D0,v4))*(g1m/beta41)
+                ww24=0.5*(1.+sign(1.D0,v4))*(g2p/beta42) &
+                     +0.5*(1.-sign(1.D0,v4))*(g2m/beta42)
                 sw=ww14+ww24
                 w14=ww14/sw
                 w24=ww24/sw
-                ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
-                     +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
-                ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
-                     +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
+                ww14m=w14*0.5*(1.+sign(1.D0,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
+                     +w14*0.5*(1.-sign(1.D0,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
+                ww24m=w24*0.5*(1.+sign(1.D0,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
+                     +w24*0.5*(1.-sign(1.D0,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
                 swm=ww14m+ww24m 
                 w14=ww14m/swm 
                 w24=ww24m/swm 
 !
-                ww15=0.5*(1.+sign(1.,v5))*(g1p/beta51) &
-                     +0.5*(1.-sign(1.,v5))*(g1m/beta51)
-                ww25=0.5*(1.+sign(1.,v5))*(g2p/beta52) &
-                     +0.5*(1.-sign(1.,v5))*(g2m/beta52)
+                ww15=0.5*(1.+sign(1.D0,v5))*(g1p/beta51) &
+                     +0.5*(1.-sign(1.D0,v5))*(g1m/beta51)
+                ww25=0.5*(1.+sign(1.D0,v5))*(g2p/beta52) &
+                     +0.5*(1.-sign(1.D0,v5))*(g2m/beta52)
                 sw=ww15+ww25
                 w15=ww15/sw
                 w25=ww25/sw
-                ww15m=w15*0.5*(1.+sign(1.,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
-                     +w15*0.5*(1.-sign(1.,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
-                ww25m=w25*0.5*(1.+sign(1.,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &   
-                     +w25*0.5*(1.-sign(1.,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
+                ww15m=w15*0.5*(1.+sign(1.D0,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
+                     +w15*0.5*(1.-sign(1.D0,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
+                ww25m=w25*0.5*(1.+sign(1.D0,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &   
+                     +w25*0.5*(1.-sign(1.D0,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
                 swm=ww15m+ww25m
                 w15=ww15m/swm 
                 w25=ww25m/swm 
@@ -2009,129 +2006,129 @@ contains
                 q5f2p=q51*v(n+2*ninc,3)+q52*fxy(m+2*ninc)+q53*fyy(m+2*ninc) &
                      +q54*fyz(m+2*ninc)+q55*fey(m+2*ninc)
 !        calcul des flux d'ordre 2 sur les 2 stencils
-                g11=0.5*(1.+sign(1.,v1))*(q1f1m*c10 +q1f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q1f  *c00 +q1f1p*c01)
-                g12=0.5*(1.+sign(1.,v1))*(q1f  *c00 +q1f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q1f1p*c11 +q1f2p*c10)
+                g11=0.5*(1.+sign(1.D0,v1))*(q1f1m*c10 +q1f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01)
+                g12=0.5*(1.+sign(1.D0,v1))*(q1f  *c00 +q1f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q1f1p*c11 +q1f2p*c10)
 !
-                g21=0.5*(1.+sign(1.,v1))*(q2f1m*c10 +q2f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q2f  *c00 +q2f1p*c01)
-                g22=0.5*(1.+sign(1.,v1))*(q2f  *c00 +q2f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q2f1p*c11 +q2f2p*c10)
+                g21=0.5*(1.+sign(1.D0,v1))*(q2f1m*c10 +q2f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01)
+                g22=0.5*(1.+sign(1.D0,v1))*(q2f  *c00 +q2f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q2f1p*c11 +q2f2p*c10)
 !
-                g31=0.5*(1.+sign(1.,v1))*(q3f1m*c10 +q3f  *c11) &
-                     +0.5*(1.-sign(1.,v1))*(q3f  *c00 +q3f1p*c01)
-                g32=0.5*(1.+sign(1.,v1))*(q3f  *c00 +q3f1p*c01) &
-                     +0.5*(1.-sign(1.,v1))*(q3f1p*c11 +q3f2p*c10)
+                g31=0.5*(1.+sign(1.D0,v1))*(q3f1m*c10 +q3f  *c11) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01)
+                g32=0.5*(1.+sign(1.D0,v1))*(q3f  *c00 +q3f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v1))*(q3f1p*c11 +q3f2p*c10)
 !
-                g41=0.5*(1.+sign(1.,v4))*(q4f1m*c10 +q4f  *c11) &
-                     +0.5*(1.-sign(1.,v4))*(q4f  *c00 +q4f1p*c01)
-                g42=0.5*(1.+sign(1.,v4))*(q4f  *c00 +q4f1p*c01) &
-                     +0.5*(1.-sign(1.,v4))*(q4f1p*c11 +q4f2p*c10)
+                g41=0.5*(1.+sign(1.D0,v4))*(q4f1m*c10 +q4f  *c11) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01)
+                g42=0.5*(1.+sign(1.D0,v4))*(q4f  *c00 +q4f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v4))*(q4f1p*c11 +q4f2p*c10)
 !
-                g51=0.5*(1.+sign(1.,v5))*(q5f1m*c10 +q5f  *c11) &
-                     +0.5*(1.-sign(1.,v5))*(q5f  *c00 +q5f1p*c01)
-                g52=0.5*(1.+sign(1.,v5))*(q5f  *c00 +q5f1p*c01) &
-                     +0.5*(1.-sign(1.,v5))*(q5f1p*c11 +q5f2p*c10)
+                g51=0.5*(1.+sign(1.D0,v5))*(q5f1m*c10 +q5f  *c11) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01)
+                g52=0.5*(1.+sign(1.D0,v5))*(q5f  *c00 +q5f1p*c01) &
+                     +0.5*(1.-sign(1.D0,v5))*(q5f1p*c11 +q5f2p*c10)
 !        calcul des senseurs beta (au carre)
                 iexp=2
 !         iexp=1
-                beta11=(0.5*(1.+sign(1.,v1))*d1c1 &
-                     +0.5*(1.-sign(1.,v1))*d1c2+eps)**iexp
-                beta12=(0.5*(1.+sign(1.,v1))*d1c2 &
-                     +0.5*(1.-sign(1.,v1))*d1c3+eps)**iexp
+                beta11=(0.5*(1.+sign(1.D0,v1))*d1c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c2+eps)**iexp
+                beta12=(0.5*(1.+sign(1.D0,v1))*d1c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d1c3+eps)**iexp
 !
-                beta21=(0.5*(1.+sign(1.,v1))*d2c1 &
-                     +0.5*(1.-sign(1.,v1))*d2c2+eps)**iexp
-                beta22=(0.5*(1.+sign(1.,v1))*d2c2 &
-                     +0.5*(1.-sign(1.,v1))*d2c3+eps)**iexp
+                beta21=(0.5*(1.+sign(1.D0,v1))*d2c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c2+eps)**iexp
+                beta22=(0.5*(1.+sign(1.D0,v1))*d2c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d2c3+eps)**iexp
 !
-                beta31=(0.5*(1.+sign(1.,v1))*d3c1 &
-                     +0.5*(1.-sign(1.,v1))*d3c2+eps)**iexp
-                beta32=(0.5*(1.+sign(1.,v1))*d3c2 &
-                     +0.5*(1.-sign(1.,v1))*d3c3+eps)**iexp
+                beta31=(0.5*(1.+sign(1.D0,v1))*d3c1 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c2+eps)**iexp
+                beta32=(0.5*(1.+sign(1.D0,v1))*d3c2 &
+                     +0.5*(1.-sign(1.D0,v1))*d3c3+eps)**iexp
 !
-                beta41=(0.5*(1.+sign(1.,v4))*d4c1 &
-                     +0.5*(1.-sign(1.,v4))*d4c2+eps)**iexp
-                beta42=(0.5*(1.+sign(1.,v4))*d4c2 &
-                     +0.5*(1.-sign(1.,v4))*d4c3+eps)**iexp
+                beta41=(0.5*(1.+sign(1.D0,v4))*d4c1 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c2+eps)**iexp
+                beta42=(0.5*(1.+sign(1.D0,v4))*d4c2 &
+                     +0.5*(1.-sign(1.D0,v4))*d4c3+eps)**iexp
 !
-                beta51=(0.5*(1.+sign(1.,v5))*d5c1 &
-                     +0.5*(1.-sign(1.,v5))*d5c2+eps)**iexp
-                beta52=(0.5*(1.+sign(1.,v5))*d5c2 &
-                     +0.5*(1.-sign(1.,v5))*d5c3+eps)**iexp
+                beta51=(0.5*(1.+sign(1.D0,v5))*d5c1 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c2+eps)**iexp
+                beta52=(0.5*(1.+sign(1.D0,v5))*d5c2 &
+                     +0.5*(1.-sign(1.D0,v5))*d5c3+eps)**iexp
 !        calculs des poids wi
-                ww11=0.5*(1.+sign(1.,v1))*(g1p/beta11) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta11)
-                ww21=0.5*(1.+sign(1.,v1))*(g2p/beta12) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta12)
+                ww11=0.5*(1.+sign(1.D0,v1))*(g1p/beta11) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta11)
+                ww21=0.5*(1.+sign(1.D0,v1))*(g2p/beta12) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta12)
                 sw=ww11+ww21
                 w11=ww11/sw
                 w21=ww21/sw
-                ww11m=w11*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
-                     +w11*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
-                ww21m=w21*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
-                     +w21*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
+                ww11m=w11*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w11+w11**2)/(g1p**2+w11*(1.-2.*g1p)) &
+                     +w11*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w11+w11**2)/(g1m**2+w11*(1.-2.*g1m))
+                ww21m=w21*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w21+w21**2)/(g2p**2+w21*(1.-2.*g2p)) &
+                     +w21*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w21+w21**2)/(g2m**2+w21*(1.-2.*g2m))
                 swm=ww11m+ww21m
                 w11=ww11m/swm 
                 w21=ww21m/swm 
 !
-                ww12=0.5*(1.+sign(1.,v1))*(g1p/beta21) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta21)
-                ww22=0.5*(1.+sign(1.,v1))*(g2p/beta22) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta22)
+                ww12=0.5*(1.+sign(1.D0,v1))*(g1p/beta21) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta21)
+                ww22=0.5*(1.+sign(1.D0,v1))*(g2p/beta22) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta22)
                 sw=ww12+ww22
                 w12=ww12/sw
                 w22=ww22/sw
-                ww12m=w12*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
-                     +w12*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
-                ww22m=w22*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
-                     +w22*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
+                ww12m=w12*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w12+w12**2)/(g1p**2+w12*(1.-2.*g1p)) &
+                     +w12*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w12+w12**2)/(g1m**2+w12*(1.-2.*g1m))
+                ww22m=w22*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w22+w22**2)/(g2p**2+w22*(1.-2.*g2p)) &
+                     +w22*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w22+w22**2)/(g2m**2+w22*(1.-2.*g2m))
                 swm=ww12m+ww22m 
                 w12=ww12m/swm 
                 w22=ww22m/swm 
 !
-                ww13=0.5*(1.+sign(1.,v1))*(g1p/beta31) &
-                     +0.5*(1.-sign(1.,v1))*(g1m/beta31)
-                ww23=0.5*(1.+sign(1.,v1))*(g2p/beta32) &
-                     +0.5*(1.-sign(1.,v1))*(g2m/beta32)
+                ww13=0.5*(1.+sign(1.D0,v1))*(g1p/beta31) &
+                     +0.5*(1.-sign(1.D0,v1))*(g1m/beta31)
+                ww23=0.5*(1.+sign(1.D0,v1))*(g2p/beta32) &
+                     +0.5*(1.-sign(1.D0,v1))*(g2m/beta32)
                 sw=ww13+ww23
                 w13=ww13/sw
                 w23=ww23/sw
-                ww13m=w13*0.5*(1.+sign(1.,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
-                     +w13*0.5*(1.-sign(1.,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
-                ww23m=w23*0.5*(1.+sign(1.,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
-                     +w23*0.5*(1.-sign(1.,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
+                ww13m=w13*0.5*(1.+sign(1.D0,v1))*(g1p+g1p**2-3.*g1p*w13+w13**2)/(g1p**2+w13*(1.-2.*g1p)) &
+                     +w13*0.5*(1.-sign(1.D0,v1))*(g1m+g1m**2-3.*g1m*w13+w13**2)/(g1m**2+w13*(1.-2.*g1m))
+                ww23m=w23*0.5*(1.+sign(1.D0,v1))*(g2p+g2p**2-3.*g2p*w23+w23**2)/(g2p**2+w23*(1.-2.*g2p)) &   
+                     +w23*0.5*(1.-sign(1.D0,v1))*(g2m+g2m**2-3.*g2m*w23+w23**2)/(g2m**2+w23*(1.-2.*g2m))
                 swm=ww13m+ww23m
                 w13=ww13m/swm 
                 w23=ww23m/swm 
 !
-                ww14=0.5*(1.+sign(1.,v4))*(g1p/beta41) &
-                     +0.5*(1.-sign(1.,v4))*(g1m/beta41)
-                ww24=0.5*(1.+sign(1.,v4))*(g2p/beta42) &
-                     +0.5*(1.-sign(1.,v4))*(g2m/beta42)
+                ww14=0.5*(1.+sign(1.D0,v4))*(g1p/beta41) &
+                     +0.5*(1.-sign(1.D0,v4))*(g1m/beta41)
+                ww24=0.5*(1.+sign(1.D0,v4))*(g2p/beta42) &
+                     +0.5*(1.-sign(1.D0,v4))*(g2m/beta42)
                 sw=ww14+ww24
                 w14=ww14/sw
                 w24=ww24/sw
-                ww14m=w14*0.5*(1.+sign(1.,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
-                     +w14*0.5*(1.-sign(1.,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
-                ww24m=w24*0.5*(1.+sign(1.,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
-                     +w24*0.5*(1.-sign(1.,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
+                ww14m=w14*0.5*(1.+sign(1.D0,v4))*(g1p+g1p**2-3.*g1p*w14+w14**2)/(g1p**2+w14*(1.-2.*g1p)) &
+                     +w14*0.5*(1.-sign(1.D0,v4))*(g1m+g1m**2-3.*g1m*w14+w14**2)/(g1m**2+w14*(1.-2.*g1m))
+                ww24m=w24*0.5*(1.+sign(1.D0,v4))*(g2p+g2p**2-3.*g2p*w24+w24**2)/(g2p**2+w24*(1.-2.*g2p)) &  
+                     +w24*0.5*(1.-sign(1.D0,v4))*(g2m+g2m**2-3.*g2m*w24+w24**2)/(g2m**2+w24*(1.-2.*g2m))
                 swm=ww14m+ww24m 
                 w14=ww14m/swm 
                 w24=ww24m/swm 
 !
-                ww15=0.5*(1.+sign(1.,v5))*(g1p/beta51) &
-                     +0.5*(1.-sign(1.,v5))*(g1m/beta51)
-                ww25=0.5*(1.+sign(1.,v5))*(g2p/beta52) &
-                     +0.5*(1.-sign(1.,v5))*(g2m/beta52)
+                ww15=0.5*(1.+sign(1.D0,v5))*(g1p/beta51) &
+                     +0.5*(1.-sign(1.D0,v5))*(g1m/beta51)
+                ww25=0.5*(1.+sign(1.D0,v5))*(g2p/beta52) &
+                     +0.5*(1.-sign(1.D0,v5))*(g2m/beta52)
                 sw=ww15+ww25
                 w15=ww15/sw
                 w25=ww25/sw
-                ww15m=w15*0.5*(1.+sign(1.,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
-                     +w15*0.5*(1.-sign(1.,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
-                ww25m=w25*0.5*(1.+sign(1.,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &   
-                     +w25*0.5*(1.-sign(1.,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
+                ww15m=w15*0.5*(1.+sign(1.D0,v5))*(g1p+g1p**2-3.*g1p*w15+w15**2)/(g1p**2+w15*(1.-2.*g1p)) &
+                     +w15*0.5*(1.-sign(1.D0,v5))*(g1m+g1m**2-3.*g1m*w15+w15**2)/(g1m**2+w15*(1.-2.*g1m))
+                ww25m=w25*0.5*(1.+sign(1.D0,v5))*(g2p+g2p**2-3.*g2p*w25+w25**2)/(g2p**2+w25*(1.-2.*g2p)) &   
+                     +w25*0.5*(1.-sign(1.D0,v5))*(g2m+g2m**2-3.*g2m*w25+w25**2)/(g2m**2+w25*(1.-2.*g2m))
                 swm=ww15m+ww25m
                 w15=ww15m/swm 
                 w25=ww25m/swm 
@@ -2169,21 +2166,21 @@ contains
 !!             +(p51*v1*q13+p52*v1*q23+p53*v1*q33+p54*v4*q43+p55*v5*q53)*dw3 &
 !!             +(p51*v1*q14+p52*v1*q24+p53*v1*q34+p54*v4*q44+p55*v5*q54)*dw4 &
 !!             +(p51*v1*q15+p52*v1*q25+p53*v1*q35+p54*v4*q45+p55*v5*q55)*dw5
-!          dfex=cmuj1(m)*(rhoer+ps(n1)-pinfl)*ur  &
-!              +cmuj2(m)*(rhoel+ps(n )-pinfl)*ul
-!          dfey=cmuj1(m)*(rhoer+ps(n1)-pinfl)*vr  &
-!              +cmuj2(m)*(rhoel+ps(n )-pinfl)*vl
+!          dfex=cmuj1(n)*(rhoer+ps(n1)-pinfl)*ur  &
+!              +cmuj2(n)*(rhoel+ps(n )-pinfl)*ul
+!          dfey=cmuj1(n)*(rhoer+ps(n1)-pinfl)*vr  &
+!              +cmuj2(n)*(rhoel+ps(n )-pinfl)*vl
 !          dg5=0.5*(dfex*sn(m,kdir,1)+dfey*sn(m,kdir,2)-dj5)
 !         endif 
 !        calcul des flux visqueux (multiplies par -2)
-                gv2=(cmuj2(m1)*toxx(n)+cmuj1(m1)*toxx(n1))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*toxy(n)+cmuj1(m1)*toxy(n1))*sn(m1,kdir,2)
-                gv3=(cmuj2(m1)*toxy(n)+cmuj1(m1)*toxy(n1))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*toyy(n)+cmuj1(m1)*toyy(n1))*sn(m1,kdir,2)
-                gv5=(cmuj2(m1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
-                     +cmuj1(m1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
-                     +(cmuj2(m1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
-                     +cmuj1(m1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
+                gv2=(cmuj2(n1)*toxx(n)+cmuj1(n1)*toxx(n1))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*toxy(n)+cmuj1(n1)*toxy(n1))*sn(m1,kdir,2)
+                gv3=(cmuj2(n1)*toxy(n)+cmuj1(n1)*toxy(n1))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*toyy(n)+cmuj1(n1)*toyy(n1))*sn(m1,kdir,2)
+                gv5=(cmuj2(n1)*(toxx(n )*ul+toxy(n )*vl+qcx(n )) &
+                     +cmuj1(n1)*(toxx(n1)*ur+toxy(n1)*vr+qcx(n1)))*sn(m1,kdir,1) &
+                     +(cmuj2(n1)*(toxy(n )*ul+toyy(n )*vl+qcy(n )) &
+                     +cmuj1(n1)*(toxy(n1)*ur+toyy(n1)*vr+qcy(n1)))*sn(m1,kdir,2)
                 u(n1,1)=u(n1,1)-dg1
                 u(n1,2)=u(n1,2)-dg2+0.5*gv2
                 u(n1,3)=u(n1,3)-dg3+0.5*gv3

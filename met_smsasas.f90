@@ -15,7 +15,7 @@ contains
 !***********************************************************************
 !
 !     DATE 
-!      juillet 2010 - Jean DECAIX
+!      juillet 2010 - Jean DECAIX / LEGI
 !     ACT
 !_A    Modele de Spalart-Allmaras avec terme SAS.
 !_A    Calcul du second  membre de l'equation pour nu-tilde.
@@ -86,7 +86,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension v(ip11,ip60)
     dimension mu(ip12),dist(ip12), &
          txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &
@@ -101,8 +100,6 @@ contains
     dimension sdif(ip00),vol(ip11)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
          cmuk1(ip21),cmuk2(ip21)
-!
-
 !
 !     ---------------------------------------------------------------
 !com  sdif --> grad(ro nu_tilde).grad(nu_tilde) * cb2/sigma

@@ -22,7 +22,6 @@ contains
     use modeleturb
     use mod_tcmd_dfpmtbn
     use mod_b1_dfpmtbn
-
     implicit none
     integer          :: imot,nmot
 !

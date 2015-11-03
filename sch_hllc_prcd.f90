@@ -66,15 +66,12 @@ contains
     character(len=7 ) :: equat
     dimension v(ip11,ip60),u(ip11,ip60),ff(ip11,ip60)
     dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
-         tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12)
+              tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12)
     dimension sn(lgsnlt,nind,ndir)
     dimension ps(ip11)
     dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
-         rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
+              rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
-
-
-
     isortie=0
 !
     n0c=npc(lm)
@@ -180,7 +177,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1p1,j,k)
           ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
 !        vecteur normal unitaire a la face consideree
@@ -325,7 +322,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1,j1  ,k)
        ind2 = indc(i1,j2m1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2,ncj
           m=n-n0c
           n1=n-ninc
@@ -368,7 +365,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i2,j1  ,k)
        ind2 = indc(i2,j2m1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2,ncj
           m=n-n0c
           fxx=v(n,2)*(v(n,2)/v(n,1))+ps(n)-pinfl-toxx(n)
@@ -455,7 +452,7 @@ contains
        do j=j1p1,j2m1
           ind1 = indc(i1  ,j,k)
           ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
 !        vecteur normal unitaire a la face consideree
@@ -601,7 +598,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2
           m=n-n0c
           n1=n-ninc
@@ -644,7 +641,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2
           m=n-n0c
           fxx=v(n,2)*(v(n,2)/v(n,1))+ps(n)-pinfl-toxx(n)
@@ -683,7 +680,7 @@ contains
        enddo
     enddo
 !
-!c------direction k-------------------------------------------------------
+!-------direction k-------------------------------------------------------
 !
     if(equat(3:4).eq.'3d') then
        kdir=3
@@ -732,7 +729,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1,j,k)
              ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!DEC$ IVDEP
              do n=ind1,ind2
                 m=n-n0c
 !        vecteur normal unitaire a la face consideree
@@ -877,7 +874,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k1)
           ind2 = indc(i2m1,j,k1)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
              n1=n-ninc
@@ -920,7 +917,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k2)
           ind2 = indc(i2m1,j,k2)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
              fxx=v(n,2)*(v(n,2)/v(n,1))+ps(n)-pinfl-toxx(n)
@@ -1003,5 +1000,6 @@ contains
       integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
+
   end subroutine sch_hllc_prcd
 end module mod_sch_hllc_prcd

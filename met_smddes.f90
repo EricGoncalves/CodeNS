@@ -62,7 +62,7 @@ contains
     use mod_met_difsa
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2m1
-    integer          ::   imax,  imin,  ind1,  ind2,  indc
+    integer          ::   imax,  imin,  ind1,  ind2
     integer          ::      j,    j1,  j1m1,    j2,  j2m1
     integer          ::   jmax,  jmin,     k,    k1,  k1m1
     integer          ::     k2,  k2m1,  kmax,  kmin,     l
@@ -87,10 +87,9 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension v(ip11,ip60)
     dimension mu(ip12),dist(ip12),qcxts5(ip12),qcyts6 (ip12), &
-         txxf5x(ip12),txyf5y (ip12),txzf5z(ip12)            
+              txxf5x(ip12),txyf5y (ip12),txzf5z(ip12)            
     dimension cfke(ip13),vol(ip11)
     dimension sn(ip31*ndir)
     dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
@@ -99,10 +98,8 @@ contains
          dtdx(ip00),dtdy(ip00),dtdz(ip00)           
     dimension sdif(ip00),Delta(ip00),t(ip00)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
+             cmuk1(ip21),cmuk2(ip21)
     dimension x(ip21),y(ip21),z(ip21)
-!
-    indc(i,j,k)=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
 !
 !     ---------------------------------------------------------------
 !com  sdif --> grad(ro nu_tilde).grad(nu_tilde) * cb2/sigma
@@ -272,5 +269,11 @@ contains
     enddo
 !
     return
+  contains
+    function    indc(i,j,k)
+      implicit none
+      integer          ::    i,indc,   j,   k
+      indc=n0c+1+(i-id1(l))+(j-jd1(l))*nid+(k-kd1(l))*nijd
+    end function indc
   end subroutine met_smddes
 end module mod_met_smddes

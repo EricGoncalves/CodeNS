@@ -45,8 +45,6 @@ contains
     dimension x(ip21),y(ip21),z(ip21)
     dimension xcc(ip00),ycc(ip00),zcc(ip00)
 !
-
-!
     n0=npc(l)
     i1=ii1(l)
     j1=jj1(l)
@@ -62,16 +60,16 @@ contains
 !
 !     calcul des centres des facettes pour les plans k=constante (facteur 4)
     do k=k1,k2
-       do j=j1,j2-1
-          indjk=ind(j,k)
-          do i=i1,i2-1
-             n=indjk+(i-id1(l))
-             m=n-n0
-             xcc(m)=x(n)+x(n+1)+x(n+nid)+x(n+1+nid)
-             ycc(m)=y(n)+y(n+1)+y(n+nid)+y(n+1+nid)
-             zcc(m)=z(n)+z(n+1)+z(n+nid)+z(n+1+nid)
-          enddo
+     do j=j1,j2-1
+      indjk=ind(j,k)
+      do i=i1,i2-1
+        n=indjk+(i-id1(l))
+        m=n-n0
+        xcc(m)=x(n)+x(n+1)+x(n+nid)+x(n+1+nid)
+        ycc(m)=y(n)+y(n+1)+y(n+nid)+y(n+1+nid)
+        zcc(m)=z(n)+z(n+1)+z(n+nid)+z(n+1+nid)
        enddo
+      enddo
     enddo
 !
 !     moyenne sur k pour coordonnees au centre des cellules

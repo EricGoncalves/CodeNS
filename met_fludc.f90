@@ -62,8 +62,6 @@ contains
          fd6x(ip12),fd6y(ip12),fd6z(ip12)
     dimension t(ip00),dtdx(ip00),dtdy(ip00),dtdz(ip00)
 !
-
-!
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)

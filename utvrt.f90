@@ -58,8 +58,8 @@ contains
     ncjk = inc(0,1,1)
     ncijk= inc(1,1,1)
 !
-    pis2  =atan2(1.,0.)
-    degrad=pis2/90.
+    pis2  =atan2(1.D0,0.D0)
+    degrad=pis2/90.D0
 !
     ml=mpb(mfl)+1
     rmach =bceqt(ml,1)

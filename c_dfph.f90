@@ -24,9 +24,7 @@ contains
     use para_fige
     use sortiefichier
     use mod_dfph
-
     use mod_b1_dfph
-
     use mod_tcmd_dfph
     implicit none
     integer          :: imot,nmot

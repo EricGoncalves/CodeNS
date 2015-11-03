@@ -134,7 +134,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension x(ip21),y(ip21),z(ip21)
     dimension toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
     dimension v(ip11,ip60)
@@ -188,6 +187,8 @@ contains
 !
 !     -------------------------------------------------------
 !
+    if(icyexpl.eq.0) then
+
 !     pression
     cxavtot=0.
     cyavtot=0.
@@ -315,9 +316,9 @@ contains
              dsxy=abs(dx1*dy2-dy1*dx2)/2.
              dsml=sqrt(dsyz*dsyz+dsxz*dsxz+dsxy*dsxy)
 !           pression
-             dcx=(p0spi0-pspi0)*dsyz*sign(1.,nxn(mfacn))
-             dcy=(p0spi0-pspi0)*dsxz*sign(1.,nyn(mfacn))
-             dcz=(p0spi0-pspi0)*dsxy*sign(1.,nzn(mfacn))
+             dcx=(p0spi0-pspi0)*dsyz*sign(1.D0,nxn(mfacn))
+             dcy=(p0spi0-pspi0)*dsxz*sign(1.D0,nyn(mfacn))
+             dcz=(p0spi0-pspi0)*dsxy*sign(1.D0,nzn(mfacn))
              dcl=dcy*(zcfac-zref)-dcz*(ycfac-yref)
              dcm=dcx*(zcfac-zref)-dcz*(xcfac-xref)
              dcn=dcx*(ycfac-yref)-dcy*(xcfac-xref)
@@ -330,11 +331,11 @@ contains
 !
 !           frottement
              utx=toxx(nfacf)*nxn(mfacn)+toxy(nfacf)*nyn(mfacn)+ &
-                  toxz(nfacf)*nzn(mfacn)
+                 toxz(nfacf)*nzn(mfacn)
              uty=toxy(nfacf)*nxn(mfacn)+toyy(nfacf)*nyn(mfacn)+ &
-                  toyz(nfacf)*nzn(mfacn)
+                 toyz(nfacf)*nzn(mfacn)
              utz=toxz(nfacf)*nxn(mfacn)+toyz(nfacf)*nyn(mfacn)+ &
-                  tozz(nfacf)*nzn(mfacn)
+                 tozz(nfacf)*nzn(mfacn)
 !           projection du frottement sur la surface
              taunorm=utx*nxn(mfacn)+uty*nyn(mfacn)+utz*nzn(mfacn)
              utxt=utx-taunorm*nxn(mfacn)
@@ -355,16 +356,19 @@ contains
           enddo
        enddo
 !
-!       pression
+!      pression
        cxav=cxav/(q0spi0*sref)
        cyav=cyav/(q0spi0*sref)
        czav=czav/(q0spi0*sref)
        clav=clav/(q0spi0*sref*xlref)
        cmav=cmav/(q0spi0*sref*xlref)
        cnav=cnav/(q0spi0*sref*xlref)
-       cxaero=cxav*csal*csbe-cyav*snbe+czav*snal*csbe
-       cyaero=cxav*csal*snbe+cyav*csbe+czav*snal*snbe
-       czaero=-cxav*snal+czav*csal
+!       cxaero=cxav*csal*csbe-cyav*snbe+czav*snal*csbe
+!       cyaero=cxav*csal*snbe+cyav*csbe+czav*snal*snbe
+!       czaero=-cxav*snal+czav*csal
+       cxaero=cxav*csal*csbe-czav*snbe+cyav*snal*csbe
+       czaero=cxav*csal*snbe+czav*csbe+cyav*snal*snbe
+       cyaero=-cxav*snal+cyav*csal
        claero=clav*csal*csbe+cmav*snbe+cnav*snal*csbe
        cmaero=-clav*csal*snbe+cmav*csbe-cnav*snal*snbe
        cnaero=-clav*snal+cnav*csal
@@ -375,7 +379,7 @@ contains
        cmavtot=cmavtot+cmav
        cnavtot=cnavtot+cnav
 !
-!       frottement
+!      frottement
        cxavfr=cxavfr*tauref0/sref
        cyavfr=cyavfr*tauref0/sref
        czavfr=czavfr*tauref0/sref
@@ -391,33 +395,43 @@ contains
        cnavtfr=cnavtfr+cnavfr
     enddo !fin boucle sur les parois
 !
-!     pression
-    cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
-    cyaero= cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
-    czaero=-cxavtot*snal+czavtot*csal
+!   pression
+!    cxaero= cxavtot*csal*csbe-cyavtot*snbe+czavtot*snal*csbe
+!    cyaero= cxavtot*csal*snbe+cyavtot*csbe+czavtot*snal*snbe
+!    czaero=-cxavtot*snal+czavtot*csal
+    cxaero= cxavtot*csal*csbe-czavtot*snbe+cyavtot*snal*csbe
+    czaero= cxavtot*csal*snbe+czavtot*csbe+cyavtot*snal*snbe
+    cyaero=-cxavtot*snal+cyavtot*csal
     claero= clavtot*csal*csbe+cmavtot*snbe+cnavtot*snal*csbe
     cmaero=-clavtot*csal*snbe+cmavtot*csbe-cnavtot*snal*snbe
     cnaero=-clavtot*snal+cnavtot*csal
 !
-!     frottement
-    cxaefr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
-    cyaefr= cxavtfr*csal*snbe+cyavtfr*csbe+czavtfr*snal*snbe
-    czaefr=-cxavtfr*snal+czavtfr*csal
+!   frottement
+!    cxaefr= cxavtfr*csal*csbe-cyavtfr*snbe+czavtfr*snal*csbe
+!    cyaefr= cxavtfr*csal*snbe+cyavtfr*csbe+czavtfr*snal*snbe
+!    czaefr=-cxavtfr*snal+czavtfr*csal
+    cxaefr= cxavtfr*csal*csbe-czavtfr*snbe+cyavtfr*snal*csbe
+    czaefr= cxavtfr*csal*snbe+czavtfr*csbe+cyavtfr*snal*snbe
+    cyaefr=-cxavtfr*snal+cyavtfr*csal
     claefr= clavtfr*csal*csbe+cmavtfr*snbe+cnavtfr*snal*csbe
     cmaefr=-clavtfr*csal*snbe+cmavtfr*csbe-cnavtfr*snal*snbe
     cnaefr=-clavtfr*snal+cnavtfr*csal
-!
-    if(icyexpl.eq.0) then
-!       repere avion
-       write(out,3801) icyc,cxavtot,cyavtot,czavtot, &
-            clavtot,cmavtot,cnavtot
-3801   format('=>utitfr p: ',i6,1x,6(1pe11.3))
-       write(out,3802) icyc,cxavtfr,cyavtfr,czavtfr,clavtfr, &
-            cmavtfr,cnavtfr
-3802   format('=>utitfr f: ',i6,1x,6(1pe11.3))
+
+!    if(icyexpl.eq.0) then
+!      repere avion
+!       write(out,3801) icyc,cxavtot,cyavtot,czavtot, &
+!            clavtot,cmavtot,cnavtot
+!3801   format('=>utitfr p: ',i6,1x,6(1pe11.3))
+!       write(out,3802) icyc,cxavtfr,cyavtfr,czavtfr,clavtfr, &
+!            cmavtfr,cnavtfr
+!3802   format('=>utitfr f: ',i6,1x,6(1pe11.3))
+       write(out,3803) icyc,cxavtfr+cxavtot,cyavtfr+cyavtot,czavtfr+czavtot
+3803   format('=>utitfr f: ',i6,1x,3(1pe11.3))
     endif
 !
-!      vrtcz=czaero
+!   blocage de la condition vrt
+!   commente la ligne pour bloquer 
+!    vrtcz=czaero
 !
     return
   end subroutine utitfr

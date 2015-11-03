@@ -47,16 +47,16 @@ contains
 !
     character(len=7 ) :: equat
     dimension txxf5x(ip12),txyf5y(ip12),txzf5z(ip12), &
-         tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12)
+              tyyf6x(ip12),tyzf6y(ip12),tzzf6z(ip12)
     dimension nxn(ip42),nyn(ip42),nzn(ip42), &
-         ncbd(ip41),ncin(ip41)
+              ncbd(ip41),ncin(ip41)
     dimension sn(ip31*ndir),vol(ip11),ztemp(ip11)
     dimension mu(ip12),mut(ip12),mnc(ip43)
     dimension v(ip11,ip60)
     dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)
     dimension qcxts5(ip12),qcyts6(ip12),qcz000(ip12)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
+              cmuk1(ip21),cmuk2(ip21)
     dimension dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00), &
          dvyz(ip00),dvzx(ip00),dvzy(ip00),dvzz(ip00)
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dtdx,dtdy,dtdz

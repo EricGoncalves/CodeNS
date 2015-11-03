@@ -20,7 +20,6 @@ contains
     use para_fige
     use sortiefichier
     use mod_b1_dfpmdtg
-
     use mod_tcmd_dfpmdtg
     implicit none
     integer          :: imot,nmot

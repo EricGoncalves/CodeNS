@@ -30,8 +30,6 @@ contains
     dimension u(ip11,ip60),v(ip11,ip60)
     dimension vol(ip11),dt(ip11)
 !
-
-!
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)

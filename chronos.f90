@@ -91,10 +91,6 @@ contains
     dimension vol(ip11),cson(ip11),dt(ip11)
     dimension sfsi(ip00),sfsj(ip00),sfsk(ip00),dism(ip00)
 !
-
-
-
-
     n0c =npc(l)
     n0n =npn(l)
     i1  =ii1(l)
@@ -123,9 +119,9 @@ contains
     enddo
 !
     do k=k1,k2m1
-       do j=j1,j2m1
+      do j=j1,j2m1
 !!$OMP SIMD
-          do i=i1,i2
+        do i=i1,i2
              n=indn(i,j,k)
              m=n-n0n
              sfsi(m)=sn(m,1,1)*sn(m,1,1)+ &

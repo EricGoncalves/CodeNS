@@ -117,5 +117,4 @@ contains
 !
     return
   end subroutine lpkomega
-
 end module mod_lpkomega

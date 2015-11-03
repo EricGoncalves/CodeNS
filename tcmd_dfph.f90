@@ -17,7 +17,7 @@ contains
     use proprieteflu
     use mod_valreel
     implicit none
-    integer          :: icmt,imot,kval,  nm,nmot
+    integer          :: icmt,imot,kval,nm,nmot
 !
 !-----------------------------------------------------------------------
 !

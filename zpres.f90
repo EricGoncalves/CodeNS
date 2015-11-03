@@ -43,8 +43,6 @@ contains
     dimension v(ip11,ip60)
     dimension pression(ip11),ztemp(ip11),cson(ip11)
 !
-
-!
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)

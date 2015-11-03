@@ -81,7 +81,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension mu(ip12),mut(ip12),dist(ip12),mnpar(ip12)
     dimension nxn(ip42),nyn(ip42),nzn(ip42),fgam(ip42)
     dimension ncin(ip41),ncbd(ip41)
@@ -208,5 +207,4 @@ contains
 !
     return
   end subroutine lpker1
-
 end module mod_lpker1

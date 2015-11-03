@@ -91,8 +91,6 @@ contains
          dvzx(ip00),dvzy(ip00),dvzz(ip00), &
          dtx(ip00),dty(ip00),dtz(ip00)
 !
-
-!
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)

@@ -43,9 +43,6 @@ contains
          dvzx(ip00),dvzy(ip00),dvzz(ip00)
     dimension cfke(ip13)
 !
-
-
-!
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)

@@ -38,61 +38,61 @@ contains
     use proprieteflu
     use chainecarac
     use sortiefichier
-    use mod_lp2ke
-    use mod_met_samut
-    use mod_lp2kl
-    use mod_met_chmut
-    use mod_met_fludcsa
-    use mod_met_roe2oh
-    use mod_met_smsa
-    use mod_lp2kw
-    use mod_met_smklsas
-    use mod_sch_turb2
-    use mod_met_smdes
-    use mod_impli2_eqt_3d
-    use mod_sch_turb
-    use mod_met_komutr
-    use mod_met_roe2o
-    use mod_met_kocmut
-    use mod_met_bord
-    use mod_lpker
     use mod_at_cutke
-    use mod_met_roe
-    use mod_met_mutke2
-    use mod_met_fludmt
-    use mod_lpke
-    use mod_met_klrmut
-    use mod_met_klsmut
     use mod_atctranske
-    use mod_lpkl
-    use mod_met_dual2
+    use mod_lp2ke
+    use mod_lp2kl
+    use mod_lp2kw
     use mod_lp2sa
     use mod_lpkomega
-    use mod_met_gradtr
-    use mod_met_fludc
-    use mod_met_smch
-    use mod_met_smsasas
-    use mod_met_kemutr
-    use mod_met_fludko
-    use mod_met_smmtr
+    use mod_lpkomegar
+    use mod_lpsa
+    use mod_lpke
+    use mod_lpker
+    use mod_lpkl
+    use mod_impli2_eqt_3d
     use mod_impli2_eqt
+    use mod_met_fludc
+    use mod_met_fludcsa
+    use mod_met_fludmt
+    use mod_met_fludko
+    use mod_met_roe
+    use mod_met_roe2o
+    use mod_met_roe2oh
+    use mod_sch_turb_pond
+    use mod_sch_turb
+    use mod_met_samut
+    use mod_met_chmut
+    use mod_met_kemut
+    use mod_met_ke2mut
     use mod_met_kemutm
+    use mod_met_kemutr
+    use mod_met_klmut
+    use mod_met_klrmut
+    use mod_met_klsmut
+    use mod_met_komut
+    use mod_met_komutr
+    use mod_met_kocmut
+    use mod_met_smch
+    use mod_met_smke
+    use mod_met_smko
     use mod_met_smkor
+    use mod_met_smmt
+    use mod_met_smmtr
+    use mod_met_smkl
+    use mod_met_smklsas
+    use mod_met_smsa
+    use mod_met_smsasas
+    use mod_met_smdes
+    use mod_met_dual
+    use mod_met_dual2
+    use mod_met_parko
+    use mod_met_prod
+    use mod_met_gradtr
+    use mod_met_bord
     use mod_met_rbsc
     use mod_met_rbse
-    use mod_met_parko
-    use mod_lpsa
-    use mod_met_smmt
-    use mod_met_klmut
-    use mod_met_komut
-    use mod_met_prod
-    use mod_met_dual
-    use mod_met_smke
     use mod_met_rbsr
-    use mod_lpkomegar
-    use mod_met_kemut
-    use mod_met_smkl
-    use mod_met_smko
     implicit none
     integer          :: icycle,     l,lgsnlt,    mf,   mfc
     integer          ::    mfr,   mnc, mnpar,   mnr,  ncbd
@@ -111,7 +111,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension u(ip11,ip60),v(ip11,ip60),d(ip11,ip60),ptdual(ip11,ip60)
     dimension dt(ip11),vol(ip11),ztemp(ip11),cson(ip11),pression(ip11),topz(ip11)
     dimension mut(ip12),mu(ip12), &
@@ -122,14 +121,13 @@ contains
     dimension bceqt(ip41,neqt)
     dimension sn(ip31*ndir)
     dimension tn1(ip00),tn2(ip00),tn3(ip00),t(ip00),tprod(ip00), &
-         dtdx(ip00),dtdy(ip00),dtdz(ip00),tn9(ip00),tn10(ip00)
+              dtdx(ip00),dtdy(ip00),dtdz(ip00),tn9(ip00),tn10(ip00)
     dimension tp(ip40),ncbd(ip41),ncin(ip41),mnc(ip43)
     dimension xnr(ip44),ynr(ip44),znr(ip44),mnr(ip44)
     dimension nxn(ip42),nyn(ip42),nzn(ip42)
     dimension mnpar(ip12),dist(ip12),fgam(ip42),utau(ip42)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
-    dimension coefe(ndir,ip00)
+              cmuk1(ip21),cmuk2(ip21)
     dimension x(ip21),y(ip21),z(ip21)
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dvxx,dvxy,dvxz,dvyx,dvyy,dvyz, &
          dvzx,dvzy,dvzz,fracmod
@@ -158,7 +156,7 @@ contains
 !
     endif
 !
-!-----------application des condition aux limites----------------------------------------
+!-----------application des condition aux limites--------------------------------------
 !
     call met_bord( &
          0, &
@@ -654,7 +652,7 @@ contains
           if((ischema.eq.2).or.(ischema.eq.4).or.(ischema.eq.6).or. &
                (ischema.eq.8).or.(ischema.eq.11).or.(ischema.eq.13)) then
 !             schemas ponderes de Jameson et de Roe
-             call sch_turb2( &
+             call sch_turb_pond( &
                   l,u,v,d, &
                   txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                   qcxts5,qcyts6, &
@@ -742,7 +740,7 @@ contains
        if(kcmut.eq.1) then
 !
           if((equatt(4:4).eq.' ').or.(equatt(4:4).eq.'S').or. &
-               (equatt(4:4).eq.'C').or.(equatt(4:4).eq.'L')) then
+             (equatt(4:4).eq.'C').or.(equatt(4:4).eq.'L')) then
 !            modele de base ou avec correction SST
              call met_kemut( &
                   l, &
@@ -824,7 +822,7 @@ contains
 !                 v,mu,mut, &
 !                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
           elseif((equatt(4:4).eq.'R').or. &
-               (equatt(5:5).eq.'R')) then
+                 (equatt(5:5).eq.'R')) then
 !         Modeles k-omega de Menter avec realisabilite de Durbin
              call met_komutr( &
                   l, &
@@ -860,7 +858,7 @@ contains
 !
        else if(kcmut.eq.6) then
 !
-          call met_mutke2( &
+          call met_ke2mut( &
                l,ncyc, &
                v,mu,mut,dist,mnpar,ncin, &
                txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &

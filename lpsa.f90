@@ -109,5 +109,4 @@ contains
 !
     return
   end subroutine lpsa
-
 end module mod_lpsa

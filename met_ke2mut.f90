@@ -1,7 +1,7 @@
-module mod_met_mutke2
+module mod_met_ke2mut
   implicit none
 contains
-  subroutine met_mutke2( &
+  subroutine met_ke2mut( &
        l,ncyc, &
        v,mu,mut,dist,mnpar,ncin, &
        txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
@@ -65,10 +65,6 @@ contains
          txxf5x(ip12),txyf5y (ip12),txzf5z(ip12), &
          tyyf6x(ip12),tyzf6y (ip12),tzzf6z(ip12),frac(ip12)
     dimension ncin(ip41)
-!
-
-
-!     . . . . . . . . . . . . . . . . . .
 !
     cmu500=500.*cmukl
     c14=25.5**4
@@ -191,5 +187,5 @@ contains
       integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
-  end subroutine met_mutke2
-end module mod_met_mutke2
+  end subroutine met_ke2mut
+end module mod_met_ke2mut

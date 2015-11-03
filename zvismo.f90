@@ -59,7 +59,6 @@ contains
     dimension mu(ip12),temp(ip11)
     dimension s(ip11,ip60)
 !
-
     iarret=0
 !
     n0=npc(l)

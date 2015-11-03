@@ -53,10 +53,7 @@ contains
          dvzx(ip00),dvzy(ip00),dvzz(ip00),t(ip00)
     dimension sn(ip31*ndir)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
-!
-
-
+              cmuk1(ip21),cmuk2(ip21)
 !
     n0=npc(l)
     i1=ii1(l)

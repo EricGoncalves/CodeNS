@@ -62,14 +62,9 @@ contains
     dimension sn(lgsnlt,nind,ndir)
     dimension ps(ip11)
     dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
-         rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
+              rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
-
-
-!
-
-
-    REAL,DIMENSION(:),ALLOCATABLE   :: r1,r2,r3,r4,r5
+    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE   :: r1,r2,r3,r4,r5
     ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))
 
     n0c=npc(lm)
@@ -1137,37 +1132,34 @@ contains
     function    fmp(aa)
       implicit none
       double precision ::  aa,fmp
-      fmp=0.25*(1.+sign(1.,abs(aa)-1.))*(aa+abs(aa)) &
-           +0.125*(1.-sign(1.,abs(aa)-1.))*(aa+1.)**2 !*(1.+0.5*(aa-1.)**2)
+      fmp=0.25*(1.+sign(1.D0,abs(aa)-1.))*(aa+abs(aa)) &
+        +0.125*(1.-sign(1.D0,abs(aa)-1.))*(aa+1.)**2 !*(1.+0.5*(aa-1.)**2)
     end function fmp
     function    fmm(xa)
       implicit none
       double precision :: fmm, xa
-      fmm=0.25*(1.+sign(1.,abs(xa)-1.))*(xa-abs(xa)) &
-           -0.125*(1.-sign(1.,abs(xa)-1.))*(xa-1.)**2 !*(1.+0.5*(xa+1.)**2)
+      fmm=0.25*(1.+sign(1.D0,abs(xa)-1.))*(xa-abs(xa)) &
+        -0.125*(1.-sign(1.D0,abs(xa)-1.))*(xa-1.)**2 !*(1.+0.5*(xa+1.)**2)
     end function fmm
     function    fpp(ta)
       implicit none
       double precision :: fpp, ta
-      fpp=0.25*(1.+sign(1.,abs(ta)-1.))*(1.+sign(1.,abs(ta))) &
-           +0.125*(1.-sign(1.,abs(ta)-1.))*(ta+1.)**2*(2.-ta+0.75*ta*(ta-1.)**2)
+      fpp=0.25*(1.+sign(1.D0,abs(ta)-1.))*(1.+sign(1.D0,abs(ta))) &
+        +0.125*(1.-sign(1.D0,abs(ta)-1.))*(ta+1.)**2*(2.-ta+0.75*ta*(ta-1.)**2)
     end function fpp
     function    fpm(ra)
       implicit none
       double precision :: fpm, ra
-      fpm=0.25*(1.+sign(1.,abs(ra)-1.))*(1.-sign(1.,abs(ra))) &
-           +0.125*(1.-sign(1.,abs(ra)-1.))*(ra-1.)**2*(2.+ra-0.75*ra*(ra+1.)**2)
+      fpm=0.25*(1.+sign(1.D0,abs(ra)-1.))*(1.-sign(1.D0,abs(ra))) &
+        +0.125*(1.-sign(1.D0,abs(ra)-1.))*(ra-1.)**2*(2.+ra-0.75*ra*(ra+1.)**2)
     end function fpm
     function    phi(a)
       implicit none
       double precision ::   a,phi
-      phi=max(0.,min(1.,a))  !minmod
+      phi=max(0.,min(1.,a))           !minmod
+!      phi=max(0.,min(1.,2.*a),min(2.,a)) !superbee
+!      phi=max(0.,(a+a**2)/(1.+a**2))  !van albada
     end function phi
-
-!       phi(a)=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
-
-!      phi(a)=max(0.,(a+a**2)/(1.+a**2))  !van albada
-!      phi(a)=max(0.,min(1.,2.*a),min(2.,a)) !superbee
 
   end subroutine sch_ausmp
 end module mod_sch_ausmp

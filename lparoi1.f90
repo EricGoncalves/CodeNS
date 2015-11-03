@@ -99,7 +99,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension mu(ip12),mut(ip12),toxx(ip12),toxy(ip12), &
          toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12), &
          qcx (ip12),qcy(ip12),qcz(ip12)
@@ -154,7 +153,7 @@ contains
 !         turbulent
           lamin=.false.
        endif
-!       vitesse cellule adjacente a la paroi (cellule 1)
+!      vitesse cellule adjacente a la paroi (cellule 1)
        v1x=v(ni,2)/v(ni,1)
        v1y=v(ni,3)/v(ni,1)
        v1z=v(ni,4)/v(ni,1)
@@ -162,7 +161,7 @@ contains
        n1=nxn(nfacns)
        n2=nyn(nfacns)
        n3=nzn(nfacns)
-!       tangente normee a la paroi
+!      tangente normee a la paroi
        tn=v1x*n1+v1y*n2+v1z*n3
        t1=v1x-tn*n1
        t2=v1y-tn*n2
@@ -171,19 +170,19 @@ contains
        t1=t1/tt
        t2=t2/tt
        t3=t3/tt
-!       composante tangentielle de la vitesse dans repere paroi : v1t
+!      composante tangentielle de la vitesse dans repere paroi : v1t
        v1t=v1x*t1+v1y*t2+v1z*t3
-!       temperature cellule 1 : temp1
+!      temperature cellule 1 : temp1
        temp1=temp(ni)
-!       temperature a la paroi : tparoi
+!      temperature a la paroi : tparoi
        pka=cp*(mu(ni)/pr+mut(ni)/prt)
        pkb=mu(ni)+mut(ni)
        tparoi=temp1+0.5*pkb*v1t**2/pka
-!       masse volumique a la paroi
+!      masse volumique a la paroi
        rop=v(ni,1)*temp1/tparoi
-!       viscosite moleculaire a la paroi
+!      viscosite moleculaire a la paroi
        mup=mu(ni)*sqrt(tparoi/temp1)*(1.+sv/temp1)/(1.+sv/tparoi)
-!       correction de compressibilite (loi de Van Driest)
+!      correction de compressibilite (loi de Van Driest)
        co=sqrt(2.*pka*tparoi/pkb)
        v1t=co*asin(v1t/co)
 !       contrainte de frottement a la paroi : top

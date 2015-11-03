@@ -263,50 +263,50 @@ program solve
   use definition
   use chainecarac
   use sortiefichier
-  use mod_c_svbdn
-  use mod_c_dfpmtbkeg
-  use mod_c_svfw
-  use mod_c_svbdb
-  use mod_c_svbdc
+  use mod_atlecdon
   use mod_inimem
-  use mod_c_dfst0
-  use mod_c_dffw
   use mod_utdon_gen
-  use mod_c_intn
-  use mod_c_dfpmcfg
-  use mod_c_dfph
-  use mod_c_crdms
-  use mod_utsorfr
+  use mod_rdcmd
+  use mod_svdual
   use mod_met_intep3
   use mod_met_yplus
-  use mod_rdcmd
-  use mod_c_svgr
-  use mod_atlecdon
-  use mod_c_dfpmtbn
-  use mod_c_nzst
-  use mod_c_dftl1
-  use mod_svdual
+  use mod_utsorfr
   use mod_c_cpfw
-  use mod_c_end
+  use mod_c_crdms
   use mod_c_crbds
   use mod_c_cpbd
+  use mod_c_dfpmtbkeg
+  use mod_c_dffw
+  use mod_c_dfpmcfg
+  use mod_c_dfph
+  use mod_c_dfst
+  use mod_c_dfst0
   use mod_c_dfpmdtg
   use mod_c_dfpmdtd
   use mod_c_dfnzst
-  use mod_c_dfgm
-  use mod_c_infw
-  use mod_c_secpfw
-  use mod_c_svbd
   use mod_c_dfpmdsd
+  use mod_c_dfpmtbn
+  use mod_c_dfpmimd
   use mod_c_dpdim
   use mod_c_dpbd
-  use mod_c_dfnm
+  use mod_c_dfnm  
+  use mod_c_dfgm  
+  use mod_c_dftl1
+  use mod_c_intn
   use mod_c_inbdn
   use mod_c_inbdc
-  use mod_c_dfpmimd
   use mod_c_ingr
   use mod_c_inbdb
-  use mod_c_dfst
+  use mod_c_infw
+  use mod_c_end
+  use mod_c_nzst
+  use mod_c_svbdn
+  use mod_c_svfw
+  use mod_c_svbdb
+  use mod_c_svbdc
+  use mod_c_svgr
+  use mod_c_secpfw
+  use mod_c_svbd
   implicit none
 !
 !-----------------------------------------------------------------------
@@ -314,7 +314,7 @@ program solve
   integer           :: iyplus
   integer           :: img,imot,l,mfbi,mfc,mfn,mfr,mnc,mnpar,mnr,ncbd,ncin
   integer           :: ncyc,nmot
-  double precision              :: mu,mut,nxn,nyn,nzn
+  double precision  :: mu,mut,nxn,nyn,nzn
   double precision  :: aam,bceqt,cfke,cmui1,cmui2,cmuj1,cmuj2,cmuk1
   double precision  :: cmuk2,cson,cvi,cvj,cvk,d0x,d0y,d0z,dist,dt,exs1
   double precision  :: exs2,fgam,pres,pression,ptdual,qcx,qcy,qcz,qtx,qty,qtz,r,res,roam
@@ -329,15 +329,14 @@ program solve
   dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),ptdual(ip11,ip60)
   dimension r(ip11),dt(ip11),vol(ip11),ztemp(ip11),pression(ip11),cson(ip11)
   dimension mu(ip12),mut(ip12),dist(ip12), &
-       toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
-       tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12),mnpar(ip12)
-  dimension cfke(ip13),pres(ip40)
+            toxx(ip12),toxy(ip12),toxz(ip12),toyy(ip12),toyz(ip12), &
+            tozz(ip12),qcx(ip12),qcy(ip12),qcz(ip12),mnpar(ip12)
+  dimension cfke(ip13)
   dimension sn(ip31*ndir)
-  dimension x(ip21),y(ip21),z(ip21)
-  dimension cvi(ip21),cvj(ip21),cvk(ip21), &
-       cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)
+  dimension x(ip21),y(ip21),z(ip21),cvi(ip21),cvj(ip21),cvk(ip21), &
+       cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21),cmuk2(ip21)       
   dimension rpi(ip40),rti(ip40),d0x(ip40),d0y(ip40),d0z(ip40), &
-       qtx(ip40),qty(ip40),qtz(ip40),res(ip40),tp(ip40), &
+       qtx(ip40),qty(ip40),qtz(ip40),res(ip40),tp(ip40),pres(ip40), &
        rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
   dimension ncbd(ip41),ncin(ip41)
   dimension bceqt(ip41,neqt)
@@ -348,14 +347,6 @@ program solve
   dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40), &
        tm5(ip40),tm6(ip40),tm7(ip40),tm8(ip40), &
        tm9(ip40),tm10(ip40),tm11(ip40),tm12(ip40),tm13(ip40)
-!    tm14(ip40),tm15(ip40),tm16(ip40), &
-!                tm17(ip40),tm18(ip40),tm19(ip40),tm20(ip40), &
-!                tm21(ip40),tm22(ip40),tm23(ip40),tm24(ip40), &
-!                tm25(ip40),tm26(ip40),tm27(ip40),tm28(ip40), &
-!                tm29(ip40),tm30(ip40),tm31(ip40),tm32(ip40), &
-!                tm33(ip40),tm34(ip40),tm35(ip40),tm36(ip40), &
-!                tm37(ip40),tm38(ip40),tm39(ip40),tm40(ip40), &
-!                tm41(ip40),tm42(ip40),tm43(ip40),tm44(ip40)
   dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00),tn5(ip00), &
        tn6(ip00),tn7(ip00),tn8(ip00),tn9(ip00),tn10(ip00)
   dimension tnte1(ip11,ip60),tnte2(ip11,ip60),tnte3(ip11,ip60),tnte4(ip11,ip60)
@@ -378,16 +369,7 @@ program solve
   open(kdgv ,file='fgv' ,form='unformatted')
   open(kdgc ,file='fgc' ,form='unformatted')
   open(kdac ,file='fac' ,form='unformatted')
-!      open(kdav ,file='fav' ,form='unformatted')
-!      open(kdgcf,file='fgcf',form='unformatted')
-!      open(kdacf,file='facf',form='unformatted')
-!      open(kfi  ,file='fi'  ,form='unformatted')
-!      open(kfb  ,file='fb'  ,form='unformatted')
-!      open(kfn  ,file='fn'  ,form='unformatted')
-!      open(kfc  ,file='fc'  ,form='unformatted')
-!      open(kfr  ,file='fr'  ,form='unformatted')
-!      open(kres ,file='fres',form='unformatted')
-!
+
 !     lecture fichier "fatdon" des donnees des modeles 2 equations
   call atlecdon
 !
@@ -437,7 +419,7 @@ program solve
 !
 !           calcul et ecriture de y+ pour la premiere maille
 !            hauteur demi-maille adjacente aux parois
-              iyplus=1
+              iyplus=0
               if(iyplus.eq.1) then
                  call  met_yplus( &
                       ncbd,ncin,v,mu,dist, &

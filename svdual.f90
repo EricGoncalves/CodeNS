@@ -33,10 +33,7 @@ contains
 !
     dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60)
 !
-
-!
-!            Fichier sauvegarde
-!
+!   Fichier sauvegarde
     open(UNIT=98,FILE='facdual',FORM='unformatted',STATUS='unknown')
 !
     n0   = npc(l)

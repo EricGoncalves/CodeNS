@@ -75,10 +75,10 @@ met_roe.f90              met_roe2o.f90           met_roe2oh.f90       \
 met_smkes.f90            met_smker.f90           met_smkec.f90        \
 met_smkesas.f90          met_klnmut.f90          met_komutr.f90       \
 met_kobmut.f90           met_klsmut.f90          met_kemut.f90        \
-met_mutke2.f90           met_kemutm.f90          met_kemutr.f90       \
+met_ke2mut.f90           met_kemutm.f90          met_kemutr.f90       \
 met_pardis.f90           met_parko.f90           met_mtcorf1.f90      \
-met_samut.f90            met_sasmut.f90          met_smch.f90         \
-met_smdes.f90            met_smke1.f90           met_smkl.f90         \
+met_samut.f90            met_smch.f90         \
+met_smdes.f90            met_smke.f90            met_smkl.f90         \
 met_smklsas.f90          met_smko.f90            met_smkor.f90        \
 met_smmt.f90             met_smmtr.f90           met_smsa.f90         \
 met_uttau.f90            pgrad.f90               lpke1.f90            \
@@ -90,7 +90,7 @@ lpker.f90                lpkomegar1.f90          lpkomegar.f90        \
 lp2kl1.f90               lp2kl3d.f90             lp2kl.f90            \
 lp2ke1.f90               lp2ke.f90               lp2kw1.f90           \
 lp2kw.f90                lp2sa1.f90              lp2sa.f90            \
-met_klrmut.f90           met_smke.f90            met_smsasas.f90      \
+met_klrmut.f90           met_smsasas.f90         utinig.f90           \
 met_yplus.f90            at_cutke.f90            sch_acou.f90         \
 sch_ausmp.f90            sch_ausmp_prcd.f90      sch_dual.f90         \
 sch_dual2.f90            sch_duin.f90            sch_duup.f90         \
@@ -98,7 +98,7 @@ sch_duup2.f90            sch_jameson.f90         sch_jameson_pond.f90 \
 sch_jameson3.f90         sch_jameson3pond.f90    sch_jam3_turb.f90    \
 sch_roe.f90              sch_roe_prcd.f90        sch_roe_pond.f90     \
 sch_roe_pond_prcd.f90    sch_roe_euler.f90       sch_ausmp_pond.f90   \
-sch_turb.f90             sch_turb2.f90           sch_hllc.f90         \
+sch_turb.f90             sch_turb_pond.f90       sch_hllc.f90         \
 sch_hllc_prcd.f90        sch_hllc_euler.f90      sch_rusanov.f90      \
 sch_rusanov_prcd.f90     sch_weno3.f90           sch_weno3split.f90   \
 sch_weno3split2.f90      sch_weno3_3d.f90        sch_weno3pond.f90    \
@@ -110,7 +110,7 @@ smg_fcv.f90              zpres.f90               dissip_jameson.f90   \
 dissip_jameson_prcd2.f90 dissip_jameson_turb.f90 zvisqc.f90           \
 smg_res.f90              smg_flu.f90             smg_upc.f90          \
 chronos.f90              chronos_prcd.f90        chrono.f90           \
-impli2_eqt.f90           impli2_eqt_3d.f90       implimf.f90          \
+impli2_eqt.f90           impli2_eqt_3d.f90       implimf_2d.f90       \
 implimf_prcd2.f90        implimf_3d.f90          implimf_eu.f90       \
 met_num.f90              prcd_turkel.f90         sch_expli.f90        \
 atsch_num.f90            dua_resro.f90           sortieplot.f90       \
@@ -157,19 +157,18 @@ OBJS =  ${SRCS:.f90=.o}
 # CMD		Name of the executable
 # PROFLIB	Library needed for profiling
 #
-FC =  gfortran
-#FC =  ifort
-#CMD =	 solver_air_testperfo
-CMD =	 solver_air
+#FC =  gfortran
+FC =  ifort
+#CMD =	 solver_air
+CMD =	 solver_tic
 
 # To perform the default compilation, use the first line
-#FFLAGS =  -Ofast -march=native -ffast-math -funsafe-math-optimizations -fdefault-double-8 -fdefault-real-8 -ffree-line-length-none # -fopenmp -ftree-loop-distribution -ftree-loop-im
-FFLAGS = -fdefault-double-8 -fdefault-real-8 -O0 -g3 -Wall -fbacktrace -ffpe-trap=zero,overflow,invalid -fbounds-check -Wextra -fimplicit-none -Wimplicit-interface -fPIC -Wno-unused-parameter  -Wno-unused  -pedantic -std=f2008 # -finit-real=snan  -fcheck=all -Wno-unused-dummy-argument 
-#FFLAGS =  -O2   -fdefault-double-8 -fdefault-real-8  -p -fno-inline-functions
-#FFLAGS = -r8 -fast #-openmp -parallel -threads 
-#FFLAGS = -r8 -O2 -g#-openmp -parallel -threads 
-#FFLAGS = -r8 -fast -openmp -parallel -threads 
-#FFLAGS = -r8 -O0 -g -traceback  -C -debug all -warn all,nounused -fpe0 -ftrapuv -nozero -fstack-protector-all  -init=snan -WB -fp-stack-check -u -gen-interfaces  -stand f08 #-openmp -parallel -threads -warn nodeclarations
+#FFLAGS =  -O2  -ffree-line-length-none
+#LDFLAGS = -O2 -fdefault-double-8 -fdefault-real-8
+#FFLAGS =  -O2   -fdefault-double-8 -fdefault-real-8 -ffree-line-length-none
+FFLAGS =  -O2 -openmp -parallel -threads
+LDFLAGS = -O2 -openmp -parallel -threads
+
 
 # Lines from here on down should not need to be changed.
 #

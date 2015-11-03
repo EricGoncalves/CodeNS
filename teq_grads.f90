@@ -44,12 +44,8 @@ contains
          vol(ip11)
     dimension s(ip00),dsdx(ip00),dsdy(ip00),dsdz(ip00)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
+              cmuk1(ip21),cmuk2(ip21)
 !
-!
-
-
-
     eps=0.000001
 !
     n0c=npc(l)
@@ -81,7 +77,7 @@ contains
     ncj=inc(0,1,0)
     nck=inc(0,0,1)
 !
-!     initialisation
+!   initialisation
     ind1=indc(i1m1,j1m1,k1m1)-n0c
     ind2=indc(i2p1,j2p1,k2p1)-n0c
     do m=ind1,ind2
@@ -261,18 +257,18 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   sk1=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,1)
-                   sk2=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,2)
-                   sk3=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,3)
+                   sk1=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,1)
+                   sk2=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,2)
+                   sk3=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m)=dsdx(m)-sk1
                    dsdy(m)=dsdy(m)-sk2
                    dsdz(m)=dsdz(m)-sk3
                 enddo
                 do n=ind1,ind2
                    m=n-n0c
-                   sk1=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,1)
-                   sk2=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,2)
-                   sk3=(cmuk1(m)*s(m)+cmuk2(m)*s(m-ninc))*sn(m,kdir,3)
+                   sk1=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,1)
+                   sk2=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,2)
+                   sk3=(cmuk1(n)*s(m)+cmuk2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m-ninc)=dsdx(m-ninc)+sk1
                    dsdy(m-ninc)=dsdy(m-ninc)+sk2
                    dsdz(m-ninc)=dsdz(m-ninc)+sk3
@@ -318,18 +314,18 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   sj1=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,1)
-                   sj2=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,2)
-                   sj3=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,3)
+                   sj1=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,1)
+                   sj2=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,2)
+                   sj3=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m)=dsdx(m)-sj1
                    dsdy(m)=dsdy(m)-sj2
                    dsdz(m)=dsdz(m)-sj3
                 enddo
                 do n=ind1,ind2
                    m=n-n0c
-                   sj1=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,1)
-                   sj2=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,2)
-                   sj3=(cmuj1(m)*s(m)+cmuj2(m)*s(m-ninc))*sn(m,kdir,3)
+                   sj1=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,1)
+                   sj2=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,2)
+                   sj3=(cmuj1(n)*s(m)+cmuj2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m-ninc)=dsdx(m-ninc)+sj1
                    dsdy(m-ninc)=dsdy(m-ninc)+sj2
                    dsdz(m-ninc)=dsdz(m-ninc)+sj3
@@ -374,18 +370,18 @@ contains
                 ind2 = indc(i2m1,j,k)
                 do n=ind1,ind2
                    m=n-n0c
-                   si1=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,1)
-                   si2=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,2)
-                   si3=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,3)
+                   si1=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,1)
+                   si2=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,2)
+                   si3=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m)=dsdx(m)-si1
                    dsdy(m)=dsdy(m)-si2
                    dsdz(m)=dsdz(m)-si3
                 enddo
                 do n=ind1,ind2
                    m=n-n0c
-                   si1=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,1)
-                   si2=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,2)
-                   si3=(cmui1(m)*s(m)+cmui2(m)*s(m-ninc))*sn(m,kdir,3)
+                   si1=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,1)
+                   si2=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,2)
+                   si3=(cmui1(n)*s(m)+cmui2(n)*s(m-ninc))*sn(m,kdir,3)
                    dsdx(m-ninc)=dsdx(m-ninc)+si1
                    dsdy(m-ninc)=dsdy(m-ninc)+si2
                    dsdz(m-ninc)=dsdz(m-ninc)+si3
@@ -429,7 +425,7 @@ contains
     do n=ind1,ind2
        m=n-n0c
 !       le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t
-       ts=sign(0.5,-vol(n))
+       ts=sign(0.5D0,-vol(n))
        vols=(0.5+ts)*eps+(0.5-ts)*vol(n)
        c0=0.5/vols
 !        c0=0.5/vol(n)

@@ -60,10 +60,8 @@ contains
 !-----------------------------------------------------------------------
 !
     dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
-!
-!
+
     mfbi=nfei(mfbe)
-!
     mfbim=mfbi+(img-1)*mtb
 !
     mt=mmb(mfbim)

@@ -33,8 +33,6 @@ contains
     dimension vol(ip11)
     dimension ptdual(ip11,ip60)
 !
-
-!
     fact=1.5
     if(icycle.le.1) fact=1.
     dti=1./dt1min

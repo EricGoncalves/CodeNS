@@ -49,7 +49,6 @@ contains
 !
 !-----------------------------------------------------------------
 !
-!
     dimension v(ip11,ip60),u(ip11,ip60)
     dimension dt(ip11),vol(ip11),mu(ip12),mut(ip12), &
          cfke(ip13),ncin(ip41)
@@ -58,9 +57,6 @@ contains
          coefdiag(ip00),alpha(ip00),beta6(ip00),beta7(ip00)
     dimension sn(lgsnlt,nind,ndir)
 !
-
-
-
     DOUBLE PRECISION,DIMENSION(:,:),ALLOCATABLE :: coefe
     ALLOCATE(coefe(ndir,ip00))
 
@@ -110,8 +106,8 @@ contains
 !
     ind1=indc(i1m1,j1m1,k1m1)
     ind2=indc(i2+1,j2+1,k2+1)
-!!!$OMP PARALLEL 
-!!!$OMP DO
+!$OMP PARALLEL 
+!$OMP DO
     do n=ind1,ind2
        m=n-n0c
        dwi6(m)=0.
@@ -127,11 +123,11 @@ contains
        beta6(m)=0.
        beta7(m)=0.
     enddo
-!!!$OMP END DO
+!$OMP END DO
 !
 !----calculs du rayon spectral visqueux-------------------------
 !
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -144,18 +140,18 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO
-!
+!$OMP END DO
+
 !*****************************************************************
 !-----remplissage des coefficients par direction
 !*****************************************************************
-!
-!!!$OMP SINGLE
+
+!$OMP SINGLE
     kdir=1
     ninc=nci
-!!!$OMP END SINGLE
-!
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww)
+!$OMP END SINGLE
+
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1,j,k)
@@ -174,14 +170,14 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO
-!
-!!!$OMP SINGLE
+!$OMP END DO
+
+!$OMP SINGLE
     kdir=2
     ninc=ncj
-!!!$OMP END SINGLE
-!
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww)
+!$OMP END SINGLE
+
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww)
     do k=k1,k2m1
        do j=j1,j2
           ind1 = indc(i1  ,j,k)
@@ -200,14 +196,14 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO
-!
-!!!$OMP SINGLE
+!$OMP END DO
+
+!$OMP SINGLE
     kdir=3
     ninc=nck
-!!!$OMP END SINGLE
-!
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww)
+!$OMP END SINGLE
+
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww)
     do k=k1,k2
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -226,9 +222,9 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO
-!
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
+!$OMP END DO
+
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -241,8 +237,8 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO
-!
+!$OMP END DO
+
 !c-----calcul instationnaire avec dts-----------------------------
 !
 !       if(kfmg.eq.3) then
@@ -268,8 +264,8 @@ contains
 !-----inversion direction i-----------------------------------------
 !
     do li=1,ibalai
-!
-!!!$OMP DO PRIVATE(k,i,n,m,ind1,ind2,td,tpj,tmj,tpk,tmk,di6,di7,ai,bi,cci)
+
+!$OMP DO PRIVATE(k,i,n,m,ind1,ind2,td,tpj,tmj,tpk,tmk,di6,di7,ai,bi,cci)
        do k=k1,k2m1
           do i=i2m1,i1,-1
              ind1=indc(i,j1  ,k)
@@ -294,9 +290,9 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO
-!
-!!!$OMP DO PRIVATE(k,i,n,m,ind1,ind2)
+!$OMP END DO
+
+!$OMP DO PRIVATE(k,i,n,m,ind1,ind2)
        do k=k1,k2m1
           do i=i1,i2m1
              ind1=indc(i,j1  ,k)
@@ -308,25 +304,25 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO
-!
+!$OMP END DO
+
     enddo
 !
 !-----inversion direction j------------------------------------
 !
     ind1=indc(i1m1,j1m1,k1m1)-n0c
     ind2=indc(i2+1,j2+1,k2+1)-n0c
-!!!$OMP DO
+!$OMP DO
     do m=ind1,ind2
        alpha(m)=0.
        beta6(m)=0.
        beta7(m)=0.
     enddo
-!!!$OMP END DO
-!
+!$OMP END DO
+
     do lj=1,ibalai
-!
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,td,tpi,tmi,tpk,tmk,dj6,dj7,ai,bi,cci)
+
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,td,tpi,tmi,tpk,tmk,dj6,dj7,ai,bi,cci)
        do k=k1,k2m1
           do j=j2m1,j1,-1
              ind1=indc(i1  ,j,k)
@@ -351,9 +347,9 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO
-!
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
+!$OMP END DO
+
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
        do k=k1,k2m1
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
@@ -365,25 +361,25 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO
-!
+!$OMP END DO
+
     enddo
 !
 !------inversion direction k--------------------------------------
 !
     ind1=indc(i1m1,j1m1,k1m1)-n0c
     ind2=indc(i2+1,j2+1,k2+1)-n0c
-!!!$OMP DO
+!$OMP DO
     do m=ind1,ind2
        alpha(m)=0.
        beta6(m)=0.
        beta7(m)=0.
     enddo
-!!!$OMP END DO
-!
+!$OMP END DO
+
     do lk=1,ibalai
-!
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,td,tpi,tmi,tpj,tmj,dk6,dk7,ai,bi,cci)
+
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,td,tpi,tmi,tpj,tmj,dk6,dk7,ai,bi,cci)
        do k=k2m1,k1,-1
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
@@ -408,9 +404,9 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO
-!
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
+!$OMP END DO
+
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
        do k=k1,k2m1
           do j=j1,j2m1
              ind1=indc(i1  ,j,k)
@@ -422,8 +418,8 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO
-!
+!$OMP END DO
+
     enddo
 !
 !-----lois de paroi------------------------------------------------
@@ -456,7 +452,7 @@ contains
 !
 !-----avance en temps------------------------------------------------
 !
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -468,8 +464,8 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO
-!!!$OMP END PARALLEL
+!$OMP END DO
+!$OMP END PARALLEL
 
     DEALLOCATE(coefe)
 

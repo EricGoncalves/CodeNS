@@ -181,7 +181,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension x(ip21),y(ip21),z(ip21)
     dimension s(ip11,ip60)
     dimension mut(ip12),nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
@@ -212,8 +211,8 @@ contains
 !
     open(sorf2,file='fsor2')
 !
-    pis2=atan2(1.,0.)
-    raddeg=90./pis2
+    pis2=atan2(1.D0,0.D0)
+    raddeg=90.D0/pis2
 !
     alfar=alpha0/raddeg
     betar=beta0/raddeg
@@ -352,9 +351,9 @@ contains
              dsxz=abs(dz1*dx2-dx1*dz2)/2.
              dsxy=abs(dx1*dy2-dy1*dx2)/2.
              dsml=sqrt(dsyz*dsyz+dsxz*dsxz+dsxy*dsxy)
-             dcx=(p0spi0-pspi0)*dsyz*sign(1.,nxn(mfacn))
-             dcy=(p0spi0-pspi0)*dsxz*sign(1.,nyn(mfacn))
-             dcz=(p0spi0-pspi0)*dsxy*sign(1.,nzn(mfacn))
+             dcx=(p0spi0-pspi0)*dsyz*sign(1.D0,nxn(mfacn))
+             dcy=(p0spi0-pspi0)*dsxz*sign(1.D0,nyn(mfacn))
+             dcz=(p0spi0-pspi0)*dsxy*sign(1.D0,nzn(mfacn))
              dcl=dcy*(zcfac-zref)-dcz*(ycfac-yref)
              dcm=dcx*(zcfac-zref)-dcz*(xcfac-xref)
              dcn=dcx*(ycfac-yref)-dcy*(xcfac-xref)

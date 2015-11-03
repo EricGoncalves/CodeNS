@@ -53,14 +53,10 @@ contains
     dimension sn(lgsnlt,nind,ndir), &
          vol(ip11)
     dimension dsx(ip00),dsy(ip00),dsz(ip00), &
-         dsd2x(ip00),dsd2y(ip00),dsd2z(ip00)
+              dsd2x(ip00),dsd2y(ip00),dsd2z(ip00)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
+              cmuk1(ip21),cmuk2(ip21)
     dimension v(ip11,ip60)
-!
-
-!
-
 
     eps=0.000001
 !
@@ -272,9 +268,9 @@ contains
 !!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
-                   sk1=(cmuk1(m)*dsx(m)+cmuk2(m)*dsx(m-ninc))*sn(m,kdir,1)
-                   sk2=(cmuk1(m)*dsy(m)+cmuk2(m)*dsy(m-ninc))*sn(m,kdir,2)
-                   sk3=(cmuk1(m)*dsz(m)+cmuk2(m)*dsz(m-ninc))*sn(m,kdir,3)
+                   sk1=(cmuk1(n)*dsx(m)+cmuk2(n)*dsx(m-ninc))*sn(m,kdir,1)
+                   sk2=(cmuk1(n)*dsy(m)+cmuk2(n)*dsy(m-ninc))*sn(m,kdir,2)
+                   sk3=(cmuk1(n)*dsz(m)+cmuk2(n)*dsz(m-ninc))*sn(m,kdir,3)
                    dsd2x(m)=dsd2x(m)-sk1
                    dsd2y(m)=dsd2y(m)-sk2
                    dsd2z(m)=dsd2z(m)-sk3
@@ -325,9 +321,9 @@ contains
 !!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
-                   sj1=(cmuj1(m)*dsx(m)+cmuj2(m)*dsx(m-ninc))*sn(m,kdir,1)
-                   sj2=(cmuj1(m)*dsy(m)+cmuj2(m)*dsy(m-ninc))*sn(m,kdir,2)
-                   sj3=(cmuj1(m)*dsz(m)+cmuj2(m)*dsz(m-ninc))*sn(m,kdir,3)
+                   sj1=(cmuj1(n)*dsx(m)+cmuj2(n)*dsx(m-ninc))*sn(m,kdir,1)
+                   sj2=(cmuj1(n)*dsy(m)+cmuj2(n)*dsy(m-ninc))*sn(m,kdir,2)
+                   sj3=(cmuj1(n)*dsz(m)+cmuj2(n)*dsz(m-ninc))*sn(m,kdir,3)
                    dsd2x(m)=dsd2x(m)-sj1
                    dsd2y(m)=dsd2y(m)-sj2
                    dsd2z(m)=dsd2z(m)-sj3
@@ -378,9 +374,9 @@ contains
 !!$OMP SIMD
                 do n=ind1,ind2
                    m=n-n0c
-                   si1=(cmui1(m)*dsx(m)+cmui2(m)*dsx(m-ninc))*sn(m,kdir,1)
-                   si2=(cmui1(m)*dsy(m)+cmui2(m)*dsy(m-ninc))*sn(m,kdir,2)
-                   si3=(cmui1(m)*dsz(m)+cmui2(m)*dsz(m-ninc))*sn(m,kdir,3)
+                   si1=(cmui1(n)*dsx(m)+cmui2(n)*dsx(m-ninc))*sn(m,kdir,1)
+                   si2=(cmui1(n)*dsy(m)+cmui2(n)*dsy(m-ninc))*sn(m,kdir,2)
+                   si3=(cmui1(n)*dsz(m)+cmui2(n)*dsz(m-ninc))*sn(m,kdir,3)
                    dsd2x(m)=dsd2x(m)-si1
                    dsd2y(m)=dsd2y(m)-si2
                    dsd2z(m)=dsd2z(m)-si3
@@ -427,7 +423,7 @@ contains
     do n=ind1,ind2
        m=n-n0c
 !       le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t
-       ts=sign(0.5,-vol(n))
+       ts=sign(0.5D0,-vol(n))
        vols=(0.5+ts)*eps+(0.5-ts)*vol(n)
        c0=0.5/vols
 !        c0=0.5/vol(n)

@@ -51,9 +51,6 @@ contains
     dimension f6x(ip00),f6y(ip00),f6z(ip00), &
          f7x(ip00),f7y(ip00),f7z(ip00)
 !
-
-
-
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -123,7 +120,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1p1,j,k)
           ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
              si6= (f6x(m)+f6x(m-ninc))*sn(m,kdir,1) &
@@ -143,7 +140,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1,j1  ,k)
        ind2 = indc(i1,j2m1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2,ncj
           m=n-n0c
           si6= 2*f6x(m-ninc)*sn(m,kdir,1) &
@@ -160,7 +157,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i2,j1  ,k)
        ind2 = indc(i2,j2m1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2,ncj
           m=n-n0c
           si6= 2*f6x(m)*sn(m,kdir,1) &
@@ -183,7 +180,7 @@ contains
        do j=j1p1,j2m1
           ind1 = indc(i1,j,k)
           ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
              sj6= (f6x(m)+f6x(m-ninc))*sn(m,kdir,1) &
@@ -203,7 +200,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2
           m=n-n0c
           sj6= 2*f6x(m-ninc)*sn(m,kdir,1) &
@@ -220,7 +217,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2
           m=n-n0c
           sj6= 2*f6x(m)*sn(m,kdir,1) &
@@ -244,7 +241,7 @@ contains
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!DEC$ IVDEP
              do n=ind1,ind2
                 m=n-n0c
                 sk6= (f6x(m)+f6x(m-ninc))*sn(m,kdir,1) &
@@ -264,7 +261,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k1)
           ind2 = indc(i2m1,j,k1)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
              sk6= 2*f6x(m-ninc)*sn(m,kdir,1) &
@@ -281,7 +278,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k2)
           ind2 = indc(i2m1,j,k2)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
              sk6= 2*f6x(m)*sn(m,kdir,1) &

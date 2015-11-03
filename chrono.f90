@@ -82,8 +82,6 @@ contains
     dimension sn(ip31*ndir)
     dimension tn1(ip00),tn2(ip00),tn3(ip00),tn4(ip00)
 
-
-
 !-----calcul du pas de temps local en stationnaire--------------------
 !
     do l=1,lzx
@@ -125,12 +123,12 @@ contains
           njd  = jd2(lm)-jd1(lm)+1
           nijd = nid*njd
           do k = kk1(lm),kk2(lm)-1
-             do j = jj1(lm),jj2(lm)-1
-                do i = ii1(lm),ii2(lm)-1
-                   n = indc(i,j,k)
-                   dtmin=min(dtmin,dt(n))
-                enddo
-             enddo
+           do j = jj1(lm),jj2(lm)-1
+            do i = ii1(lm),ii2(lm)-1
+              n = indc(i,j,k)
+              dtmin=min(dtmin,dt(n))
+            enddo
+          enddo
           enddo
 !
        enddo

@@ -46,14 +46,6 @@ contains
     dimension del6(ip00),del7(ip00)
     dimension sn(lgsnlt,nind,ndir)
 !
-
-
-!
-
-
-
-
-
     n0 = npc(l)
     i1 = ii1(l)
     i2 = ii2(l)
@@ -320,7 +312,7 @@ contains
     function    amimd(a,b)
       implicit none
       double precision ::     a,amimd,    b
-      amimd=sign(1.,a)*max(0.,min(abs(a),b*sign(1.,a)))
+      amimd=sign(1.D0,a)*max(0.,min(abs(a),b*sign(1.D0,a)))
     end function amimd
     function    fi1(x,y,z)
       implicit none
@@ -330,8 +322,8 @@ contains
     function    psi(aa,eps)
       implicit none
       double precision ::  aa,eps,psi
-      psi=0.5*(1.+sign(1.,abs(aa)-eps))*abs(aa)+ &
-           0.25*(1.-sign(1.,abs(aa)-eps))*(aa*aa+eps*eps)/eps
+      psi=0.5*(1.+sign(1.D0,abs(aa)-eps))*abs(aa)+ &
+         0.25*(1.-sign(1.D0,abs(aa)-eps))*(aa*aa+eps*eps)/eps
     end function psi
   end subroutine met_roe2oh
 end module mod_met_roe2oh

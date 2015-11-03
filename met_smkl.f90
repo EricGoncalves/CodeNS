@@ -111,9 +111,6 @@ contains
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
          cmuk1(ip21),cmuk2(ip21)
 !
-
-
-!
     impli=.true.
 !      impli=.false.
 !

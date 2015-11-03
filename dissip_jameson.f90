@@ -44,9 +44,6 @@ contains
     dimension ps(ip11),cson(ip11),snu(ip00)
     dimension sn(lgsnlt,nind,ndir)
 !
-
-
-
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)

@@ -57,11 +57,9 @@ contains
 !
     character(len=7 ) :: eqt
     dimension v1(ip00),v2(ip00),v3(ip00),v4(ip00), &
-         v5(ip00),v6(ip00),v7(ip00)
+              v5(ip00),v6(ip00),v7(ip00)
     dimension mut(ndmut)
     dimension utau(ip42)
-!
-
 !
     if(l.eq.1) rewind kda
 !
@@ -84,9 +82,9 @@ contains
             (((mut(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
     endif
 !
-    if(eqt(6:7).eq.'ke') then
-!      if (eqt(6:7).eq.'ke' .or. &
-!         (eqt(2:4).eq.'res' .and. ip60.eq.7) ) then
+!    if(eqt(6:7).eq.'ke') then
+      if (eqt(6:7).eq.'ke' .or. &
+         (eqt(2:4).eq.'res' .and. ip60.eq.7) ) then
        write(kda) &
             ((( v6(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
        write(kda) &

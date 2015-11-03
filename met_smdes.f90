@@ -84,10 +84,9 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension v(ip11,ip60)
     dimension mu(ip12),dist(ip12),qcxts5(ip12),qcyts6 (ip12), &
-         txxf5x(ip12),txyf5y (ip12),txzf5z(ip12)            
+              txxf5x(ip12),txyf5y (ip12),txzf5z(ip12)            
     dimension cfke(ip13),vol(ip11)
     dimension sn(ip31*ndir)
     dimension dvxx(ip00),dvxy(ip00),dvxz(ip00), &
@@ -98,8 +97,6 @@ contains
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
          cmuk1(ip21),cmuk2(ip21)
     dimension x(ip21),y(ip21),z(ip21)
-!
-
 !
 !     ---------------------------------------------------------------
 !com  sdif --> grad(ro nu_tilde).grad(nu_tilde) * cb2/sigma
@@ -138,7 +135,6 @@ contains
     i2m1=i2-1
     j2m1=j2-1
     k2m1=k2-1
-!
 !
 !       calcul grad( rho ) pour implicitation
 !       dtdx<->d(rho)/dx  dtdy<->d(rho)/dy  dtdz<->d(rho)/dz
@@ -197,8 +193,8 @@ contains
     cb2sig=cb2/sigma
 !
 !     constante DES
-!      ctdes=0.65 !valeur init
-    ctdes=0.95
+      ctdes=0.65 !valeur init
+!    ctdes=0.95
 !
     do k=k1,k2m1
        do j=j1,j2m1

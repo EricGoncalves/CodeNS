@@ -42,12 +42,6 @@ contains
     dimension del6(ip00),del7(ip00)
     dimension sn(lgsnlt,nind,ndir)
 !
-
-
-!
-
-
-
     n0 = npc(l)
     i1 = ii1(l)
     i2 = ii2(l)
@@ -296,7 +290,7 @@ contains
     function    amimd(a,b)
       implicit none
       double precision ::     a,amimd,    b
-      amimd=sign(1.,a)*max(0.,min(abs(a),b*sign(1.,a)))
+      amimd=sign(1.D0,a)*max(0.,min(abs(a),b*sign(1.D0,a)))
     end function amimd
     function    fi1(x,y,z)
       implicit none

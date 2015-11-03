@@ -38,7 +38,7 @@ contains
     use sortiefichier
     use boundary
     implicit none
-    integer          :: imot, m0n,mfbi,  mt,nmot
+    integer          :: imot, m0n,mfbi,mt,nmot
     double precision :: nxn,nyn,nzn
 !
 !-----------------------------------------------------------------------

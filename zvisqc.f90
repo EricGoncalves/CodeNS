@@ -141,7 +141,7 @@ contains
     dimension sn(ip31*ndir)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
          cmuk1(ip21),cmuk2(ip21)
-    REAL,DIMENSION(:),ALLOCATABLE :: dtx,dty,dtz
+    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dtx,dty,dtz
     ALLOCATE(dtx(ip00),dty(ip00),dtz(ip00))
 !
     do l=1,lzx

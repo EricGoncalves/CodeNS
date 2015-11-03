@@ -44,9 +44,7 @@ contains
          dvyz(ip00),dvzx(ip00),dvzy(ip00),dvzz(ip00), &
          dtdx(ip00),dtdy(ip00),dtdz(ip00),bare(ip00)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
-!
-
+              cmuk1(ip21),cmuk2(ip21)
 !
     n0c=npc(l)
     i1=ii1(l)

@@ -60,11 +60,8 @@ contains
     dimension sn(lgsnlt,nind,ndir)
     dimension ps(ip11)
     dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
-         rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
+              rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
-
-
-
     isortie=0
 !
     n0c=npc(lm)
@@ -894,5 +891,6 @@ contains
       integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
+
   end subroutine sch_hllc_euler
 end module mod_sch_hllc_euler

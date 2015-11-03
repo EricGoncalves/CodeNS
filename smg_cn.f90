@@ -193,7 +193,7 @@ contains
        enddo
 !
        do n = ndeb,nfin
-          ts=sign(0.5,-volt(n))
+          ts=sign(0.5D0,-volt(n))
           vols = (0.5+ts)*eps+(0.5-ts)*volt(n)
           vv(n,1)=vv(n,1)/vols
           vv(n,2)=vv(n,2)/vols

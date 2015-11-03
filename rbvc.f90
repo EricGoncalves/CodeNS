@@ -1,7 +1,7 @@
 module mod_rbvc
   implicit none
 contains
-  subroutine rbvc(t,ncbd,ncin,mnc)
+  subroutine rbvc(t,ncbd,ncin,mnc,ps,temp,cson)
 !
 !***********************************************************************
 !
@@ -37,13 +37,14 @@ contains
     integer          ::    m,  mb,  mc,  mf, mfb
     integer          ::  mnc,  mt,  nc,ncbd,ncin
     integer          ::   nd, ndm
-    double precision ::    t,tper
+    double precision ::    t,ps,cson,temp,tper
 !
 !-----------------------------------------------------------------------
 !
     dimension t(ip11,ip60)
     dimension ncbd(ip41),ncin(ip41)
     dimension mnc(ip43)
+    dimension ps(ip11),cson(ip11),temp(ip11)
 !
     do mf=1,nbd
 !
@@ -65,8 +66,10 @@ contains
           t(nd,3) = 0.5*( t(ndm,3)+t(nc,3)*cos(tper)+t(nc,4)*sin(tper))
           t(nd,4) = 0.5*( t(ndm,4)+t(nc,4)*cos(tper)-t(nc,3)*sin(tper))
           t(nd,5) = 0.5*( t(ndm,5)+t(nc,5) )
-!
-       enddo
+      ps(nd)   = 0.5*(   ps(ndm)+  ps(nc) )
+      temp(nd) = 0.5*( temp(ndm)+temp(nc) )
+      cson(nd) = 0.5*( cson(ndm)+cson(nc) )
+     enddo
     enddo
 !
     return

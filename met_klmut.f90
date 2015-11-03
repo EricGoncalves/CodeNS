@@ -34,9 +34,6 @@ contains
     dimension mu(ip12),mut(ip12),dist(ip12)
     dimension v(ip11,ip60)
 !
-
-
-!
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)

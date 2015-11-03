@@ -38,9 +38,7 @@ contains
     double precision ::     dfex,    dfey,    dfez,    dfxx,    dfxy
     double precision ::     dfxz,    dfyy,    dfyz,    dfzz,      dt
     double precision ::    dtpas,    fact,     fex,     fey,     fez
-    double precision ::       ff,    fiex,    fiey,    fiez,    fixx
-    double precision ::     fixy,    fixz,    fiyy,    fiyz,    fizz
-    double precision ::      fxx,     fxy,     fxz,     fyy,     fyz
+    double precision ::       ff,  fxx,     fxy,   fxz,   fyy,  fyz
     double precision ::      fzz,    pres,      ps,      sn,     tn1
     double precision ::      tn2,     tn3,     tn4,     tn5,       u
     double precision ::       ui,      uu,       v,      vi,     vol
@@ -55,9 +53,6 @@ contains
     dimension sn(lgsnlt,nind,ndir)
     dimension dfxx(ip00),dfxy(ip00),dfxz(ip00),dfex(ip00),coefdiag(ip00), &
          dfyy(ip00),dfyz(ip00),dfey(ip00),dfzz(ip00),dfez(ip00)
-!
-
-
 
     DOUBLE PRECISION,DIMENSION(:,:),ALLOCATABLE :: coefe
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE   :: d2w1,d2w2,d2w3,d2w4,d2w5
@@ -483,16 +478,6 @@ contains
 !         pression donnee par loi d'etat
                 pres=gam1*(wi5-.5*wi1*(ui**2+vi**2+wi**2)-pinfl)
 !
-                fixx=wi1*ui**2+pres
-                fixy=wi1*ui*vi
-                fixz=wi1*ui*wi
-                fiyy=wi1*vi**2+pres
-                fiyz=wi1*vi*wi
-                fizz=wi1*wi**2+pres
-                fiex=ui*(wi5+pres-pinfl)
-                fiey=vi*(wi5+pres-pinfl)
-                fiez=wi*(wi5+pres-pinfl)
-!
                 fxx=v(n,2)*(v(n,2)/v(n,1))+ps(n)
                 fxy=v(n,3)*(v(n,2)/v(n,1))
                 fxz=v(n,4)*(v(n,2)/v(n,1))
@@ -503,15 +488,15 @@ contains
                 fey=(v(n,5)+ps(n)-pinfl)*v(n,3)/v(n,1)
                 fez=(v(n,5)+ps(n)-pinfl)*v(n,4)/v(n,1)
 !
-                dfxx(m)=fixx-fxx
-                dfxy(m)=fixy-fxy
-                dfxz(m)=fixz-fxz
-                dfex(m)=fiex-fex
-                dfyy(m)=fiyy-fyy
-                dfyz(m)=fiyz-fyz
-                dfey(m)=fiey-fey
-                dfzz(m)=fizz-fzz
-                dfez(m)=fiez-fez
+               dfxx(m)=wi1*ui**2+pres-fxx
+               dfxy(m)=wi1*ui*vi-fxy
+               dfxz(m)=wi1*ui*wi-fxz
+               dfex(m)=ui*(wi5+pres-pinfl)-fex
+               dfyy(m)=wi1*vi**2+pres-fyy
+               dfyz(m)=wi1*vi*wi-fyz
+               dfey(m)=vi*(wi5+pres-pinfl)-fey
+               dfzz(m)=wi1*wi**2+pres-fzz
+               dfez(m)=wi*(wi5+pres-pinfl)-fez
              enddo
           enddo
 !!!!!$OMP END DO

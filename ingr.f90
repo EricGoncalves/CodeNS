@@ -32,6 +32,7 @@ contains
     use sortiefichier
     use definition
     use mod_readdg
+    use mod_utinig
     use mod_smg_fcm
     implicit none
     integer          ::  img,king,   l
@@ -43,7 +44,7 @@ contains
 !
     if(king.ne.0) then
 !     remplissage des tableaux x , y , z dans un sous-programme d'initialisation
-!        call utinig(l,x,y,z)
+       call utinig(l,x,y,z)
     elseif(king.eq.0) then
 !     remplissage des tableaux x , y , z par lecture d' un fichier de reprise
        call readdg(l,kdgv,x,y,z)

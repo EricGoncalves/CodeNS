@@ -43,7 +43,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension ncbd(ip41)
     dimension v(ip11,ip60)
     dimension mmb(mtt),mpb(mtt)

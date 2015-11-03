@@ -122,7 +122,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension rpi(ip40),rti(ip40)
     dimension d0x(ip40),d0y(ip40),d0z(ip40)
     dimension v(ip11,ip60),pression(ip11),temp(ip11),cson(ip11)
@@ -133,8 +132,6 @@ contains
          qn(ip40),p(ip40),resi(ip40),ro(ip40), &
          un(ip40),usdn(ip40),ym(ip40),zm(ip40)
     dimension y(ip21),z(ip21)
-!
-
 !
     eps=0.0000001
     n0n=npn(l)

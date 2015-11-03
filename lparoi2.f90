@@ -102,7 +102,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension mu(ip12),mut(ip12), &
          toxx(ip12),toxy(ip12),toxz(ip12), &
          toyy(ip12),toyz(ip12),tozz(ip12), &

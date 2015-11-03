@@ -99,15 +99,12 @@ contains
          dtx (ip00),dty (ip00),dtz (ip00)
     dimension vol(ip11),temp(ip11),s(ip11,ip60)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
+              cmuk1(ip21),cmuk2(ip21)
 
-!
-
-
-
-    REAL,DIMENSION(:),ALLOCATABLE :: vx,vy,vz
-    eps=0.00001
+    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: vx,vy,vz
     ALLOCATE(vx(ip00),vy(ip00),vz(ip00))
+
+    eps=0.00001
 
     n0=npc(l)
     i1=ii1(l)
@@ -169,7 +166,7 @@ contains
        enddo
     enddo
 !
-!     initialisation
+!   initialisation
     ind1=ind(id1(l),jd1(l),kd1(l))-n0
     ind2=ind(id2(l),jd2(l),kd2(l))-n0
     do m=ind1,ind2
@@ -198,18 +195,18 @@ contains
 !!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
-                skxx=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,1)
-                skxy=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,2)
-                skxz=(cmuk1(m)*vx(m)+cmuk2(m)*vx(m-nck))*sn(m,3,3)
-                skyx=(cmuk1(m)*vy(m)+cmuk2(m)*vy(m-nck))*sn(m,3,1)
-                skyy=(cmuk1(m)*vy(m)+cmuk2(m)*vy(m-nck))*sn(m,3,2)
-                skyz=(cmuk1(m)*vy(m)+cmuk2(m)*vy(m-nck))*sn(m,3,3)
-                skzx=(cmuk1(m)*vz(m)+cmuk2(m)*vz(m-nck))*sn(m,3,1)
-                skzy=(cmuk1(m)*vz(m)+cmuk2(m)*vz(m-nck))*sn(m,3,2)
-                skzz=(cmuk1(m)*vz(m)+cmuk2(m)*vz(m-nck))*sn(m,3,3)
-                stx=(cmuk1(m)*temp(n)+cmuk2(m)*temp(n-nck))*sn(m,3,1)
-                sty=(cmuk1(m)*temp(n)+cmuk2(m)*temp(n-nck))*sn(m,3,2)
-                stz=(cmuk1(m)*temp(n)+cmuk2(m)*temp(n-nck))*sn(m,3,3)
+                skxx=(cmuk1(n)*vx(m)+cmuk2(n)*vx(m-nck))*sn(m,3,1)
+                skxy=(cmuk1(n)*vx(m)+cmuk2(n)*vx(m-nck))*sn(m,3,2)
+                skxz=(cmuk1(n)*vx(m)+cmuk2(n)*vx(m-nck))*sn(m,3,3)
+                skyx=(cmuk1(n)*vy(m)+cmuk2(n)*vy(m-nck))*sn(m,3,1)
+                skyy=(cmuk1(n)*vy(m)+cmuk2(n)*vy(m-nck))*sn(m,3,2)
+                skyz=(cmuk1(n)*vy(m)+cmuk2(n)*vy(m-nck))*sn(m,3,3)
+                skzx=(cmuk1(n)*vz(m)+cmuk2(n)*vz(m-nck))*sn(m,3,1)
+                skzy=(cmuk1(n)*vz(m)+cmuk2(n)*vz(m-nck))*sn(m,3,2)
+                skzz=(cmuk1(n)*vz(m)+cmuk2(n)*vz(m-nck))*sn(m,3,3)
+                stx=(cmuk1(n)*temp(n)+cmuk2(n)*temp(n-nck))*sn(m,3,1)
+                sty=(cmuk1(n)*temp(n)+cmuk2(n)*temp(n-nck))*sn(m,3,2)
+                stz=(cmuk1(n)*temp(n)+cmuk2(n)*temp(n-nck))*sn(m,3,3)
 !
                 dvxx(m)=dvxx(m)-skxx
                 dvxy(m)=dvxy(m)-skxy
@@ -295,18 +292,18 @@ contains
 !!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
-                sjxx=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,1)
-                sjxy=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,2)
-                sjxz=(cmuj1(m)*vx(m)+cmuj2(m)*vx(m-ncj))*sn(m,2,3)
-                sjyx=(cmuj1(m)*vy(m)+cmuj2(m)*vy(m-ncj))*sn(m,2,1)
-                sjyy=(cmuj1(m)*vy(m)+cmuj2(m)*vy(m-ncj))*sn(m,2,2)
-                sjyz=(cmuj1(m)*vy(m)+cmuj2(m)*vy(m-ncj))*sn(m,2,3)
-                sjzx=(cmuj1(m)*vz(m)+cmuj2(m)*vz(m-ncj))*sn(m,2,1)
-                sjzy=(cmuj1(m)*vz(m)+cmuj2(m)*vz(m-ncj))*sn(m,2,2)
-                sjzz=(cmuj1(m)*vz(m)+cmuj2(m)*vz(m-ncj))*sn(m,2,3)
-                stx=(cmuj1(m)*temp(n)+cmuj2(m)*temp(n-ncj))*sn(m,2,1)
-                sty=(cmuj1(m)*temp(n)+cmuj2(m)*temp(n-ncj))*sn(m,2,2)
-                stz=(cmuj1(m)*temp(n)+cmuj2(m)*temp(n-ncj))*sn(m,2,3)
+                sjxx=(cmuj1(n)*vx(m)+cmuj2(n)*vx(m-ncj))*sn(m,2,1)
+                sjxy=(cmuj1(n)*vx(m)+cmuj2(n)*vx(m-ncj))*sn(m,2,2)
+                sjxz=(cmuj1(n)*vx(m)+cmuj2(n)*vx(m-ncj))*sn(m,2,3)
+                sjyx=(cmuj1(n)*vy(m)+cmuj2(n)*vy(m-ncj))*sn(m,2,1)
+                sjyy=(cmuj1(n)*vy(m)+cmuj2(n)*vy(m-ncj))*sn(m,2,2)
+                sjyz=(cmuj1(n)*vy(m)+cmuj2(n)*vy(m-ncj))*sn(m,2,3)
+                sjzx=(cmuj1(n)*vz(m)+cmuj2(n)*vz(m-ncj))*sn(m,2,1)
+                sjzy=(cmuj1(n)*vz(m)+cmuj2(n)*vz(m-ncj))*sn(m,2,2)
+                sjzz=(cmuj1(n)*vz(m)+cmuj2(n)*vz(m-ncj))*sn(m,2,3)
+                stx=(cmuj1(n)*temp(n)+cmuj2(n)*temp(n-ncj))*sn(m,2,1)
+                sty=(cmuj1(n)*temp(n)+cmuj2(n)*temp(n-ncj))*sn(m,2,2)
+                stz=(cmuj1(n)*temp(n)+cmuj2(n)*temp(n-ncj))*sn(m,2,3)
 !
                 dvxx(m)=dvxx(m)-sjxx
                 dvxy(m)=dvxy(m)-sjxy
@@ -392,18 +389,18 @@ contains
 !!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0
-                sixx=(cmui1(m)*vx(m)+cmui2(m)*vx(m-nci))*sn(m,1,1)
-                sixy=(cmui1(m)*vx(m)+cmui2(m)*vx(m-nci))*sn(m,1,2)
-                sixz=(cmui1(m)*vx(m)+cmui2(m)*vx(m-nci))*sn(m,1,3)
-                siyx=(cmui1(m)*vy(m)+cmui2(m)*vy(m-nci))*sn(m,1,1)
-                siyy=(cmui1(m)*vy(m)+cmui2(m)*vy(m-nci))*sn(m,1,2)
-                siyz=(cmui1(m)*vy(m)+cmui2(m)*vy(m-nci))*sn(m,1,3)
-                sizx=(cmui1(m)*vz(m)+cmui2(m)*vz(m-nci))*sn(m,1,1)
-                sizy=(cmui1(m)*vz(m)+cmui2(m)*vz(m-nci))*sn(m,1,2)
-                sizz=(cmui1(m)*vz(m)+cmui2(m)*vz(m-nci))*sn(m,1,3)
-                stx=(cmui1(m)*temp(n)+cmui2(m)*temp(n-nci))*sn(m,1,1)
-                sty=(cmui1(m)*temp(n)+cmui2(m)*temp(n-nci))*sn(m,1,2)
-                stz=(cmui1(m)*temp(n)+cmui2(m)*temp(n-nci))*sn(m,1,3)
+                sixx=(cmui1(n)*vx(m)+cmui2(n)*vx(m-nci))*sn(m,1,1)
+                sixy=(cmui1(n)*vx(m)+cmui2(n)*vx(m-nci))*sn(m,1,2)
+                sixz=(cmui1(n)*vx(m)+cmui2(n)*vx(m-nci))*sn(m,1,3)
+                siyx=(cmui1(n)*vy(m)+cmui2(n)*vy(m-nci))*sn(m,1,1)
+                siyy=(cmui1(n)*vy(m)+cmui2(n)*vy(m-nci))*sn(m,1,2)
+                siyz=(cmui1(n)*vy(m)+cmui2(n)*vy(m-nci))*sn(m,1,3)
+                sizx=(cmui1(n)*vz(m)+cmui2(n)*vz(m-nci))*sn(m,1,1)
+                sizy=(cmui1(n)*vz(m)+cmui2(n)*vz(m-nci))*sn(m,1,2)
+                sizz=(cmui1(n)*vz(m)+cmui2(n)*vz(m-nci))*sn(m,1,3)
+                stx=(cmui1(n)*temp(n)+cmui2(n)*temp(n-nci))*sn(m,1,1)
+                sty=(cmui1(n)*temp(n)+cmui2(n)*temp(n-nci))*sn(m,1,2)
+                stz=(cmui1(n)*temp(n)+cmui2(n)*temp(n-nci))*sn(m,1,3)
 !
                 dvxx(m)=dvxx(m)-sixx
                 dvxy(m)=dvxy(m)-sixy
@@ -485,7 +482,7 @@ contains
     do n=ind1,ind2
        m=n-n0
 !      le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t
-       ts=sign(0.5,-vol(n))
+       ts=sign(0.5D0,-vol(n))
        vols = (0.5+ts)*eps+(0.5-ts)*vol(n)
        c0 =.5/vols
 !       c0=0.5/vol(n)

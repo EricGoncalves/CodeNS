@@ -77,7 +77,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension mu(ip12),mut(ip12)
     dimension nxn(ip42),nyn(ip42),nzn(ip42)
     dimension ncin(ip41),ncbd(ip41)
@@ -86,7 +85,7 @@ contains
     dimension tprod(ip00),tp(ip40)
     dimension temp(ip11)
 !
-    cmu1=1./sqrt(cmu)
+!    cmu1=1./sqrt(0.09)
     sv=110.4/tnz !air
 
     mt=mmb(mfb)
@@ -200,5 +199,4 @@ contains
 !
     return
   end subroutine lpkl2
-
 end module mod_lpkl2

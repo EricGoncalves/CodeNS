@@ -38,7 +38,6 @@ contains
     dimension v(ip11,ip60),ptdual(ip11,ip60)
     dimension vdual1(ip11,ip60),vdual(ip11,ip60),vdual2(ip11,ip60)
 !
-
     c1=1./3.
 !
     do l = 1,lzx

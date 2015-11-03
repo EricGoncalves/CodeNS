@@ -35,8 +35,6 @@ contains
     dimension dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyz(ip00), &
          dvzx(ip00),dvzy(ip00)
 !
-
-!
     n0=npc(l)
     i1=ii1(l)
     i2=ii2(l)

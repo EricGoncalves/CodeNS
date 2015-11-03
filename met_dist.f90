@@ -40,9 +40,6 @@ contains
     dimension x(ip21),y(ip21),z(ip21)
     dimension Delta(ip00)
 !
-
-
-!
     nid=id2(l)-id1(l)+1
     njd=jd2(l)-jd1(l)+1
 !

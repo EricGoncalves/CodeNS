@@ -106,15 +106,15 @@ contains
     character(len=4) clsave
 !
     dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
-         tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
-         tm11(ip40),tm12(ip40),tm13(ip40)
+              tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
+              tm11(ip40),tm12(ip40),tm13(ip40)
     dimension bceqt(ip41,neqt)
     dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40)
     dimension d0x(ip40),d0y(ip40),d0z(ip40)
     dimension qtx(ip40),qty(ip40),qtz(ip40)
     dimension rod(ip40),roud(ip40),rovd(ip40),rowd(ip40),roed(ip40)
     dimension x(ip21),y(ip21),z(ip21), &
-         v(ip11,ip60)
+              v(ip11,ip60)
     dimension sn(ip31*ndir)
     dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
     dimension mnr(ip44),xnr(ip44),ynr(ip44),znr(ip44)

@@ -82,7 +82,6 @@ contains
     use schemanum
     use sortiefichier
     use mod_b1_cpbd
-
     use mod_cpbd
     use mod_tcmd_cpbd
     implicit none
@@ -101,13 +100,12 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     character(len=32) ::  mot(nmx)
 !
     dimension imot(nmx)
     dimension tm1(ip40),tm2(ip40),tm3(ip40),tm4(ip40),tm5(ip40), &
-         tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
-         tm11(ip40),tm12(ip40),tm13(ip40)
+              tm6(ip40),tm7(ip40),tm8(ip40),tm9(ip40),tm10(ip40), &
+              tm11(ip40),tm12(ip40),tm13(ip40)
     dimension bceqt(ip41,neqt)
     dimension rpi(ip40),rti(ip40),pres(ip40),tp(ip40)
     dimension d0x(ip40),d0y(ip40),d0z(ip40)

@@ -80,7 +80,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension v(ip11,ip60)
     dimension mu(ip12),dist(ip12), &
          txxf5x(ip12),txyf5y (ip12),txzf5z(ip12), &
@@ -94,10 +93,8 @@ contains
          t(ip00)
     dimension sdif(ip00)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
-!
+             cmuk1(ip21),cmuk2(ip21)
 
-!
 !     ---------------------------------------------------------------
 !com  sdif --> grad(ro nu_tilde).grad(nu_tilde) * cb2/sigma
 !
@@ -204,6 +201,7 @@ contains
 !
              fv1=xkhi3/(xkhi3+cv13)
              fv2=1.-(xkhi/(1+xkhi*fv1))
+!            fv2=abs(1.-(xkhi/(1.+xkhi*fv1)))   !modif R114
              stilde=vort+nutilde*fv2/kapd2
              rtilde=nutilde/(stilde*kapd2)
              rtilde=min(rtilde,1.)

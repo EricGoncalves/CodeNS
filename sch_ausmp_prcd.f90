@@ -65,10 +65,8 @@ contains
     dimension sn(lgsnlt,nind,ndir)
     dimension ps(ip11)
     dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
-         rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
+              rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
-
-
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)
@@ -246,7 +244,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1,j1  ,k)
        ind2 = indc(i1,j2m1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2,ncj
           m=n-n0c
           n1=n-ninc
@@ -289,7 +287,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i2,j1  ,k)
        ind2 = indc(i2,j2m1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2,ncj
           m=n-n0c
           fxx=v(n,2)*(v(n,2)/v(n,1))+ps(n)-pinfl-toxx(n)
@@ -450,7 +448,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j1,k)
        ind2 = indc(i2m1,j1,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2
           m=n-n0c
           n1=n-ninc
@@ -493,7 +491,7 @@ contains
     do k=k1,k2m1
        ind1 = indc(i1  ,j2,k)
        ind2 = indc(i2m1,j2,k)
-!!$OMP SIMD
+!DEC$ IVDEP
        do n=ind1,ind2
           m=n-n0c
           fxx=v(n,2)*(v(n,2)/v(n,1))+ps(n)-pinfl-toxx(n)
@@ -652,7 +650,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k1)
           ind2 = indc(i2m1,j,k1)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
              n1=n-ninc
@@ -695,7 +693,7 @@ contains
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k2)
           ind2 = indc(i2m1,j,k2)
-!!$OMP SIMD
+!DEC$ IVDEP
           do n=ind1,ind2
              m=n-n0c
              fxx=v(n,2)*(v(n,2)/v(n,1))+ps(n)-pinfl-toxx(n)
@@ -772,29 +770,29 @@ contains
     function    fmp(aa)
       implicit none
       double precision ::  aa,fmp
-      fmp=0.25*(1.+sign(1.,abs(aa)-1.))*(aa+abs(aa)) &
-           +0.5*(1.-sign(1.,abs(aa)-1.))* &
+      fmp=0.25*(1.+sign(1.D0,abs(aa)-1.))*(aa+abs(aa)) &
+          +0.5*(1.-sign(1.D0,abs(aa)-1.))* &
            (0.25*(aa+1.)**2+cb*(aa**2-1.)**2)
     end function fmp
     function    fmm(xa)
       implicit none
       double precision :: fmm, xa
-      fmm=0.25*(1.+sign(1.,abs(xa)-1.))*(xa-abs(xa)) &
-           -0.5*(1.-sign(1.,abs(xa)-1.))* &
+      fmm=0.25*(1.+sign(1.D0,abs(xa)-1.))*(xa-abs(xa)) &
+          -0.5*(1.-sign(1.D0,abs(xa)-1.))* &
            (0.25*(xa-1.)**2-cb**(xa**2-1.)**2)
     end function fmm
     function    fpp(ta)
       implicit none
       double precision :: fpp, ta
-      fpp=0.25*(1.+sign(1.,abs(ta)-1.))*(1.+sign(1.,abs(ta))) &
-           +0.5*(1.-sign(1.,abs(ta)-1.))* &
+      fpp=0.25*(1.+sign(1.D0,abs(ta)-1.))*(1.+sign(1.D0,abs(ta))) &
+          +0.5*(1.-sign(1.D0,abs(ta)-1.))* &
            (0.25*(ta+1.)**2*(2.-ta)+ca*ta*(ta**2-1.)**2)
     end function fpp
     function    fpm(ra)
       implicit none
       double precision :: fpm, ra
-      fpm=0.25*(1.+sign(1.,abs(ra)-1.))*(1.-sign(1.,abs(ra))) &
-           +0.5*(1.-sign(1.,abs(ra)-1.))* &
+      fpm=0.25*(1.+sign(1.D0,abs(ra)-1.))*(1.-sign(1.D0,abs(ra))) &
+          +0.5*(1.-sign(1.D0,abs(ra)-1.))* &
            (0.25*(ra-1.)**2*(2.+ra)-ca*ra*(ra**2-1.)**2)
     end function fpm
   end subroutine sch_ausmp_prcd

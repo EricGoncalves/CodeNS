@@ -51,22 +51,22 @@ contains
     use definition
     use modeleturb
     use chainecarac
-    use mod_smg_fcr
-    use mod_sch_duup2
-    use mod_dua_resro
-    use mod_smg_upc
-    use mod_sortieplot
-    use mod_smg_flu
-    use mod_utitfr
-    use mod_sortieplot2
-    use mod_sch_duin
-    use mod_svfw
-    use mod_sortietest
-    use mod_smg_fcv
     use mod_sch_duup
+    use mod_sch_duup2
+    use mod_sch_duin
+    use mod_dua_resro
+    use mod_smg_flu
+    use mod_atsch_num
+    use mod_smg_fcr
+    use mod_smg_upc
+    use mod_smg_fcv
+    use mod_svfw
+    use mod_sortieplot
+    use mod_sortieplot2
+    use mod_sortietest
+    use mod_utitfr
     use mod_rbc
     use mod_rscpsv
-    use mod_atsch_num
     implicit none
     integer          ::    icyc, icycle,icyexpl,  idcyc,    img
     integer          ::    iter, itypdf, ityprk,      l,     lm
@@ -95,12 +95,11 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension mnpar(ip12),fgam(ip42),utau(ip42)
     dimension x(ip21),y(ip21),z(ip21)
     dimension dt(ip11),vol(ip11),r(ip11),pression(ip11),ztemp(ip11),cson(ip11)
     dimension v(ip11,ip60),d_volt(ip11,ip60),u_duv(ip11,ip60), &
-         ff_du(ip11,ip60),u0(ip11,ip60)
+              ff_du(ip11,ip60),u0(ip11,ip60)
     dimension vdual(ip11,ip60),vdual1(ip11,ip60),vdual2(ip11,ip60),ptdual(ip11,ip60)
     dimension sn(ip31*ndir)
     dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)

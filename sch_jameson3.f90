@@ -54,11 +54,8 @@ contains
     dimension sn(lgsnlt,nind,ndir)
     dimension ps(ip11)
     dimension fxx(ip00),fyy(ip00),fzz(ip00),fxy(ip00),fxz(ip00), &
-         fyz(ip00),fex(ip00),fey(ip00),fez(ip00)
+              fyz(ip00),fex(ip00),fey(ip00),fez(ip00)
 !
-
-
-
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)

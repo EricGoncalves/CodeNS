@@ -41,8 +41,6 @@ contains
     dimension t(ip11,ip60),cson(ip11),ps(ip11)
     dimension x(ip21),y(ip21),z(ip21)
 !
-
-!
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)

@@ -77,7 +77,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension mu(ip12),mut(ip12)
     dimension nxn(ip42),nyn(ip42),nzn(ip42)
     dimension ncin(ip41),ncbd(ip41)

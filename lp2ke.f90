@@ -69,7 +69,6 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension mu(ip12),mut(ip12),mnpar(ip12),dist(ip12)
     dimension nxn(ip42),nyn(ip42),nzn(ip42),fgam(ip42),utau(ip42)
     dimension ncin(ip41),ncbd(ip41),tp(ip40)
@@ -121,5 +120,4 @@ contains
 !      
     return
   end subroutine lp2ke
-
 end module mod_lp2ke

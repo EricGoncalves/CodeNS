@@ -62,9 +62,6 @@ contains
     dimension sn(lgsnlt,nind,ndir)
     dimension dfxx(ip00),dfxy(ip00),dfxz(ip00),dfex(ip00),rv(ip00), &
          dfyy(ip00),dfyz(ip00),dfey(ip00),dfzz(ip00),dfez(ip00)
-!
-
-
 
     DOUBLE PRECISION,DIMENSION(:,:),ALLOCATABLE :: coefe,coefv
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE   :: coefdiag,coefb, &

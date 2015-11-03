@@ -48,13 +48,10 @@ contains
 !
 !-----------------------------------------------------------------------
 !
-!
     dimension s(ip11,ip60)
     dimension mu(ip12), &
          fd5x(ip12),fd5y(ip12),fd5z(ip12), &
          fd6x(ip12),fd6y(ip12),fd6z(ip12)
-!
-
 !
     n0=npc(l)
     i1=ii1(l)

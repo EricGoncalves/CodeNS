@@ -84,7 +84,6 @@ contains
     dimension rhol(ip00),ul(ip00),vl(ip00),wl(ip00),pl(ip00), &
          rhor(ip00),ur(ip00),vr(ip00),wr(ip00),prr(ip00)
 !
-
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE   :: r1,r2,r3,r4,r5
     ALLOCATE(r1(ip00),r2(ip00),r3(ip00),r4(ip00),r5(ip00))
 
@@ -1503,8 +1502,7 @@ contains
       integer          ::  id,inc, jd, kd
       inc=id+jd*nid+kd*nijd
     end function inc
-!      phi(a)=sign(1.,a)*max(0.,min(abs(a),sign(1.,a)))
-
+!      phi(a)=sign(1.D0,a)*max(0.,min(abs(a),sign(1.D0,a)))
 !     phi(a)=max(0.,(a+a**2)/(1.+a**2))  !van albada
 !      phi(a)=max(0.,min(1.,2.*a),min(2.,a)) !superbee
     function    phi(a)

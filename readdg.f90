@@ -50,8 +50,6 @@ contains
     character(len=1) coord
     dimension x(ip21),y(ip21),z(ip21)
 !
-
-!
     ecri=.false.
 !      ecri=.true.
 !

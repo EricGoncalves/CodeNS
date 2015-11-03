@@ -43,7 +43,7 @@ contains
        nid=id2(l)-id1(l)+1
        njd=jd2(l)-jd1(l)+1
 !
-!!$OMP SIMD
+!DEC$ IVDEP
        do m=1,mt
           mr=mpr(mfb)+m
           nr=mnr(mr)

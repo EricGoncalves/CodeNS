@@ -39,9 +39,6 @@ contains
     dimension vol(ip11)
     dimension sn(lgsnlt,nind,ndir)
 !
-
-
-!
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)

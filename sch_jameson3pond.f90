@@ -62,11 +62,8 @@ contains
          cmuk1(ip21),cmuk2(ip21)
     dimension ps(ip11)
     dimension fxx(ip00),fyy(ip00),fzz(ip00),fxy(ip00),fxz(ip00), &
-         fyz(ip00),fex(ip00),fey(ip00),fez(ip00)
+              fyz(ip00),fex(ip00),fey(ip00),fez(ip00)
 !
-
-
-
     n0c=npc(lm)
     i1=ii1(lm)
     i2=ii2(lm)
@@ -161,28 +158,28 @@ contains
              m=n-n0c
              n2=n-2*ninc
              m2=m-2*ninc
-             a1=-0.25*cmui1(m)*cmui2(m)*cvi(m)**2/(cvi(m+ninc)*(cvi(m)+cvi(m+ninc)))
-             a2=cmui1(m)+0.25*cmui1(m)*cmui2(m)*cvi(m)*(1./cvi(m+ninc) &
-                  -1./(cvi(m-ninc)+cvi(m)))
-             a3=cmui2(m)+0.25*cmui1(m)*cmui2(m)*cvi(m)*(1./cvi(m-ninc) &
-                  -1./(cvi(m)+cvi(m+ninc)))
-             a4=-0.25*cmui1(m)*cmui2(m)*cvi(m)**2/(cvi(m-ninc)*(cvi(m-ninc)+cvi(m)))
+             a1=-0.25*cmui1(n)*cmui2(n)*cvi(n)**2/(cvi(n+ninc)*(cvi(n)+cvi(n+ninc)))
+             a2=cmui1(n)+0.25*cmui1(n)*cmui2(n)*cvi(n)*(1./cvi(n+ninc) &
+                  -1./(cvi(n-ninc)+cvi(n)))
+             a3=cmui2(n)+0.25*cmui1(n)*cmui2(n)*cvi(n)*(1./cvi(n-ninc) &
+                  -1./(cvi(n)+cvi(n+ninc)))
+             a4=-0.25*cmui1(n)*cmui2(n)*cvi(n)**2/(cvi(n-ninc)*(cvi(n-ninc)+cvi(n)))
 !
              si0=(a1*v(n+ninc,2)+a2*v(n,2)+a3*v(n-ninc,2)+a4*v(n2,2))*sn(m,kdir,1) &
-                  +(a1*v(n+ninc,3)+a2*v(n,3)+a3*v(n-ninc,3)+a4*v(n2,3))*sn(m,kdir,2) &
-                  +(a1*v(n+ninc,4)+a2*v(n,4)+a3*v(n-ninc,4)+a4*v(n2,4))*sn(m,kdir,3)
+                +(a1*v(n+ninc,3)+a2*v(n,3)+a3*v(n-ninc,3)+a4*v(n2,3))*sn(m,kdir,2) &
+                +(a1*v(n+ninc,4)+a2*v(n,4)+a3*v(n-ninc,4)+a4*v(n2,4))*sn(m,kdir,3)
              si1=(a1*fxx(m+ninc)+a2*fxx(m)+a3*fxx(m-ninc)+a4*fxx(m2))*sn(m,kdir,1) &
-                  +(a1*fxy(m+ninc)+a2*fxy(m)+a3*fxy(m-ninc)+a4*fxy(m2))*sn(m,kdir,2) &
-                  +(a1*fxz(m+ninc)+a2*fxz(m)+a3*fxz(m-ninc)+a4*fxz(m2))*sn(m,kdir,3)
+                +(a1*fxy(m+ninc)+a2*fxy(m)+a3*fxy(m-ninc)+a4*fxy(m2))*sn(m,kdir,2) &
+                +(a1*fxz(m+ninc)+a2*fxz(m)+a3*fxz(m-ninc)+a4*fxz(m2))*sn(m,kdir,3)
              si2=(a1*fxy(m+ninc)+a2*fxy(m)+a3*fxy(m-ninc)+a4*fxy(m2))*sn(m,kdir,1) &
-                  +(a1*fyy(m+ninc)+a2*fyy(m)+a3*fyy(m-ninc)+a4*fyy(m2))*sn(m,kdir,2) &
-                  +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,3)
+                +(a1*fyy(m+ninc)+a2*fyy(m)+a3*fyy(m-ninc)+a4*fyy(m2))*sn(m,kdir,2) &
+                +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,3)
              si3=(a1*fxz(m+ninc)+a2*fxz(m)+a3*fxz(m-ninc)+a4*fxz(m2))*sn(m,kdir,1) &
-                  +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,2) &
-                  +(a1*fzz(m+ninc)+a2*fzz(m)+a3*fzz(m-ninc)+a4*fzz(m2))*sn(m,kdir,3)
+                +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,2) &
+                +(a1*fzz(m+ninc)+a2*fzz(m)+a3*fzz(m-ninc)+a4*fzz(m2))*sn(m,kdir,3)
              si4=(a1*fex(m+ninc)+a2*fex(m)+a3*fex(m-ninc)+a4*fex(m2))*sn(m,kdir,1) &
-                  +(a1*fey(m+ninc)+a2*fey(m)+a3*fey(m-ninc)+a4*fey(m2))*sn(m,kdir,2) &
-                  +(a1*fez(m+ninc)+a2*fez(m)+a3*fez(m-ninc)+a4*fez(m2))*sn(m,kdir,3)
+                +(a1*fey(m+ninc)+a2*fey(m)+a3*fey(m-ninc)+a4*fey(m2))*sn(m,kdir,2) &
+                +(a1*fez(m+ninc)+a2*fez(m)+a3*fez(m-ninc)+a4*fez(m2))*sn(m,kdir,3)
              u(n,1)=u(n,1)-si0
              u(n,2)=u(n,2)-si1
              u(n,3)=u(n,3)-si2
@@ -202,21 +199,21 @@ contains
        ind2 = indc(i1p1,j2m1,k)
        do n=ind1,ind2,ncj
           m=n-n0c
-          si0=(cmui1(m)*v(n,2)+cmui2(m)*v(n-ninc,2))*sn(m,kdir,1) &
-               +(cmui1(m)*v(n,3)+cmui2(m)*v(n-ninc,3))*sn(m,kdir,2) &
-               +(cmui1(m)*v(n,4)+cmui2(m)*v(n-ninc,4))*sn(m,kdir,3)
-          si1=(cmui1(m)*fxx(m)+cmui2(m)*fxx(m-ninc))*sn(m,kdir,1) &
-               +(cmui1(m)*fxy(m)+cmui2(m)*fxy(m-ninc))*sn(m,kdir,2) &
-               +(cmui1(m)*fxz(m)+cmui2(m)*fxz(m-ninc))*sn(m,kdir,3)
-          si2=(cmui1(m)*fxy(m)+cmui2(m)*fxy(m-ninc))*sn(m,kdir,1) &
-               +(cmui1(m)*fyy(m)+cmui2(m)*fyy(m-ninc))*sn(m,kdir,2) &
-               +(cmui1(m)*fyz(m)+cmui2(m)*fyz(m-ninc))*sn(m,kdir,3)
-          si3=(cmui1(m)*fxz(m)+cmui2(m)*fxz(m-ninc))*sn(m,kdir,1) &
-               +(cmui1(m)*fyz(m)+cmui2(m)*fyz(m-ninc))*sn(m,kdir,2) &
-               +(cmui1(m)*fzz(m)+cmui2(m)*fzz(m-ninc))*sn(m,kdir,3)
-          si4=(cmui1(m)*fex(m)+cmui2(m)*fex(m-ninc))*sn(m,kdir,1) &
-               +(cmui1(m)*fey(m)+cmui2(m)*fey(m-ninc))*sn(m,kdir,2) &
-               +(cmui1(m)*fez(m)+cmui2(m)*fez(m-ninc))*sn(m,kdir,3)
+          si0=(cmui1(n)*v(n,2)+cmui2(n)*v(n-ninc,2))*sn(m,kdir,1) &
+             +(cmui1(n)*v(n,3)+cmui2(n)*v(n-ninc,3))*sn(m,kdir,2) &
+             +(cmui1(n)*v(n,4)+cmui2(n)*v(n-ninc,4))*sn(m,kdir,3)
+          si1=(cmui1(n)*fxx(m)+cmui2(n)*fxx(m-ninc))*sn(m,kdir,1) &
+             +(cmui1(n)*fxy(m)+cmui2(n)*fxy(m-ninc))*sn(m,kdir,2) &
+             +(cmui1(n)*fxz(m)+cmui2(n)*fxz(m-ninc))*sn(m,kdir,3)
+          si2=(cmui1(n)*fxy(m)+cmui2(n)*fxy(m-ninc))*sn(m,kdir,1) &
+             +(cmui1(n)*fyy(m)+cmui2(n)*fyy(m-ninc))*sn(m,kdir,2) &
+             +(cmui1(n)*fyz(m)+cmui2(n)*fyz(m-ninc))*sn(m,kdir,3)
+          si3=(cmui1(n)*fxz(m)+cmui2(n)*fxz(m-ninc))*sn(m,kdir,1) &
+             +(cmui1(n)*fyz(m)+cmui2(n)*fyz(m-ninc))*sn(m,kdir,2) &
+             +(cmui1(n)*fzz(m)+cmui2(n)*fzz(m-ninc))*sn(m,kdir,3)
+          si4=(cmui1(n)*fex(m)+cmui2(n)*fex(m-ninc))*sn(m,kdir,1) &
+             +(cmui1(n)*fey(m)+cmui2(n)*fey(m-ninc))*sn(m,kdir,2) &
+             +(cmui1(n)*fez(m)+cmui2(n)*fez(m-ninc))*sn(m,kdir,3)
           u(n,1)=u(n,1)-si0
           u(n,2)=u(n,2)-si1
           u(n,3)=u(n,3)-si2
@@ -235,21 +232,21 @@ contains
        ind2 = indc(i2m1,j2m1,k)
        do n=ind1,ind2,ncj
           m=n-n0c
-          si0=(cmui1(m)*v(n,2)+cmui2(m)*v(n-ninc,2))*sn(m,kdir,1) &
-               +(cmui1(m)*v(n,3)+cmui2(m)*v(n-ninc,3))*sn(m,kdir,2) &
-               +(cmui1(m)*v(n,4)+cmui2(m)*v(n-ninc,4))*sn(m,kdir,3)
-          si1=(cmui1(m)*fxx(m)+cmui2(m)*fxx(m-ninc))*sn(m,kdir,1) &
-               +(cmui1(m)*fxy(m)+cmui2(m)*fxy(m-ninc))*sn(m,kdir,2) &
-               +(cmui1(m)*fxz(m)+cmui2(m)*fxz(m-ninc))*sn(m,kdir,3)
-          si2=(cmui1(m)*fxy(m)+cmui2(m)*fxy(m-ninc))*sn(m,kdir,1) &
-               +(cmui1(m)*fyy(m)+cmui2(m)*fyy(m-ninc))*sn(m,kdir,2) &
-               +(cmui1(m)*fyz(m)+cmui2(m)*fyz(m-ninc))*sn(m,kdir,3)
-          si3=(cmui1(m)*fxz(m)+cmui2(m)*fxz(m-ninc))*sn(m,kdir,1) &
-               +(cmui1(m)*fyz(m)+cmui2(m)*fyz(m-ninc))*sn(m,kdir,2) &
-               +(cmui1(m)*fzz(m)+cmui2(m)*fzz(m-ninc))*sn(m,kdir,3)
-          si4=(cmui1(m)*fex(m)+cmui2(m)*fex(m-ninc))*sn(m,kdir,1) &
-               +(cmui1(m)*fey(m)+cmui2(m)*fey(m-ninc))*sn(m,kdir,2) &
-               +(cmui1(m)*fez(m)+cmui2(m)*fez(m-ninc))*sn(m,kdir,3)
+          si0=(cmui1(n)*v(n,2)+cmui2(n)*v(n-ninc,2))*sn(m,kdir,1) &
+             +(cmui1(n)*v(n,3)+cmui2(n)*v(n-ninc,3))*sn(m,kdir,2) &
+             +(cmui1(n)*v(n,4)+cmui2(n)*v(n-ninc,4))*sn(m,kdir,3)
+          si1=(cmui1(n)*fxx(m)+cmui2(n)*fxx(m-ninc))*sn(m,kdir,1) &
+             +(cmui1(n)*fxy(m)+cmui2(n)*fxy(m-ninc))*sn(m,kdir,2) &
+             +(cmui1(n)*fxz(m)+cmui2(n)*fxz(m-ninc))*sn(m,kdir,3)
+          si2=(cmui1(n)*fxy(m)+cmui2(n)*fxy(m-ninc))*sn(m,kdir,1) &
+             +(cmui1(n)*fyy(m)+cmui2(n)*fyy(m-ninc))*sn(m,kdir,2) &
+             +(cmui1(n)*fyz(m)+cmui2(n)*fyz(m-ninc))*sn(m,kdir,3)
+          si3=(cmui1(n)*fxz(m)+cmui2(n)*fxz(m-ninc))*sn(m,kdir,1) &
+             +(cmui1(n)*fyz(m)+cmui2(n)*fyz(m-ninc))*sn(m,kdir,2) &
+             +(cmui1(n)*fzz(m)+cmui2(n)*fzz(m-ninc))*sn(m,kdir,3)
+          si4=(cmui1(n)*fex(m)+cmui2(n)*fex(m-ninc))*sn(m,kdir,1) &
+             +(cmui1(n)*fey(m)+cmui2(n)*fey(m-ninc))*sn(m,kdir,2) &
+             +(cmui1(n)*fez(m)+cmui2(n)*fez(m-ninc))*sn(m,kdir,3)
           u(n,1)=u(n,1)-si0
           u(n,2)=u(n,2)-si1
           u(n,3)=u(n,3)-si2
@@ -269,20 +266,20 @@ contains
        do n=ind1,ind2,ncj
           m=n-n0c
           si0= 2*v(n-ninc,2)*sn(m,kdir,1) &
-               +2*v(n-ninc,3)*sn(m,kdir,2) &
-               +2*v(n-ninc,4)*sn(m,kdir,3)
+              +2*v(n-ninc,3)*sn(m,kdir,2) &
+              +2*v(n-ninc,4)*sn(m,kdir,3)
           si1= 2*fxx(m-ninc)*sn(m,kdir,1) &
-               +2*fxy(m-ninc)*sn(m,kdir,2) &
-               +2*fxz(m-ninc)*sn(m,kdir,3)
+              +2*fxy(m-ninc)*sn(m,kdir,2) &
+              +2*fxz(m-ninc)*sn(m,kdir,3)
           si2= 2*fxy(m-ninc)*sn(m,kdir,1) &
-               +2*fyy(m-ninc)*sn(m,kdir,2) &
-               +2*fyz(m-ninc)*sn(m,kdir,3)
+              +2*fyy(m-ninc)*sn(m,kdir,2) &
+              +2*fyz(m-ninc)*sn(m,kdir,3)
           si3= 2*fxz(m-ninc)*sn(m,kdir,1) &
-               +2*fyz(m-ninc)*sn(m,kdir,2) &
-               +2*fzz(m-ninc)*sn(m,kdir,3)
+              +2*fyz(m-ninc)*sn(m,kdir,2) &
+              +2*fzz(m-ninc)*sn(m,kdir,3)
           si4= 2*fex(m-ninc)*sn(m,kdir,1) &
-               +2*fey(m-ninc)*sn(m,kdir,2) &
-               +2*fez(m-ninc)*sn(m,kdir,3)
+              +2*fey(m-ninc)*sn(m,kdir,2) &
+              +2*fez(m-ninc)*sn(m,kdir,3)
           u(n,1)=u(n,1)-si0
           u(n,2)=u(n,2)-si1
           u(n,3)=u(n,3)-si2
@@ -297,20 +294,20 @@ contains
        do n=ind1,ind2,ncj
           m=n-n0c
           si0= 2*v(n,2)*sn(m,kdir,1) &
-               +2*v(n,3)*sn(m,kdir,2) &
-               +2*v(n,4)*sn(m,kdir,3)
+              +2*v(n,3)*sn(m,kdir,2) &
+              +2*v(n,4)*sn(m,kdir,3)
           si1= 2*fxx(m)*sn(m,kdir,1) &
-               +2*fxy(m)*sn(m,kdir,2) &
-               +2*fxz(m)*sn(m,kdir,3)
+              +2*fxy(m)*sn(m,kdir,2) &
+              +2*fxz(m)*sn(m,kdir,3)
           si2= 2*fxy(m)*sn(m,kdir,1) &
-               +2*fyy(m)*sn(m,kdir,2) &
-               +2*fyz(m)*sn(m,kdir,3)
+              +2*fyy(m)*sn(m,kdir,2) &
+              +2*fyz(m)*sn(m,kdir,3)
           si3= 2*fxz(m)*sn(m,kdir,1) &
-               +2*fyz(m)*sn(m,kdir,2) &
-               +2*fzz(m)*sn(m,kdir,3)
+              +2*fyz(m)*sn(m,kdir,2) &
+              +2*fzz(m)*sn(m,kdir,3)
           si4= 2*fex(m)*sn(m,kdir,1) &
-               +2*fey(m)*sn(m,kdir,2) &
-               +2*fez(m)*sn(m,kdir,3)
+              +2*fey(m)*sn(m,kdir,2) &
+              +2*fez(m)*sn(m,kdir,3)
           u(n-ninc,1)=u(n-ninc,1)+si0
           u(n-ninc,2)=u(n-ninc,2)+si1
           u(n-ninc,3)=u(n-ninc,3)+si2
@@ -332,28 +329,28 @@ contains
              m=n-n0c
              n2=n-2*ninc
              m2=m-2*ninc
-             a1=-0.25*cmuj1(m)*cmuj2(m)*cvj(m)**2/(cvj(m+ninc)*(cvj(m)+cvj(m+ninc)))
-             a2=cmuj1(m)+0.25*cmuj1(m)*cmuj2(m)*cvj(m)*(1./cvj(m+ninc) &
-                  -1./(cvj(m-ninc)+cvj(m)))
-             a3=cmuj2(m)+0.25*cmuj1(m)*cmuj2(m)*cvj(m)*(1./cvj(m-ninc) &
-                  -1./(cvj(m)+cvj(m+ninc)))
-             a4=-0.25*cmuj1(m)*cmuj2(m)*cvj(m)**2/(cvj(m-ninc)*(cvj(m-ninc)+cvj(m)))
+             a1=-0.25*cmuj1(n)*cmuj2(n)*cvj(n)**2/(cvj(n+ninc)*(cvj(n)+cvj(n+ninc)))
+             a2=cmuj1(n)+0.25*cmuj1(n)*cmuj2(n)*cvj(n)*(1./cvj(n+ninc) &
+                  -1./(cvj(n-ninc)+cvj(n)))
+             a3=cmuj2(n)+0.25*cmuj1(n)*cmuj2(n)*cvj(n)*(1./cvj(n-ninc) &
+                  -1./(cvj(n)+cvj(n+ninc)))
+             a4=-0.25*cmuj1(n)*cmuj2(n)*cvj(n)**2/(cvj(n-ninc)*(cvj(n-ninc)+cvj(n)))
 !
              sj0=(a1*v(n+ninc,2)+a2*v(n,2)+a3*v(n-ninc,2)+a4*v(n2,2))*sn(m,kdir,1) &
-                  +(a1*v(n+ninc,3)+a2*v(n,3)+a3*v(n-ninc,3)+a4*v(n2,3))*sn(m,kdir,2) &
-                  +(a1*v(n+ninc,4)+a2*v(n,4)+a3*v(n-ninc,4)+a4*v(n2,4))*sn(m,kdir,3)
+                +(a1*v(n+ninc,3)+a2*v(n,3)+a3*v(n-ninc,3)+a4*v(n2,3))*sn(m,kdir,2) &
+                +(a1*v(n+ninc,4)+a2*v(n,4)+a3*v(n-ninc,4)+a4*v(n2,4))*sn(m,kdir,3)
              sj1=(a1*fxx(m+ninc)+a2*fxx(m)+a3*fxx(m-ninc)+a4*fxx(m2))*sn(m,kdir,1) &
-                  +(a1*fxy(m+ninc)+a2*fxy(m)+a3*fxy(m-ninc)+a4*fxy(m2))*sn(m,kdir,2) &
-                  +(a1*fxz(m+ninc)+a2*fxz(m)+a3*fxz(m-ninc)+a4*fxz(m2))*sn(m,kdir,3)
+                +(a1*fxy(m+ninc)+a2*fxy(m)+a3*fxy(m-ninc)+a4*fxy(m2))*sn(m,kdir,2) &
+                +(a1*fxz(m+ninc)+a2*fxz(m)+a3*fxz(m-ninc)+a4*fxz(m2))*sn(m,kdir,3)
              sj2=(a1*fxy(m+ninc)+a2*fxy(m)+a3*fxy(m-ninc)+a4*fxy(m2))*sn(m,kdir,1) &
-                  +(a1*fyy(m+ninc)+a2*fyy(m)+a3*fyy(m-ninc)+a4*fyy(m2))*sn(m,kdir,2) &
-                  +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,3)
+                +(a1*fyy(m+ninc)+a2*fyy(m)+a3*fyy(m-ninc)+a4*fyy(m2))*sn(m,kdir,2) &
+                +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,3)
              sj3=(a1*fxz(m+ninc)+a2*fxz(m)+a3*fxz(m-ninc)+a4*fxz(m2))*sn(m,kdir,1) &
-                  +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,2) &
-                  +(a1*fzz(m+ninc)+a2*fzz(m)+a3*fzz(m-ninc)+a4*fzz(m2))*sn(m,kdir,3)
+                +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,2) &
+                +(a1*fzz(m+ninc)+a2*fzz(m)+a3*fzz(m-ninc)+a4*fzz(m2))*sn(m,kdir,3)
              sj4=(a1*fex(m+ninc)+a2*fex(m)+a3*fex(m-ninc)+a4*fex(m2))*sn(m,kdir,1) &
-                  +(a1*fey(m+ninc)+a2*fey(m)+a3*fey(m-ninc)+a4*fey(m2))*sn(m,kdir,2) &
-                  +(a1*fez(m+ninc)+a2*fez(m)+a3*fez(m-ninc)+a4*fez(m2))*sn(m,kdir,3)
+                +(a1*fey(m+ninc)+a2*fey(m)+a3*fey(m-ninc)+a4*fey(m2))*sn(m,kdir,2) &
+                +(a1*fez(m+ninc)+a2*fez(m)+a3*fez(m-ninc)+a4*fez(m2))*sn(m,kdir,3)
              u(n,1)=u(n,1)-sj0
              u(n,2)=u(n,2)-sj1
              u(n,3)=u(n,3)-sj2
@@ -373,21 +370,21 @@ contains
        ind2 = indc(i2m1,j1p1,k)
        do n=ind1,ind2
           m=n-n0c
-          sj0=(cmuj1(m)*v(n,2)+cmuj2(m)*v(n-ninc,2))*sn(m,kdir,1) &
-               +(cmuj1(m)*v(n,3)+cmuj2(m)*v(n-ninc,3))*sn(m,kdir,2) &
-               +(cmuj1(m)*v(n,4)+cmuj2(m)*v(n-ninc,4))*sn(m,kdir,3)
-          sj1=(cmuj1(m)*fxx(m)+cmuj2(m)*fxx(m-ninc))*sn(m,kdir,1) &
-               +(cmuj1(m)*fxy(m)+cmuj2(m)*fxy(m-ninc))*sn(m,kdir,2) &
-               +(cmuj1(m)*fxz(m)+cmuj2(m)*fxz(m-ninc))*sn(m,kdir,3)
-          sj2=(cmuj1(m)*fxy(m)+cmuj2(m)*fxy(m-ninc))*sn(m,kdir,1) &
-               +(cmuj1(m)*fyy(m)+cmuj2(m)*fyy(m-ninc))*sn(m,kdir,2) &
-               +(cmuj1(m)*fyz(m)+cmuj2(m)*fyz(m-ninc))*sn(m,kdir,3)
-          sj3=(cmuj1(m)*fxz(m)+cmuj2(m)*fxz(m-ninc))*sn(m,kdir,1) &
-               +(cmuj1(m)*fyz(m)+cmuj2(m)*fyz(m-ninc))*sn(m,kdir,2) &
-               +(cmuj1(m)*fzz(m)+cmuj2(m)*fzz(m-ninc))*sn(m,kdir,3)
-          sj4=(cmuj1(m)*fex(m)+cmuj2(m)*fex(m-ninc))*sn(m,kdir,1) &
-               +(cmuj1(m)*fey(m)+cmuj2(m)*fey(m-ninc))*sn(m,kdir,2) &
-               +(cmuj1(m)*fez(m)+cmuj2(m)*fez(m-ninc))*sn(m,kdir,3)
+          sj0=(cmuj1(n)*v(n,2)+cmuj2(n)*v(n-ninc,2))*sn(m,kdir,1) &
+             +(cmuj1(n)*v(n,3)+cmuj2(n)*v(n-ninc,3))*sn(m,kdir,2) &
+             +(cmuj1(n)*v(n,4)+cmuj2(n)*v(n-ninc,4))*sn(m,kdir,3)
+          sj1=(cmuj1(n)*fxx(m)+cmuj2(n)*fxx(m-ninc))*sn(m,kdir,1) &
+             +(cmuj1(n)*fxy(m)+cmuj2(n)*fxy(m-ninc))*sn(m,kdir,2) &
+             +(cmuj1(n)*fxz(m)+cmuj2(n)*fxz(m-ninc))*sn(m,kdir,3)
+          sj2=(cmuj1(n)*fxy(m)+cmuj2(n)*fxy(m-ninc))*sn(m,kdir,1) &
+             +(cmuj1(n)*fyy(m)+cmuj2(n)*fyy(m-ninc))*sn(m,kdir,2) &
+             +(cmuj1(n)*fyz(m)+cmuj2(n)*fyz(m-ninc))*sn(m,kdir,3)
+          sj3=(cmuj1(n)*fxz(m)+cmuj2(n)*fxz(m-ninc))*sn(m,kdir,1) &
+             +(cmuj1(n)*fyz(m)+cmuj2(n)*fyz(m-ninc))*sn(m,kdir,2) &
+             +(cmuj1(n)*fzz(m)+cmuj2(n)*fzz(m-ninc))*sn(m,kdir,3)
+          sj4=(cmuj1(n)*fex(m)+cmuj2(n)*fex(m-ninc))*sn(m,kdir,1) &
+             +(cmuj1(n)*fey(m)+cmuj2(n)*fey(m-ninc))*sn(m,kdir,2) &
+             +(cmuj1(n)*fez(m)+cmuj2(n)*fez(m-ninc))*sn(m,kdir,3)
           u(n,1)=u(n,1)-sj0
           u(n,2)=u(n,2)-sj1
           u(n,3)=u(n,3)-sj2
@@ -406,21 +403,21 @@ contains
        ind2 = indc(i2m1,j2m1,k)
        do n=ind1,ind2
           m=n-n0c
-          sj0=(cmuj1(m)*v(n,2)+cmuj2(m)*v(n-ninc,2))*sn(m,kdir,1) &
-               +(cmuj1(m)*v(n,3)+cmuj2(m)*v(n-ninc,3))*sn(m,kdir,2) &
-               +(cmuj1(m)*v(n,4)+cmuj2(m)*v(n-ninc,4))*sn(m,kdir,3)
-          sj1=(cmuj1(m)*fxx(m)+cmuj2(m)*fxx(m-ninc))*sn(m,kdir,1) &
-               +(cmuj1(m)*fxy(m)+cmuj2(m)*fxy(m-ninc))*sn(m,kdir,2) &
-               +(cmuj1(m)*fxz(m)+cmuj2(m)*fxz(m-ninc))*sn(m,kdir,3)
-          sj2=(cmuj1(m)*fxy(m)+cmuj2(m)*fxy(m-ninc))*sn(m,kdir,1) &
-               +(cmuj1(m)*fyy(m)+cmuj2(m)*fyy(m-ninc))*sn(m,kdir,2) &
-               +(cmuj1(m)*fyz(m)+cmuj2(m)*fyz(m-ninc))*sn(m,kdir,3)
-          sj3=(cmuj1(m)*fxz(m)+cmuj2(m)*fxz(m-ninc))*sn(m,kdir,1) &
-               +(cmuj1(m)*fyz(m)+cmuj2(m)*fyz(m-ninc))*sn(m,kdir,2) &
-               +(cmuj1(m)*fzz(m)+cmuj2(m)*fzz(m-ninc))*sn(m,kdir,3)
-          sj4=(cmuj1(m)*fex(m)+cmuj2(m)*fex(m-ninc))*sn(m,kdir,1) &
-               +(cmuj1(m)*fey(m)+cmuj2(m)*fey(m-ninc))*sn(m,kdir,2) &
-               +(cmuj1(m)*fez(m)+cmuj2(m)*fez(m-ninc))*sn(m,kdir,3)
+          sj0=(cmuj1(n)*v(n,2)+cmuj2(n)*v(n-ninc,2))*sn(m,kdir,1) &
+             +(cmuj1(n)*v(n,3)+cmuj2(n)*v(n-ninc,3))*sn(m,kdir,2) &
+             +(cmuj1(n)*v(n,4)+cmuj2(n)*v(n-ninc,4))*sn(m,kdir,3)
+          sj1=(cmuj1(n)*fxx(m)+cmuj2(n)*fxx(m-ninc))*sn(m,kdir,1) &
+             +(cmuj1(n)*fxy(m)+cmuj2(n)*fxy(m-ninc))*sn(m,kdir,2) &
+             +(cmuj1(n)*fxz(m)+cmuj2(n)*fxz(m-ninc))*sn(m,kdir,3)
+          sj2=(cmuj1(n)*fxy(m)+cmuj2(n)*fxy(m-ninc))*sn(m,kdir,1) &
+             +(cmuj1(n)*fyy(m)+cmuj2(n)*fyy(m-ninc))*sn(m,kdir,2) &
+             +(cmuj1(n)*fyz(m)+cmuj2(n)*fyz(m-ninc))*sn(m,kdir,3)
+          sj3=(cmuj1(n)*fxz(m)+cmuj2(n)*fxz(m-ninc))*sn(m,kdir,1) &
+             +(cmuj1(n)*fyz(m)+cmuj2(n)*fyz(m-ninc))*sn(m,kdir,2) &
+             +(cmuj1(n)*fzz(m)+cmuj2(n)*fzz(m-ninc))*sn(m,kdir,3)
+          sj4=(cmuj1(n)*fex(m)+cmuj2(n)*fex(m-ninc))*sn(m,kdir,1) &
+             +(cmuj1(n)*fey(m)+cmuj2(n)*fey(m-ninc))*sn(m,kdir,2) &
+             +(cmuj1(n)*fez(m)+cmuj2(n)*fez(m-ninc))*sn(m,kdir,3)
           u(n,1)=u(n,1)-sj0
           u(n,2)=u(n,2)-sj1
           u(n,3)=u(n,3)-sj2
@@ -440,20 +437,20 @@ contains
        do n=ind1,ind2
           m=n-n0c
           sj0= 2*v(n-ninc,2)*sn(m,kdir,1) &
-               +2*v(n-ninc,3)*sn(m,kdir,2) &
-               +2*v(n-ninc,4)*sn(m,kdir,3)
+              +2*v(n-ninc,3)*sn(m,kdir,2) &
+              +2*v(n-ninc,4)*sn(m,kdir,3)
           sj1= 2*fxx(m-ninc)*sn(m,kdir,1) &
-               +2*fxy(m-ninc)*sn(m,kdir,2) &
-               +2*fxz(m-ninc)*sn(m,kdir,3)
+              +2*fxy(m-ninc)*sn(m,kdir,2) &
+              +2*fxz(m-ninc)*sn(m,kdir,3)
           sj2= 2*fxy(m-ninc)*sn(m,kdir,1) &
-               +2*fyy(m-ninc)*sn(m,kdir,2) &
-               +2*fyz(m-ninc)*sn(m,kdir,3)
+              +2*fyy(m-ninc)*sn(m,kdir,2) &
+              +2*fyz(m-ninc)*sn(m,kdir,3)
           sj3= 2*fxz(m-ninc)*sn(m,kdir,1) &
-               +2*fyz(m-ninc)*sn(m,kdir,2) &
-               +2*fzz(m-ninc)*sn(m,kdir,3)
+              +2*fyz(m-ninc)*sn(m,kdir,2) &
+              +2*fzz(m-ninc)*sn(m,kdir,3)
           sj4= 2*fex(m-ninc)*sn(m,kdir,1) &
-               +2*fey(m-ninc)*sn(m,kdir,2) &
-               +2*fez(m-ninc)*sn(m,kdir,3)
+              +2*fey(m-ninc)*sn(m,kdir,2) &
+              +2*fez(m-ninc)*sn(m,kdir,3)
           u(n,1)=u(n,1)-sj0
           u(n,2)=u(n,2)-sj1
           u(n,3)=u(n,3)-sj2
@@ -468,20 +465,20 @@ contains
        do n=ind1,ind2
           m=n-n0c
           sj0= 2*v(n,2)*sn(m,kdir,1) &
-               +2*v(n,3)*sn(m,kdir,2) &
-               +2*v(n,4)*sn(m,kdir,3)
+              +2*v(n,3)*sn(m,kdir,2) &
+              +2*v(n,4)*sn(m,kdir,3)
           sj1= 2*fxx(m)*sn(m,kdir,1) &
-               +2*fxy(m)*sn(m,kdir,2) &
-               +2*fxz(m)*sn(m,kdir,3)
+              +2*fxy(m)*sn(m,kdir,2) &
+              +2*fxz(m)*sn(m,kdir,3)
           sj2= 2*fxy(m)*sn(m,kdir,1) &
-               +2*fyy(m)*sn(m,kdir,2) &
-               +2*fyz(m)*sn(m,kdir,3)
+              +2*fyy(m)*sn(m,kdir,2) &
+              +2*fyz(m)*sn(m,kdir,3)
           sj3= 2*fxz(m)*sn(m,kdir,1) &
-               +2*fyz(m)*sn(m,kdir,2) &
-               +2*fzz(m)*sn(m,kdir,3)
+              +2*fyz(m)*sn(m,kdir,2) &
+              +2*fzz(m)*sn(m,kdir,3)
           sj4= 2*fex(m)*sn(m,kdir,1) &
-               +2*fey(m)*sn(m,kdir,2) &
-               +2*fez(m)*sn(m,kdir,3)
+              +2*fey(m)*sn(m,kdir,2) &
+              +2*fez(m)*sn(m,kdir,3)
           u(n-ninc,1)=u(n-ninc,1)+sj0
           u(n-ninc,2)=u(n-ninc,2)+sj1
           u(n-ninc,3)=u(n-ninc,3)+sj2
@@ -504,28 +501,28 @@ contains
                 m=n-n0c
                 n2=n-2*ninc
                 m2=m-2*ninc
-                a1=-0.25*cmuk1(m)*cmuk2(m)*cvk(m)**2/(cvk(m+ninc)*(cvk(m)+cvk(m+ninc)))
-                a2=cmuk1(m)+0.25*cmuk1(m)*cmuk2(m)*cvk(m)*(1./cvk(m+ninc) &
-                     -1./(cvk(m-ninc)+cvk(m)))
-                a3=cmuk2(m)+0.25*cmuk1(m)*cmuk2(m)*cvk(m)*(1./cvk(m-ninc) &
-                     -1./(cvk(m)+cvk(m+ninc)))
-                a4=-0.25*cmuk1(m)*cmuk2(m)*cvk(m)**2/(cvk(m-ninc)*(cvk(m-ninc)+cvk(m)))
+                a1=-0.25*cmuk1(n)*cmuk2(n)*cvk(n)**2/(cvk(n+ninc)*(cvk(n)+cvk(n+ninc)))
+                a2=cmuk1(n)+0.25*cmuk1(n)*cmuk2(n)*cvk(n)*(1./cvk(n+ninc) &
+                     -1./(cvk(n-ninc)+cvk(n)))
+                a3=cmuk2(n)+0.25*cmuk1(n)*cmuk2(n)*cvk(n)*(1./cvk(n-ninc) &
+                     -1./(cvk(n)+cvk(n+ninc)))
+                a4=-0.25*cmuk1(n)*cmuk2(n)*cvk(n)**2/(cvk(n-ninc)*(cvk(n-ninc)+cvk(n)))
 !
                 sk0=(a1*v(n+ninc,2)+a2*v(n,2)+a3*v(n-ninc,2)+a4*v(n2,2))*sn(m,kdir,1) &
-                     +(a1*v(n+ninc,3)+a2*v(n,3)+a3*v(n-ninc,3)+a4*v(n2,3))*sn(m,kdir,2) &
-                     +(a1*v(n+ninc,4)+a2*v(n,4)+a3*v(n-ninc,4)+a4*v(n2,4))*sn(m,kdir,3)
+                   +(a1*v(n+ninc,3)+a2*v(n,3)+a3*v(n-ninc,3)+a4*v(n2,3))*sn(m,kdir,2) &
+                   +(a1*v(n+ninc,4)+a2*v(n,4)+a3*v(n-ninc,4)+a4*v(n2,4))*sn(m,kdir,3)
                 sk1=(a1*fxx(m+ninc)+a2*fxx(m)+a3*fxx(m-ninc)+a4*fxx(m2))*sn(m,kdir,1) &
-                     +(a1*fxy(m+ninc)+a2*fxy(m)+a3*fxy(m-ninc)+a4*fxy(m2))*sn(m,kdir,2) &
-                     +(a1*fxz(m+ninc)+a2*fxz(m)+a3*fxz(m-ninc)+a4*fxz(m2))*sn(m,kdir,3)
+                   +(a1*fxy(m+ninc)+a2*fxy(m)+a3*fxy(m-ninc)+a4*fxy(m2))*sn(m,kdir,2) &
+                   +(a1*fxz(m+ninc)+a2*fxz(m)+a3*fxz(m-ninc)+a4*fxz(m2))*sn(m,kdir,3)
                 sk2=(a1*fxy(m+ninc)+a2*fxy(m)+a3*fxy(m-ninc)+a4*fxy(m2))*sn(m,kdir,1) &
-                     +(a1*fyy(m+ninc)+a2*fyy(m)+a3*fyy(m-ninc)+a4*fyy(m2))*sn(m,kdir,2) &
-                     +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,3)
+                   +(a1*fyy(m+ninc)+a2*fyy(m)+a3*fyy(m-ninc)+a4*fyy(m2))*sn(m,kdir,2) &
+                   +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,3)
                 sk3=(a1*fxz(m+ninc)+a2*fxz(m)+a3*fxz(m-ninc)+a4*fxz(m2))*sn(m,kdir,1) &
-                     +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,2) &
-                     +(a1*fzz(m+ninc)+a2*fzz(m)+a3*fzz(m-ninc)+a4*fzz(m2))*sn(m,kdir,3)
+                   +(a1*fyz(m+ninc)+a2*fyz(m)+a3*fyz(m-ninc)+a4*fyz(m2))*sn(m,kdir,2) &
+                   +(a1*fzz(m+ninc)+a2*fzz(m)+a3*fzz(m-ninc)+a4*fzz(m2))*sn(m,kdir,3)
                 sk4=(a1*fex(m+ninc)+a2*fex(m)+a3*fex(m-ninc)+a4*fex(m2))*sn(m,kdir,1) &
-                     +(a1*fey(m+ninc)+a2*fey(m)+a3*fey(m-ninc)+a4*fey(m2))*sn(m,kdir,2) &
-                     +(a1*fez(m+ninc)+a2*fez(m)+a3*fez(m-ninc)+a4*fez(m2))*sn(m,kdir,3)
+                   +(a1*fey(m+ninc)+a2*fey(m)+a3*fey(m-ninc)+a4*fey(m2))*sn(m,kdir,2) &
+                   +(a1*fez(m+ninc)+a2*fez(m)+a3*fez(m-ninc)+a4*fez(m2))*sn(m,kdir,3)
                 u(n,1)=u(n,1)-sk0
                 u(n,2)=u(n,2)-sk1
                 u(n,3)=u(n,3)-sk2
@@ -545,21 +542,21 @@ contains
           ind2 = indc(i2m1,j,k1p1)
           do n=ind1,ind2
              m=n-n0c
-             sk0=(cmuk1(m)*v(n,2)+cmuk2(m)*v(n-ninc,2))*sn(m,kdir,1) &
-                  +(cmuk1(m)*v(n,3)+cmuk2(m)*v(n-ninc,3))*sn(m,kdir,2) &
-                  +(cmuk1(m)*v(n,4)+cmuk2(m)*v(n-ninc,4))*sn(m,kdir,3)
-             sk1=(cmuk1(m)*fxx(m)+cmuk2(m)*fxx(m-ninc))*sn(m,kdir,1) &
-                  +(cmuk1(m)*fxy(m)+cmuk2(m)*fxy(m-ninc))*sn(m,kdir,2) &
-                  +(cmuk1(m)*fxz(m)+cmuk2(m)*fxz(m-ninc))*sn(m,kdir,3)
-             sk2=(cmuk1(m)*fxy(m)+cmuk2(m)*fxy(m-ninc))*sn(m,kdir,1) &
-                  +(cmuk1(m)*fyy(m)+cmuk2(m)*fyy(m-ninc))*sn(m,kdir,2) &
-                  +(cmuk1(m)*fyz(m)+cmuk2(m)*fyz(m-ninc))*sn(m,kdir,3)
-             sk3=(cmuk1(m)*fxz(m)+cmuk2(m)*fxz(m-ninc))*sn(m,kdir,1) &
-                  +(cmuk1(m)*fyz(m)+cmuk2(m)*fyz(m-ninc))*sn(m,kdir,2) &
-                  +(cmuk1(m)*fzz(m)+cmuk2(m)*fzz(m-ninc))*sn(m,kdir,3)
-             sk4=(cmuk1(m)*fex(m)+cmuk2(m)*fex(m-ninc))*sn(m,kdir,1) &
-                  +(cmuk1(m)*fey(m)+cmuk2(m)*fey(m-ninc))*sn(m,kdir,2) &
-                  +(cmuk1(m)*fez(m)+cmuk2(m)*fez(m-ninc))*sn(m,kdir,3)
+             sk0=(cmuk1(n)*v(n,2)+cmuk2(n)*v(n-ninc,2))*sn(m,kdir,1) &
+                +(cmuk1(n)*v(n,3)+cmuk2(n)*v(n-ninc,3))*sn(m,kdir,2) &
+                +(cmuk1(n)*v(n,4)+cmuk2(n)*v(n-ninc,4))*sn(m,kdir,3)
+             sk1=(cmuk1(n)*fxx(m)+cmuk2(n)*fxx(m-ninc))*sn(m,kdir,1) &
+                +(cmuk1(n)*fxy(m)+cmuk2(n)*fxy(m-ninc))*sn(m,kdir,2) &
+                +(cmuk1(n)*fxz(m)+cmuk2(n)*fxz(m-ninc))*sn(m,kdir,3)
+             sk2=(cmuk1(n)*fxy(m)+cmuk2(n)*fxy(m-ninc))*sn(m,kdir,1) &
+                +(cmuk1(n)*fyy(m)+cmuk2(n)*fyy(m-ninc))*sn(m,kdir,2) &
+                +(cmuk1(n)*fyz(m)+cmuk2(n)*fyz(m-ninc))*sn(m,kdir,3)
+             sk3=(cmuk1(n)*fxz(m)+cmuk2(n)*fxz(m-ninc))*sn(m,kdir,1) &
+                +(cmuk1(n)*fyz(m)+cmuk2(n)*fyz(m-ninc))*sn(m,kdir,2) &
+                +(cmuk1(n)*fzz(m)+cmuk2(n)*fzz(m-ninc))*sn(m,kdir,3)
+             sk4=(cmuk1(n)*fex(m)+cmuk2(n)*fex(m-ninc))*sn(m,kdir,1) &
+                +(cmuk1(n)*fey(m)+cmuk2(n)*fey(m-ninc))*sn(m,kdir,2) &
+                +(cmuk1(n)*fez(m)+cmuk2(n)*fez(m-ninc))*sn(m,kdir,3)
              u(n,1)=u(n,1)-sk0
              u(n,2)=u(n,2)-sk1
              u(n,3)=u(n,3)-sk2
@@ -578,21 +575,21 @@ contains
           ind2 = indc(i2m1,j,k2m1)
           do n=ind1,ind2
              m=n-n0c
-             sk0=(cmuk1(m)*v(n,2)+cmuk2(m)*v(n-ninc,2))*sn(m,kdir,1) &
-                  +(cmuk1(m)*v(n,3)+cmuk2(m)*v(n-ninc,3))*sn(m,kdir,2) &
-                  +(cmuk1(m)*v(n,4)+cmuk2(m)*v(n-ninc,4))*sn(m,kdir,3)
-             sk1=(cmuk1(m)*fxx(m)+cmuk2(m)*fxx(m-ninc))*sn(m,kdir,1) &
-                  +(cmuk1(m)*fxy(m)+cmuk2(m)*fxy(m-ninc))*sn(m,kdir,2) &
-                  +(cmuk1(m)*fxz(m)+cmuk2(m)*fxz(m-ninc))*sn(m,kdir,3)
-             sk2=(cmuk1(m)*fxy(m)+cmuk2(m)*fxy(m-ninc))*sn(m,kdir,1) &
-                  +(cmuk1(m)*fyy(m)+cmuk2(m)*fyy(m-ninc))*sn(m,kdir,2) &
-                  +(cmuk1(m)*fyz(m)+cmuk2(m)*fyz(m-ninc))*sn(m,kdir,3)
-             sk3=(cmuk1(m)*fxz(m)+cmuk2(m)*fxz(m-ninc))*sn(m,kdir,1) &
-                  +(cmuk1(m)*fyz(m)+cmuk2(m)*fyz(m-ninc))*sn(m,kdir,2) &
-                  +(cmuk1(m)*fzz(m)+cmuk2(m)*fzz(m-ninc))*sn(m,kdir,3)
-             sk4=(cmuk1(m)*fex(m)+cmuk2(m)*fex(m-ninc))*sn(m,kdir,1) &
-                  +(cmuk1(m)*fey(m)+cmuk2(m)*fey(m-ninc))*sn(m,kdir,2) &
-                  +(cmuk1(m)*fez(m)+cmuk2(m)*fez(m-ninc))*sn(m,kdir,3)
+             sk0=(cmuk1(n)*v(n,2)+cmuk2(n)*v(n-ninc,2))*sn(m,kdir,1) &
+                +(cmuk1(n)*v(n,3)+cmuk2(n)*v(n-ninc,3))*sn(m,kdir,2) &
+                +(cmuk1(n)*v(n,4)+cmuk2(n)*v(n-ninc,4))*sn(m,kdir,3)
+             sk1=(cmuk1(n)*fxx(m)+cmuk2(n)*fxx(m-ninc))*sn(m,kdir,1) &
+                +(cmuk1(n)*fxy(m)+cmuk2(n)*fxy(m-ninc))*sn(m,kdir,2) &
+                +(cmuk1(n)*fxz(m)+cmuk2(n)*fxz(m-ninc))*sn(m,kdir,3)
+             sk2=(cmuk1(n)*fxy(m)+cmuk2(n)*fxy(m-ninc))*sn(m,kdir,1) &
+                +(cmuk1(n)*fyy(m)+cmuk2(n)*fyy(m-ninc))*sn(m,kdir,2) &
+                +(cmuk1(n)*fyz(m)+cmuk2(n)*fyz(m-ninc))*sn(m,kdir,3)
+             sk3=(cmuk1(n)*fxz(m)+cmuk2(n)*fxz(m-ninc))*sn(m,kdir,1) &
+                +(cmuk1(n)*fyz(m)+cmuk2(n)*fyz(m-ninc))*sn(m,kdir,2) &
+                +(cmuk1(n)*fzz(m)+cmuk2(n)*fzz(m-ninc))*sn(m,kdir,3)
+             sk4=(cmuk1(n)*fex(m)+cmuk2(n)*fex(m-ninc))*sn(m,kdir,1) &
+                +(cmuk1(n)*fey(m)+cmuk2(n)*fey(m-ninc))*sn(m,kdir,2) &
+                +(cmuk1(n)*fez(m)+cmuk2(n)*fez(m-ninc))*sn(m,kdir,3)
              u(n,1)=u(n,1)-sk0
              u(n,2)=u(n,2)-sk1
              u(n,3)=u(n,3)-sk2

@@ -72,10 +72,6 @@ contains
     dimension tprod(ip00)
     dimension cfke(ip13)
 !
-
-!
-
-!
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
@@ -105,10 +101,10 @@ contains
           ind2 = indc(i2m1,j,k)
           do n=ind1,ind2
              m=n-n0c
-!         gkgo=tyyf6x(n)*txxf5x(n)+tyzf6y(n)*txyf5y(n)+
-!     &        tzzf6z(n)*txzf5z(n)
+!         gkgo=tyyf6x(n)*txxf5x(n)+tyzf6y(n)*txyf5y(n)+ &
+!              tzzf6z(n)*txzf5z(n)
              omeg=v(n,7)/v(n,1)
-!         cd=sigmd*v(n,1)*max(gkgo,0.)/omeg
+!            cd=sigmd*v(n,1)*max(gkgo,0.)/omeg
              cd=0.
              xmt=sqrt(2.*v(n,6)/v(n,1))/cson(n)
              betasc=betas*(1.+1.5*fmt(xmt))
@@ -130,7 +126,7 @@ contains
     function    fmt(aa)
       implicit none
       double precision ::  aa,fmt
-      fmt=0.5*(1.+sign(1.,aa-xmt0))*(aa**2-xmt0**2)
+      fmt=0.5*(1.+sign(1.D0,aa-xmt0))*(aa**2-xmt0**2)
     end function fmt
   end subroutine met_smko
 end module mod_met_smko

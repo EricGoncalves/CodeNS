@@ -28,28 +28,43 @@ implicit none
   integer          :: mdimtnf,mdimtrf, mdimub,ndimctf,ndimnts
   integer          :: ndimntu, ndimub,   nvar
   double precision :: ccg,cfg,cng
-  parameter(ndimub =120000)
-  parameter(ndimctf=100000)
-  parameter(ndimnts=100000)
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! TIC
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  parameter(ndimub =1500000)
+  parameter(ndimctf=7000000)
+  parameter(ndimnts=7000000)
   parameter(ndimntu=1)
   parameter(kdimg  =1)
   parameter(kdimv  =1)
   parameter(kdimk  =1)
-  parameter(mdimub =400)
-  parameter(mdimtbf=900)
-  parameter(mdimtnf=900)
-  parameter(mdimtcf=160)
+  parameter(mdimub =27000)
+  parameter(mdimtbf=300000)
+  parameter(mdimtnf=75000 )
+  parameter(mdimtcf=225000)
+!
+!  parameter(ndimub =200000)
+!  parameter(ndimctf=280000)
+!  parameter(ndimnts=280000)
+!  parameter(ndimntu=1)
+!  parameter(kdimg  =1)
+!  parameter(kdimv  =1)
+!  parameter(kdimk  =1)
+!  parameter(mdimub =320)
+!  parameter(mdimtbf=1500)
+!  parameter(mdimtnf=1000)
+!  parameter(mdimtcf=600)
   parameter(mdimtrf=1)
   parameter(nvar   =7)
-!  parameter(    ccg=1./3.) !3D
-!  parameter(    cng=1./3.) !3D
-  parameter(    ccg=1./2.) 
-  parameter(    cng=1./2.)
+  parameter(    ccg=1./3.) !3D
+  parameter(    cng=1./3.) !3D
+!  parameter(    ccg=1./2.) 
+!  parameter(    cng=1./2.)
   parameter(    cfg=1.)
-!parameter(     ccg2=3) !3D
-!parameter(     cng2=3) !3D
-  parameter(   ccg2=2) 
-  parameter(   cng2=2)
+parameter(     ccg2=3) !3D
+parameter(     cng2=3) !3D
+!  parameter(   ccg2=2) 
+!  parameter(   cng2=2)
   parameter(   cfg2=1)
   parameter(ip00=ndimub)
   parameter(ip11=ndimctf+kdimg*ndimctf/ccg2)
@@ -143,12 +158,6 @@ implicit none
   integer          :: intmx, linx
   double precision :: degrad,  pis2,raddeg,reelmn,reelmx
   data linx/132/
-!  data intmx/999999/
-!  data reelmx/999999999./
-!  data reelmn/1.e-30/
-!  data pis2/1.570796327/
-!  data raddeg/57.29577951/
-!  data degrad/0.01745329252/
 end module constantes
 !
 module proprieteflu

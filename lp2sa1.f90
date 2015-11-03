@@ -148,7 +148,7 @@ contains
                 top=rop*v1t**2/(log(dist(ni)*sqrt(rop*top)/mup)/vkar+cllog)**2
              enddo
           endif
-          utau(nfacns)=sign(1.,top)*sqrt(abs(top)/rop) 
+          utau(nfacns)=sign(1.D0,top)*sqrt(abs(top)/rop) 
        enddo !fin boucle sur facettes paroi
     endif
 !-----fin initialisation de utau--------------------------------
@@ -258,10 +258,10 @@ contains
        if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
           v(ni,6)=rokinf
 !        vitesse de frottement utau
-          utau(nfacns)=sign(1.,topar)*sqrt(abs(topar)/rop)
+          utau(nfacns)=sign(1.D0,topar)*sqrt(abs(topar)/rop)
        else
 !        vitesse de frottement utau
-          utau(nfacns)=sign(1.,topar)*sqrt(abs(topar)/rop)
+          utau(nfacns)=sign(1.D0,topar)*sqrt(abs(topar)/rop)
 !        calcul de nu_tilde en cellule 1
           rnutilde=v(ni,1)*kappa*dist(ni)*utau(nfacns)
           v(ni,6)=max(rnutilde,epsk)

@@ -25,7 +25,6 @@ contains
 !     OUT
 !_O    mut        : arg real(ip12      ) ; viscosite turbulente
 !
-!
 !-----parameters figes--------------------------------------------------
 !
     use para_var
@@ -58,9 +57,7 @@ contains
     dimension sn(ip31*ndir), &
          vol(ip11)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
-         cmuk1(ip21),cmuk2(ip21)
-!
-
+             cmuk1(ip21),cmuk2(ip21)
 !
     n0=npc(l)
     i1=ii1(l)

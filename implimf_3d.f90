@@ -54,11 +54,8 @@ contains
     dimension mu(ip12),mut(ip12)
     dimension sn(lgsnlt,nind,ndir)
     dimension dfxx(ip00),dfxy(ip00),dfxz(ip00),dfex(ip00),rv(ip00), &
-         dfyy(ip00),dfyz(ip00),dfey(ip00),dfzz(ip00),dfez(ip00)
+              dfyy(ip00),dfyz(ip00),dfey(ip00),dfzz(ip00),dfez(ip00)
 !
-
-
-
     DOUBLE PRECISION,DIMENSION(:,:),ALLOCATABLE :: coefe
     DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE   :: coefdiag,d2w1,d2w2,d2w3,d2w4,d2w5
     ALLOCATE(coefe(ndir,ip00))
@@ -87,16 +84,16 @@ contains
     ncj = inc(0,1,0)
     nck = inc(0,0,1)
 
-!     constante instationnaire DTS
+!   constante instationnaire DTS
     fact=1.5
-!     fact=11./6.  !ordre 3
+!   fact=11./6.  !ordre 3
 
 !-----initalisation--------------------------------
 !
     ind1 = indc(i1m1,j1m1,k1m1)
     ind2 = indc(i2+1,j2+1,k2+1)
-!!!$OMP PARALLEL 
-!!!$OMP DO 
+!$OMP PARALLEL 
+!$OMP DO 
     do n=ind1,ind2
        m=n-n0c
        d(n,1)=0.
@@ -118,11 +115,11 @@ contains
        coefe(3,m)=0.
        rv(m)=0.
     enddo
-!!!$OMP END DO 
+!$OMP END DO 
 
 !-----rayon spectral visqueux et coef diagonal------------------------------
 
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -136,16 +133,16 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO
+!$OMP END DO
 
 !-----remplissage du coefficient diagonal par direction--------------------------
 
-!!!$OMP SINGLE
+!$OMP SINGLE
     kdir=1
     ninc=nci
-!!!$OMP END SINGLE
+!$OMP END SINGLE
 
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,cc)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,cc)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1,j,k)
@@ -165,14 +162,14 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO
+!$OMP END DO
 
-!!!$OMP SINGLE
+!$OMP SINGLE
     kdir=2
     ninc=ncj
-!!!$OMP END SINGLE
+!$OMP END SINGLE
 
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,cc)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,cc)
     do k=k1,k2m1
        do j=j1,j2
           ind1 = indc(i1  ,j,k)
@@ -192,14 +189,14 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO
+!$OMP END DO
 
-!!!$OMP SINGLE
+!$OMP SINGLE
     kdir=3
     ninc=nck
-!!!$OMP END SINGLE
+!$OMP END SINGLE
 
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,cc)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,cnds,uu,vv,ww,vn,cc)
     do k=k1,k2
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -219,9 +216,9 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO
+!$OMP END DO
 
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -234,12 +231,12 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO 
+!$OMP END DO 
 
 !------calcul instationnaire avec dts-----------------------------------
 
     if(kfmg.eq.3) then
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
        do k=k1,k2m1
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
@@ -250,7 +247,7 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO 
+!$OMP END DO 
     endif
 
 !*************************************************************************
@@ -262,7 +259,7 @@ contains
 !-----residu explicite------------------------------------------
 
        if(ityprk.eq.0) then
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
           do k=k1,k2m1
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
@@ -277,9 +274,9 @@ contains
                 enddo
              enddo
           enddo
-!!!$OMP END DO 
+!$OMP END DO 
        else
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2)
           do k=k1,k2m1
              do j=j1,j2m1
                 ind1 = indc(i1  ,j,k)
@@ -294,27 +291,27 @@ contains
                 enddo
              enddo
           enddo
-!!!$OMP END DO 
+!$OMP END DO 
        endif
 
 !------direction i------------------------------------------
 
-!!!$OMP SINGLE
+!$OMP SINGLE
        kdir=1
        ninc=nci
-!!!$OMP END SINGLE
+!$OMP END SINGLE
 
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,tn1,tn2,tn3,tn4,tn5)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,tn1,tn2,tn3,tn4,tn5)
        do k=k1,k2m1
           do j=j1,j2m1
              ind1 = indc(i1,j,k)
              ind2 = indc(i2,j,k)
-!!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
-                     +0.5*(d(n,3)+d(n-ninc,3))*sn(m,kdir,2) &
-                     +0.5*(d(n,4)+d(n-ninc,4))*sn(m,kdir,3)
+                   +0.5*(d(n,3)+d(n-ninc,3))*sn(m,kdir,2) &
+                   +0.5*(d(n,4)+d(n-ninc,4))*sn(m,kdir,3)
                 tn2=0.5*(dfxx(m)+dfxx(m-ninc))*sn(m,kdir,1) &
                      +0.5*(dfxy(m)+dfxy(m-ninc))*sn(m,kdir,2) &
                      +0.5*(dfxz(m)+dfxz(m-ninc))*sn(m,kdir,3)
@@ -350,21 +347,21 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO 
+!$OMP END DO 
 
 !------direction j------------------------------------------
 
-!!!$OMP SINGLE
+!$OMP SINGLE
        kdir=2
        ninc=ncj
-!!!$OMP END SINGLE
+!$OMP END SINGLE
 
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,tn1,tn2,tn3,tn4,tn5)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,tn1,tn2,tn3,tn4,tn5)
        do k=k1,k2m1
           do j=j1,j2
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
@@ -405,21 +402,21 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO 
+!$OMP END DO 
 
 !------direction k------------------------------------------
 
-!!!$OMP SINGLE
+!$OMP SINGLE
        kdir=3
        ninc=nck
-!!!$OMP END SINGLE
+!$OMP END SINGLE
 
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,tn1,tn2,tn3,tn4,tn5)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,tn1,tn2,tn3,tn4,tn5)
        do k=k1,k2
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 tn1=0.5*(d(n,2)+d(n-ninc,2))*sn(m,kdir,1) &
@@ -460,19 +457,19 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO 
+!$OMP END DO 
 
 !*******************************************************************************
 !     Calcul de l'increment implicite
 !     Actualisation des variables conservatives et des flux
 !     Calcul des increments de flux
 !
-!!!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,wi1,wi2,wi3,wi4,wi5,ui,vi,wi,pres,fxx,fxy,fxz,fyy,fyz,fzz,fex,fey,fez)
+!$OMP DO PRIVATE(k,j,n,m,ind1,ind2,wi1,wi2,wi3,wi4,wi5,ui,vi,wi,pres,fxx,fxy,fxz,fyy,fyz,fzz,fex,fey,fez)
        do k=k1,k2m1
           do j=j1,j2m1
              ind1 = indc(i1  ,j,k)
              ind2 = indc(i2m1,j,k)
-!!$OMP SIMD
+!$OMP SIMD
              do n=ind1,ind2
                 m=n-n0c
                 d(n,1)=d2w1(m)/coefdiag(m)
@@ -514,7 +511,7 @@ contains
              enddo
           enddo
        enddo
-!!!$OMP END DO 
+!$OMP END DO 
 
     enddo  !fin boucle sous-iterations
 !
@@ -522,7 +519,7 @@ contains
 !      avance d'un pas de temps des variables
 !*************************************************************************
 
-!!!$OMP DO PRIVATE(k,j,n,ind1,ind2)
+!$OMP DO PRIVATE(k,j,n,ind1,ind2)
     do k=k1,k2m1
        do j=j1,j2m1
           ind1 = indc(i1  ,j,k)
@@ -537,8 +534,8 @@ contains
           enddo
        enddo
     enddo
-!!!$OMP END DO 
-!!!$OMP END PARALLEL
+!$OMP END DO 
+!$OMP END PARALLEL
 
     DEALLOCATE(coefe,coefdiag,d2w1,d2w2,d2w3,d2w4,d2w5)
 

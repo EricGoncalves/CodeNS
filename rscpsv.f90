@@ -79,7 +79,7 @@ contains
     dimension res1xx(ip00),res2yy(ip00),res3zz(ip00),res4(ip00), &
          res5(ip00),res6(ip00),res7(ip00),tn8(ip00)
     INTEGER,DIMENSION(:),ALLOCATABLE          :: idumx,jdumx,kdumx
-    REAL,DIMENSION(:),ALLOCATABLE :: dumy1,dumy2,dumax,dumy2g,dumaxg
+    DOUBLE PRECISION,DIMENSION(:),ALLOCATABLE :: dumy1,dumy2,dumax,dumy2g,dumaxg
     ALLOCATE(idumx(neqt),jdumx(neqt),kdumx(neqt), &
          dumy1(neqt),dumy2(neqt),dumax(neqt),dumy2g(neqt),dumaxg(neqt))
 
@@ -134,10 +134,10 @@ contains
                   l, &
                   x,y,z, &
                   res1xx,res2yy,res3zz)
-             call writdg( &
-                  l,kdgc, &
-                  imin,imax,jmin,jmax,kmin,kmax, &
-                  res1xx,res2yy,res3zz)
+!             call writdg( &
+!                  l,kdgc, &
+!                  imin,imax,jmin,jmax,kmin,kmax, &
+!                  res1xx,res2yy,res3zz)
           endif
 !
           ni = ii2(l)-ii1(l)

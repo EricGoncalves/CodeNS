@@ -42,9 +42,7 @@ contains
     dimension mu(ip12),vol(ip11)
     dimension cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21), &
          cmuk1(ip21),cmuk2(ip21)
-!
 
-!
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)

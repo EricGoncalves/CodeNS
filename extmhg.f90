@@ -55,9 +55,6 @@ contains
 !
 !----- extrapolation d' ordre 0 ou 1
 !
-
-
-!
     n0=npn(l)
     i1=ii1(l)
     i2=ii2(l)

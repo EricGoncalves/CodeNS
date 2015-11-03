@@ -100,8 +100,8 @@ contains
     dimension sn(ip31*ndir)
     dimension nxn(ip42),nyn(ip42),nzn(ip42),ncbd(ip41)
     dimension tn1(ip00),tn2(ip00),tn3(ip00), &
-         tn4(ip00),tn5(ip00),tn6(ip00), &
-         tn7(ip00),tn8(ip00),tn9(ip00)
+              tn4(ip00),tn5(ip00),tn6(ip00), &
+              tn7(ip00),tn8(ip00),tn9(ip00)
 !
     mfbi=nfei(mfbe)
 !

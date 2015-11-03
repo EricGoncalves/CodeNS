@@ -48,8 +48,6 @@ contains
     dimension ps(ip11),vol(ip11),temp(ip11)
     dimension mu(ip12),mut(ip12),dist(ip12)
 !
-
-!
     n0c=npc(l)
     i1=ii1(l)
     i2=ii2(l)
