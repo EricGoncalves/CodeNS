@@ -34,14 +34,16 @@ contains
     integer          ::     ls,     m,     n,   n0c,   nci
     integer          ::    ncj,   nck,   nid,  nijd,  ninc
     integer          ::    njd
-    double precision ::                   cc,                cnds,          cson(ip11),        d(ip11,ip60),         dfex(ip00),          dfey(ip00)
+    double precision ::                   cc,                cnds,          cson(ip11),        d(ip11,ip60)
+    double precision ::           dfex(ip00),          dfey(ip00)
     double precision ::           dfxx(ip00),          dfxy(ip00),          dfyy(ip00),            dt(ip11),               dtpas
     double precision ::                 fact,                 fex,                 fey,       ff(ip11,ip60),                 fxx
     double precision ::                  fxy,                 fyy,            mu(ip12),           mut(ip12),                pres
     double precision ::             ps(ip11),            rv(ip00),sn(lgsnlt,nind,ndir),                 tn1,                 tn2
     double precision ::                  tn3,                 tn5,        u(ip11,ip60),                  ui,                  uu
     double precision ::         v(ip11,ip60),                  vi,                  vn,           vol(ip11),                  vv
-    double precision ::                  wi1,                 wi2,                 wi3,                 wi5,dfxz(ip00),dfyz(ip00),dfzz(ip00),dfez(ip00)
+    double precision ::                  wi1,                 wi2,                 wi3,                 wi5
+    double precision ::           dfxz(ip00),          dfyz(ip00),          dfzz(ip00),          dfez(ip00)
     double precision ::                  fez,fxz,fyz,fzz,tn4,wi,wi4,ww
     double precision,allocatable :: coefdiag(:), coefe(:,:),d2w1(:),d2w2(:),d2w3(:), d2w4(:),         d2w5(:)
 !

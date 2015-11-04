@@ -816,7 +816,7 @@ contains
                      exs1,exs2, &
                      x,y,z, &
                      ncbd,ncin,mnc, &
-                     0,frgf1,frgf2,1,0., &
+                     0,frgf1,frgf2,1,0.D0, &
                      tmp(1),tmp(2),tmp(3),mot(16)(1:2),mot(17)(1:2),mot(18)(1:2))
              endif
           endif

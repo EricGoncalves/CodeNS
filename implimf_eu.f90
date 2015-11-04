@@ -39,14 +39,14 @@ contains
     double precision ::                   cc,                cnds,      coefdiag(ip00),          cson(ip11),        d(ip11,ip60)
     double precision ::           dfex(ip00),          dfey(ip00),          dfez(ip00),          dfxx(ip00),          dfxy(ip00)
     double precision ::           dfxz(ip00),          dfyy(ip00),          dfyz(ip00),          dfzz(ip00),            dt(ip11)
-    double precision ::    dtpas,    fact,     fex,     fey,     fez
+    double precision ::    dtpas,    fact,     fex,     fey,     fez,norm,norm1
     double precision ::        ff(ip11,ip60),                fiex,                fiey,                fiez,                fixx
     double precision ::                 fixy,                fixz,                fiyy,                fiyz,                fizz
     double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
     double precision ::                  fzz,                pres,            ps(ip11),sn(lgsnlt,nind,ndir),                 tn1
     double precision ::                  tn2,                 tn3,                 tn4,                 tn5,        u(ip11,ip60)
     double precision ::                   ui,                  uu,        v(ip11,ip60),                  vi,           vol(ip11)
-    double precision ::                   vv,                  wi,                 wi1,                 wi5,                  ww,norm,norm1
+    double precision ::                   vv,                  wi,                 wi1,                 wi5,                  ww
 !
 !-----------------------------------------------------------------------
 !

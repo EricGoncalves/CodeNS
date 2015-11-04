@@ -1,6 +1,7 @@
 SHELL=/bin/sh
 
-SRCS    =                modules.f90             at_dlist.f90         \
+SRCS    =                modules.f90             tools.f90            \
+mpi.F90                  at_dlist.f90         \
 at_ecrdist.f90           at_fidist.f90           at_grdist.f90        \
 at_lecdist.f90           at_lecopt.f90           atccc.f90            \
 atccfp.f90               atctranske.f90          atdist_1.f90         \
@@ -145,36 +146,42 @@ c_end.f90                c_inbdc.f90             c_inbdn.f90          \
 c_infw.f90               c_ingr.f90              c_intn.f90           \
 c_nzst.f90               c_secpfw.f90            c_svbd.f90           \
 c_svbdb.f90              c_svbdc.f90             c_svbdn.f90          \
-c_svfw.f90               c_svgr.f90              partition.f90        \
-solve.f90 
+c_svfw.f90               c_svgr.f90              partitionnement.f90  \
+tcmd_partitionnement.f90 c_partitionnement.f90   solve.f90 
 
-OBJS =  ${SRCS:.f90=.o}
+OBJS1 =  $(subst f90,o,$(SRCS))
+OBJS =  $(subst F90,o,$(OBJS1))
 
 # Tunable parameters
 #
-# CF		Name of the fortran compiling system to use
+# FC		Name of the fortran compiling system to use
 # LDFLAGS	Flags to the loader
 # LIBS		List of libraries
 # CMD		Name of the executable
 # PROFLIB	Library needed for profiling
 #
 #FC =  gfortran
-FC =  ifort
-#CMD =	 solver_air
-CMD =	 solver_tic
+FC =  mpifort
+CMD =	 solver_air
+#CMD =	 solver_tic
 
 # To perform the default compilation, use the first line
 #FFLAGS =  -O2  -ffree-line-length-none
 #LDFLAGS = -O2 -fdefault-double-8 -fdefault-real-8
 #FFLAGS =  -O2   -fdefault-double-8 -fdefault-real-8 -ffree-line-length-none
-FFLAGS =  -O2 -openmp -parallel -threads
-LDFLAGS = -O2 -openmp -parallel -threads
-
+#FFLAGS =  -O2 -openmp -parallel -threads
+#LDFLAGS = -O2 -openmp -parallel -threads
+FFLAGS = -O3 -march=native
+LDFLAGS =$(FFLAGS)
 
 # Lines from here on down should not need to be changed.
 #
+%.o: %.F90
+	$(FC) $(FFLAGS) -c $< 
+
 %.o: %.f90
 	$(FC) $(FFLAGS) -c $<
+
 all:		$(CMD)
 
 $(CMD):		$(OBJS)
