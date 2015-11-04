@@ -21,10 +21,10 @@ contains
     use maillage
     use chainecarac
     implicit none
+    integer         ,intent(in)    :: l,lgsnlt
     double precision,intent(inout) :: d(ip11,ip60),del6(ip00),del7(ip00)
     double precision,intent(in)    :: t(ip11,ip60),sn(lgsnlt,nind,ndir)
     double precision,intent(in)    :: vol(ip11)
-    integer         ,intent(in)    :: l,lgsnlt
 
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
     integer          ::   i2m1,  i2p1,  ind1,  ind2

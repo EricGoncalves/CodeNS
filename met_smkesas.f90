@@ -25,10 +25,10 @@ contains
     use mod_met_laplaciens
     implicit none
     integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,  i2p1,    id,     j,    j1
+    integer          ::   i2m1,  i2p1,     j,    j1
     integer          ::   j1m1,  j1p1,    j2,  j2m1,  j2p1
-    integer          ::     jd,     k,    k1,  k1m1,  k1p1
-    integer          ::     k2,  k2m1,  k2p1,    kd,     l
+    integer          ::      k,    k1,  k1m1,  k1p1
+    integer          ::     k2,  k2m1,  k2p1,     l
     integer          :: lgsnlt,     m,     n,   n0c,   nci
     integer          ::    ncj,   nck,   nid,  nijd,   njd
     integer          ::   npsn

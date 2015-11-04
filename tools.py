@@ -677,5 +677,35 @@ def clean_diff(difffile):
   if fileblock:
     cleanfileblock(fileblock)
 
-clean_diff("diff")
+#cmake + fortran compil log
+def read_compil_log(logfile):
+  blob=""
+  srcfile1=""
+  srcfile=""
+  var=""
+  vars=[]
+  for line in open(logfile):
+    if matched(line,"^/"):
+      srcfile=path.basename(line.split(":")[0])
+      if not srcfile1:
+        srcfile1=srcfile
+    else:
+      if "Wunused-variable" in line:
+        var=line.decode("utf8").split(u"\u2018")[1].split(u"\u2019")[0]
+        if not srcfile==srcfile1:
+          if vars:
+            output=srcfile1+" :"
+            for var1 in vars:
+              output=output+" "+var1 
+            print(output)
+            vars=[]
+          srcfile1=srcfile
+        vars.append(var)
+
+
+#clean_diff("diff")
+read_compil_log("compile.log")
+
+
+
 

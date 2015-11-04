@@ -26,11 +26,11 @@ contains
     use proprieteflu
     implicit none
     integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,   i2m2,     id,   iexp,   ind1
+    integer          ::    i2m1,   i2m2,   iexp,   ind1
     integer          ::    ind2,isortie, ityprk,      j,     j1
     integer          ::    j1m1,   j1p1,     j2,   j2m1,   j2m2
-    integer          ::      jd,      k,     k1,   k1m1,   k1p1
-    integer          ::      k2,   k2m1,   k2m2,     kd,   kdir
+    integer          ::       k,     k1,   k1m1,   k1p1
+    integer          ::      k2,   k2m1,   k2m2,   kdir
     integer          ::  lgsnlt,     lm,      m,     m1,      n
     integer          ::     n0c,     n1,    nci,    ncj,    nck
     integer          ::     nid,   nijd,   ninc,    njd

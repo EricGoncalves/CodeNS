@@ -18,7 +18,7 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::    i,  i1,  i2,i2m1, img
+    integer          ::   i1,  i2,i2m1, img
     integer          :: ind1,ind2,   j,  j1,  j2
     integer          :: j2m1,   k,  k1,  k2,k2m1
     integer          ::    l,  lm,   m, n0c,  nc

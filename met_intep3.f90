@@ -176,7 +176,6 @@ contains
 !
     character(len=20) ::  nomfic
     character(len=1 ) :: c
-    character(len=5 ) :: control
 !
     ALLOCATE(dvxx(ip00),dvxy(ip00),dvxz(ip00),dvyx(ip00),dvyy(ip00),dvyz(ip00), &
          dvzx(ip00),dvzy(ip00),dvzz(ip00),vort(ip12))

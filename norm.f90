@@ -80,10 +80,10 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::      i,    i1,  i1p1,    id,  imax
+    integer          ::      i,    i1,  i1p1,  imax
     integer          :: imaxm1,  imin,   ior,     j,    j1
-    integer          ::   j1p1,    jd,  jmax,jmaxm1,  jmin
-    integer          ::    jor,     k,    k1,  k1p1,    kd
+    integer          ::   j1p1,  jmax,jmaxm1,  jmin
+    integer          ::    jor,     k,    k1,  k1p1
     integer          ::   kmax,kmaxm1,  kmin,   kor,     l
     integer          ::      m,   mor,     n,    n0,   ndt
     integer          ::    nid,  nijd,   njd,   nor

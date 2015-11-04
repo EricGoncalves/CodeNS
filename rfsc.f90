@@ -32,7 +32,7 @@ contains
     use boundary
     use mod_mpi
     implicit none
-    integer          ::          m,        mb,        mc,        mf,       mfb
+    integer          ::          m,        mb,        mf,       mfb
     integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),        nd,ncin(ip41)
     double precision :: t(ip11)
     double precision,allocatable :: buff(:,:,:)

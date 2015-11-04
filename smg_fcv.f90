@@ -21,11 +21,11 @@ contains
     use chainecarac
     use schemanum
     implicit none
-    integer          ::      i,   i1c,   i2c,    ic,    id
+    integer          ::    i1c,   i2c,    ic
     integer          ::     if,  imgc,  imgf,incf_i,incf_j
-    integer          :: incf_k,     j,   j1c,   j2c,    jc
-    integer          ::     jd,    jf,     k,   k1c,   k2c
-    integer          ::     kc,    kd,    kf,     l,   lmc
+    integer          :: incf_k,   j1c,   j2c,    jc
+    integer          ::     jf,   k1c,   k2c
+    integer          ::     kc,    kf,     l,   lmc
     integer          ::    lmf,   n0c,   n0f,    nc,   nf1
     integer          ::    nf2,   nf3,   nf4,   nf5,   nf6
     integer          ::    nf7,   nf8,   nic,   nif,  nijc

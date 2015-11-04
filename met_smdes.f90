@@ -59,7 +59,7 @@ contains
     use mod_met_dist
     use mod_met_difsa
     implicit none
-    integer          ::      i,    i1,  i1m1,    i2,  i2m1
+    integer          ::     i1,  i1m1,    i2,  i2m1
     integer          ::   imax,  imin,  ind1,  ind2,     j
     integer          ::     j1,  j1m1,    j2,  j2m1,  jmax
     integer          ::   jmin,     k,    k1,  k1m1,    k2

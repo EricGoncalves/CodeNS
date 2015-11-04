@@ -64,8 +64,8 @@ contains
     use mod_svol
     use mod_extmhg
     implicit none
-    integer          ::      i,    id,     j,    jd,     k
-    integer          ::     kd,     l,lgsnlt,    nc,   nci
+    integer          ::      i,     j,     k
+    integer          ::      l,lgsnlt,    nc,   nci
     integer          ::   ncij, ncijk,  ncik,   ncj,  ncjk
     integer          ::    nck,   nid,   njd,    nn,  npsn
     double precision ::          exs1,         exs2,      r(ip11),sn(ip31*ndir),    tn1(ip00)

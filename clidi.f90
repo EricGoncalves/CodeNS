@@ -70,7 +70,7 @@ contains
     use schemanum
     use definition
     implicit none
-    integer          ::         id,        jd,        kd,         l,         m
+    integer          ::          l,         m
     integer          ::         mb,       mfb,  mmb(mtt),        mn,  mpb(mtt)
     integer          ::   mpn(mtt),        mt,       n0c,       n0n,        nc
     integer          :: ncbd(ip41),       nci,      ncij,     ncijk,      ncik

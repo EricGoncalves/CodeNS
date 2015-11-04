@@ -32,7 +32,6 @@ contains
     double precision ::   dist(ip12),           e,    mu(ip12),   mut(ip12),    ps(ip11)
     double precision :: t(ip11,ip60),           u,           v,           w,     x(ip21)
     double precision ::          xcc,     y(ip21),         ycc,     z(ip21),         zcc
-    logical          :: ouvert
 !
 !-----------------------------------------------------------------------
 !

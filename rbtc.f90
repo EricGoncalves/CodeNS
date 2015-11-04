@@ -53,13 +53,12 @@ contains
     use definition
     use mod_mpi
     implicit none
-    integer          ::          m,        mb,        mc,        mf,       mfb
+    integer          ::          m,        mb,        mf,       mfb
     integer          ::  mnc(ip43),        mt,        nc,ncbd(ip41),ncin(ip41)
     integer          ::         nd,       ndm
-    double precision ::         cr, qcx(ip12),      qcxr, qcy(ip12),      qcyr
-    double precision ::  qcz(ip12),      qczr,        sr,toxx(ip12),toxy(ip12)
-    double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12),      txxr
-    double precision ::       txyr,      txzr,      tyyr,      tyzr,      tzzr
+    double precision ::         cr, qcx(ip12), qcy(ip12)
+    double precision ::  qcz(ip12),        sr,toxx(ip12),toxy(ip12)
+    double precision :: toxz(ip12),toyy(ip12),toyz(ip12),tozz(ip12)
     double precision,allocatable :: buff(:,:,:,:)
     integer :: req(nbd,2),other,me,bcg_to_mf(num_bcg)
 !

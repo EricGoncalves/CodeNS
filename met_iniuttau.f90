@@ -31,7 +31,7 @@ contains
     use mod_rbte
     use mod_zvismo
     implicit none
-    integer          ::          l,    lgsnlt,        mf,       mfc,       mfr
+    integer          ::          l,    lgsnlt,        mf,       mfr
     integer          ::  mnc(ip43), mnr(ip44),ncbd(ip41),ncin(ip41),      npsn
     double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
     double precision ::   cmuk2(ip21),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00),   dvyx(ip00)

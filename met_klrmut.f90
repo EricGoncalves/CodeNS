@@ -24,9 +24,9 @@ contains
     use modeleturb
     use mod_teq_gradv
     implicit none
-    integer          ::    i,  i1,  i2,i2m1,  id
-    integer          ::    j,  j1,  j2,j2m1,  jd
-    integer          ::    k,  k1,  k2,k2m1,  kd
+    integer          ::    i,  i1,  i2,i2m1
+    integer          ::    j,  j1,  j2,j2m1
+    integer          ::    k,  k1,  k2,k2m1
     integer          ::    l,   m,   n,  n0, nci
     integer          ::  ncj, nck, nid,nijd, njd
     double precision ::            a1,           c1,          c14,           c2,          c22

@@ -40,10 +40,10 @@ contains
     use maillage
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2p1
-    integer          ::   id,iinc,  is,   j,  j1
-    integer          :: j1m1,  j2,j2p1,  jd,jinc
+    integer          :: iinc,  is,   j,  j1
+    integer          :: j1m1,  j2,j2p1,jinc
     integer          ::   js,   k,  k1,k1m1,  k2
-    integer          :: k2p1,  kd,kinc,  ks,   l
+    integer          :: k2p1,kinc,  ks,   l
     integer          ::    n,  n0, nci,nci2, ncj
     integer          :: ncj2, nck,nck2, nid,nijd
     integer          ::  njd

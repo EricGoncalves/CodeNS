@@ -55,18 +55,17 @@ contains
       use sortiefichier
     implicit none
     integer          ::    i,  i1,  i2,   j,  j1
-    integer          ::   j2,   k,  k1,  k2, kdg
-    integer          ::    l,   n, nid,nijd, njd
+    integer          ::   j2,   k,  k1,  k2
+    integer          ::    l, nid,nijd, njd
     integer          ::  npi, npj, npk, nkd
     integer          ::  n0 ,ni, nj, nk, numero
     double precision :: x,y,z
-    logical          :: ecri
 !     parameters locaux
 !      parameter (idim=100,jdim=100,kdim=100)
 !-----------------------------------------------------------------------
 !
-      character *80 titre
-      character *20 fmt1
+      character(len=80) titre
+      character(len=20) fmt1
       dimension x(ip21),y(ip21),z(ip21)
 !
       n0=npn(l)

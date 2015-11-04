@@ -32,7 +32,7 @@ contains
     integer          ::    k,  k1,k1m1,  k2,k2m1
     integer          ::    l,   m,   n, n0c, nid
     integer          :: nijd, njd
-    double precision ::   cson(ip11),  dist(ip12),           e,    mu(ip12),   mut(ip12)
+    double precision ::   cson(ip11),  dist(ip12),    mu(ip12),   mut(ip12)
     double precision ::     ps(ip11),          qq,t(ip11,ip60),  temp(ip11),  toxy(ip12)
     double precision ::            u,           v,           w,     x(ip21),         xcc
     double precision ::          xme,     y(ip21),         ycc,     z(ip21),         zcc

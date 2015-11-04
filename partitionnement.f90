@@ -319,7 +319,7 @@ contains
          print*,''
          print*,"Proc | Nb blocks | Load"
          do proc=0,nprocs-1
-            write(*,'(x,i4," | ",5x,i4," | ",i8)') proc,nload(proc),load(proc)
+            write(*,'(1x,i4," | ",5x,i4," | ",i8)') proc,nload(proc),load(proc)
          enddo
          write(*,'(A,I8,A,I4,A,I4,A,F6.2,A)') " Total : ",sum(load)," dispatched on "&
                                     ,sum(nload)," blocks on "&
@@ -1096,12 +1096,12 @@ contains
                 !       compute sizes of sub-blocks
                 call compute_size(i,j,k,ii2,jj2,kk2,tmp_ii2,tmp_jj2,tmp_kk2)
 !
-                if (min(minval(tmp_ii2),minval(tmp_jj2),minval(tmp_kk2))>1) then ! if the splitting is acceptable   !  todo : criteria may be different elsewhere
+                if (min(minval(tmp_ii2),minval(tmp_jj2),minval(tmp_kk2))>1) then ! if the splitting is acceptable
                    !             compute sizes of new communication, must be over evaluated (including boundary condition)
                    num_cft=2*(tmp_jj2*tmp_ii2 + tmp_ii2*tmp_kk2 + tmp_jj2*tmp_kk2)
                    !             choose the best splitting (less comm)
                    if(sum(num_cft)<sum(num_cf2)) then  !  TODO : is sum better than maxval ?
-                      nblockd=(/i,j,k/)
+                      nblockd=[i,j,k]
                       call reallocate(  new_jj2,i,j,k) ;   new_jj2=tmp_jj2
                       call reallocate(  new_ii2,i,j,k) ;   new_ii2=tmp_ii2
                       call reallocate(  new_kk2,i,j,k) ;   new_kk2=tmp_kk2

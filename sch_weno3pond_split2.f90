@@ -31,11 +31,11 @@ contains
     use proprieteflu
     implicit none
     integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,   i2m2,     id,   iexp,   imap
+    integer          ::    i2m1,   i2m2,   iexp,   imap
     integer          ::    ind1,   ind2,isortie, ityprk,      j
     integer          ::      j1,   j1m1,   j1p1,     j2,   j2m1
-    integer          ::    j2m2,     jd,      k,     k1,   k1m1
-    integer          ::    k1p1,     k2,   k2m1,   k2m2,     kd
+    integer          ::    j2m2,      k,     k1,   k1m1
+    integer          ::    k1p1,     k2,   k2m1,   k2m2
     integer          ::    kdir, lgsnlt,     lm,      m,     m1
     integer          ::       n,    n0c,     n1,    nci,    ncj
     integer          ::     nid,   nijd,   ninc,    njd
@@ -49,24 +49,24 @@ contains
     double precision ::                 d2c2,                d2c3,                d3c1,                d3c2,                d3c3
     double precision ::                 d4c1,                d4c2,                d4c3,                d5c1,               d5c1m
     double precision ::                d5c1p,                d5c2,               d5c2m,               d5c2p,                d5c3
-    double precision ::                  df1,                 df2,                 df3,                 df4,                 df5
-    double precision ::                  dg1,                 dg2,                 dg3,                 dg4,                 dg5
+    double precision ::                  df1,                 df2,                 df3,                 df5
+    double precision ::                  dg1,                 dg2,                 dg3,                 dg5
     double precision ::                  eps,                  f1,                 f11,                 f12,                  f2
     double precision ::                  f21,                 f22,                  f3,                 f31,                 f32
-    double precision ::                   f4,                 f41,                 f42,                  f5,                 f51
+    double precision ::                  f41,                 f42,                  f5,                 f51
     double precision ::                  f52,                 fc1,                 fc2,                 fc3,                 fc4
     double precision ::                  fc5,                fcm5,                fcp5,           fex(ip00),           fey(ip00)
     double precision ::            fez(ip00),       ff(ip11,ip60),                fm51,                fm52,                fp51
-    double precision ::                 fp52,                 fv2,                 fv3,                 fv4,                 fv5
+    double precision ::                 fp52,                 fv2,                 fv3,                 fv5
     double precision ::            fxx(ip00),           fxy(ip00),           fxz(ip00),           fyy(ip00),           fyz(ip00)
     double precision ::            fzz(ip00),                  g1,                 g11,                 g12,                 g1m
     double precision ::                  g1p,                  g2,                 g21,                 g22,                 g2m
-    double precision ::                  g2p,                  g3,                 g31,                 g32,                  g4
+    double precision ::                  g2p,                  g3,                 g31,                 g32
     double precision ::                  g41,                 g42,                  g5,                 g51,                 g52
     double precision ::                  gc1,                 gc2,                 gc3,                 gc4,                 gc5
     double precision ::                   gd,                 gd1,                 gd2,                gm51,                gm52
     double precision ::                 gmc5,                gp51,                gp52,                gpc5,                 gv2
-    double precision ::                  gv3,                 gv4,                 gv5,                  hl,                  hm
+    double precision ::                  gv3,                 gv5,                  hl,                  hm
     double precision ::                   hr,                  nx,                  ny,                  nz,                 p11
     double precision ::                  p12,                 p13,                 p14,                 p15,                 p21
     double precision ::                  p22,                 p23,                 p24,                 p25,                 p31

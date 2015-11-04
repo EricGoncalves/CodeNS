@@ -29,10 +29,10 @@ contains
     use schemanum
     implicit none
     integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,     id,   ind1,   ind2,isortie
+    integer          ::    i2m1,   ind1,   ind2,isortie
     integer          ::  ityprk,      j,     j1,   j1m1,   j1p1
-    integer          ::      j2,   j2m1,     jd,      k,     k1
-    integer          ::    k1m1,   k1p1,     k2,   k2m1,     kd
+    integer          ::      j2,   j2m1,      k,     k1
+    integer          ::    k1m1,   k1p1,     k2,   k2m1
     integer          ::    kdir, lgsnlt,     lm,      m,      n
     integer          ::     n0c,     n1,    nci,    ncj,    nck
     integer          ::     nid,   nijd,   ninc,    njd
@@ -47,7 +47,7 @@ contains
     double precision ::                  fxz,                 fyy,                 fyz,                 fzz,                  g1
     double precision ::                   g2,                  g3,                  g4,                  g5,                  h1
     double precision ::                   h2,                  h3,                  h4,                  h5,                  hl
-    double precision ::                   hr,                 ids,                  nx,                  ny,                  nz
+    double precision ::                   hr,                  nx,                  ny,                  nz
     double precision ::             pl(ip00),           prr(ip00),            ps(ip11),                 q2l,                 q2r
     double precision ::            qcx(ip12),           qcy(ip12),           qcz(ip12),          rhol(ip00),          rhor(ip00)
     double precision ::                   rm,                 si1,                 si2,                 si3,                 si4

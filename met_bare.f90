@@ -23,7 +23,7 @@ contains
     use maillage
     use mod_teq_grads
     implicit none
-    integer          ::      i,    i1,    i2,  i2m1,  ind1
+    integer          ::     i1,    i2,  i2m1,  ind1
     integer          ::   ind2,     j,    j1,    j2,  j2m1
     integer          ::      k,    k1,    k2,  k2m1,     l
     integer          :: lgsnlt,     m,     n,   n0c,   nid

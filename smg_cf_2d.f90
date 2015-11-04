@@ -14,12 +14,12 @@ contains
     use chainecarac
     use schemanum
     implicit none
-    integer          ::        i,     i1c,     i2c,      ic,      id
+    integer          ::      i1c,     i2c,      ic
     integer          ::       if,    imgc,    imgf,  incc_i,  incc_j
     integer          ::   incc_k,  incf_i, incf_ij,incf_ijk, incf_ik
-    integer          ::   incf_j, incf_jk,  incf_k,       j,     j1c
-    integer          ::      j2c,      jc,      jd,      jf,       k
-    integer          ::      k1c,     k2c,      kc,      kd,      kf
+    integer          ::   incf_j, incf_jk,  incf_k,     j1c
+    integer          ::      j2c,      jc,      jf
+    integer          ::      k1c,     k2c,      kc,       kf
     integer          ::        l,     lmc,     lmf,    n0cf,    n0nc
     integer          ::      nc1,     nc2,     nc3,     nc4,     nf1
     integer          ::      nf2,     nf3,     nf4,     nic,     nif

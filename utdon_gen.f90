@@ -64,7 +64,7 @@ contains
     use mod_mpi
     implicit none
     integer          ::   idefconf,  idefxref,      ierr,     ligne,      mflu,mflu1
-    integer          ::         nb,ncbd(ip41),l,l1,proc,nbfllg,mf
+    integer          ::         nb,ncbd(ip41),l,proc,nbfllg,mf
     integer,allocatable :: nbfll_proc(:)
     double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),        omg1,          p2
     double precision ::          rpi,         rti,        tpar,v(ip11,ip60),     x(ip21)
@@ -230,7 +230,7 @@ contains
                 enddo
              else !fin sequence, continuer la lecture generale des mots-c
                 allocate(nbfll_proc(nprocs))
-                call gather((/nbfll/),nbfll_proc,1)
+                call gather([nbfll],nbfll_proc,1)
                 nbfllg=sum(nbfll_proc)
                 allocate(bcint_to_bcintg(nbfll))
                 allocate(bcintg_to_proc(nbfllg))

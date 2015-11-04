@@ -33,7 +33,6 @@ contains
     double precision ::   cson(ip11),           e,    ps(ip11),          qq,t(ip11,ip60)
     double precision ::            u,           v,           w,     x(ip21),         xcc
     double precision ::          xme,     y(ip21),         ycc,     z(ip21),         zcc
-    logical          :: ouvert
 !
 !-----------------------------------------------------------------------
 !

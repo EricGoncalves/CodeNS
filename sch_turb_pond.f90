@@ -27,11 +27,11 @@ contains
     use modeleturb
     use mod_met_pardis
     implicit none
-    integer          ::          i,        i1,      i1m1,      i1p1,        i2
-    integer          ::       i2m1,        id,      ind1,      ind2,         j
+    integer          ::         i1,      i1m1,      i1p1,        i2
+    integer          ::       i2m1,      ind1,      ind2,         j
     integer          ::         j1,      j1m1,      j1p1,        j2,      j2m1
-    integer          ::         jd,         k,        k1,      k1m1,      k1p1
-    integer          ::         k2,      k2m1,        kd,      kdir,         l
+    integer          ::          k,        k1,      k1m1,      k1p1
+    integer          ::         k2,      k2m1,      kdir,         l
     integer          ::     lgsnlt,         m,         n,       n0c,       nci
     integer          :: ncin(ip41),       ncj,       nck,       nid,      nijd
     integer          ::       ninc,       njd

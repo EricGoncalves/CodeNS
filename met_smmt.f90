@@ -56,9 +56,9 @@ contains
     use mod_met_mtcorf1
     implicit none
     integer          ::           i,         i1,       i1m1,         i2,       i2m1
-    integer          ::          id,          j,         j1,       j1m1,         j2
-    integer          ::        j2m1,         jd,          k,         k1,       k1m1
-    integer          ::          k2,       k2m1,         kd,          l,          m
+    integer          ::           j,         j1,       j1m1,         j2
+    integer          ::        j2m1,          k,         k1,       k1m1
+    integer          ::          k2,       k2m1,          l,          m
     integer          :: mnpar(ip12),          n,        n0c,        nci, ncin(ip41)
     integer          ::         ncj,        nck,       ncyc,        nid,       nijd
     integer          ::         njd

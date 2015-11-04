@@ -52,9 +52,9 @@ contains
     use maillage
     implicit none
     integer          ::      i,    i1,  i1m1,    i2,  i2p1
-    integer          ::     id,     j,    j1,  j1m1,    j2
-    integer          ::   j2p1,    jd,     k,    k1,  k1m1
-    integer          ::     k2,  k2p1,    kd,     l,lgsnlt
+    integer          ::      j,    j1,  j1m1,    j2
+    integer          ::   j2p1,     k,    k1,  k1m1
+    integer          ::     k2,  k2p1,     l,lgsnlt
     integer          ::      m,    m1,    m2,    m4,    m5
     integer          ::      n,   n0c,   n0n,   nid,  nijd
     integer          ::    njd

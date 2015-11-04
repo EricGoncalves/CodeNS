@@ -46,10 +46,10 @@ contains
     use para_fige
     use maillage
     implicit none
-    integer          ::    i,  i1,i1m1,  i2,  id
+    integer          ::    i,  i1,i1m1,  i2
     integer          :: inc1,inc2,inc3,   j,  j1
-    integer          :: j1m1,  j2,  jd,   k,  k1
-    integer          :: k1m1,  k2,  kd,   l,   m
+    integer          :: j1m1,  j2,   k,  k1
+    integer          :: k1m1,  k2,   l,   m
     integer          ::    n,  n0, nid,nijd, njd
     double precision ::  x(ip21),xx(ip00), y(ip21),yy(ip00), z(ip21)
     double precision :: zz(ip00)

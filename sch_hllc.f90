@@ -28,14 +28,14 @@ contains
     use schemanum
     implicit none
     integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,     id,   ind1,   ind2,isortie
+    integer          ::    i2m1,   ind1,   ind2,isortie
     integer          ::  ityprk,      j,     j1,   j1m1,   j1p1
-    integer          ::      j2,   j2m1,     jd,      k,     k1
-    integer          ::    k1m1,   k1p1,     k2,   k2m1,     kd
+    integer          ::      j2,   j2m1,      k,     k1
+    integer          ::    k1m1,   k1p1,     k2,   k2m1
     integer          ::    kdir, lgsnlt,     lm,      m,      n
     integer          ::     n0c,     n1,    nci,    ncj,    nck
     integer          ::     nid,   nijd,   ninc,    njd
-    double precision ::                    a,                  al,                  am,                  ar,                cnds
+    double precision ::                   al,                  am,                  ar,                cnds
     double precision ::                   el,                  er,                 fc1,                 fc2,                 fc3
     double precision ::                  fc4,                 fc5,                 fex,                 fey,                 fez
     double precision ::        ff(ip11,ip60),                 fv2,                 fv3,                 fv4,                 fv5

@@ -28,11 +28,11 @@ contains
     use proprieteflu
     implicit none
     integer          ::       i,     i1,   i1m1,   i1p1,     i2
-    integer          ::    i2m1,   i2m2,     id,   iexp,   imap
+    integer          ::    i2m1,   i2m2,   iexp,   imap
     integer          ::    ind1,   ind2,isortie, ityprk,      j
     integer          ::      j1,   j1m1,   j1p1,     j2,   j2m1
-    integer          ::    j2m2,     jd,      k,     k1,   k1m1
-    integer          ::    k1p1,     k2,   k2m1,   k2m2,     kd
+    integer          ::    j2m2,      k,     k1,   k1m1
+    integer          ::    k1p1,     k2,   k2m1,   k2m2
     integer          ::    kdir, lgsnlt,     lm,      m,     m1
     integer          ::       n,    n0c,     n1,    nci,    ncj
     integer          ::     nid,   nijd,   ninc,    njd
@@ -40,21 +40,21 @@ contains
     double precision ::               beta12,              beta21,              beta22,              beta31,              beta32
     double precision ::               beta41,              beta42,              beta51,              beta52,                 c00
     double precision ::                  c01,                 c10,                 c11,                cnds,                 df1
-    double precision ::                  df2,                 df3,                 df4,                 df5,                 dg1
-    double precision ::                  dg2,                 dg3,                 dg4,                 dg5,                 eps
+    double precision ::                  df2,                 df3,                 df5,                 dg1
+    double precision ::                  dg2,                 dg3,                 dg5,                 eps
     double precision ::                   f1,                 f11,                 f12,                  f2,                 f21
-    double precision ::                  f22,                  f3,                 f31,                 f32,                  f4
+    double precision ::                  f22,                  f3,                 f31,                 f32
     double precision ::                  f41,                 f42,                  f5,                 f51,                 f52
     double precision ::                  fc1,                 fc2,                 fc3,                 fc4,                 fc5
     double precision ::            fex(ip00),           fey(ip00),           fez(ip00),       ff(ip11,ip60),                 fv2
-    double precision ::                  fv3,                 fv4,                 fv5,           fxx(ip00),           fxy(ip00)
+    double precision ::                  fv3,                 fv5,           fxx(ip00),           fxy(ip00)
     double precision ::            fxz(ip00),           fyy(ip00),           fyz(ip00),           fzz(ip00),                  g1
     double precision ::                  g11,                 g12,                  g2,                 g21,                 g22
-    double precision ::                   g3,                 g31,                 g32,                  g4,                 g41
+    double precision ::                   g3,                 g31,                 g32,                 g41
     double precision ::                  g42,                  g5,                 g51,                 g52,                 ga1
     double precision ::                  ga2,                 gc1,                 gc2,                 gc3,                 gc4
     double precision ::                  gc5,                  gd,                 gd1,                 gd2,                 gv2
-    double precision ::                  gv3,                 gv4,                 gv5,                  hl,                  hm
+    double precision ::                  gv3,                 gv5,                  hl,                  hm
     double precision ::                   hr,                  nx,                  ny,                  nz,                 p11
     double precision ::                  p12,                 p13,                 p14,                 p15,                 p21
     double precision ::                  p22,                 p23,                 p24,                 p25,                 p31

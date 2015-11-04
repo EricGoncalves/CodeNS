@@ -190,7 +190,7 @@ contains
     double precision ::      ps,  pspi0,    qcx,    qcy,    qcz
     double precision ::      qq,     qt,    qtx,    qty,    qtz
     double precision ::  raddeg,     rm,      s,    sml,  smlfr
-    double precision ::    snal,   snbe,    sxy,   sxyb,  sxyfr,sxzb
+    double precision ::    snal,   snbe,    sxy,   sxzb,  sxyfr
     double precision ::     sxz,  sxzfr,    syz,  syzfr,     t1
     double precision ::      t2,     t3, taumod,taunorm,tauref0
     double precision ::    temp,   toxx,   toxy,   toxz,   toyy

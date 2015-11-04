@@ -27,11 +27,11 @@ contains
     use maillage
     use proprieteflu
     implicit none
-    integer          ::      i,    i1,  i1m1,  i1p1,    i2
-    integer          ::   i2m1,    id,  ind1,  ind2,ityprk
+    integer          ::     i1,  i1m1,  i1p1,    i2
+    integer          ::   i2m1,  ind1,  ind2,ityprk
     integer          ::      j,    j1,  j1m1,  j1p1,    j2
-    integer          ::   j2m1,    jd,     k,    k1,  k1m1
-    integer          ::   k1p1,    k2,  k2m1,    kd,  kdir
+    integer          ::   j2m1,     k,    k1,  k1m1
+    integer          ::   k1p1,    k2,  k2m1,  kdir
     integer          :: lgsnlt,    lm,     m,    m2,     n
     integer          ::    n0c,    n2,   nci,   ncj,   nck
     integer          ::    nid,  nijd,  ninc,   njd

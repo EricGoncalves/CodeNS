@@ -181,7 +181,7 @@ contains
     double precision :: cyaetfr,   cyav,  cyavb,cyavbfr, cyavfr
     double precision :: cyavtfr,cyavtot, czaefr,czaerfr, czaero
     double precision :: czaerob,czaetfr,   czav,  czavb,czavbfr
-    double precision ::  czavfr,czavtfr,czavtot,    dcl,  dclfr,sxzb
+    double precision ::  czavfr,czavtfr,czavtot,    dcl,  dclfr
     double precision ::     dcm,  dcmfr,    dcn,  dcnfr,    dcx
     double precision ::   dcxfr,    dcy,  dcyfr,    dcz,  dczfr
     double precision ::    dsml,   dsxy,   dsxz,   dsyz,    dx1
@@ -191,7 +191,7 @@ contains
     double precision ::     ps(ip11),       pspi0,   qcx(ip12),   qcy(ip12),   qcz(ip12)
     double precision ::      qq,     qt,    qtx,    qty,    qtz
     double precision ::       raddeg,          rm,s(ip11,ip60),         sml,       smlfr
-    double precision ::         snal,        snbe,         sxy,        sxyb,       sxyfr
+    double precision ::         snal,        snbe,         sxy,        sxzb,       sxyfr
     double precision ::     sxz,  sxzfr,    syz,  syzfr,     t1
     double precision ::      t2,     t3, taumod,taunorm,tauref0
     double precision ::   temp(ip11),  toxx(ip12),  toxy(ip12),  toxz(ip12),  toyy(ip12)

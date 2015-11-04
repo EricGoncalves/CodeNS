@@ -29,10 +29,10 @@ contains
     use maillage
     use modeleturb
     implicit none
-    integer          ::      i,    i1,    i2,  i2m1,    id
+    integer          ::      i,    i1,    i2,  i2m1
     integer          :: idebug,     j,    j1,    j2,  j2m1
-    integer          ::     jd,     k,    k1,    k2,  k2m1
-    integer          ::     kd,     l,     n,    n0,   nci
+    integer          ::      k,    k1,    k2,  k2m1
+    integer          ::      l,     n,    n0,   nci
     integer          ::    ncj,   nck,  ncyc,   nid,  nijd
     integer          ::    njd
     double precision ::       allfae,    mu(ip12),   mut(ip12),      omegha,        rapk

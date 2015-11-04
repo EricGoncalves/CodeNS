@@ -20,9 +20,9 @@ contains
     use maillage
     use chainecarac
     implicit none
-    integer          ::    i, i1c, i2c,  ic,  if
-    integer          :: imgc,imgf,   j, j1c, j2c
-    integer          ::   jc,  jf,   k, k1c, k2c
+    integer          ::  i1c, i2c,  ic,  if
+    integer          :: imgc,imgf, j1c, j2c
+    integer          ::   jc,  jf, k1c, k2c
     integer          ::   kc,  kf,   l, lmc, lmf
     integer          ::  n0c, n0f,  nc,  nf, nic
     integer          ::  nif,nijc,nijf, njc, njf

@@ -44,10 +44,10 @@ contains
     use maillage
     implicit none
     integer          ::     i,   i1, i1m1,   i2, i2m1
-    integer          ::  i2p1,   id, imax, imin,    j
+    integer          ::  i2p1, imax, imin,    j
     integer          ::    j1, j1m1,   j2, j2m1, j2p1
-    integer          ::    jd, jmax, jmin,    k,   k1
-    integer          ::  k1m1,   k2, k2m1, k2p1,   kd
+    integer          ::  jmax, jmin,    k,   k1
+    integer          ::  k1m1,   k2, k2m1, k2p1
     integer          ::  kmax, kmin,    l,    m,    n
     integer          ::    n0,   n1,   n2,  nci, ncij
     integer          :: ncijk, ncik,  ncj, ncjk,  nck

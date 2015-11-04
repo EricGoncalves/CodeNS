@@ -634,7 +634,7 @@ module mod_mpi
         double precision,allocatable ::C(:)
         integer :: ierr
         allocate(c(size(a)))
-        CALL MPI_ALLREDUCE(A, C, SIZE(A), MPI_REAL8,MPI_MAX, MPI_COMM_WORLD,IERR)
+        CALL MPI_ALLREDUCE(A(1), C(1), SIZE(A), MPI_REAL8,MPI_MAX, MPI_COMM_WORLD,IERR)
         if (present(B)) then
           B=C
         else
@@ -900,9 +900,7 @@ module mod_mpi
     subroutine get_time(time)
         implicit none
         double precision,intent(out) :: time
-
         logical,parameter :: wall_time=.true.
-        integer(kind=8) :: clock_rate,clock
 #ifdef WITH_MPI
         if (wall_time) then
           time=MPI_Wtime()
@@ -911,6 +909,7 @@ module mod_mpi
           call sum_mpi(time)                      ! THIS MIGHT NOT BE RELEVANT
         endif
 #else
+        integer(kind=8) :: clock_rate,clock
         if (wall_time) then
           call system_clock(clock,clock_rate)
           time=clock/clock_rate

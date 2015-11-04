@@ -37,10 +37,10 @@ contains
     use chainecarac
     implicit none
     integer          ::     i,   i1, i1p1,   i2, i2m1
-    integer          ::    id,    j,   j1, j1p1,   j2
-    integer          ::  j2m1,   jd,    k,   k1, k1p1
-    integer          ::    k2, k2m1,   kd,    l,    m
-    integer          ::     n,  n0c,  nci, ncij,ncijk
+    integer          ::     j,   j1, j1p1,   j2
+    integer          ::  j2m1,    k,   k1, k1p1
+    integer          ::    k2, k2m1,    l
+    integer          ::     n,  nci, ncij,ncijk
     integer          ::  ncik,  ncj, ncjk,  nck,  nid
     integer          ::   njd
     double precision :: cmui1(ip21),cmui2(ip21),cmuj1(ip21),cmuj2(ip21),cmuk1(ip21)

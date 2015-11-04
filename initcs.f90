@@ -92,10 +92,10 @@ contains
     implicit none
     integer          ::      i,   ia1,   ia2,   ib1,   ib2
     integer          ::    iba,    ii,  imax,   img, inpcb
-    integer          ::    ipb,     j,   ja1,   ja2,   jb1
-    integer          ::    jb2,   jba,    jj,  jmax,   jpb
+    integer          ::      j,   ja1,   ja2,   jb1
+    integer          ::    jb2,   jba,    jj,  jmax
     integer          ::      k,   ka1,   ka2,   kb1,   kb2
-    integer          ::    kba,kinitc,    kk,  kmax,   kpb
+    integer          ::    kba,kinitc,    kk,  kmax
     integer          ::    krr,     l,    la,    lb
     integer          ::      m,   m0c,    mc,  mfba,   mnc(ip43)
     integer          ::     na,   nai,   naj,   nak,    nb
@@ -103,8 +103,7 @@ contains
     integer          ::  nidlb,nijdla,nijdlb, njdla, njdlb
     integer          ::    nvi,   nvj,   nvk
     integer          ::  id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb
-    double precision :: cnrota,  dist,   eps,snrota,     x(ip21)
-    double precision ::      y(ip21),   ynb,     z(ip21),   znb
+    double precision ::  dist,   eps,x(ip21),y(ip21),z(ip21)
 !
 !-----------------------------------------------------------------------
 !

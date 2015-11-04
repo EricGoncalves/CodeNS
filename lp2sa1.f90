@@ -46,13 +46,12 @@ contains
     integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,       ndis
     integer          ::      nfacns,         ni,        nii,         nn,       npsn
     integer          ::        ntab
-    double precision ::            c1,          c13,          c18,           c2,           c3
-    double precision ::            c4,           ca,           cb,         conv,          ctk
+    double precision ::           c13,          c18,         conv,          ctk
     double precision ::          ctmu,        ctmu2,        dconv,   dist(ip12),         dnum
     double precision ::          dpdt,   dpdx(ip00),   dpdy(ip00),   dpdz(ip00),         dtop
     double precision ::          dudy,           dy,   fgam(ip42),     mu(ip12),          mup
     double precision ::     mut(ip12),    nxn(ip42),    nyn(ip42),    nzn(ip42),     ps(ip11)
-    double precision ::           rc4,         rhoi,     rnutilde,          rop,        seuil
+    double precision ::          rhoi,     rnutilde,          rop,        seuil
     double precision :: sn(ip31*ndir),           sv,           t1,           t2,           t3
     double precision ::    temp(ip11),           tn,          top,         top0,        topar
     double precision ::        topini,           tt,        upyp1,   utau(ip42), v(ip11,ip60)

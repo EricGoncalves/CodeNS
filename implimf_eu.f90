@@ -40,8 +40,7 @@ contains
     double precision ::           dfex(ip00),          dfey(ip00),          dfez(ip00),          dfxx(ip00),          dfxy(ip00)
     double precision ::           dfxz(ip00),          dfyy(ip00),          dfyz(ip00),          dfzz(ip00),            dt(ip11)
     double precision ::    dtpas,    fact,     fex,     fey,     fez,norm,norm1
-    double precision ::        ff(ip11,ip60),                fiex,                fiey,                fiez,                fixx
-    double precision ::                 fixy,                fixz,                fiyy,                fiyz,                fizz
+    double precision ::        ff(ip11,ip60)
     double precision ::                  fxx,                 fxy,                 fxz,                 fyy,                 fyz
     double precision ::                  fzz,                pres,            ps(ip11),sn(lgsnlt,nind,ndir),                 tn1
     double precision ::                  tn2,                 tn3,                 tn4,                 tn5,        u(ip11,ip60)
@@ -73,10 +72,10 @@ contains
     nci = inc(1,0,0)
     ncj = inc(0,1,0)
     nck = inc(0,0,1)
-    inc_dir(1,:)=(/k2m1,k2m1,k2/)
-    inc_dir(2,:)=(/j2m1,j2,j2m1/)
-    inc_dir(3,:)=(/i2,i2m1,i2m1/)
-    inc_dir(4,:)=(/nci,ncj,nck/)
+    inc_dir(1,:)=[k2m1,k2m1,k2]
+    inc_dir(2,:)=[j2m1,j2,j2m1]
+    inc_dir(3,:)=[i2,i2m1,i2m1]
+    inc_dir(4,:)=[nci,ncj,nck]
 
     numdir=2
     if(equat(3:4).eq.'3d') numdir=3

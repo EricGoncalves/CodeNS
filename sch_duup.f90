@@ -43,9 +43,9 @@ contains
     use mod_met_komutr
     use mod_met_klnmut
     implicit none
-    integer          ::    i,  i1,  i2,i2m1, img
-    integer          :: ind1,ind2,   j,  j1,  j2
-    integer          :: j2m1,   k,  k1,  k2,k2m1
+    integer          ::   i1,  i2,i2m1, img
+    integer          :: ind1,ind2,  j1,  j2
+    integer          :: j2m1,  k1,  k2,k2m1
     integer          ::    l,  lm,   m, n0c,  nc
     integer          :: ncyc, nid,nijd, njd
     double precision ::       cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21),      cmuk1(ip21)

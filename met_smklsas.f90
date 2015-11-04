@@ -73,10 +73,10 @@ contains
     use mod_met_bark
     implicit none
     integer          ::           i,         i1,       i1m1,         i2,       i2m1
-    integer          ::          id,       imax,       imin,       ind1,       ind2
+    integer          ::        imax,       imin,       ind1,       ind2
     integer          ::           j,         j1,       j1m1,         j2,       j2m1
-    integer          ::          jd,       jmax,       jmin,          k,         k1
-    integer          ::        k1m1,         k2,       k2m1,         kd,       kmax
+    integer          ::        jmax,       jmin,          k,         k1
+    integer          ::        k1m1,         k2,       k2m1,       kmax
     integer          ::        kmin,          l,     lgsnlt,          m,mnpar(ip12)
     integer          ::           n,        n0c,        nci,        nid,       nijd
     integer          ::         njd,       npsn

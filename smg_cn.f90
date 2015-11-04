@@ -21,11 +21,11 @@ contains
     use maillage
     use chainecarac
     implicit none
-    integer          ::       i,     i1,     i2,     id,   iinf
+    integer          ::       i,     i1,     i2,   iinf
     integer          ::     img,  inc_i, inc_ij,inc_ijk, inc_ik
     integer          ::   inc_j, inc_jk,  inc_k,   isup,      j
-    integer          ::      j1,     j2,     jd,   jinf,   jsup
-    integer          ::       k,     k1,     k2,     kd,   kinf
+    integer          ::      j1,     j2,   jinf,   jsup
+    integer          ::       k,     k1,     k2,   kinf
     integer          ::    ksup,      l,     lm,      n,    n0c
     integer          ::     n0n,     nc,   ndeb,   nfin,     ni
     integer          ::     nij,     nj,     nn
