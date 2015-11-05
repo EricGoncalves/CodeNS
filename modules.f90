@@ -31,17 +31,17 @@ implicit none
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! TIC
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  parameter(ndimub =1500000)
-  parameter(ndimctf=7000000)
-  parameter(ndimnts=7000000)
+  parameter(ndimub =200000)
+  parameter(ndimctf=400000)
+  parameter(ndimnts=400000)
   parameter(ndimntu=1)
   parameter(kdimg  =1)
   parameter(kdimv  =1)
   parameter(kdimk  =1)
-  parameter(mdimub =27000)
-  parameter(mdimtbf=300000)
-  parameter(mdimtnf=75000 )
-  parameter(mdimtcf=225000)
+  parameter(mdimub =400)
+  parameter(mdimtbf=1500)
+  parameter(mdimtnf=900)
+  parameter(mdimtcf=1000)
 !
 !  parameter(ndimub =200000)
 !  parameter(ndimctf=280000)
