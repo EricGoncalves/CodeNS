@@ -75,7 +75,7 @@ module mod_mpi
     ! PROC 1 : IN=A , OUT=[A,B,C]
     ! PROC 2 : IN=B , OUT=[A,B,C]
     ! PROC 3 : IN=C , OUT=[A,B,C]
-    MODULE PROCEDURE GATHER_R,GATHER_I
+    MODULE PROCEDURE GATHER_R,GATHER_I,GATHER_I0
     END INTERFACE GATHER
 
     INTERFACE MPI_TRANS
@@ -469,7 +469,7 @@ module mod_mpi
 
     END SUBROUTINE BARRIER
 
-    SUBROUTINE GATHER_P(IN,OUT)
+    SUBROUTINE GATHER_I0(IN,OUT)
         ! THIS ROUTINE IS GATHERING INTEGER FOR EVERY PROC FROM EVERY PROC
         ! EXEMPLE
         ! PROC 1 : IN=A , OUT=[A , B , C]
@@ -477,7 +477,7 @@ module mod_mpi
         ! PROC 3 : IN=C , OUT=[A , B , C]
         IMPLICIT NONE
         integer,INTENT(IN)  :: IN
-        integer,INTENT(OUT) :: OUT(:)
+        integer,INTENT(OUT) :: OUT(nprocs)
         integer :: ierr
 #ifdef WITH_MPI
         CALL MPI_ALLGATHER(IN, 1, MPI_INTEGER, OUT(1), 1, MPI_INTEGER, MPI_COMM_WORLD,IERR)
@@ -485,7 +485,7 @@ module mod_mpi
         OUT(:)=IN
 #endif
 
-    END SUBROUTINE GATHER_P
+    END SUBROUTINE GATHER_I0
 
     SUBROUTINE MAXLOC_MPI(IN,OUT)
         IMPLICIT NONE

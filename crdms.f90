@@ -58,10 +58,12 @@ contains
     use schemanum
     use tools
     use mod_mpi
+    use sortiefichier
     implicit none
     integer          ::   img, imgi, imgj, imgk,    l
     integer          ::    lm,   ni,  nid,   nj,  njd
     integer          ::    nk,  nkd,nptfs
+    integer          :: load(nprocs)
     integer,optional :: li,proc
 
     num_bg=num_bg+1
@@ -75,7 +77,8 @@ contains
        bg_to_proc(l)=proc ! useless...
     else
       call reallocate_s(bg_to_proc,num_bg)
-      bg_to_proc(l)=modulo((l-1),nprocs)
+      call gather(ndimctbx,load)
+      bg_to_proc(l)=minloc(load,1)-1   ! give the domain to the process with the minimum load
     endif
 !
 

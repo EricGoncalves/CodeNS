@@ -230,7 +230,7 @@ contains
                 enddo
              else !fin sequence, continuer la lecture generale des mots-c
                 allocate(nbfll_proc(nprocs))
-                call gather([nbfll],nbfll_proc,1)
+                call gather(nbfll,nbfll_proc)
                 nbfllg=sum(nbfll_proc)
                 allocate(bcint_to_bcintg(nbfll))
                 allocate(bcintg_to_proc(nbfllg))

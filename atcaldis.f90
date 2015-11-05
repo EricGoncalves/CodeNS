@@ -195,7 +195,7 @@ contains
     end if
 
     allocate(nbdko_proc(nprocs))
-    call gather([nbdko],nbdko_proc,1)
+    call gather(nbdko,nbdko_proc)
     nbdkog=sum(nbdko_proc)
     allocate(lbdko_to_lbdkog(nbdko))
     allocate(lbdkog_to_proc(nbdkog))
