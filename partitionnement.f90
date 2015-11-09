@@ -1,7 +1,7 @@
 module mod_partitionnement
   use tools
   implicit none
-  integer :: verbosity
+  integer :: verbosity=2
 contains
   subroutine partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2,nblocks,nsplit,nsplit_dir)
     use boundary
