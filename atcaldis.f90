@@ -122,6 +122,7 @@ contains
     use constantes
     use boundary
     use mod_atdist_2
+    use mod_atdist_2_par
     use mod_atccfp
     use mod_atdist_1
     use mod_at_ecrdist
@@ -284,30 +285,36 @@ contains
 !       sont esssayees.
 !       boucle sur les domaines
 !
-       do l=1,lzx
-          lm=l+(img-1)*lz
-!
-!         calcul des centres des cellules
-          call atccc( &
-               x,y,z, &
-               xcc,ycc,zcc, &
-               lm)
-!
-!         calcul distrance de chaque cellule d'un domaine aux parois et
-!         cellule origine de la "normale"
-          call atdist_2( &
-               x,y,z, &
-               xpar,ypar,zpar, &
-               xcc,ycc,zcc,dist2, &
-               dist,mnpar, &
-               lm)
-          if(kecrdis.eq.1) then
-!           ecriture disque des distances (fichiers separes "fdist_l")
-             call at_ecrdist( &
-                  lm,         &
-                  dist,mnpar)
-          endif
-       enddo
+!       do l=1,lzx
+!          lm=l+(img-1)*lz
+!!
+!!         calcul des centres des cellules
+!          call atccc( &
+!               x,y,z, &
+!               xcc,ycc,zcc, &
+!               lm)
+!!
+!!         calcul distrance de chaque cellule d'un domaine aux parois et
+!!         cellule origine de la "normale"
+!          call atdist_2( &
+!               x,y,z, &
+!               xpar,ypar,zpar, &
+!               xcc,ycc,zcc,dist2, &
+!               dist,mnpar, &
+!               lm)
+!          if(kecrdis.eq.1) then
+!!           ecriture disque des distances (fichiers separes "fdist_l")
+!             call at_ecrdist( &
+!                  lm,         &
+!                  dist,mnpar)
+!          endif
+!       enddo
+
+        call atdist_2_par(img, &
+             x,y,z, &
+             xpar,ypar,zpar, &
+             dist2,dist,mnpar)
+
     endif
 !
     return

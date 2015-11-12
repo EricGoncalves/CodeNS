@@ -508,13 +508,19 @@ module mod_mpi
         IMPLICIT NONE
         ! THIS ROUTINE COMPUTE AN "OR" OPERATION BETWEEN IN
 
-        LOGICAL,INTENT(IN)  ::  IN
-        LOGICAL,INTENT(OUT) :: OUT
+        LOGICAL,INTENT(INOUT)  ::  IN
+        LOGICAL,INTENT(OUT),optional :: OUT
+        LOGICAL             :: TMP
         integer :: ierr
 #ifdef WITH_MPI
-        CALL MPI_ALLREDUCE(IN, OUT, 1, MPI_LOGICAL,MPI_LOR, MPI_COMM_WORLD,IERR)
+        CALL MPI_ALLREDUCE(IN, TMP, 1, MPI_LOGICAL,MPI_LOR, MPI_COMM_WORLD,IERR)
+        if (present(out))  then
+          OUT=TMP
+        else
+          IN=TMP
+        endif
 #else
-        OUT=IN
+        if (present(out))  OUT=IN
 #endif
 
     END SUBROUTINE LOR_MPI
