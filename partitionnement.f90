@@ -84,6 +84,7 @@ contains
 
     verbosity=1 ! from 0 to 3
     nblocks=max(nblocks,nprocs) ! minimum number of bloc that we need
+    nblocks=max(nblocks,sum(nsplit)) ! number of bloc that we need
     nblocks=max(nblocks,num_bg) ! number of bloc that we need
 
     if(.true.) then ! always do the partitionning in order to reequilibrate
@@ -1013,13 +1014,15 @@ contains
     !    end do
     !    nblock2(k)=nblock2(k)+1
     ! end do
-    li=sum(nblock2)
-    where(nblock2>1) nblock2=-nblock2 ! block user values
+    where(nblock2>0) nblock2=-nblock2 ! block user values
+    where(nblock2==0) nblock2=1 
+    li=sum(abs(nblock2))
 
     !   compute number of spliting of each blocks with the best equilibrium
     do i=li,nblocks-1                       ! split until we have nblocks blocks
        sblock=ceiling(ii2*jj2*kk2*1./nblock2) ! compute the current size of blocks
        j=maxloc(sblock,1)                        ! split the first bigest block
+       if(sblock(j)<0) stop "partitionning impossible with user parameters"
        do k=j+1,lt
           if(sblock(k)==sblock(j) &          ! if more than one bigest block
                .and.nblock2(k)>nblock2(j)) &      ! split the most splitted

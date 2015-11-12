@@ -16,8 +16,8 @@ contains
     integer          :: nblocks
     integer          :: nsplit(num_bg),nsplit_dir(3,num_bg)
 
-    nblocks=1 ! initial values
-    nsplit=1
+    nblocks=1    ! initial values
+    nsplit=0     ! 0 mean automatic
     nsplit_dir=0 ! 0 mean automatic
 
     call tcmd_partitionnement(mot,imot,nmot,nblocks,nsplit,nsplit_dir)
