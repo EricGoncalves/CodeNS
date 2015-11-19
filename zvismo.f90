@@ -51,11 +51,10 @@ contains
     integer          ::   j2m1,     k,    k1,    k2,  k2m1
     integer          ::      l,     n,    n0,   nid,  nijd
     integer          ::    njd
-    double precision ::            a,    mu(ip12),s(ip11,ip60),  temp(ip11)
-    double precision ::        usrey
+    double precision ::   mu(ip12),s(ip11,ip60),temp(ip11)
+    double precision ::   a, bl, usrey
 !
 !-----------------------------------------------------------------------
-!
 !
     iarret=0
 !
@@ -75,24 +74,51 @@ contains
     njd = jd2(l)-jd1(l)+1
     nijd= nid*njd
 
-!     constante sutherland pour l'air (=110.4K)
-    a=110.4/tnz
+    if(iflu.eq.1) then    !air  
+!   constante sutherland pour l'air (=110.4K)
+      a=110.4/tnz
+    elseif(iflu.eq.2) then  !eau froide
+!     constante loi viscosite liquide: mu=A*exp(B/T)
+!     pour l'eau  : A=1.24e-6 Pa.s   et B=1968K
+!     pour le R114: A=10.336e-6 Pa.s et B=976.9738K
+       bl=1968./tnz
+    elseif(iflu.eq.3) then  !freon R114
+       bl=976.9738/tnz
+    endif
     usrey=1./reynz
 
-    do k=k1,k2m1
-       do j=j1,j2m1
-          ind1=ind(i1  ,j,k)
-          ind2=ind(i2m1,j,k)
-          do n=ind1,ind2
-             if(temp(n).le.0.) then
-                iarret=iarret+1
-                mu(n)=0.
-             else
-                mu(n)=usrey*temp(n)*sqrt(temp(n))*(1.+a)/(temp(n)+a)
-             endif
-          enddo
+    if(iflu.eq.1) then
+     do k=k1,k2m1
+      do j=j1,j2m1
+       ind1=ind(i1  ,j,k)
+       ind2=ind(i2m1,j,k)
+       do n=ind1,ind2
+         if(temp(n).le.0.) then
+           iarret=iarret+1
+           mu(n)=0.
+         else
+           mu(n)=usrey*temp(n)*sqrt(temp(n))*(1.+a)/(temp(n)+a)
+         endif
        enddo
-    enddo
+      enddo
+     enddo
+     elseif(iflu.ge.2) then
+      do k=k1,k2m1
+       do j=j1,j2m1
+        ind1=ind(i1  ,j,k)
+        ind2=ind(i2m1,j,k)
+        do n=ind1,ind2
+         if(temp(n).le.0.) then
+          iarret=iarret+1
+          mu(n)=0.
+         else
+!          mu(n)=usrey*exp(bl*(1./temp(n)-1.))
+          mu(n)=usrey
+         endif
+        enddo
+       enddo
+      enddo
+     endif
 !
     if(iarret.ne.0) then
        write(imp,'(/,"!!!zvismo: temperature negative en",i8," cellules domaine= ",i4)')iarret,l

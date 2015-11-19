@@ -60,10 +60,10 @@ implicit none
   parameter(kdimg  =1)
   parameter(kdimv  =1)
   parameter(kdimk  =1)
-  parameter(mdimub =4000)
-  parameter(mdimtbf=9000)
-  parameter(mdimtnf=9000)
-  parameter(mdimtcf=16000)
+  parameter(mdimub =27000)
+  parameter(mdimtbf=300000)
+  parameter(mdimtnf=75000)
+  parameter(mdimtcf=225000)
   parameter(mdimtrf=1)
   parameter(nvar   =7)
 !  parameter(    ccg=1./3.) !3D
@@ -82,9 +82,9 @@ module definition
   use para_fige
 implicit none
   integer          :: klomg
-  double precision ::              aa1,             anz,             dnz,             ha1,             omg
-  double precision ::              pa1,           perio,             pnz,          protat,          ptrans
-  double precision ::              rnz,            roa1,            ronz,             ta1,             tnz
+  double precision :: aa1,             anz,             dnz,             ha1,             omg
+  double precision :: pa1,           perio,             pnz,          protat,          ptrans
+  double precision :: rnz,            roa1,            ronz,             ta1,             tnz
   double precision :: varst(nsta,lsta)
 end module definition
 !
@@ -115,16 +115,11 @@ implicit none
     integer          :: intmx, linx
     double precision :: degrad,  pis2,raddeg,reelmn,reelmx
   data linx/132/
-!  data intmx/999999/
-!  data reelmx/999999999./
-!  data reelmn/1.e-30/
-!  data pis2/1.570796327/
-!  data raddeg/57.29577951/
-!  data degrad/0.01745329252/
 end module constantes
 !
 module proprieteflu
 implicit none
+    integer          :: iflu
     double precision ::    cp,   cv,  gam, gam1, gam2
     double precision ::  gam3, gam4, gam5,pinfl,   pr
     double precision ::   prt,   ql,   rd,reynz,  rgp
@@ -146,7 +141,7 @@ implicit none
     integer          ::            kperio,           kpinfl,             kpnz,              kpr,             kprt
     integer          ::               kql,              krd,           kreynz,             krnz,            kronz
     integer          ::           ktitrt1,             ktnz,             ktol,           ktolke,kvarst(nsta,lsta)
-    integer          ::               kxk
+    integer          ::               kxk,            kiflu
     integer         ,allocatable ::     keta(:),    kki2(:),    kki4(:),    kkmf(:),   klmax(:),      kncycle(:)
 end module kcle
 !

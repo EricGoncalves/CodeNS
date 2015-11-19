@@ -74,7 +74,6 @@ contains
 !_I    fgam       : arg real(ip42      ) ; fonction d'intermittence pour
 !_I                                        transition
 !
-!
 !-----parameters figes--------------------------------------------------
 !
     use para_var
@@ -85,25 +84,41 @@ contains
     use modeleturb
     use definition
     implicit none
-    integer          ::        iter,         lm,          m,       m0ns,         mb
-    integer          ::        mfbm,mnpar(ip12),       mpar,         mt,        n0c
-    integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
-    integer          ::          ni,        nii
-    double precision ::          cta,         ctb,       denom,  dist(ip12),  fgam(ip42)
-    double precision ::     mu(ip12),         mup,   mut(ip12),          n1,          n2
-    double precision ::           n3,   nxn(ip42),   nyn(ip42),   nzn(ip42),        phip
-    double precision ::          qc1,   qcx(ip12),   qcy(ip12),   qcz(ip12),         rop
-    double precision ::           sv,          t1,          t2,          t3,  temp(ip11)
-    double precision ::        temp1,          tn,         top,  toxx(ip12),  toxy(ip12)
-    double precision ::   toxz(ip12),  toyy(ip12),  toyz(ip12),  tozz(ip12),    tp(ip40)
-    double precision ::           tt,       upyp1,v(ip11,ip60),         v1t,         v1x
-    double precision ::          v1y,         v1z,        yp02
+    integer          ::   iter,    lm,     m,  m0ns,    mb
+    integer          ::   mfbm, mnpar(ip12), mpar, mt, n0c
+    integer          ::     nc,  ncbd(ip41), ncin(ip41), ncyc,nfacns
+    integer          ::     ni,   nii
+    double precision ::   cta, ctb,denom, dist(ip12), fgam(ip42)
+    double precision ::    mu(ip12), mup, mut(ip12), n1, n2
+    double precision ::    n3,nxn(ip42),nyn(ip42),nzn(ip42), phip
+    double precision ::   qc1,qcx(ip12),qcy(ip12),qcz(ip12), rop
+    double precision ::    sv, t1, t2, t3, temp(ip11)
+    double precision :: temp1, tn, top, toxx(ip12), toxy(ip12)
+    double precision ::  toxz(ip12), toyy(ip12), toyz(ip12), tozz(ip12), tp(ip40)
+    double precision ::    tt,upyp1, v(ip11,ip60), v1t, v1x
+    double precision ::   v1y, v1z, yp02, bl, usrey
     logical          :: lamin
 !
 !-----------------------------------------------------------------------
 !
+!     lois viscosite : sutherland pour gaz et loi exponentielle pour liquide
+!     loi sutherland mu=mu0*sqrt(T/T0)*(1+S/T0)/(1+S/T)
+!     pour vapeur d'eau S=548K, mu0=9.73e-6 Pa.s et T0=293K
+!     loi exponentielle mu=A*exp(B/T)
+!     pour l'eau A=1.24e-6 Pa.s et B=1968K
+      if(iflu.eq.1) then  !air
+       sv=110.4/tnz
+      elseif(iflu.eq.2) then !eau froide
+       sv=548./tnz
+       bl=1968./tnz
+      elseif(iflu.eq.2) then !freon R114
+!     pour vapeur R114 : S=260K, mu0=10.527e-6 Pa.s et T0=293K
+!     pour le R114: A=10.336e-6 Pa.s et B=976.9738K
+       sv=260./tnz
+       bl=976.9738/tnz
+      endif
+      usrey=1./reynz
 !
-    sv=110.4/tnz !air
     mt=mmb(mfbm)
     m0ns=mpn(mfbm)
     n0c=npc(lm)
@@ -128,11 +143,11 @@ contains
        v1x=v(ni,2)/v(ni,1)
        v1y=v(ni,3)/v(ni,1)
        v1z=v(ni,4)/v(ni,1)
-!       normale a la paroi
+!      normale a la paroi
        n1=nxn(nfacns)
        n2=nyn(nfacns)
        n3=nzn(nfacns)
-!       tangente normee a la paroi
+!      tangente normee a la paroi
        tn=v1x*n1+v1y*n2+v1z*n3
        t1=v1x-tn*n1
        t2=v1y-tn*n2
@@ -141,15 +156,20 @@ contains
        t1=t1/tt
        t2=t2/tt
        t3=t3/tt
-!       composante tangentielle de la vitesse dans repere paroi : v1t
+!      composante tangentielle de la vitesse dans repere paroi : v1t
        v1t=v1x*t1+v1y*t2+v1z*t3
-!       temperature cellule 1 : temp1
+!      temperature cellule 1 : temp1
        temp1=temp(ni)
-!       masse volumique a la paroi
+!      masse volumique a la paroi
        rop=v(ni,1)*temp1/tp(m)
-!       viscosite moleculaire a la paroi
-       mup=mu(ni)*sqrt(tp(m)/temp1)*(1.+sv/temp1)/(1.+sv/tp(m))
-!       correction de compressibilite (loi de Van Driest)
+!      viscosite moleculaire a la paroi
+       if(iflu.eq.1) then 
+        mup=mu(ni)*sqrt(tp(m)/temp1)*(1.+sv/temp1)/(1.+sv/tp(m))
+       else
+        mup=usrey*exp(bl*(1./tp(m)-1.))
+!        mup=mu(ni)
+       endif
+!      correction de compressibilite (loi de Van Driest)
        cta=(mu(ni)+mut(ni))/(cp*(mu(ni)/pr+mut(ni)/prt))
        ctb=cta/(2.*tp(m))
        denom=(tp(m)-temp1-cta*0.5*v1t**2)*sqrt(temp1/tp(m)) + &

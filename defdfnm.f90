@@ -53,6 +53,8 @@ contains
     kvisq=0
     kkvisq=1
 !
+    iflu=1
+    kiflu=1
     ql=0.
     kql=1
     pinfl=1.

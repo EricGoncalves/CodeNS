@@ -46,7 +46,6 @@ contains
 !_I    fgam       : arg real(ip42      ) ; fonction d'intermittence pour
 !_I                                        transition
 !
-!
 !-----parameters figes--------------------------------------------------
 !
     use para_var
@@ -57,49 +56,41 @@ contains
     use definition
     use modeleturb
     implicit none
-    integer          ::        iter,          l,          m,       m0ns,         mb
-    integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
-    integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
-    integer          ::          ni,        nii
-    double precision ::           c1,         c13,         c18,          c2,          c3
-    double precision ::           c4,          ca,          cb,          co,  dist(ip12)
-    double precision ::         dudy,  fgam(ip42),    mu(ip12),         mup,   mut(ip12)
-    double precision ::           n1,          n2,          n3,   nxn(ip42),   nyn(ip42)
-    double precision ::    nzn(ip42),         pka,         pkb,         rc4,    rnutilde
-    double precision ::          rop,          sv,          t1,          t2,          t3
-    double precision ::   temp(ip11),       temp1,          tn,         top,      tparoi
-    double precision ::           tt,       upyp1,v(ip11,ip60),         v1t,         v1x
-    double precision ::          v1y,         v1z,        yp02,      yplus1
+    integer          ::  iter,     l,     m,  m0ns,    mb
+    integer          ::  mfb, mnpar(ip12),  mpar,    mt,   n0c
+    integer          ::  nc,  ncbd(ip41),  ncin(ip41), ncyc,nfacns
+    integer          ::  ni,   nii
+    double precision ::  c1,     c13,     c18,      c2,      c3
+    double precision ::  c4,      ca,      cb,      co,    dist(ip12)
+    double precision ::  dudy, fgam(ip42), mu(ip12), mup, mut(ip12)
+    double precision ::  n1,      n2,      n3, nxn(ip42), nyn(ip42)
+    double precision ::  nzn(ip42), pka, pkb, rc4,rnutilde
+    double precision ::  rop,      sv,      t1,      t2,      t3
+    double precision ::  temp(ip11), temp1,      tn,     top,  tparoi
+    double precision ::  tt,   upyp1,  v(ip11,ip60),     v1t,     v1x
+    double precision ::  v1y, v1z, yp02,  yplus1, bl, usrey
     logical          :: lamin
 !
 !-----------------------------------------------------------------------
-!
 !
 !     lois viscosite : sutherland pour gaz et loi exponentielle pour liquide
 !     loi sutherland mu=mu0*sqrt(T/T0)*(1+S/T0)/(1+S/T)
 !     pour vapeur d'eau S=548K, mu0=9.73e-6 Pa.s et T0=293K
 !     loi exponentielle mu=A*exp(B/T)
 !     pour l'eau A=1.24e-6 Pa.s et B=1968K
-!      if(iflu.eq.1) then  !eau
-!        sv=548./tnz
-!        s0=tnz/293.
-!        mu0=9.73E-6
-!        al=1.214E-6
-!        bl=1968./tnz
-!      elseif(iflu.eq.2) then !freon R114
+      if(iflu.eq.1) then  !air
+       sv=110.4/tnz
+      elseif(iflu.eq.2) then !eau froide
+       sv=548./tnz
+       bl=1968./tnz
+      elseif(iflu.eq.2) then !freon R114
 !     pour vapeur R114 : S=260K, mu0=10.527e-6 Pa.s et T0=293K
 !     pour le R114: A=10.336e-6 Pa.s et B=976.9738K
-!        sv=260./tnz
-!        s0=tnz/293.
-!        mu0=10.527E-6
-!        al=10.336E-6
-!        bl=976.9738/tnz
-!      elseif(iflu.eq.3) then !air
-!        sv=110.4/tnz !air
-!        STOP
-!      endif
+       sv=260./tnz
+       bl=976.9738/tnz
+      endif
+      usrey=1./reynz
 !
-    sv=110.4/tnz !air
     c13=1./3.
     c18=1./18.
 !
@@ -150,7 +141,12 @@ contains
        tparoi=temp1+0.5*pkb*v1t**2/pka
 !       tparoi=temp(nc)
 !      viscosite moleculaire a la paroi
-       mup=mu(ni)*sqrt(tparoi/temp1)*(1.+sv/temp1)/(1.+sv/tparoi)
+       if(iflu.eq.1) then
+        mup=mu(ni)*sqrt(tparoi/temp1)*(1.+sv/temp1)/(1.+sv/tparoi)
+       else
+!        mup=usrey*exp(bl*(1./tparoi-1.))
+        mup=mu(ni)
+       endif
 !      masse volumique a la paroi
        rop=v(ni,1)*temp1/tparoi
 !      correction de compressibilite (loi de Van Driest)
@@ -194,7 +190,7 @@ contains
 !           top=max(1.e-10,mup*v1t/dist(ni))
 !           do jj=1,10
 !             yy=log(dist(ni)*sqrt(rop*top)/mup)
-!              top=max(1.e-10,rop*v1t** 2/(0.17962*yy**4- &
+!              top=max(1.e-10,rop*v1t** 2/(0.17962*yy**4- & 
 !                       2.2117*yy**3+9.2052*yy**2-10.804*yy &
 !                   +6.4424)**2)
 !            end do

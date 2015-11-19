@@ -16,8 +16,9 @@ contains
     use kcle
     use proprieteflu
     use mod_valreel
+    use mod_valenti
     implicit none
-    integer          ::      icmt,imot(nmx),     kval,       nm,     nmot
+    integer          :: icmt,imot(nmx),nm,nmot
 !
 !-----------------------------------------------------------------------
 !
@@ -27,7 +28,6 @@ contains
     do icmt=1,32
        comment(icmt:icmt)=' '
     enddo
-    kval=0
 !
     if(kgam.eq.2) kgam=3
     if(kpr.eq.2) kpr=3
@@ -43,7 +43,10 @@ contains
        nm=2
        do while(nm.lt.nmot)
           nm=nm+1
-          if((imot(nm).eq.6).and.(mot(nm).eq.'gammal')) then
+          if((imot(nm).eq.4).and.(mot(nm).eq.'iflu')) then
+             nm=nm+1
+             call valenti(mot,imot,nm,iflu,kiflu)
+          else if((imot(nm).eq.6).and.(mot(nm).eq.'gammal')) then
              nm=nm+1
              call valreel(mot,imot,nm,gam,kgam)
           else if((imot(nm).eq.5).and.(mot(nm).eq.'rgazl')) then

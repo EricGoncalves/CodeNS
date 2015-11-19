@@ -18,7 +18,7 @@ contains
     !
     !     act
     !_a    realisation du partitionnement
-    !      ecrit par Alexandre Poux
+    !      ecrit par Alexandre Poux - sept 2015
     !
     !***********************************************************************
     !

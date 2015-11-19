@@ -1,12 +1,10 @@
 module mod_atdist_2
   implicit none
 contains
-  subroutine atdist_2( &
+  subroutine atdist_2(img, &
        x,y,z, &
        xpar,ypar,zpar, &
-       xcc,ycc,zcc,dist2, &
-       dist,mnpar, &
-       l)
+       dist2,dist,mnpar)
 !
 !***********************************************************************
 !
@@ -14,6 +12,7 @@ contains
 !_A    calcul de la facette de paroi la plus proche d'une cellule
 !_A    et rattachement de la cellule au pointeur de la facette dans
 !_A    tableaux des frontieres a normales stockees
+!_A    VERSION POUR LE PARALLELE
 !
 !     INP
 !_I    x          : arg real(ip21      ) ; coordonnee sur l'axe x
@@ -39,73 +38,117 @@ contains
     use sortiefichier
     use maillage
     use boundary
+    use mod_mpi
+    use tools
+    use mod_atccc
+    use mod_at_ecrdist
     implicit none
-    integer          ::           i,         i1,         i2,      imini,          j
+    integer          ::           i,         i1,         i2,          j
     integer          ::          j1,         j2,          k,         k1,         k2
     integer          ::           l,        m0b,         mb,        mbb,       mbmx
-    integer          ::          mc,mnpar(ip12),         n0,         nc,       nfbi
-    integer          ::         nid,       nijd,        njd,         no
-    double precision ::  dist(ip12),dist2(ip00),      dmini,    x(ip21),  xcc(ip00)
+    integer          ::          mc,mnpar(ip12),         n0,         nc
+    integer          ::         nid,       nijd,        njd
+    integer          ::         bcg,        bcl,        img,         lm
+    logical          ::     isparoi
+    double precision ::  dist(ip12),dist2(ip00),    x(ip21),  xcc(ip00)
     double precision ::  xpar(ip00),    y(ip21),  ycc(ip00), ypar(ip00),    z(ip21)
     double precision ::   zcc(ip00), zpar(ip00)
+    double precision,allocatable :: buff(:,:)
 !
 !-----------------------------------------------------------------------
 !
 !
 
+   dist=Huge(1.)
+!  boucle sur toutes les conditions limites
+   do bcg=1,num_bcg
+
+!     test si paroi
+      isparoi=.False.
+      if(rank==bcg_to_proc(bcg)) then
+        bcl=bcg_to_bcl(bcg)
+        isparoi=((cl(bcl)(1:2).eq.'pa').or.(cl(bcl)(1:2).eq.'lp').or. &
+              (cl(bcl)(1:2).eq.'gl'))
+      endif
+      call lor_mpi(isparoi)
+      if(isparoi) then
+
+!       broadcast the coordinates of points on the boundary
+        mbmx=0
+        if(rank==bcg_to_proc(bcg)) mbmx=mmb(bcl)
+        call bcast(mbmx,bcg_to_proc(bcg))
+        call reallocate(buff,3,mbmx)
+        if(rank==bcg_to_proc(bcg)) then
+           m0b=mpn(bcl)
+           do mb=1,mbmx
+              mbb=m0b+mb
+              buff(1,mb)=xpar(mbb)
+              buff(2,mb)=ypar(mbb)
+              buff(3,mb)=zpar(mbb)
+           enddo
+        endif
+        call bcast(buff,bcg_to_proc(bcg))
+
+!       boucle sur les domaines locaux
+       do l=1,lzx
+          lm=l+(img-1)*lz
+
+          n0=npn(l)
+          i1=ii1(l)
+          j1=jj1(l)
+          k1=kk1(l)
 !
-    n0=npn(l)
-    i1=ii1(l)
-    j1=jj1(l)
-    k1=kk1(l)
+          nid = id2(l)-id1(l)+1
+          njd = jd2(l)-jd1(l)+1
 !
-    nid = id2(l)-id1(l)+1
-    njd = jd2(l)-jd1(l)+1
-!
-    nijd = nid*njd
-    i2=ii2(l)
-    j2=jj2(l)
-    k2=kk2(l)
-!
-!     boucle sur les cellules
-    do k=k1,k2-1
-       do j=j1,j2-1
-          do i=i1,i2-1
-             nc=ind(i,j,k)
-             mc=nc-n0
-!
-!           Boucle sur les facettes des parois. Recherche du minimum de la
-!           distance paroi par paroi.
-!                    nfbi : numero interne paroi
-!                    mpn  : pointeur fin frontiere precedente norm. stockees
-!                    mmb  : nombre de facettes sur une paroi
-!                    nc   : pointeur cellule tab toutes cellules
-!                   imin  : pointeur facette paroi la plus proche dans
-!                           vecteur des facettes de toutes les parois
-!
-             dmini=1.e+20
-             do no=1,nbd
-                nfbi=lbd(no)
-                m0b=mpn(nfbi)
-                mbmx=mmb(nfbi)
-                do mb=1,mbmx
-                   mbb=m0b+mb
-                   dist2(mb)=(xcc(mc)-xpar(mbb))**2+(ycc(mc)-ypar(mbb))**2+ &
-                        (zcc(mc)-zpar(mbb))**2
-!
-!             existe une fonction pour le minimum (do 50....50 continue)
-                   if(dist2(mb).lt.dmini) then
-                      imini=m0b+mb
-                      dmini=dist2(mb)
-                   end if
+          nijd = nid*njd
+          i2=ii2(l)
+          j2=jj2(l)
+          k2=kk2(l)
+
+!         calcul des centres des cellules
+          call atccc( &
+               x,y,z, &
+               xcc,ycc,zcc, &
+               lm)
+
+!         boucle sur les cellules du domaine
+          do k=k1,k2-1
+             do j=j1,j2-1
+                do i=i1,i2-1
+                   nc=ind(i,j,k)
+                   mc=nc-n0
+
+!                  boucle sur les points de la condition limite
+                   do mb=1,mbmx
+!                    calcul des distances
+                     dist2(mc)=(xcc(mc)-buff(1,mb))**2+(ycc(mc)-buff(2,mb))**2+ &
+                          (zcc(mc)-buff(3,mb))**2
+                     if(dist2(mc).lt.dist(nc)) then
+                        mnpar(nc)=mb
+!                        mnpar2(nc)=bcg
+                        dist(nc)=dist2(mc)
+                     end if
+                   enddo
                 enddo
              enddo
-!
-             dist(nc) =sqrt(dmini)
-             mnpar(nc)=imini
           enddo
        enddo
-    enddo
+     endif
+   enddo
+
+  dist=sqrt(dist)
+
+    if(kecrdis.eq.1) then
+      do l=1,lzx
+        lm=l+(img-1)*lz
+!
+!           ecriture disque des distances (fichiers separes "fdist_l")
+         call at_ecrdist( &
+              lm,         &
+              dist,mnpar)
+      enddo
+    endif
 !
     return
   contains

@@ -75,6 +75,7 @@ contains
     use mod_implimf_2d
     use mod_implimf_3d
     use mod_implimf_prcd2
+    use mod_implimf_prcd2_3d
     use mod_implimf_eu
     use mod_met_num
     use mod_met_ini
@@ -150,10 +151,6 @@ contains
     allocate(m1tb(ip00))
 !
 !-----------------------------------------------------------------------
-!
-!
-
-
 !     keinit : controle initialisation variables k et seconde (epsilon, l, ...)
 !              avant "atsch_num" :
 !                0      : lecture mut, k, epsilon
@@ -1053,8 +1050,8 @@ contains
 !                 pression,ztemp,cson)
              elseif(kprec.eq.2) then
 !         preconditionnement basse vitesse de Turkel (P,u,e)
-!            if(equat(3:4).eq.'2d') then
-                call implimf_prcd2( &
+              if(equat(3:4).eq.'2d') then
+                 call implimf_prcd2( &
                      lm,u,dt,v,d,ff, &
                      mu,mut, &
                      equat,lmax(lm), &
@@ -1062,16 +1059,16 @@ contains
                      vol,dtpas,ityprk, &
                      tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                      pression,cson)
-!             elseif(equat(3:4).eq.'3d') then
-!              call implimf_prcd2_3d( &
-!                 lm,u,dt,v,d,ff, &
-!                 mu,mut, &
-!                 equat,lmax(lm), &
-!                 sn(npsn),lgsnlt, &
-!                 vol,dtpas,ityprk, &
-!                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
-!                 pression,cson)
-!             endif
+             elseif(equat(3:4).eq.'3d') then
+               call implimf_prcd2_3d( &
+                 lm,u,dt,v,d,ff, &
+                 mu,mut, &
+                 equat,lmax(lm), &
+                 sn(npsn),lgsnlt, &
+                 vol,dtpas,ityprk, &
+                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
+                 pression,cson)
+              endif
              endif
 !             if(kdtl.eq.0) then
 !              call implimf_prcd2inst( &

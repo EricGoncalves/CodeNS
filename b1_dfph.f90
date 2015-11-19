@@ -30,8 +30,9 @@ contains
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
-    character(len=24) ::  cgam,crd,cpinfl,cql,cpr,cprt,creynz
+    character(len=24) ::  cgam,crd,cpinfl,cql,cpr,cprt,creynz,ciflu
 !
+    call convich(kiflu,ciflu)
     call convich(kgam,cgam)
     call convich(krd,crd)
     call convich(kpinfl,cpinfl)
@@ -42,18 +43,20 @@ contains
 !
     form='(/,2x,''definition de la physique''/' &
          //'2x,''-------------------------'',/' &
+         //'2x,''type fluide              : '',4x,i5   ,2x,a/' &
          //'2x,''gamma liquide            : '',4x,e12.6,2x,a/' &
          //'2x,''cte gaz liquide          : '',4x,e12.6,2x,a/' &
          //'2x,''pinf liquide             : '',4x,e12.6,2x,a/' &
          //'2x,''energie ref liquide      : '',4x,e12.6,2x,a)'
-    write(imp,form) gam,cgam, &
+    write(imp,form) iflu,ciflu, &
+         gam,cgam, &
          rd,crd, &
          pinfl,cpinfl, &
          ql,cql
     if (equat(1:2).eq.'ns') then
        form  ='(2x,''pr liquide               : '',4x,e12.6,2x,a/' &
-            //'2x,''prt                      : '',4x,e12.6,2x,a/' &
-            //'2x,''reynz                    : '',4x,e12.6,2x,a)'
+             //'2x,''prt                      : '',4x,e12.6,2x,a/' &
+             //'2x,''reynz                    : '',4x,e12.6,2x,a)'
        write(imp,form) pr,cpr, &
             prt,cprt, &
             reynz,creynz

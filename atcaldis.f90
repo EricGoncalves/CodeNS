@@ -122,7 +122,6 @@ contains
     use constantes
     use boundary
     use mod_atdist_2
-    use mod_atdist_2_par
     use mod_atccfp
     use mod_atdist_1
     use mod_at_ecrdist
@@ -136,7 +135,7 @@ contains
     integer          ::       m1max,      m1min,        m20,      m2max,      m2min
     integer          ::         m30,      m3max,      m3min,         mf,  mnc(ip43)
     integer          :: mnpar(ip12),          n, ncbd(ip41), ncin(ip41),       nfbe
-    integer          ::        nfbi,         no,proc,nbdkog,nbd1
+    integer          ::        nfbi,         no,proc,nbdkog
     integer,allocatable :: nbdko_proc(:)
     double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
     double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
@@ -190,8 +189,7 @@ contains
        write(imp,'(/,"!!!atcaldis: pb declaration parois - arret")')
        stop
     end if
-    call sum_mpi(nbd,nbd1)
-    if(nbd1.eq.0) then
+    if(nbd.eq.0) then
        write(imp,'(/,"!!!atcaldis: pas de paroi pour calcul des distances aux parois - arret")')
        stop
     end if
@@ -311,7 +309,7 @@ contains
 !          endif
 !       enddo
 
-        call atdist_2_par(img, &
+        call atdist_2(img, &
              x,y,z, &
              xpar,ypar,zpar, &
              dist2,dist,mnpar)
