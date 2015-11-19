@@ -28,8 +28,7 @@ contains
 !_I    kd2        : arg int              ; indice max en k fictif
 !_I    mnpar      : arg real(ip12      ) ; pointeur dans tableaux front normales
 !_I                                        stockees du point de rattach normale
-!_I    fgam       : arg real(ip42      ) ; fonction d'intermittence pour
-!_I                                        transition
+!_I    fgam       : arg real(ip42      ) ; fonction d'intermittence pour transition
 !
 !     OUT
 !_/    mut        : arg real(ip12      ) ; viscosite turbulente
