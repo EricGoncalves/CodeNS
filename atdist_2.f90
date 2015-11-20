@@ -4,7 +4,7 @@ contains
   subroutine atdist_2(img, &
        x,y,z, &
        xpar,ypar,zpar, &
-       dist2,dist,mnpar)
+       dist2,dist,mnpar,mnpar2)
 !
 !***********************************************************************
 !
@@ -46,7 +46,7 @@ contains
     integer          ::           i,         i1,         i2,          j
     integer          ::          j1,         j2,          k,         k1,         k2
     integer          ::           l,        m0b,         mb,        mbb,       mbmx
-    integer          ::          mc,mnpar(ip12),         n0,         nc
+    integer          ::          mc,mnpar(ip12),mnpar2(ip12),         n0,         nc
     integer          ::         nid,       nijd,        njd
     integer          ::         bcg,        bcl,        img,         lm
     logical          ::     isparoi
@@ -126,7 +126,7 @@ contains
                           (zcc(mc)-buff(3,mb))**2
                      if(dist2(mc).lt.dist(nc)) then
                         mnpar(nc)=mb
-!                        mnpar2(nc)=bcg
+                        mnpar2(nc)=bcg
                         dist(nc)=dist2(mc)
                      end if
                    enddo

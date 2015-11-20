@@ -72,7 +72,7 @@ contains
     integer          ::        icyc,     icycle,    icyexpl,      idcyc,        img
     integer          ::        iter,     itypdf,     ityprk,          l,         lm
     integer          ::     mcyresi,    mcysave,        mfc,        mfr,         mg
-    integer          ::        mglp,  mnc(ip43),mnpar(ip12),  mnr(ip44),         nc
+    integer          ::        mglp,  mnc(ip43),mnpar(ip12),mnpar2(ip12),  mnr(ip44),         nc
     integer          ::  ncbd(ip41), ncin(ip41),       ncyc,      ncycl,      ndcyc
     integer          ::        ndeb,       nfin,        ngx,kfin,k,ll
     double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
@@ -184,7 +184,7 @@ contains
                      toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
                      tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10, &
                      tm11,tm12,tm13, &
-                     ncin,mnpar,fgam, &
+                     ncin,mnpar,mnpar2,fgam, &
                      mnc, &
                      ncbd,mnr,xnr,ynr,znr, &
                      bceqt, &

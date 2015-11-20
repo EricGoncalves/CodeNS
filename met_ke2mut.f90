@@ -3,7 +3,7 @@ module mod_met_ke2mut
 contains
   subroutine met_ke2mut( &
        l,ncyc, &
-       v,mu,mut,dist,mnpar,ncin, &
+       v,mu,mut,dist,mnpar,mnpar2,ncin, &
        txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
        frac)
 !
@@ -46,7 +46,7 @@ contains
     integer          ::           j,         j1,       j1m1,         j2
     integer          ::        j2m1,          k,         k1,       k1m1
     integer          ::          k2,       k2m1,          l,          m
-    integer          :: mnpar(ip12),          n,        n0c,        nci, ncin(ip41)
+    integer          :: mnpar(ip12),mnpar2(ip12),          n,        n0c,        nci, ncin(ip41)
     integer          ::         ncj,        nck,       ncyc,        nid,       nijd
     integer          ::         njd
     double precision ::          c14,         c22,         c50,         chi,        chi2

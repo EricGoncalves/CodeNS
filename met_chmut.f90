@@ -3,7 +3,7 @@ module mod_met_chmut
 contains
   subroutine met_chmut( &
        l, &
-       v,mu,mut,dist,mnpar,utau)
+       v,mu,mut,dist,mnpar,mnpar2,utau)
 !
 !***********************************************************************
 !
@@ -22,7 +22,7 @@ contains
     integer          ::           i,         i1,         i2,       i2m1
     integer          ::           j,         j1,         j2,       j2m1
     integer          ::           k,         k1,         k2,       k2m1
-    integer          ::           l,mnpar(ip12),         mp,          n,         n0
+    integer          ::           l,mnpar(ip12),mnpar2(ip12),         mp,          n,         n0
     integer          ::         nci,        ncj,        nck,        nid,       nijd
     integer          ::         njd
     double precision ::   dist(ip12),         fmu,    mu(ip12),   mut(ip12),  utau(ip42)

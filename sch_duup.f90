@@ -213,7 +213,7 @@ contains
 !
           else if(kcmut.eq.5) then
 !           modele de Chien
-!            call met_chmut(lm,v,mu,mut,dist,mnpar,utau)
+!            call met_chmut(lm,v,mu,mut,dist,mnpar,mnpar2,utau)
 !
              write(imp,'(/,''!!!sch_duup: modele k-e de Chien '',''non prevu'')')
              stop
@@ -224,7 +224,7 @@ contains
 !
 !            call met_ke2mut(
 !     &           l,ncyc,
-!     &           v,mu,mut,dist,mnpar,ncin,
+!     &           v,mu,mut,dist,mnpar,mnpar2,ncin,
 !     &           txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z,
 !     &           qcz000)
 !

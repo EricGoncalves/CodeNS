@@ -320,7 +320,7 @@ program solve
   integer          ::          l,         m,      mfbi,       mfc,       mfn
   integer          ::        mfr,      ncyc,      nmot, imot(nmx)
   double precision ::  aam,exs1,exs2,roam, tam,     Time_1,    Time_2
-  integer         ,allocatable ::   mnc(:),mnpar(:),  mnr(:), ncbd(:)
+  integer         ,allocatable ::   mnc(:),mnpar(:),mnpar2(:),  mnr(:), ncbd(:)
   integer         ,allocatable ::  ncin(:)
   double precision,allocatable ::  bceqt(:,:),    cfke(:),   cmui1(:),   cmui2(:),   cmuj1(:)
   double precision,allocatable ::    cmuj2(:),   cmuk1(:),   cmuk2(:),    cson(:),     cvi(:)
@@ -467,7 +467,7 @@ program solve
               call met_intep3( &
                    ncbd,ncin,v, &
                    sn,vol, &
-                   dist,mnpar,mu, &
+                   dist,mnpar,mnpar2,mu, &
                    tn1,tn2,tn3,tn4,tn5, &
                    toxx,toxy,toxz,toyy,toyz,tozz, &
                    x,y,z,nxn,nyn,nzn, &
@@ -1074,7 +1074,7 @@ mnc=0
     allocate(qcz(ip12))
     allocate(mu(ip12))
     allocate(mut(ip12))
-    allocate(mnpar(ip12))
+    allocate(mnpar(ip12),mnpar2(ip12))
     allocate(dist(ip12))
 
     ip13 = kdimk*ndimntbx
@@ -1183,7 +1183,7 @@ lz=lt
       deallocate(tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10)
       deallocate(tnte1,tnte2,tnte3,tnte4,v,vdual,vdual2,vdual1)
       deallocate(ptdual,pression,dt,ztemp,cson,r,vol,toxx,toxy,toxz)
-      deallocate(toyy,toyz,tozz,qcx,qcy,qcz,mu,mut,mnpar,dist,cfke,cvi)
+      deallocate(toyy,toyz,tozz,qcx,qcy,qcz,mu,mut,mnpar,mnpar2,dist,cfke,cvi)
       deallocate(cvj,cvk,cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2,sn,rti,nfbr)
       deallocate(ndrr,srotr,nfba,nfbn,crotr,lbdrat,nmfint,nba,lbd,mpn,lbdko)
       deallocate(mpr,klmax,kkmf,keta,kki2,kki4,kmf,lmax,ki2,ki4,eta,pctvort)

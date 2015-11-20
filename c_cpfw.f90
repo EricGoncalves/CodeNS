@@ -41,7 +41,7 @@ contains
     use mod_cpfw
     use mod_mpi
     implicit none
-    integer          ::   imot(nmx),  mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41)
+    integer          ::   imot(nmx),  mnc(ip43),mnpar(ip12),mnpar2(ip12),  mnr(ip44), ncbd(ip41)
     integer          ::  ncin(ip41),       ncyc,       nmot
     double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
     double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)

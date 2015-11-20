@@ -59,7 +59,7 @@ contains
     use mod_lp2kl3d
     use mod_lp2kl1
     implicit none
-    integer          ::           l,       ldom,         mf,        mfb,mnpar(ip12)
+    integer          ::           l,       ldom,         mf,        mfb,mnpar(ip12),mnpar2(ip12)
     integer          ::  ncbd(ip41), ncin(ip41),       ncyc,         no
     double precision ::     dist(ip12),    fgam(ip42),      mu(ip12),     mut(ip12),     nxn(ip42)
     double precision ::      nyn(ip42),     nzn(ip42),pression(ip11), sn(ip31*ndir),     tn1(ip00)

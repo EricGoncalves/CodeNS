@@ -6,7 +6,7 @@ contains
        nxn,nyn,nzn, &
        xpar,ypar,zpar, &
        xcc,ycc,zcc, &
-       dist,mnpar, &
+       dist,mnpar,mnpar2, &
        ncin,m3min,m3max,dm3,isens3, &
        nfbi)
 !
@@ -56,7 +56,7 @@ contains
     implicit none
     integer          ::         dm3,       ierr,     isens3,          l,          m
     integer          ::         m0b,        m0n,         m3,      m3max,      m3min
-    integer          ::          mb,        mbn,mnpar(ip12),         mt,         n0
+    integer          ::          mb,        mbn,mnpar(ip12),mnpar2(ip12),         mt,         n0
     integer          ::          nc,        nci,       ncil, ncin(ip41),        ncl
     integer          ::        ncm1,      ncm1l,       nfbi
     double precision :: dist(ip12),     distn, nxn(ip42), nyn(ip42), nzn(ip42)

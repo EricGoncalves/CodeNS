@@ -81,7 +81,7 @@ contains
     implicit none
     integer          ::          ij,         in,       iter,          j,         jk
     integer          ::          kk,          l,     lgsnlt,          m,       m0ns
-    integer          ::          mb,        mfb,mnpar(ip12),       mpar,         mt
+    integer          ::          mb,        mfb,mnpar(ip12),mnpar2(ip12),       mpar,         mt
     integer          ::         n0c,         nc, ncbd(ip41), ncin(ip41),       ncyc
     integer          ::        ndis,     nfacns,         ni,        nii,         nn
     integer          ::        npsn,       ntab

@@ -4,7 +4,7 @@ contains
   subroutine met_smklsas( &
        l, &
        sn, &
-       vol,v,mu,mut,dist,mnpar, &
+       vol,v,mu,mut,dist,mnpar,mnpar2, &
        dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
        txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
        tprod,cfke, &
@@ -77,7 +77,7 @@ contains
     integer          ::           j,         j1,       j1m1,         j2,       j2m1
     integer          ::        jmax,       jmin,          k,         k1
     integer          ::        k1m1,         k2,       k2m1,       kmax
-    integer          ::        kmin,          l,     lgsnlt,          m,mnpar(ip12)
+    integer          ::        kmin,          l,     lgsnlt,          m,mnpar(ip12),mnpar2(ip12)
     integer          ::           n,        n0c,        nci,        nid,       nijd
     integer          ::         njd,       npsn
     double precision ::    bark(ip00),         c132,         cc43,   cfke(ip13),  cmui1(ip21)

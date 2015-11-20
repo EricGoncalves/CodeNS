@@ -4,7 +4,7 @@ contains
   subroutine met_intep3( &
        ncbd,ncin,s, &
        sn,vol, &
-       dist,mnpar,mu, &
+       dist,mnpar,mnpar2,mu, &
        pi,tau,us,ut,un, &
        toxx,toxy,toxz,toyy,toyz,tozz, &
        x,y,z,nxn,nyn,nzn, &
@@ -139,7 +139,7 @@ contains
     integer          ::       m3del,     m3delp,     m3delt,     m3delv,      m3max
     integer          ::       m3min,      m3mxd,      m3pmx,      m3tmx,      m3vmx
     integer          ::        mdel,      mdel2,         mf,       mfac,      mfacn
-    integer          ::         mfl,mnpar(ip12),       mpar,          n,        n0c
+    integer          ::         mfl,mnpar(ip12),mnpar2(ip12),       mpar,          n,        n0c
     integer          ::         n0n,        nc0, ncbd(ip41),        nci, ncin(ip41)
     integer          ::         ncj,        nck,       ndel,      ndel2,      ndelp
     integer          ::       ndelt,      ndelv,      nfac1,      nfac2,      nfac3

@@ -125,7 +125,7 @@ contains
     integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
     integer          ::           l,     ldismx,     lgsnlt,         lm,    mcychro
     integer          ::     mcyturb,        mfc,        mfn,         mg,  mnc(ip43)
-    integer          :: mnpar(ip12),  mnr(ip44),         nc, ncbd(ip41), ncin(ip41)
+    integer          :: mnpar(ip12),mnpar2(ip12), mnr(ip44),         nc, ncbd(ip41), ncin(ip41)
     integer          ::        ncyc,       ndeb,       nfin,       npsn
     double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
     double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
@@ -196,7 +196,7 @@ contains
           call atcaldis( &
                x,y,z,nxn,nyn,nzn, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7, &
-               dist,mnpar,fgam,img, &
+               dist,mnpar,mnpar2,fgam,img, &
                ncin,mnc,ncbd)
 !
        CASE(3)
@@ -204,7 +204,7 @@ contains
           call atcaldis3( &
                x,y,z,nxn,nyn,nzn, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7, &
-               dist,mnpar,fgam, &
+               dist,mnpar,mnpar2,fgam, &
                ncin,mnc,ncbd, &
                m1tb,m2tb,nfrtb)
 !
@@ -369,7 +369,7 @@ contains
 !
                    call met_iniko( &
                         l,ncin,ncbd, &
-                        v,mut,mu,dist,mnpar, &
+                        v,mut,mu,dist,mnpar,mnpar2, &
                         sn,vol,tn1, &
                         tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                         cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
@@ -557,7 +557,7 @@ contains
        call zvisqc( &
             img, &
             v,mu,v(1,1), &
-            x,y,z,mut,dist,mnpar,fgam, &
+            x,y,z,mut,dist,mnpar,mnpar2,fgam, &
             toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
             icyc,mcyturb, &
             ncbd,ncin,mnc, &

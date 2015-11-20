@@ -4,7 +4,7 @@ contains
   subroutine atcaldis( &
        x,y,z,nxn,nyn,nzn, &
        xpar,ypar,zpar,xcc,ycc,zcc,dist2, &
-       dist,mnpar,fgam,img, &
+       dist,mnpar,mnpar2,fgam,img, &
        ncin,mnc,ncbd)
 !
 !***********************************************************************
@@ -122,7 +122,6 @@ contains
     use constantes
     use boundary
     use mod_atdist_2
-    use mod_atdist_2_par
     use mod_atccfp
     use mod_atdist_1
     use mod_at_ecrdist
@@ -135,7 +134,7 @@ contains
     integer          ::      isens3,          l,         lm,          m,        m10
     integer          ::       m1max,      m1min,        m20,      m2max,      m2min
     integer          ::         m30,      m3max,      m3min,         mf,  mnc(ip43)
-    integer          :: mnpar(ip12),          n, ncbd(ip41), ncin(ip41),       nfbe
+    integer          :: mnpar(ip12),mnpar2(ip12),         n, ncbd(ip41), ncin(ip41),       nfbe
     integer          ::        nfbi,         no,proc,nbdkog,nbd1
     integer,allocatable :: nbdko_proc(:)
     double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
@@ -221,6 +220,7 @@ contains
     do n=1,ndimctbx
        dist(n) =reelmx
        mnpar(n)=0
+       mnpar2(n)=0
     enddo
 !     ----------------------------------------------------------
 !
@@ -271,7 +271,7 @@ contains
                nxn,nyn,nzn, &
                xpar,ypar,zpar, &
                xcc,ycc,zcc, &
-               dist,mnpar, &
+               dist,mnpar,mnpar2, &
                ncin,m3min,m3max,dm3,isens3, &
                nfbi)
        end if
@@ -301,7 +301,7 @@ contains
 !               x,y,z, &
 !               xpar,ypar,zpar, &
 !               xcc,ycc,zcc,dist2, &
-!               dist,mnpar, &
+!               dist,mnpar,mnpar2, &
 !               lm)
 !          if(kecrdis.eq.1) then
 !!           ecriture disque des distances (fichiers separes "fdist_l")
@@ -311,10 +311,10 @@ contains
 !          endif
 !       enddo
 
-        call atdist_2_par(img, &
+        call atdist_2(img, &
              x,y,z, &
              xpar,ypar,zpar, &
-             dist2,dist,mnpar)
+             dist2,dist,mnpar,mnpar2)
 
     endif
 !

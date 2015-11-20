@@ -6,7 +6,7 @@ contains
   subroutine atcaldis3( &
        x,y,z,nxn,nyn,nzn, &
        xpar,ypar,zpar,xcc,ycc,zcc,dist2, &
-       dist,mnpar,fgam, &
+       dist,mnpar,mnpar2,fgam, &
        ncin,mnc,ncbd, &
        m1tb,m2tb,nfrtb)
 !
@@ -134,7 +134,7 @@ contains
     integer          ::     kgr(lz),          l,     ldismx,          m,        m10
     integer          ::       m1max,      m1min, m1tb(ip00),        m20,      m2max
     integer          ::       m2min, m2tb(ip00),        m30,      m3max,      m3min
-    integer          ::          mf,  mnc(ip43),mnpar(ip12),          n, ncbd(ip41)
+    integer          ::          mf,  mnc(ip43),mnpar(ip12),mnpar2(ip12),          n, ncbd(ip41)
     integer          ::  ncin(ip41),         nf,       nfbe,       nfbi,nfrtb(ip00)
     integer          ::          no,proc,nbdkog
     integer,allocatable :: nbdko_proc(:)
@@ -340,7 +340,7 @@ contains
                   x,y,z, &
                   xpar,ypar,zpar, &
                   xcc,ycc,zcc,dist2, &
-                  dist,mnpar, &
+                  dist,mnpar,mnpar2, &
                   m1tb,m2tb,nfrtb, &
                   l)
 !
@@ -364,7 +364,7 @@ contains
                   x,y,z, &
                   xpar,ypar,zpar, &
                   xcc,ycc,zcc,dist2, &
-                  dist,mnpar, &
+                  dist,mnpar,mnpar2, &
                   m1tb,m2tb,nfrtb, &
                   l)
           else
@@ -374,7 +374,7 @@ contains
                   x,y,z, &
                   xpar,ypar,zpar, &
                   xcc,ycc,zcc,dist2, &
-                  dist,mnpar, &
+                  dist,mnpar,mnpar2, &
                   l)
           end if
           if(kecrdis.eq.1) then

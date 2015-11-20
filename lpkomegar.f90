@@ -29,7 +29,7 @@ contains
     use boundary
     use mod_lpkomegar1
     implicit none
-    integer          ::           l,       ldom,         mf,        mfb,mnpar(ip12)
+    integer          ::           l,       ldom,         mf,        mfb,mnpar(ip12),mnpar2(ip12)
     integer          ::  ncbd(ip41), ncin(ip41),         no
     double precision ::   dist(ip12),  dvxx(ip00),  dvxy(ip00),  dvxz(ip00),  dvyx(ip00)
     double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)

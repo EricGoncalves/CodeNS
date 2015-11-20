@@ -2,7 +2,7 @@ module mod_atctranske
   implicit none
 contains
   subroutine atctranske( &
-       l,v,mu,mut,mnpar,fgam)
+       l,v,mu,mut,mnpar,mnpar2,fgam)
 !
 !***********************************************************************
 !
@@ -44,7 +44,7 @@ contains
     integer          ::          i1,         i2,       i2m1,       ind1
     integer          ::        ind2,          j,         j1,         j2,       j2m1
     integer          ::           k,         k1,         k2,       k2m1,          l
-    integer          :: mnpar(ip12),       mpar,          n,        n0c,        nid
+    integer          :: mnpar(ip12),mnpar2(ip12),       mpar,          n,        n0c,        nid
     integer          ::        nijd,        njd
     double precision ::   fgam(ip42),    mu(ip12),   mut(ip12),v(ip11,ip60)
 !

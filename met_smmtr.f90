@@ -3,7 +3,7 @@ module mod_met_smmtr
 contains
   subroutine met_smmtr( &
        l, &
-       v,mu,mut,dist,mnpar,ncin, &
+       v,mu,mut,dist,mnpar,mnpar2,ncin, &
        txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
        dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
        tprod,cfke,frac, &
@@ -58,7 +58,7 @@ contains
     integer          ::          i1,       i1m1,         i2,       i2m1
     integer          ::        ind1,       ind2,          j,         j1,       j1m1
     integer          ::          j2,       j2m1,          k,         k1,       k1m1
-    integer          ::          k2,       k2m1,          l,          m,mnpar(ip12)
+    integer          ::          k2,       k2m1,          l,          m,mnpar(ip12),mnpar2(ip12)
     integer          ::           n,        n0c, ncin(ip41),        nid,       nijd
     integer          ::         njd
     double precision ::        alpha,  cfke(ip13),       coef1,       coef2,       coef3
@@ -136,7 +136,7 @@ contains
 !
     call met_mtcorf1( &
          l,ncin, &
-         dist,mnpar,frac)
+         dist,mnpar,mnpar2,frac)
 !
 !  -----------------------------------------------------------------------
 !com  calcul des termes sources et du rayon spectral pour implicitation

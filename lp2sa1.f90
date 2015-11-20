@@ -42,7 +42,7 @@ contains
     implicit none
     integer          ::          ij,         in,       iter,          j,         kk
     integer          ::           l,     lgsnlt,          m,       m0ns,         mb
-    integer          ::         mfb,mnpar(ip12),       mpar,         mt,        n0c
+    integer          ::         mfb,mnpar(ip12),mnpar2(ip12),       mpar,         mt,        n0c
     integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,       ndis
     integer          ::      nfacns,         ni,        nii,         nn,       npsn
     integer          ::        ntab

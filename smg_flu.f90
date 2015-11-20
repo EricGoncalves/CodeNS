@@ -15,7 +15,7 @@ contains
        toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
        tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9,tm10, &
        tm11,tm12,tm13, &
-       ncin,mnpar,fgam, &
+       ncin,mnpar,mnpar2,fgam, &
        mnc, &
        ncbd,mnr,xnr,ynr,znr, &
        bceqt, &
@@ -81,7 +81,7 @@ contains
     implicit none
     integer          ::        icyc,     icycle,        img,     itypdf,          l
     integer          ::      lgsnlt,         lm,    mcyturb,        mfc,        mfn
-    integer          ::   mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41), ncin(ip41)
+    integer          ::   mnc(ip43),mnpar(ip12),mnpar2(ip12),  mnr(ip44), ncbd(ip41), ncin(ip41)
     integer          ::        ncyc,       npsn
     double precision ::  bceqt(ip41,neqt),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21)
     double precision ::       cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21),        cvj(ip21)
@@ -197,7 +197,7 @@ contains
        call zvisqc( &
             img, &
             v,mu,v(1,1), &
-            x,y,z,mut,dist,mnpar,fgam, &
+            x,y,z,mut,dist,mnpar,mnpar2,fgam, &
             toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
             icyc,mcyturb, &
             ncbd,ncin,mnc, &

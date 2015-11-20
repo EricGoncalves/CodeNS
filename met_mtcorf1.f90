@@ -3,7 +3,7 @@ module mod_met_mtcorf1
 contains
   subroutine met_mtcorf1( &
        l,ncin, &
-       dist,mnpar,frac)
+       dist,mnpar,mnpar2,frac)
 !
 !***********************************************************************
 !
@@ -45,7 +45,7 @@ contains
     integer          ::           l,       lpar,          m,        m10,      m1max
     integer          ::       m1min,        m20,      m2max,      m2min,         m3
     integer          ::         m30,      m3lim,      m3max,      m3min,      m3mxx
-    integer          ::        mfbi,mnpar(ip12),       mpar,       mpb0,       mpn0
+    integer          ::        mfbi,mnpar(ip12),mnpar2(ip12),       mpar,       mpb0,       mpn0
     integer          ::        mpn1,          n, ncin(ip41),       nfac,       nmin
     integer          ::        npar
     double precision :: dist(ip12),frac(ip12)

@@ -85,7 +85,7 @@ contains
     use definition
     implicit none
     integer          ::   iter,    lm,     m,  m0ns,    mb
-    integer          ::   mfbm, mnpar(ip12), mpar, mt, n0c
+    integer          ::   mfbm, mnpar(ip12),mnpar2(ip12), mpar, mt, n0c
     integer          ::     nc,  ncbd(ip41), ncin(ip41), ncyc,nfacns
     integer          ::     ni,   nii
     double precision ::   cta, ctb,denom, dist(ip12), fgam(ip42)

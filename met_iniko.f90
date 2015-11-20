@@ -3,7 +3,7 @@ module mod_met_iniko
 contains
   subroutine met_iniko( &
        l,ncin,ncbd, &
-       v,mut,mu,dist,mnpar, &
+       v,mut,mu,dist,mnpar,mnpar2, &
        sn,vol,s, &
        dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
        cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
@@ -24,7 +24,7 @@ contains
     use mod_met_kocmut
     use mod_met_komut
     implicit none
-    integer          ::           l,mnpar(ip12), ncbd(ip41), ncin(ip41)
+    integer          ::           l,mnpar(ip12),mnpar2(ip12), ncbd(ip41), ncin(ip41)
     double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
     double precision ::   cmuk2(ip21),   dist(ip12),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00)
     double precision ::    dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00)
