@@ -74,7 +74,6 @@ contains
       if(isparoi) then
 
 !       broadcast the coordinates of points on the boundary
-        mbmx=0
         if(rank==bcg_to_proc(bcg)) mbmx=mmb(bcl)
         call bcast(mbmx,bcg_to_proc(bcg))
         call reallocate(buff,3,mbmx)
