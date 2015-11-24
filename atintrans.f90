@@ -82,7 +82,7 @@ contains
     integer          ::      mfacn,       mfe,       mfl,         n,       nci
     integer          :: ncin(ip41),       ncj,       nck,       nfr,     nfrmx
     integer          ::        nid,      nijd,       njd,mfbe
-    double precision :: fgam(ip42)
+    double precision :: fgam(ip12)
 !
 !-----------------------------------------------------------------------
 

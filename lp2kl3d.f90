@@ -81,7 +81,7 @@ contains
     implicit none
     integer          ::          ij,         in,       iter,          j,         jk
     integer          ::          kk,          l,     lgsnlt,          m,       m0ns
-    integer          ::          mb,        mfb,mnpar(ip12),mnpar2(ip12),       mpar,         mt
+    integer          ::          mb,        mfb,mnpar(ip12),       mpar,         mt
     integer          ::         n0c,         nc, ncbd(ip41), ncin(ip41),       ncyc
     integer          ::        ndis,     nfacns,         ni,        nii,         nn
     integer          ::        npsn,       ntab
@@ -91,7 +91,7 @@ contains
     double precision ::        dconvz,   dist(ip12),        dist2,          dpc,         dpde
     double precision ::          dpdt,   dpdx(ip00),   dpdy(ip00),   dpdz(ip00),        dtopx
     double precision ::         dtopz,           dy,           e1,           e2,           e3
-    double precision ::           f1i,   fgam(ip42),         fmui,           ki,           li
+    double precision ::           f1i,   fgam(ip12),         fmui,           ki,           li
     double precision ::      mu(ip12),          mup,    mut(ip12),    nxn(ip42),    nyn(ip42)
     double precision ::     nzn(ip42),     ps(ip11),         rhoi,         rhol,          rk2
     double precision ::          rok2,          rop,        seuil,sn(ip31*ndir),         som1
@@ -145,9 +145,8 @@ contains
           ni=ncin(mb)
           nc=ncbd(mb)
           nfacns=m0ns+m
-          mpar=mnpar(ni)
 !       test sur transition et regime d'ecoulement
-          if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
+          if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
 !         laminaire
              lamin=.true.
           else
@@ -206,7 +205,6 @@ contains
        nc=ncbd(mb)
        nii=ni-n0c
        nfacns=m0ns+m
-       mpar=mnpar(ni)
 !       vitesse cellule 1
        v1x=v(ni,2)/v(ni,1)
        v1y=v(ni,3)/v(ni,1)
@@ -266,7 +264,7 @@ contains
              do nn=2,ndis
                 yi=(nn-1)*dy
                 mui(nn)=mu(ni)
-                if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
+                if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
                    muti(nn)=0.
                 else
                    rhoi=v(ni,1)
@@ -340,7 +338,7 @@ contains
 !************************************************************************
        enddo
 !       test sur la transition
-       if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
 !        tprod(nii)=0.
           v(ni,7)=roeinf
           v(ni,6)=rokinf

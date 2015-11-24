@@ -4,7 +4,7 @@ contains
   subroutine zvisqc( &
        img, &
        s,mu,ro, &
-       x,y,z,mut,dist,mnpar,mnpar2,fgam, &
+       x,y,z,mut,dist,mnpar,fgam, &
        toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
        icyc,mcyturb, &
        ncbd,ncin,mnc, &
@@ -115,12 +115,12 @@ contains
     use mod_rbtc
     implicit none
     integer          ::        icyc,        img,          l,     lgsnlt,         lm
-    integer          ::     mcyturb,         mf,        mfc,  mnc(ip43),mnpar(ip12),mnpar2(ip12)
+    integer          ::     mcyturb,         mf,        mfc,  mnc(ip43),mnpar(ip12)
     integer          ::  ncbd(ip41), ncin(ip41),       npsn
     double precision ::   cmui1(ip21),  cmui2(ip21),  cmuj1(ip21),  cmuj2(ip21),  cmuk1(ip21)
     double precision ::   cmuk2(ip21),   dist(ip12),   dvxx(ip00),   dvxy(ip00),   dvxz(ip00)
     double precision ::    dvyx(ip00),   dvyy(ip00),   dvyz(ip00),   dvzx(ip00),   dvzy(ip00)
-    double precision ::    dvzz(ip00),   fgam(ip42),     mu(ip12),    mut(ip12),    qcx(ip12)
+    double precision ::    dvzz(ip00),   fgam(ip12),     mu(ip12),    mut(ip12),    qcx(ip12)
     double precision ::     qcy(ip12),    qcz(ip12),     ro(ip11), s(ip11,ip60),sn(ip31*ndir)
     double precision ::    toxx(ip12),   toxy(ip12),   toxz(ip12),   toyy(ip12),   toyz(ip12)
     double precision ::    tozz(ip12),    vol(ip11),      x(ip21),      y(ip21),      z(ip21)
@@ -161,7 +161,7 @@ contains
           if(mcyturb.eq.1) then
              if(img.eq.mgl) then!
                 if(ktransi.eq.1) then  ! transition fixee
-                   call atctranske(l,s,mu,mut,mnpar,mnpar2,fgam)
+                   call atctranske(l,s,mu,mut,mnpar,fgam)
                 endif
              else  ! fine to coarse transfer of mut
                 call smg_fcs( &

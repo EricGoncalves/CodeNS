@@ -7,7 +7,7 @@ contains
        icyc,ncyc,idcyc,icycle, &
        mg,  &
        x,y,z,r,nxn,nyn,nzn, &
-       sn, &
+       nxn1,nyn1,nzn1,sn, &
        vol, &
        tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
        u,mu,mut,dist,cfke, &
@@ -121,6 +121,7 @@ contains
     use mod_zpres
     use mod_zvisqc
     use mod_mpi
+    use mod_get_from_mnpar
     implicit none
     integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
     integer          ::           l,     ldismx,     lgsnlt,         lm,    mcychro
@@ -204,7 +205,7 @@ contains
           call atcaldis3( &
                x,y,z,nxn,nyn,nzn, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7, &
-               dist,mnpar,mnpar2,fgam1, &
+               dist,mnpar,fgam1, &
                ncin,mnc,ncbd, &
                m1tb,m2tb,nfrtb)
 !
@@ -373,7 +374,7 @@ contains
 !
                    call met_iniko( &
                         l,ncin,ncbd, &
-                        v,mut,mu,dist,mnpar,mnpar2, &
+                        v,mut,mu,dist,mnpar, &
                         sn,vol,tn1, &
                         tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                         cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
@@ -561,7 +562,7 @@ contains
        call zvisqc( &
             img, &
             v,mu,v(1,1), &
-            x,y,z,mut,dist,mnpar,mnpar2,fgam, &
+            x,y,z,mut,dist,mnpar,fgam, &
             toxx,toxy,toxz,toyy,toyz,tozz,qcx,qcy,qcz, &
             icyc,mcyturb, &
             ncbd,ncin,mnc, &

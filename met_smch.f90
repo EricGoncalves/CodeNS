@@ -3,7 +3,7 @@ module mod_met_smch
 contains
   subroutine met_smch( &
        l, &
-       v,mu,dist,mnpar,mnpar2,utau, &
+       v,mu,dist,mnpar,utau, &
        tprod, &
        qcxts5,qcyts6)
 !
@@ -70,7 +70,7 @@ contains
     integer          ::        i2m1,          j,         j1,       j1p1
     integer          ::          j2,       j2m1,          k,         k1
     integer          ::        k1p1,         k2,       k2m1,          l
-    integer          ::           m,mnpar(ip12),mnpar2(ip12),         mp,          n,        n0c
+    integer          ::           m,mnpar(ip12),         mp,          n,        n0c
     integer          ::         nci,        ncj,        nck,        nid,       nijd
     integer          ::         njd
     double precision ::   dist(ip12),       dist2,       epssk,          f2,    mu(ip12)

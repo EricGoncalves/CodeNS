@@ -20,7 +20,7 @@ contains
     integer          ::           i,         i1,         i2,       i2m1,        ird
     integer          ::           j,         j1,         j2,       j2m1,          k
     integer          ::          k1,         k2,       k2m1,          l,     ldismx
-    integer          :: mnpar(ip12),mnpar2(ip12),         n0,        nid,       nijd,        njd
+    integer          :: mnpar(ip12),         n0,        nid,       nijd,        njd
     double precision :: dist(ip12)
 !
 !-----------------------------------------------------------------------

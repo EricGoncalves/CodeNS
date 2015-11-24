@@ -4,10 +4,10 @@ contains
   subroutine met_intep3( &
        ncbd,ncin,s, &
        sn,vol, &
-       dist,mnpar,mnpar2,mu, &
+       dist,mnpar,mu, &
        pi,tau,us,ut,un, &
        toxx,toxy,toxz,toyy,toyz,tozz, &
-       x,y,z,nxn,nyn,nzn, &
+       x,y,z,nxn,nyn,nzn,nxn1,nyn1,nzn1, &
        ps,cson,temp, &
        cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
@@ -139,7 +139,7 @@ contains
     integer          ::       m3del,     m3delp,     m3delt,     m3delv,      m3max
     integer          ::       m3min,      m3mxd,      m3pmx,      m3tmx,      m3vmx
     integer          ::        mdel,      mdel2,         mf,       mfac,      mfacn
-    integer          ::         mfl,mnpar(ip12),mnpar2(ip12),       mpar,          n,        n0c
+    integer          ::         mfl,mnpar(ip12),       mpar,          n,        n0c
     integer          ::         n0n,        nc0, ncbd(ip41),        nci, ncin(ip41)
     integer          ::         ncj,        nck,       ndel,      ndel2,      ndelp
     integer          ::       ndelt,      ndelv,      nfac1,      nfac2,      nfac3
@@ -168,6 +168,7 @@ contains
     double precision ::            xn,           xs,           xt,      y(ip12),        ycfac
     double precision ::            yn,           ys,           yt,      z(ip12),        zcfac
     double precision ::            zn,           zs,           zt
+    double precision ::     nxn1(ip12),  nyn1(ip12),   nzn1(ip12)
     logical          ::    iok,ouvert
     double precision,allocatable :: dvxx(:),dvxy(:),dvxz(:),dvyx(:),dvyy(:)
     double precision,allocatable :: dvyz(:),dvzx(:),dvzy(:),dvzz(:),vort(:)
@@ -723,9 +724,9 @@ contains
                 uez=uez1+rpdel*(uez2-uez1)
                 rhoe=s(ndel,1)+rpdel*(s(ndel2,1)-s(ndel,1))
 !
-                nx =nxn(mpar)
-                ny =nyn(mpar)
-                nz =nzn(mpar)
+                nx =nxn1(ndel)
+                ny =nyn1(ndel)
+                nz =nzn1(ndel)
                 uen=uex*nx+uey*ny+uez*nz
                 sx =uex-uen*nx
                 sy =uey-uen*ny

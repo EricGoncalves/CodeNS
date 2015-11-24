@@ -61,11 +61,11 @@ contains
     use modeleturb
     implicit none
     integer          ::   iter,     l,     m,  m0ns,    mb
-    integer          ::    mfb, mnpar(ip12),mnpar2(ip12), mpar,    mt,   n0c
+    integer          ::    mfb, mnpar(ip12), mpar,    mt,   n0c
     integer          ::     nc, ncbd(ip41), ncin(ip41), ncyc,nfacns
     integer          ::     ni,   nii
     double precision ::    cmu1, cmu2, cmu3, co, dist(ip12)
-    double precision :: echleps, fgam(ip42), mu(ip12), mup, mut(ip12)
+    double precision :: echleps, fgam(ip12), mu(ip12), mup, mut(ip12)
     double precision ::      n1, n2, n3, nxn(ip42), nyn(ip42)
     double precision ::     nzn(ip42) , omega,  pka, pkb,  retur
     double precision ::     rop, sv, t1, t2, t3
@@ -110,9 +110,8 @@ contains
        nc=ncbd(mb)
        nfacns=m0ns+m
        nii=ni-n0c
-       mpar=mnpar(ni)
 !         test sur transition et regime d'ecoulement
-       if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
 !           laminaire
           lamin=.true.
        else

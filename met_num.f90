@@ -95,12 +95,12 @@ contains
     use mod_met_rbsr
     implicit none
     integer          ::      icycle,          l,     lgsnlt,         mf,        mfc
-    integer          ::         mfr,  mnc(ip43),mnpar(ip12),mnpar2(ip12),  mnr(ip44), ncbd(ip41)
+    integer          ::         mfr,  mnc(ip43),mnpar(ip12),  mnr(ip44), ncbd(ip41)
     integer          ::  ncin(ip41),       ncyc,       npsn
     double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
     double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),     d(ip11,ip60)
     double precision ::        dist(ip12),         dt(ip11),       dtdx(ip00),       dtdy(ip00),       dtdz(ip00)
-    double precision ::        fgam(ip42),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
+    double precision ::        fgam(ip12),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
     double precision ::         nzn(ip42),   pression(ip11),ptdual(ip11,ip60),     qcxts5(ip12),     qcyts6(ip12)
     double precision ::      qcz000(ip12),    sn(ip31*ndir),          t(ip00),        tn1(ip00),       tn10(ip00)
     double precision ::         tn2(ip00),        tn3(ip00),        tn9(ip00),       topz(ip11),         tp(ip40)
@@ -421,7 +421,7 @@ contains
              call met_smklsas( &
                   l, &
                   sn, &
-                  vol,v,mu,mut,dist,mnpar,mnpar2, &
+                  vol,v,mu,mut,dist,mnpar, &
                   dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                   txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                   tprod,cfke, &
@@ -433,7 +433,7 @@ contains
              call met_smkl( &
                   l, &
                   sn, &
-                  vol,v,mu,mut,dist,mnpar,mnpar2, &
+                  vol,v,mu,mut,dist,mnpar, &
                   dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                   txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                   tprod,cfke, &
@@ -451,7 +451,7 @@ contains
           case(' ','S')
              call met_smmt( &
                   l,ncyc, &
-                  v,mu,mut,dist,mnpar,mnpar2,ncin, &
+                  v,mu,mut,dist,mnpar,ncin, &
                   txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                   tprod,cfke, &
                   tn9,qcz000, &
@@ -460,7 +460,7 @@ contains
           case('R')
              call met_smmtr( &
                   l, &
-                  v,mu,mut,dist,mnpar,mnpar2,ncin, &
+                  v,mu,mut,dist,mnpar,ncin, &
                   txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                   dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
                   tprod,cfke,fracmod, &
@@ -473,7 +473,7 @@ contains
 !
           call met_smch( &
                l, &
-               v,mu,dist,mnpar,mnpar2,utau, &
+               v,mu,dist,mnpar,utau, &
                tprod, &
                qcxts5,qcyts6)
 !
@@ -484,7 +484,7 @@ contains
 !              call met_smrng( &
 !                 l,ncyc, &
 !                 sn,vol, &
-!                 v,mu,mut,dist,mnpar,mnpar2,ncin, &
+!                 v,mu,mut,dist,mnpar,ncin, &
 !                 dvxx,dvxy,dvxz,dvyx,dvyy,dvyz,dvzx,dvzy,dvzz, &
 !                 txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
 !                 tprod,cfke, &
@@ -859,7 +859,7 @@ contains
 !
           call met_chmut( &
                l, &
-               v,mu,mut,dist,mnpar,mnpar2,utau)
+               v,mu,mut,dist,mnpar,utau)
 !
 !------------------------------------------------------------------
 !       Modele k-eps de Jones Launder ou Launder Sharma avec correction
@@ -871,7 +871,7 @@ contains
 !
           call met_ke2mut( &
                l,ncyc, &
-               v,mu,mut,dist,mnpar,mnpar2,ncin, &
+               v,mu,mut,dist,mnpar,ncin, &
                txxf5x,txyf5y,txzf5z,tyyf6x,tyzf6y,tzzf6z, &
                qcz000)
 !
@@ -927,7 +927,7 @@ contains
 !------------------------------------------------------------------
 !
        if(ktransi.eq.1) then
-          call atctranske(l,v,mu,mut,mnpar,mnpar2,fgam)
+          call atctranske(l,v,mu,mut,mnpar,fgam)
        endif
     enddo  !fin de boucle sur les domaines
 

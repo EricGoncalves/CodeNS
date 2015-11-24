@@ -5,7 +5,7 @@ contains
        x,y,z, &
        xpar,ypar,zpar, &
        xcc,ycc,zcc,dist2, &
-       dist,mnpar,mnpar2, &
+       dist,mnpar, &
        l)
 !
 !***********************************************************************
@@ -44,7 +44,7 @@ contains
     integer          ::           i,         i1,         i2,      imini,          j
     integer          ::          j1,         j2,          k,         k1,         k2
     integer          ::           l,        m0b,         mb,        mbb,       mbmx
-    integer          ::          mc,mnpar(ip12),mnpar2(ip12),         mp,      mpar0,      mpar1
+    integer          ::          mc,mnpar(ip12),         mp,      mpar0,      mpar1
     integer          ::          n0,         nc,       nfbi,        nid,       nijd
     integer          ::         njd
     double precision ::  dist(ip12),dist2(ip00),      dmini,    x(ip21),  xcc(ip00)

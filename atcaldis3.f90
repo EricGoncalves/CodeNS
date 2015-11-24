@@ -6,7 +6,7 @@ contains
   subroutine atcaldis3( &
        x,y,z,nxn,nyn,nzn, &
        xpar,ypar,zpar,xcc,ycc,zcc,dist2, &
-       dist,mnpar,mnpar2,fgam, &
+       dist,mnpar,fgam, &
        ncin,mnc,ncbd, &
        m1tb,m2tb,nfrtb)
 !
@@ -134,11 +134,11 @@ contains
     integer          ::     kgr(lz),          l,     ldismx,          m,        m10
     integer          ::       m1max,      m1min, m1tb(ip00),        m20,      m2max
     integer          ::       m2min, m2tb(ip00),        m30,      m3max,      m3min
-    integer          ::          mf,  mnc(ip43),mnpar(ip12),mnpar2(ip12),          n, ncbd(ip41)
+    integer          ::          mf,  mnc(ip43),mnpar(ip12),          n, ncbd(ip41)
     integer          ::  ncin(ip41),         nf,       nfbe,       nfbi,nfrtb(ip00)
     integer          ::          no,proc,nbdkog
     integer,allocatable :: nbdko_proc(:)
-    double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
+    double precision ::  dist(ip12),dist2(ip00), fgam(ip12),  nxn(ip42),  nyn(ip42)
     double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
     double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
     double precision,allocatable :: raptat(:)
@@ -340,7 +340,7 @@ contains
                   x,y,z, &
                   xpar,ypar,zpar, &
                   xcc,ycc,zcc,dist2, &
-                  dist,mnpar,mnpar2, &
+                  dist,mnpar, &
                   m1tb,m2tb,nfrtb, &
                   l)
 !
@@ -364,7 +364,7 @@ contains
                   x,y,z, &
                   xpar,ypar,zpar, &
                   xcc,ycc,zcc,dist2, &
-                  dist,mnpar,mnpar2, &
+                  dist,mnpar, &
                   m1tb,m2tb,nfrtb, &
                   l)
           else
@@ -374,7 +374,7 @@ contains
                   x,y,z, &
                   xpar,ypar,zpar, &
                   xcc,ycc,zcc,dist2, &
-                  dist,mnpar,mnpar2, &
+                  dist,mnpar, &
                   l)
           end if
           if(kecrdis.eq.1) then

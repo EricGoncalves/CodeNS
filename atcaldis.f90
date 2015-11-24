@@ -137,7 +137,7 @@ contains
     integer          :: mnpar(ip12),mnpar2(ip12),         n, ncbd(ip41), ncin(ip41),       nfbe
     integer          ::        nfbi,         no,proc,nbdkog,nbd1
     integer,allocatable :: nbdko_proc(:)
-    double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
+    double precision ::  dist(ip12),dist2(ip00), fgam(ip12),  nxn(ip42),  nyn(ip42)
     double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
     double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
 !
@@ -271,7 +271,7 @@ contains
                nxn,nyn,nzn, &
                xpar,ypar,zpar, &
                xcc,ycc,zcc, &
-               dist,mnpar,mnpar2, &
+               dist,mnpar, &
                ncin,m3min,m3max,dm3,isens3, &
                nfbi)
        end if
@@ -301,7 +301,7 @@ contains
 !               x,y,z, &
 !               xpar,ypar,zpar, &
 !               xcc,ycc,zcc,dist2, &
-!               dist,mnpar,mnpar2, &
+!               dist,mnpar, &
 !               lm)
 !          if(kecrdis.eq.1) then
 !!           ecriture disque des distances (fichiers separes "fdist_l")

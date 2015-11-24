@@ -339,6 +339,7 @@ program solve
   double precision,allocatable ::     toxy(:),    toxz(:),    toyy(:),    toyz(:),    tozz(:)
   double precision,allocatable ::       tp(:),    utau(:),     v(:,:), vdual(:,:),vdual1(:,:)
   double precision,allocatable :: vdual2(:,:),     vol(:),       x(:),     xnr(:),       y(:)
+  double precision,allocatable ::     nxn1(:),    nyn1(:),    nzn1(:)
   double precision,allocatable ::      ynr(:),       z(:),     znr(:),   ztemp(:)
 !
 !-----------------------------------------------------------------------
@@ -365,8 +366,8 @@ program solve
   lt=0!lz*lg   ! ?
   mtt=0!mtb*lg ! Nb front total
 
-  if (.true.) then ! wait for gdb
-    l=1
+  if (.false.) then ! wait for gdb
+    l=0
     write(stderr,*) rank,"I'm waiting for gdb ", getpid()
     do while(l==0)
        call sleep(1)
@@ -467,10 +468,10 @@ program solve
               call met_intep3( &
                    ncbd,ncin,v, &
                    sn,vol, &
-                   dist,mnpar,mnpar2,mu, &
+                   dist,mnpar,mu, &
                    tn1,tn2,tn3,tn4,tn5, &
                    toxx,toxy,toxz,toyy,toyz,tozz, &
-                   x,y,z,nxn,nyn,nzn, &
+                   x,y,z,nxn,nyn,nzn,nxn1,nyn1,nzn1, &
                    pression,cson,ztemp, &
                    cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
            else
@@ -495,7 +496,7 @@ program solve
                 mot,imot,nmot, &
                 ncyc, &
                 x,y,z,r,exs1,exs2,nxn,nyn,nzn, &
-                sn, &
+                nxn1,nyn1,nzn1,sn, &
                 vol, &
                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                 mu,mut,dist,cfke, &
@@ -1010,7 +1011,7 @@ mpc=0
     allocate(bceqt(ip41,neqt))
 
     ip42=mdimtbx            ! Nb point frontiere
-!    allocate(fgam(ip42))
+!    allocate(fgam(ip12))
 !    allocate(nxn(ip42))
 !    allocate(nyn(ip42))
 !    allocate(nzn(ip42))
@@ -1074,7 +1075,7 @@ mnc=0
     allocate(qcz(ip12))
     allocate(mu(ip12))
     allocate(mut(ip12))
-    allocate(mnpar(ip12),mnpar2(ip12))
+    allocate(mnpar(ip12))
     allocate(dist(ip12))
 
     ip13 = kdimk*ndimntbx
@@ -1155,10 +1156,13 @@ lz=lt
     allocate(rowd(ip40))
     allocate(roed(ip40))
 
-    allocate(fgam(ip42))
+    allocate(fgam(ip12))
     allocate(nxn(ip42))
     allocate(nyn(ip42))
     allocate(nzn(ip42))
+    allocate(nxn1(ip12))
+    allocate(nyn1(ip12))
+    allocate(nzn1(ip12))
 
     allocate(mnr(ip44))
     allocate(xnr(ip44))
@@ -1183,13 +1187,13 @@ lz=lt
       deallocate(tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10)
       deallocate(tnte1,tnte2,tnte3,tnte4,v,vdual,vdual2,vdual1)
       deallocate(ptdual,pression,dt,ztemp,cson,r,vol,toxx,toxy,toxz)
-      deallocate(toyy,toyz,tozz,qcx,qcy,qcz,mu,mut,mnpar,mnpar2,dist,cfke,cvi)
+      deallocate(toyy,toyz,tozz,qcx,qcy,qcz,mu,mut,mnpar,dist,cfke,cvi)
       deallocate(cvj,cvk,cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2,sn,rti,nfbr)
       deallocate(ndrr,srotr,nfba,nfbn,crotr,lbdrat,nmfint,nba,lbd,mpn,lbdko)
       deallocate(mpr,klmax,kkmf,keta,kki2,kki4,kmf,lmax,ki2,ki4,eta,pctvort)
       deallocate(rod,qtx,qty,qtz,res,tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9)
       deallocate(tm10,tm11,tm12,tm13,tp,rpi,d0y,d0x,d0z,pres,roud,rovd,rowd)
-      deallocate(roed,fgam,nxn,nyn,nzn,mnr,xnr,ynr,znr)
+      deallocate(roed,fgam,nxn,nyn,nzn,mnr,xnr,ynr,znr,nxn1,nyn1,nzn1)
     endif
 
     if (allocated(cl)) then
