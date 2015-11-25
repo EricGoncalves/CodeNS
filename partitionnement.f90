@@ -1246,7 +1246,7 @@ subroutine compute_size(i,j,k,ii2,jj2,kk2,new_ii2,new_jj2,new_kk2)
     double precision,allocatable   :: buff(:,:,:,:)
     integer :: xi,yi,zi,xyz
 
-    allocate(buff(3,xe-xs+1,ye-ys+1,xe-xs+1))
+    allocate(buff(3,xe-xs+1,ye-ys+1,ze-zs+1))
     do zi=zs,ze
        do yi=ys,ye
           do xi=xs,xe
@@ -1276,7 +1276,7 @@ subroutine compute_size(i,j,k,ii2,jj2,kk2,new_ii2,new_jj2,new_kk2)
     double precision,allocatable :: buff(:,:,:,:)
     integer                      :: xi,yi,zi,xyz,nid,njd,nijd
 
-    allocate(buff(3,ii2(l)-ii1(l)+1,jj2(l)-jj1(l)+1,ii2(l)-ii1(l)+1))
+    allocate(buff(3,ii2(l)-ii1(l)+1,jj2(l)-jj1(l)+1,kk2(l)-kk1(l)+1))
 
     call reallocate_s(x,ndimntbx)
     call reallocate_s(y,ndimntbx)
