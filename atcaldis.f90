@@ -122,7 +122,6 @@ contains
     use constantes
     use boundary
     use mod_atdist_2
-    use mod_atdist_2_par
     use mod_atccfp
     use mod_atdist_1
     use mod_at_ecrdist
@@ -311,7 +310,7 @@ contains
 !          endif
 !       enddo
 
-        call atdist_2_par(img, &
+        call atdist_2(img, &
              x,y,z, &
              xpar,ypar,zpar, &
              dist2,dist,mnpar)
