@@ -1,7 +1,7 @@
 module mod_partitionnement
   use tools
   implicit none
-  integer :: verbosity=2
+  integer,parameter :: verbosity=3  ! from 0 to 3
 contains
   subroutine partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2,nblocks,nsplit,nsplit_dir)
     use boundary
@@ -76,13 +76,12 @@ contains
     character(len=32) ::  mot(nmx)
     character(len=2) :: indmf
 
-    logical :: test
+    logical :: test,is_surf_x,is_surf_y,is_surf_z,switch_ij,switch_ik,switch_jk
 
     !############################################################################################
     !############################## GET PARAMETERS ##############################################
     !############################################################################################
 
-    verbosity=1 ! from 0 to 3
     nblocks=max(nblocks,nprocs) ! minimum number of bloc that we need
     nblocks=max(nblocks,sum(nsplit)) ! number of bloc that we need
     nblocks=max(nblocks,num_bg) ! number of bloc that we need
@@ -425,10 +424,11 @@ contains
                          tmp(5)=min(ze,max(zs,save_kminb(frli1)))
                          tmp(6)=min(ze,max(zs,save_kmaxb(frli1)))
 
-                         if((tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0).or. &
-                            (tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0).or. &
-                            (tmp(2)-tmp(1)>0.and.tmp(6)-tmp(5)>0)) then
+                         is_surf_x=(tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0)
+                         is_surf_y=(tmp(6)-tmp(5)>0.and.tmp(2)-tmp(1)>0)
+                         is_surf_z=(tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0)
 
+                         if(is_surf_x.or.is_surf_y.or.is_surf_z) then
                            nsub=1
                            sub_bc(:,1)=tmp
                            indmf=save_indfl(frli1)
@@ -458,13 +458,74 @@ contains
 
                       if(rank==proci2) then
                          nsub=0
+                         switch_ij=.false.
+                         switch_jk=.false.
+                         switch_ik=.false.
 
-                         imin=sub_bc(1,1)+save_iminb(frli2)
-                         imax=sub_bc(2,1)+save_iminb(frli2) ! coordinate of the new boundary
-                         jmin=sub_bc(3,1)+save_jminb(frli2) ! in the old block ref
-                         jmax=sub_bc(4,1)+save_jminb(frli2)
-                         kmin=sub_bc(5,1)+save_kminb(frli2)
-                         kmax=sub_bc(6,1)+save_kminb(frli2)
+                         is_surf_x=(sub_bc(6,1)-sub_bc(5,1)>0.and.sub_bc(4,1)-sub_bc(3,1)>0)
+                         is_surf_y=(sub_bc(6,1)-sub_bc(5,1)>0.and.sub_bc(2,1)-sub_bc(1,1)>0)
+                         is_surf_z=(sub_bc(2,1)-sub_bc(1,1)>0.and.sub_bc(4,1)-sub_bc(3,1)>0)
+
+                         imin=sub_bc(1,1)
+                         imax=sub_bc(2,1)
+                         jmin=sub_bc(3,1)
+                         jmax=sub_bc(4,1)
+                         kmin=sub_bc(5,1)
+                         kmax=sub_bc(6,1)
+
+                         if(is_surf_x) then
+                           select case(save_indfl(frli2)(1:1))
+                           case("j") ! we have to inverse i and j
+                             imin=sub_bc(3,1)
+                             imax=sub_bc(4,1)
+                             jmin=sub_bc(1,1)
+                             jmax=sub_bc(2,1)
+                             switch_ij=.true.
+                           case("k") ! we have to inverse i and k
+                             imin=sub_bc(5,1)
+                             imax=sub_bc(6,1)
+                             kmin=sub_bc(1,1)
+                             kmax=sub_bc(2,1)
+                             switch_ik=.true.
+                           end select
+                         elseif(is_surf_y) then
+                           select case(save_indfl(frli2)(1:1))
+                           case("i") ! we have to inverse i and j
+                             imin=sub_bc(3,1)
+                             imax=sub_bc(4,1)
+                             jmin=sub_bc(1,1)
+                             jmax=sub_bc(2,1)
+                             switch_ij=.true.
+                           case("k") ! we have to inverse j and k
+                             jmin=sub_bc(5,1)
+                             jmax=sub_bc(6,1)
+                             kmin=sub_bc(3,1)
+                             kmax=sub_bc(4,1)
+                             switch_jk=.true.
+                           end select
+                         elseif(is_surf_z) then
+                           select case(save_indfl(frli2)(1:1))
+                           case("j") ! we have to inverse j and k
+                             kmin=sub_bc(3,1)
+                             kmax=sub_bc(4,1)
+                             jmin=sub_bc(5,1)
+                             jmax=sub_bc(6,1)
+                             switch_jk=.true.
+                           case("i") ! we have to inverse i and k
+                             imin=sub_bc(5,1)
+                             imax=sub_bc(6,1)
+                             kmin=sub_bc(1,1)
+                             kmax=sub_bc(2,1)
+                             switch_ik=.true.
+                           end select
+                         endif
+                         
+                         imin=imin+save_iminb(frli2)
+                         imax=imax+save_iminb(frli2) ! coordinate of the new boundary
+                         jmin=jmin+save_jminb(frli2) ! in the old block ref
+                         jmax=jmax+save_jminb(frli2)
+                         kmin=kmin+save_kminb(frli2)
+                         kmax=kmax+save_kminb(frli2)
 
                          do k2=1,nsplit_dir(3,lgi2)
                             do j2=1,nsplit_dir(2,lgi2)
@@ -492,11 +553,12 @@ contains
                                      tmp(4)=min(ye,max(ys,jmax))-save_jminb(frli2)
                                      tmp(5)=min(ze,max(zs,kmin))-save_kminb(frli2)
                                      tmp(6)=min(ze,max(zs,kmax))-save_kminb(frli2)
+                                     
+                                     is_surf_x=(tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0)
+                                     is_surf_y=(tmp(6)-tmp(5)>0.and.tmp(2)-tmp(1)>0)
+                                     is_surf_z=(tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0)
 
-                                     if((tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0).or. &
-                                        (tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0).or. &
-                                        (tmp(2)-tmp(1)>0.and.tmp(6)-tmp(5)>0)) then
-
+                                     if(is_surf_x.or.is_surf_y.or.is_surf_z) then
                                        nsub=nsub+1
                                        call reallocate_s(sub_bc,6,nsub)
                                        sub_bc(:,nsub)=tmp
@@ -504,6 +566,32 @@ contains
                                   endif
                                enddo
                             enddo
+                         enddo
+                         if (nsub==0) then
+                            print*,"Problem in the boundary ",frgi1,frgi2
+                            call abort
+                         endif
+                         do i2=1,nsub
+                            tmp=sub_bc(:,nsub)
+                            if(switch_ij) then
+                              tmp(1)=sub_bc(3,nsub)
+                              tmp(2)=sub_bc(4,nsub)
+                              tmp(3)=sub_bc(1,nsub)
+                              tmp(4)=sub_bc(2,nsub)
+                            endif
+                            if(switch_ik) then
+                              tmp(5)=sub_bc(1,nsub)
+                              tmp(6)=sub_bc(2,nsub)
+                              tmp(1)=sub_bc(5,nsub)
+                              tmp(2)=sub_bc(6,nsub)
+                            endif
+                            if(switch_jk) then
+                              tmp(5)=sub_bc(3,nsub)
+                              tmp(6)=sub_bc(4,nsub)
+                              tmp(3)=sub_bc(5,nsub)
+                              tmp(4)=sub_bc(6,nsub)
+                            endif
+                            sub_bc(:,nsub)=tmp
                          enddo
                       endif
                       call MPI_TRANS(nsub,nsub,proci2,proci1)
@@ -696,7 +784,7 @@ contains
     endif
     call reallocate(tmp,3)
 
-       !    print*,'initialization '
+       print*,'initialization '
        do frgf1=1,num_bcg
           frlf1=bcg_to_bcl(frgf1)
           lgf1=bcg_to_bg(frgf1)
@@ -734,6 +822,9 @@ contains
                            id1(llf3),id2(llf3),jd1(llf3),jd2(llf3),kd1(llf3),kd2(llf3),npn(llf3),       &
                            x,y,z)
 
+                      print*,rank,1,sub_bc_c(1,:)
+                      print*,rank,2,sub_bc_c(2,:)
+
                       if (abs(sub_bc_c(1,1)-sub_bc_c(2,1))<=1d-10 .and. &
                            abs(sub_bc_c(1,2)-sub_bc_c(2,2))<=1d-10 .and. &
                            abs(sub_bc_c(1,3)-sub_bc_c(2,3))<=1d-10 .and. & ! It's me !
@@ -748,6 +839,10 @@ contains
                 endif
              enddo find_otherblock
              call sum_mpi(frgf4) ! there must be exactly one non zero value in this sum
+             if (frgf4==0) then
+                print*,"Coincident boundary not found ",frgi1,frgf1
+                call abort
+             endif
              frgf2=frgf4
           endif
           if (test) then   ! raccord boundary
@@ -856,67 +951,216 @@ contains
   end subroutine partitionnement
 
   subroutine write_mesh(prefix,x,y,z)
-    use maillage
     use boundary
     use mod_mpi
+    use para_var
     implicit none
     double precision,intent(in) :: x(:),y(:),z(:)
     character(*),intent(in) :: prefix
 
-    integer :: l,fr,nid,njd,nijd,xyz,i,j,k
-    character(len=50)::fich
+    integer :: l,fr,nid,njd,nijd,xyz,i,j,k,typ
+    integer :: tmp(ip21)
+    character(len=50)::fich,format
+    character(len=4)::ext
 
+!    typ=0 ! gnuplot format
+!    typ=1 ! csv format
+    typ=2 ! vtk format
+
+    if(typ==0) format='(3e11.3,i8)'       
+    if(typ==1) format='(3(e11.3,","),i8)'
+    if(typ==2) format='(3e11.3)'
+
+    if(typ==0) ext=".dat"
+    if(typ==1) ext=".csv"
+    if(typ==2) ext=".vts"
+    
+    
     ! write grid
     do l=1,lt
-       write(fich,'(A,I0.2,A)') prefix//"mesh_",bl_to_bg(l),".dat"
-       open(42,file=fich,status="replace")
+       write(fich,'(A,I0.2,A)') prefix//"mesh_",bl_to_bg(l),ext
 
-       do k=kk1(l),kk2(l)
-          do j=jj1(l),jj2(l)
-             do i=ii1(l),ii2(l)
+       if(typ==2) then 
+        call vtk_writer(fich,x,y,z,[bl_to_bg(l)],"block_num",l)
+       else
+         open(42,file=fich,status="replace")
+       
+         if(typ==1)  write(42,*) "x,y,z,block"
 
-                nid = id2(l)-id1(l)+1
-                njd = jd2(l)-jd1(l)+1
-                nijd = nid*njd
+         do k=kk1(l),kk2(l)
+            do j=jj1(l),jj2(l)
+               do i=ii1(l),ii2(l)
 
-                xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+                  nid = id2(l)-id1(l)+1
+                  njd = jd2(l)-jd1(l)+1
+                  nijd = nid*njd
 
-                write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),bl_to_bg(l)
+                  xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-             enddo
-             write(42,*) ""
-          enddo
-       enddo
-       close(42)
+                  write(42,format) x(xyz),y(xyz),z(xyz),bl_to_bg(l)
+
+               enddo
+               if (typ==0) write(42,*) ""
+            enddo
+         enddo
+         close(42)
+       endif
     enddo
 
     ! write boundaries
     do fr=1,mtb
 
-       write(fich,'(A,I0.2,A)') prefix//"bnd_",bcl_to_bcg(fr),".dat"
-       open(42,file=fich,status="replace")
+       write(fich,'(A,I0.2,A)') prefix//"bnd_",bcl_to_bcg(fr),ext
 
-       do k=kminb(fr),kmaxb(fr)
-          do j=jminb(fr),jmaxb(fr)
-             do i=iminb(fr),imaxb(fr)
-                l=ndlb(fr)
-                nid = id2(l)-id1(l)+1
-                njd = jd2(l)-jd1(l)+1
-                nijd = nid*njd
+       if(typ==2) then
+         call vtk_writer(fich,x,y,z,[bcl_to_bcg(fr)],"boundary_num",ndlb(fr), &
+                iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr))
+       else
 
-                xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+         open(42,file=fich,status="replace")
+         if(typ==1)  write(42,*) "x,y,z,boundary"
 
-                write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),bcl_to_bcg(fr)
+         do k=kminb(fr),kmaxb(fr)
+            do j=jminb(fr),jmaxb(fr)
+               do i=iminb(fr),imaxb(fr)
+                  l=ndlb(fr)
+                  nid = id2(l)-id1(l)+1
+                  njd = jd2(l)-jd1(l)+1
+                  nijd = nid*njd
 
-             enddo
-             if(indfl(fr)(1:1)/="i") write(42,*) ""
-          enddo
-          if(indfl(fr)(1:1)=="i") write(42,*) ""
-       enddo
-       close(42)
+                  xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+
+                  write(42,format) x(xyz),y(xyz),z(xyz),bcl_to_bcg(fr)
+
+               enddo
+               if(typ==0.and.indfl(fr)(1:1)/="i") write(42,*) ""
+            enddo
+            if(typ==0.and.indfl(fr)(1:1)=="i") write(42,*) ""
+         enddo
+         close(42)
+       endif
     enddo
     call barrier
   end subroutine write_mesh
+
+
+  subroutine vtk_writer(vtk_file,x,y,z,field,name_field,l,oi1,oi2,oj1,oj2,ok1,ok2)
+    use para_var
+    use boundary
+    use mod_mpi
+    implicit none
+    double precision,intent(in) :: x(:),y(:),z(:)
+    class(*),intent(in) :: field(:)
+    integer,intent(in) ::l
+    integer,intent(in),optional :: oi1,oi2,oj1,oj2,ok1,ok2
+    character(*),intent(in) :: vtk_file,name_field
+
+    integer :: i1,i2,j1,j2,k1,k2
+    integer :: nid,njd,nijd,xyz,i,j,k
+    character(len=80) :: vartype
+
+    if (present(oi1)) then
+      i1=oi1 ; i2=oi2
+      j1=oj1 ; j2=oj2
+      k1=ok1 ; k2=ok2
+    else
+      i1=ii1(l) ; i2=ii2(l)
+      j1=jj1(l) ; j2=jj2(l)
+      k1=kk1(l) ; k2=kk2(l)
+    endif
+    
+    select type(field)
+    type is (integer)
+        vartype="Int32"
+    type is (double precision)
+        vartype="Float32"
+    class default
+        write(*,*) 'vtk_writer : Unknown type'
+        call abort
+    end select
+
+    open(42,file=vtk_file,status="replace")
+
+    write(42,'(A)') '<?xml version="1.0"?>'
+    write(42,*) '<VTKFile type="StructuredGrid"  version="0.1" byte_order="LittleEndian">'
+    write(42,*) '<StructuredGrid WholeExtent="',i1,i2,j1,j2,k1,k2,'">'
+    write(42,*) '<Piece Extent="',i1,i2,j1,j2,k1,k2,'">'
+    write(42,*) "<Points>"
+    write(42,*) '<DataArray type="Float32" NumberOfComponents="3" format="ascii">'
+
+         do k=k1,k2
+            do j=j1,j2
+               do i=i1,i2
+
+                  nid = id2(l)-id1(l)+1
+                  njd = jd2(l)-jd1(l)+1
+                  nijd = nid*njd
+
+                  xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+
+                  write(42,*) x(xyz),y(xyz),z(xyz)
+
+               enddo
+            enddo
+         enddo
+         
+        write(42,*) '</DataArray>'
+        write(42,*) '</Points>'
+        write(42,*) '<PointData Scalars="',name_field,'">'
+        write(42,*) '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
+        
+        if (size(field)==ip21)then
+         do k=k1,k2
+            do j=j1,j2
+               do i=i1,i2
+                  nid = id2(l)-id1(l)+1
+                  njd = jd2(l)-jd1(l)+1
+                  nijd = nid*njd
+
+                  xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+                  
+                  select type(field)
+                  type is (integer)
+                      write(42,*) field(xyz)
+                  type is (double precision)
+                      write(42,*) field(xyz)
+                  class default
+                      write(*,*) 'vtk_writer : Unknown type'
+                      call abort
+                  end select
+                 enddo
+              enddo
+           enddo
+         elseif  (size(field)==1)then
+         do k=k1,k2
+            do j=j1,j2
+               do i=i1,i2
+                  select type(field)
+                  type is (integer)
+                      write(42,*) field
+                  type is (double precision)
+                      write(42,*) field
+                  class default
+                      write(*,*) 'vtk_writer : Unknown type'
+                      call abort
+                  end select
+            
+                 enddo
+              enddo
+           enddo
+         else
+          write(*,*) 'vtk_writer : Unknown size of field'
+          call abort
+        endif
+         write(42,*) '</DataArray>'
+         write(42,*) "</PointData>"
+         write(42,*) '</Piece>'
+         write(42,*) '</StructuredGrid>'
+         write(42,*) '</VTKFile>'
+
+       close(42)
+
+  end subroutine vtk_writer
 
   subroutine compute_split(nsplit,nsplit_dir,nigf,njgf,nkgf,  &
        npoints,num_bgi,num_bgf,num_bli,   &
@@ -994,10 +1238,10 @@ contains
     ! switch to the alternative version which permit to have ideal blocks size
     ! need a criteria to avoid too small block, and need to manage the residual block
     ! todo
-    sblock=ii2*jj2*kk2
-    rsize=minval(sblock) ! smallest block
-    nblocks=max(nblocks,nint(nxyza*1./rsize))   ! have all the block to be around the size of the smallest one
-    nblocks=nblocks+mod(nblocks,nprocs)         ! have a multiple of the number of process
+!    sblock=ii2*jj2*kk2
+!    rsize=minval(sblock) ! smallest block
+!    nblocks=max(nblocks,nint(nxyza*1./rsize))   ! have all the block to be around the size of the smallest one
+!    nblocks=nblocks+mod(nblocks,nprocs)         ! have a multiple of the number of process
 !nblocks=7
     !   compute number of spliting of each blocks with the best equilibrium
     ! do i=lt,nblocks-1                       ! split until lt>=nblocks
@@ -1311,18 +1555,32 @@ subroutine compute_size(i,j,k,ii2,jj2,kk2,new_ii2,new_jj2,new_kk2)
     integer,intent(in)           :: a,b,c,d,e,f,id1,id2,jd1,jd2,kd1,kd2,npn
     double precision,intent(in)  :: x(:),y(:),z(:)
 
-    integer nid,njd,nijd
+    integer :: nid,njd,nijd,p1,p2,p3,p
 
     nid = id2-id1+1
     njd = jd2-jd1+1
     nijd = nid*njd
 
-    xmin=x( npn+1+(a - id1)+(c - jd1)*nid+(e - kd1)*nijd )
-    xmax=x( npn+1+(b - id1)+(c - jd1)*nid+(e - kd1)*nijd )
-    ymin=y( npn+1+(a - id1)+(c - jd1)*nid+(e - kd1)*nijd )
-    ymax=y( npn+1+(a - id1)+(d - jd1)*nid+(e - kd1)*nijd )
-    zmin=z( npn+1+(a - id1)+(c - jd1)*nid+(e - kd1)*nijd )
-    zmax=z( npn+1+(a - id1)+(c - jd1)*nid+(f - kd1)*nijd )
+    xmin= Huge(1.d0)
+    xmax=-Huge(1.d0)
+    ymin= Huge(1.d0)
+    ymax=-Huge(1.d0)
+    zmin= Huge(1.d0)
+    zmax=-Huge(1.d0)
+
+    do p1=a,b,max(b-a,1)
+    do p2=c,d,max(d-c,1)
+    do p3=e,f,max(f-e,1)
+      p=npn+1+(p1 - id1)+(p2 - jd1)*nid+(p3 - kd1)*nijd
+      xmin=min(xmin,x(p))
+      xmax=max(xmax,x(p))
+      ymin=min(ymin,y(p))
+      ymax=max(ymax,y(p))
+      zmin=min(zmin,z(p))
+      zmax=max(zmax,z(p))
+    enddo
+    enddo
+    enddo
 
   end subroutine get_coords_box
 

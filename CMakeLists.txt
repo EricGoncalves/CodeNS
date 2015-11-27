@@ -37,7 +37,7 @@ endif ()
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
   set(CMAKE_Fortran_FLAGS         "-fPIC -ffree-line-length-none -g -fbacktrace  -fimplicit-none -fall-intrinsics")
   set(CMAKE_Fortran_FLAGS_RELEASE "-O3 -march=native -ffast-math -funsafe-math-optimizations -finit-local-zero -ftree-loop-distribution -ftree-loop-im") #
-  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra  -Wimplicit-interface -finit-real=snan -fcheck=all -Warray-temporaries -Wconversion-extra -Wimplicit-interface -Wimplicit-procedure -pedantic -std=f2008ts") # -Wno-unused-parameter -Wno-unused -Wno-unused-dummy-argument ")
+  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra  -Wimplicit-interface -Warray-temporaries -Wimplicit-interface -pedantic ") # -Wno-unused-parameter -Wno-unused -Wno-unused-dummy-argument ")
 #  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra -finit-real=snan -fcheck=all -pedantic -std=f2008ts -Wno-unused-parameter -Wno-unused -Wno-unused-dummy-argument ")
   set(DOUBLE_FLAGS "-fdefault-real-8 -fdefault-double-8")
   set(OPTRPT_FLAGS "-ftree-vectorizer-verbose")
