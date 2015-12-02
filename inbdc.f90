@@ -123,9 +123,9 @@ contains
     integer          ::      mdncb,     mfbea,     mfbeb,     mfbia,    mfbiam
     integer          ::      mfbib,    mfbibm,       mfc,       mlb, mnc(ip43)
     integer          ::         mt,ncbd(ip41),ncin(ip41),buff(16),lag,lbg,mfbea1,mfbeb1
-    integer          ::  id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb
+    integer          ::  id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb,nb,nbi,nbj,nbk,nidlb,njdlb,nijdlb
     double precision ::  epsmsh,   exs1,   exs2,x(ip21),y(ip21)
-    double precision :: z(ip21)
+    double precision :: z(ip21),xb,xbi,xbj,xbk,yb,ybi,ybj,ybk,zb,zbi,zbj,zbk,BUFF2(12)
 !
 !-----------------------------------------------------------------------
 !
@@ -139,7 +139,7 @@ contains
     lag=bcg_to_proc(mfbea)
     lbg=bcg_to_proc(mfbeb)
 
-    if(mfbeb1/=0) then
+    if(rank==lbg) then
 
     mfbib=nfei(mfbeb1)
 !
@@ -168,13 +168,42 @@ contains
              call extmhg(lbm,x,y,z,exs1,exs2)
           endif
 !
-      call MPI_TRANS(BUFF,(/mdncb,lbm,ib1,ib2,jb1,jb2,kb1,kb2,&
-          id1(lbm),id2(lbm),jd1(lbm),jd2(lbm),kd1(lbm),kd2(lbm),npn(lbm),npc(lbm)/),lbg,lag)
+
+      nidlb = id2(lb)-id1(lb)+1
+      njdlb = jd2(lb)-jd1(lb)+1
+      nijdlb = nidlb*njdlb
+
+      nb = npn(lb)+1+(ib1-id1(lb)) &
+                    +(jb1-jd1(lb))*nidlb &
+                    +(kb1-kd1(lb))*nijdlb
+!
+      nbi = nb+1
+      nbj = nb+nidlb
+      nbk = nb+nijdlb
+
+          xb    =x(nb)
+          xbi   =x(nbi)
+          xbj   =x(nbj)
+          xbk   =x(nbk)
+          yb    =y(nb)
+          ybi   =y(nbi)
+          ybj   =y(nbj)
+          ybk   =y(nbk)
+          zb    =z(nb)
+          zbi   =z(nbi)
+          zbj   =z(nbj)
+          zbk   =z(nbk)
+
+
+
+      call MPI_TRANS(BUFF,[mdncb,lbm,ib1,ib2,jb1,jb2,kb1,kb2,&
+          id1(lbm),id2(lbm),jd1(lbm),jd2(lbm),kd1(lbm),kd2(lbm),npn(lbm),npc(lbm)],lbg,lag)
+      call MPI_TRANS(BUFF2,[xb,xbi,xbj,xbk,yb,ybi,ybj,ybk,zb,zbi,zbj,zbk],lbg,lag)
       call MPI_TRANS(typb,typb,lbg,lag)
       endif
       enddo
     endif
-    if(mfbea1/=0) then
+    if(rank==lag) then
 
     mfbia=nfei(mfbea1)
 !
@@ -232,6 +261,7 @@ contains
           kbam=(kba-kk1(lam))/2**(imgk-1)+kk1(lam)
 !
           call MPI_TRANS(BUFF,BUFF,lbg,lag)
+          call MPI_TRANS(BUFF2,BUFF2,lbg,lag)
           call MPI_TRANS(typb,typb,lbg,lag)
           mdncb=BUFF(1)
           lbm  =BUFF(2)
@@ -249,6 +279,18 @@ contains
           kd2b  =BUFF(14)
           npnb  =BUFF(15)
           npcb  =BUFF(16)
+          xb    =BUFF2(1)
+          xbi   =BUFF2(2)
+          xbj   =BUFF2(3)
+          xbk   =BUFF2(4)
+          yb    =BUFF2(5)
+          ybi   =BUFF2(6)
+          ybj   =BUFF2(7)
+          ybk   =BUFF2(8)
+          zb    =BUFF2(9)
+          zbi   =BUFF2(10)
+          zbj   =BUFF2(11)
+          zbk   =BUFF2(12)
 
           mdnc(mfbiam)=mdncb
           call initcs( &
@@ -256,6 +298,7 @@ contains
                mfbiam, &
                lam,typa,ia1,ia2,ja1,ja2,ka1,ka2, &
                lbm,typb,ib1,ib2,jb1,jb2,kb1,kb2, &
+               xb,xbi,xbj,xbk,yb,ybi,ybj,ybk,zb,zbi,zbj,zbk,&
                ibam,jbam,kbam,tvi,tvj,tvk, &
                eqt, &
                mnc,id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb)
