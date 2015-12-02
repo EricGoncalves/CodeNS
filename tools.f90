@@ -116,8 +116,8 @@ contains
 
   subroutine reallocate_1c_s(in,newsize)
       implicit none
-      character(len=2),allocatable,intent(inout)::in(:)
-      character(len=2),allocatable::tmp(:)
+      character(*),allocatable,intent(inout)::in(:)
+      character(len(in)),allocatable::tmp(:)
       integer,intent(in) :: newsize
 
       if(newsize>size(in)) then
