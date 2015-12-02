@@ -1,7 +1,8 @@
 module mod_partitionnement
   use tools
   implicit none
-  integer,parameter :: verbosity=3  ! from 0 to 3
+  integer         ,parameter :: verbosity=3  ! from 0 to 3
+  double precision,parameter :: eps=1e-10
 contains
   subroutine partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2,nblocks,nsplit,nsplit_dir)
     use boundary
@@ -57,6 +58,7 @@ contains
     integer             :: frli1,frli2,frgi1,frgi2,frgi3
     integer             :: frlf1,frgf1,frgf2,frlf3,frgf3,frgf4
     integer             :: proci1,procf1,proci2,procf2,proc,load(0:nprocs-1),nload(0:nprocs-1)
+    integer             :: dir(3,3),offset(3),iba,ii,jba,jj,kba,kk,na,nb,nbi,nbj,nbk,i1,j1,k1
 
     integer,allocatable :: save_ii2(:),save_jj2(:),save_kk2(:)
     integer,allocatable :: save_id1(:),save_jd1(:),save_kd1(:)
@@ -69,7 +71,8 @@ contains
     integer,allocatable :: ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:),nijk(:,:,:,:)
     integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),sub_bc(:,:),tmp(:)
 
-    double precision    :: vbc(ista*lsta),sub_bc_c(2,6)
+    double precision    :: vbc(ista*lsta),sub_bc_c(2,6),sub_bc2(4,3)
+    double precision    :: dist
     double precision,allocatable :: save_x(:),save_y(:),save_z(:)
 
     character(len=2),allocatable :: save_indfl(:)
@@ -392,6 +395,7 @@ contains
        do frgi1=1,save_num_bcg
           frli1=save_bcg_to_bcl(frgi1) ! tout le monde parcours les nouvelles condition limites dans le même ordre
           lgi1=save_bcg_to_bg(frgi1)
+          lli1=save_bg_to_bl(lgi1)
           proci1=save_bg_to_proc(lgi1)
           do k=1,nsplit_dir(3,lgi1)
              do j=1,nsplit_dir(2,lgi1)
@@ -404,7 +408,9 @@ contains
                    call reallocate(sub_bc,6,1)
 
                    if (rank==proci1) then
-
+                      write(stderr,*) "init",frgf1,save_iminb(frli1),save_imaxb(frli1),&
+                                    save_jminb(frli1),save_jmaxb(frli1),&
+                                    save_kminb(frli1),save_kmaxb(frli1)
                       call new2old_p(1,1,1,xs,ys,zs,i,j,k,lgi1)
                       call new2old_p(ni(i,j,k,lgi1),nj(i,j,k,lgi1),nk(i,j,k,lgi1),xe,ye,ze,i,j,k,lgi1)
 
@@ -443,89 +449,144 @@ contains
                       frgi2=tab_raccord(frgi1)      ! a split on the other side induce split here
                       frli2=save_bcg_to_bcl(frgi2)
                       lgi2=save_bcg_to_bg(frgi2)
+                      lli2=save_bg_to_bl(lgi2)
                       proci2=save_bg_to_proc(lgi2)
 
                       if(rank==proci1) then
+                      
+                         nid = save_id2(lli1)-save_id1(lli1)+1
+                         njd = save_jd2(lli1)-save_jd1(lli1)+1
+                         nijd = nid*njd
+
+                          nb = save_npn(lli1)+1+(sub_bc(1,1)-save_id1(lli1)) &
+                                               +(sub_bc(3,1)-save_jd1(lli1))*nid &
+                                               +(sub_bc(5,1)-save_kd1(lli1))*nijd
+!
+                          nbi = nb+1
+                          nbj = nb+nid
+                          nbk = nb+nijd
+
+                          sub_bc2(1,1)   =save_x(nb)
+                          sub_bc2(2,1)   =save_x(nbi)
+                          sub_bc2(3,1)   =save_x(nbj)
+                          sub_bc2(4,1)   =save_x(nbk)
+                          sub_bc2(1,2)   =save_y(nb)
+                          sub_bc2(2,2)   =save_y(nbi)
+                          sub_bc2(3,2)   =save_y(nbj)
+                          sub_bc2(4,2)   =save_y(nbk)
+                          sub_bc2(1,3)   =save_z(nb)
+                          sub_bc2(2,3)   =save_z(nbi)
+                          sub_bc2(3,3)   =save_z(nbj)
+                          sub_bc2(4,3)   =save_z(nbk)
+                          
                          sub_bc(1,1)=sub_bc(1,1)-save_iminb(frli1)
                          sub_bc(2,1)=sub_bc(2,1)-save_iminb(frli1) ! coordinate of the new boundary
                          sub_bc(3,1)=sub_bc(3,1)-save_jminb(frli1) ! in the old boundary ref
                          sub_bc(4,1)=sub_bc(4,1)-save_jminb(frli1)
                          sub_bc(5,1)=sub_bc(5,1)-save_kminb(frli1)
-                         sub_bc(6,1)=sub_bc(6,1)-save_kminb(frli1)
+                         sub_bc(6,1)=sub_bc(6,1)-save_kminb(frli1)                          
                       endif
 
                       call MPI_TRANS(sub_bc,sub_bc,proci1,proci2)
+                      call MPI_TRANS(sub_bc2,sub_bc2,proci1,proci2)
 
                       if(rank==proci2) then
                          nsub=0
-                         switch_ij=.false.
-                         switch_jk=.false.
-                         switch_ik=.false.
-
-                         is_surf_x=(sub_bc(6,1)-sub_bc(5,1)>0.and.sub_bc(4,1)-sub_bc(3,1)>0)
-                         is_surf_y=(sub_bc(6,1)-sub_bc(5,1)>0.and.sub_bc(2,1)-sub_bc(1,1)>0)
-                         is_surf_z=(sub_bc(2,1)-sub_bc(1,1)>0.and.sub_bc(4,1)-sub_bc(3,1)>0)
-
-                         imin=sub_bc(1,1)
-                         imax=sub_bc(2,1)
-                         jmin=sub_bc(3,1)
-                         jmax=sub_bc(4,1)
-                         kmin=sub_bc(5,1)
-                         kmax=sub_bc(6,1)
-
-                         if(is_surf_x) then
-                           select case(save_indfl(frli2)(1:1))
-                           case("j") ! we have to inverse i and j
-                             imin=sub_bc(3,1)
-                             imax=sub_bc(4,1)
-                             jmin=sub_bc(1,1)
-                             jmax=sub_bc(2,1)
-                             switch_ij=.true.
-                           case("k") ! we have to inverse i and k
-                             imin=sub_bc(5,1)
-                             imax=sub_bc(6,1)
-                             kmin=sub_bc(1,1)
-                             kmax=sub_bc(2,1)
-                             switch_ik=.true.
-                           end select
-                         elseif(is_surf_y) then
-                           select case(save_indfl(frli2)(1:1))
-                           case("i") ! we have to inverse i and j
-                             imin=sub_bc(3,1)
-                             imax=sub_bc(4,1)
-                             jmin=sub_bc(1,1)
-                             jmax=sub_bc(2,1)
-                             switch_ij=.true.
-                           case("k") ! we have to inverse j and k
-                             jmin=sub_bc(5,1)
-                             jmax=sub_bc(6,1)
-                             kmin=sub_bc(3,1)
-                             kmax=sub_bc(4,1)
-                             switch_jk=.true.
-                           end select
-                         elseif(is_surf_z) then
-                           select case(save_indfl(frli2)(1:1))
-                           case("j") ! we have to inverse j and k
-                             kmin=sub_bc(3,1)
-                             kmax=sub_bc(4,1)
-                             jmin=sub_bc(5,1)
-                             jmax=sub_bc(6,1)
-                             switch_jk=.true.
-                           case("i") ! we have to inverse i and k
-                             imin=sub_bc(5,1)
-                             imax=sub_bc(6,1)
-                             kmin=sub_bc(1,1)
-                             kmax=sub_bc(2,1)
-                             switch_ik=.true.
-                           end select
-                         endif
+                         dir=0
+                         nid = save_id2(lli2)-save_id1(lli2)+1
+                         njd = save_jd2(lli2)-save_jd1(lli2)+1
+                         nijd = nid*njd
                          
-                         imin=imin+save_iminb(frli2)
-                         imax=imax+save_iminb(frli2) ! coordinate of the new boundary
-                         jmin=jmin+save_jminb(frli2) ! in the old block ref
-                         jmax=jmax+save_jminb(frli2)
-                         kmin=kmin+save_kminb(frli2)
-                         kmax=kmax+save_kminb(frli2)
+                         ! look for the first point
+                          search1:do k1=save_kminb(frli2),save_kmaxb(frli2)
+                           do j1=save_jminb(frli2),save_jmaxb(frli2)
+                            do i1=save_iminb(frli2),save_imaxb(frli2)
+                             iba=i1
+                             jba=j1
+                             kba=k1
+                            na = save_npn(lli2)+1+(i1-save_id1(lli2)) &
+                                                 +(j1-save_jd1(lli2))*nid &
+                                                 +(k1-save_kd1(lli2))*nijd
+                             dist=sqrt( (save_x(na)-sub_bc2(1,1))**2+(save_y(na)-sub_bc2(1,2))**2+(save_z(na)-sub_bc2(1,3))**2 )
+                             if(dist.lt.eps) exit search1
+                            enddo
+                           enddo
+                          enddo search1
+                          if(dist.ge.eps) stop "problem in boundary "
+                         
+                          ! look for directions
+                          search2:do k1=save_kminb(frli2),save_kmaxb(frli2)
+                           do j1=save_jminb(frli2),save_jmaxb(frli2)
+                            do i1=save_iminb(frli2),save_imaxb(frli2)
+                             ii=i1
+                             jj=j1
+                             kk=k1
+                            na = save_npn(lli2)+1+(i1-save_id1(lli2)) &
+                                                 +(j1-save_jd1(lli2))*nid &
+                                                 +(k1-save_kd1(lli2))*nijd
+                             dist=sqrt( (save_x(na)-sub_bc2(2,1))**2+(save_y(na)-sub_bc2(2,2))**2+(save_z(na)-sub_bc2(2,3))**2 )
+                             if(dist.lt.eps) exit search2
+                            enddo
+                           enddo
+                          enddo search2
+                          if(dist.lt.eps) then
+                            dir(1,1)=ii-iba ; dir(1,1)=ii-iba
+                            dir(1,2)=jj-jba ; dir(2,1)=jj-jba
+                            dir(1,3)=kk-kba ; dir(3,1)=kk-kba
+                          endif
+                          search3:do k1=save_kminb(frli2),save_kmaxb(frli2)
+                           do j1=save_jminb(frli2),save_jmaxb(frli2)
+                            do i1=save_iminb(frli2),save_imaxb(frli2)
+                             ii=i1
+                             jj=j1
+                             kk=k1
+                            na = save_npn(lli2)+1+(i1-save_id1(lli2)) &
+                                                 +(j1-save_jd1(lli2))*nid &
+                                                 +(k1-save_kd1(lli2))*nijd
+                             dist=sqrt( (save_x(na)-sub_bc2(3,1))**2+(save_y(na)-sub_bc2(3,2))**2+(save_z(na)-sub_bc2(3,3))**2 )
+                             if(dist.lt.eps) exit search3
+                            enddo
+                           enddo
+                          enddo search3
+                          if(dist.lt.eps) then
+                            dir(2,1)=ii-iba ; dir(1,2)=ii-iba
+                            dir(2,2)=jj-jba ; dir(2,2)=jj-jba
+                            dir(2,3)=kk-kba ; dir(3,2)=kk-kba
+                          endif
+                          search4:do k1=save_kminb(frli2),save_kmaxb(frli2)
+                           do j1=save_jminb(frli2),save_jmaxb(frli2)
+                            do i1=save_iminb(frli2),save_imaxb(frli2)
+                             ii=i1
+                             jj=j1
+                             kk=k1
+                            na = save_npn(lli2)+1+(i1-save_id1(lli2)) &
+                                                 +(j1-save_jd1(lli2))*nid &
+                                                 +(k1-save_kd1(lli2))*nijd
+                             dist=sqrt( (save_x(na)-sub_bc2(4,1))**2+(save_y(na)-sub_bc2(4,2))**2+(save_z(na)-sub_bc2(4,3))**2 )
+                             if(dist.lt.eps) exit search4
+                            enddo
+                           enddo
+                          enddo search4
+                          if(dist.lt.eps) then
+                            dir(3,1)=ii-iba ; dir(1,3)=ii-iba
+                            dir(3,2)=jj-jba ; dir(2,3)=jj-jba
+                            dir(3,3)=kk-kba ; dir(3,3)=kk-kba
+                          endif
+                          
+                          tmp(1:3)=matmul(dir,sub_bc(1:5:2,1))
+                          tmp(4:6)=matmul(dir,sub_bc(2:6:2,1))
+                          tmp(1:4:3)=tmp(1:4:3)+save_iminb(frli2) ! coordinate of the new boundary
+                          tmp(2:5:3)=tmp(2:5:3)+save_jminb(frli2) ! in the old block ref
+                          tmp(3:6:3)=tmp(3:6:3)+save_kminb(frli2)
+
+                          offset=[iba,jba,kba]-tmp(1:3)
+                         
+                         imin=min(tmp(1),tmp(4))+offset(1)
+                         imax=max(tmp(1),tmp(4))+offset(1)
+                         jmin=min(tmp(2),tmp(5))+offset(2)
+                         jmax=max(tmp(2),tmp(5))+offset(2)
+                         kmin=min(tmp(3),tmp(6))+offset(3)
+                         kmax=max(tmp(3),tmp(6))+offset(3)
 
                          do k2=1,nsplit_dir(3,lgi2)
                             do j2=1,nsplit_dir(2,lgi2)
@@ -572,26 +633,19 @@ contains
                             call abort
                          endif
                          do i2=1,nsub
-                            tmp=sub_bc(:,nsub)
-                            if(switch_ij) then
-                              tmp(1)=sub_bc(3,nsub)
-                              tmp(2)=sub_bc(4,nsub)
-                              tmp(3)=sub_bc(1,nsub)
-                              tmp(4)=sub_bc(2,nsub)
-                            endif
-                            if(switch_ik) then
-                              tmp(5)=sub_bc(1,nsub)
-                              tmp(6)=sub_bc(2,nsub)
-                              tmp(1)=sub_bc(5,nsub)
-                              tmp(2)=sub_bc(6,nsub)
-                            endif
-                            if(switch_jk) then
-                              tmp(5)=sub_bc(3,nsub)
-                              tmp(6)=sub_bc(4,nsub)
-                              tmp(3)=sub_bc(5,nsub)
-                              tmp(4)=sub_bc(6,nsub)
-                            endif
-                            sub_bc(:,nsub)=tmp
+                            tmp=sub_bc(:,i2)
+                            
+                            tmp(1:3)=matmul(dir,sub_bc(1:5:2,i2)-offset)
+                            tmp(4:6)=matmul(dir,sub_bc(2:6:2,i2)-offset)
+                           
+                             imin=min(tmp(1),tmp(4))
+                             imax=max(tmp(1),tmp(4))
+                             jmin=min(tmp(2),tmp(5))
+                             jmax=max(tmp(2),tmp(5))
+                             kmin=min(tmp(3),tmp(6))
+                             kmax=max(tmp(3),tmp(6))
+                         
+                            sub_bc(:,i2)=[imin,imax,jmin,jmax,kmin,kmax]
                          enddo
                       endif
                       call MPI_TRANS(nsub,nsub,proci2,proci1)
@@ -613,6 +667,9 @@ contains
                    do i2=1,nsub
                       frgf1=frgf1+1
                       ! coordinate of the new boundary in the new block ref
+                      
+                        if (rank==0) write(stderr,*) "end ",frgf1,sub_bc(:,i2)
+                        
                       call old2new_p(sub_bc(1,i2),sub_bc(3,i2),sub_bc(5,i2),sub_bc(1,i2),sub_bc(3,i2),sub_bc(5,i2),i,j,k,lgi1)
                       call old2new_p(sub_bc(2,i2),sub_bc(4,i2),sub_bc(6,i2),sub_bc(2,i2),sub_bc(4,i2),sub_bc(6,i2),i,j,k,lgi1)
 
@@ -822,15 +879,12 @@ contains
                            id1(llf3),id2(llf3),jd1(llf3),jd2(llf3),kd1(llf3),kd2(llf3),npn(llf3),       &
                            x,y,z)
 
-                      print*,rank,1,sub_bc_c(1,:)
-                      print*,rank,2,sub_bc_c(2,:)
-
-                      if (abs(sub_bc_c(1,1)-sub_bc_c(2,1))<=1d-10 .and. &
-                           abs(sub_bc_c(1,2)-sub_bc_c(2,2))<=1d-10 .and. &
-                           abs(sub_bc_c(1,3)-sub_bc_c(2,3))<=1d-10 .and. & ! It's me !
-                           abs(sub_bc_c(1,4)-sub_bc_c(2,4))<=1d-10 .and. &
-                           abs(sub_bc_c(1,5)-sub_bc_c(2,5))<=1d-10 .and. &
-                           abs(sub_bc_c(1,6)-sub_bc_c(2,6))<=1d-10) then
+                      if (abs(sub_bc_c(1,1)-sub_bc_c(2,1))<=eps .and. &
+                           abs(sub_bc_c(1,2)-sub_bc_c(2,2))<=eps .and. &
+                           abs(sub_bc_c(1,3)-sub_bc_c(2,3))<=eps .and. & ! It's me !
+                           abs(sub_bc_c(1,4)-sub_bc_c(2,4))<=eps .and. &
+                           abs(sub_bc_c(1,5)-sub_bc_c(2,5))<=eps .and. &
+                           abs(sub_bc_c(1,6)-sub_bc_c(2,6))<=eps) then
 
                          frgf4=frgf3
                          exit find_otherblock
@@ -874,23 +928,8 @@ contains
              if (rank==procf1) indmf=indfl(frlf1)
              call bcast(indmf,procf1)
 
-             select case(indmf(1:1))
-             case("i")
-                mot(16)="fa"      ; imot(16)=2
-                mot(17)="+j"      ; imot(17)=2
-                mot(18)="+k"      ; imot(18)=2
-             case("j")
-                mot(16)="+i"      ; imot(16)=2
-                mot(17)="fa"      ; imot(17)=2
-                mot(18)="+k"      ; imot(18)=2
-             case("k")
-                mot(16)="+i"      ; imot(16)=2
-                mot(17)="+j"      ; imot(17)=2
-                mot(18)="fa"      ; imot(18)=2
-             end select
-
              if(verbosity>=2) then
-                nmot=18
+                nmot=12
                 mot(1)="init"     ; imot(1)=4
                 mot(2)="boundary" ; imot(2)=8
                 mot(3)="coin"     ; imot(3)=4
@@ -900,20 +939,17 @@ contains
                 mot(7)="kibdc"    ; imot(7)=5
                 call str(mot,imot,nmx,8 ,1)
                 mot(9)="krr"      ; imot(9)=3
-                call str(mot,imot,nmx,10 ,0)
-                mot(11)="ptc"     ; imot(11)=3
-                call str(mot,imot,nmx,12 ,tmp(1))
-                call str(mot,imot,nmx,13 ,tmp(2))
-                call str(mot,imot,nmx,14 ,tmp(3))
-                mot(15)="dir"     ; imot(15)=3
+                call str(mot,imot,nmx,10 ,1)
+                mot(11)="epsmsh"  ; imot(11)=6
+                write(mot(12),'(e11.3)') eps ;  imot(12)=11
                 call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
              else
                 call inbdc( &
                      exs1,exs2, &
                      x,y,z, &
                      ncbd,ncin,mnc, &
-                     0,frgf1,frgf2,1,0.D0, &
-                     tmp(1),tmp(2),tmp(3),mot(16)(1:2),mot(17)(1:2),mot(18)(1:2))
+                     1,frgf1,frgf2,1,eps, &
+                     tmp(1),tmp(2),tmp(3),"  ","  ","  ")
              endif
           endif
        enddo
@@ -974,9 +1010,25 @@ contains
     if(typ==0) ext=".dat"
     if(typ==1) ext=".csv"
     if(typ==2) ext=".vts"
-    
+
+
     
     ! write grid
+    if(typ==2.and.rank==0) then 
+      ! write pvd file
+       write(fich,'(A)') prefix//"mesh.pvd"
+       open(42,file=fich,status="replace")
+       write(42,'(A)') '<?xml version="1.0"?>'
+       write(42,'(A)') ' <VTKFile type="Collection" version="0.1">'
+       write(42,'(A)') '   <Collection>'
+       do l=1,num_bg
+          write(42,'(A,I0.2,A,I0.2,A)') '     <DataSet part="',l-1,'" file="'//prefix//'mesh_',l,'.vts"/>'
+       enddo
+       write(42,'(A)') '   </Collection>'
+       write(42,'(A)') ' </VTKFile>'
+       close(42)
+    endif
+
     do l=1,lt
        write(fich,'(A,I0.2,A)') prefix//"mesh_",bl_to_bg(l),ext
 
@@ -1006,11 +1058,28 @@ contains
          close(42)
        endif
     enddo
-
+    
+    call barrier
+    
     ! write boundaries
+    if(typ==2.and.rank==0) then 
+      ! write pvd file
+       write(fich,'(A)') prefix//"bnd.pvd"
+       open(42,file=fich,status="replace")
+       write(42,'(A)') '<?xml version="1.0"?>'
+       write(42,'(A)') ' <VTKFile type="Collection" version="0.1">'
+       write(42,'(A)') '   <Collection>'
+       do l=1,num_bcg
+          write(42,'(A,I0.3,A,I0.3,A)') '     <DataSet part="',l-1,'" file="'//prefix//'bnd_',l,'.vts"/>'
+       enddo
+       write(42,'(A)') '   </Collection>'
+       write(42,'(A)') ' </VTKFile>'
+       close(42)
+    endif
+    
     do fr=1,mtb
 
-       write(fich,'(A,I0.2,A)') prefix//"bnd_",bcl_to_bcg(fr),ext
+       write(fich,'(A,I0.3,A)') prefix//"bnd_",bcl_to_bcg(fr),ext
 
        if(typ==2) then
          call vtk_writer(fich,x,y,z,[bcl_to_bcg(fr)],"boundary_num",ndlb(fr), &
@@ -1078,6 +1147,13 @@ contains
         write(*,*) 'vtk_writer : Unknown type'
         call abort
     end select
+
+    if (i1<ii1(l)) print*,"WTF i1",rank,i1,ii1(l)
+    if (i2>ii2(l)) print*,"WTF i2",rank,i2,ii2(l)
+    if (j1<jj1(l)) print*,"WTF j1",rank,j1,jj1(l)
+    if (j2>jj2(l)) print*,"WTF j2",rank,j2,jj2(l)
+    if (k1<kk1(l)) print*,"WTF k1",rank,k1,kk1(l)
+    if (k2>kk2(l)) print*,"WTF k2",rank,k2,kk2(l)
 
     open(42,file=vtk_file,status="replace")
 

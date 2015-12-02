@@ -6,6 +6,7 @@ contains
        mfba, &
        la,typa,ia1,ia2,ja1,ja2,ka1,ka2, &
        lb,typb,ib1,ib2,jb1,jb2,kb1,kb2, &
+       xb,xbi,xbj,xbk,yb,ybi,ybj,ybk,zb,zbi,zbj,zbk,&
        iba,jba,kba,tvi,tvj,tvk, &
        equat, &
        mnc,id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb)
@@ -103,7 +104,7 @@ contains
     integer          ::  nidlb,nijdla,nijdlb, njdla, njdlb
     integer          ::    nvi,   nvj,   nvk
     integer          ::  id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb
-    double precision ::  dist,   eps,x(ip21),y(ip21),z(ip21)
+    double precision ::  dist,   eps,x(ip21),y(ip21),z(ip21),xb,xbi,xbj,xbk,yb,ybi,ybj,ybk,zb,zbi,zbj,zbk
 !
 !-----------------------------------------------------------------------
 !
@@ -117,41 +118,29 @@ contains
       nidla = id2(la)-id1(la)+1
       njdla = jd2(la)-jd1(la)+1
       nijdla = nidla*njdla
-      nidlb = id2b-id1b+1
-      njdlb = jd2b-jd1b+1
-      nijdlb = nidlb*njdlb
+!
+!
 !
       ncilb = 1
       ncjlb = nidlb
       ncklb = nijdlb
 !
-      if (krr.eq.1) then ! TODO DO NOT WORK if nprocs > 1
+
+      if (krr.eq.1) then
 !---------------------------------------------------------------------
-      na = npn(la)+1+(ia1-id1(la)) &
-                    +(ja1-jd1(la))*nidla &
-                    +(ka1-kd1(la))*nijdla
-!
-      nai = na+1
-      naj = na+nidla
-      nak = na+nijdla
-!
-      do k=kb1,kb2
-       do j=jb1,jb2
-        do i=ib1,ib2
+! look for the first point
+      do k=ka1,ka2
+       do j=ja1,ja2
+        do i=ia1,ia2
          iba=i
          jba=j
          kba=k
-         nb = npnb+1+(i-id1b) &
-                       +(j-jd1b)*nidlb &
-                       +(k-kd1b)*nijdlb
+         na = npn(la)+1+(i-id1(la)) &
+                       +(j-jd1(la))*nidla &
+                       +(k-kd1(la))*nijdla
 !
-!print*,x(na),x(nb),i
-!print*,y(na),y(nb),j
-!print*,z(na),z(nb),k
-!print*,la   ,lb     
-         dist=sqrt( (x(nb)-x(na))**2+(y(nb)-y(na))**2+(z(nb)-z(na))**2 )
+         dist=sqrt( (x(na)-xb)**2+(y(na)-yb)**2+(z(na)-zb)**2 )
          if(dist.lt.eps) go to 51
-!         if(dist.lt.eps) exit
         enddo
        enddo
       enddo 
@@ -159,56 +148,55 @@ contains
    51 continue
 !
 !-------
-!
-      do k=kb1,kb2
-       do j=jb1,jb2
-        do i=ib1,ib2
+! look for directions
+      do k=ka1,ka2
+       do j=ja1,ja2
+        do i=ia1,ia2
          ii=i
          jj=j
          kk=k
-         nb = npnb+1+(i-id1b) &
-                       +(j-jd1b)*nidlb &
-                       +(k-kd1b)*nijdlb
-         dist=sqrt( (x(nb)-x(nai))**2+(y(nb)-y(nai))**2+(z(nb)-z(nai))**2 )
-!         if(dist.lt.eps) exit
+         na = npn(la)+1+(i-id1(la)) &
+                       +(j-jd1(la))*nidla &
+                       +(k-kd1(la))*nijdla
+                       
+         dist=sqrt( (x(na)-xbi)**2+(y(na)-ybi)**2+(z(na)-zbi)**2 )
          if(dist.lt.eps) go to 61
         enddo
        enddo
-      enddo 
+      enddo
    61 continue
 !
       tvi = 'fa'
 !
       if(equat(3:5).ne.'2di') then
-      if(ii-iba.eq.+1) tvi = '+i'
-      if(ii-iba.eq.-1) tvi = '-i'
+      if(ii-iba.eq.+1) tvi = '-i'
+      if(ii-iba.eq.-1) tvi = '+i'
       endif
 !
       if(equat(3:5).ne.'2dj') then
-      if(jj-jba.eq.+1) tvi = '+j'
-      if(jj-jba.eq.-1) tvi = '-j'
+      if(jj-jba.eq.+1) tvi = '-j'
+      if(jj-jba.eq.-1) tvi = '+j'
       endif
 !
 !VC   if(equat(3:5).ne.'2dk') then
       if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
-      if(kk-kba.eq.+1) tvi = '+k'
-      if(kk-kba.eq.-1) tvi = '-k'
+      if(kk-kba.eq.+1) tvi = '-k'
+      if(kk-kba.eq.-1) tvi = '+k'
       endif
 !
 !-------
 !
-      do k=kb1,kb2
-       do j=jb1,jb2
-        do i=ib1,ib2
+      do k=ka1,ka2
+       do j=ja1,ja2
+        do i=ia1,ia2
          ii=i
          jj=j
          kk=k
-         nb = npnb+1+(i-id1b) &
-                       +(j-jd1b)*nidlb &
-                       +(k-kd1b)*nijdlb
-         dist=sqrt( (x(nb)-x(naj))**2+(y(nb)-y(naj))**2+(z(nb)-z(naj))**2 )
+         na = npn(la)+1+(i-id1(la)) &
+                       +(j-jd1(la))*nidla &
+                       +(k-kd1(la))*nijdla
+         dist=sqrt( (x(na)-xbj)**2+(y(na)-ybj)**2+(z(na)-zbj)**2 )
          if(dist.lt.eps) go to 71
-!         if(dist.lt.eps) exit 
         enddo
        enddo
       enddo 
@@ -217,34 +205,33 @@ contains
       tvj = 'fa'
 !
       if(equat(3:5).ne.'2di') then
-      if(ii-iba.eq.+1) tvj = '+i'
-      if(ii-iba.eq.-1) tvj = '-i'
+      if(ii-iba.eq.+1) tvj = '-i'
+      if(ii-iba.eq.-1) tvj = '+i'
       endif
 !
       if(equat(3:5).ne.'2dj') then
-      if(jj-jba.eq.+1) tvj = '+j'
-      if(jj-jba.eq.-1) tvj = '-j'
+      if(jj-jba.eq.+1) tvj = '-j'
+      if(jj-jba.eq.-1) tvj = '+j'
       endif
 !
 !VC   if(equat(3:5).ne.'2dk') then
       if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
-      if(kk-kba.eq.+1) tvj = '+k'
-      if(kk-kba.eq.-1) tvj = '-k'
+      if(kk-kba.eq.+1) tvj = '-k'
+      if(kk-kba.eq.-1) tvj = '+k'
       endif
 ! 
 !-------
 !
-      do k=kb1,kb2
-       do j=jb1,jb2
-        do i=ib1,ib2
+      do k=ka1,ka2
+       do j=ja1,ja2
+        do i=ia1,ia2
          ii=i
          jj=j
          kk=k
-         nb = npnb+1+(i-id1b) &
-                       +(j-jd1b)*nidlb &
-                       +(k-kd1b)*nijdlb
-         dist=sqrt( (x(nb)-x(nak))**2+(y(nb)-y(nak))**2+(z(nb)-z(nak))**2 )
-!         if(dist.lt.eps) exit 
+         na = npn(la)+1+(i-id1(la)) &
+                       +(j-jd1(la))*nidla &
+                       +(k-kd1(la))*nijdla
+         dist=sqrt( (x(na)-xbk)**2+(y(na)-ybk)**2+(z(na)-zbk)**2 )
          if(dist.lt.eps) go to 81
         enddo
        enddo
@@ -254,19 +241,19 @@ contains
       tvk = 'fa'
 !
       if(equat(3:5).ne.'2di') then
-      if(ii-iba.eq.+1) tvk = '+i'
-      if(ii-iba.eq.-1) tvk = '-i'
+      if(ii-iba.eq.+1) tvk = '-i'
+      if(ii-iba.eq.-1) tvk = '+i'
       endif
 !
       if(equat(3:5).ne.'2dj') then
-      if(jj-jba.eq.+1) tvk = '+j'
-      if(jj-jba.eq.-1) tvk = '-j'
+      if(jj-jba.eq.+1) tvk = '-j'
+      if(jj-jba.eq.-1) tvk = '+j'
       endif
 !
 !VC   if(equat(3:5).ne.'2dk') then
       if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
-      if(kk-kba.eq.+1) tvk = '+k'
-      if(kk-kba.eq.-1) tvk = '-k'
+      if(kk-kba.eq.+1) tvk = '-k'
+      if(kk-kba.eq.-1) tvk = '+k'
       endif
 !
 !---------------------------------------------------------------------

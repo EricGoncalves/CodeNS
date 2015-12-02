@@ -47,7 +47,7 @@ contains
     integer          ::          j1,         j2,          k,         k1,         k2
     integer          ::           l,        m0b,         mb,        mbb,       mbmx
     integer          ::          mc,mnpar(ip12),         n0,         nc
-    integer          ::         nid,       nijd,        njd
+    integer          ::         nid,       nijd,        njd,num,numt
     integer          ::         bcg,        bcl,        img,         lm
     logical          ::     isparoi
     double precision ::  dist(ip12),dist2(ip00),    x(ip21),  xcc(ip00)
@@ -58,7 +58,14 @@ contains
 !-----------------------------------------------------------------------
 !
 !
-
+   numt=0
+   do bcl=1,mtb
+   if ((cl(bcl)(1:2).eq.'pa').or. &
+       (cl(bcl)(1:2).eq.'lp').or. &
+       (cl(bcl)(1:2).eq.'gl'))      numt=numt+mmb(bcl)
+   enddo
+   call sum_mpi(numt)
+   num=0
    dist=Huge(1.)
 !  boucle sur toutes les conditions limites
    do bcg=1,num_bcg
@@ -77,6 +84,9 @@ contains
         mbmx=0
         if(rank==bcg_to_proc(bcg)) mbmx=mmb(bcl)
         call bcast(mbmx,bcg_to_proc(bcg))
+
+        num=num+mbmx
+        if (rank==0) write(*,*) "computing dist with the boundary",bcg," : ",100*num/numt,"%"
         call reallocate(buff,3,mbmx)
         if(rank==bcg_to_proc(bcg)) then
            m0b=mpn(bcl)
