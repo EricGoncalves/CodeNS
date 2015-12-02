@@ -989,6 +989,7 @@ contains
   subroutine write_mesh(prefix,x,y,z)
     use boundary
     use mod_mpi
+    use mod_vtk
     use para_var
     implicit none
     double precision,intent(in) :: x(:),y(:),z(:)
@@ -1011,29 +1012,17 @@ contains
     if(typ==1) ext=".csv"
     if(typ==2) ext=".vts"
 
-
-    
     ! write grid
-    if(typ==2.and.rank==0) then 
-      ! write pvd file
-       write(fich,'(A)') prefix//"mesh.pvd"
-       open(42,file=fich,status="replace")
-       write(42,'(A)') '<?xml version="1.0"?>'
-       write(42,'(A)') ' <VTKFile type="Collection" version="0.1">'
-       write(42,'(A)') '   <Collection>'
-       do l=1,num_bg
-          write(42,'(A,I0.2,A,I0.2,A)') '     <DataSet part="',l-1,'" file="'//prefix//'mesh_',l,'.vts"/>'
-       enddo
-       write(42,'(A)') '   </Collection>'
-       write(42,'(A)') ' </VTKFile>'
-       close(42)
+
+    if(typ==2) then 
+       call vtk_start_collection(prefix//"mesh.pvd","fields")
     endif
 
     do l=1,lt
        write(fich,'(A,I0.2,A)') prefix//"mesh_",bl_to_bg(l),ext
 
        if(typ==2) then 
-        call vtk_writer(fich,x,y,z,[bl_to_bg(l)],"block_num",l)
+        call vtk_writer(fich,x,y,z,bl_to_bg(l),"block_num",l)
        else
          open(42,file=fich,status="replace")
        
@@ -1058,31 +1047,25 @@ contains
          close(42)
        endif
     enddo
+
+    if(typ==2) then 
+       call vtk_end_collection()
+    endif
     
     call barrier
+
+    if(typ==2) then 
+       call vtk_start_collection(prefix//"bnd.pvd","fields")
+    endif
     
     ! write boundaries
-    if(typ==2.and.rank==0) then 
-      ! write pvd file
-       write(fich,'(A)') prefix//"bnd.pvd"
-       open(42,file=fich,status="replace")
-       write(42,'(A)') '<?xml version="1.0"?>'
-       write(42,'(A)') ' <VTKFile type="Collection" version="0.1">'
-       write(42,'(A)') '   <Collection>'
-       do l=1,num_bcg
-          write(42,'(A,I0.3,A,I0.3,A)') '     <DataSet part="',l-1,'" file="'//prefix//'bnd_',l,'.vts"/>'
-       enddo
-       write(42,'(A)') '   </Collection>'
-       write(42,'(A)') ' </VTKFile>'
-       close(42)
-    endif
     
     do fr=1,mtb
 
        write(fich,'(A,I0.3,A)') prefix//"bnd_",bcl_to_bcg(fr),ext
 
        if(typ==2) then
-         call vtk_writer(fich,x,y,z,[bcl_to_bcg(fr)],"boundary_num",ndlb(fr), &
+         call vtk_writer(fich,x,y,z,bcl_to_bcg(fr),"boundary_num",ndlb(fr), &
                 iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr))
        else
 
@@ -1109,134 +1092,13 @@ contains
          close(42)
        endif
     enddo
-    call barrier
-  end subroutine write_mesh
-
-
-  subroutine vtk_writer(vtk_file,x,y,z,field,name_field,l,oi1,oi2,oj1,oj2,ok1,ok2)
-    use para_var
-    use boundary
-    use mod_mpi
-    implicit none
-    double precision,intent(in) :: x(:),y(:),z(:)
-    class(*),intent(in) :: field(:)
-    integer,intent(in) ::l
-    integer,intent(in),optional :: oi1,oi2,oj1,oj2,ok1,ok2
-    character(*),intent(in) :: vtk_file,name_field
-
-    integer :: i1,i2,j1,j2,k1,k2
-    integer :: nid,njd,nijd,xyz,i,j,k
-    character(len=80) :: vartype
-
-    if (present(oi1)) then
-      i1=oi1 ; i2=oi2
-      j1=oj1 ; j2=oj2
-      k1=ok1 ; k2=ok2
-    else
-      i1=ii1(l) ; i2=ii2(l)
-      j1=jj1(l) ; j2=jj2(l)
-      k1=kk1(l) ; k2=kk2(l)
+    
+    if(typ==2) then 
+       call vtk_end_collection()
     endif
     
-    select type(field)
-    type is (integer)
-        vartype="Int32"
-    type is (double precision)
-        vartype="Float32"
-    class default
-        write(*,*) 'vtk_writer : Unknown type'
-        call abort
-    end select
-
-    if (i1<ii1(l)) print*,"WTF i1",rank,i1,ii1(l)
-    if (i2>ii2(l)) print*,"WTF i2",rank,i2,ii2(l)
-    if (j1<jj1(l)) print*,"WTF j1",rank,j1,jj1(l)
-    if (j2>jj2(l)) print*,"WTF j2",rank,j2,jj2(l)
-    if (k1<kk1(l)) print*,"WTF k1",rank,k1,kk1(l)
-    if (k2>kk2(l)) print*,"WTF k2",rank,k2,kk2(l)
-
-    open(42,file=vtk_file,status="replace")
-
-    write(42,'(A)') '<?xml version="1.0"?>'
-    write(42,*) '<VTKFile type="StructuredGrid"  version="0.1" byte_order="LittleEndian">'
-    write(42,*) '<StructuredGrid WholeExtent="',i1,i2,j1,j2,k1,k2,'">'
-    write(42,*) '<Piece Extent="',i1,i2,j1,j2,k1,k2,'">'
-    write(42,*) "<Points>"
-    write(42,*) '<DataArray type="Float32" NumberOfComponents="3" format="ascii">'
-
-         do k=k1,k2
-            do j=j1,j2
-               do i=i1,i2
-
-                  nid = id2(l)-id1(l)+1
-                  njd = jd2(l)-jd1(l)+1
-                  nijd = nid*njd
-
-                  xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
-
-                  write(42,*) x(xyz),y(xyz),z(xyz)
-
-               enddo
-            enddo
-         enddo
-         
-        write(42,*) '</DataArray>'
-        write(42,*) '</Points>'
-        write(42,*) '<PointData Scalars="',name_field,'">'
-        write(42,*) '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
-        
-        if (size(field)==ip21)then
-         do k=k1,k2
-            do j=j1,j2
-               do i=i1,i2
-                  nid = id2(l)-id1(l)+1
-                  njd = jd2(l)-jd1(l)+1
-                  nijd = nid*njd
-
-                  xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
-                  
-                  select type(field)
-                  type is (integer)
-                      write(42,*) field(xyz)
-                  type is (double precision)
-                      write(42,*) field(xyz)
-                  class default
-                      write(*,*) 'vtk_writer : Unknown type'
-                      call abort
-                  end select
-                 enddo
-              enddo
-           enddo
-         elseif  (size(field)==1)then
-         do k=k1,k2
-            do j=j1,j2
-               do i=i1,i2
-                  select type(field)
-                  type is (integer)
-                      write(42,*) field
-                  type is (double precision)
-                      write(42,*) field
-                  class default
-                      write(*,*) 'vtk_writer : Unknown type'
-                      call abort
-                  end select
-            
-                 enddo
-              enddo
-           enddo
-         else
-          write(*,*) 'vtk_writer : Unknown size of field'
-          call abort
-        endif
-         write(42,*) '</DataArray>'
-         write(42,*) "</PointData>"
-         write(42,*) '</Piece>'
-         write(42,*) '</StructuredGrid>'
-         write(42,*) '</VTKFile>'
-
-       close(42)
-
-  end subroutine vtk_writer
+    call barrier
+  end subroutine write_mesh
 
   subroutine compute_split(nsplit,nsplit_dir,nigf,njgf,nkgf,  &
        npoints,num_bgi,num_bgf,num_bli,   &
