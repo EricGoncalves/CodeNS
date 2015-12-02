@@ -53,7 +53,7 @@ implicit none
   integer          :: mdimtnf,mdimtrf, mdimub,ndimctf,ndimnts
   integer          :: ndimntu, ndimub,   nvar
   double precision :: ccg,cfg,cng
-  parameter(ndimub =1200000)
+  parameter(ndimub =12000000)
   parameter(ndimctf=1000000)
   parameter(ndimnts=1000000)
   parameter(ndimntu=1)
