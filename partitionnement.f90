@@ -58,6 +58,7 @@ contains
     integer             :: frli1,frli2,frgi1,frgi2,frgi3
     integer             :: frlf1,frgf1,frgf2,frlf3,frgf3,frgf4
     integer             :: proci1,procf1,proci2,procf2,proc,load(0:nprocs-1),nload(0:nprocs-1)
+    integer             :: dir(3,3),offset(3),iba,ii,jba,jj,kba,kk,na,nb,nbi,nbj,nbk,i1,j1,k1
 
     integer,allocatable :: save_ii2(:),save_jj2(:),save_kk2(:)
     integer,allocatable :: save_id1(:),save_jd1(:),save_kd1(:)
@@ -70,7 +71,8 @@ contains
     integer,allocatable :: ni(:,:,:,:),nj(:,:,:,:),nk(:,:,:,:),nijk(:,:,:,:)
     integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),sub_bc(:,:),tmp(:)
 
-    double precision    :: vbc(ista*lsta),sub_bc_c(2,6)
+    double precision    :: vbc(ista*lsta),sub_bc_c(2,6),sub_bc2(4,3)
+    double precision    :: dist
     double precision,allocatable :: save_x(:),save_y(:),save_z(:)
 
     character(len=2),allocatable :: save_indfl(:)
@@ -393,6 +395,7 @@ contains
        do frgi1=1,save_num_bcg
           frli1=save_bcg_to_bcl(frgi1) ! tout le monde parcours les nouvelles condition limites dans le même ordre
           lgi1=save_bcg_to_bg(frgi1)
+          lli1=save_bg_to_bl(lgi1)
           proci1=save_bg_to_proc(lgi1)
           do k=1,nsplit_dir(3,lgi1)
              do j=1,nsplit_dir(2,lgi1)
@@ -443,11 +446,37 @@ contains
                       frgi2=tab_raccord(frgi1)      ! a split on the other side induce split here
                       frli2=save_bcg_to_bcl(frgi2)
                       lgi2=save_bcg_to_bg(frgi2)
+                      lli2=save_bg_to_bl(lgi2)
                       proci2=save_bg_to_proc(lgi2)
 
                       if(rank==proci1) then
+                         nid = save_id2(lli1)-save_id1(lli1)+1
+                         njd = save_jd2(lli1)-save_jd1(lli1)+1
+                         nijd = nid*njd
+
+                          nb = save_npn(lli1)+1+(sub_bc(1,1)-save_id1(lli1)) &
+                                               +(sub_bc(3,1)-save_jd1(lli1))*nid &
+                                               +(sub_bc(5,1)-save_kd1(lli1))*nijd
+!
+                          nbi = nb+1
+                          nbj = nb+nid
+                          nbk = nb+nijd
+
+                          sub_bc2(1,1)   =save_x(nb)
+                          sub_bc2(2,1)   =save_x(nbi)
+                          sub_bc2(3,1)   =save_x(nbj)
+                          sub_bc2(4,1)   =save_x(nbk)
+                          sub_bc2(1,2)   =save_y(nb)!   coordinate of the first point of the new boundary
+                          sub_bc2(2,2)   =save_y(nbi)
+                          sub_bc2(3,2)   =save_y(nbj)
+                          sub_bc2(4,2)   =save_y(nbk)
+                          sub_bc2(1,3)   =save_z(nb)
+                          sub_bc2(2,3)   =save_z(nbi)
+                          sub_bc2(3,3)   =save_z(nbj)
+                          sub_bc2(4,3)   =save_z(nbk)
+
                          sub_bc(1,1)=sub_bc(1,1)-save_iminb(frli1)
-                         sub_bc(2,1)=sub_bc(2,1)-save_iminb(frli1) ! coordinate of the new boundary
+                         sub_bc(2,1)=sub_bc(2,1)-save_iminb(frli1) ! index of the new boundary
                          sub_bc(3,1)=sub_bc(3,1)-save_jminb(frli1) ! in the old boundary ref
                          sub_bc(4,1)=sub_bc(4,1)-save_jminb(frli1)
                          sub_bc(5,1)=sub_bc(5,1)-save_kminb(frli1)
@@ -455,16 +484,107 @@ contains
                       endif
 
                       call MPI_TRANS(sub_bc,sub_bc,proci1,proci2)
+                      call MPI_TRANS(sub_bc2,sub_bc2,proci1,proci2)
 
                       if(rank==proci2) then
                          nsub=0
+                         dir=0
+                         nid = save_id2(lli2)-save_id1(lli2)+1
+                         njd = save_jd2(lli2)-save_jd1(lli2)+1
+                         nijd = nid*njd
 
-                         imin=sub_bc(1,1)+save_iminb(frli2)
-                         imax=sub_bc(2,1)+save_iminb(frli2) ! coordinate of the new boundary
-                         jmin=sub_bc(3,1)+save_jminb(frli2) ! in the old block ref
-                         jmax=sub_bc(4,1)+save_jminb(frli2)
-                         kmin=sub_bc(5,1)+save_kminb(frli2)
-                         kmax=sub_bc(6,1)+save_kminb(frli2)
+                         ! look for the first point
+                          search1:do k1=save_kminb(frli2),save_kmaxb(frli2)
+                           do j1=save_jminb(frli2),save_jmaxb(frli2)
+                            do i1=save_iminb(frli2),save_imaxb(frli2)
+                             iba=i1
+                             jba=j1
+                             kba=k1
+                            na = save_npn(lli2)+1+(i1-save_id1(lli2)) &
+                                                 +(j1-save_jd1(lli2))*nid &
+                                                 +(k1-save_kd1(lli2))*nijd
+                             dist=sqrt( (save_x(na)-sub_bc2(1,1))**2+(save_y(na)-sub_bc2(1,2))**2+(save_z(na)-sub_bc2(1,3))**2 )
+                             if(dist.lt.eps) exit search1
+                            enddo
+                           enddo
+                          enddo search1
+                          if(dist.ge.eps) stop "problem in boundary "
+                         
+                          ! look for directions
+                          search2:do k1=save_kminb(frli2),save_kmaxb(frli2)
+                           do j1=save_jminb(frli2),save_jmaxb(frli2)
+                            do i1=save_iminb(frli2),save_imaxb(frli2)
+                             ii=i1
+                             jj=j1
+                             kk=k1
+                            na = save_npn(lli2)+1+(i1-save_id1(lli2)) &
+                                                 +(j1-save_jd1(lli2))*nid &
+                                                 +(k1-save_kd1(lli2))*nijd
+                             dist=sqrt( (save_x(na)-sub_bc2(2,1))**2+(save_y(na)-sub_bc2(2,2))**2+(save_z(na)-sub_bc2(2,3))**2 )
+                             if(dist.lt.eps) exit search2
+                            enddo
+                           enddo
+                          enddo search2
+                          if(dist.lt.eps) then
+                            dir(1,1)=ii-iba ; dir(1,1)=ii-iba
+                            dir(1,2)=jj-jba ; dir(2,1)=jj-jba
+                            dir(1,3)=kk-kba ; dir(3,1)=kk-kba
+                          endif
+                          search3:do k1=save_kminb(frli2),save_kmaxb(frli2)
+                           do j1=save_jminb(frli2),save_jmaxb(frli2)
+                            do i1=save_iminb(frli2),save_imaxb(frli2)
+                             ii=i1
+                             jj=j1
+                             kk=k1
+                            na = save_npn(lli2)+1+(i1-save_id1(lli2)) &
+                                                 +(j1-save_jd1(lli2))*nid &
+                                                 +(k1-save_kd1(lli2))*nijd
+                             dist=sqrt( (save_x(na)-sub_bc2(3,1))**2+(save_y(na)-sub_bc2(3,2))**2+(save_z(na)-sub_bc2(3,3))**2 )
+                             if(dist.lt.eps) exit search3
+                            enddo
+                           enddo
+                          enddo search3
+                          if(dist.lt.eps) then
+                            dir(2,1)=ii-iba ; dir(1,2)=ii-iba
+                            dir(2,2)=jj-jba ; dir(2,2)=jj-jba
+                            dir(2,3)=kk-kba ; dir(3,2)=kk-kba
+                          endif
+                          search4:do k1=save_kminb(frli2),save_kmaxb(frli2)
+                           do j1=save_jminb(frli2),save_jmaxb(frli2)
+                            do i1=save_iminb(frli2),save_imaxb(frli2)
+                             ii=i1
+                             jj=j1
+                             kk=k1
+                            na = save_npn(lli2)+1+(i1-save_id1(lli2)) &
+                                                 +(j1-save_jd1(lli2))*nid &
+                                                 +(k1-save_kd1(lli2))*nijd
+                             dist=sqrt( (save_x(na)-sub_bc2(4,1))**2+(save_y(na)-sub_bc2(4,2))**2+(save_z(na)-sub_bc2(4,3))**2 )
+                             if(dist.lt.eps) exit search4
+                            enddo
+                           enddo
+                          enddo search4
+                          if(dist.lt.eps) then
+                            dir(3,1)=ii-iba ; dir(1,3)=ii-iba
+                            dir(3,2)=jj-jba ; dir(2,3)=jj-jba
+                            dir(3,3)=kk-kba ; dir(3,3)=kk-kba
+                          endif
+                          
+                          ! on change de repère
+
+                          tmp(1:3)=matmul(dir,sub_bc(1:5:2,1))
+                          tmp(4:6)=matmul(dir,sub_bc(2:6:2,1))
+                          tmp(1:4:3)=tmp(1:4:3)+save_iminb(frli2) ! coordinate of the new boundary
+                          tmp(2:5:3)=tmp(2:5:3)+save_jminb(frli2) ! in the old block ref
+                          tmp(3:6:3)=tmp(3:6:3)+save_kminb(frli2)
+
+                          offset=[iba,jba,kba]-tmp(1:3)
+                         
+                         imin=min(tmp(1),tmp(4))+offset(1)
+                         imax=max(tmp(1),tmp(4))+offset(1)
+                         jmin=min(tmp(2),tmp(5))+offset(2)
+                         jmax=max(tmp(2),tmp(5))+offset(2)
+                         kmin=min(tmp(3),tmp(6))+offset(3)
+                         kmax=max(tmp(3),tmp(6))+offset(3)
 
                          do k2=1,nsplit_dir(3,lgi2)
                             do j2=1,nsplit_dir(2,lgi2)
@@ -509,6 +629,22 @@ contains
                             print*,"Problem in the boundary ",frgi1,frgi2
                             call abort
                          endif
+                         ! on rechange de repère
+                         do i2=1,nsub
+                            tmp=sub_bc(:,i2)
+                            
+                            tmp(1:3)=matmul(dir,sub_bc(1:5:2,i2)-offset)
+                            tmp(4:6)=matmul(dir,sub_bc(2:6:2,i2)-offset)
+                           
+                             imin=min(tmp(1),tmp(4))
+                             imax=max(tmp(1),tmp(4))
+                             jmin=min(tmp(2),tmp(5))
+                             jmax=max(tmp(2),tmp(5))
+                             kmin=min(tmp(3),tmp(6))
+                             kmax=max(tmp(3),tmp(6))
+                         
+                            sub_bc(:,i2)=[imin,imax,jmin,jmax,kmin,kmax]
+                         enddo
                       endif
                       call MPI_TRANS(nsub,nsub,proci2,proci1)
                       if(rank==proci1) call reallocate_s(sub_bc,6,nsub)
@@ -1346,18 +1482,32 @@ subroutine compute_size(i,j,k,ii2,jj2,kk2,new_ii2,new_jj2,new_kk2)
     integer,intent(in)           :: a,b,c,d,e,f,id1,id2,jd1,jd2,kd1,kd2,npn
     double precision,intent(in)  :: x(:),y(:),z(:)
 
-    integer nid,njd,nijd
+    integer :: nid,njd,nijd,p1,p2,p3,p
 
     nid = id2-id1+1
     njd = jd2-jd1+1
     nijd = nid*njd
 
-    xmin=x( npn+1+(a - id1)+(c - jd1)*nid+(e - kd1)*nijd )
-    xmax=x( npn+1+(b - id1)+(c - jd1)*nid+(e - kd1)*nijd )
-    ymin=y( npn+1+(a - id1)+(c - jd1)*nid+(e - kd1)*nijd )
-    ymax=y( npn+1+(a - id1)+(d - jd1)*nid+(e - kd1)*nijd )
-    zmin=z( npn+1+(a - id1)+(c - jd1)*nid+(e - kd1)*nijd )
-    zmax=z( npn+1+(a - id1)+(c - jd1)*nid+(f - kd1)*nijd )
+    xmin= Huge(1.d0)
+    xmax=-Huge(1.d0)
+    ymin= Huge(1.d0)
+    ymax=-Huge(1.d0)
+    zmin= Huge(1.d0)
+    zmax=-Huge(1.d0)
+
+    do p1=a,b,max(b-a,1)
+        do p2=c,d,max(d-c,1)
+            do p3=e,f,max(f-e,1)
+              p=npn+1+(p1 - id1)+(p2 - jd1)*nid+(p3 - kd1)*nijd
+              xmin=min(xmin,x(p))
+              xmax=max(xmax,x(p))
+              ymin=min(ymin,y(p))
+              ymax=max(ymax,y(p))
+              zmin=min(zmin,z(p))
+              zmax=max(zmax,z(p))
+            enddo
+        enddo
+    enddo
 
   end subroutine get_coords_box
 
