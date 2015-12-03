@@ -6,6 +6,7 @@ contains
        mfba, &
        la,typa,ia1,ia2,ja1,ja2,ka1,ka2, &
        lb,typb,ib1,ib2,jb1,jb2,kb1,kb2, &
+       xb,xbi,xbj,xbk,yb,ybi,ybj,ybk,zb,zbi,zbj,zbk,&
        iba,jba,kba,tvi,tvj,tvk, &
        equat, &
        mnc,id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb)
@@ -103,8 +104,7 @@ contains
     integer          ::  nidlb,nijdla,nijdlb, njdla, njdlb
     integer          ::    nvi,   nvj,   nvk
     integer          ::  id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb
-    double precision ::  dist,   eps,x(ip21),y(ip21),z(ip21)
-    double precision ::  xb,xbi,xbj,xbk,yb,ybi,ybj,ybk,zb,zbi,zbj,zbk
+    double precision ::  dist,   eps,x(ip21),y(ip21),z(ip21),xb,xbi,xbj,xbk,yb,ybi,ybj,ybk,zb,zbi,zbj,zbk
 !
 !-----------------------------------------------------------------------
 !
@@ -119,6 +119,12 @@ contains
       njdla = jd2(la)-jd1(la)+1
       nijdla = nidla*njdla
 !
+!
+!
+      nidlb = id2b-id1b+1
+      njdlb = jd2b-jd1b+1
+      nijdlb = nidlb*njdlb
+
       ncilb = 1
       ncjlb = nidlb
       ncklb = nijdlb
