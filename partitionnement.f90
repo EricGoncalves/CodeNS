@@ -1,7 +1,8 @@
 module mod_partitionnement
   use tools
   implicit none
-  integer :: verbosity=2
+  integer         ,parameter :: verbosity=2  ! from 0 to 3
+  double precision,parameter :: eps=1e-10
 contains
   subroutine partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2,nblocks,nsplit,nsplit_dir)
     use boundary
@@ -82,7 +83,6 @@ contains
     !############################## GET PARAMETERS ##############################################
     !############################################################################################
 
-    verbosity=1 ! from 0 to 3
     nblocks=max(nblocks,nprocs) ! minimum number of bloc that we need
     nblocks=max(nblocks,sum(nsplit)) ! number of bloc that we need
     nblocks=max(nblocks,num_bg) ! number of bloc that we need
@@ -505,6 +505,10 @@ contains
                                enddo
                             enddo
                          enddo
+                         if (nsub==0) then
+                            print*,"Problem in the boundary ",frgi1,frgi2
+                            call abort
+                         endif
                       endif
                       call MPI_TRANS(nsub,nsub,proci2,proci1)
                       if(rank==proci1) call reallocate_s(sub_bc,6,nsub)
@@ -734,12 +738,12 @@ contains
                            id1(llf3),id2(llf3),jd1(llf3),jd2(llf3),kd1(llf3),kd2(llf3),npn(llf3),       &
                            x,y,z)
 
-                      if (abs(sub_bc_c(1,1)-sub_bc_c(2,1))<=1d-10 .and. &
-                           abs(sub_bc_c(1,2)-sub_bc_c(2,2))<=1d-10 .and. &
-                           abs(sub_bc_c(1,3)-sub_bc_c(2,3))<=1d-10 .and. & ! It's me !
-                           abs(sub_bc_c(1,4)-sub_bc_c(2,4))<=1d-10 .and. &
-                           abs(sub_bc_c(1,5)-sub_bc_c(2,5))<=1d-10 .and. &
-                           abs(sub_bc_c(1,6)-sub_bc_c(2,6))<=1d-10) then
+                      if (abs(sub_bc_c(1,1)-sub_bc_c(2,1))<=eps .and. &
+                           abs(sub_bc_c(1,2)-sub_bc_c(2,2))<=eps .and. &
+                           abs(sub_bc_c(1,3)-sub_bc_c(2,3))<=eps .and. & ! It's me !
+                           abs(sub_bc_c(1,4)-sub_bc_c(2,4))<=eps .and. &
+                           abs(sub_bc_c(1,5)-sub_bc_c(2,5))<=eps .and. &
+                           abs(sub_bc_c(1,6)-sub_bc_c(2,6))<=eps) then
 
                          frgf4=frgf3
                          exit find_otherblock
@@ -748,6 +752,10 @@ contains
                 endif
              enddo find_otherblock
              call sum_mpi(frgf4) ! there must be exactly one non zero value in this sum
+             if (frgf4==0) then
+                print*,"Coincident boundary not found ",frgi1,frgf1
+                stop
+             endif
              frgf2=frgf4
           endif
           if (test) then   ! raccord boundary
@@ -779,23 +787,8 @@ contains
              if (rank==procf1) indmf=indfl(frlf1)
              call bcast(indmf,procf1)
 
-             select case(indmf(1:1))
-             case("i")
-                mot(16)="fa"      ; imot(16)=2
-                mot(17)="+j"      ; imot(17)=2
-                mot(18)="+k"      ; imot(18)=2
-             case("j")
-                mot(16)="+i"      ; imot(16)=2
-                mot(17)="fa"      ; imot(17)=2
-                mot(18)="+k"      ; imot(18)=2
-             case("k")
-                mot(16)="+i"      ; imot(16)=2
-                mot(17)="+j"      ; imot(17)=2
-                mot(18)="fa"      ; imot(18)=2
-             end select
-
              if(verbosity>=2) then
-                nmot=18
+                nmot=12
                 mot(1)="init"     ; imot(1)=4
                 mot(2)="boundary" ; imot(2)=8
                 mot(3)="coin"     ; imot(3)=4
@@ -805,20 +798,17 @@ contains
                 mot(7)="kibdc"    ; imot(7)=5
                 call str(mot,imot,nmx,8 ,1)
                 mot(9)="krr"      ; imot(9)=3
-                call str(mot,imot,nmx,10 ,0)
-                mot(11)="ptc"     ; imot(11)=3
-                call str(mot,imot,nmx,12 ,tmp(1))
-                call str(mot,imot,nmx,13 ,tmp(2))
-                call str(mot,imot,nmx,14 ,tmp(3))
-                mot(15)="dir"     ; imot(15)=3
+                call str(mot,imot,nmx,10 ,1)
+                mot(11)="epsmsh"  ; imot(11)=6
+                write(mot(12),'(e11.3)') eps ;  imot(12)=11
                 call c_inbdc(  mot,imot,nmot, exs1,exs2, x,y,z, ncbd,ncin,mnc)
              else
                 call inbdc( &
                      exs1,exs2, &
                      x,y,z, &
                      ncbd,ncin,mnc, &
-                     0,frgf1,frgf2,1,0.D0, &
-                     tmp(1),tmp(2),tmp(3),mot(16)(1:2),mot(17)(1:2),mot(18)(1:2))
+                     1,frgf1,frgf2,1,eps, &
+                     tmp(1),tmp(2),tmp(3),"  ","  ","  ")
              endif
           endif
        enddo
@@ -856,20 +846,44 @@ contains
   end subroutine partitionnement
 
   subroutine write_mesh(prefix,x,y,z)
-    use maillage
     use boundary
     use mod_mpi
+    use mod_vtk
+    use para_var
     implicit none
     double precision,intent(in) :: x(:),y(:),z(:)
     character(*),intent(in) :: prefix
 
-    integer :: l,fr,nid,njd,nijd,xyz,i,j,k
-    character(len=50)::fich
+    integer :: l,fr,nid,njd,nijd,xyz,i,j,k,typ
+    character(len=50)::fich,format
+    character(len=4)::ext
+
+!    typ=0 ! gnuplot format
+!    typ=1 ! csv format
+    typ=2 ! vtk format
+
+    if(typ==0) format='(3e11.3,i8)'       
+    if(typ==1) format='(3(e11.3,","),i8)'
+    if(typ==2) format='(3e11.3)'
+
+    if(typ==0) ext=".dat"
+    if(typ==1) ext=".csv"
+    if(typ==2) ext=".vts"
 
     ! write grid
+    if(typ==2) then 
+       call vtk_start_collection(prefix//"mesh.pvd","fields")
+    endif
+
     do l=1,lt
-       write(fich,'(A,I0.2,A)') prefix//"mesh_",bl_to_bg(l),".dat"
+       write(fich,'(A,I0.2,A)') prefix//"mesh_",bl_to_bg(l),ext
+
+       if(typ==2) then 
+        call vtk_writer(fich,x,y,z,bl_to_bg(l),"block_num",l)
+       else
        open(42,file=fich,status="replace")
+
+         if(typ==1)  write(42,*) "x,y,z,block"
 
        do k=kk1(l),kk2(l)
           do j=jj1(l),jj2(l)
@@ -881,20 +895,37 @@ contains
 
                 xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-                write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),bl_to_bg(l)
+                  write(42,format) x(xyz),y(xyz),z(xyz),bl_to_bg(l)
 
              enddo
-             write(42,*) ""
+               if (typ==0) write(42,*) ""
           enddo
        enddo
        close(42)
+       endif
     enddo
+
+    if(typ==2) then 
+       call vtk_end_collection()
+    endif
+    
+    call barrier
+
+    if(typ==2) then 
+       call vtk_start_collection(prefix//"bnd.pvd","fields")
+    endif
 
     ! write boundaries
     do fr=1,mtb
 
-       write(fich,'(A,I0.2,A)') prefix//"bnd_",bcl_to_bcg(fr),".dat"
+       write(fich,'(A,I0.3,A)') prefix//"bnd_",bcl_to_bcg(fr),ext
+
+       if(typ==2) then
+         call vtk_writer(fich,x,y,z,bcl_to_bcg(fr),"boundary_num",ndlb(fr), &
+                iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr))
+       else
        open(42,file=fich,status="replace")
+         if(typ==1)  write(42,*) "x,y,z,boundary"
 
        do k=kminb(fr),kmaxb(fr)
           do j=jminb(fr),jmaxb(fr)
@@ -906,15 +937,19 @@ contains
 
                 xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-                write(42,'(3e11.3,i8)') x(xyz),y(xyz),z(xyz),bcl_to_bcg(fr)
+                  write(42,format) x(xyz),y(xyz),z(xyz),bcl_to_bcg(fr)
 
              enddo
-             if(indfl(fr)(1:1)/="i") write(42,*) ""
+               if(typ==0.and.indfl(fr)(1:1)/="i") write(42,*) ""
           enddo
-          if(indfl(fr)(1:1)=="i") write(42,*) ""
+            if(typ==0.and.indfl(fr)(1:1)=="i") write(42,*) ""
        enddo
        close(42)
+       endif
     enddo
+    if(typ==2) then 
+       call vtk_end_collection()
+    endif
     call barrier
   end subroutine write_mesh
 
