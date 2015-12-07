@@ -121,11 +121,14 @@ contains
 !
 !
 !
+      nidlb = id2b-id1b+1
+      njdlb = jd2b-jd1b+1
+      nijdlb = nidlb*njdlb
+!
       ncilb = 1
       ncjlb = nidlb
       ncklb = nijdlb
 !
-
       if (krr.eq.1) then
 !---------------------------------------------------------------------
 ! look for the first point

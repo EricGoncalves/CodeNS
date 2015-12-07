@@ -79,7 +79,7 @@ contains
     character(len=32) ::  mot(nmx)
     character(len=2) :: indmf
 
-    logical :: test,is_surf_x,is_surf_y,is_surf_z,switch_ij,switch_ik,switch_jk
+    logical :: test
 
     !############################################################################################
     !############################## GET PARAMETERS ##############################################
@@ -430,11 +430,10 @@ contains
                          tmp(5)=min(ze,max(zs,save_kminb(frli1)))
                          tmp(6)=min(ze,max(zs,save_kmaxb(frli1)))
 
-                         is_surf_x=(tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0)
-                         is_surf_y=(tmp(6)-tmp(5)>0.and.tmp(2)-tmp(1)>0)
-                         is_surf_z=(tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0)
+                         if((tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0).or. &
+                            (tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0).or. &
+                            (tmp(2)-tmp(1)>0.and.tmp(6)-tmp(5)>0)) then
 
-                         if(is_surf_x.or.is_surf_y.or.is_surf_z) then
                            nsub=1
                            sub_bc(:,1)=tmp
                            indmf=save_indfl(frli1)
@@ -453,7 +452,6 @@ contains
                       proci2=save_bg_to_proc(lgi2)
 
                       if(rank==proci1) then
-                      
                          nid = save_id2(lli1)-save_id1(lli1)+1
                          njd = save_jd2(lli1)-save_jd1(lli1)+1
                          nijd = nid*njd
@@ -470,7 +468,7 @@ contains
                           sub_bc2(2,1)   =save_x(nbi)
                           sub_bc2(3,1)   =save_x(nbj)
                           sub_bc2(4,1)   =save_x(nbk)
-                          sub_bc2(1,2)   =save_y(nb)
+                          sub_bc2(1,2)   =save_y(nb)!   coordinate of the first point of the new boundary
                           sub_bc2(2,2)   =save_y(nbi)
                           sub_bc2(3,2)   =save_y(nbj)
                           sub_bc2(4,2)   =save_y(nbk)
@@ -478,9 +476,9 @@ contains
                           sub_bc2(2,3)   =save_z(nbi)
                           sub_bc2(3,3)   =save_z(nbj)
                           sub_bc2(4,3)   =save_z(nbk)
-                          
+
                          sub_bc(1,1)=sub_bc(1,1)-save_iminb(frli1)
-                         sub_bc(2,1)=sub_bc(2,1)-save_iminb(frli1) ! coordinate of the new boundary
+                         sub_bc(2,1)=sub_bc(2,1)-save_iminb(frli1) ! index of the new boundary
                          sub_bc(3,1)=sub_bc(3,1)-save_jminb(frli1) ! in the old boundary ref
                          sub_bc(4,1)=sub_bc(4,1)-save_jminb(frli1)
                          sub_bc(5,1)=sub_bc(5,1)-save_kminb(frli1)
@@ -496,7 +494,7 @@ contains
                          nid = save_id2(lli2)-save_id1(lli2)+1
                          njd = save_jd2(lli2)-save_jd1(lli2)+1
                          nijd = nid*njd
-                         
+
                          ! look for the first point
                           search1:do k1=save_kminb(frli2),save_kmaxb(frli2)
                            do j1=save_jminb(frli2),save_jmaxb(frli2)
@@ -573,6 +571,8 @@ contains
                             dir(3,3)=kk-kba ; dir(3,3)=kk-kba
                           endif
                           
+                          ! on change de repère
+
                           tmp(1:3)=matmul(dir,sub_bc(1:5:2,1))
                           tmp(4:6)=matmul(dir,sub_bc(2:6:2,1))
                           tmp(1:4:3)=tmp(1:4:3)+save_iminb(frli2) ! coordinate of the new boundary
@@ -614,12 +614,11 @@ contains
                                      tmp(4)=min(ye,max(ys,jmax))-save_jminb(frli2)
                                      tmp(5)=min(ze,max(zs,kmin))-save_kminb(frli2)
                                      tmp(6)=min(ze,max(zs,kmax))-save_kminb(frli2)
-                                     
-                                     is_surf_x=(tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0)
-                                     is_surf_y=(tmp(6)-tmp(5)>0.and.tmp(2)-tmp(1)>0)
-                                     is_surf_z=(tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0)
 
-                                     if(is_surf_x.or.is_surf_y.or.is_surf_z) then
+                                     if((tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0).or. &
+                                        (tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0).or. &
+                                        (tmp(2)-tmp(1)>0.and.tmp(6)-tmp(5)>0)) then
+
                                        nsub=nsub+1
                                        call reallocate_s(sub_bc,6,nsub)
                                        sub_bc(:,nsub)=tmp
@@ -632,6 +631,7 @@ contains
                             print*,"Problem in the boundary ",frgi1,frgi2
                             call abort
                          endif
+                         ! on rechange de repère
                          do i2=1,nsub
                             tmp=sub_bc(:,i2)
                             
@@ -841,7 +841,7 @@ contains
     endif
     call reallocate(tmp,3)
 
-       print*,'initialization '
+       !    print*,'initialization '
        do frgf1=1,num_bcg
           frlf1=bcg_to_bcl(frgf1)
           lgf1=bcg_to_bg(frgf1)
@@ -895,7 +895,7 @@ contains
              call sum_mpi(frgf4) ! there must be exactly one non zero value in this sum
              if (frgf4==0) then
                 print*,"Coincident boundary not found ",frgi1,frgf1
-                call abort
+                stop
              endif
              frgf2=frgf4
           endif
@@ -996,7 +996,6 @@ contains
     character(*),intent(in) :: prefix
 
     integer :: l,fr,nid,njd,nijd,xyz,i,j,k,typ
-    integer :: tmp(ip21)
     character(len=50)::fich,format
     character(len=4)::ext
 
@@ -1013,7 +1012,6 @@ contains
     if(typ==2) ext=".vts"
 
     ! write grid
-
     if(typ==2) then 
        call vtk_start_collection(prefix//"mesh.pvd","fields")
     endif
@@ -1057,7 +1055,7 @@ contains
     if(typ==2) then 
        call vtk_start_collection(prefix//"bnd.pvd","fields")
     endif
-    
+
     ! write boundaries
     
     do fr=1,mtb
@@ -1092,11 +1090,9 @@ contains
          close(42)
        endif
     enddo
-    
     if(typ==2) then 
        call vtk_end_collection()
     endif
-    
     call barrier
   end subroutine write_mesh
 
@@ -1507,17 +1503,17 @@ subroutine compute_size(i,j,k,ii2,jj2,kk2,new_ii2,new_jj2,new_kk2)
     zmax=-Huge(1.d0)
 
     do p1=a,b,max(b-a,1)
-    do p2=c,d,max(d-c,1)
-    do p3=e,f,max(f-e,1)
-      p=npn+1+(p1 - id1)+(p2 - jd1)*nid+(p3 - kd1)*nijd
-      xmin=min(xmin,x(p))
-      xmax=max(xmax,x(p))
-      ymin=min(ymin,y(p))
-      ymax=max(ymax,y(p))
-      zmin=min(zmin,z(p))
-      zmax=max(zmax,z(p))
-    enddo
-    enddo
+        do p2=c,d,max(d-c,1)
+            do p3=e,f,max(f-e,1)
+              p=npn+1+(p1 - id1)+(p2 - jd1)*nid+(p3 - kd1)*nijd
+              xmin=min(xmin,x(p))
+              xmax=max(xmax,x(p))
+              ymin=min(ymin,y(p))
+              ymax=max(ymax,y(p))
+              zmin=min(zmin,z(p))
+              zmax=max(zmax,z(p))
+            enddo
+        enddo
     enddo
 
   end subroutine get_coords_box

@@ -857,6 +857,34 @@ module mod_mpi
 
     END SUBROUTINE GATHER_C
 
+    SUBROUTINE GATHER_C(IN,OUT,SIZE)
+        ! THIS ROUTINE IS GATHERING INTEGER FOR EVERY PROC FROM EVERY PROC
+        ! EXEMPLE
+        ! PROC 1 : IN=[A,B,C,D] , SIZE=3 , OUT=[A,B,C,E,F]
+        ! PROC 2 : IN=[E,F]     , SIZE=2 , OUT=[A,B,C,E,F]
+        ! PROC 3 : IN=[]        , SIZE=0 , OUT=[A,B,C,E,F]
+        IMPLICIT NONE
+        integer,INTENT(IN)       :: SIZE
+        character(*),INTENT(IN)  :: IN(:)
+        character(*),INTENT(OUT) :: OUT(:)
+        integer             :: I,DISP(NPROCS),SIZE_ALL(NPROCS)
+        integer :: ierr
+#ifdef WITH_MPI
+        CALL MPI_ALLGATHER(SIZE, 1, MPI_INTEGER, &
+            SIZE_ALL, 1, MPI_INTEGER, MPI_COMM_WORLD,IERR)
+        DISP(1)=0
+        DO I=2,NPROCS
+          DISP(I)=DISP(I-1) + SIZE_ALL(I-1)*len(IN)
+        ENDDO
+
+        CALL MPI_ALLGATHERV(IN(1), SIZE*len(IN), MPI_character, &
+            OUT(1), SIZE_ALL*len(IN), DISP, MPI_character, MPI_COMM_WORLD,IERR)
+#else
+        OUT=IN
+#endif
+
+    END SUBROUTINE GATHER_C
+
     SUBROUTINE GATHER_R(IN,OUT,SIZE)
         IMPLICIT NONE
         ! THIS ROUTINE IS GATHERING REAL FOR EVERY PROC FROM EVERY PROC
