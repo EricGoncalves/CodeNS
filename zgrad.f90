@@ -421,7 +421,7 @@ contains
        m=n-n0
 !      le coefficient 1/2 provient de la moyenne de vx,vy,vz ou t
        ts=sign(0.5D0,-vol(n))
-       vols=(0.5+ts)*eps+(0.5-ts)*vol(n)
+       vols=(0.5+ts)*eps+(0.5-ts)*vol(n)+tiny(1.d0)
        c0=0.5/vols
 !
        dvxx(m)=dvxx(m)*c0
