@@ -297,9 +297,9 @@ contains
       ! write header
 
       write(42,'(A)') '<?xml version="1.0"?>'
-      write(42,*) '<VTKFile type="StructuredGrid"  version="0.1" byte_order="LittleEndian">'
-      write(42,*) '<StructuredGrid WholeExtent="',i1,i2,j1,j2,k1,k2,'">'
-      write(42,*) '<Piece Extent="',i1,i2,j1,j2,k1,k2,'">'
+      write(42,'(A)') '<VTKFile type="StructuredGrid"  version="0.1" byte_order="LittleEndian">'
+      write(42,'(A,6I4,A)') '<StructuredGrid WholeExtent="',i1,i2,j1,j2,k1,k2,'">'
+      write(42,'(A,6I4,A)') '<Piece Extent="',i1,i2,j1,j2,k1,k2,'">'
 
       ! write mesh
 
@@ -316,19 +316,19 @@ contains
 
             xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-            write(42,*) x(xyz),y(xyz),z(xyz)
+            write(42,'(3E16.8)') x(xyz),y(xyz),z(xyz)
 
           enddo
         enddo
       enddo
 
-      write(42,*) '</DataArray>'
-      write(42,*) '</Points>'
+      write(42,'(A)') '</DataArray>'
+      write(42,'(A)') '</Points>'
 
       ! write var
 
-      write(42,*) '<PointData Scalars="',name_field,'">'
-      write(42,*) '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
+      write(42,'(3A)') '<PointData Scalars="',name_field,'">'
+      write(42,'(5A)') '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
 
       do k=k1,k2
         do j=j1,j2
@@ -339,7 +339,7 @@ contains
 
             xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-            write(42,*) field(xyz)
+            write(42,'(E16.8)') field(xyz)
           enddo
         enddo
       enddo

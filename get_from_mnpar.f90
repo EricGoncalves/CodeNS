@@ -9,18 +9,20 @@ contains
     implicit none
     double precision,dimension(ip42),intent(in)  :: var_in
     double precision,dimension(ip12),intent(out) :: var_out
-    integer,dimension(ip12)         ,intent(in)  :: mnpar(ip12),mnpar2(ip12)
+    integer,dimension(ip12)         ,intent(in)  :: mnpar,mnpar2
     
     integer         ,allocatable :: old_ranks(:) 
     double precision,allocatable :: buff(:)
     integer :: bcg,proc,new_proc,new_comm,new_rank,new_NPROCS,mbmx,m0b,mb,mbb,nc,IERR
     logical :: test,test2
 
+
+    var_out=42.0
     do bcg=1,num_bcg
-      test=sum(mnpar2,mask=(mnpar2==bcg))/=0
+      test=sum(mnpar2,mask=(mnpar2==bcg))/=0 ! at least one of my points is concern
       call LOR_MPI(test,test2)
       if (test2) then
-        proc=bcg_to_proc(bcg)
+        proc=bcg_to_proc(bcg) ! I'm the owner
 
         call barrier ! TODO, usefull ?
 
@@ -33,7 +35,6 @@ contains
           call reallocate(old_ranks,new_NPROCS)
           call gather(rank,old_ranks,comm=new_comm)
           
-          proc=bcg_to_proc(bcg)
           new_proc=minloc(old_ranks, 1, mask=(old_ranks==proc))-1
 
           !prepare buffer
@@ -57,7 +58,7 @@ contains
           !fill var_out
           
           do nc = 1,ip12
-             if(mnpar2(nc)==bcg) var_out(nc)=buff(mnpar(nc))
+             if(mnpar2(nc)==bcg) var_out(nc)=real(bcg) ! buff(mnpar(nc))
           enddo
           call barrier ! TODO, usefull ?
           call MPI_COMM_FREE(NEW_COMM, IERR)
