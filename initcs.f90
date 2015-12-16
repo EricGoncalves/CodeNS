@@ -104,7 +104,8 @@ contains
     integer          ::  nidlb,nijdla,nijdlb, njdla, njdlb
     integer          ::    nvi,   nvj,   nvk
     integer          ::  id1b,id2b,jd1b,jd2b,kd1b,kd2b,npnb,npcb
-    double precision ::  dist,   eps,x(ip21),y(ip21),z(ip21),xb,xbi,xbj,xbk,yb,ybi,ybj,ybk,zb,zbi,zbj,zbk
+    double precision ::  dist,   eps,x(ip21),y(ip21),z(ip21)
+    double precision ::  xb,xbi,xbj,xbk,yb,ybi,ybj,ybk,zb,zbi,zbj,zbk
 !
 !-----------------------------------------------------------------------
 !
@@ -172,19 +173,19 @@ contains
       tvi = 'fa'
 !
       if(equat(3:5).ne.'2di') then
-      if(ii-iba.eq.+1) tvi = '-i'
-      if(ii-iba.eq.-1) tvi = '+i'
+      if(ii-iba.eq.+1) tvi = '+i'
+      if(ii-iba.eq.-1) tvi = '-i'
       endif
 !
       if(equat(3:5).ne.'2dj') then
-      if(jj-jba.eq.+1) tvi = '-j'
-      if(jj-jba.eq.-1) tvi = '+j'
+      if(jj-jba.eq.+1) tvi = '+j'
+      if(jj-jba.eq.-1) tvi = '-j'
       endif
 !
 !VC   if(equat(3:5).ne.'2dk') then
       if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
-      if(kk-kba.eq.+1) tvi = '-k'
-      if(kk-kba.eq.-1) tvi = '+k'
+      if(kk-kba.eq.+1) tvi = '+k'
+      if(kk-kba.eq.-1) tvi = '-k'
       endif
 !
 !-------
@@ -208,19 +209,19 @@ contains
       tvj = 'fa'
 !
       if(equat(3:5).ne.'2di') then
-      if(ii-iba.eq.+1) tvj = '-i'
-      if(ii-iba.eq.-1) tvj = '+i'
+      if(ii-iba.eq.+1) tvj = '+i'
+      if(ii-iba.eq.-1) tvj = '-i'
       endif
 !
       if(equat(3:5).ne.'2dj') then
-      if(jj-jba.eq.+1) tvj = '-j'
-      if(jj-jba.eq.-1) tvj = '+j'
+      if(jj-jba.eq.+1) tvj = '+j'
+      if(jj-jba.eq.-1) tvj = '-j'
       endif
 !
 !VC   if(equat(3:5).ne.'2dk') then
       if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
-      if(kk-kba.eq.+1) tvj = '-k'
-      if(kk-kba.eq.-1) tvj = '+k'
+      if(kk-kba.eq.+1) tvj = '+k'
+      if(kk-kba.eq.-1) tvj = '-k'
       endif
 ! 
 !-------
@@ -244,22 +245,48 @@ contains
       tvk = 'fa'
 !
       if(equat(3:5).ne.'2di') then
-      if(ii-iba.eq.+1) tvk = '-i'
-      if(ii-iba.eq.-1) tvk = '+i'
+      if(ii-iba.eq.+1) tvk = '+i'
+      if(ii-iba.eq.-1) tvk = '-i'
       endif
 !
       if(equat(3:5).ne.'2dj') then
-      if(jj-jba.eq.+1) tvk = '-j'
-      if(jj-jba.eq.-1) tvk = '+j'
+      if(jj-jba.eq.+1) tvk = '+j'
+      if(jj-jba.eq.-1) tvk = '-j'
       endif
 !
 !VC   if(equat(3:5).ne.'2dk') then
-      if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
-      if(kk-kba.eq.+1) tvk = '-k'
-      if(kk-kba.eq.-1) tvk = '+k'
-      endif
+!      if(equat(3:5).ne.'2dk' .and. equat(3:5).ne.'2xk' ) then
+      if(kk-kba.eq.+1) tvk = '+k'
+      if(kk-kba.eq.-1) tvk = '-k'
+!      endif
 !
 !---------------------------------------------------------------------
+
+      if(tvi.eq.'fa') iba = ib1
+      if(tvi.eq.'+i') iba = ib1
+      if(tvi.eq.'-i') iba = ib2
+      if(tvi.eq.'+j') iba = jb1
+      if(tvi.eq.'-j') iba = jb2
+      if(tvi.eq.'+k') iba = kb1
+      if(tvi.eq.'-k') iba = kb2
+      
+      if(tvj.eq.'fa') jba = jb1
+      if(tvj.eq.'+i') jba = ib1
+      if(tvj.eq.'-i') jba = ib2
+      if(tvj.eq.'+j') jba = jb1
+      if(tvj.eq.'-j') jba = jb2
+      if(tvj.eq.'+k') jba = kb1
+      if(tvj.eq.'-k') jba = kb2
+      
+      if(tvk.eq.'fa') kba = kb1
+      if(tvk.eq.'+i') kba = ib1
+      if(tvk.eq.'-i') kba = ib2
+      if(tvk.eq.'+j') kba = jb1
+      if(tvk.eq.'-j') kba = jb2
+      if(tvk.eq.'+k') kba = kb1
+      if(tvk.eq.'-k') kba = kb2
+
+
       endif
 !
       if (kimp.ge.2) then
