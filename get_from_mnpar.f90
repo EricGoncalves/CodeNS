@@ -58,7 +58,7 @@ contains
           !fill var_out
           
           do nc = 1,ip12
-             if(mnpar2(nc)==bcg) var_out(nc)=real(bcg) ! buff(mnpar(nc))
+             if(mnpar2(nc)==bcg) var_out(nc)= buff(mnpar(nc))
           enddo
           call barrier ! TODO, usefull ?
           call MPI_COMM_FREE(NEW_COMM, IERR)

@@ -59,122 +59,20 @@ contains
       collect=.false.
   end subroutine vtk_end_collection
 
-  subroutine vtk_writer_I1(vtk_file,x,y,z,field,name_field,l,oi1,oi2,oj1,oj2,ok1,ok2)
+  subroutine vtk_open(vtk_file,x,y,z,l,oi1,oi2,oj1,oj2,ok1,ok2)
       use para_var
       use boundary
       use mod_mpi
       use tools
       implicit none
       double precision,intent(in) :: x(:),y(:),z(:)
-      integer,intent(in) :: field(:)
       integer,intent(in) ::l
       integer,intent(in),optional :: oi1,oi2,oj1,oj2,ok1,ok2
-      character(*),intent(in) :: vtk_file,name_field
+      character(*),intent(in) :: vtk_file
 
       integer :: i1,i2,j1,j2,k1,k2
       integer :: nid,njd,nijd,xyz,i,j,k
-      character(len=80) :: vartype,file
-
-      if (collect) then
-        ncollect=ncollect+1
-        call reallocate_s(collection,ncollect)
-        collection(ncollect)=vtk_file
-        file=trim(collect_dir)//"/"//vtk_file
-      else
-       file=vtk_file
-      endif
-
-      if (present(oi1)) then
-        i1=oi1 ; i2=oi2        ! if given, write only a portion of the domain
-        j1=oj1 ; j2=oj2
-        k1=ok1 ; k2=ok2
-      else
-        i1=ii1(l) ; i2=ii2(l)  ! if not, write all domain
-        j1=jj1(l) ; j2=jj2(l)
-        k1=kk1(l) ; k2=kk2(l)
-      endif
-
-      vartype="Int32"
-
-      open(42,file=file,status="replace")
-
-      ! write header
-
-      write(42,'(A)') '<?xml version="1.0"?>'
-      write(42,*) '<VTKFile type="StructuredGrid"  version="0.1" byte_order="LittleEndian">'
-      write(42,*) '<StructuredGrid WholeExtent="',i1,i2,j1,j2,k1,k2,'">'
-      write(42,*) '<Piece Extent="',i1,i2,j1,j2,k1,k2,'">'
-
-      ! write mesh
-
-      write(42,*) "<Points>"
-      write(42,*) '<DataArray type="Float32" NumberOfComponents="3" format="ascii">'
-
-      do k=k1,k2
-        do j=j1,j2
-          do i=i1,i2
-
-            nid = id2(l)-id1(l)+1
-            njd = jd2(l)-jd1(l)+1
-            nijd = nid*njd
-
-            xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
-
-            write(42,*) x(xyz),y(xyz),z(xyz)
-
-          enddo
-        enddo
-      enddo
-
-      write(42,*) '</DataArray>'
-      write(42,*) '</Points>'
-
-      ! write var
-
-      write(42,*) '<PointData Scalars="',name_field,'">'
-      write(42,*) '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
-
-      do k=k1,k2
-        do j=j1,j2
-          do i=i1,i2
-            nid = id2(l)-id1(l)+1
-            njd = jd2(l)-jd1(l)+1
-            nijd = nid*njd
-
-            xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
-
-            write(42,*) field(xyz)
-          enddo
-        enddo
-      enddo
-
-      ! write footer
-
-      write(42,*) '</DataArray>'
-      write(42,*) "</PointData>"
-      write(42,*) '</Piece>'
-      write(42,*) '</StructuredGrid>'
-      write(42,*) '</VTKFile>'
-
-      close(42)
-
-  end subroutine vtk_writer_I1
-
-  subroutine vtk_writer_I0(vtk_file,x,y,z,field,name_field,l,oi1,oi2,oj1,oj2,ok1,ok2)
-      use para_var
-      use boundary
-      use mod_mpi
-      use tools
-      implicit none
-      double precision,intent(in) :: x(:),y(:),z(:)
-      integer,intent(in) :: field
-      integer,intent(in) ::l
-      integer,intent(in),optional :: oi1,oi2,oj1,oj2,ok1,ok2
-      character(*),intent(in) :: vtk_file,name_field
-
-      integer :: i1,i2,j1,j2,k1,k2
-      integer :: nid,njd,nijd,xyz,i,j,k
-      character(len=80) :: vartype,file
+      character(len=80) :: file
 
       if (collect) then
         ncollect=ncollect+1
@@ -194,103 +92,10 @@ contains
         j1=jj1(l) ; j2=jj2(l)
         k1=kk1(l) ; k2=kk2(l)
       endif
-
-      vartype="Int32"
-
-      open(42,file=file,status="replace")
-
-      ! write header
-
-      write(42,'(A)') '<?xml version="1.0"?>'
-      write(42,*) '<VTKFile type="StructuredGrid"  version="0.1" byte_order="LittleEndian">'
-      write(42,*) '<StructuredGrid WholeExtent="',i1,i2,j1,j2,k1,k2,'">'
-      write(42,*) '<Piece Extent="',i1,i2,j1,j2,k1,k2,'">'
-
-      ! write mesh
-
-      write(42,*) "<Points>"
-      write(42,*) '<DataArray type="Float32" NumberOfComponents="3" format="ascii">'
-
-      do k=k1,k2
-        do j=j1,j2
-          do i=i1,i2
-
-            nid = id2(l)-id1(l)+1
-            njd = jd2(l)-jd1(l)+1
-            nijd = nid*njd
-
-            xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
-
-            write(42,*) x(xyz),y(xyz),z(xyz)
-
-          enddo
-        enddo
-      enddo
-
-      write(42,*) '</DataArray>'
-      write(42,*) '</Points>'
-
-      ! write var
-
-      write(42,*) '<PointData Scalars="',name_field,'">'
-      write(42,*) '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
-
-      do k=k1,k2
-        do j=j1,j2
-          do i=i1,i2
-            write(42,*) field
-          enddo
-        enddo
-      enddo
-
-      ! write footer
-
-      write(42,*) '</DataArray>'
-      write(42,*) "</PointData>"
-      write(42,*) '</Piece>'
-      write(42,*) '</StructuredGrid>'
-      write(42,*) '</VTKFile>'
-
-      close(42)
-
-  end subroutine vtk_writer_I0
-
-  subroutine vtk_writer_R1(vtk_file,x,y,z,field,name_field,l,oi1,oi2,oj1,oj2,ok1,ok2)
-      use para_var
-      use boundary
-      use mod_mpi
-      use tools
-      implicit none
-      double precision,intent(in) :: x(:),y(:),z(:)
-      double precision,intent(in) :: field(:)
-      integer,intent(in) ::l
-      integer,intent(in),optional :: oi1,oi2,oj1,oj2,ok1,ok2
-      character(*),intent(in) :: vtk_file,name_field
-
-      integer :: i1,i2,j1,j2,k1,k2
-      integer :: nid,njd,nijd,xyz,i,j,k
-      character(len=80) :: vartype,file
-
-      if (collect) then
-        ncollect=ncollect+1
-        call reallocate_s(collection,ncollect)
-        collection(ncollect)=vtk_file
-        file=trim(collect_dir)//"/"//vtk_file
-      else
-       file=vtk_file
-      endif
       
-      if (present(oi1)) then
-        i1=oi1 ; i2=oi2        ! if given, write only a portion of the domain
-        j1=oj1 ; j2=oj2
-        k1=ok1 ; k2=ok2
-      else
-        i1=ii1(l) ; i2=ii2(l)  ! if not, write all domain
-        j1=jj1(l) ; j2=jj2(l)
-        k1=kk1(l) ; k2=kk2(l)
-      endif
-
-      vartype="Float32"
+      nid = id2(l)-id1(l)+1
+      njd = jd2(l)-jd1(l)+1
+      nijd = nid*njd
 
       open(42,file=file,status="replace")
 
@@ -303,16 +108,12 @@ contains
 
       ! write mesh
 
-      write(42,*) "<Points>"
-      write(42,*) '<DataArray type="Float32" NumberOfComponents="3" format="ascii">'
+      write(42,'(A)') "<Points>"
+      write(42,'(A)') '<DataArray type="Float32" NumberOfComponents="3" format="ascii">'
 
       do k=k1,k2
         do j=j1,j2
-          do i=i1,i2
-
-            nid = id2(l)-id1(l)+1
-            njd = jd2(l)-jd1(l)+1
-            nijd = nid*njd
+         do i=i1,i2
 
             xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
@@ -324,20 +125,214 @@ contains
 
       write(42,'(A)') '</DataArray>'
       write(42,'(A)') '</Points>'
+      write(42,'(A)') '<CellData>'
+      close(42)
+
+  end subroutine vtk_open
+
+
+  subroutine vtk_close(vtk_file)
+      use para_var
+      use boundary
+      use mod_mpi
+      use tools
+      implicit none
+      character(*),intent(in) :: vtk_file
+      character(len=80) :: file
+
+      if (collect) then
+        file=trim(collect_dir)//"/"//vtk_file
+      else
+       file=vtk_file
+      endif
+
+      open(42,file=file,position="append")
+
+      ! write footer
+
+      write(42,'(A)') "</CellData>"
+      write(42,'(A)') '</Piece>'
+      write(42,'(A)') '</StructuredGrid>'
+      write(42,'(A)') '</VTKFile>'
+
+      close(42)
+
+  end subroutine vtk_close
+
+
+
+
+  subroutine vtk_writer_I1(vtk_file,field,name_field,l,oi1,oi2,oj1,oj2,ok1,ok2)
+      use para_var
+      use boundary
+      use mod_mpi
+      use tools
+      implicit none
+      integer,intent(in) :: field(:)
+      integer,intent(in) ::l
+      integer,intent(in),optional :: oi1,oi2,oj1,oj2,ok1,ok2
+      character(*),intent(in) :: vtk_file,name_field
+
+      integer :: i1,i2,j1,j2,k1,k2
+      integer :: nid,njd,nijd,xyz,i,j,k
+      character(len=80) :: vartype,file
+
+      if (collect) then
+        file=trim(collect_dir)//"/"//vtk_file
+      else
+       file=vtk_file
+      endif
+
+      if (present(oi1)) then
+        i1=oi1 ; i2=oi2        ! if given, write only a portion of the domain
+        j1=oj1 ; j2=oj2
+        k1=ok1 ; k2=ok2
+      else
+        i1=ii1(l) ; i2=ii2(l)  ! if not, write all domain
+        j1=jj1(l) ; j2=jj2(l)
+        k1=kk1(l) ; k2=kk2(l)
+      endif
+
+      vartype="Int32"
+
+      open(42,file=file,position="append")
 
       ! write var
 
-      write(42,'(3A)') '<PointData Scalars="',name_field,'">'
       write(42,'(5A)') '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
 
-      do k=k1,k2
-        do j=j1,j2
-          do i=i1,i2
+      do k=k1,k2-1
+        do j=j1,j2-1
+          do i=i1,i2-1
             nid = id2(l)-id1(l)+1
             njd = jd2(l)-jd1(l)+1
             nijd = nid*njd
 
-            xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+            xyz =npc(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+
+            write(42,'(I5)') field(xyz)
+          enddo
+        enddo
+      enddo
+
+      ! write footer
+
+      write(42,'(A)') '</DataArray>'
+
+      close(42)
+
+  end subroutine vtk_writer_I1
+
+  subroutine vtk_writer_I0(vtk_file,field,name_field,l,oi1,oi2,oj1,oj2,ok1,ok2)
+      use para_var
+      use boundary
+      use mod_mpi
+      use tools
+      implicit none
+      integer,intent(in) :: field
+      integer,intent(in) ::l
+      integer,intent(in),optional :: oi1,oi2,oj1,oj2,ok1,ok2
+      character(*),intent(in) :: vtk_file,name_field
+
+      integer :: i1,i2,j1,j2,k1,k2
+      integer :: nid,njd,nijd,xyz,i,j,k
+      character(len=80) :: vartype,file
+
+      if (collect) then
+        file=trim(collect_dir)//"/"//vtk_file
+      else
+       file=vtk_file
+      endif
+      
+      if (present(oi1)) then
+        i1=oi1 ; i2=oi2        ! if given, write only a portion of the domain
+        j1=oj1 ; j2=oj2
+        k1=ok1 ; k2=ok2
+      else
+        i1=ii1(l) ; i2=ii2(l)  ! if not, write all domain
+        j1=jj1(l) ; j2=jj2(l)
+        k1=kk1(l) ; k2=kk2(l)
+      endif
+
+      vartype="Int32"
+
+      open(42,file=file,position="append")
+
+      ! write var
+
+      write(42,'(5A)') '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
+
+      do k=k1,k2-1
+        do j=j1,j2-1
+          do i=i1,i2-1
+            nid = id2(l)-id1(l)+1
+            njd = jd2(l)-jd1(l)+1
+            nijd = nid*njd
+
+            xyz =npc(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+
+            write(42,'(I5)') field
+          enddo
+        enddo
+      enddo
+
+      ! write footer
+
+      write(42,'(A)') '</DataArray>'
+
+      close(42)
+
+  end subroutine vtk_writer_I0
+
+  subroutine vtk_writer_R1(vtk_file,field,name_field,l,oi1,oi2,oj1,oj2,ok1,ok2)
+      use para_var
+      use boundary
+      use mod_mpi
+      use tools
+      implicit none
+      double precision,intent(in) :: field(:)
+      integer,intent(in) ::l
+      integer,intent(in),optional :: oi1,oi2,oj1,oj2,ok1,ok2
+      character(*),intent(in) :: vtk_file,name_field
+
+      integer :: i1,i2,j1,j2,k1,k2
+      integer :: nid,njd,nijd,xyz,i,j,k
+      double precision :: xcc,ycc,zcc
+      character(len=80) :: vartype,file
+
+      if (collect) then
+        file=trim(collect_dir)//"/"//vtk_file
+      else
+       file=vtk_file
+      endif
+      
+      if (present(oi1)) then
+        i1=oi1 ; i2=oi2        ! if given, write only a portion of the domain
+        j1=oj1 ; j2=oj2
+        k1=ok1 ; k2=ok2
+      else
+        i1=ii1(l) ; i2=ii2(l)  ! if not, write all domain
+        j1=jj1(l) ; j2=jj2(l)
+        k1=kk1(l) ; k2=kk2(l)
+      endif
+      
+      nid = id2(l)-id1(l)+1
+      njd = jd2(l)-jd1(l)+1
+      nijd = nid*njd
+
+      vartype="Float32"
+
+      open(42,file=file,position="append")
+
+      ! write var
+
+      write(42,'(5A)') '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
+
+      do k=k1,k2-1
+          do j=j1,j2-1
+            do i=i1,i2-1
+
+            xyz =npc(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
             write(42,'(E16.8)') field(xyz)
           enddo
@@ -346,23 +341,17 @@ contains
 
       ! write footer
 
-      write(42,*) '</DataArray>'
-      write(42,*) "</PointData>"
-      write(42,*) '</Piece>'
-      write(42,*) '</StructuredGrid>'
-      write(42,*) '</VTKFile>'
-
+      write(42,'(A)') '</DataArray>'
       close(42)
 
   end subroutine vtk_writer_r1
 
-  subroutine vtk_writer_r0(vtk_file,x,y,z,field,name_field,l,oi1,oi2,oj1,oj2,ok1,ok2)
+  subroutine vtk_writer_r0(vtk_file,field,name_field,l,oi1,oi2,oj1,oj2,ok1,ok2)
       use para_var
       use boundary
       use mod_mpi
       use tools
       implicit none
-      double precision,intent(in) :: x(:),y(:),z(:)
       double precision,intent(in) :: field
       integer,intent(in) ::l
       integer,intent(in),optional :: oi1,oi2,oj1,oj2,ok1,ok2
@@ -373,9 +362,6 @@ contains
       character(len=80) :: vartype,file
 
       if (collect) then
-        ncollect=ncollect+1
-        call reallocate_s(collection,ncollect)
-        collection(ncollect)=vtk_file
         file=trim(collect_dir)//"/"//vtk_file
       else
        file=vtk_file
@@ -393,59 +379,31 @@ contains
 
       vartype="Float32"
 
-      open(42,file=file,status="replace")
 
-      ! write header
+      open(42,file=file,position="append")
 
-      write(42,'(A)') '<?xml version="1.0"?>'
-      write(42,*) '<VTKFile type="StructuredGrid"  version="0.1" byte_order="LittleEndian">'
-      write(42,*) '<StructuredGrid WholeExtent="',i1,i2,j1,j2,k1,k2,'">'
-      write(42,*) '<Piece Extent="',i1,i2,j1,j2,k1,k2,'">'
+      ! write var
 
-      ! write mesh
+      write(42,'(5A)') '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
 
-      write(42,*) "<Points>"
-      write(42,*) '<DataArray type="Float32" NumberOfComponents="3" format="ascii">'
-
-      do k=k1,k2
-        do j=j1,j2
-          do i=i1,i2
-
+      do k=k1,k2-1
+        do j=j1,j2-1
+          do i=i1,i2-1
             nid = id2(l)-id1(l)+1
             njd = jd2(l)-jd1(l)+1
             nijd = nid*njd
 
-            xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
+            xyz =npc(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-            write(42,*) x(xyz),y(xyz),z(xyz)
-
-          enddo
-        enddo
-      enddo
-
-      write(42,*) '</DataArray>'
-      write(42,*) '</Points>'
-
-      ! write var
-
-      write(42,*) '<PointData Scalars="',name_field,'">'
-      write(42,*) '<DataArray type="',trim(vartype),'" Name="',name_field,'"  NumberOfComponents="1" format="ascii">'
-
-      do k=k1,k2
-        do j=j1,j2
-          do i=i1,i2
-            write(42,*) field
+            write(42,'(E16.8)') field
           enddo
         enddo
       enddo
 
       ! write footer
 
-      write(42,*) '</DataArray>'
-      write(42,*) "</PointData>"
-      write(42,*) '</Piece>'
-      write(42,*) '</StructuredGrid>'
-      write(42,*) '</VTKFile>'
+      write(42,'(A)') '</DataArray>'
+
 
       close(42)
 

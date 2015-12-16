@@ -704,7 +704,7 @@ contains
 !            if(ndel.ne.0) iok=.true.
 !            mpar =mnpar(ndel)
 !            iok=.false.
-             if(ndel.ne.0) mpar =mnpar(ndel)
+!             if(ndel.ne.0) mpar =mnpar(ndel)
              if(isens3.gt.0 .and. m3del.gt.m3min) iok=.true.
              if(isens3.lt.0 .and. m3del.lt.m3min) iok=.true.
 !

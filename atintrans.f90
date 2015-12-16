@@ -122,8 +122,8 @@ contains
 !
 !       calcul numero facette de la frontiere
 !
-       mfbe=bcg_to_bcl(mfe)
-       if (mfbe/=0) then ! I own part of this boundary
+       do mfbe=1,mtb
+       if(bcg_to_bci(bcl_to_bcg(mfbe))==mfe) then
          mfl=nfei(mfbe)
          l =ndlb(mfl)
   !
@@ -150,6 +150,14 @@ contains
          jmaxf=jmaxb(mfl)
          kminf=kminb(mfl)
          kmaxf=kmaxb(mfl)
+         
+         ilmin=iminf
+         ilmax=imaxf
+         jlmin=jminf
+         jlmax=jmaxf
+         klmin=kminf
+         klmax=kmaxf
+         
          m1min=1
          m2min=1
   !
@@ -213,6 +221,7 @@ contains
          enddo
 !     fin boucle sur frontieres laminaires
       endif
+      enddo
     enddo
     close(99)
 !
