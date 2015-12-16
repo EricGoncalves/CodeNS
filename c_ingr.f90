@@ -35,15 +35,15 @@ contains
          mot,imot,nmot, &
          ldom,ldomd,king)
 !
-    if(kimp.ge.1.and.rank==0) then
-       call b1_ingr(ldom,ldomd,king)
+    if(kimp.ge.1) then
+       if (rank==0)  call b1_ingr(ldom,ldomd,king)
+       call barrier
     endif
 !
     do l=1,ldomd
      if(bg_to_proc(ldom(l))==rank) then
         call ingr(bg_to_bl(ldom(l)),x,y,z,king)
      endif
-     call barrier
     enddo
 !
     deallocate(ldom)

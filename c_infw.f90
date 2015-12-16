@@ -39,8 +39,9 @@ contains
          mot,imot,nmot, &
          ldom,ldomd,kina)
 !
-    if (kimp.ge.1.and.rank==0) then
-        call b1_infw(ldom,ldomd,kina)
+    if (kimp.ge.1) then
+      if (rank==0) call b1_infw(ldom,ldomd,kina)
+      call barrier
     endif
 !
     do l=1,ldomd
@@ -50,7 +51,6 @@ contains
           kina,utau, &
           vdual,vdual1,vdual2)
     endif
-      call barrier
 !
     enddo
 !

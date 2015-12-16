@@ -313,7 +313,6 @@ contains
        end if
     enddo
     end if
-    call barrier
 !
     return
   end subroutine inbdc
