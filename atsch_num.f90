@@ -7,7 +7,7 @@ contains
        icyc,ncyc,idcyc,icycle, &
        mg,  &
        x,y,z,r,nxn,nyn,nzn, &
-       nxn1,nyn1,nzn1,sn, &
+       sn, &
        vol, &
        tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
        u,mu,mut,dist,cfke, &
@@ -121,18 +121,17 @@ contains
     use mod_zpres
     use mod_zvisqc
     use mod_mpi
-    use mod_get_from_mnpar
     implicit none
     integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
     integer          ::           l,     ldismx,     lgsnlt,         lm,    mcychro
     integer          ::     mcyturb,        mfc,        mfn,         mg,  mnc(ip43)
-    integer          :: mnpar(ip12),mnpar2(ip12), mnr(ip44),         nc, ncbd(ip41), ncin(ip41)
+    integer          :: mnpar(ip12),  mnr(ip44),         nc, ncbd(ip41), ncin(ip41)
     integer          ::        ncyc,       ndeb,       nfin,       npsn
     double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
     double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
     double precision ::         cvj(ip21),        cvk(ip21),     d(ip11,ip60),        d0x(ip40),        d0y(ip40)
     double precision ::         d0z(ip40),       dist(ip12),         dt(ip11),            dtpas,    ff(ip11,ip60)
-    double precision ::        fgam(ip12),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
+    double precision ::        fgam(ip42),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
     double precision ::         nzn(ip42),       pres(ip40),   pression(ip11),ptdual(ip11,ip60),        qcx(ip12)
     double precision ::         qcy(ip12),        qcz(ip12),          r(ip11),        rod(ip40),       roed(ip40)
     double precision ::        roud(ip40),       rovd(ip40),       rowd(ip40),        rpi(ip40),        rti(ip40)
@@ -144,7 +143,7 @@ contains
     double precision ::        toxy(ip12),       toxz(ip12),       toyy(ip12),       toyz(ip12),       tozz(ip12)
     double precision ::          tp(ip40),     u(ip11,ip60),       utau(ip42),     v(ip11,ip60),        vol(ip11)
     double precision ::           x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44),          z(ip21)
-    double precision ::         znr(ip44),      ztemp(ip11),fgam1(ip42),nxn1(ip12),nyn1(ip12),nzn1(ip12)
+    double precision ::         znr(ip44),      ztemp(ip11)
     logical          :: gfetke
 
     allocate(m2tb(ip00))
@@ -197,7 +196,7 @@ contains
           call atcaldis( &
                x,y,z,nxn,nyn,nzn, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7, &
-               dist,mnpar,mnpar2,fgam1,img, &
+               dist,mnpar,fgam,img, &
                ncin,mnc,ncbd)
 !
        CASE(3)
@@ -205,7 +204,7 @@ contains
           call atcaldis3( &
                x,y,z,nxn,nyn,nzn, &
                tn1,tn2,tn3,tn4,tn5,tn6,tn7, &
-               dist,mnpar,fgam1, &
+               dist,mnpar,fgam, &
                ncin,mnc,ncbd, &
                m1tb,m2tb,nfrtb)
 !
@@ -229,11 +228,7 @@ contains
 !
 !--------initialisation fonction "fgam" pour transition. Lecture "fatdon"
 !
-       call atintrans(ncin,fgam1)
-       call get_from_mnpar(fgam,fgam1,mnpar,mnpar2)
-       call get_from_mnpar(nxn1,nxn,mnpar,mnpar2)
-       call get_from_mnpar(nyn1,nyn,mnpar,mnpar2)
-       call get_from_mnpar(nzn1,nzn,mnpar,mnpar2)
+       call atintrans(ncin,fgam)
     endif
 !
 !-------------------------------------------------------------------

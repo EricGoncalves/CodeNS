@@ -53,7 +53,7 @@ contains
     double precision ::          cste,          ctk,         ctmu,        ctmu2,        dconv
     double precision ::    dist(ip12),        dist2,         dnum,          dpc,         dpdt
     double precision ::    dpdx(ip00),   dpdy(ip00),   dpdz(ip00),         dtop,           dy
-    double precision ::       echleps,          eps,          f1i,   fgam(ip12),         fmui
+    double precision ::       echleps,          eps,          f1i,   fgam(ip42),         fmui
     double precision ::           fxi,           ki,           li,     mu(ip12),          mup
     double precision ::     mut(ip12),    nxn(ip42),    nyn(ip42),    nzn(ip42),     ps(ip11)
     double precision ::         retur,         rhoi,          rk2,         rok2,          rop
@@ -110,8 +110,9 @@ contains
           ni=ncin(mb)
           nc=ncbd(mb)
           nfacns=m0ns+m
+          mpar=mnpar(ni)
 !       test sur transition et regime d'ecoulement
-          if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+          if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
 !         laminaire
              lamin=.true.
           else
@@ -170,6 +171,7 @@ contains
        nc=ncbd(mb)
        nii=ni-n0c
        nfacns=m0ns+m
+       mpar=mnpar(ni)
 !       vitesse cellule 1
        v1x=v(ni,2)/v(ni,1)
        v1y=v(ni,3)/v(ni,1)
@@ -222,7 +224,7 @@ contains
                 yi=(nn-1)*dy
                 mui(nn)=mu(ni)
 !           test sur la transition
-                if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+                if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
                    muti(nn)=0.
                 else
                    rhoi=v(ni,1)
@@ -274,7 +276,7 @@ contains
 !************************************************************************
        end do
 !       test sur la transition
-       if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
 !        tprod(nii)=0.
           v(ni,7)=roeinf
           v(ni,6)=rokinf

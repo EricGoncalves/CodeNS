@@ -49,7 +49,7 @@ contains
     double precision ::           c13,          c18,         conv,          ctk
     double precision ::          ctmu,        ctmu2,        dconv,   dist(ip12),         dnum
     double precision ::          dpdt,   dpdx(ip00),   dpdy(ip00),   dpdz(ip00),         dtop
-    double precision ::          dudy,           dy,   fgam(ip12),     mu(ip12),          mup
+    double precision ::          dudy,           dy,   fgam(ip42),     mu(ip12),          mup
     double precision ::     mut(ip12),    nxn(ip42),    nyn(ip42),    nzn(ip42),     ps(ip11)
     double precision ::          rhoi,     rnutilde,          rop,        seuil
     double precision :: sn(ip31*ndir),           sv,           t1,           t2,           t3
@@ -99,8 +99,9 @@ contains
           ni=ncin(mb)
           nc=ncbd(mb)
           nfacns=m0ns+m
+          mpar=mnpar(ni)
 !       test sur transition et regime d'ecoulement
-          if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+          if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
 !         laminaire
              lamin=.true.
           else
@@ -159,6 +160,7 @@ contains
        nc=ncbd(mb)
        nii=ni-n0c
        nfacns=m0ns+m
+       mpar=mnpar(ni)
 !       vitesse cellule 1
        v1x=v(ni,2)/v(ni,1)
        v1y=v(ni,3)/v(ni,1)
@@ -199,7 +201,7 @@ contains
                 yi=(nn-1)*dy
                 mui(nn)=mu(ni)
 !           test sur la transition
-                if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+                if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
                    muti(nn)=0.
                 else
                    rhoi=v(ni,1)
@@ -245,7 +247,7 @@ contains
 !************************************************************************
        enddo
 !       test sur la transition
-       if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
           v(ni,6)=rokinf
 !        vitesse de frottement utau
           utau(nfacns)=sign(1.D0,topar)*sqrt(abs(topar)/rop)

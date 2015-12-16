@@ -28,7 +28,7 @@ contains
 !_I    kd2        : arg int              ; indice max en k fictif
 !_I    mnpar      : arg real(ip12      ) ; pointeur dans tableaux front normales
 !_I                                        stockees du point de rattach normale
-!_I    fgam       : arg real(ip12      ) ; fonction d'intermittence pour
+!_I    fgam       : arg real(ip42      ) ; fonction d'intermittence pour
 !_I                                        transition
 !
 !     OUT
@@ -46,7 +46,7 @@ contains
     integer          ::           k,         k1,         k2,       k2m1,          l
     integer          :: mnpar(ip12),       mpar,          n,        n0c,        nid
     integer          ::        nijd,        njd
-    double precision ::   fgam(ip12),    mu(ip12),   mut(ip12),v(ip11,ip60)
+    double precision ::   fgam(ip42),    mu(ip12),   mut(ip12),v(ip11,ip60)
 !
 !-----------------------------------------------------------------------
 !
@@ -72,12 +72,15 @@ contains
           ind1=indc(i1,j,k)
           ind2=indc(i2m1,j,k)
           do n=ind1,ind2
-            if(fgam(n).lt.1.e-3) then
-               mut(n)=1.e-3*mu(n)
-               v(n,6)=epsk
-               v(n,7)=epse
-            end if
-!         mut(n)=max(fgam(n)*mut(n),1.e-3*mu(n))
+             mpar=mnpar(n)
+             if(mpar.ge.1) then
+                if(fgam(mpar).lt.1.e-3) then
+                   mut(n)=1.e-3*mu(n)
+                   v(n,6)=epsk
+                   v(n,7)=epse
+                end if
+!         mut(n)=max(fgam(mpar)*mut(n),1.e-3*mu(n))
+             end if
           enddo
        enddo
     enddo

@@ -469,7 +469,7 @@ module mod_mpi
 
     END SUBROUTINE BARRIER
 
-    SUBROUTINE GATHER_I0(IN,OUT,COMM)
+    SUBROUTINE GATHER_I0(IN,OUT)
         ! THIS ROUTINE IS GATHERING INTEGER FOR EVERY PROC FROM EVERY PROC
         ! EXEMPLE
         ! PROC 1 : IN=A , OUT=[A , B , C]
@@ -478,14 +478,9 @@ module mod_mpi
         IMPLICIT NONE
         integer,INTENT(IN)  :: IN
         integer,INTENT(OUT) :: OUT(nprocs)
-        integer,INTENT(IN),optional  :: COMM
         integer :: ierr
 #ifdef WITH_MPI
-        if (present(comm)) then
-          CALL MPI_ALLGATHER(IN, 1, MPI_INTEGER, OUT(1), 1, MPI_INTEGER, COMM,IERR)
-        else
-          CALL MPI_ALLGATHER(IN, 1, MPI_INTEGER, OUT(1), 1, MPI_INTEGER, MPI_COMM_WORLD,IERR)
-        endif
+        CALL MPI_ALLGATHER(IN, 1, MPI_INTEGER, OUT(1), 1, MPI_INTEGER, MPI_COMM_WORLD,IERR)
 #else
         OUT(:)=IN
 #endif
@@ -677,20 +672,15 @@ module mod_mpi
 #endif
     END SUBROUTINE SUM_MPI_1I
 
-    SUBROUTINE BCAST_0I(IN,ORIG,COMM)
+    SUBROUTINE BCAST_0I(IN,ORIG)
         !BROADCAST THE MESSAGE IN FROM ORIG
         !RETURN WHEN EVERYTHING IS DONE
         IMPLICIT NONE
         integer   ,INTENT(INOUT) :: IN
         integer,INTENT(IN)    :: ORIG
-        integer,intent(in),optional :: comm
         integer :: ierr
 #ifdef WITH_MPI
-        if (present(comm)) then
-          CALL MPI_BCAST( IN,1, MPI_INTEGER, ORIG, comm,IERR)
-        else
-          CALL MPI_BCAST( IN,1, MPI_INTEGER, ORIG, MPI_COMM_WORLD,IERR)
-        endif
+        CALL MPI_BCAST( IN,1, MPI_INTEGER, ORIG, MPI_COMM_WORLD,IERR)
 #endif
 
     END SUBROUTINE BCAST_0I
@@ -708,23 +698,18 @@ module mod_mpi
 
     END SUBROUTINE BCAST_0R
 
-    SUBROUTINE BCAST_1R(IN,ORIG,COMM)
+    SUBROUTINE BCAST_1R(IN,ORIG)
         !BROADCAST THE MESSAGE IN FROM ORIG
         !RETURN WHEN EVERYTHING IS DONE
         IMPLICIT NONE
-        double precision,INTENT(INOUT) :: IN(:)
+        double precision   ,INTENT(INOUT) :: IN(:)
         integer,INTENT(IN)    :: ORIG
-        integer,intent(in),optional :: comm
         double precision,allocatable :: buff(:) ! securiy necessary
         integer :: ierr
 #ifdef WITH_MPI
         allocate(buff(size(in)))
         buff=in
-        if (present(comm)) then
-          CALL MPI_BCAST( buff(1),SIZE(IN), MPI_REAL8, ORIG, comm,IERR)
-        else
-          CALL MPI_BCAST( buff(1),SIZE(IN), MPI_REAL8, ORIG, MPI_COMM_WORLD,IERR)
-        endif
+        CALL MPI_BCAST( buff(1),SIZE(IN), MPI_REAL8, ORIG, MPI_COMM_WORLD,IERR)
         in=buff
         deallocate(buff)
 #endif
@@ -749,23 +734,18 @@ module mod_mpi
 
     END SUBROUTINE BCAST_2R
 
-    SUBROUTINE BCAST_1I(IN,ORIG,COMM)
+    SUBROUTINE BCAST_1I(IN,ORIG)
         !BROADCAST THE MESSAGE IN FROM ORIG
         !RETURN WHEN EVERYTHING IS DONE
         IMPLICIT NONE
         integer,INTENT(INOUT) :: IN(:)
         integer,INTENT(IN)    :: ORIG
-        integer,intent(in),optional :: comm
         integer,allocatable :: buff(:) ! securiy necessary
         integer :: ierr
 #ifdef WITH_MPI
         allocate(buff(size(in)))
         buff=in
-        if (present(comm)) then
-          CALL MPI_BCAST( buff(1),SIZE(IN), MPI_INTEGER, ORIG, comm,IERR)
-        else
-          CALL MPI_BCAST( buff(1),SIZE(IN), MPI_INTEGER, ORIG, MPI_COMM_WORLD,IERR)
-        endif
+        CALL MPI_BCAST( buff(1),SIZE(IN), MPI_INTEGER, ORIG, MPI_COMM_WORLD,IERR)
         in=buff
         deallocate(buff)
 #endif

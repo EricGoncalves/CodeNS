@@ -7,7 +7,7 @@ contains
        dist,mnpar,mu, &
        pi,tau,us,ut,un, &
        toxx,toxy,toxz,toyy,toyz,tozz, &
-       x,y,z,nxn,nyn,nzn,nxn1,nyn1,nzn1, &
+       x,y,z,nxn,nyn,nzn, &
        ps,cson,temp, &
        cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
 !
@@ -168,7 +168,6 @@ contains
     double precision ::            xn,           xs,           xt,      y(ip12),        ycfac
     double precision ::            yn,           ys,           yt,      z(ip12),        zcfac
     double precision ::            zn,           zs,           zt
-    double precision ::     nxn1(ip12),  nyn1(ip12),   nzn1(ip12)
     logical          ::    iok,ouvert
     double precision,allocatable :: dvxx(:),dvxy(:),dvxz(:),dvyx(:),dvyy(:)
     double precision,allocatable :: dvyz(:),dvzx(:),dvzy(:),dvzz(:),vort(:)
@@ -704,7 +703,7 @@ contains
 !            if(ndel.ne.0) iok=.true.
 !            mpar =mnpar(ndel)
 !            iok=.false.
-!             if(ndel.ne.0) mpar =mnpar(ndel)
+             if(ndel.ne.0) mpar =mnpar(ndel)
              if(isens3.gt.0 .and. m3del.gt.m3min) iok=.true.
              if(isens3.lt.0 .and. m3del.lt.m3min) iok=.true.
 !
@@ -724,9 +723,9 @@ contains
                 uez=uez1+rpdel*(uez2-uez1)
                 rhoe=s(ndel,1)+rpdel*(s(ndel2,1)-s(ndel,1))
 !
-                nx =nxn1(ndel)
-                ny =nyn1(ndel)
-                nz =nzn1(ndel)
+                nx =nxn(mpar)
+                ny =nyn(mpar)
+                nz =nzn(mpar)
                 uen=uex*nx+uey*ny+uez*nz
                 sx =uex-uen*nx
                 sy =uey-uen*ny

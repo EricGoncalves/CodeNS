@@ -86,7 +86,7 @@ contains
     double precision ::  bceqt(ip41,neqt),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21),      cmuj2(ip21)
     double precision ::       cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21),        cvj(ip21)
     double precision ::         cvk(ip21),     d(ip11,ip60),        d0x(ip40),        d0y(ip40),        d0z(ip40)
-    double precision ::        dist(ip12),    ff(ip11,ip60),       fgam(ip12),         mu(ip12),        mut(ip12)
+    double precision ::        dist(ip12),    ff(ip11,ip60),       fgam(ip42),         mu(ip12),        mut(ip12)
     double precision ::         nxn(ip42),        nyn(ip42),        nzn(ip42),       pres(ip40),   pression(ip11)
     double precision :: ptdual(ip11,ip60),        qcx(ip12),        qcy(ip12),        qcz(ip12),          r(ip11)
     double precision ::         rod(ip40),       roed(ip40),       roud(ip40),       rovd(ip40),       rowd(ip40)

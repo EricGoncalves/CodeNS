@@ -100,7 +100,7 @@ contains
     double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
     double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),     d(ip11,ip60)
     double precision ::        dist(ip12),         dt(ip11),       dtdx(ip00),       dtdy(ip00),       dtdz(ip00)
-    double precision ::        fgam(ip12),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
+    double precision ::        fgam(ip42),         mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42)
     double precision ::         nzn(ip42),   pression(ip11),ptdual(ip11,ip60),     qcxts5(ip12),     qcyts6(ip12)
     double precision ::      qcz000(ip12),    sn(ip31*ndir),          t(ip00),        tn1(ip00),       tn10(ip00)
     double precision ::         tn2(ip00),        tn3(ip00),        tn9(ip00),       topz(ip11),         tp(ip40)
