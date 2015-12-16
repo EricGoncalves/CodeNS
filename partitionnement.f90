@@ -1015,7 +1015,9 @@ contains
        write(fich,'(A,I0.2,A)') prefix//"mesh_",bl_to_bg(l),ext
 
        if(typ==2) then 
-        call vtk_writer(fich,x,y,z,bl_to_bg(l),"block_num",l)
+        call vtk_open(fich,x,y,z,l)
+        call vtk_writer(fich,bl_to_bg(l),"block_num",l)
+        call vtk_close(fich)
        else
        open(42,file=fich,status="replace")
 
@@ -1057,8 +1059,10 @@ contains
        write(fich,'(A,I0.3,A)') prefix//"bnd_",bcl_to_bcg(fr),ext
 
        if(typ==2) then
-         call vtk_writer(fich,x,y,z,bcl_to_bcg(fr),"boundary_num",ndlb(fr), &
+        call vtk_open(fich,x,y,z,l)
+        call vtk_writer(fich,bcl_to_bcg(fr),"boundary_num",ndlb(fr), &
                 iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr))
+        call vtk_close(fich)
        else
        open(42,file=fich,status="replace")
          if(typ==1)  write(42,*) "x,y,z,boundary"
