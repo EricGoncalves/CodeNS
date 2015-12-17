@@ -17,9 +17,8 @@ contains
     logical :: test,test2
 
 
-    var_out=42.0
     do bcg=1,num_bcg
-      test=sum(mnpar2,mask=(mnpar2==bcg))/=0 ! at least one of my points is concern
+      test=sum(mnpar2,mask=(mnpar2==bcg))/=0 ! at least one of my points is concerned
       call LOR_MPI(test,test2)
       if (test2) then
         proc=bcg_to_proc(bcg) ! I'm the owner

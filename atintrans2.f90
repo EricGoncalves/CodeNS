@@ -1,7 +1,7 @@
 module mod_atintrans2
   implicit none
 contains
-  subroutine atintrans2(ncin,fgam)
+  subroutine atintrans2(x,y,z,ncin,fgam)
 !
 !***********************************************************************
 !
@@ -81,8 +81,11 @@ contains
     integer          ::      m2deb,     m2fin,     m2max,   m2maxm1,     m2min
     integer          ::      mfacn,       mfe,       mfl,         n,       nci
     integer          :: ncin(ip41),       ncj,       nck,       nfr,     nfrmx
-    integer          ::        nid,      nijd,       njd,mfbe
+    integer          ::        nid,      nijd,       njd,mfbe,m,mb,nc,i,j,k,xyz,mn
+    double precision ::    x(ip21), y(ip21), z(ip21)
     double precision :: fgam(ip12),xmin,xmax,ymin,ymax,zmin,zmax
+    double precision :: xcc,ycc,zcc
+    double precision,parameter :: eps=1e-10
 !
 !-----------------------------------------------------------------------
 
@@ -134,11 +137,9 @@ contains
          njd = jd2(l)-jd1(l)+1
          nijd = nid*njd
   !
-        ! taille de la diagonnale de la zone
-        diag=(xmin-xmax)**2+(ymin-ymax)**2+(zmin-zmax)**2
-        
        do m=1,mmb(mfl)
           mb=mpb(mfl)+m
+          mn=mpn(mfl)+m
           nc=ncin(mb)
           
           !calcul de la coordonnée du centre de la cellule
@@ -159,15 +160,15 @@ contains
           ycc=ycc*0.125
           zcc=zcc*0.125
           
-          ! distances aux deux coins de la zone
-          dist1=(xcc-xmin)**2+(ycc-ymin)**2+(zcc-zmin)**2
-          dist2=(xcc-xmax)**2+(ycc-ymax)**2+(zcc-zmax)**2
-          
-          ! le point est dans la zone ssi dist1 et dist2 sont <= à diag
-          if(dist1<=diag.and.dist2<=diag) then
-             fgam(mb)=0.
+          if((abs(abs(xcc-xmin)+abs(xcc-xmax)-abs(xmin-xmax))<=eps).and. &
+             (abs(abs(ycc-ymin)+abs(ycc-ymax)-abs(ymin-ymax))<=eps).and. &
+             (abs(abs(zcc-zmin)+abs(zcc-zmax)-abs(zmin-zmax))<=eps)) then
+             print*, xcc,ycc,zcc,bcl_to_bcg(mfbe)
+             fgam(mn)=0.
           endif
                   
+        enddo
+        endif
 !     fin boucle sur frontieres laminaires
       enddo
     enddo
