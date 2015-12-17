@@ -122,7 +122,6 @@ contains
     use mod_zvisqc
     use mod_mpi
     use mod_get_from_mnpar
-    use mod_vtk
     implicit none
     integer          ::        icyc,     icycle,      idcyc,        img,     ityprk
     integer          ::           l,     ldismx,     lgsnlt,         lm,    mcychro
@@ -147,7 +146,6 @@ contains
     double precision ::           x(ip21),        xnr(ip44),          y(ip21),        ynr(ip44),          z(ip21)
     double precision ::         znr(ip44),      ztemp(ip11),fgam1(ip42),nxn1(ip12),nyn1(ip12),nzn1(ip12)
     logical          :: gfetke
-    character(len=50)::fich
 
 
     allocate(m2tb(ip00))
@@ -243,24 +241,12 @@ contains
 !     calcul des variables thermo
 !-------------------------------------------------------------------
 !
-    call vtk_start_collection("mnpar.pvd","fields")
     do l=1,lzx
        lm=l+(img-1)*lz
-       write(fich,'(A,I0.2,A)') "mnpar",bl_to_bg(l),".vts"
-       call vtk_open(fich,x,y,z,l)
-       call vtk_writer(fich,fgam,"fgam",l)
-       call vtk_writer(fich,dist,"dist",l)
-       call vtk_writer(fich,mnpar2,"mnpar2",l)
-       call vtk_writer(fich,mnpar,"mnpar",l)
-       call vtk_writer(fich,nxn1,"nxn",l)
-       call vtk_writer(fich,nyn1,"nyn",l)
-       call vtk_writer(fich,nzn1,"nzn",l)
-       call vtk_close(fich)
        call zpres( &
             lm,v, &
             pression,ztemp,cson)
     enddo
-    call vtk_end_collection()
 !
 !-----------------------------------------------------------
 !     initialisation de k et epsilon

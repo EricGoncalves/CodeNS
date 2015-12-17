@@ -41,9 +41,9 @@ contains
     character(len=1316) :: form
 !
     form='(/ 2x,''numero de la grille      : '',11x,i5/' &
-         //'2x,''nb de noeuds (dont fic.) : '',10x,i6/' &
+         //'2x,''nb de noeuds (dont fic.) : '', 9x,i7/' &
          //'2x,''tot. noeuds dom preced   : '', 9x,i7/' &
-         //'2x,''nb de cellules(dont fic.): '',10x,i6/' &
+         //'2x,''nb de cellules(dont fic.): '', 9x,i7/' &
          //'2x,''tot. cellules dom preced : '', 9x,i7/' &
          //'2x,''nb de facettes(dont fic.): '', 9x,i7/' &
          //'2x,''tot. facettes dom preced : '', 9x,i7/' &
