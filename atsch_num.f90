@@ -62,7 +62,7 @@ contains
     use proprieteflu
     use mod_atcaldis
     use mod_atcaldis3
-    use mod_atintrans
+    use mod_atintrans2
     use mod_cllparoi1
     use mod_cllparoi2
     use mod_chrono
@@ -229,7 +229,7 @@ contains
 !
 !--------initialisation fonction "fgam" pour transition. Lecture "fatdon"
 !
-       call atintrans(ncin,fgam1)
+       call atintrans2(ncin,fgam1)
        call get_from_mnpar(fgam,fgam1,mnpar,mnpar2)
        call get_from_mnpar(nxn1,nxn,mnpar,mnpar2)
        call get_from_mnpar(nyn1,nyn,mnpar,mnpar2)
