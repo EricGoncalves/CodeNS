@@ -43,7 +43,7 @@ contains
     integer          ::  ncbd(ip41), ncin(ip41),         no
     double precision ::   dist(ip12),  dvxx(ip00),  dvxy(ip00),  dvxz(ip00),  dvyx(ip00)
     double precision ::   dvyy(ip00),  dvyz(ip00),  dvzx(ip00),  dvzy(ip00),  dvzz(ip00)
-    double precision ::   fgam(ip42),    mu(ip12),   mut(ip12),   nxn(ip42),   nyn(ip42)
+    double precision ::   fgam(ip12),    mu(ip12),   mut(ip12),   nxn(ip42),   nyn(ip42)
     double precision ::    nzn(ip42), tprod(ip00),v(ip11,ip60), ztemp(ip11)
 !
 !-----------------------------------------------------------------------

@@ -8,7 +8,7 @@ contains
        mg,ncycl, &
        idcyc, &
        x,y,z,r,nxn,nyn,nzn, &
-       sn, &
+       nxn1,nyn1,nzn1,sn, &
        vol, &
        tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
        mu,mut,dist,cfke, &
@@ -78,8 +78,9 @@ contains
     double precision ::  bceqt(ip41,neqt),       cfke(ip13),      cmui1(ip21),      cmui2(ip21),      cmuj1(ip21)
     double precision ::       cmuj2(ip21),      cmuk1(ip21),      cmuk2(ip21),       cson(ip11),        cvi(ip21)
     double precision ::         cvj(ip21),        cvk(ip21),        d0x(ip40),        d0y(ip40),        d0z(ip40)
-    double precision :: d_volt(ip11,ip60),       dist(ip12),         dt(ip11), ff_du(ip11,ip60),       fgam(ip42)
+    double precision :: d_volt(ip11,ip60),       dist(ip12),         dt(ip11), ff_du(ip11,ip60),       fgam(ip12)
     double precision ::          mu(ip12),        mut(ip12),        nxn(ip42),        nyn(ip42),        nzn(ip42)
+    double precision ::        nxn1(ip12),       nyn1(ip12),       nzn1(ip12)
     double precision ::        pres(ip40),   pression(ip11),ptdual(ip11,ip60),        qcx(ip12),        qcy(ip12)
     double precision ::         qcz(ip12),        qtx(ip40),        qty(ip40),        qtz(ip40),          r(ip11)
     double precision ::         rod(ip40),       roed(ip40),       roud(ip40),       rovd(ip40),       rowd(ip40)
@@ -236,7 +237,7 @@ contains
                   icyc,ncyc,idcyc,icycle, &
                   mg, &
                   x,y,z,r,nxn,nyn,nzn, &
-                  sn, &
+                  nxn1,nyn1,nzn1,sn, &
                   vol, &
                   tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                   u_duv,mu,mut,dist,cfke, &

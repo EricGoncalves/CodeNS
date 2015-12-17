@@ -1,7 +1,7 @@
-module mod_atintrans
+module mod_atintrans2
   implicit none
 contains
-  subroutine atintrans(ncin,fgam)
+  subroutine atintrans2(x,y,z,ncin,fgam)
 !
 !***********************************************************************
 !
@@ -81,8 +81,11 @@ contains
     integer          ::      m2deb,     m2fin,     m2max,   m2maxm1,     m2min
     integer          ::      mfacn,       mfe,       mfl,         n,       nci
     integer          :: ncin(ip41),       ncj,       nck,       nfr,     nfrmx
-    integer          ::        nid,      nijd,       njd,mfbe
-    double precision :: fgam(ip12)
+    integer          ::        nid,      nijd,       njd,mfbe,m,mb,nc,i,j,k,xyz,mn
+    double precision ::    x(ip21), y(ip21), z(ip21)
+    double precision :: fgam(ip12),xmin,xmax,ymin,ymax,zmin,zmax
+    double precision :: xcc,ycc,zcc
+    double precision,parameter :: eps=1e-10
 !
 !-----------------------------------------------------------------------
 
@@ -113,12 +116,15 @@ contains
     read(99,*,err=302)nfrmx
     if(nfrmx.le.0) then
 !       le nombre de zones laminaires doit etre positif
-        if (rank==0) write(imp,'(/,"!!!atintrans: domaine laminaire mal defini",14x,"nfrmx=",i5)')nfrmx
+        if (rank==0) write(imp,'(/,"!!!atintrans2: domaine laminaire mal defini",14x,"nfrmx=",i5)')nfrmx
        stop
     endif
 !
     do nfr=1,nfrmx
-       read(99,*,err=303)mfe,ilmin,ilmax,jlmin,jlmax,klmin,klmax
+      ! lecture du numero de la frontiere concernée
+      ! et des coordonées de deux points extremes définissant une zone
+      ! Tout point de cette frontiere inclus dans cette zone
+       read(99,*,err=303)mfe,xmin,ymin,zmin,xmax,ymax,zmax
 !
 !       calcul numero facette de la frontiere
 !
@@ -127,100 +133,43 @@ contains
          mfl=nfei(mfbe)
          l =ndlb(mfl)
   !
-         i1=ii1(l)
-         i2=ii2(l)
-         j1=jj1(l)
-         j2=jj2(l)
-         k1=kk1(l)
-         k2=kk2(l)
-  !
          nid = id2(l)-id1(l)+1
          njd = jd2(l)-jd1(l)+1
          nijd = nid*njd
   !
-         nci=1
-         ncj=nid
-         nck=nijd
-  !
-         m0b=mpb(mfl)
-         m0n=mpn(mfl)
-         iminf=iminb(mfl)
-         imaxf=imaxb(mfl)
-         jminf=jminb(mfl)
-         jmaxf=jmaxb(mfl)
-         kminf=kminb(mfl)
-         kmaxf=kmaxb(mfl)
-         
-         ilmin=iminf
-         ilmax=imaxf
-         jlmin=jminf
-         jlmax=jmaxf
-         klmin=kminf
-         klmax=kmaxf
-         
-         m1min=1
-         m2min=1
-  !
-  !           m1deb m1fin : limites de variation des facettes parois laminaires
-  !           m2deb m2fin : dans numerotation des frontieres a normale stockee
-  !
-
-  !                     ilmin           ilmax
-  !                       |               |
-  !                       |   laminaire   |
-  !                       |===============|
-  !       ..........x-----------------------------x.............
-  !               iminf   frontiere "mfl"       imaxf  indice en "i" domaine l
-  !                |
-  !            m0n=mpn(mfl)                            pointeur normales stockees
-  !
-  !
-         if (iminf.eq.imaxf) then
-  !         frontiere i=cste
-            m1max=jmaxf-jminf+1
-            m1maxm1=m1max-1
-            m2max=kmaxf-kminf+1
-            m2maxm1=m2max-1
-            m1deb=jlmin-jminf+1
-            m1fin=jlmax-jminf
-            m2deb=klmin-kminf+1
-            m2fin=klmax-kminf
-  !
-         elseif (jminf.eq.jmaxf) then
-  !         frontiere j=cste
-            m1max=imaxf-iminf+1
-            m1maxm1=m1max-1
-            m2max=kmaxf-kminf+1
-            m2maxm1=m2max-1
-            m1deb=ilmin-iminf+1
-            m1fin=ilmax-iminf
-            m2deb=klmin-kminf+1
-            m2fin=klmax-kminf
-  !
-         elseif (kminf.eq.kmaxf) then
-  !         frontiere k=cste
-            m1max=imaxf-iminf+1
-            m1maxm1=m1max-1
-            m2max=jmaxf-jminf+1
-            m2maxm1=m2max-1
-            m1deb=ilmin-iminf+1
-            m1fin=ilmax-iminf
-            m2deb=jlmin-jminf+1
-            m2fin=jlmax-jminf
-         endif
-  !
-  !
-         idm=m1max-m1min
-         do m2=m2deb,m2fin
-  !         boucle sur les bandes
-            do m1=m1deb,m1fin
-  !           boucle sur les cellules de la bande
-               mfacn=m0n+m1+(m2-1)*idm
-               fgam(mfacn)=0.
+       do m=1,mmb(mfl)
+          mb=mpb(mfl)+m
+          mn=mpn(mfl)+m
+          nc=ncin(mb)
+          
+          !calcul de la coordonnée du centre de la cellule
+          xcc=0.
+          ycc=0.
+          zcc=0.
+          do k=0,1
+            do j=0,1
+              do i=0,1
+                xyz =nc + i + j*nid + k*nijd
+                xcc=xcc+x(xyz)  
+                ycc=ycc+y(xyz)
+                zcc=zcc+z(xyz)
+              enddo
             enddo
-         enddo
+          enddo
+          xcc=xcc*0.125
+          ycc=ycc*0.125
+          zcc=zcc*0.125
+          
+          if((abs(abs(xcc-xmin)+abs(xcc-xmax)-abs(xmin-xmax))<=eps).and. &
+             (abs(abs(ycc-ymin)+abs(ycc-ymax)-abs(ymin-ymax))<=eps).and. &
+             (abs(abs(zcc-zmin)+abs(zcc-zmax)-abs(zmin-zmax))<=eps)) then
+             print*, xcc,ycc,zcc,bcl_to_bcg(mfbe)
+             fgam(mn)=0.
+          endif
+                  
+        enddo
+        endif
 !     fin boucle sur frontieres laminaires
-      endif
       enddo
     enddo
     close(99)
@@ -232,26 +181,26 @@ contains
 301 continue
 !     fin de fichier. Pas de transition
     ktransi=0
-    if (rank==0) write(imp,'(/,"===>atintrans: ktransi=0. Calcul tout laminaire ou tout turbulent")')
+    if (rank==0) write(imp,'(/,"===>atintrans2: ktransi=0. Calcul tout laminaire ou tout turbulent")')
     close(99)
     return
 !
 100 continue
-    if (rank==0) write(imp,'(/,"!!!atintrans: erreur ouverture fichier fatdon")')
+    if (rank==0) write(imp,'(/,"!!!atintrans2: erreur ouverture fichier fatdon")')
     stop
 !
 302 continue
-    if (rank==0) write(imp,'(/,"!!!atintrans: erreur nombre de frontieres laminaires ")')
+    if (rank==0) write(imp,'(/,"!!!atintrans2: erreur nombre de frontieres laminaires ")')
     stop
 !
 303 continue
-    if (rank==0) write(imp,'(/,"!!!atintrans: erreur lecture frontiere ligne",i4)')lig
+    if (rank==0) write(imp,'(/,"!!!atintrans2: erreur lecture frontiere ligne",i4)')lig
     stop
 !
 304 continue
-    if (rank==0) write(imp,'(/,"!!!atintrans: erreur positionnement dans fatdon")')
+    if (rank==0) write(imp,'(/,"!!!atintrans2: erreur positionnement dans fatdon")')
     stop
 !
     return
-  end subroutine atintrans
-end module mod_atintrans
+  end subroutine atintrans2
+end module mod_atintrans2

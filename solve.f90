@@ -320,7 +320,7 @@ program solve
   integer          ::          l,         m,      mfbi,       mfc,       mfn
   integer          ::        mfr,      ncyc,      nmot, imot(nmx)
   double precision ::  aam,exs1,exs2,roam, tam,     Time_1,    Time_2
-  integer         ,allocatable ::   mnc(:),mnpar(:),  mnr(:), ncbd(:)
+  integer         ,allocatable ::   mnc(:),mnpar(:),mnpar2(:),  mnr(:), ncbd(:)
   integer         ,allocatable ::  ncin(:)
   double precision,allocatable ::  bceqt(:,:),    cfke(:),   cmui1(:),   cmui2(:),   cmuj1(:)
   double precision,allocatable ::    cmuj2(:),   cmuk1(:),   cmuk2(:),    cson(:),     cvi(:)
@@ -339,6 +339,7 @@ program solve
   double precision,allocatable ::     toxy(:),    toxz(:),    toyy(:),    toyz(:),    tozz(:)
   double precision,allocatable ::       tp(:),    utau(:),     v(:,:), vdual(:,:),vdual1(:,:)
   double precision,allocatable :: vdual2(:,:),     vol(:),       x(:),     xnr(:),       y(:)
+  double precision,allocatable ::     nxn1(:),    nyn1(:),    nzn1(:)
   double precision,allocatable ::      ynr(:),       z(:),     znr(:),   ztemp(:)
 !
 !-----------------------------------------------------------------------
@@ -470,7 +471,7 @@ program solve
                    dist,mnpar,mu, &
                    tn1,tn2,tn3,tn4,tn5, &
                    toxx,toxy,toxz,toyy,toyz,tozz, &
-                   x,y,z,nxn,nyn,nzn, &
+                   x,y,z,nxn,nyn,nzn,nxn1,nyn1,nzn1, &
                    pression,cson,ztemp, &
                    cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
            else
@@ -495,7 +496,7 @@ program solve
                 mot,imot,nmot, &
                 ncyc, &
                 x,y,z,r,exs1,exs2,nxn,nyn,nzn, &
-                sn, &
+                nxn1,nyn1,nzn1,sn, &
                 vol, &
                 tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8,tn9,tn10, &
                 mu,mut,dist,cfke, &
@@ -1010,7 +1011,7 @@ mpc=0
     allocate(bceqt(ip41,neqt))
 
     ip42=mdimtbx            ! Nb point frontiere
-!    allocate(fgam(ip42))
+!    allocate(fgam(ip12))
 !    allocate(nxn(ip42))
 !    allocate(nyn(ip42))
 !    allocate(nzn(ip42))
@@ -1155,10 +1156,13 @@ lz=lt
     allocate(rowd(ip40))
     allocate(roed(ip40))
 
-    allocate(fgam(ip42))
+    allocate(fgam(ip12))
     allocate(nxn(ip42))
     allocate(nyn(ip42))
     allocate(nzn(ip42))
+    allocate(nxn1(ip12))
+    allocate(nyn1(ip12))
+    allocate(nzn1(ip12))
 
     allocate(mnr(ip44))
     allocate(xnr(ip44))
@@ -1189,7 +1193,7 @@ lz=lt
       deallocate(mpr,klmax,kkmf,keta,kki2,kki4,kmf,lmax,ki2,ki4,eta,pctvort)
       deallocate(rod,qtx,qty,qtz,res,tm1,tm2,tm3,tm4,tm5,tm6,tm7,tm8,tm9)
       deallocate(tm10,tm11,tm12,tm13,tp,rpi,d0y,d0x,d0z,pres,roud,rovd,rowd)
-      deallocate(roed,fgam,nxn,nyn,nzn,mnr,xnr,ynr,znr)
+      deallocate(roed,fgam,nxn,nyn,nzn,mnr,xnr,ynr,znr,nxn1,nyn1,nzn1)
     endif
 
     if (allocated(cl)) then

@@ -66,7 +66,7 @@ contains
     integer          ::          nc, ncbd(ip41), ncin(ip41),       ncyc,     nfacns
     integer          ::          ni,        nii
     double precision ::         cmu1,        cmu2,        cmu3,         cta,         ctb
-    double precision ::        denom,  dist(ip12),     echleps,  fgam(ip42),    mu(ip12)
+    double precision ::        denom,  dist(ip12),     echleps,  fgam(ip12),    mu(ip12)
     double precision ::          mup,   mut(ip12),          n1,          n2,          n3
     double precision ::    nxn(ip42),   nyn(ip42),   nzn(ip42),       omega,       retur
     double precision ::          rop,          sv,          t1,          t2,          t3
@@ -95,9 +95,8 @@ contains
        nc=ncbd(mb)
        nfacns=m0ns+m
        nii=ni-n0c
-       mpar=mnpar(ni)
 !         test sur transition et regime d'ecoulement
-       if((fgam(mpar).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
 !           laminaire
           lamin=.true.
        else

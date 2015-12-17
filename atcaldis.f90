@@ -4,7 +4,7 @@ contains
   subroutine atcaldis( &
        x,y,z,nxn,nyn,nzn, &
        xpar,ypar,zpar,xcc,ycc,zcc,dist2, &
-       dist,mnpar,fgam,img, &
+       dist,mnpar,mnpar2,fgam,img, &
        ncin,mnc,ncbd)
 !
 !***********************************************************************
@@ -134,10 +134,10 @@ contains
     integer          ::      isens3,          l,         lm,          m,        m10
     integer          ::       m1max,      m1min,        m20,      m2max,      m2min
     integer          ::         m30,      m3max,      m3min,         mf,  mnc(ip43)
-    integer          :: mnpar(ip12),          n, ncbd(ip41), ncin(ip41),       nfbe
+    integer          :: mnpar(ip12),mnpar2(ip12),         n, ncbd(ip41), ncin(ip41),       nfbe
     integer          ::        nfbi,         no,proc,nbdkog,nbd1
     integer,allocatable :: nbdko_proc(:)
-    double precision ::  dist(ip12),dist2(ip00), fgam(ip42),  nxn(ip42),  nyn(ip42)
+    double precision ::  dist(ip12),dist2(ip00), fgam(ip12),  nxn(ip42),  nyn(ip42)
     double precision ::   nzn(ip42),    x(ip21),  xcc(ip00), xpar(ip00),    y(ip21)
     double precision ::   ycc(ip00), ypar(ip00),    z(ip21),  zcc(ip00), zpar(ip00)
 !
@@ -220,6 +220,7 @@ contains
     do n=1,ndimctbx
        dist(n) =reelmx
        mnpar(n)=0
+       mnpar2(n)=0
     enddo
 !     ----------------------------------------------------------
 !
@@ -313,7 +314,7 @@ contains
         call atdist_2(img, &
              x,y,z, &
              xpar,ypar,zpar, &
-             dist2,dist,mnpar)
+             dist2,dist,mnpar,mnpar2)
 
     endif
 !
