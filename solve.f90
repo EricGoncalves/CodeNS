@@ -320,7 +320,7 @@ program solve
   integer          ::          l,         m,      mfbi,       mfc,       mfn
   integer          ::        mfr,      ncyc,      nmot, imot(nmx)
   double precision ::  aam,exs1,exs2,roam, tam,     Time_1,    Time_2
-  integer         ,allocatable ::   mnc(:),mnpar(:),mnpar2(:),  mnr(:), ncbd(:)
+  integer         ,allocatable ::   mnc(:),mnpar(:),  mnr(:), ncbd(:)
   integer         ,allocatable ::  ncin(:)
   double precision,allocatable ::  bceqt(:,:),    cfke(:),   cmui1(:),   cmui2(:),   cmuj1(:)
   double precision,allocatable ::    cmuj2(:),   cmuk1(:),   cmuk2(:),    cson(:),     cvi(:)
@@ -344,7 +344,7 @@ program solve
 !
 !-----------------------------------------------------------------------
 !
-  character(len=32) :: comment,mot(nmx)
+  character(len=32) :: mot(nmx)
   call inimpi
 
   ip00=0!ndimub                            ! Nb de cellules

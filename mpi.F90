@@ -850,7 +850,7 @@ module mod_mpi
     END SUBROUTINE GATHER_I
 
     SUBROUTINE GATHER_C(IN,OUT,SIZE)
-        ! THIS ROUTINE IS GATHERING INTEGER FOR EVERY PROC FROM EVERY PROC
+        ! THIS ROUTINE IS GATHERING CHARCTER FOR EVERY PROC FROM EVERY PROC
         ! EXEMPLE
         ! PROC 1 : IN=[A,B,C,D] , SIZE=3 , OUT=[A,B,C,E,F]
         ! PROC 2 : IN=[E,F]     , SIZE=2 , OUT=[A,B,C,E,F]
@@ -864,13 +864,14 @@ module mod_mpi
 #ifdef WITH_MPI
         CALL MPI_ALLGATHER(SIZE, 1, MPI_INTEGER, &
             SIZE_ALL, 1, MPI_INTEGER, MPI_COMM_WORLD,IERR)
+        SIZE_ALL=SIZE_ALL*len(IN)
         DISP(1)=0
         DO I=2,NPROCS
-          DISP(I)=DISP(I-1) + SIZE_ALL(I-1)*len(IN)
+          DISP(I)=DISP(I-1) + SIZE_ALL(I-1)
         ENDDO
 
         CALL MPI_ALLGATHERV(IN(1), SIZE*len(IN), MPI_character, &
-            OUT(1), SIZE_ALL*len(IN), DISP, MPI_character, MPI_COMM_WORLD,IERR)
+            OUT(1), SIZE_ALL, DISP, MPI_character, MPI_COMM_WORLD,IERR)
 #else
         OUT=IN
 #endif

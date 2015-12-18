@@ -72,15 +72,8 @@ contains
     use modeleturb
     use mod_mpi
     implicit none
-    integer          ::         i1,        i2,       idm,     ilmax,     ilmin
-    integer          ::      imaxf,     iminf,        j1,        j2,     jlmax
-    integer          ::      jlmin,     jmaxf,     jminf,        k1,        k2
-    integer          ::      klmax,     klmin,     kmaxf,     kminf,         l
-    integer          ::        lig,       m0b,       m0n,        m1,     m1deb
-    integer          ::      m1fin,     m1max,   m1maxm1,     m1min,        m2
-    integer          ::      m2deb,     m2fin,     m2max,   m2maxm1,     m2min
-    integer          ::      mfacn,       mfe,       mfl,         n,       nci
-    integer          :: ncin(ip41),       ncj,       nck,       nfr,     nfrmx
+    integer          ::          l,       lig,       mfe,       mfl,         n
+    integer          :: ncin(ip41),       nfr,     nfrmx
     integer          ::        nid,      nijd,       njd,mfbe,m,mb,nc,i,j,k,xyz,mn
     double precision ::    x(ip21), y(ip21), z(ip21)
     double precision :: fgam(ip12),xmin,xmax,ymin,ymax,zmin,zmax
@@ -163,7 +156,6 @@ contains
           if((abs(abs(xcc-xmin)+abs(xcc-xmax)-abs(xmin-xmax))<=eps).and. &
              (abs(abs(ycc-ymin)+abs(ycc-ymax)-abs(ymin-ymax))<=eps).and. &
              (abs(abs(zcc-zmin)+abs(zcc-zmax)-abs(zmin-zmax))<=eps)) then
-             print*, xcc,ycc,zcc,bcl_to_bcg(mfbe)
              fgam(mn)=0.
           endif
                   

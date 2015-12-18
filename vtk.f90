@@ -297,7 +297,6 @@ contains
 
       integer :: i1,i2,j1,j2,k1,k2
       integer :: nid,njd,nijd,xyz,i,j,k
-      double precision :: xcc,ycc,zcc
       character(len=80) :: vartype,file
 
       if (collect) then

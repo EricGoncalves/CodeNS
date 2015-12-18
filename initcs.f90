@@ -99,7 +99,7 @@ contains
     integer          ::    kba,kinitc,    kk,  kmax
     integer          ::    krr,     l,    la,    lb
     integer          ::      m,   m0c,    mc,  mfba,   mnc(ip43)
-    integer          ::     na,   nai,   naj,   nak,    nb
+    integer          ::     na,    nb
     integer          ::    nbv, ncilb, ncjlb, ncklb, nidla
     integer          ::  nidlb,nijdla,nijdlb, njdla, njdlb
     integer          ::    nvi,   nvj,   nvk

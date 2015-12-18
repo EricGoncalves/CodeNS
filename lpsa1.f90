@@ -57,7 +57,7 @@ contains
     use modeleturb
     implicit none
     integer          ::  iter,     l,     m,  m0ns,    mb
-    integer          ::  mfb, mnpar(ip12),  mpar,    mt,   n0c
+    integer          ::  mfb, mnpar(ip12),    mt,   n0c
     integer          ::  nc,  ncbd(ip41),  ncin(ip41), ncyc,nfacns
     integer          ::  ni,   nii
     double precision ::  c1,     c13,     c18,      c2,      c3
