@@ -40,13 +40,19 @@ contains
     if(nmot.gt.2) then
        nm=2
        n1=0
-       do no=1,maxval(bcg_to_bci)
+       list:do no=1,maxval(bcg_to_bci)
           nm=nm+1
           if(nmot.lt.nm) then
              comment=ci
              call synterr(mot,imot,nmot,comment)
           else
              call valenti(mot,imot,nm,tmp,knba)
+             do n2=1,n1
+                if(bcg_to_bci(bcl_to_bcg(nba(n2)))==tmp) then
+                  print*,"tcmd_dfpmcfg : duplicate entry : ",tmp,", just ignoring"
+                  cycle list
+                endif
+             enddo
              do n2=1,mtb
              if(bcg_to_bci(bcl_to_bcg(n2))==tmp) then
                n1=n1+1
@@ -54,7 +60,7 @@ contains
              endif
              enddo
           endif
-       enddo
+       enddo list
        do n2=1,mtb
        if(bcg_to_bci(bcl_to_bcg(n2))==0) then
          n1=n1+1
