@@ -315,6 +315,7 @@ program solve
   use mod_mpi
   use mod_c_partitionnement
   use mod_partitionnement,only:iniraccord
+  use tools,only : wait_for_gdb
   implicit none
   integer          ::        img,    iyplus
   integer          ::          l,         m,      mfbi,       mfc,       mfn
@@ -366,13 +367,7 @@ program solve
   lt=0!lz*lg   ! ?
   mtt=0!mtb*lg ! Nb front total
 
-  if (.false.) then ! wait for gdb
-    l=0
-    write(stderr,*) rank,"I'm waiting for gdb ", getpid()
-    do while(l==0)
-       call sleep(1)
-    enddo
-  endif
+!  call wait_for_gdb
 
   call allocdata
   temp_array=0.

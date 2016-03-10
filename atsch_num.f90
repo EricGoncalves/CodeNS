@@ -148,6 +148,7 @@ contains
     logical          :: gfetke
 
 
+    mnpar2=0
     allocate(m2tb(ip00))
     allocate(nfrtb(ip00))
     allocate(m1tb(ip00))

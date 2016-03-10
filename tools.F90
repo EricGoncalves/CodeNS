@@ -212,4 +212,19 @@ contains
       endif
 
   end subroutine reallocate_s_1r
+  
+  subroutine wait_for_gdb
+      use mod_mpi,only : rank
+      use sortiefichier,only : stderr
+#ifdef __INTEL_COMPILER
+          USE IFPORT, only:getpid
+#endif
+      implicit none
+      integer :: l
+      l=0
+      write(stderr,*) rank,"I'm waiting for gdb ", getpid()
+      do while(l==0)
+         call sleep(1)
+      enddo
+  end subroutine wait_for_gdb
 end module tools

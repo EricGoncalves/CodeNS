@@ -64,7 +64,7 @@ contains
 !
       if(ncyc.eq.1) then
        resno1=sqrt(durmy2)
-       if(resno1.eq.0.) resno1=1.
+       if(abs(resno1)<tiny(1.)) resno1=1.
       endif
       resite=sqrt(durmy2)/resno1
 !     resite=sqrt(durmy2)
