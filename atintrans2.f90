@@ -76,13 +76,18 @@ contains
     integer          :: ncin(ip41),       nfr,     nfrmx
     integer          ::        nid,      nijd,       njd,mfbe,m,mb,nc,i,j,k,xyz,mn
     double precision ::    x(ip21), y(ip21), z(ip21)
-    double precision :: fgam(ip12),xmin,xmax,ymin,ymax,zmin,zmax
+    double precision :: fgam(ip42),xmin,xmax,ymin,ymax,zmin,zmax
     double precision :: xcc,ycc,zcc
     double precision,parameter :: eps=1e-10
 !
 !-----------------------------------------------------------------------
 
     character(len=80) ::  ligne
+
+!     initialisation de "fgam" a 1
+    do n=1,mdimtnx
+       fgam(n)=1. ! TODO  DO we really want 1 even without transition ?
+    enddo
 !
     open(99,file='fatdon',status='old',err=100)
 !
@@ -98,10 +103,6 @@ contains
 !     transition fixee
     ktransi=1
 !
-!     initialisation de "fgam" a 1
-    do n=1,mdimtnx
-       fgam(n)=1.
-    enddo
 !
 !     lecture des frontieres laminaires
 !
@@ -168,6 +169,7 @@ contains
 !
 300 format(a80)
 !
+
     return
 !
 301 continue
