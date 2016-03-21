@@ -447,7 +447,7 @@ contains
       select type(field)
       type is (integer)
         vartype="Int32"
-      type is (double precision)
+      type is (real(8))
         vartype="Float32"
       class default
         if(rank==0) write(*,*) 'vtk_writer : Unknown type, must be integer or real'
@@ -505,7 +505,7 @@ contains
               select type(field)
               type is (integer)
                 write(42,*) field(xyz)
-              type is (double precision)
+              type is (real(8))
                 write(42,*) field(xyz)
               class default
                 write(*,*) 'vtk_writer : Unknown type, must be integer or real'
@@ -521,7 +521,7 @@ contains
               select type(field)
               type is (integer)
                 write(42,*) field
-              type is (double precision)
+              type is (real(8))
                 write(42,*) field
               class default
                 write(*,*) 'vtk_writer : Unknown type, must be integer or real'

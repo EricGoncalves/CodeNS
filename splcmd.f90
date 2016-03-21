@@ -41,14 +41,20 @@ contains
              im=0
              kbl=1
           endif
-       else
+       elseif(iachar(command(icmd:icmd)).ne.13) then ! ignore carriage return
           if(nmot.eq.0) nmot=1
           kbl=0
           im=im+1
           mot(nmot)(im:im)=command(icmd:icmd)
        endif
     enddo
-    if (nmot.ne.0) imot(nmot)=im
+    if (nmot.ne.0) then
+        if(im.ne.0) then
+          imot(nmot)=im
+        else     ! ignore empty word
+          nmot=nmot-1
+        endif
+    endif
 !
     return
   end subroutine splcmd

@@ -221,6 +221,9 @@ contains
 #endif
       implicit none
       integer :: l
+#ifdef __PGI
+      integer,external ::  getpid 
+#endif
       l=0
       write(stderr,*) rank,"I'm waiting for gdb ", getpid()
       do while(l==0)

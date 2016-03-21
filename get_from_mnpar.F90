@@ -1,3 +1,5 @@
+#define WITH_MPI
+
 module mod_get_from_mnpar
   implicit none
 contains
@@ -28,9 +30,15 @@ contains
         !prepare new communicator with only concerned procs
         
         if (test.or.rank==proc) then
+#ifdef WITH_MPI
           call MPI_COMM_SPLIT(MPI_COMM_WORLD, 1, rank, NEW_COMM, IERR)
           CALL MPI_COMM_RANK(NEW_COMM, new_RANK, IERR)
           CALL MPI_COMM_SIZE(NEW_COMM, new_NPROCS, IERR)
+#else
+          NEW_COMM=0
+          new_RANK=0
+          new_NPROCS=1
+#endif
           call reallocate(old_ranks,new_NPROCS)
           call gather(rank,old_ranks,comm=new_comm)
           
@@ -59,12 +67,16 @@ contains
           do nc = 1,ip12
              if(mnpar2(nc)==bcg) var_out(nc)= buff(mnpar(nc))
           enddo
+#ifdef WITH_MPI
           call barrier ! TODO, usefull ?
           call MPI_COMM_FREE(NEW_COMM, IERR)
+#endif
         else
+#ifdef WITH_MPI
           call MPI_COMM_SPLIT(MPI_COMM_WORLD, 0, rank, NEW_COMM, IERR)
           call barrier ! TODO, usefull ?
           call MPI_COMM_FREE(NEW_COMM, IERR)
+#endif
         endif
       endif
    enddo

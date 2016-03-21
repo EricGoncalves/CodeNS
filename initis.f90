@@ -56,7 +56,7 @@ contains
     character(len=2 ) :: indfl
 !
    allocate(ncbd1(ip41))
-   ncbd1(1:size(ncbd))=ncbd
+   if(ip41>0) ncbd1(1:size(ncbd))=ncbd
    deallocate(ncbd)
    
 !

@@ -24,18 +24,17 @@ option(lto     "Enable link-time optimizations" ON)
 
 # ifort compiler (LINUX)
 if (CMAKE_Fortran_COMPILER_ID STREQUAL "Intel")
-  set(CMAKE_Fortran_FLAGS         "-fPIC -g  -traceback -u -override-limits")
+  set(CMAKE_Fortran_FLAGS         "-fPIC -g  -traceback")
   set(CMAKE_Fortran_FLAGS_RELEASE "-xHOST -O3 -no-prec-div -fp-model fast=2 ") #  -init=zero -prof-use -prof-dir=prof_dir/  -prof-gen
   set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -C -debug all -warn all,nounused -fpe0 -ftrapuv -fstack-protector-all  -init=snan -WB -fp-stack-check -u -gen-interfaces -stand f08") #  -warn nodeclarations
   set(DOUBLE_FLAGS "-r8")
   set(OPTRPT_FLAGS "-qopt-report=5 -guide -diag-enable=openmp,vec,par")
-  set(LTO_FLAGS    "-ipo -ipo-jobs=8")
+  set(LTO_FLAGS    "-ipo -ipo-jobs=5")
   set(OPENMP_FLAGS "-openmp -parallel -threads")
-endif ()
 
 # gfortran compiler (LINUX)
-if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
-  set(CMAKE_Fortran_FLAGS         "-fPIC -ffree-line-length-none -g -fbacktrace  -fimplicit-none -fall-intrinsics")
+elseif (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
+  set(CMAKE_Fortran_FLAGS         "-fPIC -ffree-line-length-none -g -fbacktrace  -fimplicit-none -fall-intrinsics -D_FORTIFY_SOURCE=2")
   set(CMAKE_Fortran_FLAGS_RELEASE "-O3 -march=native -ffast-math -funsafe-math-optimizations -finit-local-zero") #
   set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra -finit-real=snan -fcheck=all -Warray-temporaries -Wconversion-extra -Wimplicit-interface -Wimplicit-procedure -pedantic -std=f2008 -Wrealloc-lhs-all -Wsurprising -Wcharacter-truncation -Waliasing -Wno-unused-parameter -Wno-unused -Wno-unused-dummy-argument ")
 #  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Wall -ffpe-trap=zero,overflow,invalid -Wextra -finit-real=snan -fcheck=all -pedantic -std=f2008ts -Wno-unused-parameter -Wno-unused -Wno-unused-dummy-argument ")
@@ -43,6 +42,18 @@ if (CMAKE_Fortran_COMPILER_ID STREQUAL "GNU")
   set(OPTRPT_FLAGS "-ftree-vectorizer-verbose")
   set(LTO_FLAGS    "-flto ") # -combine -flto=jobserver
   set(OPENMP_FLAGS "-fopenmp")
+
+# pgf90 compiler (LINUX)
+elseif (CMAKE_Fortran_COMPILER_ID STREQUAL "PGI")
+  set(CMAKE_Fortran_FLAGS         "-fpic -g -traceback")
+  set(CMAKE_Fortran_FLAGS_RELEASE "-fast -tp -Mfpapprox -Mfprelaxed -Mprefetch ") #
+  set(CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g -C -Mstandard -Minform=inform -Ktrap=fp")
+  set(DOUBLE_FLAGS "-r8")
+  set(OPTRPT_FLAGS "-Minfo=all ")
+  set(LTO_FLAGS    "-Mipa=fast,jobs=5 ") 
+  set(OPENMP_FLAGS "-mp=align,allcores,bind,numa -Mconcur")
+else ()
+  message(FATAL_ERROR "ERROR : Compiler type unknown : ${CMAKE_Fortran_COMPILER_ID}")
 endif ()
 
 set(PROFILE_FLAGS "-p -pg")

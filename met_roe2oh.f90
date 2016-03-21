@@ -144,6 +144,7 @@ contains
                      sn(m,3,3)*sn(m,3,3))
                 rlam=(u*sn(m,3,1)+v*sn(m,3,2)+w*sn(m,3,3))/cndsk
                 coef=0.5*psi(rlam,eps*c)*cndsk
+                dd=coef*(del6(m)-fi1(del6(m1),del6(m),del6(m2)))
                 d(n     ,6) = d(n     ,6)-dd
                 d(n-ninc,6) = d(n-ninc,6)+dd
                 dd=coef*(del7(m)-fi1(del7(m1),del7(m),del7(m2)))

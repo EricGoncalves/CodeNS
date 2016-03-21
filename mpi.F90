@@ -24,6 +24,14 @@ module mod_mpi
   ! l : local numerotation
   !ab can be proc to have the rank of the process that own the object
 
+#ifndef WITH_MPI
+  integer,parameter :: mpi_request_null = 0
+  integer,parameter :: mpi_comm_world = 0
+#endif
+#if defined(__PGI)
+  integer,external :: fseek,ftell,getpid
+#endif
+
   INTERFACE SUM_MPI
     !       SUM_MPI(A,B)
     ! COMPUTE THE SUM OF A IN B
@@ -109,8 +117,8 @@ module mod_mpi
         NPROCS=1
 #endif
 
-        allocate(bcg_to_proc(0),bcg_to_bcl(0),bcl_to_bcg(0))
-        allocate(bg_to_proc(0),bg_to_bl(0),bl_to_bg(0),bcg_to_bg(0))
+        allocate(bcg_to_proc(1),bcg_to_bcl(1),bcl_to_bcg(1))
+        allocate(bg_to_proc(1),bg_to_bl(1),bl_to_bg(1),bcg_to_bg(1))
 
     END SUBROUTINE  INIMPI
 
@@ -943,11 +951,11 @@ module mod_mpi
     subroutine my_fseek(unit,pos)
         implicit none
         integer :: unit,pos
-#if defined(__INTEL_COMPILER)
+#if defined(__GFORTRAN__)
+        call fseek(unit,pos,0)
+#else
         integer :: i
         i=fseek(unit,pos,0)
-#else
-        call fseek(unit,pos,0)
 #endif
     end subroutine my_fseek
 

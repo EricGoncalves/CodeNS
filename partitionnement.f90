@@ -165,48 +165,48 @@ contains
 
        !   reinitialisation
 
-       call reallocate(x,0)
-       call reallocate(y,0)
-       call reallocate(z,0)
-       call reallocate(ndlb,0)
-       call reallocate(nfei,0)
-       call reallocate(indfl,0)
-       call reallocate(iminb,0)
-       call reallocate(imaxb,0)
-       call reallocate(jminb,0)
-       call reallocate(jmaxb,0)
-       call reallocate(kminb,0)
-       call reallocate(kmaxb,0)
-       call reallocate(mpb,0)
-       call reallocate(mmb,0)
-       call reallocate(ncbd,0)
-       call reallocate(ii1,0)
-       call reallocate(jj1,0)
-       call reallocate(kk1,0)
-       call reallocate(ii2,0)
-       call reallocate(jj2,0)
-       call reallocate(kk2,0)
-       call reallocate(id1,0)
-       call reallocate(jd1,0)
-       call reallocate(kd1,0)
-       call reallocate(id2,0)
-       call reallocate(jd2,0)
-       call reallocate(kd2,0)
-       call reallocate(nnn,0)
-       call reallocate(nnc,0)
-       call reallocate(nnfb,0)
-       call reallocate(npn,0)
-       call reallocate(npc,0)
-       call reallocate(npfb,0)
-       call reallocate(bcg_to_proc,0)
-       call reallocate(bcg_to_bcl,0)
-       call reallocate(bcg_to_bci,0)
-       call reallocate(bcl_to_bcg,0)
-       call reallocate(bg_to_proc,0)
-       call reallocate(bg_to_bl,0)
-       call reallocate(bg_to_bi,0)
-       call reallocate(bl_to_bg,0)
-       call reallocate(bcg_to_bg,0)
+       call reallocate(x,1) ; x=0.
+       call reallocate(y,1) ; y=0.
+       call reallocate(z,1) ; z=0.
+       call reallocate(ndlb,1) ; ndlb=0
+       call reallocate(nfei,1) ; nfei=0
+       call reallocate(indfl,1) ; indfl=""
+       call reallocate(iminb,1) ; iminb=0
+       call reallocate(imaxb,1) ; imaxb=0
+       call reallocate(jminb,1) ; jminb=0
+       call reallocate(jmaxb,1) ; jmaxb=0
+       call reallocate(kminb,1) ; kminb=0
+       call reallocate(kmaxb,1) ; kmaxb=0
+       call reallocate(mpb,1) ; mpb=0
+       call reallocate(mmb,1) ; mmb=0
+       call reallocate(ncbd,1) ; ncbd=0
+       call reallocate(ii1,1) ; ii1=0
+       call reallocate(jj1,1) ; jj1=0
+       call reallocate(kk1,1) ; kk1=0
+       call reallocate(ii2,1) ; ii2=0
+       call reallocate(jj2,1) ; jj2=0
+       call reallocate(kk2,1) ; kk2=0
+       call reallocate(id1,1) ; id1=0
+       call reallocate(jd1,1) ; jd1=0
+       call reallocate(kd1,1) ; kd1=0
+       call reallocate(id2,1) ; id2=0
+       call reallocate(jd2,1) ; jd2=0
+       call reallocate(kd2,1) ; kd2=0
+       call reallocate(nnn,1) ; nnn=0
+       call reallocate(nnc,1) ; nnc=0
+       call reallocate(nnfb,1) ; nnfb=0
+       call reallocate(npn,1) ; npn=0
+       call reallocate(npc,1) ; npc=0
+       call reallocate(npfb,1) ; npfb=0
+       call reallocate(bcg_to_proc,1) ; bcg_to_proc=0
+       call reallocate(bcg_to_bcl,1) ; bcg_to_bcl=0
+       call reallocate(bcg_to_bci,1) ; bcg_to_bci=0
+       call reallocate(bcl_to_bcg,1) ; bcl_to_bcg=0
+       call reallocate(bg_to_proc,1) ; bg_to_proc=0
+       call reallocate(bg_to_bl,1) ; bg_to_bl=0
+       call reallocate(bg_to_bi,1) ; bg_to_bi=0
+       call reallocate(bl_to_bg,1) ; bl_to_bg=0
+       call reallocate(bcg_to_bg,1) ; bcg_to_bg=0
 
        ndimubx = 0
        ndimctbx=0
@@ -990,7 +990,7 @@ contains
     double precision,intent(in) :: x(:),y(:),z(:)
     character(*),intent(in) :: prefix
 
-    integer :: l,fr,nid,njd,nijd,xyz,i,j,k,typ
+    integer :: l,fr,nid,njd,nijd,xyz,i,j,k,typ,frgf,lgf
     character(len=50)::fich,format
     character(len=4)::ext
 
@@ -1056,11 +1056,15 @@ contains
     ! write boundaries
     do fr=1,mtb
 
-       write(fich,'(A,I0.3,A)') prefix//"bnd_",bcl_to_bcg(fr),ext
+          frgf=bcl_to_bcg(fr)
+          lgf=bcg_to_bg(frgf)
+          l=bg_to_bl(lgf)
+
+       write(fich,'(A,I0.3,A)') prefix//"bnd_",frgf,ext
 
        if(typ==2) then
         call vtk_open(fich,x,y,z,l)
-        call vtk_writer(fich,bcl_to_bcg(fr),"boundary_num",ndlb(fr), &
+        call vtk_writer(fich,frgf,"boundary_num",ndlb(fr), &
                 iminb(fr),imaxb(fr),jminb(fr),jmaxb(fr),kminb(fr),kmaxb(fr))
         call vtk_close(fich)
        else
@@ -1077,7 +1081,7 @@ contains
 
                 xyz =npn(l)+1+(i -id1(l))+(j -jd1(l))*nid+(k -kd1(l))*nijd
 
-                  write(42,format) x(xyz),y(xyz),z(xyz),bcl_to_bcg(fr)
+                  write(42,format) x(xyz),y(xyz),z(xyz),frgf
 
              enddo
                if(typ==0.and.indfl(fr)(1:1)/="i") write(42,*) ""
