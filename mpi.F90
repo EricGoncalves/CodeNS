@@ -975,7 +975,7 @@ module mod_mpi
         integer(kind=8) :: clock_rate,clock
         if (wall_time) then
           call system_clock(clock,clock_rate)
-          time=clock/clock_rate
+          time=clock*1./clock_rate
         else
           call CPU_TIME(time)
         endif

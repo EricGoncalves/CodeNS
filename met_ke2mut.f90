@@ -110,7 +110,7 @@ contains
              coef4=txxf5x(n)*(tyyf6x(n)/eps-txxf5x(n)/xk)+ &
                   txyf5y(n)*(tyzf6y(n)/eps-txyf5y(n)/xk)+ &
                   txzf5z(n)*(tzzf6z(n)/eps-txzf5z(n)/xk)
-             coef4=max(coef4,1.e-20)
+             coef4=max(coef4,1.d-20)
              coef3=4.*xk/(dist2*coef4)
              zeta =min( max(coef1,coef2),coef3)
              if(zeta.le.2.5) then

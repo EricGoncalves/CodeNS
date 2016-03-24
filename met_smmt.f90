@@ -140,7 +140,7 @@ contains
                 dist2=dist(n)**2
                 coef2=500.*mu(n)/(v(n,7)*dist2)
                 coef4=wsig2*v(n,1)*gkgo(m)/omeg
-                dkomg=max(coef4,1.e-20)
+                dkomg=max(coef4,1.d-20)
                 coef3=w4sig2*v(n,6)/(dist2*dkomg)
                 zeta =min( max(coef1,coef2),coef3)
                 if(zeta.le.2.5) then

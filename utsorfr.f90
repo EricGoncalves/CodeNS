@@ -691,7 +691,7 @@ contains
              qtx=qcx(nfacf)-phipadi*nxn(nfacm)
              qty=qcy(nfacf)-phipadi*nyn(nfacm)
              qtz=qcz(nfacf)-phipadi*nzn(nfacm)
-             qt=max(1.e-10,sqrt(qtx**2+qty**2+qtx**2))
+             qt=max(1.d-10,sqrt(qtx**2+qty**2+qtx**2))
              t1=qtx/qt
              t2=qty/qt
              t3=qtz/qt

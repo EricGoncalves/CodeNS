@@ -115,7 +115,7 @@ contains
 !                   imin  : pointeur facette paroi la plus proche dans
 !                           vecteur des facettes de toutes les parois
 !
-             dmini=1.e+20
+             dmini=1.d+20
              mpar0=npbrat(l)+1
              mpar1=npbrat(l)+nbdrat(l)
              do mp=mpar0,mpar1

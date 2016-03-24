@@ -54,7 +54,7 @@ contains
           do i=i1,i2m1
              n=n+nci
              if (s(n,6).lt.0.) then
-!        prendre "epsk" de l'ordre de 1.e-8
+!        prendre "epsk" de l'ordre de 1.d-8
                 s(n,6)=epsk
              endif
              s(n,7)=0.

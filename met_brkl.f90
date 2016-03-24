@@ -72,7 +72,7 @@ contains
              omeg = sqrt((dvzy(m)-dvyz(m))**2 &
                   +(dvxz(m)-dvzx(m))**2 &
                   +(dvyx(m)-dvxy(m))**2)
-             mutmx=max(mut(n),1.e-3*mu(n))
+             mutmx=max(mut(n),1.d-3*mu(n))
              v(n,6)=max(cmu1*mutmx*omeg,epsk)
              v(n,7)=b1s2*mutmx/sqrt(v(n,6)/v(n,1))
           enddo

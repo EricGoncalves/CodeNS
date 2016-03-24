@@ -68,7 +68,7 @@ contains
              rota = sqrt((dvzy(m)-dvyz(m))**2 &
                   +(dvxz(m)-dvzx(m))**2 &
                   +(dvyx(m)-dvxy(m))**2)
-             mutmx=max(mut(n),1.e-12)
+             mutmx=max(mut(n),1.d-12)
              v(n,6)=cmu1*mutmx*rota
              v(n,7)=v(n,1)*v(n,6)/mutmx
           enddo

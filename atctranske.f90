@@ -72,12 +72,12 @@ contains
           ind1=indc(i1,j,k)
           ind2=indc(i2m1,j,k)
           do n=ind1,ind2
-            if(fgam(n).lt.1.e-3) then
-               mut(n)=1.e-3*mu(n)
+            if(fgam(n).lt.1.d-3) then
+               mut(n)=1.d-3*mu(n)
                v(n,6)=epsk
                v(n,7)=epse
             end if
-!         mut(n)=max(fgam(n)*mut(n),1.e-3*mu(n))
+!         mut(n)=max(fgam(n)*mut(n),1.d-3*mu(n))
           enddo
        enddo
     enddo

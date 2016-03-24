@@ -43,7 +43,7 @@ contains
           ind1=indc(i1,j,k)
           ind2=indc(i2m1,j,k)
           do n=ind1,ind2
-             mut(n)=mu(n)*1.e-1
+             mut(n)=mu(n)*1.d-1
           enddo
        enddo
     enddo

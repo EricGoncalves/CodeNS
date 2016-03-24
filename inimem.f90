@@ -129,7 +129,7 @@ contains
 !     nombre de cycles precedents en debut d'execution
     ncyc=0
     ncycle=0
-    tol=1.e-08
+    tol=1.d-08
     tolke=0.
     niter=1
     nitur=1

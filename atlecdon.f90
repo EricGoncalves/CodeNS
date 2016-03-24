@@ -299,7 +299,7 @@ contains
 !       utaumin : valeur mini de u_tau
 !       utau / a_i = u_0/ a_i sqrt( Cf0/2 )
 !
-       utaumin=2.e-4
+       utaumin=2.d-4
 !
        if(kcaldis.eq.0 .and. klecdis.eq.0) ierrdis=1
 !
@@ -424,9 +424,9 @@ contains
 !     lecture des precisions pour calcul de delta
 !
     muttrav=0
-    epspid =-1.e+10
-    epstaud=-1.e+10
-    epsvord=-1.e+10
+    epspid =-1.d+10
+    epstaud=-1.d+10
+    epsvord=-1.d+10
     rap_h0=0.
     kamort=0
     do

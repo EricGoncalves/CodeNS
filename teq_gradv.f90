@@ -83,7 +83,7 @@ contains
           ind1=indc(imin,j,k)
           ind2=indc(imax,j,k)
           do n=ind1,ind2
-             t(n,1) = max(t(n,1),1.e-20)
+             t(n,1) = max(t(n,1),1.d-20)
           enddo
        enddo
     enddo

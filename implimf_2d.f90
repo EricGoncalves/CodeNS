@@ -413,12 +413,12 @@ DEALLOCATE(coefe,coefdiag,d2w1,d2w2,d2w3,d2w4,d2w5)
 
     return
   contains
-    pure integer function     indc(i,j,k)
+    integer function     indc(i,j,k)
       implicit none
       integer,intent(in)          ::    i,   j,   k
       indc=n0c+1+(i-id1(lm))+(j-jd1(lm))*nid+(k-kd1(lm))*nijd
     end function indc
-    pure integer function     inc(id,jd,kd)
+    integer function     inc(id,jd,kd)
       implicit none
       integer,intent(in)          ::  id, jd, kd
       inc=id+jd*nid+kd*nijd

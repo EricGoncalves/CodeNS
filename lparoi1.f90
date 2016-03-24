@@ -129,7 +129,7 @@ contains
        nfacns=m0ns+m
        nii=ni-n0c
 !       test sur transition et regime d'ecoulement
-       if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(ni).lt.1.d-3).and.(ktransi.gt.0)) then
 !         laminaire
           lamin=.true.
        else

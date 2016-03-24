@@ -100,7 +100,7 @@ contains
              rk=(cmut*ct/dist(n))**2/v(n,1)
              rk=max(rk,rokinf)
 !
-!           if(rk.lt.1.e-06) then
+!           if(rk.lt.1.d-06) then
 !             mut(n)=cmut
 !           else
              coef1=2.*v(n,6)/(cmu*sqrt(rk*v(n,1))*dist(n))

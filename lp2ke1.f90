@@ -78,8 +78,8 @@ contains
 !      ndis=20
     ndis=30
     dtop=0.001
-!      seuil=1.e-6
-    seuil=1.e-7
+!      seuil=1.d-6
+    seuil=1.d-7
     sv=110.4/tnz !air
 !
 !     constantes du calcul
@@ -111,7 +111,7 @@ contains
           nc=ncbd(mb)
           nfacns=m0ns+m
 !       test sur transition et regime d'ecoulement
-          if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+          if((fgam(ni).lt.1.d-3).and.(ktransi.gt.0)) then
 !         laminaire
              lamin=.true.
           else
@@ -222,7 +222,7 @@ contains
                 yi=(nn-1)*dy
                 mui(nn)=mu(ni)
 !           test sur la transition
-                if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+                if((fgam(ni).lt.1.d-3).and.(ktransi.gt.0)) then
                    muti(nn)=0.
                 else
                    rhoi=v(ni,1)
@@ -274,7 +274,7 @@ contains
 !************************************************************************
        end do
 !       test sur la transition
-       if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(ni).lt.1.d-3).and.(ktransi.gt.0)) then
 !        tprod(nii)=0.
           v(ni,7)=roeinf
           v(ni,6)=rokinf

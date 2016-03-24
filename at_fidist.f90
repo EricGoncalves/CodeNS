@@ -278,7 +278,7 @@ contains
 !                   calcul de la distance mini
 !
                             mc=n-n0
-                            dmini=1.e+20
+                            dmini=1.d+20
 !                   boucle coupee en 2 pour vectorisation
                             do m1=m1mi,m1mx
                                do m2=m2mi,m2mx
@@ -331,7 +331,7 @@ contains
 !                             vecteur des facettes de toutes les parois
 !
                             mc=n-n0
-                            dmini=1.e+20
+                            dmini=1.d+20
                             mpar0=npbrat(l)+1
                             mpar1=npbrat(l)+nbdrat(l)
                             do mp=mpar0,mpar1

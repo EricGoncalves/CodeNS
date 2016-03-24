@@ -114,7 +114,7 @@ contains
              read(kda) utau(1:mdimtnxl)
           else
              do m=1,ip42
-                utau(m)=1.e-04
+                utau(m)=1.d-04
              enddo
           endif
        endif

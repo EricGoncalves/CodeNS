@@ -131,7 +131,7 @@ contains
        nfacns=m0ns+m
        nii=ni-n0c
 !       test sur transition et regime d'ecoulement
-       if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(ni).lt.1.d-3).and.(ktransi.gt.0)) then
 !         laminaire
           lamin=.true.
        else
@@ -227,7 +227,7 @@ contains
 !           top=mup*v1t/dist(ni)
 !           do jj=1,10
 !             yy=log(dist(ni)*sqrt(rop*top)/mup)
-!               top=max(1.e-10,rop*v1t** 2/(0.17962*yy**4-
+!               top=max(1.d-10,rop*v1t** 2/(0.17962*yy**4-
 !     &                  2.2117*yy**3+9.2052*yy**2-10.804*yy
 !     &             +6.4424)**2)
 !            end do

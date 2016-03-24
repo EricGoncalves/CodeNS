@@ -94,7 +94,7 @@ contains
        nc=ncbd(mb)
        nfacns=m0ns+m
        nii=ni-n0c
-       if((fgam(ni).lt.1.e-3).and.(ktransi.gt.0)) then
+       if((fgam(ni).lt.1.d-3).and.(ktransi.gt.0)) then
 !         laminaire
           lamin=.true.
        else
@@ -151,7 +151,7 @@ contains
 !        loi raffinee avec interpolation
 !         if(upyp1.le.9.) then
 !          loi lineaire
-!           top=max(1.e-10,mup*v1t/dist(ni))
+!           top=max(1.d-10,mup*v1t/dist(ni))
 !       else
 !         yplus0=3.
 !         do ii=1,10
@@ -159,17 +159,17 @@ contains
 !          end do
 !           if(yplus0.gt.40.) then
 !c           loi logarithmique
-!           top=max(1.e-10,mup*v1t/dist(ni))
+!           top=max(1.d-10,mup*v1t/dist(ni))
 !           do iter=1,10
-!             top=max(1.e-10,v(nc,1)*v1t**2/(log(dist(ni)*sqrt(v(nc,1)
+!             top=max(1.d-10,v(nc,1)*v1t**2/(log(dist(ni)*sqrt(v(nc,1)
 !     &               *top)/mup)/vkar+cllog)**2)
 !            end do
 !           else
 !c           region tampon : interpolation par polynome de degre 4
-!           top=max(1.e-10,mup*v1t/dist(ni))
+!           top=max(1.d-10,mup*v1t/dist(ni))
 !           do jj=1,10
 !             yy=log(dist(ni)*sqrt(v(nc,1)*top)/mup)
-!              top=max(1.e-10,v(nc,1)*v1t** 2/(0.17962*yy**4-
+!              top=max(1.d-10,v(nc,1)*v1t** 2/(0.17962*yy**4-
 !     &                  2.2117*yy**3+9.2052*yy**2-10.804*yy
 !     &             +6.4424)**2)
 !            end do

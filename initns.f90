@@ -143,7 +143,7 @@ contains
     character(len=2 ) :: indfb
     character(len=7 ) :: eqt
 !
-    eps=1.e-10
+    eps=1.d-10
 !
     n0=npc(l)
     i1=ii1(l)
