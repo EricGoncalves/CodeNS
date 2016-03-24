@@ -41,12 +41,12 @@ contains
     character(len=1316) :: form
 !
     form='(/ 2x,''numero de la grille      : '',11x,i5/' &
-         //'2x,''nb de noeuds (dont fic.) : '', 9x,i7/' &
-         //'2x,''tot. noeuds dom preced   : '', 9x,i7/' &
-         //'2x,''nb de cellules(dont fic.): '', 9x,i7/' &
-         //'2x,''tot. cellules dom preced : '', 9x,i7/' &
-         //'2x,''nb de facettes(dont fic.): '', 9x,i7/' &
-         //'2x,''tot. facettes dom preced : '', 9x,i7/' &
+         //'2x,''nb de noeuds (dont fic.) : '', 9x,i8/' &
+         //'2x,''tot. noeuds dom preced   : '', 9x,i8/' &
+         //'2x,''nb de cellules(dont fic.): '', 9x,i8/' &
+         //'2x,''tot. cellules dom preced : '', 9x,i8/' &
+         //'2x,''nb de facettes(dont fic.): '', 9x,i8/' &
+         //'2x,''tot. facettes dom preced : '', 9x,i8/' &
          //'2x,''domaine d''''indicage       : '',/' &
          //'2x,5h id1=,i5,6h  ii1=,i5,6h  ii2=,i5,6h  id2=,i5,/' &
          //'2x,5h jd1=,i5,6h  jj1=,i5,6h  jj2=,i5,6h  jd2=,i5,/' &

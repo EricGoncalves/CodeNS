@@ -2,7 +2,7 @@ module mod_partitionnement
   use tools
   implicit none
   integer         ,parameter :: verbosity=2  ! from 0 to 3
-  double precision,parameter :: eps=1e-10
+  double precision,parameter :: eps=1e-7
 contains
   subroutine partitionnement(x,y,z,ncbd,mnc,ncin,bceqt,exs1,exs2,nblocks,nsplit,nsplit_dir)
     use boundary
@@ -72,7 +72,8 @@ contains
     integer,allocatable :: ii2g(:),jj2g(:),kk2g(:),sub_bc(:,:),tmp(:)
 
     double precision    :: vbc(ista*lsta),sub_bc_c(2,6),sub_bc2(4,3)
-    double precision    :: dist
+    double precision    :: dist, mindist
+    integer             :: minpos
     double precision,allocatable :: save_x(:),save_y(:),save_z(:)
 
     character(len=2),allocatable :: save_indfl(:)
@@ -494,6 +495,7 @@ contains
                          nijd = nid*njd
 
                          ! look for the first point
+                         mindist=huge(1.)
                           search1:do k1=save_kminb(frli2),save_kmaxb(frli2)
                            do j1=save_jminb(frli2),save_jmaxb(frli2)
                             do i1=save_iminb(frli2),save_imaxb(frli2)
@@ -504,13 +506,28 @@ contains
                                                  +(j1-save_jd1(lli2))*nid &
                                                  +(k1-save_kd1(lli2))*nijd
                              dist=sqrt( (save_x(na)-sub_bc2(1,1))**2+(save_y(na)-sub_bc2(1,2))**2+(save_z(na)-sub_bc2(1,3))**2 )
+                             if(dist<mindist) then
+                               mindist=dist
+                               minpos=na
+                             endif
                              if(dist.lt.eps) exit search1
                             enddo
                            enddo
                           enddo search1
-                          if(dist.ge.eps) stop "problem in boundary "
+                          test=.false.
+                          if(dist.ge.eps) then
+                            write(*,'(I4,A,I4)')    rank, " Problem in boundary :                 ",frli1
+                            write(*,'(I4,A,I4)')    rank, " Couldn't find corresponding part in : ",frli2
+                            write(*,'(I4,A,3e13.6)')rank, " Was looking for the point : ", sub_bc2(1,1),sub_bc2(1,2),sub_bc2(1,3)
+                            write(*,'(I4,A,3e13.6)')rank, " Closest point found is :    ", save_x(minpos),save_y(minpos),save_z(minpos)
+                            write(*,'(I4,A,e13.6)') rank, " Which is at a distance of : ", mindist
+                            write(*,'(I4,A,e13.6)') rank, " While criteria is set at :  ",eps
+                            write(*,'(I4,A)')       rank, " If the criteria was bigger, we would be looking for :"
+                            test=.true.
+                          endif
                          
                           ! look for directions
+                          mindist=huge(1.)
                           search2:do k1=save_kminb(frli2),save_kmaxb(frli2)
                            do j1=save_jminb(frli2),save_jmaxb(frli2)
                             do i1=save_iminb(frli2),save_imaxb(frli2)
@@ -521,10 +538,19 @@ contains
                                                  +(j1-save_jd1(lli2))*nid &
                                                  +(k1-save_kd1(lli2))*nijd
                              dist=sqrt( (save_x(na)-sub_bc2(2,1))**2+(save_y(na)-sub_bc2(2,2))**2+(save_z(na)-sub_bc2(2,3))**2 )
+                             if(dist<mindist) then
+                               mindist=dist
+                               minpos=na
+                             endif
                              if(dist.lt.eps) exit search2
                             enddo
                            enddo
                           enddo search2
+                          if(test) then
+                            write(*,'(I4,A,3e13.6)')rank, " Was looking for the point : ", sub_bc2(2,1),sub_bc2(2,2),sub_bc2(2,3)
+                            write(*,'(I4,A,3e13.6)')rank, " Closest point found is :    ", save_x(minpos),save_y(minpos),save_z(minpos)
+                            write(*,'(I4,A,e13.6)') rank, " Which is at a distance of : ", mindist
+                          endif
                           if(dist.lt.eps) then
                             dir(1,1)=ii-iba ; dir(1,1)=ii-iba
                             dir(1,2)=jj-jba ; dir(2,1)=jj-jba
@@ -544,6 +570,11 @@ contains
                             enddo
                            enddo
                           enddo search3
+                          if(test) then
+                            write(*,'(I4,A,3e13.6)')rank, " Was looking for the point : ", sub_bc2(3,1),sub_bc2(3,2),sub_bc2(3,3)
+                            write(*,'(I4,A,3e13.6)')rank, " Closest point found is :    ", save_x(minpos),save_y(minpos),save_z(minpos)
+                            write(*,'(I4,A,e13.6)') rank, " Which is at a distance of : ", mindist
+                          endif
                           if(dist.lt.eps) then
                             dir(2,1)=ii-iba ; dir(1,2)=ii-iba
                             dir(2,2)=jj-jba ; dir(2,2)=jj-jba
@@ -568,7 +599,13 @@ contains
                             dir(3,2)=jj-jba ; dir(2,3)=jj-jba
                             dir(3,3)=kk-kba ; dir(3,3)=kk-kba
                           endif
-                          
+                          if(test) then
+                            write(*,'(I4,A,3e13.6)')rank, " Was looking for the point : ", sub_bc2(4,1),sub_bc2(4,2),sub_bc2(4,3)
+                            write(*,'(I4,A,3e13.6)')rank, " Closest point found is :    ", save_x(minpos),save_y(minpos),save_z(minpos)
+                            write(*,'(I4,A,e13.6)') rank, " Which is at a distance of : ", mindist
+                            stop
+                          endif
+
                           ! on change de repère
 
                           tmp(1:3)=matmul(dir,sub_bc(1:5:2,1))
@@ -1254,7 +1291,7 @@ contains
     !                      test all possiblities constisting in dividing
     !                      i times in the x direction, j times in the y direction and k times in the z direction
     call reallocate(num_cf2,1,1,1)
-    num_cf2=nxyza*nblock2*6 ! useless initial big value
+    num_cf2=HUGE(1) ! useless initial big value
     i1=nblockd(1)
     i2=nblockd(1)
     j1=nblockd(2)
@@ -1295,6 +1332,9 @@ contains
           end do
        end do
     end do
+    if (product(nblockd)==0) then
+      stop "No splitting found !?!"
+    endif
   end subroutine triv_split
 
 subroutine compute_size(i,j,k,ii2,jj2,kk2,new_ii2,new_jj2,new_kk2)

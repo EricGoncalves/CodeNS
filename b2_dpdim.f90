@@ -65,24 +65,24 @@ contains
          //'1x,39(1h-),                             //,' &
          //'1x,''code     '',  11x,''calcul           '',7x/,' &
          //'1x,''----     '',  11x,''------           '',7x//,' &
-         //'1x,''lz     = '',i7,4x,''lzx     = '',i7//,' &
-         //'1x,''ndimub = '',i7,4x,''ndimubx = '',i7//,' &
-         //'1x,''ndimctb= '',i7,4x,''ndimctbx= '',i7//,' &
-         //'1x,''ndimntb= '',i7,4x,''ndimntbx= '',i7//,' &
-         //'1x,''nvar   = '',i7,4x,''equat          = '',2x,a//,' &
-         //'1x,''kdimv  = '',i7,//,' &
-         //'1x,''kdimk  = '',i7,//,' &
-         //'1x,''kdimg  = '',i7,4x,''lgx            = '',i7/)'
+         //'1x,''lz     = '',i9,4x,''lzx     = '',i9//,' &
+         //'1x,''ndimub = '',i9,4x,''ndimubx = '',i9//,' &
+         //'1x,''ndimctb= '',i9,4x,''ndimctbx= '',i9//,' &
+         //'1x,''ndimntb= '',i9,4x,''ndimntbx= '',i9//,' &
+         //'1x,''nvar   = '',i9,4x,''equat          = '',2x,a//,' &
+         //'1x,''kdimv  = '',i9,//,' &
+         //'1x,''kdimk  = '',i9,//,' &
+         //'1x,''kdimg  = '',i9,4x,''lgx            = '',i9/)'
     write(imp,form)lz,lzx,ndimub,ndimubx,ndimctb,ndimctbx, &
          ndimntb,ndimntbx, &
          nvar,equat,kdimv,kdimk,kdimg,lgx
     form='(' &
-         //'1x,''mtb     = '',i7,4x,''mtbx    = '',i7//,' &
-         //'1x,''mdimub  = '',i7,4x,''mdimubx = '',i7//,' &
-         //'1x,''mdimtb  = '',i7,4x,''mdimtbx = '',i7//,' &
-         //'1x,''mdimtn  = '',i7,4x,''mdimtnx = '',i7//,' &
-         //'1x,''mdimtc  = '',i7,4x,''mdimtcx = '',i7//,' &
-         //'1x,''mdimtr  = '',i7,4x,''mdimtrx = '',i7//)'
+         //'1x,''mtb     = '',i9,4x,''mtbx    = '',i9//,' &
+         //'1x,''mdimub  = '',i9,4x,''mdimubx = '',i9//,' &
+         //'1x,''mdimtb  = '',i9,4x,''mdimtbx = '',i9//,' &
+         //'1x,''mdimtn  = '',i9,4x,''mdimtnx = '',i9//,' &
+         //'1x,''mdimtc  = '',i9,4x,''mdimtcx = '',i9//,' &
+         //'1x,''mdimtr  = '',i9,4x,''mdimtrx = '',i9//)'
     write(imp,form)mtb,mtbx, &
          mdimub,mdimubx,mdimtb,mdimtbx,mdimtn,mdimtnx, &
          mdimtc,mdimtcx,mdimtr,mdimtrx

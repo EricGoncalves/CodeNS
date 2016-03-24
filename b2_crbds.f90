@@ -31,8 +31,8 @@ contains
     mfbi=nfei(mfbe)
 !
     form='(/ 2x,''numero de la grille      : '',11x,i5/' &
-         //'2x,''nb de pts de la frontiere: '',11x,i5/' &
-         //'2x,''tot. pts des front preced: '',11x,i5)'
+         //'2x,''nb de pts de la frontiere: '',11x,i7/' &
+         //'2x,''tot. pts des front preced: '',11x,i7)'
 !
     do img=1,lgx
        mfbim=mfbi+(img-1)*mtb
