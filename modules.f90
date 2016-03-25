@@ -53,17 +53,17 @@ implicit none
   integer          :: mdimtnf,mdimtrf, mdimub,ndimctf,ndimnts
   integer          :: ndimntu, ndimub,   nvar
   double precision :: ccg,cfg,cng
-  parameter(ndimub =12000000)
-  parameter(ndimctf=1000000)
-  parameter(ndimnts=1000000)
-  parameter(ndimntu=1)
+  parameter(ndimub =1)
+  parameter(ndimctf=1)
+  parameter(ndimnts=1)
+  parameter(ndimntu=1) ! Those parameters should be more or less useless now
   parameter(kdimg  =1)
   parameter(kdimv  =1)
   parameter(kdimk  =1)
-  parameter(mdimub =27000)
-  parameter(mdimtbf=300000)
-  parameter(mdimtnf=75000)
-  parameter(mdimtcf=225000)
+  parameter(mdimub =1)
+  parameter(mdimtbf=1)
+  parameter(mdimtnf=1)
+  parameter(mdimtcf=1)
   parameter(mdimtrf=1)
   parameter(nvar   =7)
 !  parameter(    ccg=1./3.) !3D

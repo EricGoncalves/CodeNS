@@ -83,10 +83,8 @@ contains
     dumy1=0.
     dumy2=0.
     dumax=0.
-    do m=1,neqtx
-       dumy2g(m)=0.
-       dumaxg(m)=0.
-    enddo
+    dumy2g=0.
+    dumaxg=0.
 !
     if (kimp.ge.1.and.rank==0) then
        form='(/1x,2h--,1x,i7,13h ieme cycle :,3x,' &

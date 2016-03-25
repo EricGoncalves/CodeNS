@@ -714,6 +714,12 @@ contains
           enddo
        enddo
        deallocate(tmp)
+       deallocate(save_x,save_y,save_z,save_indfl,save_iminb,save_jminb,save_kminb)
+       deallocate(save_imaxb,save_jmaxb,save_kmaxb,save_bcg_to_bcl,save_bcg_to_bci)
+       deallocate(save_bg_to_proc,save_bg_to_bl,save_bg_to_bi,save_bl_to_bg,save_bcg_to_bg)
+       deallocate(save_ii2,save_jj2,save_kk2,save_id1,save_jd1,save_kd1,save_id2,save_jd2)
+       deallocate(save_kd2,save_npn)
+
        !############################################################################################
        !########################### CREATE NEW BOUNDARIES ##########################################
        !############################################################################################
@@ -840,12 +846,6 @@ contains
        !############################################################################################
 
        if(verbosity>=3) call write_mesh("test",x,y,z)
-
-       deallocate(save_x,save_y,save_z,save_indfl,save_iminb,save_jminb,save_kminb)
-       deallocate(save_imaxb,save_jmaxb,save_kmaxb,save_bcg_to_bcl,save_bcg_to_bci)
-       deallocate(save_bg_to_proc,save_bg_to_bl,save_bg_to_bi,save_bl_to_bg,save_bcg_to_bg)
-       deallocate(save_ii2,save_jj2,save_kk2,save_id1,save_jd1,save_kd1,save_id2,save_jd2)
-       deallocate(save_kd2,save_npn)
 
        ip21=ndimntbx
        ip40=mdimubx            ! Nb point frontiere

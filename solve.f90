@@ -861,10 +861,10 @@ contains
 !    allocate(npbrat(lz))
 
     ! will be reallocated
-    ip41=0
-    ip42=0
+    ip41=1
+    ip42=1
     allocate(utau(ip41)) ! if necessary (readda)
-    lt=0
+    lt=1
     allocate(ii1(lt))   !crbms
     allocate(jj1(lt))   !crbms
     allocate(kk1(lt))   !crbms
@@ -885,12 +885,12 @@ contains
     allocate(npc(lt))   !crbms
     allocate(bg_to_bi(mtb))   !crbds
     allocate(ncbd(ip41)) ! initis
-    mtb=0
+    mtb=1
     allocate(indfl(mtb))  !crbds
     allocate(nfei(mtb))   !crbds
     allocate(ndlb(mtb))   !crbds
     allocate(bcg_to_bci(mtb))   !crbds
-    mtt=0
+    mtt=1
     allocate(kmaxb(mtt))   !crbds
     allocate(iminb(mtt))   !crbds
     allocate(jmaxb(mtt))   !crbds
@@ -922,103 +922,40 @@ contains
     use modeleturb
     implicit none
 
+    mtt=mtbx*lgx
+    lt=lgx*lzx
+
+    ip40=mdimubx            ! Nb point frontiere
+
+    ip41=mdimtbx            ! Nb point frontiere
+    ip42=ip41            ! Nb point frontiere
+    ip43=ip41            ! Nb point frontiere
+    ip44=0!mdimubx            !TODO
+
     allocate(cl(mtb))
     allocate(tab_raccord(num_bcg))
     allocate(ndcc(mtb))
     allocate(nbdc(mtb))
     allocate(nfbc(mtb))
     allocate(bc(mtb,ista*lsta))
-ndcc=0
-nbdc=0
-nfbc=0
-bc=0.
-tab_raccord=0
-cl=""
-
-!    allocate(nfbr(mtb))
-!    allocate(ndrr(mtb))
-!    allocate(srotr(mtb))
-!    allocate(nfba(mtb))
-!    allocate(nfbn(mtb))
-!    allocate(crotr(mtb))
-!    allocate(lbdrat(mtb))
-!    allocate(nmfint(mtb))
-!    allocate(nba(mtb))
-!    call defdfpmcfg
-
-    mtt=mtbx*lgx
     allocate(mdnc(mtt))
     allocate(mper(mtt))
     allocate(mpc(mtt))
-mdnc=0
-mper=0
-mpc=0
-!    allocate(lbd(mtt))
-!    allocate(mpn(mtt))
-!    allocate(lbdko(mtt))
-!    allocate(mpr(mtt))
-
-    lt=lgx*lzx
-!    allocate(klmax(lt))
-!    allocate(kkmf(lt))
-!    allocate(keta(lt))
-!    allocate(kki2(lt))
-!    allocate(kki4(lt))
-!    allocate(kmf(lt))
-!    allocate(lmax(lt))
-!    allocate(ki2(lt))
-!    allocate(ki4(lt))
-!    allocate(eta(lt))
-!    allocate(pctvort(lt))
-
-    ip40=mdimubx            ! Nb point frontiere
-!    allocate(rod(ip40))
-!    allocate(qtx(ip40))
-!    allocate(qty(ip40))
-!    allocate(qtz(ip40))
-!    allocate(res(ip40))
-!    allocate(tm1(ip40))
-!    allocate(tm2(ip40))
-!    allocate(tm3(ip40))
-!    allocate(tm4(ip40))
-!    allocate(tm5(ip40))
-!    allocate(tm6(ip40))
-!    allocate(tm7(ip40))
-!    allocate(tm8(ip40))
-!    allocate(tm9(ip40))
-!    allocate(tm10(ip40))
-!    allocate(tm11(ip40))
-!    allocate(tm12(ip40))
-!    allocate(tm13(ip40))
-!    allocate(tp(ip40))
-!    allocate(rpi(ip40))
-!    allocate(d0y(ip40))
-!    allocate(d0x(ip40))
-!    allocate(d0z(ip40))
-!    allocate(pres(ip40))
-!    allocate(roud(ip40))
-!    allocate(rovd(ip40))
-!    allocate(rowd(ip40))
-!    allocate(roed(ip40))
-
-    ip41=mdimtbx            ! Nb point frontiere
     allocate(ncin(ip41))
     allocate(bceqt(ip41,neqt))
-
-    ip42=mdimtbx            ! Nb point frontiere
-!    allocate(fgam(ip12))
-!    allocate(nxn(ip42))
-!    allocate(nyn(ip42))
-!    allocate(nzn(ip42))
-
-    ip43=mdimtbx            ! Nb point frontiere
     allocate(mnc(ip43))
-mnc=0
-    ip44=0!mdimubx            !TODO
-!    allocate(mnr(ip44))
-!    allocate(xnr(ip44))
-!    allocate(ynr(ip44))
-!    allocate(znr(ip44))
+    
+    ndcc=0
+    nbdc=0
+    nfbc=0
+    bc=0.
+    tab_raccord=0
+    cl=""
+    mdnc=0
+    mper=0
+    mpc=0
+    mnc=0
+
 
   end subroutine allocbnd
 
@@ -1028,7 +965,7 @@ mnc=0
     use modeleturb
     implicit none
 
-    ip00 = ndimubx        ! nbr de cellules du plus grd domaine (strict)
+    ip00 = ndimubx        ! nbr de cellules du plus grd domaine
     allocate(tn1(ip00))
     allocate(tn2(ip00))
     allocate(tn3(ip00))
@@ -1040,7 +977,7 @@ mnc=0
     allocate(tn9(ip00))
     allocate(tn10(ip00))
 
-    ip11 = ndimntbx        ! nbr de cellules de tts les domaines (strict)
+    ip11 = ndimntbx        ! nbr de cellules de tts les domaines
     ip60 = nvar
     allocate(tnte1(ip11,ip60))
     allocate(tnte2(ip11,ip60))
@@ -1058,7 +995,7 @@ mnc=0
     allocate(r(ip11))
     allocate(vol(ip11))
 
-    ip12 = ndimntbx        ! nbr de cellules de tts les domaines (strict)
+    ip12 = ip11        ! nbr de cellules de tts les domaines (strict)
     allocate(toxx(ip12))
     allocate(toxy(ip12))
     allocate(toxz(ip12))
@@ -1073,7 +1010,7 @@ mnc=0
     allocate(mnpar(ip12))
     allocate(dist(ip12))
 
-    ip13 = kdimk*ndimntbx
+    ip13 = kdimk*ip11
     allocate(cfke(ip13))
 
     allocate(cvi(ip21))
@@ -1086,7 +1023,8 @@ mnc=0
     allocate(cmuk1(ip21))
     allocate(cmuk2(ip21))
 
-    ip31=1+3*(ndimnts+kdimg*ndimnts/cng2)  ! ?
+!    ip31=1+3*(ndimnts+kdimg*ndimnts/cng2)  ! ?
+    ip31=3*ip11
 !print*,ip31,ndir
     allocate(sn(ip31*ndir)) ! TODO ?
 

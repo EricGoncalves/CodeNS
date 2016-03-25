@@ -71,22 +71,22 @@ contains
        call end_keep_order
     endif
 !
-    if (lt     .lt.lzx     ) stop 'dimensionnement incorrect lt'
-    if (ndimub .lt.ndimubx ) stop 'dimensionnement incorrect ndimub'
-    if (ndimctb.lt.ndimctbx) stop 'dimensionnement incorrect ndimctb'
-    if (ndimntb.lt.ndimntbx) stop 'dimensionnement incorrect ndimntb'
-    if((kdimg.eq.0).and.(lgx.gt.1)) &
-         stop 'dimensionnement incorrect kdimg'
-    if((kdimv.eq.0).and.(equat(1:2).eq.'ns')) &
-         stop 'dimensionnement incorrect kdimv'
-    if((kdimk.eq.0).and.(equat(1:2).eq.'ke')) &
-         stop 'dimensionnement incorrect kdimk'
-    if (mtb    .lt.mtbx    ) stop 'dimensionnement incorrect mtb'
-    if (mdimub .lt.mdimubx ) stop 'dimensionnement incorrect mdimub'
-    if (mdimtb .lt.mdimtbx ) stop 'dimensionnement incorrect mdimtb'
-    if (mdimtn .lt.mdimtnx ) stop 'dimensionnement incorrect mdimtn'
-    if (mdimtc .lt.mdimtcx ) stop 'dimensionnement incorrect mdimtc'
-    if (mdimtr .lt.mdimtrx ) stop 'dimensionnement incorrect mdimtr'
+!    if (lt     .lt.lzx     ) stop 'dimensionnement incorrect lt'
+!    if (ndimub .lt.ndimubx ) stop 'dimensionnement incorrect ndimub'
+!    if (ndimctb.lt.ndimctbx) stop 'dimensionnement incorrect ndimctb'
+!    if (ndimntb.lt.ndimntbx) stop 'dimensionnement incorrect ndimntb'
+!    if((kdimg.eq.0).and.(lgx.gt.1)) &
+!         stop 'dimensionnement incorrect kdimg'
+!    if((kdimv.eq.0).and.(equat(1:2).eq.'ns')) &
+!         stop 'dimensionnement incorrect kdimv'
+!    if((kdimk.eq.0).and.(equat(1:2).eq.'ke')) &
+!         stop 'dimensionnement incorrect kdimk'
+!    if (mtb    .lt.mtbx    ) stop 'dimensionnement incorrect mtb'
+!    if (mdimub .lt.mdimubx ) stop 'dimensionnement incorrect mdimub'
+!    if (mdimtb .lt.mdimtbx ) stop 'dimensionnement incorrect mdimtb'
+!    if (mdimtn .lt.mdimtnx ) stop 'dimensionnement incorrect mdimtn'
+!    if (mdimtc .lt.mdimtcx ) stop 'dimensionnement incorrect mdimtc'
+!    if (mdimtr .lt.mdimtrx ) stop 'dimensionnement incorrect mdimtr'
 !
     return
   end subroutine c_dpdim
