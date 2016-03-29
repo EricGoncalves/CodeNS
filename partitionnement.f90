@@ -1148,7 +1148,7 @@ contains
     integer,allocatable,intent(out) :: nigf(:,:,:,:),njgf(:,:,:,:),nkgf(:,:,:,:)
 
     integer,allocatable :: nilf(:,:,:),njlf(:,:,:),nklf(:,:,:)
-    integer :: lg,ll,proc
+    integer :: lg,ll,proc,nblockd(3)
 
     allocate(nigf(1,1,1,num_bgi),njgf(1,1,1,num_bgi),nkgf(1,1,1,num_bgi))
 
@@ -1161,21 +1161,33 @@ contains
        lg=bli_to_bgi(ll)
 
        allocate(nilf(nsplit(lg),1,1),njlf(nsplit(lg),1,1),nklf(nsplit(lg),1,1))
+       nblockd=nsplit_dir(:,lg)
+       
        ! calcule le split pour un block, c'est à dire
        ! le nombre de blocs par direction              (nsplit_dir)
        ! le nombre de points dans chaque nouveau block (nilf,njlf,nklf)
        call triv_split(nsplit(lg),npoints,nili(ll) ,njli(ll) ,nkli(ll), &
-            nsplit_dir(:,lg),nilf,njlf,nklf)
+            nblockd,nilf,njlf,nklf)
+
+       nsplit_dir(:,lg)=nblockd
+
+       ! start workaround intel bug
+       call reallocate(nilf,nblockd(1),nblockd(2),nblockd(3))
+       call reallocate(njlf,nblockd(1),nblockd(2),nblockd(3))
+       call reallocate(nklf,nblockd(1),nblockd(2),nblockd(3))
+       call compute_size(nblockd(1),nblockd(2),nblockd(3), &
+                    nili(ll),njli(ll),nkli(ll),nilf,njlf,nklf)
+       ! end workaround intel bug
 
        ! ajoute le split avec les splits des autres blocks localement
        call reallocate_s(nigf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
-       nigf(:size(nilf,1),:size(nilf,2),:size(nilf,3),lg)=nilf
+       nigf(1:nblockd(1),1:nblockd(2),1:nblockd(3),lg)=nilf
 
        call reallocate_s(njgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
-       njgf(:size(njlf,1),:size(njlf,2),:size(njlf,3),lg)=njlf
+       njgf(1:nblockd(1),1:nblockd(2),1:nblockd(3),lg)=njlf
 
        call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
-       nkgf(:size(nklf,1),:size(nklf,2),:size(nklf,3),lg)=nklf
+       nkgf(1:nblockd(1),1:nblockd(2),1:nblockd(3),lg)=nklf
        
        deallocate(nilf,njlf,nklf)
     enddo
@@ -1286,21 +1298,19 @@ contains
     integer,allocatable,intent(out) :: new_ii2(:,:,:),new_jj2(:,:,:),new_kk2(:,:,:)
     integer,intent(inout)             :: nblockd(3)
 
-    integer             :: i,j,k,i1,j1,k1,i2,j2,k2
-    integer,allocatable :: tmp_ii2(:,:,:),tmp_jj2(:,:,:),tmp_kk2(:,:,:),num_cft(:,:,:), num_cf2(:,:,:)
+    integer             :: i,j,k,i1,j1,k1,i2,j2,k2,num_cft, num_cf2
+    integer,allocatable :: tmp_ii2(:,:,:),tmp_jj2(:,:,:),tmp_kk2(:,:,:)
 
     !   trivial spliting : divide my block in nblock2 subblock
     !                      test all possiblities constisting in dividing
     !                      i times in the x direction, j times in the y direction and k times in the z direction
-    allocate(num_cf2(nblock2,1,1))
-    allocate(num_cft(nblock2,1,1))
     allocate(tmp_ii2(nblock2,1,1))
     allocate(tmp_jj2(nblock2,1,1))
     allocate(tmp_kk2(nblock2,1,1))
     allocate(new_ii2(nblock2,1,1))
     allocate(new_jj2(nblock2,1,1))
     allocate(new_kk2(nblock2,1,1))
-    num_cf2=HUGE(1)/nblock2 ! useless initial big value
+    num_cf2=HUGE(1) ! useless initial big value
     i1=nblockd(1)
     i2=nblockd(1)
     j1=nblockd(2)
@@ -1320,7 +1330,6 @@ contains
        do j=j1,j2
           do i=i1,i2
              if(i*j*k==nblock2) then !           if we get the right number of blocks
-                num_cft=reshape(num_cft,[i,j,k])
                 tmp_ii2=reshape(tmp_ii2,[i,j,k])
                 tmp_jj2=reshape(tmp_jj2,[i,j,k])
                 tmp_kk2=reshape(tmp_kk2,[i,j,k])
@@ -1329,21 +1338,22 @@ contains
 !
                 if (min(minval(tmp_ii2),minval(tmp_jj2),minval(tmp_kk2))>1) then ! if the splitting is acceptable
                    !             compute sizes of new communication, must be over evaluated (including boundary condition)
-                   num_cft=2*(tmp_jj2*tmp_ii2 + tmp_ii2*tmp_kk2 + tmp_jj2*tmp_kk2)
+                   !  TODO : is sum better than maxval ?
+                   num_cft=sum(2*(tmp_jj2*tmp_ii2 + tmp_ii2*tmp_kk2 + tmp_jj2*tmp_kk2))
                    !             choose the best splitting (less comm)
-                   if(sum(num_cft)<sum(num_cf2)) then  !  TODO : is sum better than maxval ?
+                   if(num_cft<num_cf2) then
                       nblockd=[i,j,k]
                       new_jj2=reshape(new_jj2,nblockd) ; new_jj2=tmp_jj2
                       new_ii2=reshape(new_ii2,nblockd) ; new_ii2=tmp_ii2
                       new_kk2=reshape(new_kk2,nblockd) ; new_kk2=tmp_kk2
-                      num_cf2=reshape(num_cf2,nblockd) ; num_cf2=num_cft
+                      num_cf2=num_cft
                    end if
                 end if
              end if
           end do
        end do
     end do
-    deallocate(tmp_jj2,tmp_ii2,tmp_kk2,num_cft)
+    deallocate(tmp_jj2,tmp_ii2,tmp_kk2)
     if (product(nblockd)==0) then
       stop "No splitting found !?!"
     endif
