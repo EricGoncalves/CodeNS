@@ -1150,7 +1150,6 @@ contains
     integer,allocatable :: nilf(:,:,:),njlf(:,:,:),nklf(:,:,:)
     integer :: lg,ll,proc
 
-    allocate(nilf(1,1,1),njlf(1,1,1),nklf(1,1,1))
     allocate(nigf(1,1,1,num_bgi),njgf(1,1,1,num_bgi),nkgf(1,1,1,num_bgi))
 
     ! routine calculant combiens de fois splitter chaque block initial
@@ -1161,6 +1160,7 @@ contains
     do ll=1,num_bli
        lg=bli_to_bgi(ll)
 
+       allocate(nilf(nsplit(lg),1,1),njlf(nsplit(lg),1,1),nklf(nsplit(lg),1,1))
        ! calcule le split pour un block, c'est à dire
        ! le nombre de blocs par direction              (nsplit_dir)
        ! le nombre de points dans chaque nouveau block (nilf,njlf,nklf)
@@ -1176,6 +1176,8 @@ contains
 
        call reallocate_s(nkgf,maxval(nsplit_dir(1,:)),maxval(nsplit_dir(2,:)),maxval(nsplit_dir(3,:)),num_bgi)
        nkgf(:size(nklf,1),:size(nklf,2),:size(nklf,3),lg)=nklf
+       
+       deallocate(nilf,njlf,nklf)
     enddo
 
     do lg=1,num_bgi
@@ -1290,8 +1292,15 @@ contains
     !   trivial spliting : divide my block in nblock2 subblock
     !                      test all possiblities constisting in dividing
     !                      i times in the x direction, j times in the y direction and k times in the z direction
-    call reallocate(num_cf2,1,1,1)
-    num_cf2=HUGE(1) ! useless initial big value
+    allocate(num_cf2(nblock2,1,1))
+    allocate(num_cft(nblock2,1,1))
+    allocate(tmp_ii2(nblock2,1,1))
+    allocate(tmp_jj2(nblock2,1,1))
+    allocate(tmp_kk2(nblock2,1,1))
+    allocate(new_ii2(nblock2,1,1))
+    allocate(new_jj2(nblock2,1,1))
+    allocate(new_kk2(nblock2,1,1))
+    num_cf2=HUGE(1)/nblock2 ! useless initial big value
     i1=nblockd(1)
     i2=nblockd(1)
     j1=nblockd(2)
@@ -1311,7 +1320,10 @@ contains
        do j=j1,j2
           do i=i1,i2
              if(i*j*k==nblock2) then !           if we get the right number of blocks
-                allocate(num_cft(i,j,k))
+                num_cft=reshape(num_cft,[i,j,k])
+                tmp_ii2=reshape(tmp_ii2,[i,j,k])
+                tmp_jj2=reshape(tmp_jj2,[i,j,k])
+                tmp_kk2=reshape(tmp_kk2,[i,j,k])
                 !       compute sizes of sub-blocks
                 call compute_size(i,j,k,ii2,jj2,kk2,tmp_ii2,tmp_jj2,tmp_kk2)
 !
@@ -1321,17 +1333,17 @@ contains
                    !             choose the best splitting (less comm)
                    if(sum(num_cft)<sum(num_cf2)) then  !  TODO : is sum better than maxval ?
                       nblockd=[i,j,k]
-                      call reallocate(  new_jj2,i,j,k) ;   new_jj2=tmp_jj2
-                      call reallocate(  new_ii2,i,j,k) ;   new_ii2=tmp_ii2
-                      call reallocate(  new_kk2,i,j,k) ;   new_kk2=tmp_kk2
-                      call reallocate(num_cf2,i,j,k) ; num_cf2=num_cft
+                      new_jj2=reshape(new_jj2,nblockd) ; new_jj2=tmp_jj2
+                      new_ii2=reshape(new_ii2,nblockd) ; new_ii2=tmp_ii2
+                      new_kk2=reshape(new_kk2,nblockd) ; new_kk2=tmp_kk2
+                      num_cf2=reshape(num_cf2,nblockd) ; num_cf2=num_cft
                    end if
                 end if
-                deallocate(tmp_jj2,tmp_ii2,tmp_kk2,num_cft)
              end if
           end do
        end do
     end do
+    deallocate(tmp_jj2,tmp_ii2,tmp_kk2,num_cft)
     if (product(nblockd)==0) then
       stop "No splitting found !?!"
     endif
@@ -1341,10 +1353,9 @@ subroutine compute_size(i,j,k,ii2,jj2,kk2,new_ii2,new_jj2,new_kk2)
     !       compute sizes of sub-blocks
     implicit none
     integer,intent(in)  :: ii2,jj2,kk2,i,j,k
-    integer,allocatable,intent(out) :: new_ii2(:,:,:),new_jj2(:,:,:),new_kk2(:,:,:)
+    integer,intent(out) :: new_ii2(i,j,k),new_jj2(i,j,k),new_kk2(i,j,k)
     integer             :: i1,j1,k1
 
-    allocate(new_ii2(i,j,k),new_jj2(i,j,k),new_kk2(i,j,k))
     do k1=1,k
        do j1=1,j
           do i1=1,i
