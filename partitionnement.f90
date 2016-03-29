@@ -488,7 +488,6 @@ contains
                       call MPI_TRANS(sub_bc2,sub_bc2,proci1,proci2)
 
                       if(rank==proci2) then
-                         nsub=0
                          dir=0
                          nid = save_id2(lli2)-save_id1(lli2)+1
                          njd = save_jd2(lli2)-save_jd1(lli2)+1
@@ -622,7 +621,8 @@ contains
                          jmax=max(tmp(2),tmp(5))+offset(2)
                          kmin=min(tmp(3),tmp(6))+offset(3)
                          kmax=max(tmp(3),tmp(6))+offset(3)
-
+                         
+                         nsub=0
                          do k2=1,nsplit_dir(3,lgi2)
                             do j2=1,nsplit_dir(2,lgi2)
                                do i2=1,nsplit_dir(1,lgi2)
@@ -666,6 +666,51 @@ contains
                             print*,"Problem in the boundary ",frgi1,frgi2
                             call abort
                          endif
+
+                         ! begin workaround intel
+                         deallocate(sub_bc)
+                         allocate(sub_bc(6,nsub))
+                         nsub=0
+                         do k2=1,nsplit_dir(3,lgi2)
+                            do j2=1,nsplit_dir(2,lgi2)
+                               do i2=1,nsplit_dir(1,lgi2)
+
+                                  lgf2=old2new_b(i2,j2,k2,lgi2)
+                                  llf2=bg_to_bl(lgf2)
+                                  lli2=save_bg_to_bl(lgi2)
+
+                                   call new2old_p(1,1,1,xs,ys,zs,i2,j2,k2,lgi2)
+                                   call new2old_p(ni(i2,j2,k2,lgi2),nj(i2,j2,k2,lgi2),nk(i2,j2,k2,lgi2),xe,ye,ze,i2,j2,k2,lgi2)
+
+                                  if ( imin<=xe .and. &
+                                       imax>=xs .and. &
+                                       jmin<=ye .and. &
+                                       jmax>=ys .and. & ! there is a part of the boundary in this block
+                                       kmin<=ze .and. &
+                                       kmax>=zs ) then
+
+                                     ! part of the boundary which concern this block
+
+                                     tmp(1)=min(xe,max(xs,imin))-save_iminb(frli2) ! coordinate of the new boundary
+                                     tmp(2)=min(xe,max(xs,imax))-save_iminb(frli2) ! in the old boundary ref
+                                     tmp(3)=min(ye,max(ys,jmin))-save_jminb(frli2)
+                                     tmp(4)=min(ye,max(ys,jmax))-save_jminb(frli2)
+                                     tmp(5)=min(ze,max(zs,kmin))-save_kminb(frli2)
+                                     tmp(6)=min(ze,max(zs,kmax))-save_kminb(frli2)
+
+                                     if((tmp(2)-tmp(1)>0.and.tmp(4)-tmp(3)>0).or. &
+                                        (tmp(6)-tmp(5)>0.and.tmp(4)-tmp(3)>0).or. &
+                                        (tmp(2)-tmp(1)>0.and.tmp(6)-tmp(5)>0)) then
+
+                                       nsub=nsub+1
+                                       sub_bc(:,nsub)=tmp
+                                     endif
+                                  endif
+                               enddo
+                            enddo
+                         enddo
+                         ! end workaround intel
+
                          ! on rechange de repère
                          do i2=1,nsub
                             tmp=sub_bc(:,i2)
