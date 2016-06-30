@@ -83,6 +83,7 @@ contains
     dumy1=0.
     dumy2=0.
     dumax=0.
+    dumy1g=0.
     dumy2g=0.
     dumaxg=0.
 !
