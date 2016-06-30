@@ -22,6 +22,9 @@ contains
       collect_dir=dir
       
       if(rank==0) then  ! write header of pvd file
+      
+        CALL EXECUTE_COMMAND_LINE("mkdir -p "//trim(dir)) ! may only work under linux
+        
         open(42,file=collect_file,status="replace")
         write(42,'(A)') '<?xml version="1.0"?>'
         write(42,'(A)') ' <VTKFile type="Collection" version="0.1">'
@@ -29,6 +32,7 @@ contains
         close(42)
       endif
       
+      call barrier
       collect=.true.
       ncollect=0
   end subroutine vtk_start_collection

@@ -1,7 +1,7 @@
 module mod_sortieplot
   implicit none
 contains
-  subroutine sortieplot(x,y,z,l,t,ps,cson)
+  subroutine sortieplot(x,y,z,t,ps,cson)
 !
 !***********************************************************************
 !
@@ -29,7 +29,7 @@ contains
     integer          ::    j,  j1,j1m1,  j2,j2m1
     integer          ::    k,  k1,k1m1,  k2,k2m1
     integer          ::    l,   m,   n, n0c, nid
-    integer          :: nijd, njd
+    integer          :: nijd, njd,  ll
     double precision ::   cson(ip11),           e,    ps(ip11),          qq,t(ip11,ip60)
     double precision ::            u,           v,           w,     x(ip21),         xcc
     double precision ::          xme,     y(ip21),         ycc,     z(ip21),         zcc
@@ -42,6 +42,10 @@ contains
 !
 
 !
+   do l=1,lzx
+     ll=bl_to_bg(l)
+     call START_KEEP_ORDER(ll,bg_to_proc)
+                     
     write(file,'(A,I0.4)') 'fsec.',bl_to_bg(l)
     open(sec  ,file=trim(file),status="replace")
     n0c=npc(l)
@@ -100,6 +104,9 @@ contains
        enddo
     enddo
     close(sec)
+    
+     call END_KEEP_ORDER(ll,bg_to_proc)
+   enddo
 !
     return
   contains

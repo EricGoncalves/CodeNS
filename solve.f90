@@ -370,7 +370,6 @@ program solve
 !  call wait_for_gdb
 
   call allocdata
-  temp_array=0.
 !
 !     tableaux de travail
 !    tm14(ip40),tm15(ip40),tm16(ip40), &
@@ -513,9 +512,6 @@ program solve
                 cmui1,cmui2,cmuj1,cmuj2,cmuk1,cmuk2)
            call barrier
            CALL get_time(Time_2)
-           do m=1,neqt
-              if (rank==0) write(*,*) m,temp_array(m,:)
-           enddo
            if (rank==0) print*,'TEMPS DE CALCUL ',Time_2-Time_1
 !
 !--   COMPUTE BOUNDARY

@@ -399,13 +399,8 @@ contains
 !
 !          sortie instationnaire densite-pression
                 if(mod(idcyc,nfreq).eq.0) then
-                   do l=1,lzx
-                     ll=bl_to_bg(l)
-                     call START_KEEP_ORDER(ll,bg_to_proc)
-                     call sortieplot(x,y,z,l,v,pression,cson)
-!              call sortieplot(x,y,z,l,v,pression,dist,mu,mut)
-                     call END_KEEP_ORDER(ll,bg_to_proc)
-                   enddo
+                   call sortieplot(x,y,z,v,pression,cson)
+!                   call sortieplot(x,y,z,v,pression,dist,mu,mut)
                 endif
              endif
 !
@@ -416,12 +411,7 @@ contains
              if((kfmg.eq.3).and.(lsortie.eq.1)) then
 !          sortie instationnaire densite-pression
                 if(mod(idcyc,nfreq).eq.0) then
-                   do l=1,lzx
-                      ll=bl_to_bg(l)
-                      call START_KEEP_ORDER(ll,bg_to_proc)
-                      call sortieplot(x,y,z,l,v,pression,cson)
-                      call END_KEEP_ORDER(ll,bg_to_proc)
-                   enddo
+                  call sortieplot(x,y,z,v,pression,cson)
                 endif
              endif
 
@@ -440,21 +430,19 @@ contains
                   'cccc',ncin,ncbd, &
                   tn1,tn2,tn3,tn4,tn5,tn6,tn7,tn8)
 !
-             if(kfmg.lt.3) then
+          enddo
+          if(kfmg.lt.3) then
 !         sorties tecplot
-                   ll=bl_to_bg(l)
-                   call START_KEEP_ORDER(ll,bg_to_proc)
+
                 call sortieplot2(    &
-                     x,y,z,l,v,dist, &
+                     x,y,z,v,dist, &
                      mu,mut,toxy, &
                      pression,cson,ztemp)
 !            call sortieplot3(    &
-!               x,y,z,l,v,dist, &
+!               x,y,z,v,dist, &
 !               mu,mut,toxy, &
 !               pression,cson,ztemp)
-                   call END_KEEP_ORDER(ll,bg_to_proc)
-             endif
-          enddo
+          endif
        endif
 !-------------------------------------------------------------------------
 !      Mise a jour tableaux vdual, vdual1, vdual2, ptdual

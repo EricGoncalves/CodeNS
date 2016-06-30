@@ -202,7 +202,7 @@ implicit none
     integer          :: lsortie,  nbfll,  nfreq,    out,    sec
     integer          ::    sor1,   sor2,   sor3,  sorf1,  sorf2
     double precision ::             alpha0,             beta0,            p0spi0,            q0spi0,              sref
-    double precision :: temp_array(neqt,3),                v0,             xlref,              xref,              yref
+    double precision ::                 v0,             xlref,              xref,              yref
     double precision ::               zref
     integer         ,allocatable :: nmfint(:)
   data kimp/3/

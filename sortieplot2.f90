@@ -2,7 +2,7 @@ module mod_sortieplot2
   implicit none
 contains
       subroutine sortieplot2( &
-                 x,y,z,l,t,dist, &
+                 x,y,z,t,dist, &
                  mu,mut,toxy, &
                  ps,cson,temp)
 !
@@ -26,13 +26,14 @@ contains
     use chainecarac
     use proprieteflu
     use mod_mpi
+    use mod_vtk
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
     integer          ::    j,  j1,j1m1,  j2,j2m1
     integer          ::    k,  k1,k1m1,  k2,k2m1
     integer          ::    l,   m,   n, n0c, nid
-    integer          :: nijd, njd
-    double precision ::   cson(ip11),  dist(ip12),    mu(ip12),   mut(ip12)
+    integer          :: nijd, njd,  ll
+    double precision ::   cson(ip11),  dist(ip12),    mu(ip12),   mut(ip12),   tmp(ip21)
     double precision ::     ps(ip11),          qq,t(ip11,ip60),  temp(ip11),  toxy(ip12)
     double precision ::            u,           v,           w,     x(ip21),         xcc
     double precision ::          xme,     y(ip21),         ycc,     z(ip21),         zcc
@@ -41,9 +42,40 @@ contains
 !
     character(len=1 ) :: c
     character(len=50) :: file
-!
-!
+    integer,parameter :: typ=2 ! 1 is standard, 2 is vtk
+    
+    if(typ==2) then 
+      call vtk_start_collection("fsec.pvd","fields")
 
+      do l=1,lzx
+        write(file,'(A,I0.2,A)') "fsec.",bl_to_bg(l),".vts"
+        call vtk_open(file,x,y,z,l)
+        call vtk_writer(file,ps,"Pstat",l)
+        
+        tmp = ( t(:,2)**2 + t(:,3)**2 + t(:,4)**2 ) / ( t(:,1) * cson )
+        call vtk_writer(file,tmp,"M",l)
+        call vtk_writer(file,dist,"dist",l)
+        
+        tmp = t(:,2)/t(:,1)
+        call vtk_writer(file,tmp,"u",l)
+        tmp = t(:,3)/t(:,1)
+        call vtk_writer(file,tmp,"v",l)
+        tmp = t(:,4)/t(:,1)
+        call vtk_writer(file,tmp,"w",l)
+        tmp = t(:,1)
+        call vtk_writer(file,tmp,"Rho",l)
+        call vtk_writer(file,temp,"T",l)
+        call vtk_close(file)
+      enddo
+
+      call vtk_end_collection()
+    else
+    
+!
+!
+   do l=1,lzx
+         ll=bl_to_bg(l)
+         call START_KEEP_ORDER(ll,bg_to_proc)
 !
     write(file,'(A,I0.4)') 'fsec.',bl_to_bg(l)
     open(sec  ,file=trim(file),status="replace")
@@ -107,6 +139,11 @@ contains
     enddo
     close(sec)
 !
+
+
+       call END_KEEP_ORDER(ll,bg_to_proc)
+     enddo
+     endif
     return
   contains
     function    indc(i,j,k)

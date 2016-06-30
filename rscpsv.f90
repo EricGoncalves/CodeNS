@@ -72,13 +72,13 @@ contains
     double precision ::   res5(ip00),res6(ip00),res7(ip00),tn8(ip00),u(ip11,ip60)
     double precision ::   utau(ip42),v(ip11,ip60),x(ip21),y(ip21),z(ip21)
     integer         ,allocatable :: idumx(:),jdumx(:),kdumx(:)
-    double precision,allocatable ::  dumax(:),dumaxg(:), dumy1(:), dumy2(:),dumy2g(:)
+    double precision,allocatable ::  dumax(:),dumaxg(:), dumy1(:), dumy2(:),dumy2g(:),dumy1g(:)
 !
 !-----------------------------------------------------------------------
 !
     character(len=1316) :: form
     ALLOCATE(idumx(neqt),jdumx(neqt),kdumx(neqt), &
-         dumy1(neqt),dumy2(neqt),dumax(neqt),dumy2g(neqt),dumaxg(neqt))
+         dumy1(neqt),dumy2(neqt),dumax(neqt),dumy2g(neqt),dumaxg(neqt),dumy1g(neqt))
 
     dumy1=0.
     dumy2=0.
@@ -89,7 +89,7 @@ contains
     if (kimp.ge.1.and.rank==0) then
        form='(/1x,2h--,1x,i7,13h ieme cycle :,3x,' &
             //'20hnb total de cycles =,i6)'
-       write(imp,form) icyc,ncycle
+       write(imp,form) ncyc,ncycle
     endif
 !
     npts=0
@@ -112,10 +112,6 @@ contains
             idumx,jdumx,kdumx)
        call END_KEEP_ORDER(ll,bg_to_proc)
 !
-       temp_array(:,1)=dumy1
-       temp_array(:,2)=dumy2
-       temp_array(:,3)=dumax
-
        if(img.eq.1) then
           if(ncyc.eq.ncycle) then
              imin=ii1(l)
@@ -154,36 +150,45 @@ contains
 !
           if(equat(6:7).eq.'ke') then
              do m=1,7
+                dumy1g(m)=dumy1g(m)+nmax*dumy1(m)
                 dumy2g(m)=dumy2g(m)+nmax*dumy2(m)**2
                 dumaxg(m)=max(dumaxg(m),abs(dumax(m)))
              enddo
           else
              do m=1,5
+                dumy1g(m)=dumy1g(m)+nmax*dumy1(m)
                 dumy2g(m)=dumy2g(m)+nmax*dumy2(m)**2
                 dumaxg(m)=max(dumaxg(m),abs(dumax(m)))
              enddo
           endif
-       endif !gin test img
+       endif !fin test img
 !
     enddo
+    call sum_mpi(dumy1g)
     call sum_mpi(dumy2g)
     call max_mpi(dumaxg)
     call sum_mpi(npts)
 !
+    call barrier
     if(img.eq.1) then
        if(equat(6:7).eq.'ke') then
           do m=1,7
+             dumy1g(m)=dumy1g(m)/npts
              dumy2g(m)=sqrt(dumy2g(m)/npts)
           enddo
         form='(A,i6,1x,7e11.4)'
-        if (rank==0) write(imp,form) "Stationnarite L2  ",icyc,(dumy2g(m),m=1,7)
-        if (rank==0) write(imp,form) "Stationnarite Linf",icyc,(dumaxg(m),m=1,7)
+        if (rank==0) write(imp,form) "Stationnarite L1  ",ncyc,(dumy1g(m),m=1,7)
+        if (rank==0) write(imp,form) "Stationnarite L2  ",ncyc,(dumy2g(m),m=1,7)
+        if (rank==0) write(imp,form) "Stationnarite Linf",ncyc,(dumaxg(m),m=1,7)
        else
           do m=1,5
+             dumy1g(m)=dumy1g(m)/npts
              dumy2g(m)=sqrt(dumy2g(m)/npts)
           enddo
-        form='(i6,1x,10e11.4)'
-        if (rank==0) write(out,form) icyc,(dumy2g(m),m=1,5),(dumaxg(m),m=1,5)
+        form='(A,i6,1x,7e11.4)'
+        if (rank==0) write(imp,form) "Stationnarite L1  ",ncyc,(dumy1g(m),m=1,5)
+        if (rank==0) write(imp,form) "Stationnarite L2  ",ncyc,(dumy2g(m),m=1,5)
+        if (rank==0) write(imp,form) "Stationnarite Linf",ncyc,(dumaxg(m),m=1,5)
        endif
     endif
 

@@ -2,7 +2,7 @@ module mod_sortieplot3
   implicit none
 contains
   subroutine sortieplot3( &
-       x,y,z,l,t, &
+       x,y,z,t, &
        mu,mut, &
        ps,cson,temp)
 !
@@ -25,12 +25,13 @@ contains
     use sortiefichier
     use chainecarac
     use proprieteflu
+    use mod_mpi
     implicit none
     integer          ::    i,  i1,i1m1,  i2,i2m1
     integer          ::    j,  j1,j1m1,  j2,j2m1
     integer          ::    k,  k1,k1m1,  k2,k2m1
     integer          ::    l,   m,   n, n0c, nid
-    integer          :: nijd, njd
+    integer          :: nijd, njd,  ll
     double precision ::         coef,  cson(ip11),           e,    mu(ip12),   mut(ip12)
     double precision ::     ps(ip11),          qq,t(ip11,ip60),  temp(ip11),           u
     double precision ::            v,           w,     x(ip21),         xcc,         xme
@@ -41,6 +42,9 @@ contains
     character(len=1 ) :: c
 !
 !
+   do l=1,lzx
+         ll=bl_to_bg(l)
+         call START_KEEP_ORDER(ll,bg_to_proc)
 
 !
   open(sec  ,file='fsec',position="append")
@@ -101,6 +105,10 @@ contains
     enddo
     close(sec)
 !
+
+       call END_KEEP_ORDER(ll,bg_to_proc)
+     enddo
+
     return
   contains
     function    indc(i,j,k)
