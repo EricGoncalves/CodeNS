@@ -50,7 +50,8 @@ contains
     integer          ::     i, imax, imin,    j, jmax
     integer          ::  jmin,    k,  kda, kmax, kmin
     integer          ::     l,    m,ndmut,  nid, nijd
-    integer          ::   njd,pos,ll
+    integer          ::   njd,ll
+    integer(8)       :: pos
     double precision :: mut(ndmut),utau(ip42),  v1(ip00),  v2(ip00),  v3(ip00)
     double precision ::   v4(ip00),  v5(ip00),  v6(ip00),  v7(ip00)
 !
@@ -60,7 +61,7 @@ contains
 !
     ll=bl_to_bg(l)
     if(ll.eq.1) rewind kda
-    pos=int(FTELL(kda))
+    pos=FTELL(kda)
     call start_keep_order(ll,bg_to_proc,pos)
     CALL my_FSEEK(kda, pos)
 !
@@ -111,7 +112,7 @@ contains
 !      close(100)
 !
 
-    pos=int(FTELL(kda))
+    pos=FTELL(kda)
     call END_KEEP_ORDER(ll,bg_to_proc,pos)
     return
   contains

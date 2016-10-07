@@ -39,7 +39,8 @@ contains
     implicit none
     integer          ::    i,imax,imin,   j,jmax
     integer          :: jmin,   k, kdg,kmax,kmin
-    integer          ::    l, nid,nijd, njd,pos,ll
+    integer          ::    l, nid,nijd, njd,ll
+    integer(8)       :: pos
     double precision :: x(ip00),y(ip00),z(ip00)
 !
 !-----------------------------------------------------------------------
@@ -49,7 +50,7 @@ contains
 !
     ll=bl_to_bg(l)
     if(ll.eq.1) rewind kdg
-    pos=int(FTELL(kdg))
+    pos=FTELL(kdg)
     call start_keep_order(ll,bg_to_proc,pos)
     CALL my_FSEEK(kdg, pos)
 !
@@ -61,7 +62,7 @@ contains
     write(kdg)(((y(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
     write(kdg)(((z(ind(i,j,k)),i=imin,imax),j=jmin,jmax),k=kmin,kmax)
 !
-    pos=int(FTELL(kdg))
+    pos=FTELL(kdg)
     call END_KEEP_ORDER(ll,bg_to_proc,pos)
     return
   contains

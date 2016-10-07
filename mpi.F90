@@ -91,7 +91,7 @@ module mod_mpi
       ! SEND A MESSAGE WITH MPI AND WAIT FOR IT TO BE RECIEVED
       MODULE PROCEDURE MPI_TRANS_R1,MPI_TRANS_R2,MPI_TRANS_R4,&
             MPI_TRANS_I1,MPI_TRANS_I2,MPI_TRANS_I0,&
-            MPI_TRANS_C0
+            MPI_TRANS_C0,MPI_TRANS_I80
     END INTERFACE MPI_TRANS
 
     INTERFACE MPI_ITRANS2
@@ -99,6 +99,14 @@ module mod_mpi
       ! SEND A MESSAGE WITH MPI AND DOES NOT WAIT FOR IT TO BE RECIEVED
       MODULE PROCEDURE MPI_ITRANS2_R1,MPI_ITRANS2_R2
     END INTERFACE MPI_ITRANS2
+
+    INTERFACE START_KEEP_ORDER
+      MODULE PROCEDURE START_KEEP_ORDER_i4,START_KEEP_ORDER_i8
+    END INTERFACE START_KEEP_ORDER
+
+    INTERFACE END_KEEP_ORDER
+      MODULE PROCEDURE END_KEEP_ORDER_i4,END_KEEP_ORDER_i8
+    END INTERFACE END_KEEP_ORDER
 
   contains
 
@@ -359,6 +367,37 @@ module mod_mpi
         ENDIF
 
     END SUBROUTINE MPI_TRANS_I0
+
+    SUBROUTINE MPI_TRANS_I80(A,B,ORIG,DEST)
+        !ORIG SEND THE MESSAGE A TO DEST
+        !DEST RECV THE MESSAGE B FROM ORIG
+        !RETURN WHEN EVERYTHING IS DONE
+        IMPLICIT NONE
+        integer(8),INTENT(INOUT) :: A
+        integer(8),INTENT(IN)    :: B
+        integer,INTENT(IN)    :: ORIG,DEST
+#ifdef WITH_MPI
+        integer :: STATUS(MPI_STATUS_SIZE),TAG
+        integer :: ierr
+#endif
+
+        IF (RANK==ORIG.AND.RANK==DEST) THEN ! SENDING A MESSAGE TO MYSELF
+          A=B
+#ifdef WITH_MPI
+        ELSE
+          TAG=ORIG*NPROCS+DEST
+          STATUS=MPI_STATUS_IGNORE
+          IF(RANK==ORIG)  & ! I'M ORIG, I SEND THE MESSAGE B TO DEST
+              CALL MPI_SEND(B,1,MPI_DOUBLE_INT,DEST, &
+              TAG,MPI_COMM_WORLD,IERR)
+
+          IF(RANK==DEST) &  ! I'M DEST, I RECIEVE THE MESSAGE A FORM ORIG
+              CALL MPI_RECV(A,1,MPI_DOUBLE_INT,ORIG, &
+              TAG,MPI_COMM_WORLD,STATUS,IERR)
+#endif
+        ENDIF
+
+    END SUBROUTINE MPI_TRANS_I80
 
     SUBROUTINE MPI_TRANS_C0(A,B,ORIG,DEST)
         !ORIG SEND THE MESSAGE A TO DEST
@@ -914,7 +953,7 @@ module mod_mpi
     END SUBROUTINE GATHER_R
 
 
-    SUBROUTINE START_KEEP_ORDER(index,queue,relais_in)
+    SUBROUTINE START_KEEP_ORDER_i4(index,queue,relais_in)
         IMPLICIT NONE
         integer,intent(inout),optional :: relais_in
         integer,intent(in),optional :: index,queue(:)
@@ -929,10 +968,10 @@ module mod_mpi
         endif
 #endif
         if (present(relais_in)) relais_in=relais
-    END SUBROUTINE START_KEEP_ORDER
+    END SUBROUTINE START_KEEP_ORDER_i4
 
 
-    SUBROUTINE END_KEEP_ORDER(index,queue,relais_in)
+    SUBROUTINE END_KEEP_ORDER_i4(index,queue,relais_in)
         IMPLICIT NONE
         integer,intent(inout),optional :: relais_in
         integer,intent(in),optional :: index,queue(:)
@@ -946,11 +985,41 @@ module mod_mpi
         endif
 #endif
         if (present(relais_in)) relais_in=relais
-    END SUBROUTINE END_KEEP_ORDER
+    END SUBROUTINE END_KEEP_ORDER_i4
+
+
+    SUBROUTINE START_KEEP_ORDER_i8(index,queue,relais)
+        IMPLICIT NONE
+        integer(8),intent(inout) :: relais
+        integer,intent(in),optional :: index,queue(:)
+#ifdef WITH_MPI
+        if(present(index)) then
+          if(index>1) call mpi_trans(relais,relais,queue(index-1),rank)
+        else
+          if(rank>0) call mpi_trans(relais,relais,rank-1,rank)
+        endif
+#endif
+    END SUBROUTINE START_KEEP_ORDER_i8
+
+
+    SUBROUTINE END_KEEP_ORDER_i8(index,queue,relais)
+        IMPLICIT NONE
+        integer(8),intent(inout) :: relais
+        integer,intent(in),optional :: index,queue(:)
+#ifdef WITH_MPI
+        if(present(index)) then
+          if(index<size(queue)) call mpi_trans(relais,relais,rank,queue(index+1))
+        else
+          if(rank<nprocs-1) call mpi_trans(relais,relais,rank,rank+1)
+        endif
+#endif
+    END SUBROUTINE END_KEEP_ORDER_i8
+
 
     subroutine my_fseek(unit,pos)
         implicit none
-        integer :: unit,pos
+        integer :: unit
+        integer(8) :: pos
 #if defined(__GFORTRAN__)
         call fseek(unit,pos,0)
 #else

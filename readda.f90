@@ -48,7 +48,8 @@ contains
     integer          ::       j1,      j2,    j2m1,       k,      k1
     integer          ::       k2,    k2m1,     kda,       l,       m
     integer          :: mdimtnxl,       n,      n0,     nid,    nijd
-    integer          ::      njd,    resu,pos,ll
+    integer          ::      njd,    resu,ll
+    integer(8)       :: pos
     double precision ::         mut(ip12),     v(ip11,ip60), vdual(ip11,ip60),vdual1(ip11,ip60)
     double precision :: vdual2(ip11,ip60)
     double precision,allocatable :: utau(:)
@@ -59,7 +60,7 @@ contains
 !
     ll=bl_to_bg(l)
     if(ll.eq.1) rewind kda
-    pos=int(FTELL(kda))
+    pos=FTELL(kda)
 !
     call START_KEEP_ORDER(ll,bg_to_proc,pos)
     CALL my_FSEEK(kda, pos)
@@ -142,7 +143,7 @@ contains
 !       enddo
 !     enddo
 !     close(200)
-    pos=int(FTELL(kda))
+    pos=FTELL(kda)
 
     call END_KEEP_ORDER(ll,bg_to_proc,pos)
 
