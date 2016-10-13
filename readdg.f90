@@ -53,7 +53,7 @@ contains
 !
     ecri=.false.
 !      ecri=.true.
-    pos=FTELL(kdg)
+    pos=my_FTELL(kdg)
 !
     ll=bl_to_bg(l)
     call START_KEEP_ORDER(ll,bg_to_proc,pos)
@@ -80,7 +80,7 @@ contains
     read(kdg,err=13) &
          (((z(indn(i,j,k)),i=i1,i2),j=j1,j2),k=k1,k2)
 !
-    pos=FTELL(kdg)
+    pos=my_FTELL(kdg)
     call END_KEEP_ORDER(ll,bg_to_proc,pos)
 
     return

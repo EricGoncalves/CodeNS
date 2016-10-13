@@ -5,7 +5,7 @@ module mod_mpi
   USE MPI
 #endif
 #if defined(__INTEL_COMPILER)
-  use ifport,only : fseek,ftell,getpid
+  use ifport,only : getpid
 #endif
   implicit none
   integer             :: rank,NPROCS
@@ -1017,6 +1017,9 @@ module mod_mpi
 
 
     subroutine my_fseek(unit,pos)
+#if defined(__INTEL_COMPILER)
+        use ifport,only : fseeki8
+#endif
         implicit none
         integer :: unit
         integer(8) :: pos
@@ -1024,10 +1027,25 @@ module mod_mpi
         call fseek(unit,pos,0)
 #else
         integer :: i
-        i=fseek(unit,pos,0)
+        i=fseeki8(unit,pos,0)
 #endif
     end subroutine my_fseek
 
+    function my_ftell(unit)
+#if defined(__INTEL_COMPILER)
+        use ifport,only : ftelli8
+#endif
+        implicit none
+        integer,intent(in) :: unit
+        integer(8) :: my_ftell
+
+#if defined(__GFORTRAN__)
+          my_ftell=ftell(unit)
+#elif defined(__INTEL_COMPILER)
+          my_ftell=ftelli8(unit)
+#endif
+
+    end function my_ftell
 
     subroutine get_time(time)
         implicit none
